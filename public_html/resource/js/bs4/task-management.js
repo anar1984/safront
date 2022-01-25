@@ -55,8 +55,8 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 mt-3"> 
-                            <div class="d-flex pl-3 pr-3 task-deadline-boxes">
+                        <div class="col-lg-12 mt-0"> 
+                            <div class="d-flex task-deadline-boxes">
                             ${this.genTaskDeadLineBlockTime()}
                             ${this.genTaskDeadLineBlockTask()}
                             ${this.genTaskDeadLineBlockEvent()}
@@ -64,7 +64,7 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12" style="padding: 0 25px;">
+                        <div class="col-lg-12">
                         ${this.genTabBlock.Init()}
                          </div>
                         </div>
@@ -86,11 +86,11 @@ const taskManagement = {
           </div>`
             },
             genTitleBlock: function () {
-                return `<div class="cs-input-group mb-3">
+                return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
-                        <span class='p-1' style=" color: #ffffff66; font-size: 12px; "></span>
+                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
+                        <!-- <span class='p-1' style=" color: #ffffff66; font-size: 12px; "></span>-->
                     </div>
                     <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
@@ -140,7 +140,7 @@ const taskManagement = {
             </div>`
             },
             genTaskDeadLineBlockTime: function () {
-                return `<div class="mr-auto p-2">
+                return `<div class="mr-auto pl-0 pr-0 pb-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
                         <div class="col-lg-6  mt-2 cs-p-rem">
@@ -267,22 +267,41 @@ const taskManagement = {
                     return div
                 },
                 genTabHeader: function () {
-                    return ` <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
-                    </li>
-                    <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
-                    </li>
-                
-                   <!-- <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
-                    </li>-->
- 
-                    <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
-                    </li>
-                </ul>   `
+                    return `<div class="d-flex" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important;">
+                        <div class="schedule-dcbtn" style="display:none;">
+                            <div class="row">
+                                <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                    <div class="cs-input-group">
+                                        <label class="switch bcs-swith">
+                                            <input type="checkbox" id="runTaskAvtivateSchedule">
+                                            <span class="slider round">
+                                                <small class="deactive">Deactive</small>
+                                                <small class="active">Active</small>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
+                                </li>
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link task-tab2" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
+                                </li>
+                            
+                            <!-- <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
+                                </li>-->
+            
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>`
                 },
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
@@ -326,19 +345,6 @@ const taskManagement = {
                 },
                 genScheduleBlock: function () {
                     return ` <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
-                   <div class="row">
-                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                           <div class="cs-input-group">
-                               <label class="switch bcs-swith">
-                                   <input type="checkbox" id="runTaskAvtivateSchedule">
-                                   <span class="slider round">
-                                       <small class="deactive">Deactive</small>
-                                       <small class="active">Active</small>
-                                   </span>
-                               </label>
-                           </div>
-                       </div>
-                   </div>
                    <div class="row rsoon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
@@ -937,8 +943,8 @@ const taskManagement = {
                          </div>
                       </div>
                       <div class="row">
-                      <div class="col-lg-12 mt-3"> 
-                          <div class="d-flex pl-3 pr-3 task-deadline-boxes">
+                      <div class="col-lg-12 mt-0"> 
+                          <div class="d-flex task-deadline-boxes">
                           ${this.genTaskDeadLineBlockTime()}
                           ${this.genTaskDeadLineBlockTask()}
                           ${this.genTaskDeadLineBlockEvent()}
@@ -967,7 +973,7 @@ const taskManagement = {
           </div>`
             },
             genTitleBlock: function () {
-                return ` <div class="cs-input-group mb-3">
+                return ` <div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
                         <div class="Story-card-Header-task">
@@ -1055,59 +1061,63 @@ const taskManagement = {
             </div>`
             },
             genTaskDeadLineBlockTime: function () {
-                return `<div class="mr-auto p-2">
+                return `<div class="mr-auto pl-0 pr-0 pb-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 cs-input-group mt-2 pl-0">
-                            <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                           </span>
-                                           <input type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                           </span>
-                                           <input type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                        <div class="col-lg-6 cs-input-group mt-2 pl-2">
-                            <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        <div class="col-lg-6 mt-3 cs-p-rem">
+                            <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineEndDade" class="form-control" />
+                                            <input type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
+                                            <input type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-0">
+                        <div class="col-lg-6 mt-3 cs-p-rem">
+                           <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDetailDeadlineEndDade" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
                                 <select class="form-control update-selectpicker issue_selectpicker" data-actions-box="true"  data-live-search="true"
                                         id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-2">
+                        <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select class="run_task_categories update-selectpicker issue_selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
@@ -1115,7 +1125,7 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-0">
+                        <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
                                 <select class="run_task_sprint update-selectpicker issue_selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
@@ -1184,35 +1194,53 @@ const taskManagement = {
                     return div
                 },
                 genTabHeader: function () {
-                    return `  <ul class="nav nav-pills mb-3 pl-0 mt-3" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>${lang_task.windowUpdateTask.comment}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowUpdateTask.subtask}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
-                    </li>
-                </ul>`
+                    return `<div class="d-flex" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important;">
+                        <div class="d-schedule-dcbtn" style="display:none">
+                            <div class="row">
+                                <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                    <div class="cs-input-group">
+                                        <label class="switch bcs-swith">
+                                            <input type="checkbox" id="runTaskStartDate_activateschedule">
+                                            <span class="slider round">
+                                                <small class="deactive">Deactive</small>
+                                                <small class="active">Active</small>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>${lang_task.windowUpdateTask.comment}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link d-task-tab2" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowUpdateTask.subtask}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
+                                </li>
+                                
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                </li>
+                             </ul>
+                        </div>
+                    </div>`
                 },
                 genCommentBlock: function () {
-                    return `  <div class="tab-pane fade active show cs-box-background" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab4">
+                    return `<div class="tab-pane fade active show cs-box-background" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab4">
                     <div class="cs-input-group mb-3 mt-3">
                         <div class="commentwritepanel">
                             <div class="input-group-addon">Description</div>
-                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
-                                      placeholder="Add a comment.." rows="1"></textarea>
-
+                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput addComment4Task_comment form-control" placeholder="Add a comment.." rows="1"></textarea>
                             <br>
                             <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
                                  style="width:100%;display: none; padding:0px;margin:0px;">
@@ -1232,8 +1260,6 @@ const taskManagement = {
                                 </div>
                                 <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
                                        multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
-
-
                             </div>
                         </div>
                     </div>
@@ -1466,19 +1492,7 @@ const taskManagement = {
                 },
                 genScheduleBlock: function () {
                     return `<div class="tab-pane fade shedule-elements cs-box-background" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
-                   <div class="row">
-                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                           <div class="cs-input-group">
-                               <label class="switch bcs-swith">
-                                   <input type="checkbox" id="runTaskStartDate_activateschedule">
-                                   <span class="slider round">
-                                       <small class="deactive">Deactive</small>
-                                       <small class="active">Active</small>
-                                   </span>
-                               </label>
-                           </div>
-                       </div>
-                   </div>
+                   
                    <div class="row soon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
