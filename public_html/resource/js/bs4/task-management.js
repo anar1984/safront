@@ -2495,7 +2495,7 @@ const taskManagement = {
                 div.empty();
                 var view = localStorage.getItem('task-view-format');
                 div.append(this.genHeader());
-                this.getstatisticList();
+               
                 if (!view) {
                     view = "table"
                 }
@@ -2564,7 +2564,7 @@ const taskManagement = {
                 <div class="p-2 mt-2">
                     <div class="dropdown info-box-dropdown" id="issue-table-aktiv-all">
                         <a class="btn dropdown-toggle" href="#" role="button" id="task-table-aktiv-all1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"H"}</span> <span id="row-count-table">125</span>
+                            <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"}</span> <span id="row-count-table">125</span>
                         </a>
                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-table-aktiv-all1">
                           <a class="dropdown-item" all-aktiv="A" href="#">Activ</a>
@@ -2576,6 +2576,7 @@ const taskManagement = {
                 </div>`
             },
             genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
+                const  lt  = localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"
                 return `
                <div class="info-box mr-2">
                <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
@@ -2610,34 +2611,38 @@ const taskManagement = {
                     </div>
                 </div>
             </div>
-            <div class="info-box info-box-mob">
+            ${this.genOperationBlock(lt,newt,ongoing,waiting,closed,rejected,yonledrlb,canceled,btb)}
+           `
+            },
+            genOperationBlock: function (lt,news,ongoing,waiting,closed,rejected,yonlendirilib,canceled,tamamlanib) {
+                return `<div class="info-box info-box-mob">
                 <span class="title">Status</span>
                 <div class="info-box-in">
-                    <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
-                    <i class="cs-svg-icon plus-circle"></i> <span>${newt}</span>
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='new' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni">
+                    <i class="cs-svg-icon plus-circle"></i> <span>${news}</span>
                     </div>
-                    <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='ongoing' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada">
                         <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
                     </div>
-                    <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='waiting' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə">
                         <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
                     </div>
-            
-                    <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
-                        <i class="cs-svg-icon right-circle"></i> <span>${yonledrlb}</span>
+        
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements " data-status='yonlendirilib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib">
+                        <i class="cs-svg-icon right-circle"></i> <span>${yonlendirilib}</span>
                     </div>
-                    <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='canceled' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib">
                         <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
                     </div>
-                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib">
                         <i class="cs-svg-icon none"></i> <span>${rejected}</span>
-            
+        
                     </div>
-                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
                         <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
                     </div>
-                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
-                        <i class="cs-svg-icon shtamp-circle"></i> <span>${btb}</span>
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
+                        <i class="cs-svg-icon shtamp-circle"></i> <span>${tamamlanib}</span>
                     </div>
                 </div>
             </div>`

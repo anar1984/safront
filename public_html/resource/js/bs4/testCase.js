@@ -1195,6 +1195,7 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
+    taskManagement.readTask.genBlockTask.getstatisticList();
       var me = "'"+global_var.current_ticker_id+"'"
       var lastmnId  =  Utility.getParamFromUrl('lastMenuId')
     if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
@@ -1213,6 +1214,7 @@ function getBugList() {
             
         }else{
            var ty = localStorage.getItem("issue_mode_active");
+              ty = ty?ty:"A"
           $('#issue-table-aktiv-all').find('.title').text(ty);
           var sel  = $("#bug_filter_status");
              let value 
