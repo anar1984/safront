@@ -18922,9 +18922,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     generateCommentFileLine: function (o, cell) {
         try {
-            cell = (cell === 'undefined' || !cell) ? 'col-6' : cell;
+            cell = (cell === 'undefined' || !cell) ? 'cs-img-col' : cell;
             var st = o.split('\\|');
-            var div = $('<div></div>').addClass("row");
+            var div = $('<div></div>').addClass("d-flex flex-nowrap");
             for (var i = 0; i < st.length; i++) {
                 if (st[i].trim().length === 0) {
                     continue;
@@ -18933,7 +18933,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 var ind = st[i].lastIndexOf(".") + 1;
                 var fileFormat = st[i].substr(ind);
                 var div2 = $('<div></div>').addClass(cell);
-                var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+                var div12lik = $('<div></div>').addClass('file_upload_div cs_new_file_upload');
                 if (global_var.image_formats.includes(fileFormat)) {
                     div12lik.append($('<img></img>')
                         .attr('src', fileUrl(st[i]))
@@ -18952,17 +18952,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
                         .attr('alt', st[i]));
                 }
-                div12lik.append(' <b> ' + add3Dots2Filename(st[i]) + '</b><br>');
-                div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", fileUrl(st[i]))
-                    .append('<i class="fa fa-download" aria-hidden="true"></i>')
-                    //                        .append($('<i></i>').addClass('fa fa-download'))
-                    .append('  '))
-                    .append($('<i></i>')
-                        .addClass('lbl-action')
-                        .append('<i class="fa fa-trash-o" aria-hidden="true"></i>')
-                        .append('  ')
-                        .attr('onclick', 'new UserStory().deleteTaskCommentFile(this,"' + st[i] + '")')
+                div12lik.append('<span class="cs-img-title">' + add3Dots2Filename(st[i]) + '</span>');
+                div12lik.append($('<div class="see-detail-img"></div>')
+                    .append($('<a target="_blank">')
+                        .attr("href", fileUrl(st[i]))
+                        .append('<i class="fa fa-download" aria-hidden="true"></i>')
+                        )
+                        .append($('<span></span>')
+                            .addClass('lbl-action')
+                            .append('<i class="fa fa-trash-o" aria-hidden="true"></i>')
+                            .attr('onclick', 'new UserStory().deleteTaskCommentFile(this,"' + st[i] + '")')
+                        )
                     );
                 div2.append(div12lik);
                 div.append(div2);
@@ -19020,7 +19020,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
             var div2 = $('<div></div>').addClass(cell);
-            var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+            var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div s');
             if (global_var.image_formats.includes(fileFormat)) {
                 return "";
                 //                    
@@ -19086,7 +19086,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#pinnedImages').append(div4PinnedImage);
 
             var div2 = $('<div></div>').addClass(cell);
-            var div12lik = $('<div></div>').addClass('file_upload_div');
+            var div12lik = $('<div></div>').addClass('file_upload_div c');
             if (global_var.image_formats.includes(fileFormat)) {
                 div12lik.append($('<img></img>')
                     .attr('src', fileUrl(name))
