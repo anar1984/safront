@@ -1707,7 +1707,7 @@ const taskManagement = {
                </div>`
                 },
                 genObserverBlock: function () {
-                    return
+                    return ""
                     return `  <div class="tab-pane fade cs-box-background" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
                  <div class="cs-input-group mb-3 ml-2">
                      <div class="input-group-addon">Observer Name</div>

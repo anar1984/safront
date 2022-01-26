@@ -61,7 +61,7 @@ var cmpList  = {
                 var tit  = $(elm).find(".user-dropdonw-btn");
                 if(list===''){
                     block.empty();
-                    tit.empty();
+                    tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
                 }
                 if(type==='single'){
                     if(list&& typeof list ==='string'){
