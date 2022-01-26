@@ -1247,9 +1247,7 @@ const taskManagement = {
                                     <button class="btn btn-primary" type="submit"
                                             onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
                                 </div>
-                                <div class="deletecomment flex-fill mr-1">
-                                    <button class="btn " type="submit">Cancel</button>
-                                </div>
+                           
                                 <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
                                        multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
                             </div>
@@ -1926,6 +1924,7 @@ const taskManagement = {
             } else {
                 $("#updateTask-priority-btn").removeClass("active");
             }
+            $('#addComment4Task_comment').autoHeight();
             if (coreBugKV[taskId].backlogName) {
                 $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
                     .attr('pid', coreBugKV[taskId].fkBacklogId)
@@ -2278,12 +2277,12 @@ const taskManagement = {
                     return;
                 }
                 var obj = res.tbl[0].r;
-                var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
+                var div = $('<div></div>');
                 for (var i = 0; i < obj.length; i++) {
 
 
                     var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol1")
-                        .append("<br>");
+                       
                     var div_by_row = $('<div></div>')
                         .addClass("row")
                         .addClass("mangodb");
@@ -2291,17 +2290,20 @@ const taskManagement = {
                         fileUrl(new User().getDefaultUserprofileName()) :
                         fileUrl(obj[i].avatarUrl);
                     var div1 = $('<div></div>')
-                        .addClass("col-1 comment-line1")
+                        .addClass("comment-line1")
                         .append($('<img></img>')
                             .addClass("figure-img img-fluid rounded-circle")
-                            .attr("style", "max-width:28px")
+                            .attr("style", "width: 21px;height: 21px;object-fit: cover;object-position: center center;")
                             .attr("src", img));
                     //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
                     var comment = replaceTags(obj[i].comment);
                     var div2 = $('<div></div>')
-                        .attr('style', "padding-left:0px;font-size:13px;")
-                        .addClass("col-11")
-                        .append($("<span>").append(obj[i].username)
+                        .addClass("col-12").attr('style', "font-size:13px;")
+                        .append($("<div>").addClass('d-flex')
+
+                            .append(div1)
+                            .append($('<div>').addClass('ml-auto')
+                            .append($("<span>").append(obj[i].username)
                             .addClass('comment-content-header-name')
                             .append($("<span>")
                                 .addClass('comment-content-header-history')
@@ -2312,12 +2314,16 @@ const taskManagement = {
                             )
                             .append('&nbsp;&nbsp;&nbsp;')
 
-                            //                            .append($('<a href="#" style="font-size:11px;">')
-                            //                                    .addClass('comment-content-header-name')
-                            //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
-                            //                                    .append("Delete"))
+                                //                            .append($('<a href="#" style="font-size:11px;">')
+                                //                                    .addClass('comment-content-header-name')
+                                //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
+                                //                                    .append("Delete"))
+                            )
+
+                            )
+                            
+                            
                         )
-                        .append("<br>")
                         .append($("<span class='comment-main-span'>")
                             .css('padding-bottom', "5px")
                             .attr("id", obj[i].id)
@@ -2327,7 +2333,7 @@ const taskManagement = {
                     var div2_1 = new UserStory().generateCommentFileLine(obj[i].fileName);
                     var div3 = $('<div></div>').addClass("col-12").append("");
                     div2.append(div2_1)
-                        .append("<br>")
+                        
                     //                    .append($('<a href="#" style="font-size:11px;">')
                     //                            .attr('onclick', " convertCommentHtml2TextArea(this,'" + obj[i].id + "')")
                     //                            .append("Edit"))
@@ -2336,7 +2342,7 @@ const taskManagement = {
                     //                    .append($('<a class="saveComment" href="#" style="display:none;font-size:11px;">')
                     //                            .attr('onclick', "saveComment(this,'" + obj[i].id + "')")
                     //                            .append("Save"));
-                    div_by_row.append(div1).append(div2)
+                    div_by_row.append(div2)
                         .append(div3);
                     div_by_col.append(div_by_row)
                     div.append(div_by_col);
