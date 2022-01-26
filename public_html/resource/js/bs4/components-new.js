@@ -4,6 +4,7 @@ var cmpList  = {
             Init: function (elm,type) {
                 $(elm).empty();
                 $(elm).addClass("text-center");
+                $(elm).attr("el-name","selectInterActive");
                 if(type==='multi'){
                     var block  = this.genObserverBlockM();
                     $(elm).attr("action-type",'multi');
@@ -13,7 +14,12 @@ var cmpList  = {
                 }
                 $(elm).append(block);
                 var select  = $(elm).find('select.selectpicker-user-list');
-                this.getUserList(select);               
+                this.getUserList(select);
+                $(elm).on("sachange",function(e,callback){
+                      if(callback){
+                          callback();
+                      }
+                })               
             },
             getUserBlockValue: function (elm) {
                 var type  =  $(elm).attr("action-type");
@@ -216,6 +222,7 @@ $.fn.getVal = function (val) {
                  }
              } 
 }
+
 $.fn.extend({
     autoHeight: function () {
       function autoHeight_(element) {

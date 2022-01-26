@@ -3095,14 +3095,6 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
 })
 
 
-$(document).on("click", ".taskObserverDelete", function (e) {
-    if (confirm("Are you sure?")) {
-          $(this).closest('tr').removeAttr('id');
-          $(this).closest('tr').remove();
-
-    }   
-})
-
 $(document).on("click", ".taskCheckListItemDelete", function (e) {
     if (!confirm("Are you sure?")) {
         return;

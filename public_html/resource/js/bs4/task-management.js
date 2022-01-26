@@ -1999,7 +1999,7 @@ const taskManagement = {
                     "fkTaskId": taskId,
                     "fkUserId": val
                 }, true, function () {
-                    that.getTaskObserverList(taskId);
+                   // that.getTaskObserverList(taskId);
                 });
             } catch (error) {
                 console.log('task Observer ++++' + error);
@@ -2177,7 +2177,7 @@ const taskManagement = {
         },
 
         getTaskkObserverListDetaisl: function (res) {
-            var userList = {};
+        /*     var userList = {};
             try {
                 var idx = getIndexOfTable(res, "userList");
                 var objUser = res.tbl[idx].r;
@@ -2186,9 +2186,8 @@ const taskManagement = {
                     userList[o2.id] = o2;
                 }
             } catch (err) {}
-
-
-
+ */
+/* 
             var div = $('.task-observer-list');
             div.html('')
 
@@ -2203,16 +2202,17 @@ const taskManagement = {
                         .text("Observer"))
                 )
             )
-
+ */
             try {
                 var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
                 var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
+                var ts  =  []
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
-
-                    var lst = o.fkUserId.split(',');
-                    $(".observer-div-update-issue").getVal(lst)
-                    for (let l = 0; l < lst.length; l++) {
+                        ts.push(o.fkUserId)
+                   // var lst = o.fkUserId.split(',');
+                   
+                  /*   for (let l = 0; l < lst.length; l++) {
                         const k = lst[l];
                         var userSpan = (k && userList[k]) ?
                             $('<span>')
@@ -2238,9 +2238,10 @@ const taskManagement = {
                                     .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')));
                         table.append(tr);
                     }
-
+ */
                 }
-                div.html(table);
+                $(".observer-div-update-issue").getVal(ts);
+               // div.html(table);
             } catch (error) {
 
             }
@@ -4460,12 +4461,7 @@ $(document).on("click", ".addObserverToTAsk", function (e) {
 
 
 })
-$(document).on("click", ".addObserverToTAskUpdate", function (e) {
 
-    var taskid = Utility.getParamFromUrl('current_issue_id');
-    var val = $("#updatetask_oblerverlist").val();
-    taskManagement.updateTask.updateObserverTask(taskid, val)
-})
 
 function deleteComment(commentId) {
 
@@ -4548,6 +4544,19 @@ $(document).on("click", '#toplanti-d-btn', function () {
     $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
     $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
     updateTask4ShortChangeDetails('1', "isMeet");
+});
+$(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
+      var val  = $(this).closest('.assigne-div-update-issue').getVal();
+    updateTask4ShortChangeDetails(val, "fkAssigneeId");
+});
+$(document).on("change", '.observer-div-update-issue select.user-list-selectbox-multiple', function () {
+      var val  = $(this).closest('.observer-div-update-issue').find('.user-list-avatar-multiple li:last-child').attr("id");
+      console.log(val);
+      var taskid = Utility.getParamFromUrl('current_issue_id');
+      taskManagement.updateTask.updateObserverTask(taskid, val);
+});
+$(document).on("click", '.assigne-div-update-issue i.removed-user-btn', function () {
+    
 });
 
 $(document).on("click", '#tapshiriq-d-btn', function () {
