@@ -2796,7 +2796,7 @@ const taskManagement = {
                 </div>
                 <div class="cs-input-group cs-pagination-group-by col-4">
                 <div class="input-group-addon cs-group-by">Group By</div>
-                <select id="inputGroupSelect01">
+                <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
                     <option value='0' >None</option>
                     <option value='5' >Task Status</option>
                     <option value='7' >Task Nature</option>
@@ -2821,7 +2821,7 @@ const taskManagement = {
                         <div class="input-group-addon">Sort by</div>
                     </div>
                     <div class="cs-input-group col-4">
-                        <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
+                        <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
                         id='bug_filter_sortby' title="Columns">
                             <option value='task_status' selected>Status</option>
                             <option value='id' selected>Task ID</option>
@@ -2838,7 +2838,7 @@ const taskManagement = {
                     </div>
 
                     <div class="cs-input-group col-4">
-                        <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
+                        <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby-asc" data-actions-box="true"    
                                 id='bug_filter_sortby_asc' title="Columns">
                             <option value='asc' >ASC</option>
                             <option value='desc' selected>Desc</option>
@@ -2846,7 +2846,7 @@ const taskManagement = {
                     </div>
                     <div class="col-4">
                         <div class="cs-input-group  cs-pagination-limit">
-                            <select data-type='' class="" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
+                            <select data-type='' class="bug-mgmt-filter-select" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
                                 <option value='10'>10</option>
                                 <option value='25' selected> 25</option>
                                 <option value='50'>50</option>
