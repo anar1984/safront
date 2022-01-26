@@ -255,7 +255,10 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
            }
            
       }
-      elm.remove();
+      var prt  =$(this).closest('.user-addons-box-elm').parent();
+      //event interactive 
+      $(prt).trigger("delete-interactive",[elm.attr("id")]);
+       elm.remove();
    });
   
  $(document).on('change','select.user-list-selectbox-multiple', function (e) {
@@ -272,6 +275,8 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
         $(this).find('[value="'+o+'"]').remove();
        $(this).selectpicker('refresh');
     }
+    var prt  =$(this).closest('.user-addons-box-elm').parent();
+    $(prt).trigger("change-interactive",[o]);
     $('[data-toggle="popover"]').popover({
         html:true
     })
@@ -285,6 +290,7 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
     
         tit.html(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
         block.html(cmpList.userBlock.genItemBlock(o,userImage,userName));
+        $(prt).trigger("change-interactive",[o]);
     $('[data-toggle="popover"]').popover({
         html:true
     });

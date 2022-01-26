@@ -4551,9 +4551,12 @@ $(document).on("change", '.observer-div-update-issue select.user-list-selectbox-
       var taskid = Utility.getParamFromUrl('current_issue_id');
       taskManagement.updateTask.updateObserverTask(taskid, val);
 });
-$(document).on("click", '.assigne-div-update-issue i.removed-user-btn', function () {
-    
+$(document).on("delete-interactive", '.observer-div-update-issue', function (e,id) {
+ 
+    callApi('22012614383006986455', {id: id});
+
 });
+
 
 $(document).on("click", '#tapshiriq-d-btn', function () {
     $(this).addClass('active');
