@@ -2534,7 +2534,7 @@ const taskManagement = {
                 return `    <div class="header-info-section d-flex w-100">
                 <div class="mr-auto d-flex p-2">
                     <div class="d-flex justify-content-start">
-                        <div class="form-group has-search mr-2">
+                        <div class="form-group ${notChwk?"":"d-none"} has-search mr-2">
                         <div class="has-search-in">
                             <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
                             <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
