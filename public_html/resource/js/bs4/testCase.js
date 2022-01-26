@@ -620,7 +620,6 @@ $(document).on("change", '.bug-filter', function (e) {
         bug_filter.page_no = 1;
         getBugList();
     }
-
 })
 
 $(document).on("click", '.page-item-core-previous', function (e) {
@@ -877,8 +876,12 @@ function setBugFilterLabelValues() {
      }
 }
 function setFilterCount() {
-       
-    var elm  = notChwk ? $(".taskfilter-btn .info"):$(".filter-elements-btn .info");
+ 
+       if(notChwk()===true){
+           var elm = $(".taskfilter-btn .info")
+       }else{
+        var elm = $(".filter-elements-btn .info");
+       }
     if(FilterCount > 0){
         elm.show();
         elm.text(FilterCount);
