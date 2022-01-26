@@ -1110,13 +1110,7 @@ const taskManagement = {
                                 </div>
                            </div>
                         </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
-                            <div class="cs-input-group p-0">
-                                <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
-                                <select class="form-control update-selectpicker issue_selectpicker" data-actions-box="true"  data-live-search="true"
-                                        id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
-                            </div>
-                        </div>
+                        
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
@@ -1225,9 +1219,7 @@ const taskManagement = {
                                     <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                                 </li>
                                 
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
-                                </li>
+                
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
                                 </li>
@@ -1717,6 +1709,7 @@ const taskManagement = {
                </div>`
                 },
                 genObserverBlock: function () {
+                    return
                     return `  <div class="tab-pane fade cs-box-background" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
                  <div class="cs-input-group mb-3 ml-2">
                      <div class="input-group-addon">Observer Name</div>
