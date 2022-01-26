@@ -877,7 +877,7 @@ function setBugFilterLabelValues() {
 }
 function setFilterCount() {
  
-       if(notChwk()===true){
+       if(notChwk()){
            var elm = $(".taskfilter-btn .info")
        }else{
         var elm = $(".filter-elements-btn .info");

@@ -274,15 +274,13 @@ function calStroyCardNew(id, elId, backlogName) {
    
     $.get("resource/child/storycard.html", function (html_string)
     {
+        resetAllEditStoryCard();
         if (!id || id === '-1') {
             return;
         }
-          
-
         loadBacklogDetailsByIdIfNotExist(id);
         var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
         global_var.current_project_id = fkProjectId;
-        resetAllEditStoryCard();
         var storyCard = $("<div>").append(html_string);
         $(storyCard).find('#storyCardModalNew').attr("id",'UserStoryPopupModal-Toggle-new')
                                            .removeAttr("style")

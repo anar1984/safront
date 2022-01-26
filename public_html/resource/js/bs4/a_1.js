@@ -13664,7 +13664,7 @@ function setBacklogAsHtmlCodeGround(backlogId,js,css) {
 }
 $(document).on("click", '#info-code-ground-btn', function (e) {
 
-    callStoryCard(global_var.current_backlog_id);
+    calStroyCardNew(global_var.current_backlog_id);
 
 
 });
@@ -14870,21 +14870,25 @@ function loadStoryCardInfo4StoryCard_old(el) {
 
 function resetAllEditStoryCard() {
     if(global_var.current_modal==='loadCodeGround'){
-          $('#UserStoryPopupModal-Toggle .cs-proces-desc-add-to-task-box').remove();
+          $('#UserStoryPopupModal-Toggle-new .cs-proces-desc-add-to-task-box').remove();
+          $('#UserStoryPopupModal-Toggle-new .storycard-author-section').remove();
         //  $('#UserStoryPopupModal-Toggle .storecard-header-nav-section').addClass('d-none').removeClass("d-flex");
           $('#storyCardRightMenu').remove();
-        $("#UserStoryPopupModal-Toggle .modal-body>.row input").not('.pdfHide[type="checkbox"]').remove();
-        $("#UserStoryPopupModal-Toggle .iconDrag").remove();
-        $("#UserStoryPopupModal-Toggle  td").removeAttr("ondblclick");
-        $("#UserStoryPopupModal-Toggle  span").removeAttr("ondblclick");
-        $("#UserStoryPopupModal-Toggle  td").removeAttr("ondblclick");
-        $("#UserStoryPopupModal-Toggle  select").removeAttr("onchange");
-        $("#UserStoryPopupModal-Toggle  .scg-button-box").remove();
-        $("#UserStoryPopupModal-Toggle  .live-prototype-show-story-card-hard-refresh").remove();
-        $("#UserStoryPopupModal-Toggle .modal-body>.row .dropdown-toggle").parent().remove();
-        $("#UserStoryPopupModal-Toggle input.pdfHide").prop('checked',true).change();
-        $("#UserStoryPopupModal-Toggle .storecard-header-nav-section .cs-col-storecard").addClass('d-none').removeClass("d-flex");
-        $("#UserStoryPopupModal-Toggle .storecard-header-nav-section .cs-col-project").addClass('d-none').removeClass("d-flex");
+        $("#UserStoryPopupModal-Toggle-new .modal-body>.row input").not('.pdfHide[type="checkbox"]').remove();
+        $("#UserStoryPopupModal-Toggle-new .iconDrag").remove();
+        $("#UserStoryPopupModal-Toggle-new  td").removeAttr("ondblclick");
+        $("#UserStoryPopupModal-Toggle-new  span").removeAttr("ondblclick");
+        $("#UserStoryPopupModal-Toggle-new  td").removeAttr("ondblclick");
+        $("#UserStoryPopupModal-Toggle-new  .api-name").removeAttr("onclick");
+        $("#UserStoryPopupModal-Toggle-new  input").remove();
+        $("#UserStoryPopupModal-Toggle-new  .scg-button-box").remove();
+        $("#UserStoryPopupModal-Toggle-new .live-prototype-show-story-card-hard-refresh").remove();
+        $("#UserStoryPopupModal-Toggle-new .add_descriotion_btn ").remove();
+        $("#UserStoryPopupModal-Toggle-new .description-style ").remove();
+        $("#UserStoryPopupModal-Toggle-new .description-left>.dropdown").remove();
+        $("#UserStoryPopupModal-Toggle-new input.pdfHide").prop('checked',true).change();
+        $("#UserStoryPopupModal-Toggle-new .storecard-header-nav-section .cs-col-storecard").addClass('d-none').removeClass("d-flex");
+        $("#UserStoryPopupModal-Toggle-new .storecard-header-nav-section .cs-col-project").addClass('d-none').removeClass("d-flex");
         $('#description_table_id').remove();
 
     }
@@ -18439,6 +18443,7 @@ function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
     json.kv.fkBacklogId = bgId;
     json.kv.taskName = txt +"(From "+nm+")";
     json.kv.fkProjectId = prid;
+    json.kv.fkTaskTypeId = typId;
     json.kv.fkAssigneeId = asId;
     var that = this;
     var data = JSON.stringify(json);
