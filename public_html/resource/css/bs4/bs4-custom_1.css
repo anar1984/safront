@@ -3864,3 +3864,17 @@ img.sc-IbsAh.kqHqhS {
   height: auto;
   z-index: 900000;
 }
+
+div.user-list-selectbox-single > button.dropdown-toggle,div.user-list-selectbox-multiple > button.dropdown-toggle{
+    display: none !important;
+}
+div.user-list-selectbox-single > .dropdown-menu,div.user-list-selectbox-multiple > .dropdown-menu{
+    position: relative !important;
+    transform: none !important;
+    max-height: 150px !important;
+    min-height: 150px !important;
+    display: block !important;
+    overflow: hidden !important;
+    bottom: auto !important;
+    width: 100% !important;
+}

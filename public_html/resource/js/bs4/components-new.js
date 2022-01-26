@@ -83,6 +83,7 @@ var cmpList  = {
                 }
                 else if(type==='multi'){
                     block.empty(); 
+                    tit.empty();
                     if(typeof list ==='object'){
                         for (let i = 0; i < list.length; i++) {
                             const o = list[i];
@@ -290,6 +291,7 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
     
         tit.html(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
         block.html(cmpList.userBlock.genItemBlock(o,userImage,userName));
+     var prt  =$(this).closest('.user-addons-box-elm').parent();
         $(prt).trigger("change-interactive",[o]);
     $('[data-toggle="popover"]').popover({
         html:true

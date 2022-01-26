@@ -15580,11 +15580,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 return;
             } */
 
-
-                callStoryCard(backlogId);
-            /*  
-            $('#storyCardListSelectBox').val(backlogId);
-            $('#storyCardListSelectBox').change(); */
+            if (global_var.current_modal === 'loadLivePrototype') {
+                if(isApi==="1"){
+                    callStoryCard(backlogId);
+                    return
+                }
+                $('#storyCardListSelectBox').val(backlogId);
+                $('#storyCardListSelectBox').change();
+                    
+                } else{
+                    callStoryCard(backlogId);
+            
+                }             
+           
 
            /*  $('#container-us-body').find('tr[sid=' + backlogId + ']')
                 .first().find('a').first().focus().click(); */
