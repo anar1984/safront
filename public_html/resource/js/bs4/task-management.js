@@ -2796,30 +2796,50 @@ const taskManagement = {
             },
             genFilterClosed: function () {
                 return `  <div class="row ml-0 mr-0">
-                <div class="cs-input-group cs-pagination-limit col-4">
-                    <div class="input-group-addon">Closed Dates</div>
-                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='text'>
+                <div class="d-flex justify-content-center">
+                    <div class="cs-input-group input-group mt-3">
+                    <!--<label class="label-name" for="">Closed Dates</label>-->
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                        </div>
+                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
+                    </div>
+                        <div class="mt-3">
+                            <div class="cs-input-group  cs-pagination-limit">
+                                <select data-type='' class="bug-mgmt-filter-select" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
+                                    <option value='10'>10</option>
+                                    <option value='25' selected> 25</option>
+                                    <option value='50'>50</option>
+                                    <option value='100'>100</option>
+                                    <option value='200'>200</option>
+                                    <option value='300'>300</option>
+                                </select>
+                            </div>
+                            <b id="table-row-count"> </b>
+                        </div>
+                        <div class="cs-input-group text-center mt-3">
+                         <div class="task-clear-filter-btn">
+                            <i class="cs-svg-icon clear-filter"></i>
+                         </div>
+                        </div>
                 </div>
-                <div class="cs-input-group cs-pagination-group-by col-4">
-                <div class="input-group-addon cs-group-by">Group By</div>
-                <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
-                    <option value='0' >None</option>
-                    <option value='5' >Task Status</option>
-                    ${
-                        notChwk()?`<option value='7' >Task Nature</option>
-                        <option value='8' >Task Type</option>
-                        <option value='9' >Story Card</option>
-                        <option value='10' >Project</option>
-                      `:""
-                    }
-                    <option value='12' >Create By</option>
-                    <option value='11' >Assignee</option>
-                </select>
-            </div>
-            <div class="cs-input-group text-center task-clear-filter-btn col-4">
-                <div class="input-group-addon">Clear Filter</div>
-                <i class="cs-svg-icon clear-filter"></i>
-            </div>
+           
+            <div class="cs-input-group cs-pagination-group-by col-12">
+                    <div class="input-group-addon cs-group-by">Group By</div>
+                    <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
+                        <option value='0' >None</option>
+                        <option value='5' >Task Status</option>
+                        ${
+                            notChwk()?`<option value='7' >Task Nature</option>
+                            <option value='8' >Task Type</option>
+                            <option value='9' >Story Card</option>
+                            <option value='10' >Project</option>
+                        `:""
+                        }
+                        <option value='12' >Create By</option>
+                        <option value='11' >Assignee</option>
+                    </select>
+                </div>
             </div>`
             },
             genFilterSortBy: function () {
@@ -2852,19 +2872,7 @@ const taskManagement = {
                             <option value='desc' selected>Desc</option>
                         </select>
                     </div>
-                    <div class="col-4">
-                        <div class="cs-input-group  cs-pagination-limit">
-                            <select data-type='' class="bug-mgmt-filter-select" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
-                                <option value='10'>10</option>
-                                <option value='25' selected> 25</option>
-                                <option value='50'>50</option>
-                                <option value='100'>100</option>
-                                <option value='200'>200</option>
-                                <option value='300'>300</option>
-                            </select>
-                        </div>
-                        <b id="table-row-count"> </b>
-                    </div>
+                    
                 </divv>`
             },
             genLabelBlock:function (param) {  

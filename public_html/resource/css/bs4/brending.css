@@ -107,7 +107,10 @@
     line-height: 18px;
     padding: 4px 12px;
     font-weight: 400;
-    height: 28px;
+    height: 25px;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
@@ -1444,7 +1447,7 @@ input:checked + .slider:before {
 .description-style:hover .pointes{
     background-color: #eeeeee; 
 }
-/* #filter section */
+/* #filter section def */
 .cs-taskManagement-filter-box .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
 }
@@ -7513,4 +7516,60 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 .cs-p-rem {
  padding-left: 0.5rem;
  padding-right: 0.5rem;
+}
+/* filter section new*/
+.cs-input-group label.label-name {
+    display: block;
+    width: 100%;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+}
+.cs-input-group .input-group-prepend {
+    margin-right: 0;
+    height: 25px;
+}
+.cs-input-group input[type="text"], .cs-input-group input[type=search], .cs-input-group input[type="password"] {
+    font-size: 13px;
+    line-height: 20px;
+    height: 25px;
+    padding-left: 0;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 7px;
+    color: #fff;
+}
+.cs-input-group .input-group-text {
+    line-height: 1%;
+    color: #ffffff;
+    background-color: rgba(3, 57, 108, 0.5);
+    border: none;
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+    padding: 0.2rem 0.75rem;
+    height: 25px;
+}
+.cs-input-group .input-group-text i:after {
+    width: 17px;
+    height: 17px;
+}
+.cs-input-group .task-clear-filter-btn {
+    height: 25px;
+    width: 25px;
+    background: rgba(255, 255, 255, 0.11);
+    border-radius: 50px;
+    padding: 0;
+}
+.cs-input-group .task-clear-filter-btn i{
+    text-align: center;
+    height: 25px;
+    width: 25px;
+    display: block;
+    padding: 2px 0;
+}
+.cs-input-group .task-clear-filter-btn i.cs-svg-icon:after{
+    height: 14px;
+    width: 12px;
 }
