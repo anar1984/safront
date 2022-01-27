@@ -1198,7 +1198,7 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-    taskManagement.readTask.genBlockTask.getstatisticList();
+    taskManagement.readTask.genBlockTask.getstatisticListLoadAfter();
       var me = "'"+global_var.current_ticker_id+"'"
       var lastmnId  =  Utility.getParamFromUrl('lastMenuId')
     if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){

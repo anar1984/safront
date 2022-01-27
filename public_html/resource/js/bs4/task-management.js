@@ -2494,7 +2494,7 @@ const taskManagement = {
                 div.empty();
                 var view = localStorage.getItem('task-view-format');
                 div.append(this.genHeader());
-               
+                taskManagement.readTask.genBlockTask.getstatisticList();
                 if (!view) {
                     view = "table"
                 }
@@ -2631,14 +2631,14 @@ const taskManagement = {
                     <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='canceled' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib">
                         <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" rejected data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib">
                         <i class="cs-svg-icon none"></i> <span>${rejected}</span>
         
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='closed' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
                         <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='tamamlanib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
                         <i class="cs-svg-icon shtamp-circle"></i> <span>${tamamlanib}</span>
                     </div>
                 </div>
@@ -3066,6 +3066,26 @@ const taskManagement = {
                     return ''
                 }
                 
+            },
+            getstatisticListLoadAfter: function () {
+                try {
+                    var that = this
+                    callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
+                        const o = res.tbl[0].r[0];
+                       var elm  = $("#issue-list-statistic-block .status-class")
+                          elm.each( function () {
+                              var fld  = $(this).attr("data-status");
+                                  $(this).find("span").text(o[fld]);
+                          })
+                        $('[data-toggle="popover"]').popover({
+                            html: true
+                        });
+                        //getInfoBoxResponsive();
+                    });
+
+                } catch (error) {}
+
+
             },
             getstatisticList: function () {
                 try {
