@@ -14126,7 +14126,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#kanban_view_' + stLm + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stLm).html('');
         var priD = getProjectValueUsManageMulti();
-        var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
+        var fkAsId = ""/* getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id")) */;
         var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
 
         var priorty = $("#priority-change-story-card-filter").val();
@@ -14448,7 +14448,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $(".modal-header b.status-draft-total").text(0)
         $(".modal-header b.status-total-total").text(0)
         var priD = getProjectValueUsManageMulti();
-        var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
+        var fkAsId = "" //getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
         var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
         var priorty = $("#priority-change-story-card-filter").val();
         var search = $("#search-us-managmenet").val();
@@ -14646,7 +14646,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
 
         var priD = getProjectValueUsManageMulti();
-        var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
+        var fkAsId ="" //getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
         var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
 
         var priorty = $("#priority-change-story-card-filter").val();

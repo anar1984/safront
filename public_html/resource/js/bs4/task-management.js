@@ -126,7 +126,7 @@ const taskManagement = {
                          col-lg-12 hover-prototype-selector">
                          <span class="cs-btn-border">
                          <label class="cs-file-upload">
-                            <input class="form-control saTypeFilePicherUploadFile component-input-class" 
+                            <input class="form-control saTypeFilePicherUploadFileTask component-input-class" 
                                    sa-type="filepicker"  type="file" value="" row-no="" 
                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                    multiple="" 
@@ -1047,7 +1047,7 @@ const taskManagement = {
                          col-lg-12 hover-prototype-selector">
                          <span class="cs-btn-border">
                             <label class="cs-file-upload">
-                                <input class="form-control saTypeFilePicherUploadFile component-input-class" 
+                                <input class="form-control saTypeFilePicherUploadFileTask component-input-class" 
                                     sa-type="filepicker"  type="file" value="" row-no="" 
                                     pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                     multiple="" 
@@ -4974,4 +4974,48 @@ function createChildTask() {
         }
     });
 
+}
+
+$(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
+    if ($(this).val().trim().length > 0) {
+        uploadFile4IpoTAsk($(this).attr('id'));
+    }
+})
+
+function uploadFile4IpoTAsk(id) {
+    var r = "";
+    var that = this;
+    var files = document.getElementById(id).files;
+    var file_count = files.length;
+    var st = "";
+    var trc = 0;
+
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+  
+    $('#' + id).attr('fname', '');
+
+    for (var i = 0, f; f = files[i]; i++) {
+        //            var file = files[0];
+        var file = f;
+        var fileext = file['name'].split('.').pop();
+        var fname = file['name'].split('.')[0];
+        //            console.log('fname=' + fname);
+        if (files && file) {
+            var reader = new FileReader();
+            reader.fileName = fname;
+            reader.fileExt = fileext;
+            reader.fileNo = i;
+            reader.onload = function (readerEvt) {
+                trc++;
+                var fname1 = readerEvt.target.fileName;
+                var fileext1 = readerEvt.target.fileExt;
+                var fileNo = readerEvt.target.fileNo;
+                //                    console.log('trc no=' + trc);
+                var binaryString = readerEvt.target.result;
+                uploadFile4IpoCore(fileext1, btoa(binaryString), fname1, id);
+
+            };
+            reader.readAsBinaryString(file, fname);
+        }
+    }
 }
