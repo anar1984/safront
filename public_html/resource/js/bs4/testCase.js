@@ -1741,7 +1741,8 @@ function genUserTrblock(names,img,filed) {
              </div>                
          </li>
      </ul>
-     <ul class="main-info">
+     ${notChwk()?"":
+     `<ul class="main-info user-main-info-popover">
          <li>
              <div class="d-flex">
                  <div class="left-min-box info-title"><span>Şirkət</span></div>
@@ -1790,7 +1791,7 @@ function genUserTrblock(names,img,filed) {
                  <div class="mr-auto info-desc"><span>+994 10 101 01 01</span></div>
              </div>
          </li>
-     </ul>
+     </ul>`}
     </div>
     `
  };

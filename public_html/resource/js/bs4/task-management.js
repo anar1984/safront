@@ -306,7 +306,7 @@ const taskManagement = {
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                     <div class='row'>
-                    ${notChwk?
+                    ${notChwk()?
                         `<div class="col-lg-6  mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
@@ -322,14 +322,14 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
-                        ${notChwk?
+                        ${notChwk()?
                         `<div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
                                         data-live-search="true" id='bug_task_type_id_add' title="${lang_task.rightBar.taskType}"></select>
                             </div>
                         </div>`:""}
-                        ${notChwk?
+                        ${notChwk()?
                         `<div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select issue_selectpicker  " data-actions-box="true" onchange=''
@@ -1000,12 +1000,13 @@ const taskManagement = {
                                     </a>
         
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">${lang_task.windowUpdateTask.childTask}</a>
-                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">${lang_task.windowUpdateTask.ForwardTaskTo}</a>
+                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">${getOperName("childTask")}</a>
+                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">${getOperName("ForwardTaskTo")}</a>
                                     
-                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${lang_task.windowUpdateTask.Duplicate}</a>
-                                        <a class="dropdown-item" href="#" onclick="rejectTask()">${lang_task.windowUpdateTask.rejectTask}</a>
-                                        <a class="dropdown-item" href="#" onclick="iDidIt()">I Did It!</a>
+                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${getOperName("Duplicate")}</a>
+                                        <a class="dropdown-item" href="#" onclick="rejectTask()">${getOperName("rejectTask")}</a>
+                                        <a class="dropdown-item" href="#" onclick="iDidIt()">${getOperName("ididit")}
+                                        </a>
                                         <a class="dropdown-item" href="#" onclick="deleteTask()">${lang_task.windowUpdateTask.Delete}</a>
                                     </div>
                                 </div>
@@ -2503,6 +2504,7 @@ const taskManagement = {
                 } else if (view === 'table') {
 
                     div.append(this.genTableView.genTableBlock());
+                   
                 }
                 genTimePickerById("issue-list-datetime",'up');
                 
@@ -2564,7 +2566,7 @@ const taskManagement = {
                             <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"}</span> <span id="row-count-table">125</span>
                         </a>
                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-table-aktiv-all1">
-                          <a class="dropdown-item" all-aktiv="A" href="#">Activ</a>
+                          <a class="dropdown-item" all-aktiv="A" href="#">Aktiv</a>
                           <a class="dropdown-item" all-aktiv="P" href="#">Passiv</a>
                           <a class="dropdown-item" all-aktiv="H" href="#">Hamısı</a>
                         </div>
@@ -2684,7 +2686,7 @@ const taskManagement = {
                     <option value='waiting'>Waiting</option>
                     <option value='canceled'>Canceled</option>
                     <option value='rejected' >Rejected</option>
-                    <option value='UAT' > UAT</option>
+                    ${notChwk()?`<option value='UAT' > UAT</option>`:""}
         
                 </select>
             </div>`
@@ -2786,7 +2788,7 @@ const taskManagement = {
                   ${notChwk()?this.genFilterTaskType():""}  
                   ${notChwk()?this.genFilterTaskNature():""}
                   ${this.genFilterCreatedBy()}
-                  ${this.genFilterShowChildTask()}
+                  ${notChwk()?this.genFilterShowChildTask():""}
                   ${notChwk()?this.genFilterPriorty():""}
                   ${this.genFilterShowHide()}    
             </div>
@@ -2803,13 +2805,15 @@ const taskManagement = {
                 <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
                     <option value='0' >None</option>
                     <option value='5' >Task Status</option>
-                    <option value='7' >Task Nature</option>
-                    <option value='8' >Task Type</option>
-                    <option value='9' >Story Card</option>
-                    <option value='10' >Project</option>
+                    ${
+                        notChwk()?`<option value='7' >Task Nature</option>
+                        <option value='8' >Task Type</option>
+                        <option value='9' >Story Card</option>
+                        <option value='10' >Project</option>
+                      `:""
+                    }
                     <option value='12' >Create By</option>
                     <option value='11' >Assignee</option>
-        
                 </select>
             </div>
             <div class="cs-input-group text-center task-clear-filter-btn col-4">
@@ -3009,7 +3013,7 @@ const taskManagement = {
                                     o.noteType,
                                     o.orderNoSeq,
                                     endTime,
-                                    o.taskStatus,
+                                    getStatusName(o.taskStatus),
                                     o.isMeet
                                 )
                                 elm.append(html);
@@ -3059,7 +3063,7 @@ const taskManagement = {
                                img  =  fileUrl(img)
                              var deadLine = getTimeDifference(endTime, new Date());
                              var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
-                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus);
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,getStatusName(taskStatus));
                     
                 } catch (error) {
                    console.log(error)
@@ -3149,10 +3153,10 @@ const taskManagement = {
             </div>
             </div>`
                 },
-                genKanbanContentBlock: function (id, taskid, title, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
+                genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
                     <div class="cs-cart-head-title p-2" style="padding-bottom:5px;">
-                    <!--<span href="#" class="operation " >${title}</span>-->
+                    ${notChwk()?"":`<span href="#" class="operation " >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
                     <div class="d-flex pl-0 pr-0 pb-0 pt-0 mb-0 notify-title-box">
                     <div class="mr-auto ncs-ellipsis"><span class="id">${taskid}</span>
                         <div class="d-inline-block notify-top-section">
@@ -3182,22 +3186,32 @@ const taskManagement = {
                                 </div><div class="bg-status-${stats}" style="height: 2px; margin: 10px 0px 0px 7px;"></div>
                                 <div class="cs-staturs-circle-note1 ml-2 d-inline-block float-left">
                                 <span>${stats}</span></div><div class="canban-item-btns d-flex float-right">
-                                            <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="I did It">
+                                            <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
                                                 <i class="cs-svg-icon c-icon-1"></i>
                                             </div>
-                                            <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Rejected"  >
+                                            <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("rejectTask")}"  >
                                                 <i class="cs-svg-icon c-icon-2"></i>
                                             </div>
-                                            <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Canceled">
+                                            <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("cancel")}">
                                                 <i class="cs-svg-icon c-icon-3"></i>
                                             </div>
-                                            <div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Observer">
-                                                <i class="cs-svg-icon c-icon-5"></i>
-                                            </div>
-                                            <div class="btn-6"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="History">
+                                            <div class="btn-4 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ForwardTaskTo")}">
                                                 <i class="cs-svg-icon c-icon-6"></i>
                                             </div>
-                                            </div> </div>  </div>  </div> </div>`
+                                            ${notChwk()?`<div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getStatusName("UAT")}">
+                                            <i class="cs-svg-icon c-icon-6"></i>
+                                        </div>`:""}
+                                            <div class="btn-6 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("history")}">
+                                                <i class="cs-svg-icon c-icon-6"></i>
+                                            </div>
+                                            <div class="btn-7 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("chat")}">
+                                                <i class="cs-svg-icon c-icon-6"></i>
+                                            </div>
+                                            </div> 
+                                            </div> 
+                                             </div> 
+                                              </div>
+                                               </div>`
                 },
                 getKanbanBodyBlock: function (res, typeRow, st,pageNo) {
                     $(".count-cs-" + st).text(res.kv.tableCount);
@@ -3242,10 +3256,10 @@ const taskManagement = {
                                 this.genKanbanContentBlock(
                                     o.id,
                                     task_id,
-                                    backlogName,
+                                    o.isMeet,
                                     getTimeDifference(endTime, startTime),
                                      taskName, 
-                                     o.taskStatus, 
+                                     getStatusName(o.taskStatus), 
                                      Utility.convertDate(o.createdDate),
                                      createdByImg,
                                      o.createByName,
@@ -3284,6 +3298,7 @@ const taskManagement = {
                     global_var.bug_task_label_assign_name = '';
                     global_var.bug_task_label_assign_id = '';
                 },
+                
                 generAteBlockKanbanByGroupBy: function (elm, data) {
                     var goupBy = $('#inputGroupSelect01').val();
                     var items;
@@ -3328,7 +3343,16 @@ const taskManagement = {
                         items = $("select#bug_filter_assignee_id");
                         type = "fkAssigneeId";
                         $(elm).empty();
-                        var arr  = items.val();                        
+                        var arr  = items.val();
+                        if(arr.length<1){
+                            arr=[]
+                            var itm = items.find("option")
+                              itm.each(function (index) {
+                                   if(index<3){
+                                       arr.push($(this).val())
+                                   }
+                                  })
+                        }                         
                       for (let index = 0; index < arr.length; index++) {
                           const al = arr[index];
                              var nm =items.find('[value='+al+']').text();
@@ -3342,7 +3366,17 @@ const taskManagement = {
                         items = $("select#bug_filter_created_by");
                         type = "createdBy";
                         $(elm).empty();
-                        var arr  = items.val();                        
+                        var arr  = items.val(); 
+                             if(arr.length<1){
+                                 arr=[]
+                                 var itm = items.find("option")
+                                   itm.each(function (index) {
+                                        if(index<3){
+                                            arr.push($(this).val())
+                                        }
+                                       })
+                                       
+                             }                       
                       for (let index = 0; index < arr.length; index++) {
                           const al = arr[index];
                              var nm =items.find('[value='+al+']').text();
@@ -3484,6 +3518,7 @@ const taskManagement = {
                         <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
                         </div>
                     </div>
+                   
                 </div>
                            <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
                                <thead class="bugThead">
@@ -3494,12 +3529,10 @@ const taskManagement = {
                                </tbody>
        
                            </table>
+                           ${this.genContextMenu()}
                        </div>
                        
                    </div>
-                  
-                 
-
                    <div class=" col-12 d-flex justify-content-center paginationStyle" style=" z-index: 500; ">
 
                    <div class="mr-auto">
@@ -3599,6 +3632,34 @@ const taskManagement = {
                     global_var.bug_task_label_assign_name = '';
                     global_var.bug_task_label_assign_id = '';
                 },
+                genContextMenu : function () {
+                    return `<div id="contextMenu" class="dropdown contextMenu-dropdown-style position-fixed" style="z-index:555;display: none;">
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+                        <li class="dropdown-item" href="#" onclick="iDidIt()" >
+                            <i class="cs-svg-icon novbeti"></i> ${getOperName("ididit")}
+                        </li>
+                        <li class="dropdown-item"  >
+                               <i class="cs-svg-icon imtina"></i> ${getOperName("cancel")}
+                        </li>
+                        <li class="dropdown-item" class="dropdown-item" href="#" onclick="rejectTask()">
+                              <i class="cs-svg-icon legv"></i> ${getOperName("rejectTask")}
+                        </li>
+                        <li class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">
+                        <i class="cs-svg-icon yonlendir"></i> ${getOperName("ForwardTaskTo")}
+                         </li>                       
+                        ${notChwk()?`<li class="dropdown-item" href="#" onclick="userAcceptance()">
+                        <i class="cs-svg-icon tarixce"></i> ${getStatusName("UAT")}
+                    </li>`:""}
+                        <li class="dropdown-item">
+                            <i class="cs-svg-icon tarixce"></i> ${getOperName("history")}
+                        </li>
+                        <li class="dropdown-item">
+                           <i class="cs-svg-icon chat-circle"></i> ${getOperName("chat")}
+                        </li>
+                    </ul>
+                </div>`
+                   
+                },
                 getTaskList4Table: function (json) {
                     var that = this;
                     var data = JSON.stringify(json);
@@ -3669,7 +3730,7 @@ const taskManagement = {
                                     .append($("<div>")
                                         .addClass('position-relative us-item-status-' + o.taskStatus)
                                         .append($('<span>')
-                                            .append(o.taskStatus))
+                                            .append(getStatusName(o.taskStatus)))
                                         .append((o.taskPriority === '9') ? prtDiv : ""))
                                 ))
                            
@@ -3752,7 +3813,7 @@ const taskManagement = {
                                     .append($("<div>")
                                         .addClass('position-relative us-item-status-' + o.taskStatus)
                                         .append($('<span>')
-                                            .append(o.taskStatus))
+                                            .append(getStatusName(o.taskStatus)))
                                         .append((o.taskPriority === '9') ? prtDiv : ""))
                                 ))
                             .append($('<td>').addClass('bug-list-column')
@@ -3772,30 +3833,7 @@ const taskManagement = {
                                 .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                                 .append(taskName, ' ')
                                 .append("<input type='text' class=' task-name-issue select-box-issue'>")
-                                .append($("<div>")
-                                    .addClass("dropdown task-name-editdrop")
-                                    .append($("<button>")
-                                        .addClass('btn btn-light')
-                                        .attr("aria-haspopup", "true")
-                                        .attr("aria-expanded", "false")
-                                        .attr("data-toggle", "dropdown")
-                                        .attr("id", "bug-taskName-dropdown")
-                                        .append('<i class="fas fa-ellipsis-v"></i>'))
-
-                                    .append($("<div>")
-                                        .addClass("dropdown-menu")
-                                        .attr("aria-labelledby", "bug-taskName-dropdown")
-
-                                        .append('<a class="dropdown-item forward-task" href="#" onclick="()">Create Child Task</a>')
-                                        .append('<a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward To</a>')
-                                        .append('<a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign To</a>')
-                                        .append('<a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>')
-                                        .append('<a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>')
-                                        .append('<a class="dropdown-item" href="#" onclick="iDidIt()">I Did It!</a>')
-                                        .append('<a class="dropdown-item" href="#" onclick="userAcceptance()">User Acceptance Testing</a>')
-                                        .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
-
-                                    ))
+                                
                                 // .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
                                 .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                             )
@@ -4127,6 +4165,15 @@ const taskManagement = {
         });
     }
 }
+function getStatusName(id) {
+       
+    var nm  = lang_task.taskStatus[id.trim()];
+    return nm
+}
+function getOperName(id) {
+    var nm  = lang_task.windowUpdateTask[id.trim()];
+    return nm
+}
 function notChwk() {
     if(global_screen_name==='ch'){
          return null;
@@ -4218,7 +4265,7 @@ $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
     if (ty === 'A') {
         value = ["new", 'ongoing', 'waiting']
     } else if (ty === 'P') {
-        value = ["rejected", 'UAT', 'closed', 'canceled']
+        value = ["rejected",notChwk()?'UAT':"", 'closed', 'canceled']
     }
     sel.val(value);
     sel.selectpicker("refresh");
@@ -4975,6 +5022,22 @@ function createChildTask() {
     });
 
 }
+$(document).click(function () {
+    $("#contextMenu").hide();
+
+  })
+$(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
+   
+    $(this).closest('tbody').find("tr").removeClass("active")
+    $(this).addClass("active");
+    global_var.current_issue_id = $(this).attr("id")
+    $("#contextMenu").css({
+        display: "block",
+        left: e.pageX,
+        top: e.pageY
+    });
+    return false;
+});
 
 $(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
     if ($(this).val().trim().length > 0) {
