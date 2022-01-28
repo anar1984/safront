@@ -1198,9 +1198,9 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-    taskManagement.readTask.genBlockTask.getstatisticListLoadAfter();
+    
       var me = "'"+global_var.current_ticker_id+"'"
-      var lastmnId  =  Utility.getParamFromUrl('lastMenuId')
+      var lastmnId  =  Utility.getParamFromUrl('lastMenuId');
     if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
 
         setBugListInitialData();
@@ -1253,6 +1253,7 @@ function getBugList() {
         json.kv.endLimit = 25;
       
         var view = localStorage.getItem('task-view-format');
+        taskManagement.readTask.genBlockTask.getstatisticListLoadAfter(json);
         if (!view) {
             view = "table"
         }
@@ -2020,11 +2021,11 @@ $(document).on("click", '.all-bug-list-check', function (e) {
 
     var chck = $(".checkbox-issue-task");
     if ($(this).is(':checked')) {
-        $('.multi-edit-menu').css('display', 'initial');
+        $('.multi-edit-menu').removeClass('d-none');
         $('body').addClass('res-multi-edit-menu');
         chck.prop('checked', true);
     } else {
-        $('.multi-edit-menu').css('display', 'none');
+        $('.multi-edit-menu').addClass('d-none');
         $('body').removeClass('res-multi-edit-menu');
         chck.prop('checked', false);
     }
@@ -2059,11 +2060,11 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
 
     }
     if (ast.length > 1) {
-            $('.multi-edit-menu').css('display', 'initial');
+        $('.multi-edit-menu').removeClass('d-none');
             $('body').addClass('res-multi-edit-menu');    
     } else {
 
-        $('.multi-edit-menu').css('display', 'none');
+        $('.multi-edit-menu').addClass('d-none');
         $('body').removeClass('res-multi-edit-menu');
 
     }
