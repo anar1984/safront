@@ -363,6 +363,29 @@ function loadStoryCardInfo4StoryCard(el) {
 }
 
 
+function loadUsersAs$ComboByElm(elm) {
+
+    var elm  =select;
+    elm.html('');
+    var keys = SAProjectUser.GetKeysUser();
+    var div1 = $(`<option
+    data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
+    Unassigned</option>`);
+    elm.append(div1);
+    for (var i = 0; i < keys.length; i++) {
+        var id = keys[i];
+        var userImage = SAProjectUser.Users[id].userImage;
+        var userName = SAProjectUser.Users[id].userPersonName;
+        var img = (userImage) ?
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
+        var div = $(`<option value='${id}'
+        data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
+        ${userName}</option>`);
+        elm.append(div)
+    }
+    elm.selectpicker('refresh');
+}
 function storyCardTypeChangeEvent(backlogType) {
     //hide all story card side by panels
     $('.story-card-right-menu-panels').hide();

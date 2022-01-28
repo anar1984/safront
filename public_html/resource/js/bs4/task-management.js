@@ -686,7 +686,7 @@ const taskManagement = {
                         $("#issue-managment-add-task").modal("hide");
 
                     }
-                    reset_task_data();
+                   $("#addIssueButtonId").removeAttr("disabled")
                 },
                 error: function () {
                     Toaster.showError((lang_task.windowAddTask.addTaskMessageErr));
@@ -736,7 +736,8 @@ const taskManagement = {
 
 
             // data.description = $("#bug_filter_project_id_add").val();
-
+            reset_task_data();
+            $(this).attr("disabled",'disabled');
             this.insertNewTaskApi(data);
         },
         insertEventByTaskId: function (id) {
@@ -2504,14 +2505,15 @@ const taskManagement = {
                 } else if (view === 'table') {
 
                     div.append(this.genTableView.genTableBlock());
-                   
+                    setInterval(function(){ startTimeCurrent("issue-list-datetime") }, 5000);
+                  
                 }
                 genTimePickerById("issue-list-datetime",'up');
                 
 
             },
             genCheweekBtn: function (params) {
-                return `<div class="info-box multi-edit-menu pl-0 mr-2" style="display:none !important;">
+                return `<div class="info-box multi-edit-menu d-none pl-0 mr-2" >
                 <div class="info-item-elements">
                     <i class="cs-svg-icon arrow-1"></i>
                 </div>
@@ -2551,7 +2553,7 @@ const taskManagement = {
                   
                         ${notChwk()?` <div class="info-box" style="background: transparent; border: none;">
                         <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
-                        <div class="bcs-col-btn multi-edit-menu cs-input-group" style=" display:none; ">
+                        <div class="bcs-col-btn multi-edit-menu d-none cs-input-group" >
                            <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>                                                              
                        </div>
                   </div>`:this.genCheweekBtn()}  
@@ -2575,37 +2577,38 @@ const taskManagement = {
                 </div>`
             },
             genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
+        
                 const  lt  = localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"
                 return `
                <div class="info-box mr-2">
-               <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
+               <div class="info-item-elements filter-task-list-btn static-class"  data-status="meSend" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
-               <div class="info-item-elements me-send-task-list-btn dropdown-toggle" data-toggle="dropdown">
-                    <span data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş">
+               <div class="info-item-elements  dropdown-toggle "    data-toggle="dropdown">
+                    <span data-placement="bottom" class='static-class' data-status="myTask" data-toggle="popover" data-trigger="hover" data-content="İş">
                     <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
                     </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
-                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
-                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
+                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
+                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
+                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
                 </div>
            </div> 
            <div class="info-box info-box-mob mr-2">
            <span class="title">Tarix</span>
                 <div class="info-box-in">
-                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                    <div class="info-item-elements static-class"  data-status="expired" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
                         <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
                     </div>
-                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                    <div class="info-item-elements static-class"  data-status="todays" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
                         <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
                     </div>
-                    <div class="info-item-elements" data-placement="bottom" data-toggle="p
+                    <div class="info-item-elements static-class"  data-status="notTodays" data-placement="bottom" data-toggle="p
                     opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
                         <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
                     </div>
-                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                    <div class="info-item-elements static-class"  data-status="noDeadline" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
                         <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
                     </div>
                 </div>
@@ -2617,30 +2620,30 @@ const taskManagement = {
                 return `<div class="info-box info-box-mob">
                 <span class="title">Status</span>
                 <div class="info-box-in">
-                    <div class="${lt==='A'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='new' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni">
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='new' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni">
                     <i class="cs-svg-icon plus-circle"></i> <span>${news}</span>
                     </div>
-                    <div class="${lt==='A'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='ongoing' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada">
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='ongoing' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada">
                         <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
                     </div>
-                    <div class="${lt==='A'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='waiting' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə">
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='waiting' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə">
                         <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
                     </div>
         
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements " data-status='yonlendirilib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements " data-status='yonlendirilib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib">
                         <i class="cs-svg-icon right-circle"></i> <span>${yonlendirilib}</span>
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='canceled' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='canceled' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib">
                         <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" rejected data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='rejected' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib">
                         <i class="cs-svg-icon none"></i> <span>${rejected}</span>
         
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='closed' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='closed' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
                         <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} status-class info-item-elements" data-status='tamamlanib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='tamamlanib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
                         <i class="cs-svg-icon shtamp-circle"></i> <span>${tamamlanib}</span>
                     </div>
                 </div>
@@ -3071,21 +3074,37 @@ const taskManagement = {
                 }
                 
             },
-            getstatisticListLoadAfter: function () {
+            getstatisticListLoadAfter: function (json) {
                 try {
                     var that = this
+                    var data = JSON.stringify(json);
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmgetTaskListStatusCount",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: false,
+                        success: function (res) {
+                           
+                            const o = res.tbl[0].r[0];
+                            var elm  = $("#issue-list-statistic-block .static-class")
+                               elm.each( function () {
+                                   var fld  = $(this).attr("data-status");
+                                       $(this).find("span").text(o[fld]);
+                               })
+                             $('[data-toggle="popover"]').popover({
+                                 html: true
+                             });
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });/* 
                     callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
-                        const o = res.tbl[0].r[0];
-                       var elm  = $("#issue-list-statistic-block .status-class")
-                          elm.each( function () {
-                              var fld  = $(this).attr("data-status");
-                                  $(this).find("span").text(o[fld]);
-                          })
-                        $('[data-toggle="popover"]').popover({
-                            html: true
-                        });
+                      
                         //getInfoBoxResponsive();
-                    });
+                    }); */
 
                 } catch (error) {}
 
@@ -3094,15 +3113,16 @@ const taskManagement = {
             getstatisticList: function () {
                 try {
                     var that = this
-                    callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
+                   /*  callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
                         const o = res.tbl[0].r[0];
-                        $("#issue-list-statistic-block")
-                            .html(that.genHeaderContent(o.meSend, o.myTask, o.expired, o.todays, o.notTodays, o.noDeadline, o.new, o.ongoing, o.waiting, o.yonlendirilib, o.canceled, o.rejected, o.closed, o.tamamlanib))
                         $('[data-toggle="popover"]').popover({
                             html: true
                         });
                         //getInfoBoxResponsive();
-                    });
+                    }); */
+                    $("#issue-list-statistic-block")
+                    .html(that.genHeaderContent(/* o.meSend, o.myTask, o.expired, o.todays, o.notTodays, o.noDeadline, o.new, o.ongoing, o.waiting, o.yonlendirilib, o.canceled, o.rejected, o.closed, o.tamamlanib */))
+               
 
                 } catch (error) {}
 
@@ -3248,7 +3268,7 @@ const taskManagement = {
                                 " ";
 
                             var backlogName = '<a href1="#" onclick="callStoryCard(\'' + o.fkBacklogId + '\')">' + replaceTags(o.backlogName) + '</a>';
-                            var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                            var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                             var task_id = getTaskCode(o.id);
 
                             // var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`
@@ -3704,7 +3724,7 @@ const taskManagement = {
                             " ";
 
                         var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
-                        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                        var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
                         var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
@@ -3782,7 +3802,7 @@ const taskManagement = {
                             " ";
 
                         var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
-                        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                        var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
                         var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
@@ -3826,7 +3846,7 @@ const taskManagement = {
                                 .attr("data-placement","top")
                                 .attr("data-toggle","popover")
                                 .attr("data-trigger","hover")
-                                .attr("data-content",taskName)
+                                .attr("data-content",replaceTags(fnline2Text(o.taskName)))
                                 .addClass('bug-list-column-task-name')
                                 .css("max-width", '240px')
                                 .append((o.fkParentTaskId) ? "<i class='fa fa-level-up bug-list-column-task-name-icon'>" : "")
@@ -4174,6 +4194,30 @@ function getOperName(id) {
     var nm  = lang_task.windowUpdateTask[id.trim()];
     return nm
 }
+function startTimeCurrent(id) {
+    var today = new Date();
+    var hr = today.getHours();
+    var min = today.getMinutes();
+    var sec = today.getSeconds();
+    //Add a zero in front of numbers<10
+    hr = checkTime(hr);
+    min = checkTime(min);
+    sec = checkTime(sec);
+    var dt  = hr + ":" + min ;
+    
+    
+    var curDay = today.getDate();
+    var curMonth = today.getMonth()+1;
+    var curYear = today.getFullYear();
+    var date = curDay+"."+curMonth+"."+curYear;
+    $("#"+id).attr("placeholder",date+"/"+dt)
+}
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
 function notChwk() {
     if(global_screen_name==='ch'){
          return null;
@@ -4269,6 +4313,7 @@ $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
     }
     sel.val(value);
     sel.selectpicker("refresh");
+    taskManagement.readTask.genBlockTask.getstatisticList();
     getBugList();
 
 })
@@ -4439,6 +4484,7 @@ $(document).on("click", '#addIssueButtonId', function (e) {
     $('#issue-managment-add-task .after-add-task').css("opacity", "1");
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show(); */
+ 
     taskManagement.insertTask.insertNewTask();
 
 
@@ -4703,15 +4749,10 @@ $(document).on("click",'.cs-task-item-in-box',function (params) {
     global_var.current_issue_id = $(this).attr('id');
     Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
 })
-$(document).on("click",'.me-send-task-list-btn',function (e) {
-    $(this).parent().find(".my-send-task-list-btn").removeClass("active");
+$(document).on("click",'.filter-task-list-btn',function (e) {
+    $(this).closest('.info-box').find(".filter-task-list-btn").removeClass("active");
     $(this).toggleClass("active");
     getBugList();
-})
-$(document).on("click",'.my-send-task-list-btn',function (e) {
-     $(this).parent().find(".me-send-task-list-btn").removeClass("active");
-     $(this).toggleClass("active");
-     getBugList();
 })
 $(document).on("click",'.cs-next-large-modal-btn',function (e) {
 //    $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
@@ -5044,6 +5085,7 @@ $(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
         uploadFile4IpoTAsk($(this).attr('id'));
     }
 })
+
 
 function uploadFile4IpoTAsk(id) {
     var r = "";
