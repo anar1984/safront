@@ -3682,7 +3682,7 @@ const taskManagement = {
                             <i class="cs-svg-icon tarixce"></i> ${getOperName("history")}
                         </li>
                         <li class="dropdown-item">
-                           <i class="cs-svg-icon chat-circle"></i> ${getOperName("chat")}
+                           <i class="cs-svg-icon chat-circle-dark"></i> ${getOperName("chat")}
                         </li>
                     </ul>
                 </div>`
