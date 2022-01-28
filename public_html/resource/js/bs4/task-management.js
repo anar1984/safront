@@ -306,15 +306,14 @@ const taskManagement = {
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                     <div class='row'>
-                    ${notChwk()?
-                        `<div class="col-lg-6  mt-2">
+                    <div class="col-lg-6  mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
                                         style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
                                         title="${lang_task.rightBar.project}"></select>
                             </div>
                         </div>
-                        `:""}
+                    
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
@@ -322,15 +321,15 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
-                        ${notChwk()?
-                        `<div class="col-lg-6 mt-2">
+                   
+                        <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
                                         data-live-search="true" id='bug_task_type_id_add' title="${lang_task.rightBar.taskType}"></select>
                             </div>
-                        </div>`:""}
-                        ${notChwk()?
-                        `<div class="col-lg-6 mt-2">
+                        </div>
+                       
+                        <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select issue_selectpicker  " data-actions-box="true" onchange=''
                                         id='bug_task_nature_id_add' title="${lang_task.rightBar.taskNature}">
@@ -339,7 +338,7 @@ const taskManagement = {
                                     <option value="new" selected="">${lang_task.table.taskNature.newRequest}</option>
                                 </select>
                             </div>
-                        </div>`:""}
+                        </div>
                     </div>
                 </div>`
                 },
