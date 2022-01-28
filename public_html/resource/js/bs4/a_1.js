@@ -3583,6 +3583,8 @@ function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
     if ($(el).attr('sa-data-selectbox-hassnull') === '1') {
         $(el).append($('<option>').val('').text(''));
     }
+    
+
 
     var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
     var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : "id";
@@ -3615,6 +3617,9 @@ function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
 
     if ($(el).attr('sa-data-nosort') !== '1') {
         sortSelectBoxByElement(el);
+    }
+    if ($(el).attr('sa-item-has-new') === '1'&&$(el).hasClass('sa-selectpicker')) {
+        $(el).prepend(`<option class="text-danger align-items-center" data-icon="far fa-plus-square " value="new-item">Yeni</option>`);
     }
 
     if ($(el).hasClass('sa-selectpicker')) {
@@ -6421,6 +6426,8 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         $(el).append($('<option>').val('').text(''));
     }
 
+   
+
     var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
     var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : selectField;
     var itemSeparator = ($(el).attr('sa-item-separator')) ? ' ' + $(el).attr('sa-item-separator') + ' ' : " ";
@@ -6481,7 +6488,9 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
     }
 
-
+    if ($(el).attr('sa-item-has-new') === '1' && $(el).hasClass('sa-selectpicker')) {
+        $(el).prepend(`<option class="text-danger align-items-center" data-icon="far fa-plus-square " value="new-item">Yeni</option>`);
+    }
 
     if ($(el).hasClass('sa-selectpicker')) {
         $(el).selectpicker('refresh');
@@ -6562,7 +6571,9 @@ function fillComboInAPICall(el, data, asyncData) {
         }
     }
 
-
+    if (elem.attr('sa-item-has-new') === '1'&&$(el).hasClass('sa-selectpicker')) {
+        elem.prepend(`<option class="text-danger align-items-center" data-icon="far fa-plus-square " value="new-item">Yeni</option>`);
+    }
 
 
     if (elem.hasClass('sa-selectpicker')) {

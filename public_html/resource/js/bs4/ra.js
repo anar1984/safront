@@ -363,9 +363,8 @@ function loadStoryCardInfo4StoryCard(el) {
 }
 
 
-function loadUsersAs$ComboByElm(elm) {
+function loadUsersAs4ComboByElm(elm) {
 
-    var elm  =select;
     elm.html('');
     var keys = SAProjectUser.GetKeysUser();
     var div1 = $(`<option

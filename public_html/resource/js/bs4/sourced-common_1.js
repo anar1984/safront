@@ -10699,11 +10699,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         bcode = (bcode === undefined) ? "" : bcode;
 
         //        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
-        var loader = '<div class="box-loader shimmer"></div>'
-        var padeId = new UserStory().showPopupforGUIComponent(loader, popupBacklogId, bcode);
-
+        
         var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);
-        $("#" + padeId + " #userstory-gui-input-component-res-sus-id").html(html);
+        var padeId = new UserStory().showPopupforGUIComponent(html, popupBacklogId, bcode);
+       // $("#" + padeId + " #userstory-gui-input-component-res-sus-id").html(html);
 
         //  click on first tab
         $('.activeTabClass').each(function (e) {
