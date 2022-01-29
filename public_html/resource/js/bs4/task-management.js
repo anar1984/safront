@@ -4521,6 +4521,12 @@ $(document).on("keyup", "#taskNameInputNew2", function (event) {
 $(document).on("click", '#multi-edit-menu-btn', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_multi');
     var dwlmt = $('#bug_task_type_id_multi');
+    $("#update_multi_bug_change_btn").attr("data-pid",$(this).attr("pid"));
+    if(global_var.current_modal==='loadStoryCardMgmt'){
+        $("select.bug-mgmt-filter-select").selectpicker("refresh");
+     
+        loadUsersAs4ComboByElm($('#bug_filter_assignee_id_multi'))
+    }
     taskManagement.add_loadTaskType_bug_list(dwlmt);
 })
 

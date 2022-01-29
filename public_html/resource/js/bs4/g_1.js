@@ -1961,6 +1961,47 @@ $(document).on('click', '.more-table-details', function (event) {
 
 
 });
+$(document).on('click', '.showAll-table-details', function (event) {
+
+    var bgId = $(this).attr("pid");
+    var tbody = $(this).parents('.stat-table-us').find("tbody")
+      tbody.find("tr").removeClass("d-none")
+
+
+    $(this).html('Hide');
+    $(this).addClass('hide-all-table');
+    $(this).removeClass('showAll-table-details');
+
+
+});
+$(document).on('click', '.hide-all-table', function (event) {
+
+    var bgId = $(this).attr("pid");
+    var tbody = $(this).parents('.stat-table-us').find("tbody");
+      var asID  = $("#story_mn_filter_assigne_id").val();
+      var ntId  = $("#story_mn_filter_nature_id").val();
+     if(asID.length>0||ntId.length>0){
+      $(tbody).find("tr.task-tr-list").addClass("d-none");
+     }
+   if(asID.length>0){
+    
+      for (let i = 0; i < asID.length; i++) {
+          const o = asID[i];
+          $(tbody).find("tr[data-assignee='"+o+"']").removeClass("d-none");
+      }
+   }
+
+   if(ntId.length>0){
+      for (let i = 0; i < ntId.length; i++) {
+          const o = asID[i];
+          $(tbody).find("tr[data-nature='"+o+"']").removeClass("d-none");
+      }
+   }
+    $(this).html('All');
+    $(this).addClass('showAll-table-details');
+    $(this).removeClass('hide-all-table');
+
+});
 $(document).on('click', '.dev-mode-generate-live', function (event) {
 
 
@@ -2006,28 +2047,6 @@ $(document).on('click', '.dev-mode-generate-live', function (event) {
 
 
 });
-
-$(document).on('focusout', '#panel-js', function () {
-
-    var body = window.editorJSnew.getValue();
-    var css = window.editorCSSnew.getValue();
-    var bid = global_var.current_backlog_id;
-    setBacklogAsHtml(bid,css,body)
-    insertJSmanualBybacklogId(body);
-    insertJsSendDbBybacklogId(body)
- 
-});
-$(document).on('focusout', '#panel-css', function () {
-    var body = window.editorCSSnew.getValue();
-    var js = window.editorJSnew.getValue();
-    var bid = global_var.current_backlog_id;
-    setBacklogAsHtml(bid,body,js)
-    insertCssSendDbBybacklogId(body)
-    insertCssmanualBybacklogId(body);
-});
-
-
-
 
 $(document).on('click', '.stat-table-us thead .new-tapsiriq-rew', function (event) {
     var tbody = $(this).parents('table').find('tbody');

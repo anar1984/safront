@@ -1113,7 +1113,7 @@ function getBacklogJSBodyById(bid) {
         async: true,
         success: function (res) {
             try {
-                window.editorJSnew.setValue(res.tbl[0].r[0].fnBody);
+            
                 insertJSmanualBybacklogId(res.tbl[0].r[0].fnBody);
             } catch (error) {
                 
@@ -1139,10 +1139,63 @@ function getBacklogCSSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
+           
                     
             insertCssmanualBybacklogId(res.tbl[0].r[0].classBody);
             
+        }
+    });
+}
+function getBacklogJSCodeSync(bid) {
+
+    var pid = bid ? bid : global_var.current_backlog_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+               return res.tbl[0].r[0].fnBody
+               
+            } catch (error) {
+                return ''
+            }
+           
+        
+
+        }
+    });
+}
+function getBacklogCssCodeSync(bid) {
+    var pid = bid ? bid : global_var.current_backlog_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogCssCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+           
+            try {
+                return res.tbl[0].r[0].classBody
+                
+             } catch (error) {
+                 return ''
+             }
         }
     });
 }

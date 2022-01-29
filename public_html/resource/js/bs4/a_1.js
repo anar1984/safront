@@ -1666,8 +1666,8 @@ function loadCurrentBacklogProdDetails() {
     global_var.current_modal = '';
     var js = '', css = '';
     try {
-        js = window.editorJSnew.getValue();
-        css = window.editorCSSnew.getValue();
+        js = getBacklogJSCodeSync(global_var.current_backlog_id);
+        css = getBacklogCssCodeSync(global_var.current_backlog_id);
     } catch (err) {
 
     }
@@ -13859,41 +13859,6 @@ function insertCssmanualBybacklogId(body) {
 
 
 
-function editorGenerateJSCSS() {
-    window.editorCSSnew = CodeMirror(document.querySelector('#panel-css'), {
-        lineNumbers: true,
-        tabSize: 2,
-        mode: {name: "css", globalVars: true},
-        theme: 'blackboard',
-        extraKeys: {
-            "F11": function (cm) {
-                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-            },
-            "Esc": function (cm) {
-                if (cm.getOption("fullScreen"))
-                    cm.setOption("fullScreen", false);
-            },
-            "Ctrl-Space": "autocomplete"
-        }
-    });
-    window.editorJSnew = CodeMirror(document.querySelector('#panel-js'), {
-        lineNumbers: true,
-        tabSize: 2,
-        mode: {name: "javascript", globalVars: true},
-        theme: 'blackboard',
-        extraKeys: {
-            "F11": function (cm) {
-                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-            },
-            "Esc": function (cm) {
-                if (cm.getOption("fullScreen"))
-                    cm.setOption("fullScreen", false);
-            },
-            "Ctrl-Space": "autocomplete"
-        }
-    });
-}
-
 
 function genToolbarStatus() {
     var ast = localStorage.getItem('data-toolbar-opened');
@@ -15304,7 +15269,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
-        $('#date_timepicker_start_end-usmn').daterangepicker({}).val('');
+      //  $('#date_timepicker_start_end-usmn').daterangepicker({}).val('');
     });
 });
 $(document).on('click', '.loadBugChange', function (evt) {
@@ -16262,7 +16227,7 @@ function setPrmFilterSprintValuesUs() {
                 data: data,
                 contentType: "application/json",
                 crossDomain: true,
-                async: true,
+                async: false,
                 success: function (res) {
                     var dt = res.tbl[0].r
                     for (let i = 0; i < dt.length; i++) {
@@ -16271,7 +16236,6 @@ function setPrmFilterSprintValuesUs() {
                         st += dt[i].fkBacklogId + "%IN%";
                     }
                     UsSprint = st;
-                    new UserStory().setUSLists4KanbanView();
                 },
                 error: function () {
                     Toaster.showError(('somethingww'));
@@ -16306,7 +16270,7 @@ function setPrmFilterLabeValuesUs() {
                 data: data,
                 contentType: "application/json",
                 crossDomain: true,
-                async: true,
+                async: false,
                 success: function (res) {
                     var dt = res.tbl[0].r
                     for (let i = 0; i < dt.length; i++) {
@@ -16314,7 +16278,6 @@ function setPrmFilterLabeValuesUs() {
                         st += dt[i].fkBacklogId + "%IN%";
                     }
                     UsLabel = st;
-                    new UserStory().setUSLists4KanbanView();
                 },
                 error: function () {
                     Toaster.showError(('somethingww'));
@@ -16453,9 +16416,10 @@ function getSTatsUserManagmentTableKanban(elm) {
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid=' + le.fkBacklogId + ' action="overall" status="reject">rejected(' + le.statusRejected + ')</span></td>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-canceled" pid=' + le.fkBacklogId + ' action="overall" status="canceled">canceled(' + le.statusCanceled + ')</span></td>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid=' + le.fkBacklogId + ' action="overall" status="waiting">waiting(' + le.statusWaiting + ')</span></td>')
-                            .append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
-                            .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
-                            .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" showAll-table-details"  >All</a></td>')
+                            .append('<td class="text-center"><span class="add-task-us-card-managmenet btn btn-sm btn-info ml-1" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
+                            .append('<td class="text-center"><span href1="#" pid=' + le.fkBacklogId + ' class="btn btn-sm btn-danger ml-1 more-table-details"  ><i class="fas fa-angle-double-right"></i></span></td>')
+                            .append('<td class="text-center"><span href1="#" pid=' + le.fkBacklogId + ' class=" btn btn-sm btn-success ml-1 btn-show-hide-table-row hide-all-table"  >Hide</span></td>')
+                            .append('<td class="text-center multi-edit-menu d-none"><span href1="#" pid=' + le.fkBacklogId + ' class="  btn btn-sm btn-warning ml-1 " id="multi-edit-menu-btn" data-target="#multieditpopUp" data-toggle="modal" ><i class="far fa-edit"></i></span></td>')
 
                 }
 
@@ -16559,6 +16523,7 @@ function getBugList4UserStory(bgId, tbody) {
             $(tbody).html('')
             $(tbody).append($("<tr>").addClass('theader-table')
                     .append('<td><b>Task Id</b></td>')
+                    .append('<td><b><input type="checkbox" class="all-bug-list-check"></b></td>')
                     .append('<td class="trigger-status-filter"><b>Status</b></td>')
                     .append('<td><b>Description</b></td>')
                     .append($("<td>").append("<b>Task Nature</b>"))
@@ -16570,8 +16535,16 @@ function getBugList4UserStory(bgId, tbody) {
 
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
-                $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status', ela[i].taskStatus)
+                $(tbody)
+                .append($("<tr>")
+                          .attr("data-assignee",ela[i].fkAssigneeId)
+                          .attr("data-nature",ela[i].taskNature)
+                          .attr("data-taskType",ela[i].fkTaskTypeId)
+                         .addClass('task-tr-list')
+                         .attr('data-tr-status', ela[i].taskStatus)
+                         .attr('id',ela[i].id)
                         .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
+                        .append('<td class="task-id-td"><input data-pid="'+ela[i].fkBacklogId+'" class="checkbox-issue-task" type="checkbox"></td>')
                         .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
                         .append($("<td>")
                                  .attr("title",ela[i].taskName)
@@ -16594,6 +16567,12 @@ function getBugList4UserStory(bgId, tbody) {
             $(tbody).find('.trigger-status-filter').click();
             $(tbody).closest("table").find('.us-item-status-new').click();
             $(tbody).closest("table").find('.us-item-status-ongoing').click();
+                var asID  = $("#story_mn_filter_assigne_id").val();
+                var ntId  = $("#story_mn_filter_nature_id").val();
+               if(asID.length>0||ntId.length>0){
+                $(tbody).closest("table").find('.btn-show-hide-table-row').click();
+               }
+           
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -19375,7 +19354,7 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+    localStorage.setItem('assigne-list-usm', $(this).val());
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
@@ -19385,18 +19364,18 @@ $(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
     Utility.addParamToUrl('fk_assigne_id', $(this).val());
     labelOrSplitValuesUs();
 });
-$(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
+/* $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 
 
-    if ($(this).val().length > 0) {
+     if ($(this).val().length > 0) {
         UsLabel = '';
         UsSprint = '';
         var id = getProjectValueUsManageMultiByel(this)
         getUpdateAssigneIDForBacklog(id);
     } else {
         backLogIdListForSearch = '';
-    }
-});
+    } 
+}); */
 $(document).on('change', '#story_mn_manual_status_id', function (evt) {
 
        localStorage.setItem('manual_list_val',$(this).val());
@@ -19440,14 +19419,16 @@ function loadAssigneesByProjectUSM(projectId) {
                 $('#bug_filter_assignee_id_add').append(opt.clone());
                 $('#story_mn_filter_updated_id').append(opt.clone());
             }
+            var lst  = localStorage.getItem("assigne-list-usm")
+            var fkAssigneId = lst?lst.split(','):[global_var.current_ticker_id];
+            if (fkAssigneId) {
+                $('#story_mn_filter_assigne_id').val(fkAssigneId);
+                        }
             $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
             $('#story_mn_filter_assigne_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
             $('#story_mn_filter_updated_id').selectpicker('refresh');
-            var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
-            if (fkAssigneId) {
-                $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();
-            }
+            
         },
         error: function () {
             Toaster.showError(('somethingww'));

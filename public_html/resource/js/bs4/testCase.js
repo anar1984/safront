@@ -940,18 +940,21 @@ $(document).on("click", '.openBugStatus', function (e) {
 })
 
 $(document).on("click", '#update_multi_bug_change_btn', function (e) {
-
+    var idk  = $(this).attr('data-pid')
     var fkAssigneeId = $("#bug_filter_assignee_id_multi").val();
     var fkTaskTypeId = $("#bug_task_type_id_multi").val();
     var fkBacklogId = $("#bug_filter_backlog_id_multi").val();
     var taskPriority = $("#bug_filter_priority_add").val();
     var taskNature = $("#bug_task_nature_id_multi").val();
     var taskStatus = $("#bug_task_status_id_zad").val();
-
-    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    if(global_var.current_modal==='loadBugChange'){
+        var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    }
+    else if(global_var.current_modal==='loadStoryCardMgmt'){
+        var check = $("#tbl-"+idk+"  .task-tr-list input.checkbox-issue-task");
+    }
 
     if (!fkAssigneeId == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
             if ($(check[indx]).prop('checked')) {
                 var taskId = $(check[indx]).parents("tr").attr("id");
@@ -2019,7 +2022,7 @@ function getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount
 
 $(document).on("click", '.all-bug-list-check', function (e) {
 
-    var chck = $(".checkbox-issue-task");
+    var chck = $(this).closest('table').find("tbody > tr .checkbox-issue-task");
     if ($(this).is(':checked')) {
         $('.multi-edit-menu').removeClass('d-none');
         $('body').addClass('res-multi-edit-menu');
@@ -2032,9 +2035,13 @@ $(document).on("click", '.all-bug-list-check', function (e) {
 
 })
 $(document).on("click", '.checkbox-issue-task', function (e) {
-
-
-    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+     var idk  = $(this).attr("data-pid");
+    if(global_var.current_modal==='loadBugChange'){
+        var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    }
+    else if(global_var.current_modal==='loadStoryCardMgmt'){
+        var check = $("#tbl-"+idk+" .task-tr-list input.checkbox-issue-task");
+    }
 
     var ast = [];
     var pids = [];

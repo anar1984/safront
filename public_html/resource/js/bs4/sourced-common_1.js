@@ -14341,7 +14341,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 for (var k = 0; k < usIdList.length; k++) {
                     var obj = usIdList[k];
-                    var html = new UserStory().genUSLine4KanbanView(obj);
+                    var html = new UserStory().genUSLine4KanbanView(obj,stl);
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
                     c4new++
                 }
@@ -15227,7 +15227,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
 
-    genUSLine4KanbanView: function (o) {
+    genUSLine4KanbanView: function (o,zoneID) {
 
 
 
@@ -15322,11 +15322,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var s = $('<div >')
             .attr('bid', o.id)
             .attr('pidd', o.fkProjectId)
+            .attr('zone-id',zoneID)
             .addClass('task-content content-drag')
             .append($('<div class="task-content-header">')
                 .append($('<div class="ContentText">')
                     .attr('bno', o.backlogNo)
                     .attr('pid', o.id)
+                 
                     .append($("<input type='checkbox'>")
                         .addClass("assign-label-story-card-item-new")
                         .attr("pid", o.id))
@@ -15415,8 +15417,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append('<i class="fas fa-history"></i>')
                 )
                 .append($("<div>").addClass("stat-div-task-content")
-                              .append($('<button class="btn btn-sm btn-light ">show all</button>'))
                     .append($('<table>').addClass("stat-table-us")
+                              .attr("id","tbl-"+o.id)
                         .append($("<thead>")
                             .append($("<tr class=total>"))
                             .append($("<tr class='bug'>"))
