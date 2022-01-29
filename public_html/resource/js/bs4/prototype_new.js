@@ -1160,7 +1160,7 @@ function getBacklogJSCodeSync(bid) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             try {
                return res.tbl[0].r[0].fnBody
@@ -1187,7 +1187,7 @@ function getBacklogCssCodeSync(bid) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
            
             try {
