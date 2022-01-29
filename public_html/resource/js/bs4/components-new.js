@@ -229,7 +229,7 @@ $.fn.extend({
       function autoHeight_(element) {
         return jQuery(element)
           .css({ "height": "auto", "overflow-y": "hidden" })
-          .height(element.scrollHeight);
+          .height(element.scrollHeight-15);
       }
       return this.each(function() {
         autoHeight_(this).on("input", function() {

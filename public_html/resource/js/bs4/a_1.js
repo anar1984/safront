@@ -13589,7 +13589,7 @@ function iframeLoaded() {
    /*  $("#result-iframe").contents().find('body').html(block +`<script>
     loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`); */
 
-   loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
+   //loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
 }
 function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
