@@ -14330,7 +14330,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         data.startLimit = 0;
         data.endLimit = 20;
-        callApi('21122313051700845260', data, false, function (res) {
+        callApi('21122313051700845260', data, true, function (res) {
 
             var c4new = 0;
             $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
@@ -15415,13 +15415,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append('<i class="fas fa-history"></i>')
                 )
                 .append($("<div>").addClass("stat-div-task-content")
+                              .append($('<button class="btn btn-sm btn-light ">show all</button>'))
                     .append($('<table>').addClass("stat-table-us")
                         .append($("<thead>")
                             .append($("<tr class=total>"))
                             .append($("<tr class='bug'>"))
                         )
                         .append($("<tbody>")))
-                    .css("display", 'none'))
+                       
+                        .css("display", 'none'))
                 //                        .append($('<i  class="fa fa-info-circle">')
                 //                                .data('toggle', 'modal')
                 //                                .data('target', '#backlogTaskInfoModal')

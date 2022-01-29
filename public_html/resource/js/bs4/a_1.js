@@ -13588,8 +13588,7 @@ function iframeLoaded() {
       $("#result-code-editor").html(block);
    /*  $("#result-iframe").contents().find('body').html(block +`<script>
     loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`); */
-
-   //loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
+   loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
 }
 function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
@@ -16451,12 +16450,12 @@ function getSTatsUserManagmentTableKanban(elm) {
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span></td>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span></td>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid=' + le.fkBacklogId + ' action="overall" status="UAT">UAT(' + le.statusUat + ')</span></td>')
-
-                    $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid=' + le.fkBacklogId + ' action="overall" status="reject">rejected(' + le.statusRejected + ')</span></td>')
-                            .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid=' + le.fkBacklogId + ' action="overall" status="Canceled">canceled(' + le.statusCanceled + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-canceled" pid=' + le.fkBacklogId + ' action="overall" status="canceled">canceled(' + le.statusCanceled + ')</span></td>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid=' + le.fkBacklogId + ' action="overall" status="waiting">waiting(' + le.statusWaiting + ')</span></td>')
+                            .append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
                             .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
+                            .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" showAll-table-details"  >All</a></td>')
 
                 }
 
@@ -16467,11 +16466,10 @@ function getSTatsUserManagmentTableKanban(elm) {
                         .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing"  action="overall" status="ongoing">Ongoing(0)</span></td>')
                         .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
                         .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
-
-                $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet "><i class="fas fa-plus"></i></span></td>')
                         .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
                         .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
                         .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
+                        .append('<td class="text-center"><span class="add-task-us-card-managmenet "><i class="fas fa-plus"></i></span></td>')
                         .append('<td class="text-center"></td>')
 
             }

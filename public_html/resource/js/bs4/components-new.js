@@ -3,7 +3,7 @@ var cmpList  = {
     userBlock: {
             Init: function (elm,type) {
                 $(elm).empty();
-                $(elm).addClass("text-center");
+                $(elm).css("text-align",'left');
                 $(elm).attr("el-name","selectInterActive");
                 if(type==='multi'){
                     var block  = this.genObserverBlockM();
