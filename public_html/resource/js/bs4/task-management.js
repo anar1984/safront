@@ -685,7 +685,9 @@ const taskManagement = {
                         $("#issue-managment-add-task").modal("hide");
 
                     }
-                   $("#addIssueButtonId").removeAttr("disabled")
+                   $("#addIssueButtonId").removeAttr("disabled");
+                   updateSpirntTaskById($('#add_task_sprint').val(),res.kv.id);
+                   updateLabelTaskById($('#run_task_categories').val(),res.kv.id);
                 },
                 error: function () {
                     Toaster.showError((lang_task.windowAddTask.addTaskMessageErr));
@@ -1895,6 +1897,8 @@ const taskManagement = {
             
             this.getLabelTask($('#run_task_detail_detail_categories'));
             this.getSprintTask($('#run_task_detail_detail_sprint'));
+            this.getTaskSpirntList(taskId)
+            this.getTaskLabelList(taskId)
 
             getProjectUsers();
             $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
@@ -2395,6 +2399,45 @@ const taskManagement = {
              }
              
              elm.selectpicker("refresh");
+        },
+        getTaskSpirntList: function (taskId) {
+
+            callApi('22012918213902436118',{fkBacklogTaskId:taskId},true,function (res) {
+                try {
+                    var  list  = res.tbl[0].r;
+                    var tb  = []
+                   for (let i = 0; i < list.length; i++) {
+                       const o = list[i];
+                       tb.push(o.fkSprintId);
+                   }
+                   $("#run_task_detail_detail_sprint").val(tb);
+                   $("#run_task_detail_detail_sprint").selectpicker("refresh");
+                } catch (error) {
+                    
+                }
+                  
+           }) 
+        },
+        getTaskLabelList: function (taskId) {
+
+            callApi('22012918304302492366',{fkBacklogTaskId:taskId},true,function (res) {
+                try {
+                    var  list  = res.tbl[0].r;
+                    var tb  = []
+                   for (let i = 0; i < list.length; i++) {
+                       const o = list[i];
+                       tb.push(o.fkLabelId)
+                   }
+               
+                   
+                   $("#run_task_detail_detail_categories").val(tb);
+                   $("#run_task_detail_detail_categories").selectpicker("refresh");
+                   
+                } catch (error) {
+                    
+                }
+            
+           }) 
         },
         getTaskEvent: function (taskId) {
             $('.task-events-updated').attr("data-taskid", '');
@@ -4648,20 +4691,6 @@ $(document).on("click", '#tapshiriq-btn', function () {
     $('.loadUserForObserver span').text('').text('Observer');
 
 });
-$(document).on("change", '#run_task_detail_detail_sprint', function () {
-
-    var id  = global_var.current_issue_id;
-    var backlogId  = coreBugKV[id].fkBacklogId;
-    var projectId  = coreBugKV[id].fkProjectId;
-    var sprintId  = $(this).val();
-     for (let i = 0; i < sprintId.length; i++) {
-         const o = sprintId[i];
-         sprintZadininSheyeidlmesi(id, projectId, backlogId, o, '1');
-     }
-
-
-});
-
 
 $(document).on("click", '#toplanti-d-btn', function () {
     $(this).addClass('active');
@@ -5098,8 +5127,47 @@ $(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
         uploadFile4IpoTAsk($(this).attr('id'));
     }
 })
+$(document).on('change', "#run_task_detail_detail_categories", function (e) {
+    updateLabelTaskById($(this).val(),global_var.current_issue_id)
+})
+$(document).on('change', "#run_task_detail_detail_sprint", function (e) {
+ 
+        updateSpirntTaskById($(this).val(),global_var.current_issue_id)
+    
+})
 
-
+function updateSpirntTaskById(list,taskid) {
+       var ls  ='';
+       if(list.length <1){
+        return
+     }
+       for (let index = 0; index < list.length; index++) {
+           const o = list[index];
+             ls+= o +","
+       }
+       var data  =  {};
+          data.fkSprintId =  ls;
+          data.fkTaskId = taskid;
+       callApi('22012917513008573817',data,true,function (res) {
+              
+   }) 
+}
+function updateLabelTaskById(list,taskid) {
+       var ls  =''
+       if(list.length <1){
+           return
+       }
+       for (let index = 0; index < list.length; index++) {
+           const o = list[index];
+             ls+= o +","
+       }
+       var data  =  {};
+          data.fkLabelId =  ls;
+          data.fkTaskId = taskid;
+       callApi('22012918335802271686',data,true,function (res) {
+              
+   }) 
+}
 function uploadFile4IpoTAsk(id) {
     var r = "";
     var that = this;
