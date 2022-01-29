@@ -37,7 +37,7 @@ $(document).ready(function () {
 
     });
 
-   
+
 
     $(document).on("dblclick", ".DatabaseNameH4", function () {
 
@@ -361,6 +361,8 @@ $(document).ready(function () {
 //        }
     })
 
+    
+    
 
     $(document).on("click", ".Field_ShowDetails", function (e) {
         $('#tableFieldDetailsModal').modal("show");
@@ -925,12 +927,14 @@ function genUsTableNew(genText) {
                                             .attr("aria-labelledby", "dropdownMenuButton")
                                             .append('<a class="dropdown-item Field_AddFieldsAsLine">Add Field as Line</a>')
                                             .append('<a class="dropdown-item Field_ShowDetails">Details</a>')
+                                            .append('<a class="dropdown-item Field_ShowFormGenerator">Generate Form</a>')
                                             .append('<a class="dropdown-item EditTableName">Edit</a>')
                                             .append('<a class="dropdown-item CreateTableOnServer">Create Table in Server</a>')
 //                                            .append('<a class="dropdown-item">Move</a>')
 //                                            .append('<a class="dropdown-item">Copy</a>')
                                             .append('<a class="dropdown-item ShowTableDataEntry">Show Data Entry</a>')
                                             .append('<a class="dropdown-item ShowApiRelations">Show API Relations</a>')
+                                            .append(`<a class="dropdown-item ShowGenerateCrudApis">Generate CRUD APIs</a>`)
                                             .append('<a class="dropdown-item DeleteTableCont">Delete</a>')))))
             .append($("<div>")
                     .addClass("tdBody")

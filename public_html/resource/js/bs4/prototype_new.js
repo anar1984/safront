@@ -93,6 +93,7 @@ var Prototype = {
                     that.genActionReltionComboOrThen(res);
                     that.genRelatedApiCombo(res);
                     that.genRelatedUSApiCombo(res);
+                    that.genRelatedSUSApiCombo(res);
                 }
             });
         },
@@ -174,6 +175,28 @@ var Prototype = {
         },
         genRelatedUSApiCombo: function (res) {
             var cmd = $("#us-related-apis")
+            var obj = res.tbl[0].r;
+            cmd.html('');
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi === '1') {
+                    var pname = o.backlogName;
+                    var op = $('<option></option>').attr('value', o.id).text(pname);
+                    if (o === global_var.last_select_from_us_id) {
+                        op.attr("selected", true);
+                    }
+                    cmd.append(op);
+
+                }
+
+            }
+            sortSelectBoxByElement(cmd);
+            $(cmd).prepend($("<option class='text-danger align-items-center'>").attr("data-icon", 'far fa-plus-square ').val('-2').append(('New Api')))
+
+            cmd.selectpicker('refresh');
+        },
+        genRelatedSUSApiCombo: function (res) {
+            var cmd = $("#us-related-sus")
             var obj = res.tbl[0].r;
             cmd.html('');
             for (var n = 0; n < obj.length; n++) {
@@ -1089,9 +1112,13 @@ function getBacklogJSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            console.log(res.tbl[0].r[0].fnBody);
-            window.editorJSnew.setValue(res.tbl[0].r[0].fnBody)
-            insertJSmanualBybacklogId(res.tbl[0].r[0].fnBody);
+            try {
+            
+                insertJSmanualBybacklogId(res.tbl[0].r[0].fnBody);
+            } catch (error) {
+                
+            }
+           
         
 
         }
@@ -1112,10 +1139,63 @@ function getBacklogCSSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
+           
                     
             insertCssmanualBybacklogId(res.tbl[0].r[0].classBody);
             
+        }
+    });
+}
+function getBacklogJSCodeSync(bid) {
+
+    var pid = bid ? bid : global_var.current_backlog_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            try {
+               return res.tbl[0].r[0].fnBody
+               
+            } catch (error) {
+                return ''
+            }
+           
+        
+
+        }
+    });
+}
+function getBacklogCssCodeSync(bid) {
+    var pid = bid ? bid : global_var.current_backlog_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogCssCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+           
+            try {
+                return res.tbl[0].r[0].classBody
+                
+             } catch (error) {
+                 return ''
+             }
         }
     });
 }

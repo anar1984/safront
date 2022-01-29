@@ -354,7 +354,14 @@ function updateBacklogName() {
 function runApiOnStoryCard() {
     var fkBacklogId = global_var.current_backlog_id;
     global_var.runApiOnStoryCard = 1;
-    var out = be.callApi(fkBacklogId, {});
+    var sty = $('#user-story-input-json').val();
+//    sty = '{"name":"John", "age":30, "city":"New York"}'
+    var data1 = {};
+    try{
+        data1 = JSON.parse(sty);
+    }catch(err){}
+    data1= (data1) ? data1 :{};
+    var out = be.callApi(fkBacklogId,data1 );
     var html = $('<span>').css('white-space', 'pre')
             .css('font-family', 'monospace')
             .css("width", "200px")

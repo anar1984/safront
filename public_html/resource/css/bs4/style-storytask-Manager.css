@@ -51,13 +51,15 @@
        
 }
 .task-column{
-    width: 24.71%;
+    min-width: 350px;
+    max-width: 350px;
     border-radius: 6px;
     padding: 5px;
     margin-left: 5px;
-    background-color: rgb(244, 245, 247);
+    background: rgba(255, 255, 255, 0.11)
        
 }
+
 @media only screen and (max-width: 900px) {
     .task-column{
         width: 300px;
@@ -120,8 +122,8 @@
     border-radius: 6px;
     height: 30px;
     width: 100%;
-    font-size: 20px;
-    color: rgb(94, 108, 132);
+    font-size: 15px;
+    color:  #fff;
     text-align: center;
 }
 .task-column-header{
@@ -148,6 +150,35 @@
 #body-large-modal-in-us {
    
      
+}
+.status-list-table-for-us{
+    display: none ;
+}
+.large-modal-expand.task-column{
+    min-width: 100%;
+    max-width: 100%;
+}
+.large-modal-expand .task-column-body{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.large-modal-expand .status-list-table-for-us{
+      display: flex;
+    
+}
+.large-modal-expand .task-content{
+    width: 20%;
+    flex: 0 0 25%;
+    max-width: 19.444%;
+    margin: 5px;
+    height: fit-content;
+    
+}
+.large-modal-expand .headerInputColumn{
+      width: max-content !important;
+     
+    
 }
 #body-large-modal-in-us .task-content {
     width: 29%;
@@ -358,7 +389,7 @@
     background-color: rgb(128,128,128,0.6)
 }
 .counterkanban{
-    font-size: 20px;
+    font-size: 15px;
     color: rgb(214, 216, 219);
 }
 .headerContentText{
@@ -973,7 +1004,7 @@ color: white;
     box-shadow: 0px 0px 0px 2px #da3838 inset;
 
 }
-.more-us-card-btn{
+.more-us-card-btn,.more-us-card-btn-manual{
     width: 100%;
     display: block;
     text-align: center;

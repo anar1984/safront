@@ -611,21 +611,6 @@ $(document).ready(function () {
 })
 
 
-function getTaskCode(taskId) {
-    try {
-        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
-        var projectId = SATask.GetDetails(taskId, 'fkProjectId');
-        var projectCode = SACore.GetProjectCore(projectId).projectCode;
-        projectCode = projectCode.toUpperCase();
-
-        var taskId = (orderSeq)
-                ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderSeq : orderSeq : "";
-        taskId = "<b>" + taskId + "</b>";
-        return taskId;
-    } catch (err) {
-        return ""
-    }
-}
 
 function loadTaskCardDetails(taskId) {
     var id = taskId;

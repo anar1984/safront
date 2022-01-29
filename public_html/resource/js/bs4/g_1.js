@@ -51,7 +51,6 @@ $(function () {
     }
 
 
-
     $(document).on("mouseover", '.sa-cw1', function (e) {
         $(this).popover();
 
@@ -1565,6 +1564,31 @@ $(document).on('change', '#edit-name-input-component', function (event) {
 
 });
 
+$(document).on('click', '.more-us-card-btn-manual', function (event) {
+
+    var stLimit = $(this).attr('startlimit')
+    var endlimit = $(this).attr('endlimit')
+    var st = parseFloat(stLimit);
+    var end = parseFloat(endlimit);
+    var bsts = $(this).attr('data-ople');
+     var list  =  '';
+     
+     if ($(this).closest('.task-column').hasClass('large-modal-expand')) {
+         var elm  =$(this).closest('.task-column').find(".info-item-elements.active")
+         elm.each(function (index) {
+             if (elm.length===(index+1)) {
+                 list  += "'"+$(this).attr('data-status')+"'"
+             }else{
+                 list  += "'"+$(this).attr('data-status')+"',"
+             }
+        })
+     }else{
+         list = '"new","ongoing"'
+     }
+
+    new UserStory().getBacklogListByManualStatusIdMore(st, end, bsts,list);
+
+});
 $(document).on('click', '.more-us-card-btn', function (event) {
 
     var stLimit = $(this).attr('startlimit')
@@ -1594,17 +1618,44 @@ var time_in_minutes = 5;
 var current_time = Date.parse(new Date());
 var deadline = new Date(current_time + time_in_minutes * 60 * 1000);
 
+$(document).on('click', '.manual-status-stat-list .info-item-elements', function () {
+      $(this).toggleClass('active');
+       var st  =  $(this).closest('.task-column').attr("status");
+         var  list  =''
+         var elm  =$(this).parent().find(".info-item-elements.active")
+            elm.each(function (index) {
+                if (elm.length===(index+1)) {
+                    list  += "'"+$(this).attr('data-status')+"'"
+                }else{
+                    list  += "'"+$(this).attr('data-status')+"',"
+                }
+           })
+            if(!list){
+                return
+            }
+       new UserStory().getBacklogListByManualStatusId(st,list);
+});
 $(document).on('click', '.next-large-modal-btn', function (event) {
     var st = $(this).attr('data-status')
 
+      $(this).closest(".task-column").toggleClass("large-modal-expand");
+    if($(this).closest(".task-column").hasClass('large-modal-expand')){
+        $('.task-panel').stop().animate({
+            scrollLeft:$(this).closest(".task-panel").scrollLeft() + $(this).closest(".task-column").position().left-15
+        }, 200);
+         if($('#story_mn_groupBy_id').val()==='fkProjectId'){
+             var projectId = $(this).closest(".task-column").attr('status');
+             new UserStory().getStatisticList4Project(projectId,this);
+         }
+         if($('#story_mn_groupBy_id').val()==='manualStatus'){
 
-    new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
-    $("#task-ongoing-large-modal").modal('show');
-    $("#countDown-larg").attr('data-status-time', st)
-    current_time = Date.parse(new Date());
-    deadline = new Date(current_time + time_in_minutes * 60 * 1000)
-    run_clock('countDown-larg', deadline);
-
+              if($(this).closest(".task-column").attr('manual')){
+                var statusId = $(this).closest(".task-column").attr('status');
+                new UserStory().getStatisticList4Status(statusId,this);
+              }
+            
+         }
+    }
 });
 $(document).on('click', '.baclog-large-modal-next', function (event) {
     $("#body-large-modal-in-us4backlog").html("");
@@ -1613,9 +1664,10 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
     var elm = elm1.clone();
     elm.css("width", '100%')
     elm.find('.baclog-large-modal-next').hide();
-
     $("#task-ongoing-large-modal4backlog").modal('show');
     $("#body-large-modal-in-us4backlog").append(elm);
+    $("#body-large-modal-in-us4backlog .user-story-prototype-change1").prop("checked",true).change();
+
     $('[data-toggle="popover"]').popover();
 
 });
@@ -1673,6 +1725,14 @@ $(document).on('change', '#project_list_for_copy', function (event) {
      $(elm).find('option[text="'+global_var.current_backlog_id+'"]').attr('selected','selected');
      $(elm).selectpicker("refresh")
 
+});
+$(document).on('change', '.label-assign-link-class', function (event) {
+      if($(this).prop("checked")){
+          $(this).closest("li").addClass('rt-label-checking')
+      }else{
+        $(this).closest("li").removeClass('rt-label-checking')
+ 
+      }
 });
 $(document).on('click', '#upload_data_file_btn', function (event) {
     var elm = $("#setStoryCardUploadZipData");
@@ -1901,6 +1961,47 @@ $(document).on('click', '.more-table-details', function (event) {
 
 
 });
+$(document).on('click', '.showAll-table-details', function (event) {
+
+    var bgId = $(this).attr("pid");
+    var tbody = $(this).parents('.stat-table-us').find("tbody")
+      tbody.find("tr").removeClass("d-none")
+
+
+    $(this).html('Hide');
+    $(this).addClass('hide-all-table');
+    $(this).removeClass('showAll-table-details');
+
+
+});
+$(document).on('click', '.hide-all-table', function (event) {
+
+    var bgId = $(this).attr("pid");
+    var tbody = $(this).parents('.stat-table-us').find("tbody");
+      var asID  = $("#story_mn_filter_assigne_id").val();
+      var ntId  = $("#story_mn_filter_nature_id").val();
+     if(asID.length>0||ntId.length>0){
+      $(tbody).find("tr.task-tr-list").addClass("d-none");
+     }
+   if(asID.length>0){
+    
+      for (let i = 0; i < asID.length; i++) {
+          const o = asID[i];
+          $(tbody).find("tr[data-assignee='"+o+"']").removeClass("d-none");
+      }
+   }
+
+   if(ntId.length>0){
+      for (let i = 0; i < ntId.length; i++) {
+          const o = asID[i];
+          $(tbody).find("tr[data-nature='"+o+"']").removeClass("d-none");
+      }
+   }
+    $(this).html('All');
+    $(this).addClass('showAll-table-details');
+    $(this).removeClass('hide-all-table');
+
+});
 $(document).on('click', '.dev-mode-generate-live', function (event) {
 
 
@@ -1946,28 +2047,6 @@ $(document).on('click', '.dev-mode-generate-live', function (event) {
 
 
 });
-
-$(document).on('focusout', '#panel-js', function () {
-
-    var body = window.editorJSnew.getValue();
-    var css = window.editorCSSnew.getValue();
-    var bid = global_var.current_backlog_id;
-    setBacklogAsHtml(bid,css,body)
-    insertJSmanualBybacklogId(body);
-    insertJsSendDbBybacklogId(body)
- 
-});
-$(document).on('focusout', '#panel-css', function () {
-    var body = window.editorCSSnew.getValue();
-    var js = window.editorJSnew.getValue();
-    var bid = global_var.current_backlog_id;
-    setBacklogAsHtml(bid,body,js)
-    insertCssSendDbBybacklogId(body)
-    insertCssmanualBybacklogId(body);
-});
-
-
-
 
 $(document).on('click', '.stat-table-us thead .new-tapsiriq-rew', function (event) {
     var tbody = $(this).parents('table').find('tbody');
@@ -2110,8 +2189,41 @@ $(document).on('click', '.dropdown-menu-large-btn', function (event) {
     event.preventDefault();
 
 });
+$(document).on('click', '#part-nav-menu-id4UserStory ul li >a', function (event) {
+    $(this).toggleClass("active")
+    //$(".toggle-btn[data-link="+$(this).attr("data-link")+"]").click();
+    if($(this).hasClass("active")){
+        $('.toggle-top-box-'+$(this).attr("data-link")).css('display','block');
+    }else{
+        $('.toggle-top-box-'+$(this).attr("data-link")).css('display','none');
+    }
+     var list  = ''
+      $("#part-nav-menu-id4UserStory ul li >a").each(function () {
+            if($(this).hasClass("active")){
+               list+= $(this).attr("data-link")+','
+            }  
+      })
+     
+      localStorage.setItem('nav_list_menu_story_card',list);
+ 
+});
 
+$(document).on("click",'.toggle-min-elements .toggle-btn', function () {
+      $(this).toggleClass('active');
 
+    $('.toggle-box-'+$(this).attr("data-link")).toggleClass('open');
+       
+})
+
+$(document).on("change",'#user-story-show-prototype', function () {
+    if ($('#user-story-show-prototype').is(":checked") ) {
+        $(this).closest('label').addClass('active');
+        $('.toggle-body-item #live-prototype-show-key').css('display','block');
+    }else{
+        $(this).closest('label').removeClass('active');
+        $('.toggle-body-item #live-prototype-show-key').css('display','none');
+    }
+});
 
 function closeNewInputComponent() {
 
@@ -2491,6 +2603,9 @@ $(document).ready(function () {
                 break;
                 case 'closed':
                     class_status = 'closed';
+                break;
+                case 'draft':
+                    class_status = 'draft';
                 break;
             }
             if (class_status){

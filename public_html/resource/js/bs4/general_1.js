@@ -190,23 +190,6 @@ function init() {
 //        $('#'+pid).find('.live-prototype-component-properties').show();
 
     });
-//    $(document).on('mouseover', '.active-inputs-selected', function (evt) {
-//        //show properties
-//        var pid = $(this).attr('pid');
-//        $('.live-prototype-component-properties').hide();
-//        $('#' + pid).find('.live-prototype-component-properties').show();
-//
-//    });
-//
-//
-//    $(document).on('mouseout', '.active-inputs-selected', function (evt) {
-//        //show properties
-//        var pid = $(this).attr('pid');
-//        $('#' + pid).find('.live-prototype-component-properties').hide();
-//
-//    });
-
-
     $(document).on('click', '.chek', function (e) {
         checkedCount();
     });
@@ -219,9 +202,6 @@ function init() {
             $('#general2').css('display', 'block');
         }
     }
-
-
-
     $(document).on('click', '.us-filter-checkbox-priority', function (e) {
         global_var.userStoryFilter.priority = "";
         var st = "";
@@ -462,6 +442,16 @@ var Utility = {
         }
         return st;
     },
+    convertDTpicker: function (d, seperator) {
+        var d = d.split(";");
+        var st = "";
+        var sep = (seperator) ? seperator : global_var.time_eliminator;
+        try {
+            st = d.substring(0, 2) + sep + d.substring(2, 4) + sep + d.substring(4, 6);
+        } catch (e) {
+        }
+        return st;
+    },
     focus: function (id) {
         setTimeout(function () {
             $('#' + id).focus();
@@ -665,6 +655,7 @@ function replaceJSON(json) {
 }
 
 function replaceTags(arg) {
+    return arg
     try {
 
         if (!arg) {
@@ -690,6 +681,12 @@ function replaceTags(arg) {
     } catch (err) {
         return arg;
     }
+}
+
+function init4CoreNoRegstr() {
+     new User().loadNoRegistrOnInit();
+    new Project().loadUserList4Combo();
+    
 }
 
 function init4Core() {
@@ -1078,6 +1075,7 @@ function getTimeWithMillisecond() {
 }
 
 window.addEventListener("paste", function (e) {
+    console.log('sdsds');
     var current_canvas_no = $('#canvasdiv_' + global_var.active_canvas + ' > div ').length + getTimeWithMillisecond();
     if (global_var.active_canvas.length === 0) {
         return;
@@ -1088,6 +1086,8 @@ window.addEventListener("paste", function (e) {
             (!$('#addTaskType_showcomment').is(":checked"))) {
         return;
     }
+
+    console.log(global_var.active_canvas);
 
 
 
@@ -1115,22 +1115,27 @@ window.addEventListener("paste", function (e) {
                 var oc = document.createElement('canvas'),
                         octx = oc.getContext('2d');
                 // Update dimensions of the canvas with the dimensions of the image
-                canvas.width = this.width * 4.30;
-                canvas.height = this.height * 4.30;
+                canvas.width = this.width * 2.30;
+                canvas.height = this.height * 2.30;
                 // Draw the image
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                if (global_var.active_canvas === 'taskCreate') {
+                    uploadFile4CanvasZadShey(canvasdiv);
+                }
             };
             // Crossbrowser support for URL
             var URLObj = window.URL || window.webkitURL;
             // Creates a DOMString containing a URL representing the object given in the parameter
             // namely the original Blob
             img.src = URLObj.createObjectURL(imageBlob);
+            console.log('img-src == '+img.src)
             global_var.current_canvas++;
 
 
-            if (global_var.active_canvas === 'taskCreate') {
-                uploadFile4CanvasZadShey(canvasdiv);
-            }
+            // if (global_var.active_canvas === 'taskCreate') {
+            //     uploadFile4CanvasZadShey(canvasdiv);
+            // }
         }
     });
 }, false);
@@ -1161,7 +1166,7 @@ function sortCombo(elementId) {
 }
 
 function clearCanvasDiv() {
-    $('.canvas_canvas').html('<div class="col-12 text-center canvas_canvas_msg" style=\'background-color: gainsboro\' >' +
+    $('.canvas_canvas').html('<div class="col-12 text-center canvas_canvas_msg">' +
             ' <h5>Copy and Paste Image Here</h5></div>');
 }
 function hideAllCanvas() {
@@ -1235,47 +1240,6 @@ function GetTagLine(text, tag) {
     return st;
 }
 
-function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
-    var pageId = makeId(15);
-    var butnList = '';
-    var fkpr = Utility.getParamFromUrl("fkManualProjectId").length
-    if (global_var.current_domain === '48edh' && fkpr > 0) {
-        butnList = `<div style="position: absolute;top: 2px;right: 40px;">
-                            <span class='mr-2' ><a class="taskListShowNewSorguBtnClickEvent" href="#" title="Tapşırıq" sa-data-link="21042817181209336901"><img width="25px" class='rounded-circle' src="img/task.jpeg"></a></span> 
-                             <span class='mr-2' ><a class="for-chewekk-new-chat-link" data-link="chwkchat" href="javascript:void" title="Show Chat"><img width="25px" class='rounded-circle' src="img/chat.jpeg"></a></span> 
-                             <span  class='mr-2'><img width="25px" class='rounded-circle' src="img/info.jpg"></a> </span> 
-                             </div>`
-    }
-  
-    var st =`<div class="modal fade" id="${pageId}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                 <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;'${style}" role="document">
-                   <div class="modal-content" style="background-color:inherit;border: 0px;">
-                         <div class="modal-header text-center" style="padding: 0px 10px;background: none;">
-                           <b class="modal-title" id="userstory-gui-input-component-res-sus-label">${title }</b> ${butnList} 
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                          </button>
-                   </div>
-                    <div class="loaderModalInitiator"></div>
-                   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">
-                        
-                     <input type="hidden" id=popupTrigger pid="${triggerId}" value="nonenone">
-                   <div class="row redirectClass" bid="${backlogId}"  bcode="${makeId(10)}" id="userstory-gui-input-component-res-sus-id">
-                        ${modalBody}
-                   </div>
-                </div>
-            </div>
-       </div>
-    </div>`;
-    $("#body_of_nature").append(st);
-    initSelectpickerComponent();
-    $('#' + pageId).modal("show");
-    $(document).on('hidden.bs.modal', '#' + pageId, function (evt) {
-        $('#' + pageId).remove();
-        $('body').addClass('modal-open');
-    });
-    return pageId;
-}
 
 function generatePopupModal(modalBody) {
     var pageId = makeId(15);
@@ -1407,6 +1371,55 @@ function GetConvertedDate(componentId) {
         d = "";
     }
     return d;
+}
+function GetConvertedDateDT(componentId) {
+    var val  = $('#' + componentId).val();
+      val = val.split(" ");
+    if (!val)
+        return "";
+      nev = val[0].split(".")
+    var day = nev[0];
+    var month = nev[1];
+    var year = nev[2];
+    var d = year + "" + month + '' + day;
+    try {
+        d = parseInt(d);
+    } catch (err) {
+        d = "";
+    }
+    return d;
+}
+function GetConvertedTimeDT(componentId) {
+    var val  = $('#' + componentId).val();
+      val = val.split(" ");
+    if (!val)
+        return "";
+
+      nev = val[1].split(":")
+    var hour = nev[0];
+    hour = hour.toString(10).length === 1 ? '0' + hour : hour;
+    var minut = nev[1];
+    var second = "00";
+    var d = hour + "" + minut+""+second ;
+    return d;
+}
+function GetReConvertedDT(componentId,time,date) {
+    // convert Date
+    var day = date.substring(6, 8);
+    var month = date.substring(4, 6);
+    var year = date.substring(0, 4);
+    var d1 = day + "." + month + "." + year;
+    // convert Time
+    var s = time.substring(4, 6);
+        var m = time.substring(2, 4);
+        var h = time.substring(0, 2);
+        var d = h + ":" + m ;
+    var l = d1 + " " + d ;
+    $('#' + componentId).val(l);
+    /* $('#' + componentId).datetimepicker({
+        date: new Date(d1),
+        time: new Date(d),
+    }); */
 }
 
 function ConvertedDateToStringDate(date) {
@@ -1597,6 +1610,7 @@ var global_var = {
     "current_backlog_name": "",
     "current_us_input_id": "",
     "current_us_task_id": "",
+    "current_fn_id": "",
     "analytics_tab": "general",
     "default_us_input_component": "txt",
     "current_ipo_view": "gui",

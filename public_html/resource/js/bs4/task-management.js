@@ -1,24 +1,45 @@
-const taskManagement = {
 
+
+const taskManagement = {
+    "taskLabelList":{},
+    "taskSprintList":{},
+    Init: function (elm) {
+        var elm = $(elm);
+        elm.html(this.genBlockMain());
+        this.readTask.genBlockTask.Init($('.main-section'));
+        $("#main-sidebar-div").html('');
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
+        genTimePickerById("issue_management_closed_date_from",'');
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genLabelBlock());
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genSprintBlock());
+        var dwlmt = $('#bug_filter_tasktype')
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
+        this.readTask.genBlockTask.getNotificationRowCount();
+
+    },
     insertTask: {
         genBlockModal: {
             Init: function () {
                 $('body').find("#issue-managment-add-task").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-
+                cmpList.userBlock.Init($('.assigne-div-add-issue'),'single');
+                cmpList.userBlock.Init($('.observer-div-add-issue'),'multi');
+                taskManagement.updateTask.getSprintTask($('#add_task_sprint'));
+                taskManagement.updateTask.getLabelTask($('#run_task_categories'));
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
 
             },
             genModalSelfBlock: function () {
-                return ` <div class="modal fade cs-modal-box issue-managment-add-task" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+                return ` <div class="modal fade cs-modal-box issue-managment-add-task ${notChwk()?"":"left  cs-modal-box story-card-modal"}" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
                aria-hidden="true">
               <div class="modal-dialog rounded" style="max-width: 50%;" role="document">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
-                              <span class="text">Add Task</span>
+                              <span class="text">${lang_task.windowAddTask.addTask}</span>
                           </h6>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
@@ -34,8 +55,8 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 mt-3"> 
-                            <div class="d-flex pl-3 pr-3 task-deadline-boxes">
+                        <div class="col-lg-12 mt-0"> 
+                            <div class="d-flex task-deadline-boxes">
                             ${this.genTaskDeadLineBlockTime()}
                             ${this.genTaskDeadLineBlockTask()}
                             ${this.genTaskDeadLineBlockEvent()}
@@ -43,7 +64,7 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12" style="padding: 0 25px;">
+                        <div class="col-lg-12">
                         ${this.genTabBlock.Init()}
                          </div>
                         </div>
@@ -55,22 +76,24 @@ const taskManagement = {
                     </div>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <div class="assigne-div-add-issue"></div>
+                      <div class="observer-div-add-issue"></div>
+                          <button type="button" id="addIssueButtonId" class="btn btn-primary">${lang_task.windowAddTask.add}</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">${lang_task.windowAddTask.close}</button>
                       </div>
                   </div>
               </div>
           </div>`
             },
             genTitleBlock: function () {
-                return `<div class="cs-input-group mb-3">
+                return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
-                        <span class='p-1'>quick insert task onfocus input SHIFT+ENTER</span>
+                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
+                        <!-- <span class='p-1' style=" color: #ffffff66; font-size: 12px; "></span>-->
                     </div>
                     <div class="p-0">
-                        <div class="priority-btn"><!-- if active ( class name -- active ) -->
+                        <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
                     </div>
@@ -80,7 +103,7 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return ` <div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input type="text" class="form-control" id="newAddCheckList" placeholder="add check words..." style="background: transparent; border-radius: 0;">
+                    <input type="text" class="form-control" id="newAddCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}.." style="background: transparent; border-radius: 0;">
                     <ul>
                       
                     </ul>
@@ -94,86 +117,92 @@ const taskManagement = {
                      style="width:100%;padding:0px;margin:0px;">
                     <div class="col-12 text-center canvas_canvas_msg "
                          style='border: 1px dashed #525596;border-radius: 5px;color: #bbbbcf;'>
-                        <h5>Copy and Paste Image Here</h5>
+                        <h5>${lang_task.windowAddTask.copyPasteImg}</h5>
                     </div>
                 </div>
                 <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" >
                     <div data-toggle="tooltip" id="file1134"                                         
                          class=" tooltipMan component-class  
                          col-lg-12 hover-prototype-selector">
+                         <span class="cs-btn-border">
                          <label class="cs-file-upload">
-                            <input class="form-control saTypeFilePicherUploadFile component-input-class" 
+                            <input class="form-control saTypeFilePicherUploadFileTask component-input-class" 
                                    sa-type="filepicker"  type="file" value="" row-no="" 
                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                    multiple="" 
                                    fname="">
-                                   Attach a file
+                                   ${lang_task.windowAddTask.attachFile}
                         </label>
+                        </span>
                         <div class="progress_bar_new" id="progress_bar_new"></div>
                     </div>
                 </div>
             </div>`
             },
             genTaskDeadLineBlockTime: function () {
-                return `<div class="mr-auto p-2">
+                return `<div class="mr-auto pl-0 pr-0 pb-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">Start Date</div>                                                 
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                           </span>
-                                           <input type='text' id="taskDeadlineStartDade" class="form-control" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                           </span>
-                                           <input type='text' id="taskDeadlineStartTime" class="form-control" style="width:50px;" />
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                        <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">End Date</div>
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        <div class="col-lg-6  mt-2 cs-p-rem">
+                            <div class="cs-input-group p-0">
+                            <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDeadlineEndDade" class="form-control" />
+                                            <input type='text' id="taskDeadlineStartDade" class="form-control taskDeadlineDate" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDeadlineEndTime" class="form-control" style="width:50px;" />
+                                            <input type='text' id="taskDeadlineStartTime" class="form-control taskDeadlineTime" style="width:50px;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
-                            <div class="cs-input-group">
-                                <div class="input-group-addon">Responsible</div>
-                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
-                                        id='bug_filter_assignee_id_add' title="Assignee"></select>
+                        <div class="col-lg-6 mt-2 cs-p-rem">
+                          <div class="cs-input-group p-0">
+                            <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDeadlineEndDade" class="form-control taskDeadlineDate" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDeadlineEndTime" class="form-control taskDeadlineTime" style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                       
+                        <div class="col-lg-6 mt-2 cs-p-rem">
+                            <div class="cs-input-group p-0">
+                                <div class="input-group-addon">Sprint</div>
+                                <select multiple class="add_task_sprint issue_selectpicker"  id="add_task_sprint" data-live-search="true">
+                                   
+                                </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
-                            <div class="cs-input-group">
-                                <div class="input-group-addon">Categories</div>
-                                <select class="run_task_categories"  id="run_task_categories" data-live-search="true">
-                                    <option value="cat1">Software</option>
-                                    <option value="ca2">Back-end</option>
-                                    <option value="cat3">Front-end</option>
+                        <div class="col-lg-6 mt-2 cs-p-rem">
+                            <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
+                                <select multiple class="run_task_categories issue_selectpicker"  id="run_task_categories" data-live-search="true">
+                                   
                                 </select>
                             </div>
                         </div>
@@ -185,7 +214,7 @@ const taskManagement = {
                 return `  <div class="p-2 mt-2 ml-4">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Tapşırıq</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.task}</div>
                         <div class="tapshiriq-btn active" id="tapshiriq-btn">
                             <i class="cs-svg-icon tapshiriq"></i>
                             <i class="cs-svg-icon tapshiriq-light"></i>
@@ -198,7 +227,7 @@ const taskManagement = {
                 return ` <div class="p-2 mt-2">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Toplantı</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.meeting}</div>
                         <div class="toplanti-btn" id="toplanti-btn">
                             <i class="cs-svg-icon toplanti"></i>
                             <i class="cs-svg-icon toplanti-light"></i>
@@ -211,16 +240,15 @@ const taskManagement = {
                 return `  <div class="row">
               <div class="cs-flex-col flex-item ml-3 mt-2 horizontal">
                   <div class="cs-input-group mt-2">
-                      <label class="checkmarkcontainer">Notify you about the confirmation?
+                      <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
                           <input type="checkbox" id="sendnotification">
                           <span class="checkmark"></span>
                       </label>
-                      <label class="">
-                      <input type="checkbox" checked='true' id="after_insert_modal">
-                      After insert closed Modal
-                      
-                
-                  </label>
+
+                      <label class="checkmarkcontainer"> ${lang_task.windowAddTask.closeAfterInsert}
+                            <input type="checkbox" checked='true' id="after_insert_modal">
+                            <span class="checkmark"></span>
+                      </label>
                   </div>
               </div>
           </div>`
@@ -230,7 +258,7 @@ const taskManagement = {
                     var div = `
                      ${this.genTabHeader()}
                      <div class="tab-content" id="myTabContent">
-                     ${this.genDetailsBlock()}
+                     ${/* notChwk()? */this.genDetailsBlock()/* :"" */}
                      ${this.genScheduleBlock()}
                      ${this.genObserverBlock()}
                      ${this.genEventBlock()}
@@ -239,57 +267,75 @@ const taskManagement = {
                     return div
                 },
                 genTabHeader: function () {
-                    return ` <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>Details</span></a>
-                    </li>
-                    <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>Schedule</span></a>
-                    </li>
-                    <!-- <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"> <span>Check List</span></a>
-                    </li> -->
-                    <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>Observer</span></a>
-                    </li>
-                    <!-- <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>Subtask</span></a>
-                    </li> -->
-                    <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>Events</span></a>
-                    </li>
-                </ul>   `
+                    return `<div class="d-flex" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important;">
+                        <div class="schedule-dcbtn" style="display:none;">
+                            <div class="row">
+                                <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                    <div class="cs-input-group">
+                                        <label class="switch bcs-swith">
+                                            <input type="checkbox" id="runTaskAvtivateSchedule">
+                                            <span class="slider round">
+                                                <small class="deactive">Deactive</small>
+                                                <small class="active">Active</small>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
+                                </li>
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link task-tab2" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
+                                </li>
+                            
+                            <!-- <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
+                                </li>-->
+            
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>`
                 },
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                     <div class='row'>
-                        <div class="col-lg-6  mt-2">
+                    <div class="col-lg-6  mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control" data-live-search="true" data-actions-box="true"
+                                <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
                                         style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
-                                        title="Project"></select>
+                                        title="${lang_task.rightBar.project}"></select>
                             </div>
                         </div>
+                    
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                        data-live-search="true" id='bug_filter_backlog_id_add' title="Story Card">
+                                <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
+                                        data-live-search="true" id='bug_filter_backlog_id_add' title="${lang_task.rightBar.storyCart}">
                                 </select>
                             </div>
                         </div>
+                   
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                        data-live-search="true" id='bug_task_type_id_add' title="Task Type"></select>
+                                <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
+                                        data-live-search="true" id='bug_task_type_id_add' title="${lang_task.rightBar.taskType}"></select>
                             </div>
                         </div>
+                       
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                        id='bug_task_nature_id_add' title="Task Nature">
-                                    <option value="bug" selected="">Bug</option>
-                                    <option value="change" selected="">Change Request</option>
-                                    <option value="new" selected="">New Request</option>
+                                <select class="form-control bug-mgmt-filter-select issue_selectpicker  " data-actions-box="true" onchange=''
+                                        id='bug_task_nature_id_add' title="${lang_task.rightBar.taskNature}">
+                                    <option value="bug" selected="">${lang_task.table.taskNature.bug}</option>
+                                    <option value="change" selected="">${lang_task.table.taskNature.changeRequest}</option>
+                                    <option value="new" selected="">${lang_task.table.taskNature.newRequest}</option>
                                 </select>
                             </div>
                         </div>
@@ -298,53 +344,40 @@ const taskManagement = {
                 },
                 genScheduleBlock: function () {
                     return ` <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
-                   <div class="row">
-                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                           <div class="cs-input-group">
-                               <label class="switch bcs-swith">
-                                   <input type="checkbox" id="runTaskAvtivateSchedule">
-                                   <span class="slider round">
-                                       <small class="deactive">Deactive</small>
-                                       <small class="active">Active</small>
-                                   </span>
-                               </label>
-                           </div>
-                       </div>
-                   </div>
                    <div class="row rsoon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Start Date</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>
                                <input class="form-control" name="runTaskStartDate" id="runTaskStartDate" type="date" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">End Date</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                                <input class="form-control" name="runTaskiceEndDate" id="runTaskEndDate" type="text" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Run Time</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
                                <input class="form-control" name="runTaskTime" id="runTaskTime" type="text" required>
                            </div>
                        </div>
 
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Intensive</div>
-                               <select class="" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
-                                   <option value="weekly">Weekly</option>
-                                   <option value="monthly">Monthly</option>
-                                   <option value="yearly">Yearly</option>
+                               <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
+                               <select class="issue_selectpicker" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
+                                   <option value="weekly">${lang_task.windowAddTask.weekly}</option>
+                                   <option value="monthly">${lang_task.windowAddTask.monthly}</option>
+                                   <option value="yearly">${lang_task.windowAddTask.yearly}</option>
                                </select>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Repeat every</div>
-                               <select class="" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
+                               <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
                                    <option value="1">1</option>
                                    <option value="2">2</option>
                                    <option value="3">3</option>
@@ -363,21 +396,21 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">Status</div>
-                               <select class="" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
-                                   <option value="active">Active</option>
-                                   <option value="passive">Passive</option>
+                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
+                                   <option value="active">${lang_task.topBar.tableTypeSelector.active}</option>
+                                   <option value="passive">${lang_task.topBar.tableTypeSelector.active}</option>
                                </select>
                            </div>
                        </div>
                    </div>
                    <div class="row rsoon weekly-actions run-intensive run-enabled">
                        <div class="col-12">
-                           <h5 class="section-title"><strong>Weekly Actions</strong></h5>
+                           <h5 class="section-title"><strong>${lang_task.windowAddTask.weeklyAction}</strong></h5>
                        </div>
                        <div class="col-md-3 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Weekday</div>
-                               <select class="" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
+                               <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
                                    <option value="monday">Monday</option>
                                    <option value="tuesday">Tuesday</option>
                                    <option value="wednesday">Wednesday</option>
@@ -429,7 +462,7 @@ const taskManagement = {
                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group ml-3">
                                        <div class="input-group-addon">Day of Month</div>
-                                       <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true">
+                                       <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true">
                                            <option value="1">1</option>
                                            <option value="2">3</option>
                                            <option value="3">3</option>
@@ -473,7 +506,7 @@ const taskManagement = {
                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
                                    <div class="cs-input-group">
                                        <div class="input-group-addon">Action</div>
-                                       <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select" data-live-search="true">
+                                       <select class="issue_selectpicker" name="swofm_fl_action_select" id="swofm_fl_action_select" data-live-search="true">
                                            <option value="first">First</option>
                                            <option value="last">Last</option>
                                        </select>
@@ -482,7 +515,7 @@ const taskManagement = {
                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group">
                                        <div class="input-group-addon">Weekdays</div>
-                                       <select name="swofm_weekday_select" id="swofm_weekday_select" data-live-search="true">
+                                       <select class='issue_selectpicker' name="swofm_weekday_select" id="swofm_weekday_select" data-live-search="true">
                                            <option value="monday">Monday</option>
                                            <option value="tuesday">Tuesday</option>
                                            <option value="wednesday">Wednesday</option>
@@ -512,7 +545,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">Select Reminder</div>
-                               <select class="" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>
                                    <option value="10_minutes_before">10 minutes before</option>
@@ -536,13 +569,13 @@ const taskManagement = {
                </div>`
                 },
                 genObserverBlock: function () {
+                    return'';
                     return `<div class="tab-pane fade task-check-list-created cs-box-background" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
                  <div class="cs-input-group mb-3 ml-2">
-                     <div class="input-group-addon">Observer Name</div>
+                     <div class="input-group-addon">${lang_task.windowAddTask.observerName}</div>
                      <div class="task-check-list-observer p-0 mt-1 mb-3">
-                         <!-- <button class='btn loadUserForObserver'>Load User</button> -->
                          <select class="form-control" id="createdtask_oblerverlist"></select>
-                         <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
+                         <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> ${lang_task.windowAddTask.addObserver}</button>
                      </div>
                      <div class="task-observer-list">
 
@@ -573,49 +606,49 @@ const taskManagement = {
                     <div class="row">
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Subject</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.subject}</div>
                                 <input class="form-control" name="mezmun" id="ivent-mezmun" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Structure</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.structure}</div>
                                 <input class="form-control" name="struktur" id="ivent-struktur" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Type</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.type}</div>
                                 <input class="form-control" name="nov" id="ivent-nov" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Responsible person</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.responsiblePerson}</div>
                                 <input class="form-control" name="mesulShexs" id="ivent-mesulShexs" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Participant</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.participant}</div>
                                 <input class="form-control" name="mesulShexs" id="ivent-istirakci" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Counterparty</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.counterparty}</div>
                                 <input class="form-control" name="mesulShexs" id="ivent-kontragent" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Location</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.location}</div>
                                 <input class="form-control" name="yer" id="ivent-yer" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Note</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.note}</div>
                                 <input class="form-control" name="qeyd" id="ivent-qeyd" type="text">
                             </div>
                         </div>
@@ -647,31 +680,33 @@ const taskManagement = {
                     that.insertObserverTask(res.kv.id);
                     that.insertCheckListComulativ(res.kv.id);
                     getBugList();
-                    Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
-                     if($("#after_insert_modal").prop("checked")){
+                    Toaster.showMessage(lang_task.windowAddTask.addTaskMessageSucc);
+                    if ($("#after_insert_modal").prop("checked")) {
                         $("#issue-managment-add-task").modal("hide");
-                       
-                     }
-                     reset_task_data();
+
+                    }
+                   $("#addIssueButtonId").removeAttr("disabled");
+                   updateSpirntTaskById($('#add_task_sprint').val(),res.kv.id);
+                   updateLabelTaskById($('#run_task_categories').val(),res.kv.id);
                 },
                 error: function () {
-                    Toaster.showError(('Tapşırıq daxil edilmədi'));
+                    Toaster.showError((lang_task.windowAddTask.addTaskMessageErr));
                 }
             });
         },
         getValueCreateModalScreen: function () {
             var val = $('#taskNameInputNew2').val();
             if (!val) {
-                Toaster.showError('Məzmun daxil edilməmişdir.');
+                Toaster.showError(lang_task.windowAddTask.errorMessageTask);
                 return
             }
 
             var data = {};
 
             data.comment = $('#addComment4Task_comment_new').val();
-            var files = $('#addComment4Task_addnewfile').attr('fname');
+            var files = $('#addComment4Task_addnewfile').attr('fname') +"|";
 
-            $('.canvas-sub-class').each(function (e) {
+            $('#canvasdiv_taskCreate .canvas-sub-class').each(function (e) {
                 files += $(this).attr('fname') + "|";
             })
 
@@ -686,7 +721,7 @@ const taskManagement = {
             data.filename = files;
             data.fkProjectId = $('#bug_filter_project_id_add').val();
             data.fkBacklogId = $('#bug_filter_backlog_id_add').val();
-            data.fkAssigneeId = $('#bug_filter_assignee_id_add').val();
+            data.fkAssigneeId = $('.assigne-div-add-issue').getVal();
             data.fkTaskTypeId = $("#bug_task_type_id_add").val();
             data.taskNature = $("#bug_task_nature_id_add").val();
             data.taskPriority = $("#bug_filter_priority_add").val();
@@ -696,13 +731,14 @@ const taskManagement = {
             data.startTime = $('#taskDeadlineStartTime').val();
             data.endTime = $('#taskDeadlineEndTime').val();
             data.endDate = $('#taskDeadlineEndDade').val();
-            data.isMeet = ($("#tapshiriq-btn").hasClass("active"))?"1":"0";
+            data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "0" : "1";
             data.fkParentTaskId = $("#parent-task-id-input").val();
 
 
 
             // data.description = $("#bug_filter_project_id_add").val();
-
+            reset_task_data();
+            $(this).attr("disabled",'disabled');
             this.insertNewTaskApi(data);
         },
         insertEventByTaskId: function (id) {
@@ -737,7 +773,7 @@ const taskManagement = {
                         }
 
                     } catch (error) {
-                        msgMessage = 'Events successfully created!';
+                        msgMessage = lang_task.windowAddTask.eventMessageAdd;
                         Toaster.showMessage(msgMessage);
                     }
 
@@ -751,15 +787,15 @@ const taskManagement = {
         insertObserverTask: function (taskId) {
             try {
                 var userList = "";
-                var tbl = $("#issue-managment-add-task .task-observer-list>table>tr");
+                var tbl = $(".observer-div-add-issue").getVal();
 
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
-                    userList += $(o).attr("id") + ",";
+                    userList += o + ",";
                 }
-                 if(!userList){
-                   return
-                 }
+                if (!userList) {
+                    return
+                }
                 callService('serviceTminsertTaskObserver', {
                     "fkTaskId": taskId,
                     "fkUserId": userList
@@ -767,11 +803,12 @@ const taskManagement = {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
                 });
             } catch (error) {
-                console.log('task Observer ++++' + error);
+               // console.log('task Observer ++++' + error);
             }
 
 
         },
+
         insertBacklogTaskDetail: function (taskId) {
             try {
                 var data = {};
@@ -797,7 +834,7 @@ const taskManagement = {
                 data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
                 data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
                 data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
-                
+
 
                 callService('serviceRsCreateBacklogTaskDetail', data, true, function () {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
@@ -810,11 +847,11 @@ const taskManagement = {
         },
         insertCheckListComulativ: function (taskId) {
             var itmList = ''
-            var items = $(".task-check-list-box ul>li");
+            var items = $(".issue-managment-add-task .task-check-list-box ul>li");
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
 
-                itmList += $(o).find('.item-note').text() + '|';
+                itmList += $(o).find('textarea').val() + '|';
             }
 
             this.insertCheckListComulativCore(itmList, taskId)
@@ -824,9 +861,9 @@ const taskManagement = {
             var data = {};
             data.fkTaskId = taskId;
             data.itemName = list;
-               if(!list){
-                   return
-               }
+            if (!list) {
+                return
+            }
             callService('serviceTmInsertSingleTaskCheckListCumulativeNew', data, true, function () {
                 if (type === 'update') {
                     taskManagement.updateTask.getCheckListComulativ();
@@ -835,7 +872,6 @@ const taskManagement = {
         },
         loadAssigneesByProjectDetails: function (res) {
             $('#bug_filter_assignee_id').html('');
-            $('#bug_filter_assignee_id_add').html('');
             $('#bug_filter_detail_assignee_id_add').html('');
             $('#bug_filter_assignee_id_multi').html('');
             $('#bug_filter_created_by').html('');
@@ -843,30 +879,28 @@ const taskManagement = {
             $('#createdtask_oblerverlist').html('');
             try {
                 var obj = res.tbl[0].r;
-            for (var i in obj) {
-                var o = obj[i];
-                var opt = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
-                $('#bug_filter_assignee_id').append(opt);
-                $('#bug_filter_assignee_id_add').append(opt4);
-                $('#bug_filter_detail_assignee_id_add').append(opt4);
-                $('#bug_filter_assignee_id_multi').append(opt5);
-                $('#bug_filter_created_by').append(opt2);
-                $('#testcase_createdbyfilter').append(opt3);
-                $('#createdtask_oblerverlist').append(opt6);
-             
-            }
+                for (var i in obj) {
+                    var o = obj[i];
+                    var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
+                    $('#bug_filter_assignee_id').append(opt);
+                    $('#bug_filter_detail_assignee_id_add').append(opt4);
+                    $('#bug_filter_assignee_id_multi').append(opt5);
+                    $('#bug_filter_created_by').append(opt2);
+                    $('#testcase_createdbyfilter').append(opt3);
+                    $('#createdtask_oblerverlist').append(opt6);
+
+                }
             } catch (error) {
-                
+
             }
-            
+
             $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
-            $('#bug_filter_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_detail_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_assignee_id_multi').selectpicker('refresh');
             $('#testcase_createdbyfilter').selectpicker('refresh');
@@ -881,20 +915,23 @@ const taskManagement = {
                 $('body').find("#taskMgmtModal").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-
+                cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
+                cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
                 setProjectListByID('bug_filter_project_id_add');
                 $("#taskMgmtModal select.update-selectpicker").selectpicker("refresh");
 
+
             },
             genModalSelfBlock: function () {
-                return `<div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
+                return `<div class="modal fade cs-modal-box ${notChwk()?"":"left  cs-modal-box story-card-modal"} TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
-                          <h6 class="modal-title task-modal-title">
-                              <span class="text card-UserStory-header-text-code">Add Task</span>
+                      <div class="justify-content-center modal-header task-modal-header">
+                          <h6 class="modal-title task-modal-title ">
+                              <span class="text card-UserStory-header-text-code"></span>
                           </h6>
+
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
                           </button>
@@ -908,8 +945,8 @@ const taskManagement = {
                          </div>
                       </div>
                       <div class="row">
-                      <div class="col-lg-12 mt-3"> 
-                          <div class="d-flex pl-3 pr-3 task-deadline-boxes">
+                      <div class="col-lg-12 mt-0"> 
+                          <div class="d-flex task-deadline-boxes">
                           ${this.genTaskDeadLineBlockTime()}
                           ${this.genTaskDeadLineBlockTask()}
                           ${this.genTaskDeadLineBlockEvent()}
@@ -917,7 +954,7 @@ const taskManagement = {
                       </div>
                   </div>
                   <div class="row">
-                  <div class="col-lg-12" style="padding: 0 25px;">
+                  <div class="col-lg-12">
                   <div class="comment-seqment">
                   ${this.genTabBlock.Init()}
                     </div>
@@ -927,20 +964,25 @@ const taskManagement = {
  
 
                       </div>
+                      <div class="modal-footer">
+                      <div class="assigne-div-update-issue"></div>
+                      <div class="observer-div-update-issue"></div>
+                          <button type="button" id="" class="btn btn-primary">---</button>
+                      </div>
                   </div>
               </div>
           
           </div>`
             },
             genTitleBlock: function () {
-                return ` <div class="cs-input-group mb-3">
+                return ` <div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
                         <div class="Story-card-Header-task">
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
                                 <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 0;">
-                                    <input class="card-UserStory-header-input form-control" type="text" placeholder="e.g., Renew gym every May 1st #Sport">
+                                    <input class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
                                     <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-check"></i>
@@ -960,15 +1002,14 @@ const taskManagement = {
                                     </a>
         
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">Create
-                                            Child Task</a>
-                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward
-                                            To</a>
-                                        <a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign
-                                            To</a>
-                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>
-                                        <a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>
-                                        <a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>
+                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">${getOperName("childTask")}</a>
+                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">${getOperName("ForwardTaskTo")}</a>
+                                    
+                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${getOperName("Duplicate")}</a>
+                                        <a class="dropdown-item" href="#" onclick="rejectTask()">${getOperName("rejectTask")}</a>
+                                        <a class="dropdown-item" href="#" onclick="iDidIt()">${getOperName("ididit")}
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="deleteTask()">${lang_task.windowUpdateTask.Delete}</a>
                                     </div>
                                 </div>
         
@@ -976,8 +1017,8 @@ const taskManagement = {
         
                         </div>
                     </div>
-                    <div class="p-0">
-                        <div class="priority-btn"><!-- if active ( class name -- active ) -->
+                    <div class="p-0" style="margin-top: 3px;">
+                        <div  id="updateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
                     </div>
@@ -987,7 +1028,7 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input type="text" class="form-control" id="updateCheckList" placeholder="add check words..." style="background: transparent; border-radius: 0;">
+                    <input type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
                     <ul>
                     </ul>
                 </div>
@@ -996,90 +1037,96 @@ const taskManagement = {
             genFileAddBlock: function () {
                 return `<div class="cs-input-group">
                               
-                <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_taskCreate"
+                <div class="row canvas_canvas commentsubmit-seqment" id=""
                      style="width:100%;padding:0px;margin:0px;">
                     <div class="col-12 text-center canvas_canvas_msg "
                          style='border: 1px dashed #525596;border-radius: 5px;color: #bbbbcf;'>
-                        <h5>Copy and Paste Image Here</h5>
+                        <h5>${lang_task.windowAddTask.copyPasteImg}</h5>
                     </div>
                 </div>
                 <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" >
                     <div data-toggle="tooltip" id="file1134"                                         
                          class=" tooltipMan component-class  
                          col-lg-12 hover-prototype-selector">
-                         <label class="cs-file-upload">
-                            <input class="form-control saTypeFilePicherUploadFile component-input-class" 
-                                   sa-type="filepicker"  type="file" value="" row-no="" 
-                                   pdid="21112211275108954370" id="addComment4Task_addnewfile" 
-                                   multiple="" 
-                                   fname="">
-                                   Attach a file
-                        </label>
+                         <span class="cs-btn-border">
+                            <label class="cs-file-upload">
+                                <input class="form-control saTypeFilePicherUploadFileTask component-input-class" 
+                                    sa-type="filepicker"  type="file" value="" row-no="" 
+                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
+                                    multiple="" 
+                                    fname="">
+                                    ${lang_task.windowAddTask.attachFile}
+                            </label>
+                         </span>
                         <div class="progress_bar_new" id="progress_bar_new"></div>
                     </div>
                 </div>
             </div>`
             },
             genTaskDeadLineBlockTime: function () {
-                return `<div class="mr-auto p-2">
+                return `<div class="mr-auto pl-0 pr-0 pb-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">Start Date</div>                                                 
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                           </span>
-                                           <input type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                           </span>
-                                           <input type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                        <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">End Date</div>
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        <div class="col-lg-6 mt-3 cs-p-rem">
+                            <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineEndDade" class="form-control" />
+                                            <input type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
+                                            <input type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                        <div class="col-lg-6 mt-3 cs-p-rem">
+                           <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDetailDeadlineEndDade" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
-                                <div class="input-group-addon">Responsible</div>
-                                <select class="form-control update-selectpicker" data-actions-box="true"  data-live-search="true"
-                                        id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
+                                <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
+                                <select class="run_task_categories update-selectpicker issue_selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
+                                 
+                                </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                        <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
-                                <div class="input-group-addon">Categories</div>
-                                <select class="run_task_categories update-selectpicker"   id="run_task_detail_detail_categories" data-live-search="true">
-                                    <option value="cat1">Software</option>
-                                    <option value="ca2">Back-end</option>
-                                    <option value="cat3">Front-end</option>
+                                <div class="input-group-addon">Sprint</div>
+                                <select class="run_task_sprint update-selectpicker issue_selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
+                                
                                 </select>
                             </div>
                         </div>
@@ -1091,7 +1138,7 @@ const taskManagement = {
                 return `       <div class="p-2 mt-2 ml-4">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Tapşırıq</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.task}</div>
                         <div class="tapshiriq-btn active" id="tapshiriq-d-btn">
                             <i class="cs-svg-icon tapshiriq"></i>
                             <i class="cs-svg-icon tapshiriq-light"></i>
@@ -1104,7 +1151,7 @@ const taskManagement = {
                 return ` <div class="p-2 mt-2">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Toplantı</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.meeting}</div>
                         <div class="toplanti-btn" id="toplanti-d-btn">
                             <i class="cs-svg-icon toplanti"></i>
                             <i class="cs-svg-icon toplanti-light"></i>
@@ -1120,7 +1167,7 @@ const taskManagement = {
               </div>
               <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
                   <div class="cs-input-group mt-2">
-                      <label class="checkmarkcontainer">Notify you about the confirmation?
+                      <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
                           <input type="checkbox" id="sendnotification_detail">
                           <span class="checkmark"></span>
                       </label>
@@ -1144,36 +1191,52 @@ const taskManagement = {
                     return div
                 },
                 genTabHeader: function () {
-                    return `  <ul class="nav nav-pills mb-3 p-2 mt-3" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>Comments</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>Details</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>Schedule</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>Observer</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>Subtask</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>Events</span></a>
-                    </li>
-                </ul>`
+                    return `<div class="d-flex" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important;">
+                        <div class="d-schedule-dcbtn" style="display:none">
+                            <div class="row">
+                                <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                    <div class="cs-input-group">
+                                        <label class="switch bcs-swith">
+                                            <input type="checkbox" id="runTaskStartDate_activateschedule">
+                                            <span class="slider round">
+                                                <small class="deactive">Deactive</small>
+                                                <small class="active">Active</small>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>${lang_task.windowUpdateTask.comment}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link d-task-tab2" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowUpdateTask.subtask}</span></a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
+                                </li>
+                                
+                
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                </li>
+                             </ul>
+                        </div>
+                    </div>`
                 },
                 genCommentBlock: function () {
-                    return `  <div class="tab-pane fade active show cs-box-background" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab4">
-                    <div class="cs-input-group mb-3 mt-3">
+                    return `<div class="tab-pane fade active show cs-box-background" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab4">
+                    <div class="cs-input-group mb-3 mt-0">
                         <div class="commentwritepanel">
                             <div class="input-group-addon">Description</div>
-                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
-                                      placeholder="Add a comment.." rows="1"></textarea>
-
-                            <br>
+                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput addComment4Task_comment form-control cs-taskcomment-textarea" placeholder="Add a comment.." rows="1"></textarea>
+                           
                             <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
                                  style="width:100%;display: none; padding:0px;margin:0px;">
                                 <div class="col-12 text-center canvas_canvas_msg "
@@ -1187,13 +1250,9 @@ const taskManagement = {
                                     <button class="btn btn-primary" type="submit"
                                             onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
                                 </div>
-                                <div class="deletecomment flex-fill mr-1">
-                                    <button class="btn " type="submit">Cancel</button>
-                                </div>
+                           
                                 <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
                                        multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
-
-
                             </div>
                         </div>
                     </div>
@@ -1211,25 +1270,24 @@ const taskManagement = {
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
                                     <div class="form-group ">
 
-                                        <select class="form-control update-selectpicker task-info-modal-status" style="width:auto"
+                                        <select class="form-control update-selectpicker issue_selectpicker task-info-modal-status" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
                                             <option value='new'><span
                                                 class="us-item-status-new comment-content-header-status">New</span></option>
                                             <option value='ongoing'> <span
                                                 class="us-item-status-ongoing comment-content-header-status"
                                                 id="">Ongoing</span></option>
-                                            <option value='closed'><span
-                                                class="us-item-status-closed comment-content-header-status"
-                                                id="">Closed</span></option>
+                                          
                                             <option value='waiting'><span
                                                 class="us-item-status-waiting comment-content-header-status"
                                                 id="">Waiting</span></option>
-                                            <option value='canceled'><span
-                                                class="us-item-status-canceled comment-content-header-status"
-                                                id="">Canceled</span></option>
+                                            
                                             <option value='rejected'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">Rejected</span></option>
+                                            <option value='canceled'><span
+                                                class="us-item-status-rejected comment-content-header-status"
+                                                id="">Canceled</span></option>
                                             <option value='UAT'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">UAT</span></option>
@@ -1246,7 +1304,7 @@ const taskManagement = {
                                     <label class="input-group-addon">Task Nature</label>
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
                                     <div class="form-group">
-                                        <select class="form-control update-selectpicker task-info-modal-nature" style="width:auto"
+                                        <select class="form-control update-selectpicker task-info-modal-nature issue_selectpicker" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'taskNature')" id="task-info-modal-nature">
                                             <option value='new'><span
                                                 class="us-item-status-new comment-content-header-status">New Request</span>
@@ -1268,7 +1326,7 @@ const taskManagement = {
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
                                     <div class="form-group">
 
-                                        <select class="form-control update-selectpicker task-info-modal-tasktype" style="width:auto"
+                                        <select class="form-control update-selectpicker task-info-modal-tasktype issue_selectpicker" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
                                                 id="task-info-modal-tasktype">
 
@@ -1282,7 +1340,7 @@ const taskManagement = {
                                     <label class="input-group-addon">Priority</label>
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
                                     <div class="form-group ">
-                                        <select class="form-control update-selectpicker task-info-modal-priority" style="width:auto"
+                                        <select class="form-control update-selectpicker issue_selectpicker task-info-modal-priority" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'taskPriority')"
                                                 id="task-info-modal-priority">
                                             <option value='1' selected>1- Lowest</option>
@@ -1412,7 +1470,7 @@ const taskManagement = {
                             <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
                             <div class="form-group statusSelectSelect">
         
-                                <select class="form-control" 
+                                <select class="form-control issue_selectpicker" 
                                         style="width:auto"
                                         onchange="updateTask4ShortChange(this, 'taskVersion')"
                                         id="task-info-change-version">
@@ -1427,43 +1485,31 @@ const taskManagement = {
                 },
                 genScheduleBlock: function () {
                     return `<div class="tab-pane fade shedule-elements cs-box-background" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
-                   <div class="row">
-                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                           <div class="cs-input-group">
-                               <label class="switch bcs-swith">
-                                   <input type="checkbox" id="runTaskStartDate_activateschedule">
-                                   <span class="slider round">
-                                       <small class="deactive">Deactive</small>
-                                       <small class="active">Active</small>
-                                   </span>
-                               </label>
-                           </div>
-                       </div>
-                   </div>
+                   
                    <div class="row soon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Start Date</label>
-                               <input class="form-control cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
+                               <input class="form-control runTaskDate_detail cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">End Date</label>
-                               <input class="form-control cs-input" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
+                               <input class="form-control cs-input runTaskDate_detail" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Run Time</label>
-                               <input class="form-control cs-input" name="runTaskTime" id="runTaskTime_detail" type="text" required>
+                               <input class="form-control cs-input taskDeadlineTime" name="runTaskTime" id="runTaskTime_detail" type="text" required>
                            </div>
                        </div>
 
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Intensive</label>
-                               <select class="" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_intensive_select issue_selectpicker" id='run_task_intensive_select_detail' data-live-search="true">
                                    <option value="weekly">Weekly</option>
                                    <option value="monthly">Monthly</option>
                                    <option value="yearly">Yearly</option>
@@ -1473,7 +1519,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Repeat every</label>
-                               <select class="" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
                                    <option value="1">1</option>
                                    <option value="2">2</option>
                                    <option value="3">3</option>
@@ -1492,7 +1538,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Status</label>
-                               <select class="" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
                                    <option value="active">Active</option>
                                    <option value="passive">Passive</option>
                                </select>
@@ -1506,7 +1552,7 @@ const taskManagement = {
                        <div class="col-md-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Weekday</label>
-                               <select class="" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
                                    <option value="monday">Monday</option>
                                    <option value="tuesday">Tuesday</option>
                                    <option value="wednesday">Wednesday</option>
@@ -1558,7 +1604,7 @@ const taskManagement = {
                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group ml-3">
                                        <label class="input-group-addon">Day of Month</label>
-                                       <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
+                                       <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
                                            <option value="1">1</option>
                                            <option value="2">3</option>
                                            <option value="3">3</option>
@@ -1602,7 +1648,7 @@ const taskManagement = {
                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
                                    <div class="cs-input-group">
                                        <label class="input-group-addon">Action</label>
-                                       <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
+                                       <select class="issue_selectpicker" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
                                            <option value="first">First</option>
                                            <option value="last">Last</option>
                                        </select>
@@ -1611,7 +1657,7 @@ const taskManagement = {
                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group">
                                        <label class="input-group-addon">Weekdays</label>
-                                       <select name="swofm_weekday_select" id="swofm_weekday_select_detail" data-live-search="true">
+                                       <select name="swofm_weekday_select issue_selectpicker" id="swofm_weekday_select_detail" data-live-search="true">
                                            <option value="monday">Monday</option>
                                            <option value="tuesday">Tuesday</option>
                                            <option value="wednesday">Wednesday</option>
@@ -1641,7 +1687,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Select Reminder</label>
-                               <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>
                                    <option value="10_minutes_before">10 minutes before</option>
@@ -1664,12 +1710,13 @@ const taskManagement = {
                </div>`
                 },
                 genObserverBlock: function () {
+                    return ""
                     return `  <div class="tab-pane fade cs-box-background" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
                  <div class="cs-input-group mb-3 ml-2">
                      <div class="input-group-addon">Observer Name</div>
                      <div class="task-check-list-observer p-0 mt-1 mb-3">
                          <!-- <button class='btn loadUserForObserver'>Load User</button> -->
-                         <select class="form-control" id="updatetask_oblerverlist"></select>
+                         <select class="form-control issue_selectpicker" id="updatetask_oblerverlist issue_selectpicker"></select>
                          <button class='btn addObserverToTAskUpdate'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
                      </div>
                      <div class="task-observer-list">
@@ -1685,12 +1732,17 @@ const taskManagement = {
                         <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Task ID</th>
+                                <th><i class="cs-svg-icon numbers"></i></th>
+                                <th><i class="cs-svg-icon id"></i></th>
+                                <th><i class="cs-svg-icon deadline"></i></th>
+                                <th><i class="cs-svg-icon status"></i></th>
                                     <th>Parent Task <a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
                                             <i class="fas fa-plus" aria-hidden="true"></i>
                                         </a></th>
-                                    <th>Task Status</th>
+                                         
+                                <th><i class="cs-svg-icon task-user-1"></i></th>                                                  
+                                <th><i class="cs-svg-icon task-user-2"></i></th>                                                  
+                                <th><i class="cs-svg-icon calendar-01-dark"></i></th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -1717,13 +1769,18 @@ const taskManagement = {
                         <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Task ID</th>
+                                    <th><i class="cs-svg-icon numbers"></i></th>
+                                    <th><i class="cs-svg-icon id"></i></th>
+                                    <th><i class="cs-svg-icon deadline"></i></th>
+                                    <th><i class="cs-svg-icon status"></i></th>
                                     <th>Child Task
                                     <a href="#" class='comment-content-header-history' id="add-child-task-open-modal" style="color: #03396c;">
-                                    <i class="fas fa-plus" aria-hidden="true"></i>
-                                </a></th>                                                    
-                                    <th>Task Status</th>
+                                     <i class="fas fa-plus" aria-hidden="true"></i>
+                                     </a></th>  
+                                    <th><i class="cs-svg-icon task-user-1"></i></th>                                                  
+                                    <th><i class="cs-svg-icon task-user-2"></i></th>                                                  
+                                    <th><i class="cs-svg-icon calendar-01-dark"></i></th>                                                  
+                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -1824,43 +1881,55 @@ const taskManagement = {
             if (!taskId) {
                 return;
             }
+            global_var.active_canvas = 'comment';
             global_var.current_issue_id = taskId;
             Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
-          /*   global_var.current_issue_is_hide = "0";
-            Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
+            /*   global_var.current_issue_is_hide = "0";
+              Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
 
             //Task card-da Story Card-linke basanda istifade edilir.
+            var dwlmt = $('#task-info-modal-tasktype')
+            taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
             if (projectId !== global_var.current_project_id) {
                 global_var.current_project_id = projectId;
                 new UserStory().refreshBacklog4Bug(true);
             }
+            
+            this.getLabelTask($('#run_task_detail_detail_categories'));
+            this.getSprintTask($('#run_task_detail_detail_sprint'));
+            this.getTaskSpirntList(taskId)
+            this.getTaskLabelList(taskId)
 
             getProjectUsers();
             $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
 
             let headerText = $(el).html();
             $(".card-UserStory-header-text").html(headerText);
-           
-            taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'update')
+
+            taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'update')
             loadTaskInfoToContainer(taskId, projectId);
             taskManagement.updateTask.genCommentListOfTask();
             $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
             $("#task-info-modal-status").selectpicker('refresh');
-            $("#task-mgmt-create-by>img").attr('src',fileUrl(coreBugKV[taskId].createByImage));
+            $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
             $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
-             $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
-             $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
+            $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
+            $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
             $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
-             $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
-             if(coreBugKV[taskId].isMeet==='1'){
+            $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
+            if (coreBugKV[taskId].isMeet === '1') {
                 $("#toplanti-d-btn").click();
-             }else{
+            } else {
                 $("#tapshiriq-btn").click();
-             }
+            }
             $("#taskMgmtModal").modal("show");
-               console.log(coreBugKV[taskId]);
             //set backlog infos
-            
+            if (coreBugKV[taskId].taskPriority === '9') {
+                $("#updateTask-priority-btn").addClass("active");
+            } else {
+                $("#updateTask-priority-btn").removeClass("active");
+            }
+            $('#addComment4Task_comment').autoHeight();
             if (coreBugKV[taskId].backlogName) {
                 $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
                     .attr('pid', coreBugKV[taskId].fkBacklogId)
@@ -1873,7 +1942,8 @@ const taskManagement = {
             this.getTaskEvent(taskId);
             getChildTasks();
             getParentTask();
-           
+            
+
         },
         updateEventByTaskId: function (id) {
 
@@ -1918,15 +1988,15 @@ const taskManagement = {
                 }
             });
         },
-        updateObserverTask: function (taskId,val) {
+        updateObserverTask: function (taskId, val) {
             try {
-                
-                var that  = this ;
+
+                var that = this;
                 callService('serviceTminsertTaskObserver', {
                     "fkTaskId": taskId,
                     "fkUserId": val
                 }, true, function () {
-                     that.getTaskObserverList(taskId);
+                   // that.getTaskObserverList(taskId);
                 });
             } catch (error) {
                 console.log('task Observer ++++' + error);
@@ -2056,7 +2126,8 @@ const taskManagement = {
                                     .attr('type', 'checkbox')
                                     .attr("checked", (o.isChecked === '1') ? true : false))
                                 .append('<span class="checkmark"></span>')))
-                        .append($('<span>')
+                        .append($('<div>')
+                            .addClass('mr-auto w-100')
                             .addClass((o.isChecked === '1') ? 'text-checked' : '')
                             .append($('<textarea>')
                                 .attr('rows', '1')
@@ -2064,12 +2135,15 @@ const taskManagement = {
                                 .attr("oid", o.id)
                                 .addClass("updateTaskcheckListItemName")
                                 .val(o.itemName)))
-                        .append($('<span>')
+                        .append($('<div>')
+                            .addClass('pl-1 p2-1')
                             .append(createdBySpan))
-                        .append($('<span>')
+                        .append($('<div>')
+                            .addClass('pl-1 p2-1')
                             .append(updatedBySpan))
 
-                        .append($('<span>')
+                        .append($('<div>')
+                            .addClass('pl-1 p2-1 d-table')
                             .append($('<a href="#">')
                                 .attr('oid', o.id)
                                 .addClass("taskCheckListItemDelete")
@@ -2077,7 +2151,9 @@ const taskManagement = {
                     ul.append(tr);
 
                 }
-
+                setTimeout(() => {
+                    $('.updateTaskcheckListItemName').autoHeight();
+                }, 200);
                 $('[data-toggle=popover]').popover({
                     html: true,
                     trigger: "hover"
@@ -2098,7 +2174,7 @@ const taskManagement = {
         },
 
         getTaskkObserverListDetaisl: function (res) {
-            var userList = {};
+        /*     var userList = {};
             try {
                 var idx = getIndexOfTable(res, "userList");
                 var objUser = res.tbl[idx].r;
@@ -2107,9 +2183,8 @@ const taskManagement = {
                     userList[o2.id] = o2;
                 }
             } catch (err) {}
-
-
-
+ */
+/* 
             var div = $('.task-observer-list');
             div.html('')
 
@@ -2124,15 +2199,17 @@ const taskManagement = {
                         .text("Observer"))
                 )
             )
-
+ */
             try {
                 var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
                 var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
+                var ts  =  []
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
-
-                    var lst = o.fkUserId.split(',')
-                    for (let l = 0; l < lst.length; l++) {
+                        ts.push(o.fkUserId)
+                   // var lst = o.fkUserId.split(',');
+                   
+                  /*   for (let l = 0; l < lst.length; l++) {
                         const k = lst[l];
                         var userSpan = (k && userList[k]) ?
                             $('<span>')
@@ -2148,7 +2225,7 @@ const taskManagement = {
                             '';
 
                         var tr = $("<tr>")
-                            .append($('<td>').text(( parseFloat(l) + 1)))
+                            .append($('<td>').text((parseFloat(l) + 1)))
                             .append($('<td>')
                                 .append(userSpan))
                             .append($('<td>')
@@ -2158,9 +2235,10 @@ const taskManagement = {
                                     .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')));
                         table.append(tr);
                     }
-
+ */
                 }
-                div.html(table);
+                $(".observer-div-update-issue").getVal(ts);
+               // div.html(table);
             } catch (error) {
 
             }
@@ -2204,12 +2282,12 @@ const taskManagement = {
                     return;
                 }
                 var obj = res.tbl[0].r;
-                var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
+                var div = $('<div></div>');
                 for (var i = 0; i < obj.length; i++) {
 
 
                     var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol1")
-                        .append("<br>");
+                       
                     var div_by_row = $('<div></div>')
                         .addClass("row")
                         .addClass("mangodb");
@@ -2217,17 +2295,20 @@ const taskManagement = {
                         fileUrl(new User().getDefaultUserprofileName()) :
                         fileUrl(obj[i].avatarUrl);
                     var div1 = $('<div></div>')
-                        .addClass("col-1 comment-line1")
+                        .addClass("comment-line1")
                         .append($('<img></img>')
                             .addClass("figure-img img-fluid rounded-circle")
-                            .attr("style", "max-width:28px")
+                            .attr("style", "width: 21px;height: 21px;object-fit: cover;object-position: center center;")
                             .attr("src", img));
                     //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
                     var comment = replaceTags(obj[i].comment);
                     var div2 = $('<div></div>')
-                        .attr('style', "padding-left:0px;font-size:13px;")
-                        .addClass("col-11")
-                        .append($("<span>").append(obj[i].username)
+                        .addClass("col-12").attr('style', "font-size:13px;")
+                        .append($("<div>").addClass('d-flex')
+
+                            .append(div1)
+                            .append($('<div>').addClass('ml-auto')
+                            .append($("<span>").append(obj[i].username)
                             .addClass('comment-content-header-name')
                             .append($("<span>")
                                 .addClass('comment-content-header-history')
@@ -2238,12 +2319,16 @@ const taskManagement = {
                             )
                             .append('&nbsp;&nbsp;&nbsp;')
 
-                            //                            .append($('<a href="#" style="font-size:11px;">')
-                            //                                    .addClass('comment-content-header-name')
-                            //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
-                            //                                    .append("Delete"))
+                                //                            .append($('<a href="#" style="font-size:11px;">')
+                                //                                    .addClass('comment-content-header-name')
+                                //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
+                                //                                    .append("Delete"))
+                            )
+
+                            )
+                            
+                            
                         )
-                        .append("<br>")
                         .append($("<span class='comment-main-span'>")
                             .css('padding-bottom', "5px")
                             .attr("id", obj[i].id)
@@ -2253,7 +2338,7 @@ const taskManagement = {
                     var div2_1 = new UserStory().generateCommentFileLine(obj[i].fileName);
                     var div3 = $('<div></div>').addClass("col-12").append("");
                     div2.append(div2_1)
-                        .append("<br>")
+                        
                     //                    .append($('<a href="#" style="font-size:11px;">')
                     //                            .attr('onclick', " convertCommentHtml2TextArea(this,'" + obj[i].id + "')")
                     //                            .append("Edit"))
@@ -2262,7 +2347,7 @@ const taskManagement = {
                     //                    .append($('<a class="saveComment" href="#" style="display:none;font-size:11px;">')
                     //                            .attr('onclick', "saveComment(this,'" + obj[i].id + "')")
                     //                            .append("Save"));
-                    div_by_row.append(div1).append(div2)
+                    div_by_row.append(div2)
                         .append(div3);
                     div_by_col.append(div_by_row)
                     div.append(div_by_col);
@@ -2278,6 +2363,81 @@ const taskManagement = {
         },
         getTaskDeadLine: function () {
 
+        },
+        getLabelTask: function (elm) {
+           
+            elm.empty();
+            try {
+                var  list  = taskManagement.taskLabelList.tbl[0].r;
+           
+            for (let i = 0; i < list.length; i++) {
+                const o = list[i];
+                elm.append($("<option>")
+                                .val(o.id)
+                               .text(o.name))
+            }
+            } catch (error) {
+                
+            }
+            
+            elm.selectpicker("refresh");
+        },
+        getSprintTask: function (elm) {
+        
+            elm.empty();
+             try {
+                var  list  = taskManagement.taskSprintList.tbl[0].r;
+
+                for (let i = 0; i < list.length; i++) {
+                    const o = list[i];
+                    elm.append($("<option>")
+                                    .val(o.id)
+                                   .text(o.sprintName))
+                }
+             } catch (error) {
+                 
+             }
+             
+             elm.selectpicker("refresh");
+        },
+        getTaskSpirntList: function (taskId) {
+
+            callApi('22012918213902436118',{fkBacklogTaskId:taskId},true,function (res) {
+                try {
+                    var  list  = res.tbl[0].r;
+                    var tb  = []
+                   for (let i = 0; i < list.length; i++) {
+                       const o = list[i];
+                       tb.push(o.fkSprintId);
+                   }
+                   $("#run_task_detail_detail_sprint").val(tb);
+                   $("#run_task_detail_detail_sprint").selectpicker("refresh");
+                } catch (error) {
+                    
+                }
+                  
+           }) 
+        },
+        getTaskLabelList: function (taskId) {
+
+            callApi('22012918304302492366',{fkBacklogTaskId:taskId},true,function (res) {
+                try {
+                    var  list  = res.tbl[0].r;
+                    var tb  = []
+                   for (let i = 0; i < list.length; i++) {
+                       const o = list[i];
+                       tb.push(o.fkLabelId)
+                   }
+               
+                   
+                   $("#run_task_detail_detail_categories").val(tb);
+                   $("#run_task_detail_detail_categories").selectpicker("refresh");
+                   
+                } catch (error) {
+                    
+                }
+            
+           }) 
         },
         getTaskEvent: function (taskId) {
             $('.task-events-updated').attr("data-taskid", '');
@@ -2339,35 +2499,1621 @@ const taskManagement = {
 
         },
         loadAssigneesByProjectDetails: function (res) {
-            var el = $('#bug_filter_detail_assignee_id_update')
+            $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+            return
+           /*  var el = $('#bug_filter_detail_assignee_id_update')
             el.html('');
             try {
-               
-    
+
+
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
                     var o = obj[i];
                     var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                    
+
                     el.append(opt4);
-                   
-                  
-                    
-            
-                } 
-                console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);  
-                el.selectpicker("destroy");             
+
+                }
+                console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+                el.selectpicker("destroy");
                 el.val(coreBugKV[global_var.current_issue_id].fkAssigneeId);
                 el.selectpicker("refresh");
             } catch (error) {
                 el.hide();
-            }
-            
-           
+            } */
+
+
 
         }
 
 
+    },
+    readTask: {
+        Init: function () {
+
+        },
+        genBlockTask: {
+            Init: function (elm) {
+                var div = $(elm);
+                div.empty();
+                var view = localStorage.getItem('task-view-format');
+                div.append(this.genHeader());
+                taskManagement.readTask.genBlockTask.getstatisticList();
+                if (!view) {
+                    view = "table"
+                }
+                if (view === 'kanban') {
+                    div.append(this.genKanbanView.genKanbanBlock());
+                } else if (view === 'table') {
+
+                    div.append(this.genTableView.genTableBlock());
+                    setInterval(function(){ startTimeCurrent("issue-list-datetime") }, 5000);
+                  
+                }
+                genTimePickerById("issue-list-datetime",'up');
+                
+
+            },
+            genCheweekBtn: function (params) {
+                return `<div class="info-box multi-edit-menu d-none pl-0 mr-2" >
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon arrow-1"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon none-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon close-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon right-circle-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon user-eye"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon task-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon chat-circle"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon hour-circle"></i>
+                </div>
+            </div> `
+            },
+            genHeader: function () {
+                return `    <div class="header-info-section d-flex w-100">
+                <div class="mr-auto d-flex p-2">
+                    <div class="d-flex justify-content-start">
+                        <div class="form-group ${notChwk()?"":"d-none"} has-search mr-2">
+                        <div class="has-search-in">
+                            <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
+                            <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
+                        </div>
+                        </div>
+                  
+                        ${notChwk()?` <div class="info-box" style="background: transparent; border: none;">
+                        <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
+                        <div class="bcs-col-btn multi-edit-menu d-none cs-input-group" >
+                           <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>                                                              
+                       </div>
+                  </div>`:this.genCheweekBtn()}  
+                       
+                    </div>
+                    <div class="d-flex justify-content-start" id="issue-list-statistic-block">
+                    </div>    
+                </div>
+                <div class="p-2 mt-2">
+                    <div class="dropdown info-box-dropdown" id="issue-table-aktiv-all">
+                        <a class="btn dropdown-toggle" href="#" role="button" id="task-table-aktiv-all1" data-toggle="dropdown" aria-expanded="false">
+                            <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"}</span> <span id="row-count-table">125</span>
+                        </a>
+                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-table-aktiv-all1">
+                          <a class="dropdown-item" all-aktiv="A" href="#">Aktiv</a>
+                          <a class="dropdown-item" all-aktiv="P" href="#">Passiv</a>
+                          <a class="dropdown-item" all-aktiv="H" href="#">Hamısı</a>
+                        </div>
+                      </div>
+                   </div>
+                </div>`
+            },
+            genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
+        
+                const  lt  = localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"
+                return `
+               <div class="info-box mr-2">
+               <div class="info-item-elements filter-task-list-btn static-class"  data-status="meSend" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
+                   <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
+               </div>
+               <div class="info-item-elements  dropdown-toggle "    data-toggle="dropdown">
+                    <span data-placement="bottom" class='static-class' data-status="myTask" data-toggle="popover" data-trigger="hover" data-content="İş">
+                    <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
+                    </span>
+                </div>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
+                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
+                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
+                </div>
+           </div> 
+           <div class="info-box info-box-mob mr-2">
+           <span class="title">Tarix</span>
+                <div class="info-box-in">
+                    <div class="info-item-elements static-class"  data-status="expired" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                        <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
+                    </div>
+                    <div class="info-item-elements static-class"  data-status="todays" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                        <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
+                    </div>
+                    <div class="info-item-elements static-class"  data-status="notTodays" data-placement="bottom" data-toggle="p
+                    opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
+                        <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
+                    </div>
+                    <div class="info-item-elements static-class"  data-status="noDeadline" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                        <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
+                    </div>
+                </div>
+            </div>
+            ${this.genOperationBlock(lt,newt,ongoing,waiting,closed,rejected,yonledrlb,canceled,btb)}
+           `
+            },
+            genOperationBlock: function (lt,news,ongoing,waiting,closed,rejected,yonlendirilib,canceled,tamamlanib) {
+                return `<div class="info-box info-box-mob">
+                <span class="title">Status</span>
+                <div class="info-box-in">
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='new' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni">
+                    <i class="cs-svg-icon plus-circle"></i> <span>${news}</span>
+                    </div>
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='ongoing' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada">
+                        <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
+                    </div>
+                    <div class="${lt==='A'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='waiting' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə">
+                        <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
+                    </div>
+        
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements " data-status='yonlendirilib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib">
+                        <i class="cs-svg-icon right-circle"></i> <span>${yonlendirilib}</span>
+                    </div>
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='canceled' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib">
+                        <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
+                    </div>
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='rejected' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib">
+                        <i class="cs-svg-icon none"></i> <span>${rejected}</span>
+        
+                    </div>
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='closed' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
+                        <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
+                    </div>
+                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='tamamlanib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
+                        <i class="cs-svg-icon shtamp-circle"></i> <span>${tamamlanib}</span>
+                    </div>
+                </div>
+            </div>`
+            },
+            genFilterProject: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
+                style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
+                data-type="project_id" title="Project"></select>
+            </div>`
+            },
+            genFilterStoryCard: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
+                data-type="backlog_id" title="Story Card">
+               </select>
+            </div>`
+            },
+            genFilterAssigne: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
+                data-type="assignee_id" title="Assignee"></select>
+            </div>`
+            },
+            genFilterClosedBy: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
+                data-type="closed_by" title="Closed By"></select>
+            </div>`
+            },
+            genFilterStatus: function (params) {
+                return `<div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
+                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
+                    title="Status">
+                    <option value='new' >New</option>
+                    <option value='ongoing' >Ongoing</option>
+                    <option value='closed'>Closed</option>
+                    <option value='waiting'>Waiting</option>
+                    <option value='canceled'>Canceled</option>
+                    <option value='rejected' >Rejected</option>
+                    ${notChwk()?`<option value='UAT' > UAT</option>`:""}
+        
+                </select>
+            </div>`
+            },
+            genFilterTaskType: function (params) {
+                return `<div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
+                    title="Task Type">
+                </select>
+            </div>`
+            },
+            genFilterTaskNature: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
+                    <option value='bug' selected>Bug</option>
+                    <option value='change' selected>Change Request</option>
+                    <option value='new' selected>New Request</option>
+                </select>
+            </div>`
+            },
+            genFilterCreatedBy: function (params) {
+                return `  <div class="cs-input-group mt-3">
+                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
+                    data-type="created_by" title="Created by"></select>
+            </div>`
+            },
+            genFilterShowChildTask: function (params) {
+                return `  <div class="cs-input-group mt-3">
+    
+                <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
+                    <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
+                    <span class="checkmark"></span>
+                </label>                    
+            </div>`
+            },
+            genFilterPriorty: function (params) {
+                return `  <div class="cs-input-group mt-3">
+            
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                    data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
+                    <option value=''>None</option>
+                    <option value='1'>1- Lowest</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                    <option value='7'>7</option>
+                    <option value='8'>8</option>
+                    <option value='9'>9 - Highest</option>
+        
+                </select>
+            </div>`
+            },
+            genFilterShowHide: function (params) {
+                return ` <div class="cs-input-group ${notChwk()?"":"d-none"}  mt-3">
+                <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                    id='bug_filter_columns' title="Columns">
+                    <option value='task-status' selected>Status</option>
+                    <option value='task-id' selected>Task ID</option>
+                    <option value='task-name' selected>Description</option>
+                    <option value='task-nature' ${notChwk()?"selected":""}>Task Nature</option>
+                    <option value='assignee' selected>Assignee</option>
+                    <option value='tasktype'  ${notChwk()?"selected":""} >Task Type</option>
+                    <option value='ismeet'  ${notChwk()?"":"selected"} >Task Type</option>
+                    <option value='close-date' >Status Close Date</option> 
+                    <option value='closed-by'>Status Closed By</option> 
+                    <option value='priority'>Priority</option>
+                    <option value='story-card' ${notChwk()?"selected":""}>Story Card</option>
+                    <option value='project' ${notChwk()?"selected":""}>Project</option>
+                    <option value='created-by' selected>Create By</option>
+                    <option value='created-date' selected>Create Date</option>
+                    <option value='last-update'>Late Update</option>
+                    <option value='estimated-hours'>Estimated Hours</option>
+                    <option value='spent-hours'>Spent Hours</option>
+                    <!--<option value='estimated-counter'>Estimated Counter</option>-->
+                    <option value='executed-counter'>Executed Counter</option>
+                    <option value='estimated-budget'>Estimated Budget</option>
+                    <option value='spent-budget'>Spent Budget</option>
+        
+                </select>
+            </div>`
+            },
+            genFilterBlock: function () {
+
+                return `<div class="bugListNavMenu bugList-elements">
+                <div class="main-sorting">
+                     ${this.genFilterClosed()}
+                     ${this.genFilterSortBy()}
+                </div>
+                  ${notChwk()?this.genFilterProject():""}
+                  ${notChwk()?this.genFilterStoryCard():""}
+                  ${this.genFilterAssigne()}
+                  ${notChwk()?this.genFilterClosedBy():""}               
+                  ${this.genFilterStatus()}
+                  ${notChwk()?this.genFilterTaskType():""}  
+                  ${notChwk()?this.genFilterTaskNature():""}
+                  ${this.genFilterCreatedBy()}
+                  ${notChwk()?this.genFilterShowChildTask():""}
+                  ${notChwk()?this.genFilterPriorty():""}
+                  ${this.genFilterShowHide()}    
+            </div>
+                `
+            },
+            genFilterClosed: function () {
+                return `  <div class="row ml-0 mr-0">
+                <div class="d-flex justify-content-center">
+                    <div class="cs-input-group input-group mt-3">
+                    <!--<label class="label-name" for="">Closed Dates</label>-->
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                        </div>
+                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
+                    </div>
+                        <div class="mt-3">
+                            <div class="cs-input-group  cs-pagination-limit">
+                                <select data-type='' class="bug-mgmt-filter-select" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
+                                    <option value='10'>10</option>
+                                    <option value='25' selected> 25</option>
+                                    <option value='50'>50</option>
+                                    <option value='100'>100</option>
+                                    <option value='200'>200</option>
+                                    <option value='300'>300</option>
+                                </select>
+                            </div>
+                            <b id="table-row-count"> </b>
+                        </div>
+                        <div class="cs-input-group text-center mt-3">
+                         <div class="task-clear-filter-btn">
+                            <i class="cs-svg-icon clear-filter"></i>
+                         </div>
+                        </div>
+                </div>
+           
+            <div class="cs-input-group cs-pagination-group-by col-12">
+                    <div class="input-group-addon cs-group-by">Group By</div>
+                    <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
+                        <option value='0' >None</option>
+                        <option value='5' >Task Status</option>
+                        ${
+                            notChwk()?`<option value='7' >Task Nature</option>
+                            <option value='8' >Task Type</option>
+                            <option value='9' >Story Card</option>
+                            <option value='10' >Project</option>
+                        `:""
+                        }
+                        <option value='12' >Create By</option>
+                        <option value='11' >Assignee</option>
+                    </select>
+                </div>
+            </div>`
+            },
+            genFilterSortBy: function () {
+                return `
+                <divv class="row ml-0 mr-0">
+                    <div class="cs-input-group col-12 mt-2">
+                        <div class="input-group-addon">Sort by</div>
+                    </div>
+                    <div class="cs-input-group col-4">
+                        <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
+                        id='bug_filter_sortby' title="Columns">
+                            <option value='task_status' selected>Status</option>
+                            <option value='id' selected>Task ID</option>
+                            <option value='task_name'  accesskey="">Description</option>
+                            <option value='task_nature'  >Task Nature</option>
+                            <option value='fk_assignee_id' >Assignee</option>
+                            <option value='fk_task_type_id' >Task Type</option>
+                            <option value='close_status_date'>Closed Date</option> 
+                            <option value='closed_by'>Closed By</option> 
+                            <option value='task_priority'>Priority</option>  
+                            <option value='created_by'  >Create By</option>
+                            <option value='created_date'  >Create Date</option>  
+                        </select>
+                    </div>
+
+                    <div class="cs-input-group col-4">
+                        <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby-asc" data-actions-box="true"    
+                                id='bug_filter_sortby_asc' title="Columns">
+                            <option value='asc' >ASC</option>
+                            <option value='desc' selected>Desc</option>
+                        </select>
+                    </div>
+                    
+                </divv>`
+            },
+            genLabelBlock:function (param) {  
+                return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
+                                        <div class="category-case-box text-left">
+                                            <span class="first-icon"><i class="cs-svg-icon label"></i></span> Cheweek <span class="last-icon">8</span>
+                                        </div>
+                                        <div class="category-item-boxes text-left">
+                                            <div href="#" class="category-show-hide d-flex">
+                                                <div class="category">
+                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kategoriyalar
+                                                </div>
+                                                <div class="created new-label-modal" title="New Label" data-target="#insertNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>
+                                            <ul id="tasklabellist4Task" >
+                    
+                                            </ul>
+                                        </div>
+                                    </div>
+            `
+            },
+            genSprintBlock:function (param) {  
+                return`<div class="bugSprint-elements sprint-show-4-task">
+                <span><a class="btn" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
+                </span>
+                <span class="newlabelspan" style="cursor: pointer;"
+                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                <div class="dropdown-divider" style="padding:0px;"></div>
+                <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+            </div>`
+            },
+            genNotificationBlock: function () {
+                return `<div class="notifcation-block">
+                <div class="notification-header mb-4">
+                  <div style="float: right;padding: 0 3px;">
+                  <span class="large-blok-expand"><i class="fas fa-expand" aria-hidden="true"></i></span>
+                    <span class="circle">
+                        <label class="checkmarkcontainer">
+                            <input type="checkbox" class="noteCheckListItem" value="0">
+                            <span class="checkmark"></span>
+                        </label>
+                    </span>
+                  </div>
+                </div>
+                <div class="notification-body" id="notification-block-id">
+
+                </div>
+            </div>`
+            },
+            genNotificationItemBlock: function (id, taskId, title, deadline, body,time,msg,img,taskStatus) {
+                return `  <div class="notification-elements" id='${id}'>
+              <div class="d-flex p-2 notify-top-section">
+                  <div class="mr-auto">
+                      <span class="top-title">${title}</span>
+                        ${deadline}
+                      
+                  </div>
+                  <div>
+                     
+                      <div class="circle-s">
+                          <label class="checkmarkcontainer">
+                              <input type="checkbox" class="noteCheckListItem" value="0">
+                              <span class="checkmark"></span>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="d-flex pl-2 pr-2 pb-2 pt-0 mb-0 notify-title-box">
+                  <div class="mr-auto ncs-ellipsis"><span class="id">${taskId}</span>
+                      <span class="notefy-title">${body}</span>
+                      <div class="d-flex mt-1 notify-msg">
+                          <span>${msg?"Mesaj:":""} </span><span>${msg}</span>
+                      </div>
+                  </div>
+                  <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
+              </div>
+              <div class="notify-bottom-box pt-2">
+                  
+                  <div class="d-flex mt-2 status-box status-box-${taskStatus}">
+                      <div class="mr-auto">
+                          <div class="author-img"><img class="author" src="${img}" title="Creator"></div>
+                          <span class="notefy-status">${taskStatus}</span>
+                      </div>
+                      <div class="notify-bottom-right pr-2">
+                          <ul>
+                            <li><div class="cs-click">${time}</div></li>
+                            <!-- <li><div class="cs-click"><i class="cs-svg-icon setting-checkbox"></i> 3</div></li>
+                            <li><div class="cs-click"><i class="cs-svg-icon attach-01"></i></div></li> -->
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>`
+            },
+            getNotificationRowCount:function () {
+                var json  = initJSON();
+                   json.kv.fkAssigneeId =  global_var.current_ticker_id;
+                var data = JSON.stringify(json);
+                var that = this;
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceRsGetRowCount4TaskNotificationByUser",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                        $(".notification-btn .info").text(res.kv.rowCount);
+                           
+                       // $(".notification-btn .info").text(res.kv.rowCount);
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
+              
+            },
+            getNotificationList:function () {
+                var json  = initJSON();
+                   json.kv.fkAssigneeId =  global_var.current_ticker_id;
+                var data = JSON.stringify(json);
+                var that = this;
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceRsGetTaskNotificationListByUserId",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                        var list  = res.tbl[0].r;
+                           var elm  = $("#notification-block-id");
+                                elm.empty();
+                            for (let i = 0; i < list.length; i++) {
+                                const o = list[i];
+                                var endTime = new Date(o.endDate + ' ' + o.endTime);
+                                var html = that.genTypeNotMessaje(
+                                    o.id,
+                                    o.fkTaskId,
+                                    o.fkProjectId,
+                                    o.historyTellerId,
+                                    o.newValue,
+                                    o.oldValue,
+                                    o.historyDate,
+                                    o.historyTime,
+                                    o.noteType,
+                                    o.orderNoSeq,
+                                    endTime,
+                                    getStatusName(o.taskStatus),
+                                    o.isMeet
+                                )
+                                elm.append(html);
+                            }
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
+              
+            },
+            genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
+                if(!notType){
+                    return
+                }
+                try {
+
+                    var title  = (isMeet==='1')?"Meet":"Task"
+                    try {
+                        var projectCode = SACore.GetProjectCore(projectId).projectCode;
+                        projectCode = projectCode.toUpperCase();
+                      
+                       var taskId = (orderNoSeq)
+                       ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                    } catch (error) {
+                        console.log(error);
+                     var  taskId ="no-id";
+                    }
+                   
+                     var  img  =''
+                         var body =''                
+                      if(notType==='new'){
+                          body = "New Task Added ("+newValue+")"
+                      }
+                      else if (notType==='status'){
+                        body = "Status Changed From ("+oldValue+") To ("+newValue+")"
+                      }
+                      else if (notType==='assignee'){
+                        body = "Task Assigne ("+oldValue+") changed ("+newValue+")"
+                      }
+                      else if (notType==='comment'){
+                        body = "New Comment Added ("+newValue+")"
+                      }
+   
+                            var msg = ""
+                             var img  = SAProjectUser.Users[tellerId].userImage;
+                               img  =  fileUrl(img)
+                             var deadLine = getTimeDifference(endTime, new Date());
+                             var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,getStatusName(taskStatus));
+                    
+                } catch (error) {
+                   console.log(error)
+                    return ''
+                }
+                
+            },
+            getstatisticListLoadAfter: function (json) {
+                try {
+                    var that = this
+                    var data = JSON.stringify(json);
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmgetTaskListStatusCount",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: false,
+                        success: function (res) {
+                           
+                            const o = res.tbl[0].r[0];
+                            var elm  = $("#issue-list-statistic-block .static-class")
+                               elm.each( function () {
+                                   var fld  = $(this).attr("data-status");
+                                       $(this).find("span").text(o[fld]);
+                               })
+                             $('[data-toggle="popover"]').popover({
+                                 html: true
+                             });
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });/* 
+                    callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
+                      
+                        //getInfoBoxResponsive();
+                    }); */
+
+                } catch (error) {}
+
+
+            },
+            getstatisticList: function () {
+                try {
+                    var that = this
+                   /*  callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
+                        const o = res.tbl[0].r[0];
+                        $('[data-toggle="popover"]').popover({
+                            html: true
+                        });
+                        //getInfoBoxResponsive();
+                    }); */
+                    $("#issue-list-statistic-block")
+                    .html(that.genHeaderContent(/* o.meSend, o.myTask, o.expired, o.todays, o.notTodays, o.noDeadline, o.new, o.ongoing, o.waiting, o.yonlendirilib, o.canceled, o.rejected, o.closed, o.tamamlanib */))
+               
+
+                } catch (error) {}
+
+
+            },
+            genKanbanView: {
+                Init: function (params) {
+
+                },
+                genKanbanBlock: function () {
+                    return `
+                    <div class="col pl-1 pr-1" id="">
+                   <div class="row" style="margin: 0;">
+                       <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
+                       <div class="cs-task-panel-column cs-task-panel-column-issue">
+                       </div>
+                       </div>
+                   </div></div>`
+                },
+                genZonaBlock: function (nameh, id) {
+        return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
+            <div class="flex-fill bd-highlight">
+               
+            </div>
+            <div class="flex-fill bd-highlight text-center">
+            <div class="cs-card-size">
+                    <span><i class="fas fa-clipboard-list" aria-hidden="true"></i></span>
+                </div>
+                <h4 class="cs-status-box-name text-center">${nameh}</h4>
+                <div class="cs-card-size">
+                    <span class="count-cs-${id} ">0</span>
+                </div>
+            </div>
+            <div class="flex-fill d-flex bd-highlight minimze-hidden-block" id="${id}-total-task-list">
+           
+            </div>
+            <div class="flex-fill bd-highlight">
+                <div class="cs-card-fullview cs-next-large-modal-btn">
+                    <a href="#"><i class="fas fa-expand" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            </div>
+            </div>
+            <div class="cs-task-item-box">
+            <div id="flex-col-${id}" class="cs-task-item-box-bg">
+            </div>
+            </div>
+            </div>
+            </div>`
+                },
+                genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
+                    return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
+                    <div class="cs-cart-head-title p-2" style="padding-bottom:5px;">
+                    ${notChwk()?"":`<span href="#" class="operation " >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
+                    <div class="d-flex pl-0 pr-0 pb-0 pt-0 mb-0 notify-title-box">
+                    <div class="mr-auto ncs-ellipsis"><span class="id">${taskid}</span>
+                        <div class="d-inline-block notify-top-section">
+                            <div class="mr-auto">
+                                <span class="deadline"> ${deadline}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span></div><div class="cs-task-card-body pl-2 pr-2" "="">
+                                  
+                           <div class="cs-task-card-desc">
+                           <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
+                           </div>
+                           </div><div class="cs-task-card-bottom">
+                           <div class="d-flex cs-flex-align-middle">
+                           <div class="align-items-center">
+                           <div class="cs-task-card-avatar-boxes">
+                           <ul class='d-flex'>
+                            <li><img class="Assigne-card-story-select-img ${stats}" src="${createdImg}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${createdName}" title="" data-original-title="Daxil Edən"></li>
+                            <li><img class="Assigne-card-story-select-img ${stats}" src="${assigneImage}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${assignName}" title="" data-original-title="İcra Edən"></li>
+                                 </ul>
+                                 </div>
+                                 </div>
+                                 <div class="flex-fill text-right"><div class="cs-task-card-datatime d-block text-right">
+                                    <span>${ceratedDate} </span>
+                                </div><div class="bg-status-${stats}" style="height: 2px; margin: 10px 0px 0px 7px;"></div>
+                                <div class="cs-staturs-circle-note1 ml-2 d-inline-block float-left">
+                                <span>${stats}</span></div><div class="canban-item-btns d-flex float-right">
+                                            <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
+                                                <i class="cs-svg-icon c-icon-1"></i>
+                                            </div>
+                                            <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("rejectTask")}"  >
+                                                <i class="cs-svg-icon c-icon-2"></i>
+                                            </div>
+                                            <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("cancel")}">
+                                                <i class="cs-svg-icon c-icon-3"></i>
+                                            </div>
+                                            <div class="btn-4 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ForwardTaskTo")}">
+                                                <i class="cs-svg-icon c-icon-6"></i>
+                                            </div>
+                                            ${notChwk()?`<div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getStatusName("UAT")}">
+                                            <i class="cs-svg-icon c-icon-6"></i>
+                                        </div>`:""}
+                                            <div class="btn-6 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("history")}">
+                                                <i class="cs-svg-icon c-icon-6"></i>
+                                            </div>
+                                            <div class="btn-7 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("chat")}">
+                                                <i class="cs-svg-icon c-icon-6"></i>
+                                            </div>
+                                            </div> 
+                                            </div> 
+                                             </div> 
+                                              </div>
+                                               </div>`
+                },
+                getKanbanBodyBlock: function (res, typeRow, st,pageNo) {
+                    $(".count-cs-" + st).text(res.kv.tableCount);
+                    var sumEstHours = 0,
+                        sumSpentHours = 0,
+                        sumEstCount = 0,
+                        sumExecCount = 0,
+                        sumEstBudget = 0,
+                        sumSpentBudget = 0;
+                    try {
+                        var obj = res.tbl[0].r;
+                        for (var i = 0; i < obj.length; i++) {
+                            var o = obj[i];
+                            sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                            sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                            sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                            sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                            sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                            sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+                            var startTime = new Date();
+                            var endTime = new Date(o.endDate + ' ' + o.endTime);
+
+                            var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                            row += " " /* + rs + rsLabelFilter; */
+
+                            var userImage = o.userImage;
+                            var img = (userImage) ?
+                                fileUrl(userImage) :
+                                fileUrl(new User().getDefaultUserprofileName());
+
+                            var createByImage = o.createByImage;
+                            var createdByImg = (createByImage) ?
+                                fileUrl(createByImage) :
+                                " ";
+
+                            var backlogName = '<a href1="#" onclick="callStoryCard(\'' + o.fkBacklogId + '\')">' + replaceTags(o.backlogName) + '</a>';
+                            var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                            var task_id = getTaskCode(o.id);
+
+                            // var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`
+                            $('#flex-col-' + o[typeRow]).append(
+                                this.genKanbanContentBlock(
+                                    o.id,
+                                    task_id,
+                                    o.isMeet,
+                                    getTimeDifference(endTime, startTime),
+                                     taskName, 
+                                     getStatusName(o.taskStatus), 
+                                     Utility.convertDate(o.createdDate),
+                                     createdByImg,
+                                     o.createByName,
+                                     img,
+                                     o.userName,
+                                    
+                                )
+                            )
+
+
+                        }
+                    } catch (error) {
+
+                    }
+
+                    $('[data-toggle="popover"]').popover({
+                        html: true
+                    });
+
+                    if (parseFloat(bug_filter.limit) < parseFloat(res.kv.tableCount)) {
+                        $('#flex-col-' + st).find(".more-button-forIssue").remove();
+                        $('#flex-col-' + st)
+                            .append(`<div class="more-button-forIssue text-center" data-type="${typeRow}" data-status="${st}" start-limit="${parseFloat(pageNo) +1}" end-limit="${bug_filter.limit}">More</div>`)
+                    }
+
+
+                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                    //         sumEstBudget, sumSpentBudget);
+
+                    global_var.bug_task_sprint_assign_checked = '';
+                    global_var.bug_task_sprint_assign_name = '';
+                    global_var.bug_task_sprint_assign_id = '';
+
+
+                    global_var.bug_task_label_assign_checked = '';
+                    global_var.bug_task_label_assign_name = '';
+                    global_var.bug_task_label_assign_id = '';
+                },
+                
+                generAteBlockKanbanByGroupBy: function (elm, data) {
+                    var goupBy = $('#inputGroupSelect01').val();
+                    var items;
+                    var type = "";
+                    if (goupBy === "5"||goupBy === "0") {
+                        items = $("select#bug_filter_status option");
+                        type = "taskStatus"
+                    }
+                    if (goupBy === "7") {
+                        items = $("select#bug_filter_nature option");
+                        type = "taskNature"
+                    }
+                    if (goupBy === "9") {
+                        items = $("select#bug_filter_backlog_id");
+                        type = "fkBacklogId";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "10") {
+                        items = $("select#bug_filter_project_id");
+                        type = "fkProjectId";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "11") {
+                        items = $("select#bug_filter_assignee_id");
+                        type = "fkAssigneeId";
+                        $(elm).empty();
+                        var arr  = items.val();
+                        if(arr.length<1){
+                            arr=[]
+                            var itm = items.find("option")
+                              itm.each(function (index) {
+                                   if(index<3){
+                                       arr.push($(this).val())
+                                   }
+                                  })
+                        }                         
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "12") {
+                        items = $("select#bug_filter_created_by");
+                        type = "createdBy";
+                        $(elm).empty();
+                        var arr  = items.val(); 
+                             if(arr.length<1){
+                                 arr=[]
+                                 var itm = items.find("option")
+                                   itm.each(function (index) {
+                                        if(index<3){
+                                            arr.push($(this).val())
+                                        }
+                                       })
+                                       
+                             }                       
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "8") {
+                        items = $("select#bug_filter_tasktype");
+                        type = "fkTaskTypeId"
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    /*  if(goupBy===0){
+                          items  = $("select#bug_filter_status>option");  
+                     } */
+                    var that = this
+                    $(elm).empty();
+                    items.each(function (index) {
+                        var id = $(this).attr("value")
+                        var nm = $(this).text()
+                        $(elm).append(that.genZonaBlock(nm, id));
+                        that.getTaskList4Kanban(data, type, id);
+
+                    })
+
+                    return type
+                },
+                getTaskList4Kanban: function (json, type, st) {
+                    json.kv[type] = "'" + st + "'";
+                    var limit = json.kv.searchLimit;
+                    var data = JSON.stringify(json);
+                    var that = this;
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: true,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.getKanbanBodyBlock(res, type, st, '1');
+                          
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
+                },
+                getTaskList4KanbanMore: function (type, st,pageNo) {
+                    var json = initJSON();
+                    json.kv.fkProjectId = bug_filter.project_id;
+                    json.kv.fkAssigneeId = bug_filter.assignee_id;
+                    json.kv.closedBy = bug_filter.closed_by;
+                    json.kv.createdBy = bug_filter.created_by;
+                    json.kv.fkBackogId = bug_filter.backlog_id;
+                    json.kv.taskStatus = bug_filter.status;
+                    json.kv.priority = bug_filter.priority;
+                    json.kv.taskNature = bug_filter.nature;
+                    json.kv.searchText = bug_filter.search_text;
+                    json.kv.searchLimit = bug_filter.limit;
+                    json.kv.pageNo = pageNo;
+                    json.kv.sprintId = bug_filter.sprint_id;
+                    json.kv.labelId = bug_filter.label_id;
+                    json.kv.sortBy = bug_filter.sortBy;
+                    json.kv.sortByAsc = bug_filter.sortByAsc;
+                    json.kv.closedDateFrom = bug_filter.closed_date_from;
+                    json.kv.closedDateTo = bug_filter.closed_date_to;
+                    json.kv.showChildTask = bug_filter.showChildTask;
+                    json.kv.createdDate = bug_filter.createdDate;
+                    json.kv.startLimit = 0;
+                    json.kv.endLimit = 25;
+                    json.kv[type] = "'" + st + "'";
+                    var data = JSON.stringify(json);
+                    var that = this;
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: true,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.getKanbanBodyBlock(res, type, st,pageNo );
+                            
+
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
+                }
+            },
+            genTableView: {
+                genTableBlock: function () {
+                    return ` <div class="col pl-1 pr-1" id="addBuglist">
+                   <div class="row" style="margin: 0;">
+                       <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
+                       <div class="showhide-col-main-info" style="display: none">
+                    <div class="showhide-col-main-info-in">
+                        <ul>
+                            <li>
+                                <label>Hamısı <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Status <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Əməliyyat <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Məzmun <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Daxil edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>İcra edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                        </ul>
+                        <div class="showhide-col-footer">
+                        <span class="scm-show"><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                        </div>
+                    </div>
+                   
+                </div>
+                           <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
+                               <thead class="bugThead">
+                                ${this.genTableHeaderBlock()}
+                               </thead>
+                               <tbody>
+       
+                               </tbody>
+       
+                           </table>
+                           ${this.genContextMenu()}
+                       </div>
+                       
+                   </div>
+                   <div class=" col-12 d-flex justify-content-center paginationStyle" style=" z-index: 500; ">
+
+                   <div class="mr-auto">
+                       <div class="task-list-datetime">
+                           <input type="text" onchange="callBugFilterMulti()" id="issue-list-datetime" class="form-control" placeholder="Tarixə görə">
+                        </div>
+                   </div>
+                     <div class="d-none">
+                         <input type="text" name="" id="pagintion-selectbox-issue">
+                     </div>
+                   <div class="d-flex">
+                       <div class="dropdown">
+                           <button class="btn pagination_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">1-50/212</button>
+                           <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
+                               <button class="btn-minus-pag dropdown-item" type="button" style="border-bottom: 1px solid #9a9a9a45;">Ən başa</button>
+                               <button class="btn-plus-pag dropdown-item" type="button">Ən sona</button>
+                           </div>
+                       </div>
+                       <div class="d-table">
+                           <button class="btn pagination_btn_left_right page-item-core-previous" data-page-icon="pageLeft"> <i class="fas fa-angle-left" aria-hidden="true"></i></button>
+                           <button class="btn pagination_btn_left_right page-item-core-next" data-page-icon="pageRight"> <i class="fas fa-angle-right" aria-hidden="true"></i></button>
+                       </div>
+                   </div>
+                  </div>
+                 </div>
+                     `
+                },
+                genTableHeaderBlock: function () {
+                    return `<thead class="bugThead">
+                    <tr>
+                    <th><div class="showhide-col-btn" ><i class="cs-svg-icon numbers"></i></div></th>
+                    <th><input type="checkbox" class="all-bug-list-check"></th>
+                    <th class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
+                    <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
+                    <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
+                    <th class="bug-list-column bug-list-column-ismeet" style="width: 90px;">AD</th>
+                    <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
+                    <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
+                    <th class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
+                    <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
+                    <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
+                    <th class="bug-list-column bug-list-column-project" style="">Project</th>
+                    <th class="bug-list-column bug-list-column-assignee" style="width: 70px;"><i class="cs-svg-icon task-user-1"></i></th>
+                    <th class="bug-list-column bug-list-column-created-by" style="width: 70px;"><i class="cs-svg-icon task-user-2"></i></th>
+                    <th class="bug-list-column bug-list-column-created-date" style="width: 80px;"><i class="cs-svg-icon calendar-01-dark"></i></th>
+                    <th class="bug-list-column bug-list-column-close-date" style="display: none;">Closed On</th><th class="bug-list-column bug-list-column-closed-by" style="display: none;">Closed By</th>
+                    <th class="bug-list-column bug-list-column-last-update" style="display: none;">Last Update</th>
+                    <th class="bug-list-column bug-list-column-estimated-hours" style="display: none;">Estimated Hour(s)</th>
+                    <th class="bug-list-column bug-list-column-spent-hours" style="display: none;">Spent Hour(s)</th>
+                    <th class="bug-list-column bug-list-column-estimated-counter" style="display: none;">Estimated Counter</th>
+                    <th class="bug-list-column bug-list-column-executed-counter" style="display: none;">Executed Counter</th>
+                    <th class="bug-list-column bug-list-column-estimated-budget" style="display: none;">Estimated Budget</th>
+                    <th class="bug-list-column bug-list-column-spent-budget" style="display: none;">Spent Budget</th>
+            
+                    </tr>
+                   </thead>`
+                },
+                genTableBodyBlock: function (res) {
+
+                    var tbody = $('#bugListTable > tbody');
+                    tbody.html('');
+                    //table.append(getBugListDetailsHeader());
+                    // // thead to appaend----main header
+                    var sumEstHours = 0,
+                        sumSpentHours = 0,
+                        sumEstCount = 0,
+                        sumExecCount = 0,
+                        sumEstBudget = 0,
+                        sumSpentBudget = 0;
+                    var obj = res.tbl[0].r;
+                    for (var i = 0; i < obj.length; i++) {
+                        var o = obj[i];
+                        sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                        sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                        sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                        sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                        sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                        sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+                        
+
+                        var t = this.genTaskTableForm(o,i);
+                        tbody.append(t);
+                        $('[data-toggle="popover"]').popover({
+                            html: true
+                        });
+                    }
+
+                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                    //         sumEstBudget, sumSpentBudget);
+
+                    global_var.bug_task_sprint_assign_checked = '';
+                    global_var.bug_task_sprint_assign_name = '';
+                    global_var.bug_task_sprint_assign_id = '';
+
+
+                    global_var.bug_task_label_assign_checked = '';
+                    global_var.bug_task_label_assign_name = '';
+                    global_var.bug_task_label_assign_id = '';
+                },
+                genContextMenu : function () {
+                    return `<div id="contextMenu" class="dropdown contextMenu-dropdown-style position-fixed" style="z-index:555;display: none;">
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+                        <li class="dropdown-item" href="#" onclick="iDidIt()" >
+                            <i class="cs-svg-icon novbeti"></i> ${getOperName("ididit")}
+                        </li>
+                        <li class="dropdown-item"  >
+                               <i class="cs-svg-icon imtina"></i> ${getOperName("cancel")}
+                        </li>
+                        <li class="dropdown-item" class="dropdown-item" href="#" onclick="rejectTask()">
+                              <i class="cs-svg-icon legv"></i> ${getOperName("rejectTask")}
+                        </li>
+                        <li class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">
+                        <i class="cs-svg-icon yonlendir"></i> ${getOperName("ForwardTaskTo")}
+                         </li>                       
+                        ${notChwk()?`<li class="dropdown-item" href="#" onclick="userAcceptance()">
+                        <i class="cs-svg-icon tarixce"></i> ${getStatusName("UAT")}
+                    </li>`:""}
+                        <li class="dropdown-item">
+                            <i class="cs-svg-icon tarixce"></i> ${getOperName("history")}
+                        </li>
+                        <li class="dropdown-item">
+                           <i class="cs-svg-icon chat-circle-dark"></i> ${getOperName("chat")}
+                        </li>
+                    </ul>
+                </div>`
+                   
+                },
+                getTaskList4Table: function (json) {
+                    var that = this;
+                    var data = JSON.stringify(json);
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: false,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.genTableBodyBlock(res);
+
+                            toggleColumns();
+                            setPagination(res.kv.tableCount, res.kv.limit);
+                            getGroupList();
+
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
+                },
+                genTaskTableFormMini: function (o,i) {
+                    var startTime = new Date();
+                        var endTime = new Date(o.endDate + ' ' + o.endTime);
+
+                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                        row += " " /* + rs + rsLabelFilter; */
+
+                        var userImage = o.userImage;
+                        var img = (userImage) ?
+                            fileUrl(userImage) :
+                            fileUrl(new User().getDefaultUserprofileName());
+
+                        var createByImage = o.createByImage;
+                        var createdByImg = (createByImage) ?
+                            fileUrl(createByImage) :
+                            " ";
+
+                        var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
+                        var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                        var task_id = getTaskCode(o.id);
+
+                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
+                  const t= $('<tr>')
+                            .attr("id", o.id)
+                            .attr("projectId", o.fkProjectId)
+                            .attr("stIdr", o.fkBacklogId)
+                            .append($('<td>').attr("style", "width:25px;")
+                                .append(row)
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-id').append(task_id))
+                            .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
+                                .addClass('bug-list-column-task-deadline')
+                                .append(getTimeDifference(endTime, startTime))
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-status cs-input-group')
+                                .css("text-align", 'left')
+                                .css("padding-left", '3px')
+                                .css("overflow", 'initial')
+                                .append($("<div>")
+                                    .append($("<div>")
+                                        .addClass('position-relative us-item-status-' + o.taskStatus)
+                                        .append($('<span>')
+                                            .append(getStatusName(o.taskStatus)))
+                                        .append((o.taskPriority === '9') ? prtDiv : ""))
+                                ))
+                           
+                           .append($('<td>')
+                                .addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",taskName)
+                                .addClass('bug-list-column-task-name')
+                                .css("max-width", '240px')
+                                .append(taskName, ' ')
+                               
+                            )
+                           
+                                                        
+                            .append($('<td>')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column')
+                                .addClass('bug-list-column-assignee')
+                                .append(genUserTrblock(o.userName, img,"Assigne")))
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-by ')
+                                .append(genUserTrblock(o.createByName, createdByImg,"Created by")))
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                          
+                           
+
+                    return t
+                },
+                genTaskTableForm: function (o,i) {
+                    var startTime = new Date();
+                        var endTime = new Date(o.endDate + ' ' + o.endTime);
+
+                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                        row += " " /* + rs + rsLabelFilter; */
+
+                        var userImage = o.userImage;
+                        var img = (userImage) ?
+                            fileUrl(userImage) :
+                            fileUrl(new User().getDefaultUserprofileName());
+
+                        var createByImage = o.createByImage;
+                        var createdByImg = (createByImage) ?
+                            fileUrl(createByImage) :
+                            " ";
+
+                        var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
+                        var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                        var task_id = getTaskCode(o.id);
+
+                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
+                  const t=   $('<tr>')
+                            .attr("id", o.id)
+                            .attr("projectId", o.fkProjectId)
+                            .attr("stIdr", o.fkBacklogId)
+                            .addClass('bug-tr')
+                            .append($('<td>').attr("style", "width:25px;")
+                                .append(row)
+                            )
+                            .append($('<td>').attr("style", "width:30px;")
+                                .addClass('bug-list-checkbox')
+                                .append('<input class="checkbox-issue-task" type="checkbox">')
+                            )
+                            .append($('<td>').addClass('bug-list-column').attr("style", "width:100px;")
+                                .addClass('bug-list-column-task-id').append(task_id))
+                            .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
+                                .addClass('bug-list-column-task-deadline')
+                                .append(getTimeDifference(endTime, startTime))
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-status cs-input-group')
+                                .css("text-align", 'left')
+                                .css("padding-left", '3px')
+                                .css("overflow", 'initial')
+                                .append($("<div>")
+                                    .append($("<div>")
+                                        .addClass('position-relative us-item-status-' + o.taskStatus)
+                                        .append($('<span>')
+                                            .append(getStatusName(o.taskStatus)))
+                                        .append((o.taskPriority === '9') ? prtDiv : ""))
+                                ))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-ismeet cs-input-group')
+                                 .append(o.isMeet==='1'?'<i class="cs-svg-icon users-dark"></i>':'<i class="cs-svg-icon tapshiriq-dark"></i>')
+                                 .append(o.isMeet==='1'?"Toplantı":"Tapşırıq")
+                                  )
+                           .append($('<td>')
+                                .addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",replaceTags(fnline2Text(o.taskName)))
+                                .addClass('bug-list-column-task-name')
+                                .css("max-width", '240px')
+                                .append((o.fkParentTaskId) ? "<i class='fa fa-level-up bug-list-column-task-name-icon'>" : "")
+                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
+                                .append(taskName, ' ')
+                                .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                                
+                                // .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
+                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-nature')
+                                .append($("<div>")
+                                    .addClass("dropdown ")
+                                    .append($("<div>")
+                                        .attr("id", "bug-taskNature-dropdown")
+                                        .append(o.taskNature == 'bug' ? '<i class="fas fa-bug" style="color: red;"></i>' : "")
+                                        .append(o.taskNature == 'change' ? '<i class="fas fa-edit" style="color: #FF7F50;"></i>' : "")
+                                        .append(o.taskNature == 'new' ? '<i class="fas fa-file-alt"></i>' : "")
+        
+                                    )))
+                            .append($('<td>').addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",o.taskTypeName)
+                                .addClass('bug-list-column-tasktype')
+                                .append($("<div>")
+                                    .addClass(" ")
+                                    .append($("<div>")
+                                        .attr("id", "bug-taskNature-dropdown")
+                                        .append(o.taskTypeName)
+                                    )))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-story-card')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",backlogName)
+                                .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
+                                .append($('<div>').addClass('set-filter-box')
+                                    .append($('<i class="fa fa-filter">')
+                                        .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
+                                        .css("display", "none")
+                                        .addClass("hpYuyept"))
+
+                                )
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                    $(this).find(".hpYuyept1").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                    $(this).find(".hpYuyept1").hide();
+                                })
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",replaceTags(o.projectName))
+                                .attr("style", "max-width:200px;")
+                                .addClass('bug-list-column-project')
+                                .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
+                                .append($('<i class="fa fa-filter">')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                    .css("display", "none")
+                                    .addClass("hpYuyept"))
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                }))
+                            .append($('<td>')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column')
+                                .addClass('bug-list-column-assignee')
+                                .append(genUserTrblock(o.userName, img,"Assigne"))
+                                .append($('<i class="fa fa-filter">')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
+                                    .css("display", "none")
+                                    .addClass("hpYuyept"))
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                }))
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-by ')
+                                .append(genUserTrblock(o.createByName, createdByImg,"Created by"))
+                                .append($('<i class="fa fa-filter">')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                    .css("display", "none")
+                                    .addClass("hpYuyept"))
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                })
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-close-date')
+                                .append((o.closeStatusDate) ?
+                                    "<span class='get-data-group'>" + Utility.convertDate(o.closeStatusDate) + " : " + Utility.convertTime(o.closeStatusTime) + "</span>" :
+                                    ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-closed-by')
+                                .append("<span class='get-data-group'>" + o.closedByName + "</span>"))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-last-update').append("<span class='get-data-group'>" + (o.lastUpdatedDate) ? Utility.convertDate(o.lastUpdatedDate) : "" + "</span>"))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-estimated-hours').append((o.estimatedHours !== '0') ? o.estimatedHours : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-spent-hours').append((o.spentHours !== '0') ? o.spentHours : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-estimated-counter').append((o.estimatedCounter !== '0') ? o.estimatedCounter : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-executed-counter').append((o.executedCounter !== '0') ? o.executedCounter : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-estimated-budget').append((o.estimatedBudget !== '0') ? o.estimatedBudget : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
+
+                    return t
+                }
+            },
+        },
+
+    },
+    genBlockMain: function () {
+        return `<div class="cs-core-issue-management brand-issue-management">
+        <div class="panel-container">
+            <div class="main-section"></div>
+        <div class="right-section">
+            <div class="setting-panel d-flex">
+                <div class="setting-btn-panel">
+                   <div class="setting-btn-panel-in">
+                        <div class="setting-elemen-box">
+                            <div class="standart-badges notification-btn">
+                                <span class="info">12</span>
+                                <i class="cs-svg-icon task-01"></i>
+                            </div>
+                        </div>
+                        <hr class="rcs-hr">
+                        <div class="setting-elemen-box pb-0">
+                            <div class="standart-badges taskfilter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Filter">
+                                 <span class="info">0</span>
+                                <i class="cs-svg-icon filter"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="standart-badges tasklabel-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Label">
+                                <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="standart-badges tasksprint-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Sprint">
+                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
+                            </div>
+    
+                        </div>
+                        <!--<div class="setting-elemen-box">
+                            <div class="sticky-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Notes">
+                                <i class="cs-svg-icon sticky-notes"></i>
+                            </div>
+                        </div>-->       
+                        <hr class="rcs-hr">
+                        <!-- <div class="setting-elemen-box">
+                            <div class="calendar-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Calendar">
+                                <span class="calendar-info">19</span>
+                                <i class="cs-svg-icon calendar-02"></i>
+                            </div>
+                        </div>-->
+                        <div class="setting-elemen-box issue-view-change-button" view-type='table' >
+                            <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Row Style">
+                                <i class="cs-svg-icon cs-row-style"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box issue-view-change-button" view-type='kanban'>
+                            <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Canban Style">
+                                <i class="cs-svg-icon cs-col-style"></i>
+                            </div>
+                        </div>
+                        <div class="btn-panel-bottom" >
+                            <div class="setting-elemen-box">
+                                
+                                <div class="standart-badges" id="addNewTaskButton"   style="margin-bottom: 5px;background: rgb(0 0 0 / 20%);border-radius: 50px;height: 28px;width: 28px;padding: 1px;color: #fff;border: 1px solid rgb(0 0 0 / 20%);">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+                <div class="setting-views-panel mr-auto">
+                    <div class="setting-views-panel-in">
+                        <div class="setting-headline d-flex">
+                            <div class="title mr-auto">Qeydlər</div>
+                            <div class="close-panel"><i class="cs-svg-icon x-close"></i></div>
+                        </div>
+                        <div class="setting-main" id="main-sidebar-div">
+                                                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    </div>`
     },
     getBacklogLIstByprojectId: function (projectId) {
         if (!projectId) {
@@ -2421,7 +4167,7 @@ const taskManagement = {
 
         $('#' + elId).selectpicker('refresh');
     },
-    add_loadTaskType_bug_list: function (elm) {
+    add_loadTaskType_bug_list: function (elm, dlm) {
         var json = {
             kv: {}
         };
@@ -2448,14 +4194,22 @@ const taskManagement = {
                     var ids = dt[index].id;
                     var opt = $('<option>').val(ids).text(nm);
                     $(elm).append(opt);
+                    if (dlm = 'load') {
+                        try {
+                            $(elm).val(coreBugKV[global_var.current_issue_id].fkTaskTypeId);
+
+                        } catch (error) {
+
+                        }
+                    }
                     $(elm).selectpicker('refresh')
                 }
             }
         });
     },
-    getUserListWithImageSelectbox: function (projectId,type) {
+    getUserListWithImageSelectbox: function (projectId, type) {
         var json = initJSON();
-        json.kv.fkProjectId = projectId?projectId:global_var.current_project_id;
+        json.kv.fkProjectId = projectId ? projectId : global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
         console.log('sdfsdfsdf');
@@ -2467,7 +4221,7 @@ const taskManagement = {
             crossDomain: true,
             async: false,
             success: function (res) {
-                  
+
                 if (type === 'update') {
                     taskManagement.updateTask.loadAssigneesByProjectDetails(res);
                 } else if (type === 'create') {
@@ -2481,9 +4235,110 @@ const taskManagement = {
         });
     }
 }
+function getStatusName(id) {
+       
+    var nm  = lang_task.taskStatus[id.trim()];
+    return nm
+}
+function getOperName(id) {
+    var nm  = lang_task.windowUpdateTask[id.trim()];
+    return nm
+}
+function startTimeCurrent(id) {
+    var today = new Date();
+    var hr = today.getHours();
+    var min = today.getMinutes();
+    var sec = today.getSeconds();
+    //Add a zero in front of numbers<10
+    hr = checkTime(hr);
+    min = checkTime(min);
+    sec = checkTime(sec);
+    var dt  = hr + ":" + min ;
+    
+    
+    var curDay = today.getDate();
+    var curMonth = today.getMonth()+1;
+    var curYear = today.getFullYear();
+    var date = curDay+"."+curMonth+"."+curYear;
+    $("#"+id).attr("placeholder",date+"/"+dt)
+}
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+function notChwk() {
+    if(global_screen_name==='ch'){
+         return null;
+    }else{
+        return  true
+    }
+}
+function getTaskCode(taskId) {
+    try {
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        var projectId = SATask.GetDetails(taskId, 'fkProjectId');
+        var projectCode = SACore.GetProjectCore(projectId).projectCode;
+        projectCode = projectCode.toUpperCase();
+
+        var taskId = (orderSeq)
+                ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderSeq : orderSeq : "";
+        taskId = "<b>" + taskId + "</b>";
+        return taskId;
+    } catch (err) {
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        taskId = "<b>" + "PRVT-"+orderSeq + "</b>";
+        return taskId;
+    }
+}
 
 // task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var getTimeDifference = function (from, to) {
+
+
+    var difMs = (from - to);
+    var colorClass
+
+    /* if(difMs<=0){
+        return 0 + " days, " + 0 + " hours, " + 0 + " mins";
+    }else{ */
+    var difDays = Math.floor(difMs / 86400000);
+    var difHrs = Math.floor((difMs % 86400000) / 3600000);
+    var difMins = Math.round(((difMs % 86400000) % 3600000) / 60000);
+    var txt = difDays + " d, " + difHrs + " h, " + difMins + " m";
+    var time = '';
+    if (parseFloat(difMins) !== 0) {
+        time = difMins + "m"
+    }
+    if (parseFloat(difHrs) !== 0) {
+        time = difHrs + "h"
+    }
+    if (parseFloat(difDays) !== 0) {
+        time = difDays + "d"
+    }
+    if (difMs < 0) {
+        colorClass = 'kecib'
+    } else {
+        if (difDays > 0) {
+            colorClass = "gelecek"
+        } else if (difDays === 0) {
+            colorClass = "bugun"
+        } else {
+            colorClass = "nodeadline"
+        }
+    }
+    var div = $('<div>')
+        .addClass('td-deadline-box ')
+        .addClass(colorClass)
+        .append($('<span>')
+            .html(difMins ? `<div data-placement="top" data-toggle="popover" data-trigger="hover" data-content="${txt}" >${time}</div>` : '<i class="fas fa-ellipsis-h"></i>'))
+
+    var bl = $("<div>").html(div)
+    return bl.html();
+    // } 
+}
 
 $(document).on("change", '#updateCheckList', function (e) {
 
@@ -2494,24 +4349,46 @@ $(document).on("change", '#updateCheckList', function (e) {
     $(this).val('');
 
 })
-/* $(document).on("keypress", ".commentinput", function (event) {
-    if (event.keyCode === 13) {
-        new UserStory().addTaskCommentToTask(this)
+
+$(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
+    var ty = $(this).attr('all-aktiv');
+    localStorage.setItem("issue_mode_active", ty);
+    $(this).closest('#issue-table-aktiv-all').find('.title').text(ty)
+    var sel = $("#bug_filter_status");
+    let value
+    if (ty === 'A') {
+        value = ["new", 'ongoing', 'waiting']
+    } else if (ty === 'P') {
+        value = ["rejected",notChwk()?'UAT':"", 'closed', 'canceled']
     }
-}) */
+    sel.val(value);
+    sel.selectpicker("refresh");
+    taskManagement.readTask.genBlockTask.getstatisticList();
+    getBugList();
+
+})
 $(document).on("change", '#newAddCheckList', function (e) {
 
     $(this).parent().find('ul').prepend(`<li class="d-flex">
     <div class="item-checkbox">
-        <label class="checkmarkcontainer">
-            <input type="checkbox" class="noteCheckListItem" value="0">
-            <span class="checkmark"></span>
-        </label>
+    <label class="checkmarkcontainer">
+    <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+    <span class="checkmark">
+    </span></label>
     </div>
-    <div class="item-note">${$(this).val()}</div>
-</li>`)
+    <div class="mr-auto w-100">
+    <textarea rows="1" class="form-control " oid="">${$(this).val()}</textarea></div>
+    <div class="pl-1 p2-1"></div>
+    <div class="pl-1 p2-1">
+    </div>
+    <div class="pl-1 p2-1 d-table">
+    <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;"><i class="fas fa-trash-alt" aria-hidden="true"></i></a></div></li>`)
     $(this).val('')
 
+})
+
+$(document).on('click', '.taskCheckListItemDeletecreate', function (event) {
+     $(this).closest('li').remove();
 })
 $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.insertTask.genBlockModal.Init()
@@ -2524,7 +4401,42 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+
+    $("#issue-managment-add-task").modal("show");
+
+});
+$(document).on('click', '#addModalBugIssueTaskMng', function (event) {
+
+    taskManagement.insertTask.genBlockModal.Init()
+    loadBugTaskDeadlineScripts()
+    var bgid = $(this).attr("bid")
+    var prId = $(this).attr("pid"); //$("#story_mn_filter_project_id").val();
+    $("#bug_filter_project_id_add").val(prId).change();
+    $("#bug_filter_backlog_id_add").val(bgid).change();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
+    var dwlmt = $('#bug_task_type_id_add')
+    taskManagement.add_loadTaskType_bug_list(dwlmt);
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+
+    $("#issue-managment-add-task").modal("show");
+
+});
+$(document).on('click', '#addProjectBugIssueTaskMng', function (event) {
+
+    var manId = Utility.getParamFromUrl("fkManualProjectId")
+    taskManagement.insertTask.genBlockModal.Init()
+    loadBugTaskDeadlineScripts()
+    var bgid = manId ? "" : getCurrentModalId4UsTask();
+    var prId = manId ? manId : '21062415244905361923'; //$("#story_mn_filter_project_id").val();
+    $("#bug_filter_project_id_add").val(prId).change();
+    $("#bug_filter_backlog_id_add").val(bgid).change();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
+    var dwlmt = $('#bug_task_type_id_add')
+    taskManagement.add_loadTaskType_bug_list(dwlmt);
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -2535,6 +4447,13 @@ $(document).on("change", '#bug_filter_project_id_add', function (e) {
 
 
 })
+$(document).on("click", '.issue-view-change-button', function (e) {
+    var ty = $(this).attr('view-type');
+    localStorage.setItem('task-view-format', ty);
+    taskManagement.readTask.genBlockTask.Init($('.main-section'));
+    getBugList();
+
+})
 $(document).on("click", '#addNewTaskButton', function (e) {
     taskManagement.insertTask.genBlockModal.Init();
     loadBugTaskDeadlineScripts()
@@ -2543,10 +4462,71 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#issue-managment-add-task").modal("show");
 
 })
+
+function getCurrentModalId4UsTask() {
+    var idb = '';
+
+    if (global_var.current_modal === 'loadStoryCardMgmt') {
+        idb = '21082003291903775632'
+    }
+    if (global_var.current_modal === 'loadStoryCard') {
+        idb = '21122411175006081920'
+    }
+    if (global_var.current_modal === 'loadDev') {
+        idb = '21122518513102431977'
+    }
+    if (global_var.current_modal === 'loadCodeGround') {
+        idb = '21122518532301398391'
+    }
+    if (global_var.current_modal === 'loadProjectManagement') {
+        idb = '21090713220709994607'
+    }
+    if (global_var.current_modal === 'loadDashboard') {
+        idb = '210820032833056810823'
+    }
+    if (global_var.current_modal === 'loadTaskManagement') {
+        idb = '21082003302308873715'
+    }
+    if (global_var.current_modal === 'loadBusinessCase') {
+        idb = '21082003314403151270'
+    }
+    if (global_var.current_modal === 'loadBugChange') {
+        idb = '21082003275802222786'
+    }
+    if (global_var.current_modal === 'loadTestCase') {
+        idb = '21082003310301912293'
+    }
+    if (global_var.current_modal === 'loadDocEditor') {
+        idb = '21082003312500622676'
+    }
+    if (global_var.current_modal === 'loadRunService') {
+        idb = '21110810291103705004'
+    }
+    if (global_var.current_modal === 'loadBusinessService') {
+        idb = '21082003320807935137';
+    }
+    if (global_var.current_modal === 'loadActivityDiagram') {
+        idb = '';
+    }
+    if (global_var.current_modal === 'loadSourceActivity') {
+        idb = '';
+    }
+    if (global_var.current_modal === 'loadEntityDiagram') {
+        idb = '21082003322903142571';
+    }
+    if (global_var.current_modal === 'loadSqlBoard') {
+        idb = '21102000014805402484';
+    }
+    if (global_var.current_modal === 'loadFn') {
+        idb = '22011514411404426625';
+    }
+
+    return idb;
+}
 
 $(document).on("click", '#addIssueButtonId', function (e) {
     // $('#issue-managment-add-task .after-add-task').show();
@@ -2554,12 +4534,13 @@ $(document).on("click", '#addIssueButtonId', function (e) {
     $('#issue-managment-add-task .after-add-task').css("opacity", "1");
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show(); */
+ 
     taskManagement.insertTask.insertNewTask();
 
 
 })
 $(document).on("click", '#add-child-task-open-modal', function (e) {
-    var taskId  = global_var.current_issue_id
+    var taskId = global_var.current_issue_id
     taskManagement.insertTask.genBlockModal.Init();
     loadBugTaskDeadlineScripts()
     reset_task_data();
@@ -2567,22 +4548,28 @@ $(document).on("click", '#add-child-task-open-modal', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#parent-task-id-input").val(taskId);
     $("#issue-managment-add-task").modal("show");
 
 
 })
-$(document).on("keyup","#taskNameInputNew2",function (event) {
-    if (event.keyCode == 13) {      
-        if(event.shiftKey){
+$(document).on("keyup", "#taskNameInputNew2", function (event) {
+    if (event.keyCode == 13) {
+        if (event.shiftKey) {
             taskManagement.insertTask.insertNewTask();
-        } 
+        }
     }
 });
 $(document).on("click", '#multi-edit-menu-btn', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_multi');
     var dwlmt = $('#bug_task_type_id_multi');
+    $("#update_multi_bug_change_btn").attr("data-pid",$(this).attr("pid"));
+    if(global_var.current_modal==='loadStoryCardMgmt'){
+        $("select.bug-mgmt-filter-select").selectpicker("refresh");
+     
+        loadUsersAs4ComboByElm($('#bug_filter_assignee_id_multi'))
+    }
     taskManagement.add_loadTaskType_bug_list(dwlmt);
 })
 
@@ -2645,12 +4632,7 @@ $(document).on("click", ".addObserverToTAsk", function (e) {
 
 
 })
-$(document).on("click", ".addObserverToTAskUpdate", function (e) {
 
-    var taskid  = Utility.getParamFromUrl('current_issue_id');
-    var val  = $("#updatetask_oblerverlist").val();
-      taskManagement.updateTask.updateObserverTask(taskid,val)
-})
 
 function deleteComment(commentId) {
 
@@ -2706,10 +4688,9 @@ $(document).on("click", '#tapshiriq-btn', function () {
     $(this).addClass('active');
     $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
     $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-     $('.loadUserForObserver span').text('').text('Observer');
-     
-});
+    $('.loadUserForObserver span').text('').text('Observer');
 
+});
 
 $(document).on("click", '#toplanti-d-btn', function () {
     $(this).addClass('active');
@@ -2719,11 +4700,28 @@ $(document).on("click", '#toplanti-d-btn', function () {
 
     $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
     $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
+    updateTask4ShortChangeDetails('1', "isMeet");
 });
+$(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
+      var val  = $(this).closest('.assigne-div-update-issue').getVal();
+    updateTask4ShortChangeDetails(val, "fkAssigneeId");
+});
+$(document).on("change", '.observer-div-update-issue select.user-list-selectbox-multiple', function () {
+      var val  = $(this).closest('.observer-div-update-issue').find('.user-list-avatar-multiple li:last-child').attr("id");
+      console.log(val);
+      var taskid = Utility.getParamFromUrl('current_issue_id');
+      taskManagement.updateTask.updateObserverTask(taskid, val);
+});
+$(document).on("delete-interactive", '.observer-div-update-issue', function (e,id) {
+ 
+    callApi('22012614383006986455', {id: id});
+
+});
+
 
 $(document).on("click", '#tapshiriq-d-btn', function () {
     $(this).addClass('active');
-
+   
     $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
 
     $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
@@ -2731,9 +4729,42 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 
     $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
     $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
-
+    updateTask4ShortChangeDetails('0', "isMeet");
 });
 
+$(document).on('click', '#updateTask-priority-btn', function () {
+    $(this).toggleClass('active');
+    if ($(this).hasClass('active')) {
+        updateTask4ShortChangeDetails('9', "taskPriority");
+    } else {
+        updateTask4ShortChangeDetails('1', "taskPriority");
+    }
+})
+$(document).on('click', '#cerateTask-priority-btn', function () {
+    $(this).toggleClass('active');
+})
+$(document).on('click', '#issue-list-statistic-block .info-item-elements', function () {
+
+})
+$(document).on('click', '#issue-list-statistic-block .info-item-elements.status-class', function () {
+    $(this).toggleClass('active');
+    var items = $(this).parent().find('.info-item-elements.status-class.active');
+    var statlist = [];
+    var sel = $("#bug_filter_status");
+    items.each(function (index) {
+        statlist.push($(this).attr('data-status'));
+    })
+    sel.val(statlist);
+    sel.selectpicker("refresh");
+    getBugList();
+})
+$(document).on('click', '.more-button-forIssue', function () {
+     var type  = $(this).attr('data-type');
+     var pageNo  = $(this).attr('start-limit');
+     var st  = $(this).attr('data-status');
+     taskManagement.readTask.genBlockTask.genKanbanView.getTaskList4KanbanMore(type, st,pageNo)
+    
+})
 
 // task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -2743,4 +4774,434 @@ function reset_task_data() {
     $('.task-events-created input').change('');
     $('input#taskNameInputNew2').val('');
     $('#addComment4Task_comment_new').val('');
+    emptyCanvasDiv();
+    $("#progress_bar_new").empty();
+    $(".issue-managment-add-task .task-check-list-box ul").empty();
+}
+if (self.CavalryLogger) {
+    CavalryLogger.start_js(["jMqsAf+"]);
+}
+
+$(document).on("click", '.setting-elemen-box .notification-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .notifcation-block').show();  
+    taskManagement.readTask.genBlockTask.getNotificationList();  
+});
+$(document).on("click",'.cs-task-item-in-box',function (params) {
+    global_var.current_issue_id = $(this).attr('id');
+    Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
+})
+$(document).on("click",'.filter-task-list-btn',function (e) {
+    $(this).closest('.info-box').find(".filter-task-list-btn").removeClass("active");
+    $(this).toggleClass("active");
+    getBugList();
+})
+$(document).on("click",'.cs-next-large-modal-btn',function (e) {
+//    $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
+
+   $(this).closest(".cs-task-col").toggleClass("large-modal-expand");
+ if($(this).closest(".cs-task-col").hasClass('large-modal-expand')){
+     $('.cs-task-panel-column').stop().animate({
+         scrollLeft:$(this).closest(".cs-task-panel-column").scrollLeft() + $(this).closest(".cs-task-col").position().left-15
+     }, 200);
+ }
+})
+
+$(document).on("click", '.info-box.info-box-mob>.title', function () {
+    $(this).closest('.info-box.info-box-mob').toggleClass('active');
+});
+
+$(document).on("change",'.bugListNavMenu.bugList-elements',function (e) {
+   // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
+});
+$(document).on("click",'.task-clear-filter-btn',function (e) {
+    $('.bugListNavMenu.bugList-elements').find("select.bug-filter-multi").val('');
+    $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
+    $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
+    $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
+    getBugList();
+});
+
+function loadBugTaskDeadlineScripts() {
+    $("select.issue_selectpicker").selectpicker('refresh');
+  
+    setProjectListByID('run_task_project_name');
+    $('#run_task_project_name').change();
+    $("#runTaskStartDate").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $("#runTaskEndDate").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $('#runTaskTime').datetimepicker({
+        format: 'HH:mm'
+                // sideBySide: true
+    });
+    $('#runTaskExecutiveDate').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.hr_spa').hide();
+
+    $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
+    // $('#issue-managment-add-task .after-add-task').hide();
+   
+    $('#issue-managment-add-task .task-step-2').hide();
+
+    // TASK DETAILS ON
+    setProjectListByID('run_task_project_name_detail');
+    $('#run_task_project_name_detail').change();
+
+
+    $("input.runTaskStartDate_detail").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $('#runTaskExecutiveDate_detail').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.shedule-elements').addClass('el-disabled');
+    $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+    $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+    $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+    $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+
+    $('.run-shedule-elements').addClass('el-disabled');
+    $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+    $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+    $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+    $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
+
+    $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
+
+    // Task Deadline 
+       
+        $("input.taskDeadlineTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        });
+        $("input.taskDeadlineDate").datetimepicker({
+            format: 'YYYY-MM-DD'
+            // singleDatePicker: true
+        });
+    
+        $("#taskDetailDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startDate');
+        });
+        $("#taskDetailDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startTime');
+        });
+        $("#taskDetailDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endDate');
+        });
+        $("#taskDetailDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endTime');
+        });
+
+}
+
+
+// function getInfoBoxResponsive() {
+//     $(document).ready(function(){
+//         var infoBoxHeight = $('.info-box.info-box-mob').height();
+//         console.log(infoBoxHeight);
+//         // $('.info-box.info-box-mob').css('height', infoBoxHeight);
+//         if (infoBoxHeight > 35 ) {
+//             $('.info-box.info-box-mob').addClass('info-box-res');
+//         }else{
+//             $('.info-box.info-box-mob').removeClass('info-box-res');
+//         }
+//     });
+// }
+
+
+
+function getParentTask() {
+    var body = $('#d-task-tab5 .parent-task tbody');
+    body.html("")
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetParentTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var relId = res.kv.id;
+                if (!relId) {
+                    return
+                }
+                var fkParentTaskId = res.kv.fkTaskId;
+                if (fkParentTaskId) {
+
+
+                    var fkProjectId4 = res.kv.fkProjectId;
+                    var parentTaskName = res.kv.taskName;
+                    var orderNoSeq = res.kv.orderNoSeq;
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                        var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = "PRIVATE";
+                    }
+
+                    var taskName = add3Dots2String(parentTaskName, 50);
+
+                    var tr = taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(res.kv,0) 
+                    body.append(tr)
+
+                }
+
+            } catch (err) {
+
+            }
+        }
+    });
+}
+
+function getChildTasks() {
+    var tbody = $('.task-mgmt-modal-child-task tbody');
+    tbody.html('');
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetChildTaskList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+            try {
+                var obj = res.tbl[0].r;
+                
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+
+                    //set parent task info
+                    
+
+                    var fkProjectId4 = o.fkProjectId;
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                        projectCode = " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = 'PRIVATE';
+
+                    }
+                    tbody.each(function () {
+                        $(this).append(taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(o,n) )
+
+                    })
+
+                }
+
+            } catch (err) {
+                // alert(err);
+            }
+        }
+    });
+}
+
+
+function changeParentTaskModal() {
+    $('#change-parent-task-modal').modal('show');
+    var select = $('#change-parent-task-modal-parent-task-list');
+    select.html('');
+    select.append($('<option>').val('').text(''))
+
+    var json = initJSON();
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var obj = res.tbl[0].r;
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+
+                    //set parent task info;
+                    try {
+                        var projectCode = SACore.ProjectCore[o.fkProjectId].projectCode;
+                    } catch (error) {
+                        var projectCode = "PRVT"
+                    }
+              
+                    var nameFull = o.taskName + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    select.append($('<option>').val(o.id).text(nameFull))
+                }
+                sortSelectBoxByElement(select);
+            } catch (err) {
+            }
+        }
+    });
+}
+
+function addParentTaskToTask() {
+    updateTask4ShortChangeDetailsWithSync($('#change-parent-task-modal-parent-task-list').val(), 'fkParentTaskId');
+    getParentTask();
+    $('#change-parent-task-modal').modal('hide');
+    $('#task-mgmt-modal-parent-task').text($('#change-parent-task-modal-parent-task-list option:selected').text())
+    $('#task-mgmt-modal-parent-task').attr("pid", $('#change-parent-task-modal-parent-task-list').val());
+}
+
+function createChildTask() {
+
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmCreateChildTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            Toaster.showMessage("Child task is created.");
+
+            getBugList();
+
+        }
+    });
+
+}
+$(document).click(function () {
+    $("#contextMenu").hide();
+
+  })
+$(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
+   
+    $(this).closest('tbody').find("tr").removeClass("active")
+    $(this).addClass("active");
+    global_var.current_issue_id = $(this).attr("id")
+    $("#contextMenu").css({
+        display: "block",
+        left: e.pageX,
+        top: e.pageY
+    });
+    return false;
+});
+
+$(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
+    if ($(this).val().trim().length > 0) {
+        uploadFile4IpoTAsk($(this).attr('id'));
+    }
+})
+$(document).on('change', "#run_task_detail_detail_categories", function (e) {
+    updateLabelTaskById($(this).val(),global_var.current_issue_id)
+})
+$(document).on('change', "#run_task_detail_detail_sprint", function (e) {
+ 
+        updateSpirntTaskById($(this).val(),global_var.current_issue_id)
+    
+})
+
+function updateSpirntTaskById(list,taskid) {
+       var ls  ='';
+       if(list.length <1){
+        return
+     }
+       for (let index = 0; index < list.length; index++) {
+           const o = list[index];
+             ls+= o +","
+       }
+       var data  =  {};
+          data.fkSprintId =  ls;
+          data.fkTaskId = taskid;
+       callApi('22012917513008573817',data,true,function (res) {
+              
+   }) 
+}
+function updateLabelTaskById(list,taskid) {
+       var ls  =''
+       if(list.length <1){
+           return
+       }
+       for (let index = 0; index < list.length; index++) {
+           const o = list[index];
+             ls+= o +","
+       }
+       var data  =  {};
+          data.fkLabelId =  ls;
+          data.fkTaskId = taskid;
+       callApi('22012918335802271686',data,true,function (res) {
+              
+   }) 
+}
+function uploadFile4IpoTAsk(id) {
+    var r = "";
+    var that = this;
+    var files = document.getElementById(id).files;
+    var file_count = files.length;
+    var st = "";
+    var trc = 0;
+
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+  
+    $('#' + id).attr('fname', '');
+
+    for (var i = 0, f; f = files[i]; i++) {
+        //            var file = files[0];
+        var file = f;
+        var fileext = file['name'].split('.').pop();
+        var fname = file['name'].split('.')[0];
+        //            console.log('fname=' + fname);
+        if (files && file) {
+            var reader = new FileReader();
+            reader.fileName = fname;
+            reader.fileExt = fileext;
+            reader.fileNo = i;
+            reader.onload = function (readerEvt) {
+                trc++;
+                var fname1 = readerEvt.target.fileName;
+                var fileext1 = readerEvt.target.fileExt;
+                var fileNo = readerEvt.target.fileNo;
+                //                    console.log('trc no=' + trc);
+                var binaryString = readerEvt.target.result;
+                uploadFile4IpoCore(fileext1, btoa(binaryString), fname1, id);
+
+            };
+            reader.readAsBinaryString(file, fname);
+        }
+    }
 }

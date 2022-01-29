@@ -1261,9 +1261,6 @@ START PROJECT SECTION
     display: inline-block;
     position: relative;
 }
-#multi-edit-menu-btn{
-    display: none;
-}
 .search > div:after {
     content: "";
     background: #000000;
@@ -3027,8 +3024,26 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     position: relative;
     min-width: 200px;
 }
+.ui-resizable-e{
+    cursor: col-resize !important;
+}
+.ui-resizable-s{
+    cursor: row-resize !important;
+}
 #panel-css{
 
+}
+.dragging-arrange{
+    background: #ffffff24 !important;
+    box-shadow: none !important;
+    border: 1px dashed #f8f9fa94 !important;
+}
+.dragging-arrange >*{
+    visibility: hidden;
+    opacity: 0;
+}
+.us-managmenet-project-button div button.dropdown-toggle{
+    width: 200px;
 }
 :root {
 
@@ -4279,11 +4294,13 @@ td.selected{
     top: 50%;
     transform: translate(-10%, -50%);
     z-index: 1;
-    display: none;
-}
-.bug-list-column-task-name:hover .task-name-editdrop{
-
     display: block;
+}
+.task-name-editdrop button.btn {
+    display: none !important;
+}
+.bug-list-column-task-name:hover .task-name-editdrop button.btn {
+    display: block !important;
 }
 .table-row-show-hide-ul{
     list-style: none;

@@ -226,7 +226,7 @@ function callStoryCard4Api(id, elId, backlogName) {
     var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
 
-    $.get("resource/child/storycard.html", function (html_string)
+    $.get("resource/child/dev.html", function (html_string)
     {
         if (!id || id === '-1') {
             return;
@@ -243,13 +243,80 @@ function callStoryCard4Api(id, elId, backlogName) {
 }
 
 function callStoryCard(id, elId, backlogName) {
+   /*   $('#UserStoryPopupModal-Toggle-new').remove();
+     $('.modal-backdrop').remove();
+     $('#UserStoryPopupModal-Toggle').modal('hide'); */
+       var isApi = SACore.GetBacklogDetails(id,'isApi');
+     /*    if(isApi ==="1"){ */
+            var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+            var oldModal = global_var.current_modal;
+            var opid = global_var.current_modal;
+            var obid = global_var.current_backlog_id;
+            Utility.addParamToUrl("current_modal",(isApi==="1")?'loadDev':"loadStoryCard");
+            Utility.addParamToUrl("current_project_id",fkProjectId);
+            Utility.addParamToUrl("current_backlog_id",id);
+           var url  = document.location.href;
+           window.open(url, '_blank');
+           Utility.addParamToUrl("current_modal",oldModal);
+           Utility.addParamToUrl("current_project_id",opid);
+           Utility.addParamToUrl("current_backlog_id",obid);
+            //callApiCard(id, elId, backlogName);
+      /*   }
+        else {
+             // calStroyCardNew(id, elId, backlogName);
+        } */
+        
+}
 
+function calStroyCardNew(id, elId, backlogName) {
+    var divId = (elId) ? elId : "body_of_nature";
+    $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
+   
+    $.get("resource/child/storycard.html", function (html_string)
+    {
+        resetAllEditStoryCard();
+        if (!id || id === '-1') {
+            return;
+        }
+        loadBacklogDetailsByIdIfNotExist(id);
+        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+        global_var.current_project_id = fkProjectId;
+        var storyCard = $("<div>").append(html_string);
+        $(storyCard).find('#storyCardModalNew').attr("id",'UserStoryPopupModal-Toggle-new')
+                                           .removeAttr("style")
+        $("body").prepend(storyCard);
+       $('#UserStoryPopupModal-Toggle-new').modal('show');
+       $('#UserStoryPopupModal-Toggle-modal').empty();
+        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+        $('select.projectList_liveprototype_storycard').val(fkProjectId)
+        nav_list_menu_story_card();
+        global_var.current_backlog_id = id;
+        $('#storycard-panel-backlog-id').val(id);
+        var backlogName = SACore.GetCurrentBacklogname();
+        $('#storyCardListSelectBox4StoryCard')
+                .append($('<option>').text(backlogName))
+                .append($('<option>')
+                        .val('-2')
+                        .text("Load All Story Cards"));
+        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+        getTaskTatisticInfoUserStory(id);
 
+        fillBacklogHistory4View(id, "0");
+        new UserStory().toggleSubmenuStoryCard();
+//        loadStoryCardBodyInfo();
+
+        loadUsersAsOwner();
+        setStoryCardOwner();
+        setStoryCardCreatedBy();
+    }); 
+}
+function callApiCard(id, elId, backlogName) {
+   
 
     var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
 
-    $.get("resource/child/storycard.html", function (html_string)
+    $.get("resource/child/dev.html", function (html_string)
     {
         if (!id || id === '-1') {
             return;
@@ -274,19 +341,15 @@ function callStoryCard(id, elId, backlogName) {
                         .val('-2')
                         .text("Load All Story Cards"));
         $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
-
-
-
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
 //        loadStoryCardBodyInfo();
 
         loadUsersAsOwner();
         setStoryCardOwner();
-        setStoryCardCreatedBy();
+        setStoryCardCreatedBy(); 
     });
 }
-
 function loadStoryCardBodyInfo() {
     try {
         //load general info

@@ -338,16 +338,43 @@ text-align: center;
  ***************************** */
 
 .tableFixHead thead th:nth-child(-n+20){ 
-    position: sticky; 
-    top: 0; 
-    background-color: #eeeeee; 
+    position: sticky;
+    text-align: center;
+    top: 0;
+    background: #DFEEF7;
+    border: none !important;
+    z-index: 1;
+    padding: 0px;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    height: 30px;
+    color: #03396C;
+    vertical-align: middle;
+    border: 1px solid transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid !important;
 }
 .top-fixed-menu{ 
     position: sticky; 
     top: 0; 
     background-color: #ffffff; 
 }
-
+.tableFixHead thead th i:after {
+    width: 18px;
+    height: 18px;
+    margin-top: 0px;
+}
+.tableFixHead thead th i.deadline:after {
+    width: 26px;
+    height: 18.09px;
+    margin-top: -3px;
+}
+.tableFixHead thead th i.status:after {
+    width: 20px;
+    height: 18px;
+    margin-top: -4px;
+}
 #testCaseTrialViewPage{
     box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
     position: absolute;
@@ -414,9 +441,6 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
   justify-content: center;
   position: absolute;
   top: 40%;
-    
-
-
 }
 .bigCheck label {
     background-color: white;
@@ -461,23 +485,26 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 /* new css tasks  */
 .main-section {
-    width: 100%;
+    width: calc(100% - 50px);
     padding: 0px;
     min-height: 100vh;
     transition: all 0.3s;
     margin-bottom: 30px;
 }
+.open-setting-panel .main-section {
+    width: calc(100% - 460px);
+}
 .right-section {
-    margin-right: -545px;
-    width: 610px;
+    margin-right: -25.7rem;
+    width: 460px;
     transition: all 0.3s;
 }
 @media(min-width: 1600px) {
 
 }
-@media(max-width: 1440px) {
+@media(max-width: 1365px) {
     .right-section {
-        margin-right: -515px;
+        margin-right: -410px;
     }
     .open-setting-panel .has-search .form-control {
         width: 30px;
@@ -502,7 +529,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 .open-setting-panel .right-section {
     margin-right: 0;
-    width: 610px;
+    width: 460px;
 }
 .header-top-right .refresh i:after{
     width: 14px;
@@ -519,7 +546,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     mix-blend-mode: normal;
     background: rgba(255, 255, 255, 0.11);
     border: 0.7px solid rgba(255, 255, 255, 0.5);
-    display: table !important;
+    display: table;
     padding: 0;
     justify-content: flex-start !important;
     overflow: hidden;
@@ -534,6 +561,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     font-weight: normal;
     font-size: 14px;
     color: #fff;
+    background: transparent;
     display: table-cell;
     vertical-align: middle;
     padding: 4px 0px 4px 0px;
@@ -541,10 +569,10 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     margin-left: 0px;
 }
 .info-box .info-item-elements:last-child, .info-box-checking .info-item-elements:last-child {
-
+    padding: 4px 0px 4px 0px;
 }
-.info-box .info-item-elements:first-child, .info-box-checking .info-item-elements:first-child {
-
+.info-box .info-item-elements:last-child {
+    border-radius: 0 50px 50px 0;
 }
 .info-box .title, .info-box span.title {
     font-style: normal;
@@ -555,13 +583,10 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     vertical-align: middle;
     padding: 5px 4px 4px 9px;
 }
+.info-box .info-item-elements.dropdown-toggle:after {
+    display:none;
+}
 .info-box .info-item-elements:after {
-    /* content: "";
-    height: 20px;
-    right: 0;
-    border-right: 0.7px solid rgb(255 255 255 / 30%);
-    padding-right: 4px;
-    padding-left: 0px; */
     vertical-align: middle;
 }
 .info-box .info-item-elements:last-child::after {
@@ -597,6 +622,49 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 .info-box .info-item-elements i:after, .info-box-checking .info-item-elements i:after {
     width: 23px;
     height: 23px;
+}
+.info-box .dropdown-menu {
+    min-width: 85px !important;
+    background-color: transparent;
+    border: none;
+    margin-top: 7px;
+}
+.info-box .dropdown-item {
+    color: #fff;
+    background: #6497B2;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 70%);
+    border-radius: 25px;
+    height: 33px;
+    margin-bottom: 7px;
+    padding: 0px 10px;
+    width: auto;
+    display: table-caption;
+    vertical-align: middle;
+    line-height: 34px;
+}
+.info-box .dropdown-item:hover {
+    color: #03396C;
+    background: #DFEEF7;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 70%);
+}
+.info-box .dropdown-item i {
+    border: 2px solid #fff;
+    border-radius: 50px;
+    padding: 0px 4px;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 0px;
+}
+.info-box .dropdown-item i:after {
+    width: 13px;
+    height: 13px;
+    margin-top: -6px;
+}
+.info-box .dropdown-item:hover i {
+    border-color: #03396C;
+    filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate( 195deg) brightness(91%) contrast(98%);
 }
 .info-box-dropdown {
     opacity: 1;
@@ -713,6 +781,82 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+.info-box.info-box-mob .info-box-in {
+    display: table-cell;
+    width: auto;
+}
+@media (max-width: 1124px) {
+    .info-box.info-box-mob, .res-multi-edit-menu .info-box.info-box-mob{
+        position: relative;
+        overflow: visible;
+        }
+        .res-multi-edit-menu .info-box.info-box-mob:after,
+        .info-box.info-box-mob:after{
+        font-family: 'FontAwesome';
+        content: '\f107';
+        padding-left: 5px;
+        position: absolute;
+        font-size: 100%;
+        margin: 0px 10px 0 0;
+        vertical-align: middle;
+        top: 7px;
+        color: #fff;
+        right: 0;
+        }
+        .res-multi-edit-menu .info-box.info-box-mob .info-box-in,
+    .info-box.info-box-mob .info-box-in {
+        position: absolute;
+        left: 0;
+        top: 33px;
+        padding-top: 5px;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        }
+        .res-multi-edit-menu .info-box.info-box-mob.active .info-box-in,
+        .info-box.info-box-mob.active .info-box-in {
+        opacity: 1;
+        visibility: visible;
+        }
+        .res-multi-edit-menu .info-box.info-box-mob .info-item-elements,
+    .info-box.info-box-mob .info-item-elements {
+        color: #03396c;
+        background: #dfeef7;
+        border: 1px solid rgb(0 0 0 / 41%);
+        box-shadow: 0px 2px 3px rgb(0 0 0 / 41%);
+        border-radius: 25px;
+        height: 33px;
+        margin-bottom: 7px;
+        padding: 0px 10px;
+        width: 100%;
+        max-width: 100px;
+        display: inline-flex;
+        vertical-align: middle;
+        line-height: 28px;
+        }
+        .res-multi-edit-menu .info-box.info-box-mob .info-item-elements:hover, .res-multi-edit-menu .info-box.info-box-mob .info-item-elements.active, 
+        .info-box.info-box-mob .info-item-elements:hover, .info-box.info-box-mob .info-item-elements.active {
+        background: rgb(255 255 255);
+    }
+    .res-multi-edit-menu .info-box.info-box-mob .title, .res-multi-edit-menu .info-box.info-box-mob span.title, 
+    .info-box.info-box-mob .title, .info-box.info-box-mob span.title {
+        cursor: pointer;
+        width: 100%;
+        padding-right: 30px;
+    }
+    .res-multi-edit-menu .info-box.info-box-mob .info-item-elements i, 
+        .info-box.info-box-mob .info-item-elements i {
+        padding-left: 0;
+        padding-right: 0px;
+        vertical-align: middle;
+        display: inline-block;
+        }
+        .res-multi-edit-menu .info-box.info-box-mob .info-item-elements span, 
+        .info-box.info-box-mob .info-item-elements span {
+        padding: 2px 4px;
+        color: #03396c;
+        }
+}
 .task-list-bottom {
     position: sticky;
     z-index: 100;
@@ -781,8 +925,8 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 .setting-views-panel {
     position: relative;
-    min-width: 414px;
-    max-width: 414px;
+    min-width: 410px;
+    max-width: 410px;
 }
 .setting-views-panel-in {
     position: relative;
@@ -1406,14 +1550,29 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     width:18px;
     height:18px;
 }
+.cs-modal-box .cst-table-hover thead th i:after {
+    width:14px;
+    height:14px;
+}
 .cst-table-hover thead th i.deadline:after {
     width: 26px;
     height: 18.09px;
     margin-top: -3px;
 }
+
+.cs-modal-box .cst-table-hover thead th i.deadline:after {
+    width: 21px;
+    height: 16px;
+    margin-top: -2px;
+}
 .cst-table-hover thead th i.status:after {
     width: 20px;
     height: 18px;
+    margin-top: -4px;
+}
+.cs-modal-box .cst-table-hover thead th i.status:after {
+    width: 17px;
+    height: 16px;
     margin-top: -4px;
 }
 .cst-table-hover thead th i.id:after {
@@ -1429,22 +1588,30 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 /* issue management right panel styles */
 .bugList-elements .cs-input-group .btn {
-    border-radius: 50px;
+    border-radius: 50px !important;
 }
 .bugList-elements :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
     background: transparent;
 }
+.bugList-elements .bootstrap-select {
+    width: 360px !important;
+}
+.bugList-elements .bootstrap-select .dropdown-menu li a {
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .bugList-elements .cs-input-group .btn {
     color: #ffffff;
     background-color: rgb(49 53 130 / 50%);
-    border-color: rgb(49 53 130 / 50%);
-    font-family: Quicksand;
+    border-color: transparent;
     font-style: normal;
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 13px;
+    line-height: 15px;
     padding: 4px 12px;
     font-weight: 400;
-    height: 28px;
+    height: 25px;
 }
 .bugList-elements .checkmarkcontainer .checkmark:after {
     left: 5px;
@@ -1490,20 +1657,27 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     background-color: #CACACA;
 }
 /* Notification Elements */
+.notification-header {
+    margin-bottom: 0;
+    display: inline-block;
+    width: 100%;
+}
 .notification-elements {
     position: relative;
-    width: 100%;  
+    width: 100%;
     background: #03396C;
     mix-blend-mode: normal;
     border-radius: 10px;
     overflow: hidden;
     color: #fff;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
 }
 .notification-elements .notify-top-section .top-title {
     font-family: 'Quicksand', sans-serif;
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 25px;
     color: #FFFFFF;
     margin-right: 10px;
@@ -1696,6 +1870,9 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     width: 33px;
     height: 33px;
     border-radius: 50px;
+    background: #03396c;
+    object-fit: cover;
+    object-position: center center;
 }
 .notification-elements .notify-bottom-box .status-box .notefy-status {
     font-family: 'Quicksand', sans-serif;
@@ -1740,4 +1917,27 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     top: 0;
     display: inline-block;
     margin-top: -4px;
+}
+.notification-elements .notify-top-section .td-deadline-box {
+    display: inline-block;
+}
+.notification-elements .notify-top-section .td-deadline-box span {
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    position: relative;
+}
+.notification-elements .notify-top-section .td-deadline-box span div{
+    font-family: 'Quicksand',sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    height: 100%;
+    vertical-align: middle;
+    padding: 0 4px;
+}
+.notification-body {
+    padding: 5px;
 }

@@ -1,0 +1,218 @@
+<div class="modal fade p-0  "  id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index: 40001;display: block;position: relative;"
+aria-hidden="true">
+<style>
+ .editor-frame .loading {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, .5);
+    margin: 0 auto;
+/*     display: none; */
+    z-index: 100
+}
+
+.editor-frame .progress {
+    width: 50%;
+    margin: 15% auto 0
+}
+
+ .editor-frame .progress .bar {
+    width: 100%;
+    background-color: #4bb1cf
+}
+.progress.active .bar {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -moz-animation: progress-bar-stripes 2s linear infinite;
+    -ms-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+.progress-striped .bar {
+    background-color: #149bdf;
+    background-image: -webkit-gradient(linear,0 100%,100% 0,color-stop(.25,rgba(255,255,255,.15)),color-stop(.25,transparent),color-stop(.5,transparent),color-stop(.5,rgba(255,255,255,.15)),color-stop(.75,rgba(255,255,255,.15)),color-stop(.75,transparent),to(transparent));
+    background-image: -webkit-linear-gradient(
+45deg
+,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: -moz-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: -o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: linear-gradient(
+45deg
+,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    -webkit-background-size: 40px 40px;
+    -moz-background-size: 40px 40px;
+    -o-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+
+</style>
+<div class="modal-dialog modal-lg m-0 h-100 position-fixed" style="width: 100%;max-width: 100%" role="document">
+    <div class="modal-content h-100">
+        <div class="modal-header p-0">
+
+            <div class="d-flex  storecard-header-nav-section" style="background-color: #525596;">
+                <div class="d-flex">
+                    <div class="">
+                        <input onchange='updateJSChange(this, "fnDescription")'
+                            style='background-color: transparent;border: none;color: white;'
+                            placeholder="Function Description" class="form-control "
+                            id="jsCodeModal_fndescription">
+
+                    </div>
+                </div>
+                <div style="width: inherit;" class="d-flex justify-content-center ">
+                   
+                    <div class="d-flex justify-content-left cs-col-project">
+                        <div class="mm-col">
+                            <span class="mm-title">Function Type</span>
+                            <select onchange='getAllJsCodeByProject()'
+                                class="form-control jsCodeModal_checkbox jsCodeModal-selectpicker "
+                                id="jsCodeModal_fntype">
+                                <option  >no select</option>
+                                <option  value='javacore'>Core Java</option>
+                                <option  value='csscore'>Core CSS</option>
+                                <option  value='jscore'>Core JS</option>
+                                <option value='sql'>SQL Query</option>
+                                <option  value='core'>FN Core</option>
+                                <option value='event'>Event Based</option>
+                                <option value='java'>Java</option>
+                               
+                            
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-left cs-col-project">
+                        <div class="mm-col">
+                            <span class="mm-title">Project</span>
+                            <select  data-live-search="true"
+                                class="form-control jsCodeModal_projectList_class  jsCodeModal-selectpicker "
+                                id="jsCodeModal_projectList">
+                            
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-left cs-col-storecard">
+                        <div class="mm-col">
+                            <span class="mm-title">Function</span>
+                            <select class="form-control" data-live-search="true" data-actions-box="true"
+                                onchange='' id='jsCodeModal_fnlist' title="FN"></select>
+                        </div>
+                    </div>
+
+                    <div class="cs-col-storecard-general-setting">
+                        <div class="scg-button-box form-control">
+                            <button class="btn newin dropdown-toggle" href="#" role="button" id="copyMovePrint"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="fas fa-wrench" style=" margin-right: 6px; color: #fff;"
+                                    aria-hidden="true"></i> Tools</button>
+                            <div class="dropdown-menu " aria-labelledby="copyMovePrint"
+                                x-placement="bottom-start"
+                                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
+                                <button class="dropdown-item firstbut " onclick='addNewRelatedCallfn("","loadFn")' >New Function</button>
+                                      <hr class="m-1">
+                                <button class="dropdown-item firstbut " id="" onclick="copyJsCodeClassTo()">Copy</button>
+                                <button class="dropdown-item firstbut " id="" pid="" bid="" lid="" onclick="deleteJsCodeClass(this)">Delete</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cs-col-storecard-general-setting jscode-zad-javacore" style="display: none;">
+                        <div class="">
+                            <button class="btn newin btn-danger btn-sm " href="#" role="button" id="importCoreJavaCode" >
+                                <i class="fas fa-file-import" style=" margin-right: 6px; " aria-hidden="true"></i> 
+                                Compile
+                            </button>
+                            
+                        </div>
+                    </div>
+                      
+                   <!--  <div class="d-flex justify-content-right " style="padding-right:10px;">
+                        <div class="mm-col">
+                            <input class="form-control" placeholder="New function" id="jsCodeModal_newfunction">
+
+                        </div>
+                        <div class="mm-col">
+                            <button type="button" class="btn btn-success"
+                                onclick="insertNewJsFuncionDesc()">Add</button>
+                        </div>
+
+                    </div> -->
+                </div>
+
+                <button type="button" class="m-0 p-2 close" style="color: white;" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+        </div>
+        <div class="modal-body p-0" style="font-size: 12px;">
+
+            <div class="d-flex h-100 flex-wrap">
+
+                <div class="w-100">
+                    <div class="row h-100">
+
+
+                        <div class="col-12 jscode-corepart jscode-zad  jscode-zad-core" style="display: none;">
+                            <b>function</b> <input onchange='updateJSChange(this, "fnCoreName")'
+                                placeholder="Function Name" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_javafncorename">
+                            <b>(</b><input onchange='updateJSChange(this, "fnCoreInput")'
+                                placeholder="Input Patameters" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_fncoreinput"><b> ){</b>
+                        </div>
+
+                        <div class="col-12 jscode-eventpart jscode-zad  jscode-zad-event" style="display:none;">
+                            <b>$(document).on("</b><input onchange='updateJSChange(this, "fnEvent")'
+                                placeholder="Function Event. ex:click" class="form-control"
+                                style='border-color:white;display:inline-flex;width:25%'
+                                id="jsCodeModal_fnevent">
+                            <b>","</b><input onchange='updateJSChange(this, "fnEventObject")'
+                                placeholder="Class Name. ex: .customer" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_fneventobject"> <b>", function(e){</b>
+                        </div>
+
+
+                        <div class="col-12 jscode-javapart jscode-zad  jscode-zad-java" style='display:none;'>
+                            <button type="button" class="btn btn-secondary"
+                                onclick="compileJava()">Compile</button><br>
+                            <b>Library</b> <textarea onchange='updateJSChange(this, "libraryUrl")'
+                                placeholder="import util.io.*;" class="form-control"
+                                id="jsCodeModal_libraryurl"></textarea>
+                            <b>public static Carrier </b> <input onchange='updateJSChange(this, "fnCoreName")'
+                                placeholder="Function Name" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_fncorename">
+                            <b>(</b> Carrier carrier<b> ){</b>
+                        </div>
+
+                        <div style="height: calc(100vh - 80px); width: 100%;" class="col-12 editor-frame text-left">
+
+                            <!--  <span class="btn btn-secondary editor_full_screenBt"><i
+                                 class="fas fa-expand"></i></span> -->
+                                 <div class="loading editor" style="display: none;">
+                                    <div class="progress progress-striped active">
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                            <div onchange='' placeholder="Function Body" class="h-100" rows=15
+                                 id="jsCodeModal_fnbody"></div>
+
+                            <span class="jscode-corepart"> }</span>
+                            <span class="jscode-eventpart"> })</span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

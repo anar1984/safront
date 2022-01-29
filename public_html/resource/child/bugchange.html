@@ -73,7 +73,7 @@
                 
             
               <!-- Modal -->
-            <div class="modal fade bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade cs-modal-box card-Userstory-detail bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -293,6 +293,28 @@
         
                 </div> -->
     
+                <div class=" col-12 d-flex justify-content-center paginationStyle" style=" margin-top: -50px; z-index: 500; ">
+
+                    <div class="mr-auto">
+                        <div class="task-list-datetime">
+                            <input type="text" id="task-list-datetime" class="form-control" placeholder="Tarixə görə">
+                         </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown">
+                            <button class="btn pagination_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">1-50/212</button>
+                            <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
+                                <button class="btn-minus-pag dropdown-item" type="button" style="border-bottom: 1px solid #9a9a9a45;">Ən başa</button>
+                                <button class="btn-plus-pag dropdown-item" type="button">Ən sona</button>
+                            </div>
+                        </div>
+                        <div class="d-table">
+                            <button class="btn pagination_btn_left_right" data-page-icon="pageLeft"> <i class="fas fa-angle-left" aria-hidden="true"></i></button>
+                            <button class="btn pagination_btn_left_right" data-page-icon="pageRight"> <i class="fas fa-angle-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
                 <div class=" col-12 d-flex justify-content-center paginationStyle">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination" id="pagination_block">
@@ -355,27 +377,47 @@
     
                     <hr class="rcs-hr">
                     
-                    <div class="setting-elemen-box">
-                        <div class="sticky-badges">
-                            <i class="cs-svg-icon sticky-notes"></i>
-                        </div>
-                    </div>
-                    <div class="setting-elemen-box">
-                        <div class="standart-badges">
-                            <i class="fas fa-tag" style=" color: #fff; font-size: 21px; "></i>
-                        </div>
-                    </div>
-                    <div class="setting-elemen-box">
-                        <div class="standart-badges">
-                            <i class="fas fa-running" style=" color: #fff; font-size: 21px; "></i>
-                        </div>
-                    </div>
                     <div class="setting-elemen-box pb-0">
                         <div class="standart-badges taskfilter-btn">
                             <i class="cs-svg-icon filter"></i>
                         </div>
                     </div>
-    
+
+                    <div class="setting-elemen-box">
+                        <div class="dropdown">
+                            <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
+                                <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
+                            </div>
+                            <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
+                                <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
+                                <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
+                                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                                    <div class="dropdown-divider" style="padding:0px;"></div>
+                                <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-elemen-box">
+                        <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
+                            <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
+                            <div class="dropdown-menu drop-label-menu sprint-show-4-task">
+                                <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
+                                </span>
+                                <span class="newlabelspan" style="cursor: pointer;"
+                                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                                <div class="dropdown-divider" style="padding:0px;"></div>
+                                <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="setting-elemen-box">
+                        <div class="sticky-badges">
+                            <i class="cs-svg-icon sticky-notes"></i>
+                        </div>
+                    </div>
+                        
                     <hr class="rcs-hr">
     
                     <div class="setting-elemen-box">
@@ -520,12 +562,12 @@
                                 
                                 <div class="row ml-0 mr-0">
                                     <div class="col-12">
-                                        <input data-type='search_text' type="text" class='bug-filter form-control' onchange="" id='bug_filter_search_text'
+                                        <input data-type='search_text' type="search" class='bug-filter form-control' onchange="" id='bug_filter_search_text'
                                         placeholder="Search . . ." required="" style="height:33px;">
                                     </div>
                                                  
                                     <div class="cs-input-group col-12 mt-2">
-                                          <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button>
+                                          <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
                                           <div class="bcs-col-btn" style=" display: inline-block; ">
                                             <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
                                          </div>
@@ -610,7 +652,7 @@
 
 
 
-                            <div class="cs-input-group">
+                            <!-- <div class="cs-input-group">
                                 <div class="dropdown">
                                     <span class="dropdown-toggle1 btn btn-light"  style="width: 100%;" data-toggle="dropdown">Label</span>
                                     <i>
@@ -640,10 +682,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="cs-input-group mt-3">
+                            </div> -->
+                            <!-- <div class="cs-input-group mt-3">
                                 <div class="dropdown task-sprint-show">
-                                    <!-- btn btn-primary   sildim -->
+                                    
                                     <span class="dropdown-toggle1 btn-light btn task-sprint-show" data-toggle="dropdown"
                                         style="width: 100%;">
                                         Sprint</span>
@@ -668,7 +710,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="cs-input-group mt-3">
                                 <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
                                 style="text-overflow: ellipsis" onchange='callBugFilterMulti(this)' id='bug_filter_project_id'

@@ -20,9 +20,9 @@ var TableComp = {
         for (var j = 0; j < obj.length; j++) {
             var o = obj[j];
             var tr = $('<tr>')
-                    .addClass('redirectClass')
-                    .append($('<td>')
-                            .text((parseInt(startLimit) + j + 1)));
+                .addClass('redirectClass')
+                .append($('<td>')
+                    .text((parseInt(startLimit) + j + 1)));
 
             thead.find("th.selectablezad").each(function (e) {
                 var sfield = $(this).attr("sa-selectedfield");
@@ -61,7 +61,7 @@ var TableComp = {
                 case 'date':
                     res = TableComp.CompType.Date(val, elm);
                     break;
-                case 'time' :
+                case 'time':
                     res = TableComp.CompType.Time(val, elm);
                     break;
                 case 'image':
@@ -92,37 +92,37 @@ var TableComp = {
     },
     IsColumnHidden: function (td) {
         if (global_var.current_modal !== 'loadLivePrototype' &&
-                $(this).hasClass("componentisheaden")) {
+            $(this).hasClass("componentisheaden")) {
             td.css('display', 'none');
         }
     },
     CompType: {
         Input: function (val, elm) {
-            return  $('<input>')
-                    .attr('sa-type', 'input')
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .addClass('form-control')
-                    .attr('value', val);
+            return $('<input>')
+                .attr('sa-type', 'input')
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .addClass('form-control')
+                .attr('value', val);
         },
         Label: function (val, elm) {
-            return  $('<span>')
-                    .attr('sa-type', 'label')
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .text(val);
+            return $('<span>')
+                .attr('sa-type', 'label')
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .text(val);
         },
         Date: function (val, elm) {
-            return  $('<span>')
-                    .attr('sa-type', 'date')
+            return $('<span>')
+                .attr('sa-type', 'date')
 
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .text(Utility.convertDate(val));
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .text(Utility.convertDate(val));
         },
         Time: function (val, elm) {
-            return  $('<span>')
-                    .attr('sa-type', 'time')
+            return $('<span>')
+                .attr('sa-type', 'time')
 
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .text(Utility.convertTime(val));
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .text(Utility.convertTime(val));
             ;
         },
         FileList: function (val, elm) {
@@ -138,47 +138,47 @@ var TableComp = {
         },
         Image: function (val, elm) {
             return $('<img>')
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .attr('src', fileUrl(val));
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .attr('src', fileUrl(val));
 
         },
         TextArea: function (val, elm) {
-            return  $('<input>')
-                    .attr('sa-type', 'textarea')
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .addClass('form-control')
-                    .attr('value', val);
+            return $('<input>')
+                .attr('sa-type', 'textarea')
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .addClass('form-control')
+                .attr('value', val);
         },
         InnerCheckbox: function (val, elm) {
-            return  $('<input>')
-                    .attr('sa-type', 'innercheckbox')
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .addClass('form-control')
-                    .attr('value', val);
+            return $('<input>')
+                .attr('sa-type', 'innercheckbox')
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .addClass('form-control')
+                .attr('value', val);
         },
         Button: function (val, elm) {
             var title = (val) ? val : $(elm).attr("sa-title");
-            return  $('<button>')
-                    .attr('sa-type', 'button')
-                    .attr('style', gui_component.defaultCSS.Button + ';' + $(elm).attr('css').replace(/##/g, ''))
-                    .css("cursor", "pointer")
-                    .addClass('form-control')
-                    .text(title);
+            return $('<button>')
+                .attr('sa-type', 'button')
+                .attr('style', gui_component.defaultCSS.Button + ';' + $(elm).attr('css').replace(/##/g, ''))
+                .css("cursor", "pointer")
+                .addClass('form-control')
+                .text(title);
         },
         Icon: function (val, elm) {
-            return  $('<input>')
-                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
-                    .addClass('form-control')
-                    .attr('value', val);
+            return $('<input>')
+                .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                .addClass('form-control')
+                .attr('value', val);
         },
         Hiperlink: function (val, elm) {
             var title = (val) ? val : $(elm).attr("sa-title");
-            return  $('<a>')
-                    .attr('sa-type', 'hiperlink')
-                    .attr('style', gui_component.defaultCSS.Hiperlink + ';' + $(elm).attr('css').replace(/##/g, ''))
-                    .css("cursor", "pointer")
-                    .attr("href", "#")
-                    .text(title);
+            return $('<a>')
+                .attr('sa-type', 'hiperlink')
+                .attr('style', gui_component.defaultCSS.Hiperlink + ';' + $(elm).attr('css').replace(/##/g, ''))
+                .css("cursor", "pointer")
+                .attr("href", "#")
+                .text(title);
         },
     }
 }
@@ -225,8 +225,8 @@ var StoryCardPanel = {
         for (var n = 0; n < pid.length; n++) {
             var pname = SACore.GetProjectName(pid[n]);
             var o = $('<option></option')
-                    .attr('value', pid[n])
-                    .text(pname);
+                .attr('value', pid[n])
+                .text(pname);
             if (f) {
                 o.attr("selected", true);
                 f = false;
@@ -253,10 +253,10 @@ var StoryCardPanel = {
         global_var.current_backlog_id = StoryCardPanel.StoryCardId;
         var backlogName = SACore.GetCurrentBacklogname();
         $('#storyCardListSelectBox4StoryCard')
-                .append($('<option>').text(backlogName))
-                .append($('<option>')
-                        .val('-2')
-                        .text("Load All Story Cards"));
+            .append($('<option>').text(backlogName))
+            .append($('<option>')
+                .val('-2')
+                .text("Load All Story Cards"));
         $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
     },
 
@@ -273,38 +273,38 @@ function callStoryCard1(id, elId, backlogName) {
     var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
     StoryCardPanel.Init(id);
-//    $.get("resource/child/storycard.html", function (html_string)
-//    {
-//        if (!id || id === '-1') {
-//            return;
-//        }
-//
-//        loadBacklogDetailsByIdIfNotExist(id);
-//        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
-//        global_var.current_project_id = fkProjectId;
-//
-//        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
-//        $("#UserStoryPopupModal-Toggle").modal('show');
-//        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
-//        $('select.projectList_liveprototype_storycard').val(fkProjectId)
-//
-//        global_var.current_backlog_id = id;
-//        var backlogName = SACore.GetCurrentBacklogname();
-//        $('#storyCardListSelectBox4StoryCard')
-//                .append($('<option>').text(backlogName))
-//                .append($('<option>')
-//                        .val('-2')
-//                        .text("Load All Story Cards"));
-//        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
-//
-//        fillBacklogHistory4View(id, "0");
-//        new UserStory().toggleSubmenuStoryCard();
-////        loadStoryCardBodyInfo();
-//
-//        loadUsersAsOwner();
-//        setStoryCardOwner();
-//        setStoryCardCreatedBy();
-//    });
+    //    $.get("resource/child/storycard.html", function (html_string)
+    //    {
+    //        if (!id || id === '-1') {
+    //            return;
+    //        }
+    //
+    //        loadBacklogDetailsByIdIfNotExist(id);
+    //        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+    //        global_var.current_project_id = fkProjectId;
+    //
+    //        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+    //        $("#UserStoryPopupModal-Toggle").modal('show');
+    //        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+    //        $('select.projectList_liveprototype_storycard').val(fkProjectId)
+    //
+    //        global_var.current_backlog_id = id;
+    //        var backlogName = SACore.GetCurrentBacklogname();
+    //        $('#storyCardListSelectBox4StoryCard')
+    //                .append($('<option>').text(backlogName))
+    //                .append($('<option>')
+    //                        .val('-2')
+    //                        .text("Load All Story Cards"));
+    //        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+    //
+    //        fillBacklogHistory4View(id, "0");
+    //        new UserStory().toggleSubmenuStoryCard();
+    ////        loadStoryCardBodyInfo();
+    //
+    //        loadUsersAsOwner();
+    //        setStoryCardOwner();
+    //        setStoryCardCreatedBy();
+    //    });
 }
 
 //$(document).on('focusout', '#addComment4Task_comment_new', function (ev) {
@@ -344,15 +344,47 @@ function loadStoryCardInfo4StoryCard(el) {
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
-        setStoryCardOwner();
+        loadUsersAsNezaretci();
+       // setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
-        getRelatedStoryCardByApiId();
+        getRelatedStoryCardByApiId(); 
+        getBugList4StoryCard(id, $('.tablePaginatione.component-input-class tbody'))
+        getTaskTatisticInfoUserStory(id)
+            if(!id){
+                  return
+            }
+        callApi('21122616260906401317', { fkBacklogId: id }, true, function (res) {
+            $('#user-story-input-json').val(res.kv.inputJson);
+            
+        })
 
     }
 }
 
 
+function loadUsersAs4ComboByElm(elm) {
+
+    elm.html('');
+    var keys = SAProjectUser.GetKeysUser();
+    var div1 = $(`<option
+    data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
+    Unassigned</option>`);
+    elm.append(div1);
+    for (var i = 0; i < keys.length; i++) {
+        var id = keys[i];
+        var userImage = SAProjectUser.Users[id].userImage;
+        var userName = SAProjectUser.Users[id].userPersonName;
+        var img = (userImage) ?
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
+        var div = $(`<option value='${id}'
+        data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
+        ${userName}</option>`);
+        elm.append(div)
+    }
+    elm.selectpicker('refresh');
+}
 function storyCardTypeChangeEvent(backlogType) {
     //hide all story card side by panels
     $('.story-card-right-menu-panels').hide();
@@ -408,7 +440,7 @@ $(document).on('change', '.inputActionTypeChangeZadSheyOOO', function (ev) {
 $(document).on('change', '.inputActionTypeChangeZadShey111', function (ev) {
     var inputId = $(this).attr('inputid');
     var ustype = $(this).attr('key');
-    var val=$(this).val();
+    var val = $(this).val();
     updateInput4SCDetails(inputId, val, ustype);
 });
 
@@ -543,8 +575,8 @@ $(document).on("focusout", '#eventActionType4ManualJs', function (event) {
         $("div#" + inputId + " .script-div").remove();
         var fn = Component.GetManualFunctionBody(actionType, inputId, val)
         $("div#" + inputId).append($('<div>')
-                .addClass("script-div")
-                .append($('<script>').text(fn)));
+            .addClass("script-div")
+            .append($('<script>').text(fn)));
 
     }
     updateInput4SCDetails(inputId, val, 'manualJs');
@@ -570,13 +602,11 @@ $(document).on('click', '.live-prototype-show-story-card-hard-refresh', function
 $(document).on('change', '.okayPitchYourPathYourWay', function (ev) {
 
     var attrVal = $(this).val();
-
     if (!attrVal) {
         return;
     }
 
     var json = initJSON();
-
     json.kv.attrValue = attrVal;
     json.kv.fkInputId = global_var.current_us_input_id;
     json.kv.fkProjectId = global_var.current_project_id;
@@ -610,14 +640,14 @@ function splitSelectedFieldAndGenHtml(selectedField, fkInputId) {
             continue;
         }
         var span = $('<span>')
-                .addClass("inputSelectedFieldSingleCell")
-                .attr('pname', sf)
-                .text(sf)
-                .append($('<a>')
-                        .attr('inputId', fkInputId)
-                        .attr('pid', sf)
-                        .append('<b>(x)</b>')
-                        .addClass('deleteSelectedFieldFromInput'));
+            .addClass("inputSelectedFieldSingleCell")
+            .attr('pname', sf)
+            .text(sf)
+            .append($('<a>')
+                .attr('inputId', fkInputId)
+                .attr('pid', sf)
+                .append('<b>(x)</b>')
+                .addClass('deleteSelectedFieldFromInput'));
         div.append(span);
 
         if (s < ls.length - 1) {
@@ -628,9 +658,73 @@ function splitSelectedFieldAndGenHtml(selectedField, fkInputId) {
     return div;
 }
 
+$(document).on('click', '.generate-crud-api-for-entity', function () {
+    var data = {
+        "dbId": "",
+        "tableId": "",
+        "entity": "",
+        "entityDb": "test",
+        "action": "",
+        "fkProjectId": ""
+    };
+
+    data.fkProjectId = $('#ShowGenerateCrudApisModal-projectlist').val();
+    data.tableId = show_generate_crud_api_table_id;
+    data.entity = $('#ShowGenerateCrudApisModal-tablename').val();
+    data.dbId = $('#entityDatabaseList').val();
+    data.action += $('#ShowGenerateCrudApis-crud-c').is(":checked") ? "," +
+        $('#ShowGenerateCrudApis-crud-c').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-r').is(":checked") ? "," +
+        $('#ShowGenerateCrudApis-crud-r').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-i').is(":checked") ? "," +
+        $('#ShowGenerateCrudApis-crud-i').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-u').is(":checked") ? "," +
+        $('#ShowGenerateCrudApis-crud-u').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-d').is(":checked") ? "," +
+        $('#ShowGenerateCrudApis-crud-d').val() : "";
+
+    callService("serviceTmcreateApiFromEntity", data, true,
+        function (res) {
+            Toaster.showMessage("API Successfully Created");
+            $('#ShowGenerateCrudApisModal').modal('hide');
+        })
+})
+
+var show_generate_crud_api_table_id = "";
+$(document).on('click', '.ShowGenerateCrudApis', function (ev) {
+    $('#ShowGenerateCrudApisModal').modal('show');
+    show_generate_crud_api_table_id = $(this).closest('td.tdSeqment').attr('pid');
+    var tablename = $(this).closest('td.tdSeqment').find('.TableNameH5').first().text();
+    $('#ShowGenerateCrudApisModal-tablename').val(tablename);
+
+    callService("serviceTmgetProjectList", {}, true,
+        function (res) {
+            var select = $('#ShowGenerateCrudApisModal-projectlist');
+            select.html('');
+            var obj = res.tbl[0].r;
+            var urlVal = global_var.current_project_id;
+            for (var n = 0; n < obj.length; n++) {
+                var o = $('<option></option')
+                    .attr('value', obj[n].id)
+                    .html(obj[n].projectName);
+                if (urlVal === obj[n].id) {
+                    o.attr("selected", "selected");
+                }
+                select.append(o);
+            }
+        })
+    //    entityApiRelationModal_main
+
+
+
+
+
+
+});
+
 $(document).on('click', '.ShowApiFieldRelations', function (ev) {
     $('#entityApiRelationModal').modal('show');
-//    entityApiRelationModal_main
+    //    entityApiRelationModal_main
 
 
     var fieldId = $(this).closest('div.feildSection').first().attr('id');
@@ -657,31 +751,31 @@ $(document).on('click', '.ShowApiFieldRelations', function (ev) {
             for (let i = 0; i < obj.length; i++) {
                 var o = obj[i];
                 body.append($('<tr>')
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").append($('<b>')
-                                .css('cursor', 'pointer')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                                .text(o.backlogName)))
-                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
-                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
-                        )
+                    .append($("<td>").text(i + 1))
+                    .append($("<td>").append($('<b>')
+                        .css('cursor', 'pointer')
+                        .attr('onclick', 'callStoryCard("' + o.id + '")')
+                        .text(o.backlogName)))
+                    .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
+                    .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                )
             }
         }
     });
 
 });
 
-
+var table_id_4_api_relation = "";
 $(document).on('click', '.ShowApiRelations', function (ev) {
     $('#entityApiRelationModal').modal('show');
-//    entityApiRelationModal_main
+    //    entityApiRelationModal_main
 
 
     var tableid = $(this).closest('td.tdSeqment').first().attr('pid');
 
     if (!tableid)
         return;
-
+    table_id_4_api_relation = tableid;
     var json = initJSON();
     json.kv.tableId = tableid;
     var that = this;
@@ -701,19 +795,88 @@ $(document).on('click', '.ShowApiRelations', function (ev) {
             for (let i = 0; i < obj.length; i++) {
                 var o = obj[i];
                 body.append($('<tr>')
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").append($('<b>')
-                                .css('cursor', 'pointer')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                                .text(o.backlogName)))
-                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
-                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
-                        )
+                    .append($("<td>").text(i + 1))
+                    .append($("<td>")
+                        .attr('backlogid', o.id)
+                        .addClass('api-relation-input-backlog')
+                        .append($('<b>')
+                            .css('cursor', 'pointer')
+                            .attr('onclick', 'callStoryCard("' + o.id + '")')
+                            .text(o.backlogName)))
+                    .append($("<td>")
+                        .text(SACore.Project[o.fkProjectId]))
+                    .append($("<td>")
+                        .addClass('api-action-class-zad')
+                        .attr("action-type", o.apiAction)
+                        .text(GetApiActionTypeText(o.apiAction)))
+                    //                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                    .append($("<td>").append(tableField(that)))
+                    .append($("<td>").append(tableFieldBothAction()))
+                    .append($("<td>").append(tableFieldBothActionButton()))
+                )
             }
+            $('.entity-api-relation-crud-info-list-selectpicker').selectpicker('refresh');
         }
     });
 
 });
+
+$(document).on('click', '.entity-api-relation-crud-info-list-submit-action', function () {
+    //    carrier.addController("fkBacklogId", cp.hasValue(carrier, "fkBacklogId"));
+    //        carrier.addController("actionType", cp.hasValue(carrier, "actionType"));
+    //        carrier.addController("applyType", cp.hasValue(carrier, "applyType"));
+    //        carrier.addController("fieldName", cp.hasValue(carrier, "fieldName"));
+    //        carrier.addController("dbId", cp.hasValue(carrier, "dbId"));
+    //        carrier.addController("tableId", cp.hasValue(carrier, "tableId"));
+    //        carrier.addController("fieldId", cp.hasValue(carrier, "fieldId"));
+    var tr = $(this).closest('tr');
+    var data = {};
+    data.fkBacklogId = tr.find('td.api-relation-input-backlog').attr('backlogid');
+    data.actionType = tr.find('td.api-action-class-zad').attr('action-type');
+    data.actionType = tr.find('td.api-action-class-zad').attr('action-type');
+    data.applyType = tr.find('select.apply-type').val();
+    data.fieldName = tr.find('select.entity-api-relation-crud-info-list-selectpicker').find('option:selected').text();
+    data.dbId = $('#entityDatabaseList').val();
+    data.tableId = table_id_4_api_relation;
+    data.fieldId = tr.find('select.entity-api-relation-crud-info-list-selectpicker').val();
+
+    callService("serviceTmmodifyApiFromEntity", data, true, function (res) {
+        Toaster.showMessage("Field added successfully!")
+    })
+})
+
+var tableFieldBothActionButton = function () {
+    return `<button class='form-control btn btn-secondary 
+                    entity-api-relation-crud-info-list-submit-action'>
+                 Generate
+            </button>`;
+}
+
+var tableFieldBothAction = function () {
+    return `<select class='form-control apply-type'>
+                <option value='all'>Both</option>
+                <option value='in'>Input</option>
+                <option value='out'>Output</option>
+            </select>`;
+}
+
+var tableField = function (el) {
+    var select = $('<select>');
+    select.addClass("entity-api-relation-crud-info-list-selectpicker")
+        .attr('title', '')
+        .attr("data-live-search", "true")
+        .attr('data-actions-box', "true")
+    //.attr('multiple', true);
+    select.append($('<option>').text("").val(""))
+    var td = $(el).closest('td.tdSeqment');
+    td.find('.feildSection').each(function () {
+        var id = $(this).attr('id');
+        var fieldname = $(this).find('span.feildNamespan').text();
+        select.append($('<option>').text(fieldname).val(id))
+
+    })
+    return select;
+}
 
 $(document).on('click', '.deleteSelectedFieldFromInput', function (ev) {
 
@@ -758,7 +921,7 @@ function initMap(latInit, lngInit) {
     var lat = (latInit) ? parseFloat(latInit) : 40.58511505605673;
     var lng = (lngInit) ? parseFloat(lngInit) : 49.66477990150452;
 
-    var haightAshbury = {lat: lat, lng: lng};
+    var haightAshbury = { lat: lat, lng: lng };
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 16.3, // Set the zoom level manually
@@ -840,7 +1003,7 @@ function triggerApiDebugMode4ApiOutput(el, selectedField) {
 
 function highlightOutputFieldsForTriggerApi(el, selectedField) {
     $(el).closest('div.component-class')
-            .addClass('sa-debug-mode-output-api-selectedfield');
+        .addClass('sa-debug-mode-output-api-selectedfield');
     var attr = $(el).closest('div.component-class').attr('sa-debug-output-attr')
     $(el).closest('div.component-class').attr('sa-debug-output-attr', attr + ',' + selectedField);
 }
@@ -848,10 +1011,10 @@ function highlightOutputFieldsForTriggerApi(el, selectedField) {
 function highlightInputFieldsForTriggerApi(el, apiId) {
     //input bildiren elemnentlerin classlarini silmek
     $('.sa-debug-mode-input-api-selectedfield')
-            .removeClass('sa-debug-mode-input-api-selectedfield')
+        .removeClass('sa-debug-mode-input-api-selectedfield')
 
     $('.sa-debug-mode-output-api-selectedfield')
-            .removeClass('sa-debug-mode-output-api-selectedfield');
+        .removeClass('sa-debug-mode-output-api-selectedfield');
 
     var inputList = be.ExecAPI.GetInputsByAPI(apiId);
 
@@ -862,7 +1025,7 @@ function highlightInputFieldsForTriggerApi(el, apiId) {
             var field = selectedFields[i].trim();
             if (inputList.includes(field)) {
                 $(this).closest('div.component-class')
-                        .addClass('sa-debug-mode-input-api-selectedfield');
+                    .addClass('sa-debug-mode-input-api-selectedfield');
                 var attr = $(this).closest('div.component-class').attr('sa-debug-input-attr')
                 $(this).closest('div.component-class').attr('sa-debug-input-attr', attr + ',' + field);
             }
@@ -888,7 +1051,7 @@ function toggleComponentBlock4Debug(el) {
 }
 
 function getCallApiListFromProcessDescriptionLine(commandLine) {
-//    commandLine = '@.if(x,=,y){@.callapi(21062010245603843446);@.forlist(class){@.if(z,=,5){@.callapi(21071110441109806371);@.callapi(21062914173108442476);@.ifhasvalue(444){@.callapi(211010181551089210372);};};};}';
+    //    commandLine = '@.if(x,=,y){@.callapi(21062010245603843446);@.forlist(class){@.if(z,=,5){@.callapi(21071110441109806371);@.callapi(21062914173108442476);@.ifhasvalue(444){@.callapi(211010181551089210372);};};};}';
     var cmdList = [];
     commandLine = commandLine.toLowerCase();
     commandLine = commandLine.replace(/@.callapi/g, '@.callapi@.fntemp');
@@ -920,8 +1083,8 @@ function highlightTheSameSelectedFieldsInInputList() {
         if (saName) {
             if ($('#tblIPOList').find('.inputSelectedFieldSingleCell[pname="' + saName + '"]').length > 1) {
                 $('#tblIPOList').find('.inputSelectedFieldSingleCell[pname="' + saName + '"]')
-                        .css("border-radius", "5px")
-                        .css('background-color', getRandomColor());
+                    .css("border-radius", "5px")
+                    .css('background-color', getRandomColor());
             }
         }
     }
@@ -963,7 +1126,7 @@ function setBacklogAsHtml(backlogId, css, js) {
         crossDomain: true,
         async: true,
         success: function (res) {
-//            loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+            //loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -973,6 +1136,34 @@ function setBacklogAsHtml(backlogId, css, js) {
 
 
 
+function getFormHTML(formId,isAsync,callback) {
+    var out = '';
+    var async = (isAsync) ? isAsync : false;
+    var bid = (formId) ? formId : global_var.current_backlog_id;
+
+    if (!bid)
+        return out;
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/html/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: async,
+        success: function (res) {
+            out = res;
+            if (callback) {
+                callback(res);
+            }
+        },
+        error: function () {
+            Toaster.showError(apiId + ' ----> Something went wrong!!!');
+        }
+    });
+
+    return out;
+
+}
 
 function getBacklogAsHtml(bid1, isAsync) {
     var out = '';
@@ -1005,11 +1196,11 @@ function getBacklogAsHtml(bid1, isAsync) {
 
 
 function initZadShey(projectId) {
-//  alert('hole hole hoel')
+    //  alert('hole hole hoel')
     $('#kelbetin2').after($('<script>').attr('src', urlGl + 'api/get/script/js/' + global_var.current_domain + "/" + projectId + '.js'))
     $('#kelbetin').after($('<link>')
-            .attr('rel', 'stylesheet')
-            .attr('href', urlGl + 'api/get/script/css/' + global_var.current_domain + "/" + projectId + '.css'))
+        .attr('rel', 'stylesheet')
+        .attr('href', urlGl + 'api/get/script/css/' + global_var.current_domain + "/" + projectId + '.css'))
 
 }
 
@@ -1035,12 +1226,25 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
             global_var.current_modal = "";
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                var o = obj[n];
+                const o = obj[n];
                 if (o.isApi !== '1') {
-                    var js = window.editorJSnew.getValue();
-                    var css = window.editorCSSnew.getValue();
-                    setBacklogAsHtml(o.id, css, js);
-
+                  
+                    jQuery.ajax({
+                        url: `${urlGl}/api/get/dwd/js/${global_var.current_domain}/${o.id}.js`,
+                        success: function(js) {
+                                 
+                            jQuery.ajax({
+                                url: `${urlGl}/api/get/dwd/css/${global_var.current_domain}/${o.id}.css`,
+                                success: function(css) {
+                                         
+                                    setBacklogAsHtml(o.id, css, js);
+                                },
+                                async:false
+                              });
+                        },
+                        async:false
+                      });
+                   
                 }
 
             }
@@ -1059,7 +1263,7 @@ $(document).on('change', '.user-classwork-grade', function () {
     var id = $(this).attr("pid");
     var grade = $(this).val();
     //Update Classwork Grade
-    callApi('21120315284308914323', {id: id, grade: grade})
+    callApi('21120315284308914323', { id: id, grade: grade })
 })
 
 
@@ -1154,16 +1358,16 @@ var GradeList = {
 
 function GradingBlock(pid, grade) {
     var select = $('<select>')
-            .addClass("user-classwork-grade")
-            .attr('pid', pid)
-            .addClass('gradingblock')
-            .append($('<option>').val('').text(''))
-            .append($('<option>').val('0').text('Not Submited'))
-            .append($('<option>').val('5').text('Correct'))
-            .append($('<option>').val('4').text('Half Correct'))
-            .append($('<option>').val('3').text('Almost Correct'))
-            .append($('<option>').val('2').text('Almost Wrong'))
-            .append($('<option>').val('1').text('Wrong'));
+        .addClass("user-classwork-grade")
+        .attr('pid', pid)
+        .addClass('gradingblock')
+        .append($('<option>').val('').text(''))
+        .append($('<option>').val('0').text('Not Submited'))
+        .append($('<option>').val('5').text('Correct'))
+        .append($('<option>').val('4').text('Half Correct'))
+        .append($('<option>').val('3').text('Almost Correct'))
+        .append($('<option>').val('2').text('Almost Wrong'))
+        .append($('<option>').val('1').text('Wrong'));
 
     select.find('[value="' + grade + '"]').attr("selected", "selected")
     return select;
@@ -1185,31 +1389,31 @@ function genClassworkAndUserMatrix(fkClassId) {
     var partObj = participants.tbl[0].r;
 
     var table = $('<table>')
-            .addClass('table table-hover')
+        .addClass('table table-hover')
 
 
     var thead = $('<thead>')
     var trh = $('<tr>')
-            .addClass("redirectClass")
-            .append($('<th>').text(''))
+        .addClass("redirectClass")
+        .append($('<th>').text(''))
     for (var i in clworkObj) {
         var cObj = clworkObj[i];
         trh.append($('<th>')
-                .append($('<a href="#">')
-                        .val(cObj.id)
-                        .attr('sa-selectedfield', 'fkClassworkId')
-                        .attr('onclick_trigger_id', "21111819514900624174")
-                        .attr('fkClassworkId', cObj.id)
-                        .attr('onclick', 'showClassworkInfoManual(this)')
-                        .append($('<span>').text(cObj.title))
-                        .append($('<br>'))
-                        .append($('<span>').text('  ('))
-                        .append($('<span>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
-                        .append($('<span>').text(', '))
-                        .append($('<span>').text(cObj.typeName))
-                        .append($('<span>').text(')'))
-                        )
-                )
+            .append($('<a href="#">')
+                .val(cObj.id)
+                .attr('sa-selectedfield', 'fkClassworkId')
+                .attr('onclick_trigger_id', "21111819514900624174")
+                .attr('fkClassworkId', cObj.id)
+                .attr('onclick', 'showClassworkInfoManual(this)')
+                .append($('<span>').text(cObj.title))
+                .append($('<br>'))
+                .append($('<span>').text('  ('))
+                .append($('<span>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
+                .append($('<span>').text(', '))
+                .append($('<span>').text(cObj.typeName))
+                .append($('<span>').text(')'))
+            )
+        )
     }
     thead.append(trh);
     table.append(thead);
@@ -1229,18 +1433,18 @@ function genClassworkAndUserMatrix(fkClassId) {
                 var pid = grading[key].id
                 var grade = grading[key].grade
                 td.append(GradingBlock(pid, grade))
-                        .append($("<a href='#'>")
-                                .addClass("openClassworkbody")
-                                .attr('fkActionId', grading[key].fkActionId)
-                                .attr('classworkType', grading[key].classworkType)
-                                .append($('<br>'))
-                                .append($('<span>').text('Open')))
-                        .append("<br>")
-                        .append($("<a href='#'>")
-                                .addClass("add-comment-to-classwork")
-                                .attr('pid', pid)
-                                .append($('<i class="fa fa-comment">').text('3')))
-                        ;
+                    .append($("<a href='#'>")
+                        .addClass("openClassworkbody")
+                        .attr('fkActionId', grading[key].fkActionId)
+                        .attr('classworkType', grading[key].classworkType)
+                        .append($('<br>'))
+                        .append($('<span>').text('Open')))
+                    .append("<br>")
+                    .append($("<a href='#'>")
+                        .addClass("add-comment-to-classwork")
+                        .attr('pid', pid)
+                        .append($('<i class="fa fa-comment">').text('3')))
+                    ;
             }
             tr.append(td);
 
@@ -1272,20 +1476,20 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
     var clworkObj = classwork.tbl[0].r;
 
     var table = $('<table>')
-            .addClass('table table-hover')
+        .addClass('table table-hover')
 
 
     var thead = $('<thead>')
     var trh = $('<tr>');
 
     trh.append($('<th>').text('#'))
-            .append($('<th>').text('Title'))
-            .append($('<th>').text('Created Date'))
-            .append($('<th>').text('Due Date'))
-            .append($('<th>').text('Type'))
-            .append($('<th>').text(''))
-            .append($('<th>').text('Grade'))
-            .append($('<th>').text(''))
+        .append($('<th>').text('Title'))
+        .append($('<th>').text('Created Date'))
+        .append($('<th>').text('Due Date'))
+        .append($('<th>').text('Type'))
+        .append($('<th>').text(''))
+        .append($('<th>').text('Grade'))
+        .append($('<th>').text(''))
 
 
 
@@ -1300,52 +1504,52 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
 
         var tr = $('<tr>').addClass("redirectClass");
         tr.append($('<td>').text(idx))
-                .append($('<td>').append($('<a href="#">')
-                        .val(cObj.id)
-                        .attr('sa-selectedfield', 'fkClassworkId')
-                        .attr('onclick_trigger_id', "21111819514900624174")
-                        .attr('fkClassworkId', cObj.id)
-                        .attr('onclick', 'showClassworkInfo(this)')
-                        .text(cObj.title)))
-                .append($('<td>').text(Utility.convertDate(cObj.createdDate)))
-                .append($('<td>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
-                .append($('<td>').text(cObj.typeName))
+            .append($('<td>').append($('<a href="#">')
+                .val(cObj.id)
+                .attr('sa-selectedfield', 'fkClassworkId')
+                .attr('onclick_trigger_id', "21111819514900624174")
+                .attr('fkClassworkId', cObj.id)
+                .attr('onclick', 'showClassworkInfo(this)')
+                .text(cObj.title)))
+            .append($('<td>').text(Utility.convertDate(cObj.createdDate)))
+            .append($('<td>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
+            .append($('<td>').text(cObj.typeName))
 
 
 
-                ;
+            ;
         idx++;
 
         var key = cObj.id + "_" + global_var.current_ticker_id;
         if (grading && grading[key]) {
             var span = (grading[key].grade) ? $('<b>')
-                    .css('background-color', 'yellow')
-                    .css('border-radius', '10px')
-                    .css('padding', '2px 5px')
-                    .text(GradeList[grading[key].grade]) : "";
+                .css('background-color', 'yellow')
+                .css('border-radius', '10px')
+                .css('padding', '2px 5px')
+                .text(GradeList[grading[key].grade]) : "";
             tr.append($('<td>').append($("<a href='#'>")
-                    .addClass("add-comment-to-classwork")
-                    .attr('pid', grading[key].id)
-                    .append($('<i class="fa fa-comment">').text(''))))
+                .addClass("add-comment-to-classwork")
+                .attr('pid', grading[key].id)
+                .append($('<i class="fa fa-comment">').text(''))))
             tr.append($('<td>').append(span))
-                    .append($('<td>')
-                            .append($('<a href="#">')
-                                    .addClass("openClassworkbody")
-                                    .attr('fkActionId', grading[key].fkActionId)
-                                    .attr('classworkType', grading[key].classworkType)
-                                    .text("Open")))
-                    ;
+                .append($('<td>')
+                    .append($('<a href="#">')
+                        .addClass("openClassworkbody")
+                        .attr('fkActionId', grading[key].fkActionId)
+                        .attr('classworkType', grading[key].classworkType)
+                        .text("Open")))
+                ;
         } else {
             tr.append($('<td>').text(''))
-                    .append($('<td>').text(''))
-                    .append($('<td>')
-                            .append($('<a href="#">')
-                                    .attr("fkClassworkId", cObj.id)
-                                    .attr("fkUserId", global_var.current_ticker_id)
-                                    .attr("classworkType", cObj.classworkType)
-                                    .attr("fkClassId", fkClassId)
-                                    .attr('onclick', 'startBusinessCaseClasswork(this)')
-                                    .text("Submit")))
+                .append($('<td>').text(''))
+                .append($('<td>')
+                    .append($('<a href="#">')
+                        .attr("fkClassworkId", cObj.id)
+                        .attr("fkUserId", global_var.current_ticker_id)
+                        .attr("classworkType", cObj.classworkType)
+                        .attr("fkClassId", fkClassId)
+                        .attr('onclick', 'startBusinessCaseClasswork(this)')
+                        .text("Submit")))
         }
 
 
@@ -1358,10 +1562,10 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
 
 function startBusinessCaseClasswork(el) {
     var fkUserId = $(el).attr('fkUserId')
-            , fkClassworkId = $(el).attr('fkClassworkId')
-            , fkActionId = $(el).attr('fkActionId')
-            , classworkType = $(el).attr('classworkType')
-            , fkClassId = $(el).attr('fkClassId');
+        , fkClassworkId = $(el).attr('fkClassworkId')
+        , fkActionId = $(el).attr('fkActionId')
+        , classworkType = $(el).attr('classworkType')
+        , fkClassId = $(el).attr('fkClassId');
 
     if (fkActionId) {
         openBusinessCaseModal(fkActionId, classworkType);
@@ -1385,7 +1589,7 @@ function startBusinessCaseClasswork(el) {
     openBusinessCaseModal(bs.kv.id);
 
 
-//            21112007581103583541 startNewClasswork
+    //            21112007581103583541 startNewClasswork
 }
 
 
@@ -1395,7 +1599,7 @@ $(document).on('click', '.comment-loader', function (ev) {
 
 function getClassworkCommentList() {
     var fkClassworkAndUserId = $('#comp_id_21120404343400055046').val();
-    callApi('21120407174202603802', {fkClassworkAndUserId: fkClassworkAndUserId}, true, function (res) {
+    callApi('21120407174202603802', { fkClassworkAndUserId: fkClassworkAndUserId }, true, function (res) {
         var table = $('table#comp_id_21120407301502687177');
         table.find('tbody').html('');
         var obj = res.tbl[0].r;
@@ -1403,15 +1607,15 @@ function getClassworkCommentList() {
             var o = obj[i];
             var tr = $('<tr>');
             tr.append($('<td>')
-                    .css('max-width', '55px')
-                    .append($('<img>')
-                            .attr('width', '50px')
-                            .css("border-radius", '45px')
-                            .attr('src', fileUrl(o.createdByImage))))
-                    .append($('<td>').text(o.createdByName))
-                    .append($('<td>').text(o.commentBody))
-                    .append($('<td>').append(TableComp.CompType.FileList(o.commentFile)))
-                    .append($('<td>').text(Utility.convertDate(o.createdDate) + " " + Utility.convertTime(o.createdTime)))
+                .css('max-width', '55px')
+                .append($('<img>')
+                    .attr('width', '50px')
+                    .css("border-radius", '45px')
+                    .attr('src', fileUrl(o.createdByImage))))
+                .append($('<td>').text(o.createdByName))
+                .append($('<td>').text(o.commentBody))
+                .append($('<td>').append(TableComp.CompType.FileList(o.commentFile)))
+                .append($('<td>').text(Utility.convertDate(o.createdDate) + " " + Utility.convertTime(o.createdTime)))
 
 
 
@@ -1420,16 +1624,24 @@ function getClassworkCommentList() {
     });
 }
 
+function getFormId(el) {
+    var res = $(el).closest('.redirectClass');
+    //    alert(res.html())
+    res = res.attr('id');
+
+    return res;
+}
+
 function showClassworkInfoManual(el) {
     //Show Classwork From info
     var padeId = showForm('21111723482809628427');
     //Get Classwork Info
     var fkClassworkId = $(el).attr("fkClassworkId");
-    var data = callApi('21111821480702138626', {"fkClassworkId": fkClassworkId}, false);
+    var data = callApi('21111821480702138626', { "fkClassworkId": fkClassworkId }, false);
 
     setDataToForm(padeId, data.kv);
-//    
-//    new UserStory().setGUIComponentButtonGUIModal('', el);
+    //    
+    //    new UserStory().setGUIComponentButtonGUIModal('', el);
     $('._save').remove();
     $('._update').remove();
     $('#21111723495201831388').remove();
@@ -1452,6 +1664,86 @@ function showForm(formId, conf) {
         initOnloadActionOnGUIDesign4OnClick(el);
     }
     return padeId;
+}
+
+function getDataFromForm(el) {
+    return getGUIDataByStoryCard(el);
+}
+
+function getDataFromTable(el) {
+
+    var res = {};
+
+    $(el).closest('.redirectClass').find('[sa-data-id]').each(function (e) {
+        var val = $(this).attr('sa-data-value');
+        var key = $(this).attr('sa-data-id');
+        res[key] = val;
+    })
+
+    return res;
+}
+
+function clearDataInForm(formId, data) {
+    //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
+    //redirectClassa shamir edilir.
+    // eger sa-global-trigger===1 attribute-si varsa o zaman row redirectClass-da yeni
+    // umumi sehifede axtaracaqdir.
+
+
+
+    $('#' + formId).find('[sa-selectedfield]').each(function (e) {
+        try {
+            var val = "";
+            var selectedFields = $(this).attr('sa-selectedfield').split(',');
+            for (var i in selectedFields) {
+                var field = selectedFields[i].trim();
+                if (!field) {
+                    continue;
+                }
+
+                var keys = Object.keys(data);
+                if (keys.includes(field)) {
+                    val = "";
+                    setDataToFormComponent(this, val, field);
+                }
+            }
+        } catch (err) {
+        }
+
+    })
+}
+
+function setDataByElement(el, data) {
+    //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
+    //redirectClassa shamir edilir.
+    // eger sa-global-trigger===1 attribute-si varsa o zaman row redirectClass-da yeni
+    // umumi sehifede axtaracaqdir.
+
+
+
+    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
+        try {
+            var val = "";
+            var selectedFields = $(this).attr('sa-selectedfield').split(',');
+            for (var i in selectedFields) {
+
+
+
+                var field = selectedFields[i].trim();
+                if (!field) {
+                    continue;
+                }
+
+                var keys = Object.keys(data);
+                if (keys.includes(field)) {
+                    val = data[field];
+                    setDataToFormComponent(this, val, field);
+                }
+            }
+        } catch (err) {
+        }
+
+    })
 }
 
 function setDataToForm(formId, data) {
@@ -1527,7 +1819,7 @@ function setDataToFormComponent(el, val, selectedField) {
         } else if ($(el).attr('sa-type') === 'select') {
 
             if ($(el).attr('sa-item-setterfield') &&
-                    $(el).attr('sa-item-setterfield') === selectedField) {
+                $(el).attr('sa-item-setterfield') === selectedField) {
                 $(el).val(val);
                 $(el).find('option[value="' + val + '"]').attr('selected', true);
             } else {
@@ -1538,7 +1830,7 @@ function setDataToFormComponent(el, val, selectedField) {
         } else if ($(el).attr('sa-type') === 'multiselect') {
 
             if ($(el).attr('sa-item-setterfield') &&
-                    $(el).attr('sa-item-setterfield') === selectedField) {
+                $(el).attr('sa-item-setterfield') === selectedField) {
                 $(el).find("option:selected").prop("selected", false);
                 $(el).selectpicker('refresh');
 
@@ -1723,7 +2015,7 @@ function openBusinessCaseModal(fkBusinessCaseId, classworkType) {
         $('#trainingGeneralModal').modal('show');
         $('#trainingGeneralModal_body').html(html_string);
 
-//        getNewExecutiveTable();
+        //        getNewExecutiveTable();
 
         activeBCId = fkBusinessCaseId;
         var caseName = "";
@@ -1746,57 +2038,55 @@ function openBusinessCaseModal(fkBusinessCaseId, classworkType) {
 
 function loadMainBusinesCaseBodyForQuestion(caseName) {
     $('#business_case_heading').html(caseName)
-//   $('#business_case_description').text("asdfasd")
+    //   $('#business_case_description').text("asdfasd")
     getProblemStatList();
     $('#bcase_financial_projection').remove();
     $('#bcase_competitor_list').remove();
     $('#bcase_provided_services').remove();
     $('#bcase_problem_statement').remove();
+}
 
+$(document).on('click', '.generate-selected-fields-from-api-relation', function () {
+    var addSelectedFieldList = [];
+    var div = $(this).closest('div.modal');
+    var table = div.find('#storyCardShowRelationModalTable');
+    table.find('select.tableInputSelect').each(function () {
+        var val = $(this).val();
+        var text = $(this).find('option:selected').text();
+        if (val) {
+            addSelectedFieldList.push(val);
+            var selectedField = $(this).closest('tr')
+                .find('td.input-relation-selected-name-for-zad')
+                .attr('iname');
+            //            alert(val +' - '+text+ ' - ' + selectedField);
+
+
+            var data = {};
+            data.attrValue = selectedField;
+            data.fkInputId = val;
+            data.fkProjectId = global_var.current_project_id;
+            data.fkBacklogId = global_var.current_backlog_id;
+            data.attrType = "comp";
+            callService('serviceTmAddSelectedField', data, true,
+                function (res) {
+                    Toaster.showMessage(text + ' - ' + selectedField + " relation added.");
+                });
+        }
+    })
+})
+
+
+var load_project_list_for_story_card_api_relation = function () {
+    var select = $('select#addRelatedSourceModal-projectlist');
+    select.html('');
+    callService('serviceTmgetProjectList', {}, true, function (res) {
+        let obj = res.tbl[0].r;
+        select.append($('<option>').val('').text(''))
+            .append(obj.map((o) => `<option value='${o.id}'>${o.projectName}</option>`));
+            select.find('option[selec]')
+    })
 
 }
-$(document).on('click', '.ShowApiRelations', function (ev) {
-    $('#entityApiRelationModal').modal('show');
-//    entityApiRelationModal_main
-
-
-    var tableid = $(this).closest('td.tdSeqment').first().attr('pid');
-
-    if (!tableid)
-        return;
-
-    var json = initJSON();
-    json.kv.tableId = tableid;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmgetApiListByEntityId",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            var body = $('#entityApiRelationModal_table tbody');
-            body.empty();
-
-            var obj = res.tbl[0].r;
-            for (let i = 0; i < obj.length; i++) {
-                var o = obj[i];
-                body.append($('<tr>')
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").append($('<b>')
-                                .css('cursor', 'pointer')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                                .text(o.backlogName)))
-                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
-                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
-                        )
-            }
-        }
-    });
-
-});
 
 
 

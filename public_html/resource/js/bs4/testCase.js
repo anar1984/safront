@@ -18,6 +18,8 @@ var bug_filter = {
     sprint_id: '',
     label_id: '',
     showChildTask: '1',
+    createdDate: '',
+    fkTaskTypeId: '',
 }
 
 var sprintTaskIds = "";
@@ -253,7 +255,6 @@ function getLabelFilterCheckedCount() {
     return rc;
 }
 
-
 function getSprintFilterCheckedCount() {
     var rc = 0;
     $('.bug-task-filter-checkbox-sprint').each(function () {
@@ -440,8 +441,6 @@ function deleteBugFromTable(el) {
     });
 }
 
-
-
 function addNewTask4BugMulti(tskNm) {
     if (!tskNm.trim()) {
         return;
@@ -621,21 +620,27 @@ $(document).on("change", '.bug-filter', function (e) {
         bug_filter.page_no = 1;
         getBugList();
     }
-
 })
 
 $(document).on("click", '.page-item-core-previous', function (e) {
     if (global_var.current_modal == "loadBugChange") {
-        bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
-        getBugList();
+         if((parseInt(bug_filter.page_no) - 1)>0){
+            bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
+            getBugList();
+         }
+      
     }
 
 })
 
 $(document).on("click", '.page-item-core-next', function (e) {
+     var val = $("#pagintion-selectbox-issue").val();
     if (global_var.current_modal == "loadBugChange") {
-        bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
-        getBugList();
+         if(val>bug_filter.page_no){
+            bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
+            getBugList();
+         }
+     
     }
 
 })
@@ -728,9 +733,7 @@ function getBugFilterProjectList4Sprint() {
 function setBugFilterProject() {
     var select = $('#bug_filter_project_id');
     var keys = Object.keys(SACore.Project);
-    select.append($("<option>")
-            .val("")
-            .text("All Projects"))
+  
     for (var id in keys) {
         var pid = keys[id];
         select.append($("<option>")
@@ -738,8 +741,6 @@ function setBugFilterProject() {
                 .text(SACore.Project[pid]))
     }
 }
-
-
 function addUserStoryNewPopupBug() {
     var usName = $('#addUserStoryPopupModal-userstoryname1').val();
     var prid = $('#bug_filter_project_id_add_pop').val();
@@ -806,14 +807,19 @@ function addUserStoryNewModalWithProject() {
     $('#addUserStoryPopupModalwithProject').modal('show');
     $('#addUserStoryPopupModal-userstoryname').focus();
 }
-
-
-
 function setBugFilterMultiValues() {
     $('.bug-filter-multi').each(function () {
         var data_type = $(this).attr('data-type');
-        var val = getBugFilterMultiSelect(this)
+        var val = getBugFilterMultiSelect(this);
+
         bug_filter[data_type] = val;
+        if(data_type!=='nature'){
+            if(bug_filter[data_type].length>0 ){
+                FilterCount++;
+                $(this).parent().addClass('cs-select-active')
+            }
+        }
+       
     })
 }
 
@@ -837,6 +843,13 @@ function setBugFilterValues() {
     $('.bug-filter').each(function () {
         var data_type = $(this).attr('data-type');
         bug_filter[data_type] = $(this).val();
+         if(data_type!=='limit'){
+            if(bug_filter[data_type].length>0 ){
+                FilterCount++;
+                $(this).parent().addClass('cs-select-active')
+            }
+         }
+        
     })
 }
 
@@ -844,9 +857,10 @@ function setBugFilterCheckBoxValues() {
     $('.bug-filter-checkbox').each(function () {
         var data_type = $(this).attr('data-type');
         bug_filter[data_type] = $(this).is(":checked") ? "1" : "0";
+       
     })
-}
 
+}
 
 function setBugFilterLabelValues() {
     var st = ' ';
@@ -857,6 +871,57 @@ function setBugFilterLabelValues() {
     })
     st = st.substring(0, st.length - 1);
     bug_filter.label_id = st;
+     if(st.length >0 ){
+        FilterCount++;
+     }
+}
+function setFilterCount() {
+ 
+       if(notChwk()){
+           var elm = $(".taskfilter-btn .info")
+       }else{
+        var elm = $(".filter-elements-btn .info");
+       }
+    if(FilterCount > 0){
+        elm.show();
+        elm.text(FilterCount);
+
+    }else{
+        elm.hide();
+    }
+}
+function setBugFilterCreatedDateValues() {
+    try {
+        var val  = $("#issue-list-datetime").val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+        var inns = stTime.trim() + ' AND ' + endTime.trim();
+        bug_filter.createdDate = inns;
+    } catch (error) {
+        
+    }
+   
+    
+}
+function setBugFilterClosedDatesValues() {
+    try {
+        var val  = $("#issue_management_closed_date_from").val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+               
+    bug_filter.closed_date_from = stTime.trim();
+    bug_filter.closed_date_to = endTime.trim();
+    } catch (error) {
+        
+    }
+   
+    
 }
 
 function setBugFilterSprintValues() {
@@ -875,18 +940,21 @@ $(document).on("click", '.openBugStatus', function (e) {
 })
 
 $(document).on("click", '#update_multi_bug_change_btn', function (e) {
-
+    var idk  = $(this).attr('data-pid')
     var fkAssigneeId = $("#bug_filter_assignee_id_multi").val();
     var fkTaskTypeId = $("#bug_task_type_id_multi").val();
     var fkBacklogId = $("#bug_filter_backlog_id_multi").val();
     var taskPriority = $("#bug_filter_priority_add").val();
     var taskNature = $("#bug_task_nature_id_multi").val();
     var taskStatus = $("#bug_task_status_id_zad").val();
-
-    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    if(global_var.current_modal==='loadBugChange'){
+        var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    }
+    else if(global_var.current_modal==='loadStoryCardMgmt'){
+        var check = $("#tbl-"+idk+"  .task-tr-list input.checkbox-issue-task");
+    }
 
     if (!fkAssigneeId == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
             if ($(check[indx]).prop('checked')) {
                 var taskId = $(check[indx]).parents("tr").attr("id");
@@ -1110,19 +1178,22 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 
 
 // ______________________________________________________________
-
+let FilterCount  = 0
 function setBugListInitialData() {
+  $(".cs-select-active").removeClass("cs-select-active")
+    FilterCount =0;
     setBugFilterCheckBoxValues();
     setBugFilterValues();
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
-
+    setBugFilterCreatedDateValues()
+    setBugFilterClosedDatesValues()
+   
     bug_filter.sortBy = $('#bug_filter_sortby').val();
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
-    bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
-    bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
-
+    bug_filter.limit = $('#bug_filter_limit').val();
+    setFilterCount()
 }
 
 $(document).on("change", ".issue-mgmt-general-filter", function (e) {
@@ -1130,52 +1201,72 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-    setBugListInitialData();
-    var json = initJSON();
-    json.kv.fkProjectId = bug_filter.project_id;
-    json.kv.fkAssigneeId = bug_filter.assignee_id;
-    json.kv.closedBy = bug_filter.closed_by;
-    json.kv.createdBy = bug_filter.created_by;
-    json.kv.fkBackogId = bug_filter.backlog_id;
-    json.kv.taskStatus = bug_filter.status;
-    json.kv.priority = bug_filter.priority;
-    json.kv.taskNature = bug_filter.nature;
-    json.kv.searchText = bug_filter.search_text;
-    json.kv.searchLimit = bug_filter.limit;
-    json.kv.pageNo = bug_filter.page_no;
-    json.kv.sprintId = bug_filter.sprint_id;
-    json.kv.labelId = bug_filter.label_id;
-    json.kv.sortBy = bug_filter.sortBy;
-    json.kv.sortByAsc = bug_filter.sortByAsc;
-    json.kv.closedDateFrom = bug_filter.closed_date_from;
-    json.kv.closedDateTo = bug_filter.closed_date_to;
-    json.kv.showChildTask = bug_filter.showChildTask;
-    json.kv.showChildTask = bug_filter.showChildTask;
-    json.kv.startLimit = 0;
-    json.kv.endLimit = 25;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            AJAXCallFeedback(res);
-            coreBugList = res;
-            setKV4CoreBugList();
-            getBugListDetails(res);
-            toggleColumns();
-            setPagination(res.kv.tableCount, res.kv.limit);
-            getGroupList();
+    
+      var me = "'"+global_var.current_ticker_id+"'"
+      var lastmnId  =  Utility.getParamFromUrl('lastMenuId');
+    if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
 
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
+        setBugListInitialData();
+
+  
+        var json = initJSON();
+        json.kv.fkProjectId = bug_filter.project_id;
+        json.kv.fkAssigneeId = ($(".me-send-task-list-btn").hasClass('active'))?me:bug_filter.assignee_id;
+        json.kv.closedBy = bug_filter.closed_by;
+        json.kv.createdBy = ($(".my-send-task-list-btn").hasClass('active'))?me:bug_filter.created_by;
+        json.kv.fkBacklogId = bug_filter.backlog_id;
+        if(bug_filter.status){
+            json.kv.taskStatus = bug_filter.status;
+            
+        }else{
+           var ty = localStorage.getItem("issue_mode_active");
+              ty = ty?ty:"A"
+          $('#issue-table-aktiv-all').find('.title').text(ty);
+          var sel  = $("#bug_filter_status");
+             let value 
+                 if(ty==='A'){
+                   value  = ["new",'ongoing','waiting'];
+                   sel.val(value);
+                 }else if(ty==='P'){
+                    value  = ["rejected",'UAT','closed','canceled'];  
+                    sel.val(value);   
+                 }else if(ty==='H'){
+                    sel.selectpicker('selectAll');
+                 }
+              
+                 sel.selectpicker("refresh");
+                 json.kv.taskStatus = getBugFilterMultiSelect(sel);
         }
-    });
+        
+        json.kv.priority = bug_filter.priority;
+        json.kv.taskNature = bug_filter.nature;
+        json.kv.searchText = bug_filter.search_text;
+        json.kv.searchLimit = bug_filter.limit;
+        json.kv.pageNo = bug_filter.page_no;
+        json.kv.sprintId = bug_filter.sprint_id;
+        json.kv.labelId = bug_filter.label_id;
+        json.kv.sortBy = bug_filter.sortBy;
+        json.kv.sortByAsc = bug_filter.sortByAsc;
+        json.kv.closedDateFrom = bug_filter.closed_date_from;
+        json.kv.closedDateTo = bug_filter.closed_date_to;
+        json.kv.showChildTask = bug_filter.showChildTask;
+        json.kv.createdDate = bug_filter.createdDate;
+        json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
+        json.kv.startLimit = 0;
+        json.kv.endLimit = 25;
+      
+        var view = localStorage.getItem('task-view-format');
+        taskManagement.readTask.genBlockTask.getstatisticListLoadAfter(json);
+        if (!view) {
+            view = "table"
+        }
+        if (view === 'kanban') {
+            taskManagement.readTask.genBlockTask.genKanbanView.generAteBlockKanbanByGroupBy($('.cs-task-panel-column'),json);
+        } else if (view === 'table') {
+            taskManagement.readTask.genBlockTask.genTableView.getTaskList4Table(json);
+        }
+    }
+   
 
 }
 
@@ -1192,34 +1283,13 @@ function setKV4CoreBugList() {
 }
 
 function setPagination(rowcount, limit) {
+    $("#issue-table-aktiv-all #row-count-table").text(rowcount)
     var rc = Math.ceil(rowcount / limit);
-    var el = $('#pagination_block');
-    el.html('');
-    el.append($('<li class="page-item page-item-core-previous">')
-            .append($('<a class="page-link" href="#" aria-label="Previous">')
-                    .append($('<span aria-hidden="true">').append('&laquo;'))
-                    .append($('<span class="sr-only">').append('Previous'))))
+    var el = $('.brand-issue-management .pagination_btn');
+    el.html( ((bug_filter.page_no * limit)-limit+1)+"-"+(bug_filter.page_no * limit)+"/"+rowcount);
 
-    for (var i = 1; i <= rc; i++) {
-
-        var li = $('<li>')
-                .addClass('page-item num page-item-core')
-                .attr('page-no', i)
-                .append($('<a  href="#" class="page-link">').append(i));
-
-        if (i === parseInt(bug_filter.page_no)) {
-            li.addClass("active");
-        }
-
-        el.append(li)
-
-
-    }
-
-    el.append($('<li class="page-item order-last page-item-core-next">')
-            .append($('<a class="page-link" href="#" aria-label="Next">')
-                    .append($('<span aria-hidden="true">').append('&raquo;'))
-                    .append($('<span class="sr-only">').append('Next'))))
+      $("#pagintion-selectbox-issue").val(rc);
+  
 
 }
 
@@ -1326,7 +1396,7 @@ function getBugListDetails(res) {
     var table = $('#bugListTable');
     var tbody = $('#bugListTable > tbody');
     tbody.html('');
-    table.append(getBugListDetailsHeader());
+    //table.append(getBugListDetailsHeader());
     // // thead to appaend----main header
     var sumEstHours = 0,
             sumSpentHours = 0,
@@ -1334,9 +1404,6 @@ function getBugListDetails(res) {
             sumExecCount = 0,
             sumEstBudget = 0,
             sumSpentBudget = 0;
-
-
-
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
@@ -1476,28 +1543,31 @@ function getBugListDetails(res) {
                                         .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
 
                                         ))
-                        .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
+                        // .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
                         .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                         )
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-task-nature')
                         .append($("<div>")
-                                .addClass("dropdown")
+                                .addClass("dropdown ")
                                 .append($("<div>")
                                         .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
                                         .attr("data-toggle", "dropdown")
                                         .attr("aria-haspopup", "true")
                                         .attr("aria-expanded", "false")
                                         .attr("id", "bug-taskNature-dropdown")
-                                        .append(getBugListTaskNatureValue(o.taskNature)))
+                                        .append(o.taskNature == 'bug' ? '<i class="fas fa-bug" style="color: red;"></i>' : "" )
+                                        .append(o.taskNature == 'change' ? '<i class="fas fa-edit" style="color: #FF7F50;"></i>' : "" )
+                                        .append(o.taskNature == 'new' ? '<i class="fas fa-file-alt"></i>' : "" )
+                                        )
 
                                 .append($("<div>")
-                                        .addClass("dropdown-menu")
+                                        .addClass("dropdown-menu dropdown-menu-right")
                                         .attr("aria-labelledby", "bug-taskNature-dropdown")
 
-                                        .append('<a class="dropdown-item" data-value ="new">New Request</a>')
-                                        .append('<a class="dropdown-item" data-value ="change">Change Request</a>')
-                                        .append('<a class="dropdown-item" data-value ="bug">Bug</a>')
+                                        .append('<a class="dropdown-item" data-value ="new" title="New Request"><i class="fas fa-file-alt" style="color: #313582;"></i></a>')
+                                        .append('<a class="dropdown-item" data-value ="change" title="Change Request"><i class="fas fa-edit" style="color: #313582;"></i></a>')
+                                        .append('<a class="dropdown-item" data-value ="bug" title="Bug"><i class="fas fa-bug" style="color: #313582;"></i></a>')
 
                                         )))
           
@@ -1569,7 +1639,7 @@ function getBugListDetails(res) {
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-assignee')
-                        .append(genUserTrblock(o.userName,img))
+                        .append(genUserTrblock(o.userName,img,'Assignee'))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                             .css("display", "none")
@@ -1583,7 +1653,7 @@ function getBugListDetails(res) {
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-by ')
-                            .append(genUserTrblock(o.createByName,createdByImg))
+                            .append(genUserTrblock(o.createByName,createdByImg,'Created By'))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
                             .css("display", "none")
@@ -1627,8 +1697,8 @@ function getBugListDetails(res) {
         });
     }
 
-    getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-            sumEstBudget, sumSpentBudget);
+   // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+   //         sumEstBudget, sumSpentBudget);
 
     global_var.bug_task_sprint_assign_checked = '';
     global_var.bug_task_sprint_assign_name = '';
@@ -1640,8 +1710,8 @@ function getBugListDetails(res) {
     global_var.bug_task_label_assign_id = '';
 
 }
-function genUserTrblock(names,img) {
-
+function genUserTrblock(names,img,filed) {
+  
     try {
         return $('<a>')
             .attr('tabindex', "0")
@@ -1649,7 +1719,7 @@ function genUserTrblock(names,img) {
             //.attr('data-original-title', filed === "createdBy" ? "Daxil Edən" : "İcra Edən")
             .attr('data-toggle', 'popover')
             .attr('data-trigger', "focus")
-            .attr('data-content', genHoverImageBlock(img, names))
+            .attr('data-content', genHoverImageBlock(img, names,filed))
                 .append($('<img>')
                 .addClass("rounded-circle personal-btn-img js-btn-popover--custom")
                 .css("width", '22px')
@@ -1663,10 +1733,10 @@ function genUserTrblock(names,img) {
     }
 
   }
-  function genHoverImageBlock (img,ad) {
+  function genHoverImageBlock (img,ad, filed) {
     return `
     <div class="task-table-personal-info">
-     <div class="d-table w-100"><div class="pi-head-title">Daxil Edən</div></div>
+     <div class="d-table w-100"><div class="pi-head-title">${filed}</div></div>
      <ul class="avatar">
          <li>
              <div class="d-flex">
@@ -1675,7 +1745,8 @@ function genUserTrblock(names,img) {
              </div>                
          </li>
      </ul>
-     <ul class="main-info">
+     ${notChwk()?"":
+     `<ul class="main-info user-main-info-popover">
          <li>
              <div class="d-flex">
                  <div class="left-min-box info-title"><span>Şirkət</span></div>
@@ -1724,7 +1795,7 @@ function genUserTrblock(names,img) {
                  <div class="mr-auto info-desc"><span>+994 10 101 01 01</span></div>
              </div>
          </li>
-     </ul>
+     </ul>`}
     </div>
     `
  };
@@ -1862,7 +1933,7 @@ function callStoryCard4BugTask(projectIdOld, backlogId, el, containDiv) {
     //    var divId = (containDiv)? containDiv :"body_of_nature";
 
     var divId = '#storyCardViewManualModal-body';
-    $('#storyCardViewManualModal').modal('show');
+    
 
     $.get("resource/child/storycard.html", function (html_string) {
         if (!backlogId || backlogId === '-1') {
@@ -1870,11 +1941,13 @@ function callStoryCard4BugTask(projectIdOld, backlogId, el, containDiv) {
         }
 
         global_var.current_backlog_id = backlogId;
-
-        $(divId).html(html_string); // this is not Working
-        var storyCard = html_string;
-        $(divId).html(storyCard);
-
+             $("#storyCardViewManualModal").remove();
+      //  $(divId).html(html_string); // this is not Working
+        var storyCard = $("<div>").append(html_string);
+            $(storyCard).find('#taskMgmtModal').attr("id",'storyCardViewManualModal')
+                                               .removeAttr("style")
+        $("body").append(storyCard);
+        $('#storyCardViewManualModal').modal('show');
 
         var backlogName = $(el).html();
         $('#generalview-us-header-name').text(backlogName);
@@ -1949,21 +2022,26 @@ function getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount
 
 $(document).on("click", '.all-bug-list-check', function (e) {
 
-    var chck = $(".checkbox-issue-task");
+    var chck = $(this).closest('table').find("tbody > tr .checkbox-issue-task");
     if ($(this).is(':checked')) {
-        $('#multi-edit-menu-btn').css('display', 'initial');
+        $('.multi-edit-menu').removeClass('d-none');
+        $('body').addClass('res-multi-edit-menu');
         chck.prop('checked', true);
     } else {
-
-        $('#multi-edit-menu-btn').css('display', 'none');
+        $('.multi-edit-menu').addClass('d-none');
+        $('body').removeClass('res-multi-edit-menu');
         chck.prop('checked', false);
     }
 
 })
 $(document).on("click", '.checkbox-issue-task', function (e) {
-
-
-    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+     var idk  = $(this).attr("data-pid");
+    if(global_var.current_modal==='loadBugChange'){
+        var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    }
+    else if(global_var.current_modal==='loadStoryCardMgmt'){
+        var check = $("#tbl-"+idk+" .task-tr-list input.checkbox-issue-task");
+    }
 
     var ast = [];
     var pids = [];
@@ -1989,10 +2067,12 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
 
     }
     if (ast.length > 1) {
-        $('#multi-edit-menu-btn').css('display', 'initial');
+        $('.multi-edit-menu').removeClass('d-none');
+            $('body').addClass('res-multi-edit-menu');    
     } else {
 
-        $('#multi-edit-menu-btn').css('display', 'none');
+        $('.multi-edit-menu').addClass('d-none');
+        $('body').removeClass('res-multi-edit-menu');
 
     }
 
@@ -2164,11 +2244,14 @@ $(document).on("click", '#bug-listassigne-dropdown', function (e) {
     el.empty()
     loadAssigneesByProjectDrop(id, el);
 })
-$(document).on("click", '.bug-list-column-task-status a', function (e) {
-
-    var val = $(this).attr("data-value");
-    var id = $(this).parents('tr').attr("id");
-    updateTask4ShortChangePure(val, "taskStatus", id);
+$(document).on("click", '.canban-item-btns .status-change', function (e) {
+     if(confirm("Are You sure?")){
+        var val = $(this).attr("data-value");
+        var id = $(this).parents('.cs-task-item-in-box').attr("id");
+        updateTask4ShortChangePure(val, "taskStatus", id);
+     }
+        
+   
 })
 $(document).on("click", '.bug-list-column-assignee a', function (e) {
 
@@ -2230,6 +2313,7 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
 
 
 function toggleColumns() {
+ //   $('#bug_filter_columns option:selected').removeAttr("selected");
     $('.bug-list-column').hide();
     var colList = $('#bug_filter_columns').val();
     for (var col in colList) {
@@ -2239,10 +2323,10 @@ function toggleColumns() {
 
 function getProjectListIn() {
     var id = $('#bug_filter_project_id').val();
-    var st = id;
-    //    for (var i in id) {
-    //        st += id[i] + "%IN%"
-    //    }
+    var st = '';
+        for (var i in id) {
+         st += id[i] + "%IN%"
+        }
     return st;
 }
 
@@ -2445,7 +2529,7 @@ function loadStoryCardByProjectDetails(res) {
     } catch (err) {
 
     }
-    $('#bug_filter_backlog_id_add').selectpicker('refresh');
+    $('#bug_filter_backlog_id').selectpicker('refresh');
 }
 
 function loadStoryCardByProjectDetailsAdd(res) {
@@ -2477,151 +2561,6 @@ $(document).on('click', function (e) {
         }
     })
 })
-function loadBugTaskDeadlineScripts() {
-    $("#run_task_responsible").selectpicker('refresh');
-    $("#run_task_categories").selectpicker('refresh');
-    $("#run_task_detail_detail_categories").selectpicker('refresh');
-    $("#task-info-modal-status").selectpicker('refresh');
-    $("#task-info-modal-nature").selectpicker('refresh');
-    $("#task-info-modal-tasktype").selectpicker('refresh');
-    $("#bug_filter_sortby").selectpicker('refresh');
-    $("#bug_filter_sortby_asc").selectpicker('refresh');
-    $("#bug_filter_limit").selectpicker('refresh');
-    $("#inputGroupSelect01").selectpicker('refresh');
-    $('#run_task_project_name').selectpicker('refresh');
-    setProjectListByID('run_task_project_name');
-    $('#run_task_project_name').change();
-    $('#run_task_name').selectpicker('refresh');
-    $('#run_task_intensive_select').selectpicker('refresh');
-    $('#run_task_repeat_select').selectpicker('refresh');
-    $('#run_task_status_select').selectpicker('refresh');
-    $('#run_task_weekday_select').selectpicker('refresh');
-    $('#sdofm_day_of_Month_select').selectpicker('refresh');
-    $('#swofm_fl_action_select').selectpicker('refresh');
-    $('#swofm_weekday_select').selectpicker('refresh');
-    $('#run_task_reminder_select').selectpicker('refresh');
-    $("#runTaskStartDate").daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true
-    });
-    $("#runTaskEndDate").daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true
-    });
-    $('#runTaskTime').datetimepicker({
-        format: 'HH:mm'
-                // sideBySide: true
-    });
-    $('#runTaskExecutiveDate').daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true,
-        drops: 'up'
-    });
-    $('.hr_spa').hide();
-
-    $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
-    $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
-    $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
-    // $('#issue-managment-add-task .after-add-task').hide();
-   
-    $('#issue-managment-add-task .task-step-2').hide();
-
-    // TASK DETAILS ON
-    $('#run_task_project_name_detail').selectpicker('refresh');
-    setProjectListByID('run_task_project_name_detail');
-    $('#run_task_project_name_detail').change();
-
-    $('#run_task_name_detail').selectpicker('refresh');
-    $('#run_task_intensive_select_detail').selectpicker('refresh');
-    $('#run_task_repeat_select_detail').selectpicker('refresh');
-    $('#run_task_status_select_detail').selectpicker('refresh');
-    $('#run_task_weekday_select_detail').selectpicker('refresh');
-    $('#sdofm_day_of_Month_select_detail').selectpicker('refresh');
-    $('#swofm_fl_action_select_detail').selectpicker('refresh');
-    $('#swofm_weekday_select_detail').selectpicker('refresh');
-    $('#run_task_reminder_select_detail').selectpicker('refresh');
-    $('#updatetask_oblerverlist').selectpicker('refresh');
-    $('#createdtask_oblerverlist').selectpicker('refresh');
-
-    $("#runTaskStartDate_detail").daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true
-    });
-    $("#runTaskEndDate_detail").daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true
-    });
-    $('#runTaskTime_detail').datetimepicker({
-        format: 'HH:mm'
-                // sideBySide: true
-    });
-    $('#runTaskExecutiveDate_detail').daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true,
-        drops: 'up'
-    });
-    $('.hr_spa').hide();
-
-    $('.shedule-elements').addClass('el-disabled');
-    $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
-    $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
-    $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
-    $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
-
-    $('.run-shedule-elements').addClass('el-disabled');
-    $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
-    $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
-    $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
-    $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
-
-    $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
-    $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
-    $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
-    // TASK DETAILS OFF
-
-    // Task Deadline 
-        $("#taskDeadlineStartDade").datetimepicker({
-            format: 'YYYY-MM-DD',
-            // inline: true
-        });
-        $("#taskDeadlineStartTime").datetimepicker({
-            format: 'HH:mm',
-            // inline: true
-        });
-        $("#taskDeadlineEndDade").datetimepicker({
-            format: 'YYYY-MM-DD'
-            // singleDatePicker: true
-        });
-        $("#taskDeadlineEndTime").datetimepicker({
-             format: 'HH:mm',
-            // singleDatePicker: true
-        })
-
-        $("#taskDetailDeadlineStartDade").datetimepicker({
-            format: 'YYYY-MM-DD',
-            // inline: true
-        }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'startDate');
-        });
-        $("#taskDetailDeadlineStartTime").datetimepicker({
-            format: 'HH:mm',
-            // inline: true
-        }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'startTime');
-        });
-        $("#taskDetailDeadlineEndDade").datetimepicker({
-            format: 'YYYY-MM-DD',
-        }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'endDate');
-        });
-        $("#taskDetailDeadlineEndTime").datetimepicker({
-             format: 'HH:mm',
-            // singleDatePicker: true
-        }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'endTime');
-        });
-
-}
 
 $(document).on("change", "#runTaskExecutiveDate", function (e) {
     $('#hide_actions').val('');
@@ -3170,14 +3109,6 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
 })
 
 
-$(document).on("click", ".taskObserverDelete", function (e) {
-    if (confirm("Are you sure?")) {
-          $(this).closest('tr').removeAttr('id');
-          $(this).closest('tr').remove();
-
-    }   
-})
-
 $(document).on("click", ".taskCheckListItemDelete", function (e) {
     if (!confirm("Are you sure?")) {
         return;
@@ -3236,12 +3167,15 @@ $(document).on("click", ".loadUserForObserver", function (e) {
                 console.log(res);
                 for (var i in obj) {
                     var o = obj[i];
+                    console.log(o);
                     var opt = `<option value='${o.fkUserId}' data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='${fileUrl(o.userImage)}' alt='avatar' srcset=''>${o.userName}</span>"></option>
                   </select>`;
                     cmb.append(opt);
                     cmb.selectpicker('refresh');
                 }
             });
+
+            
 
 })
 
@@ -3372,7 +3306,7 @@ $(document).on("change", "#activateCreatedEvenets", function (e) {
     }
 });
 
-$(document).on("click", '.sticky-badges, .taskfilter-btn, .notification-btn', function () {
+$(document).on("click", '.sticky-badges, .taskfilter-btn, .notification-btn, .tasklabel-btn, .tasksprint-btn', function () {
     $('body').addClass('open-setting-panel');    
 });
 $(document).on("click", '.close-panel', function () {
@@ -3396,16 +3330,21 @@ $(document).on("click", '.setting-elemen-box .taskfilter-btn', function () {
     $('#main-sidebar-div>div').hide();
     $('#main-sidebar-div .bugList-elements').show();    
 });
+$(document).on("click", '.setting-elemen-box .tasklabel-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .bugLabel-elements').show();    
+});
+$(document).on("click", '.setting-elemen-box .tasksprint-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .bugSprint-elements').show();    
+});
 $(document).on("click", '.setting-elemen-box .sticky-badges', function () {
     $('#main-sidebar-div>div').hide();
     $('#main-sidebar-div .sticky-elements').show();    
 });
-$(document).on("click", '.setting-elemen-box .notification-btn', function () {
-    $('#main-sidebar-div>div').hide();
-    $('#main-sidebar-div .notification-elements').show();    
-});
+
 $(document).on("click", '.show-more-btn', function () {
-    $('.notification-elements').toggleClass('show-more');    
+    $(this).closest('.notification-elements').toggleClass('show-more');    
 });
 $(document).on("change", '.noteCheckListItem', function () {
 
@@ -3414,4 +3353,4 @@ $(document).on("change", '.noteCheckListItem', function () {
     } else {
         $(this).closest('li').removeClass('on-checked');
     }
-})
+});

@@ -372,7 +372,7 @@ body{
 }
 
 .us-item-status-canceled{
-    background-color: lightblue; 
+    background-color: #D285CF;
     font-size:10px;
     display: inline-block;
     padding: 1px 10px 1px 10px;
@@ -402,7 +402,7 @@ body{
 
 }
 .us-item-status-waiting{
-    background-color: #FFFF00; 
+    background-color: #CA3E12; 
     font-size:10px;
     display: inline-block;
     padding: 1px 10px 1px 10px;
@@ -3865,21 +3865,16 @@ img.sc-IbsAh.kqHqhS {
   z-index: 900000;
 }
 
-/* apiModalInputCss */
-
-.apiModalTableInput{
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+div.user-list-selectbox-single > button.dropdown-toggle,div.user-list-selectbox-multiple > button.dropdown-toggle{
+    display: none !important;
 }
-.apiModalTableTd{
-    font-size: 15px;
-    color: blue;
-    margin:0px 20px;
+div.user-list-selectbox-single > .dropdown-menu,div.user-list-selectbox-multiple > .dropdown-menu{
+    position: relative !important;
+    transform: none !important;
+    max-height: 150px !important;
+    min-height: 150px !important;
+    display: block !important;
+    overflow: hidden !important;
+    bottom: auto !important;
+    width: 100% !important;
 }
-
-
-
-
-
