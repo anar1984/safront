@@ -7552,8 +7552,8 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     height: 25px;
 }
 .cs-input-group .input-group-text i:after {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
 }
 .cs-input-group .task-clear-filter-btn {
     height: 25px;
@@ -7561,6 +7561,7 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     background: rgba(255, 255, 255, 0.11);
     border-radius: 50px;
     padding: 0;
+    cursor: pointer;
 }
 .cs-input-group .task-clear-filter-btn i{
     text-align: center;
