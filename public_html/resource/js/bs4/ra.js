@@ -1182,9 +1182,14 @@ function getBacklogAsHtml(bid1, isAsync) {
         success: function (res) {
             out = res;
             if (out.length === 0) {
-                var js = window.editorJSnew.getValue();
-                var css = window.editorCSSnew.getValue();
-                setBacklogAsHtml(bid, css, js);
+                try {
+                  
+                js = getBacklogJSCodeSync(global_var.current_backlog_id);
+                css = getBacklogCssCodeSync(global_var.current_backlog_id);
+                setBacklogAsHtml(bid, css, js);  
+                } catch (error) {
+                    
+                }
 
             }
         }

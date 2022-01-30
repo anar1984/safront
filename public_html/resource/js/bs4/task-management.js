@@ -688,6 +688,10 @@ const taskManagement = {
                    $("#addIssueButtonId").removeAttr("disabled");
                    updateSpirntTaskById($('#add_task_sprint').val(),res.kv.id);
                    updateLabelTaskById($('#run_task_categories').val(),res.kv.id);
+                   var prt  = $("#parent-task-id-input").val()
+                   if(prt.length>0){
+                    getChildTasks();
+                   }
                 },
                 error: function () {
                     Toaster.showError((lang_task.windowAddTask.addTaskMessageErr));
@@ -2791,7 +2795,7 @@ const taskManagement = {
             },
             genFilterShowHide: function (params) {
                 return ` <div class="cs-input-group ${notChwk()?"":"d-none"}  mt-3">
-                <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple
                     id='bug_filter_columns' title="Columns">
                     <option value='task-status' selected>Status</option>
                     <option value='task-id' selected>Task ID</option>
@@ -2799,7 +2803,7 @@ const taskManagement = {
                     <option value='task-nature' ${notChwk()?"selected":""}>Task Nature</option>
                     <option value='assignee' selected>Assignee</option>
                     <option value='tasktype'  ${notChwk()?"selected":""} >Task Type</option>
-                    <option value='ismeet'  ${notChwk()?"":"selected"} >Task Type</option>
+                    <option value='ismeet'  ${notChwk()?"":"selected"} >Meet</option>
                     <option value='close-date' >Status Close Date</option> 
                     <option value='closed-by'>Status Closed By</option> 
                     <option value='priority'>Priority</option>
@@ -3126,6 +3130,27 @@ const taskManagement = {
             },
             getstatisticListLoadAfter: function (json) {
                 try {
+                    var json = initJSON();
+                    json.kv.fkProjectId = bug_filter.project_id;
+                    json.kv.fkAssigneeId = ($(".me-send-task-list-btn").hasClass('active'))?me:bug_filter.assignee_id;
+                    json.kv.closedBy = bug_filter.closed_by;
+                    json.kv.createdBy = ($(".my-send-task-list-btn").hasClass('active'))?me:bug_filter.created_by;
+                    json.kv.fkBacklogId = bug_filter.backlog_id;
+                  
+                    json.kv.priority = bug_filter.priority;
+                    json.kv.taskNature = bug_filter.nature;
+                    json.kv.searchText = bug_filter.search_text;
+                    json.kv.searchLimit = bug_filter.limit;
+                    json.kv.pageNo = bug_filter.page_no;
+                    json.kv.sprintId = bug_filter.sprint_id;
+                    json.kv.labelId = bug_filter.label_id;
+                    json.kv.sortBy = bug_filter.sortBy;
+                    json.kv.sortByAsc = bug_filter.sortByAsc;
+                    json.kv.closedDateFrom = bug_filter.closed_date_from;
+                    json.kv.closedDateTo = bug_filter.closed_date_to;
+                    json.kv.showChildTask = bug_filter.showChildTask;
+                    json.kv.createdDate = bug_filter.createdDate;
+                    json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
                     var that = this
                     var data = JSON.stringify(json);
                     $.ajax({
@@ -3561,35 +3586,7 @@ const taskManagement = {
                     return ` <div class="col pl-1 pr-1" id="addBuglist">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
-                       <div class="showhide-col-main-info" style="display: none">
-                    <div class="showhide-col-main-info-in">
-                        <ul>
-                            <li>
-                                <label>Hamısı <input class="showhide-col-checkbox" type="checkbox" class=""></label>
-                            </li> 
-                            <li>
-                                <label>Status <input class="showhide-col-checkbox" type="checkbox" class=""></label>
-                            </li> 
-                            <li>
-                                <label>Əməliyyat <input class="showhide-col-checkbox" type="checkbox" class=""></label>
-                            </li> 
-                            <li>
-                                <label>Məzmun <input class="showhide-col-checkbox" type="checkbox" class=""></label>
-                            </li> 
-                            <li>
-                                <label>Daxil edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
-                            </li> 
-                            <li>
-                                <label>İcra edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
-                            </li> 
-                        </ul>
-                        <div class="showhide-col-footer">
-                        <span class="scm-show"><i class="fas fa-eye"></i></span>
-                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
-                        </div>
-                    </div>
-                   
-                </div>
+                         ${notChwk()?"":this.genShowHideBlock4ch()}
                            <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
                                <thead class="bugThead">
                                 ${this.genTableHeaderBlock()}
@@ -3629,6 +3626,46 @@ const taskManagement = {
                   </div>
                  </div>
                      `
+                },
+                genShowHideBlock4ch:function (params) {
+                    return ` <div class="showhide-col-main-info" style="display: none">
+                    <div class="showhide-col-main-info-in">
+                        <ul>
+                            <li>
+                                <label>Hamısı 
+                                <input class="showhide-col-checkbox showhide-allcheckbox"  type="checkbox" checked ></label>
+                            </li> 
+                            <hr class="m-1">
+                            <li>
+                                <label>Status <input class="showhide-col-checkbox show-hide-btn-4-chwk" data-id='task-status' type="checkbox" checked ></label>
+                            </li> 
+                            <li>
+                                <label>Ad
+                                <input class="showhide-col-checkbox show-hide-btn-4-chwk" data-id='ismeet' type="checkbox" checked ></label>
+                            </li> 
+                            <li>
+                                <label>${lang_task.table.tableColums.description} <input data-id='task-name' class="showhide-col-checkbox show-hide-btn-4-chwk" type="checkbox" checked ></label>
+                            </li> 
+                            <li>
+                                <label>${lang_task.table.tableColums.createdBy} 
+                                <input data-id='created-by' class="showhide-col-checkbox show-hide-btn-4-chwk" type="checkbox" checked ></label>
+                            </li> 
+                            <li>
+                                <label>${lang_task.table.tableColums.assigined} 
+                                <input data-id='assignee' class="showhide-col-checkbox show-hide-btn-4-chwk" type="checkbox" checked >
+                                </label>
+                            </li> 
+                            <li>
+                                <label>Tarix <input data-id='created-date' class="showhide-col-checkbox show-hide-btn-4-chwk" type="checkbox" checked ></label>
+                            </li> 
+                        </ul>
+                        <div class="showhide-col-footer">
+                        <span class="scm-show"><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                        </div>
+                    </div>
+                   
+                </div>`
                 },
                 genTableHeaderBlock: function () {
                     return `<thead class="bugThead">
@@ -3821,11 +3858,11 @@ const taskManagement = {
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column')
                                 .addClass('bug-list-column-assignee')
-                                .append(genUserTrblock(o.userName, img,"Assigne")))
+                                .append(genUserTrblock(o.userName, img,"Assigne",o.fkAssigneeId)))
                             .append($('<td>').addClass('bug-list-column')
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column-created-by ')
-                                .append(genUserTrblock(o.createByName, createdByImg,"Created by")))
+                                .append(genUserTrblock(o.createByName, createdByImg,"Created by",o.createdBy)))
                             .append($('<td>').addClass('bug-list-column')
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
@@ -3977,7 +4014,7 @@ const taskManagement = {
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column')
                                 .addClass('bug-list-column-assignee')
-                                .append(genUserTrblock(o.userName, img,"Assigne"))
+                                .append(genUserTrblock(o.userName, img,"Assigne",o.fkAssigneeId))
                                 .append($('<i class="fa fa-filter">')
                                     .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                                     .css("display", "none")
@@ -3991,7 +4028,7 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column-created-by ')
-                                .append(genUserTrblock(o.createByName, createdByImg,"Created by"))
+                                .append(genUserTrblock(o.createByName, createdByImg,"Created by",o.createdBy))
                                 .append($('<i class="fa fa-filter">')
                                     .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
                                     .css("display", "none")
@@ -5126,6 +5163,10 @@ $(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
     if ($(this).val().trim().length > 0) {
         uploadFile4IpoTAsk($(this).attr('id'));
     }
+})
+$(document).on('change', "#bug_filter_columns", function (e) {
+      localStorage.setItem("bug_list_colum",$(this).val());
+    toggleColumns();
 })
 $(document).on('change', "#run_task_detail_detail_categories", function (e) {
     updateLabelTaskById($(this).val(),global_var.current_issue_id)

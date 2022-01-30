@@ -1236,8 +1236,7 @@ function getBugList() {
               
                  sel.selectpicker("refresh");
                  json.kv.taskStatus = getBugFilterMultiSelect(sel);
-        }
-        
+        } 
         json.kv.priority = bug_filter.priority;
         json.kv.taskNature = bug_filter.nature;
         json.kv.searchText = bug_filter.search_text;
@@ -1639,7 +1638,7 @@ function getBugListDetails(res) {
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-assignee')
-                        .append(genUserTrblock(o.userName,img,'Assignee'))
+                        .append(genUserTrblock(o.userName,img,'Assignee',o.fkAssigneeId))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                             .css("display", "none")
@@ -1653,7 +1652,7 @@ function getBugListDetails(res) {
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-by ')
-                            .append(genUserTrblock(o.createByName,createdByImg,'Created By'))
+                            .append(genUserTrblock(o.createByName,createdByImg,'Created By',o.createdBy))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
                             .css("display", "none")
@@ -1710,7 +1709,7 @@ function getBugListDetails(res) {
     global_var.bug_task_label_assign_id = '';
 
 }
-function genUserTrblock(names,img,filed) {
+function genUserTrblock(names,img,filed,uid) {
   
     try {
         return $('<a>')
@@ -1721,10 +1720,11 @@ function genUserTrblock(names,img,filed) {
             .attr('data-trigger', "focus")
             .attr('data-content', genHoverImageBlock(img, names,filed))
                 .append($('<img>')
-                .addClass("rounded-circle personal-btn-img js-btn-popover--custom")
+                .addClass("rounded-circle personal-btn-img get-details-info-user-btn js-btn-popover--custom")
                 .css("width", '22px')
                 .css("height", '22px')
                 .css("border", '1px solid #03396C')
+                .attr("uid",uid)
                 .attr("src", img)
             )
 
@@ -1747,58 +1747,67 @@ function genUserTrblock(names,img,filed) {
      </ul>
      ${notChwk()?"":
      `<ul class="main-info user-main-info-popover">
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Şirkət</span></div>
-                 <div class="mr-auto info-desc"><span>ELCOM GROUP</span></div>
-             </div>
-         </li>
-         <li>
-              <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Filial</span></div>
-                 <div class="mr-auto info-desc"><span>Reklam</span></div>
-             </div>
-         </li>
-         <li>
-         <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Dep.</span></div>
-                 <div class="mr-auto info-desc"><span>Planlama</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Şöbə</span></div>
-                 <div class="mr-auto info-desc"><span>Dizayn</span></div>
-             </div>
-         </li>
-         <li>
-          <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Sektor</span></div>
-                 <div class="mr-auto info-desc"><span>Qrafik</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Vəzifə</span></div>
-                 <div class="mr-auto info-desc"><span>Qrafik Dizayner</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Email</span></div>
-                 <div class="mr-auto info-desc"><span>info@elcom.az</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Mobil</span></div>
-                 <div class="mr-auto info-desc"><span>+994 10 101 01 01</span></div>
-             </div>
-         </li>
+             
      </ul>`}
     </div>
     `
  };
+ function genDetailsUSerBlock(company,branch,dep,part,sector,position,email,number,direct) {
+     return  `<li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Şirkət</span></div>
+         <div class="mr-auto info-desc"><span>${company}</span></div>
+     </div>
+ </li>
+ <li>
+      <div class="d-flex">
+         <div class="left-min-box info-title"><span>Filial</span></div>
+         <div class="mr-auto info-desc"><span>${branch}</span></div>
+     </div>
+ </li>
+ <li>
+ <div class="d-flex">
+         <div class="left-min-box info-title"><span>Dep.</span></div>
+         <div class="mr-auto info-desc"><span>${dep}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Şöbə</span></div>
+         <div class="mr-auto info-desc"><span>${part}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>İstiqamət</span></div>
+         <div class="mr-auto info-desc"><span>${direct}</span></div>
+     </div>
+ </li>
+ <li>
+  <div class="d-flex">
+         <div class="left-min-box info-title"><span>Sektor</span></div>
+         <div class="mr-auto info-desc"><span>${sector}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Vəzifə</span></div>
+         <div class="mr-auto info-desc"><span>${position}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Email</span></div>
+         <div class="mr-auto info-desc"><span>${email}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Nömrə</span></div>
+         <div class="mr-auto info-desc"><span>${number}</span></div>
+     </div>
+ </li>`
+ }
 function callTaskCard4BugTask(el, projectId, taskId) {
       
     if (!taskId) {
@@ -2314,11 +2323,27 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
 
 function toggleColumns() {
  //   $('#bug_filter_columns option:selected').removeAttr("selected");
+    var elm = $('#bug_filter_columns');
+    var list  = localStorage.getItem("bug_list_colum");
     $('.bug-list-column').hide();
-    var colList = $('#bug_filter_columns').val();
+    $(".showhide-col-main-info-in li input").prop("checked",false);
+      if(list){
+           elm.val(list.split(','));
+           elm.selectpicker("refresh");
+      }
+      var colList = elm.val();
     for (var col in colList) {
         $('.bug-list-column-' + colList[col]).show();
+        if(!notChwk()){
+            $(".showhide-col-main-info-in li input[data-id='"+colList[col]+"']").prop("checked",true);
+
+        }
     }
+    if(colList.length > 5){
+        $(".showhide-col-main-info-in li input.showhide-allcheckbox").prop("checked",true);
+
+    }
+
 }
 
 function getProjectListIn() {

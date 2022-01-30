@@ -11400,7 +11400,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     getGUIDesignHTMLBody: function (res, rowId, sequence) {
-
+        console.log(res);
         if (sequence === 'undefined' || !sequence) {
             sequence = [];
         }
@@ -11476,9 +11476,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         } catch (err) {
             console.log(err)
         }
+        var title = SACore.GetBacklogDetails(global_var.current_backlog_id, 'description');
         sequence.push(global_var.current_backlog_id);
         st = st.length === 0 ? this.getGUIEmptyMessage() : st;
-        return st;
+        return st +'<div class="title-'+global_var.current_backlog_id+'-unique d-none">'+title+'</div>';
     },
 
     getGUIDesignHTMLBody4TabPart: function (comp, params, lbl, obj, n, param1, css) {
