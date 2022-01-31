@@ -163,6 +163,7 @@ var cmpList  = {
                 <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="cs-svg-icon user-addons-icon"></i>
                 </span>
+                <span class="count_avatar_users"></span>
                 <div class="dropdown-menu">
                     <div class="user-addons-box p-2 cs-box-background">
                         <div class="user-avatar-list mb-1">
@@ -243,9 +244,29 @@ $.fn.extend({
    // userList Block start
 $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', function (e) {
             e.stopPropagation();
+    
+    var count_avatar_span = $(this).closest('.user-addons-box-elm').find('.count_avatar_users');
+
     var elm = $(this).closest("li");
     var ul  =$(this).closest("ul");
     var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
+
+    var limit = 4;
+    var list_count = $(this).closest('.user-addons-box-elm').find(".user-list-avatar-multiple li").length;
+
+    if (list_count >=limit) {
+        $(tit).find("img:nth-child(-n+4)").addClass('active');
+        count_avatar_span.text('');
+        count_avatar_span.text('+ '+(list_count-limit));
+    }
+    if (list_count > limit) {
+        $(tit).find("img:nth-child(n+4)").addClass('hide');
+    }
+    if (list_count <=limit) {
+        count_avatar_span.text(''); 
+    }
+
+
       if(ul.hasClass("user-list-avatar-single")){
          tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
       }else{
@@ -263,18 +284,37 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
    });
   
  $(document).on('change','select.user-list-selectbox-multiple', function (e) {
+
     const o = $(this).val();
+    var count_avatar_span = $(this).closest('.user-addons-box-elm').find('.count_avatar_users');
+
     var userImage = SAProjectUser.Users[o].userImage;
     var userName = SAProjectUser.Users[o].userPersonName;
     var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
-     var has = block.find("#"+o);
+
+    var has = block.find("#"+o);
+    var limit = 4;
+    var list_count = $(this).closest('.user-addons-box-elm').find(".user-list-avatar-multiple li").length;
+
+    if (list_count >= limit) {
+
+        $(tit).find("img:nth-child(-n+4)").addClass('active');
+        // $(tit).find("img:nth-child(n+5)").hide();
+                
+        count_avatar_span.text('');
+        count_avatar_span.text('+ '+(list_count-limit));
+    }
+     if (list_count > limit) {
+        $(tit).find("img:nth-child(n+4)").addClass('hide');
+    }
+
     if(has.length <1){
         tit.find(".user-addons-icon").remove();
         tit.append(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
         block.append(cmpList.userBlock.genItemBlock(o,userImage,userName));
         $(this).find('[value="'+o+'"]').remove();
-       $(this).selectpicker('refresh');
+        $(this).selectpicker('refresh');
     }
     var prt  =$(this).closest('.user-addons-box-elm').parent();
     $(prt).trigger("change-interactive",[o]);
