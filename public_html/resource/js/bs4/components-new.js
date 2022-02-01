@@ -199,6 +199,135 @@ var cmpList  = {
                 select.selectpicker('refresh');
             }
     },
+    tablePagintion:{
+           Init:function (elm,rowCount) {
+               var tbid  = makeId(10);
+                    $(elm).attr("data-pag-id",tbid)
+             $(elm).parent().find(".table-paginition-block-component").remove();
+             $(elm).after(this.genBlock(rowCount,tbid));
+            var select  = $(elm).parent().find("select.count-row-select-global");
+                   select.empty();
+                    var page = Math.ceil(rowCount / 50);
+                    for (let i = 0; i < page; i++) {
+                        select.append($("<option>")
+                            .text(i + 1)
+                            .val(i + 1));
+                    }
+           },
+           genBlock:function (rowCount,tbid) {
+              return `<div id="" pid=""  class="d-flex w-100 table-paginition-block-component task-list-bottom ">
+              <div class="mr-auto task-list-datetime">
+                  
+              </div>
+              <div class="task-list-pagination" table-id='${tbid}'>
+                  <div style="display: none;">
+                      <input class="startLimitNew" value="0" type="text">
+                      <input class="endLimitNew" value="49" type="text">
+                      <select name=""  class="count-row-select-global"></select>
+                  </div>
+                  <div data-toggle="tooltip" orderno="34" id="21041210270502835999" pid="21041210270502835999" class="tooltipMan component-class d-flex justify-content-end p-0 col-lg-9 col-5" onclick="">
+                      <div class="component-input-class" row-no="" pdid="21041210270502835999" id="comp_id_21041210270502835999"></div>
+                  </div>
+                  <div class="float-right d-flex">
+                      <div class="dropdown">
+                          <button class="btn  pagination_btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" row-count='${rowCount}' aria-expanded="false">1-50/${rowCount}</button>
+                          <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
+                              <button onclick='cmpList.tablePagintion.startEndClick(this)'  data-page-icon="pageStart" class="dropdown-item" type="button">Ən başa</button>
+                              <button onclick='cmpList.tablePagintion.startEndClick(this)'  data-page-icon="pageEnd" class="dropdown-item" type="button">Ən sona</button>
+      
+                          </div>
+                      </div>
+                      <div>
+                          <button onclick='cmpList.tablePagintion.clickBtnLeftRight(this)' class="btn pagination_btn_left_right" data-page-icon="pageLeft"> <i class="fas fa-angle-left" aria-hidden="true"></i></button>
+                          <button onclick='cmpList.tablePagintion.clickBtnLeftRight(this)' class="btn pagination_btn_left_right" data-page-icon="pageRight"> <i class="fas fa-angle-right" aria-hidden="true"></i></button>
+                      </div>
+      
+                  </div>
+              </div>
+          </div>`
+           },
+         
+           clickBtnLeftRight :function (elm) {
+            var block  = $(elm).closest(".task-list-pagination")
+            var stlm = block.find('.startLimitNew');
+            var endlm = block.find('.endLimitNew');
+            var clickedButton = $(elm).attr('data-page-icon');
+            var pageSelected = block.find('select.count-row-select-global option:selected');
+            var pageSelect = block.find('select.count-row-select-global');
+            var pageNumber = null;
+            var button  = block.find('.pagination_btn');
+            var rowCount  =  button.attr("row-count");
+            var tbl  =  block.attr("table-id")
+           
+            if (clickedButton == 'pageLeft') {
+                var current = parseInt(pageSelected.text());
+                pageNumber = current != 1 ? current - 1 : 1;
+                if (current != 1) {
+                    var stm  = parseFloat(stlm.val()) - 50;
+                    var etm  = parseFloat(endlm.val()) - 50;
+                    stlm.val(stm);
+                    endlm.val(etm);
+                    button.html((stm+1)+'-'+(etm+1)+"/"+rowCount);
+                }
+        
+            } else if (clickedButton == 'pageRight') {
+                var current = parseInt(pageSelected.text());
+                pageNumber = current != parseInt(pageSelect.find('option:last-child').text()) ? current + 1 : current;
+                if (current != parseInt(pageSelect.find('option:last-child').text())) {
+                    var stm  = parseFloat(stlm.val()) + 50;
+                    var etm  = parseFloat(endlm.val()) + 50;
+                    stlm.val(stm);
+                    endlm.val(etm);
+                    button.html((stm+1)+'-'+(etm+1)+"/"+rowCount);
+                }
+            }
+           
+            pageSelect.val(pageNumber);
+            if(stm >=0&&etm){
+                $("[data-pag-id='"+tbl+"']").trigger("change-page",[stm,etm]);
+            }
+           },
+           startEndClick :function (elm) {
+            var block  = $(elm).closest(".task-list-pagination")
+            var stlm = block.find('.startLimitNew');
+            var endlm = block.find('.endLimitNew');
+            var clickedButton = $(elm).attr('data-page-icon');
+            var pageSelected = block.find('select.count-row-select-global option:selected');
+            var pageSelect = block.find('select.count-row-select-global');
+            var pageNumber = null;
+            var button  = block.find('.pagination_btn');
+            var rowCount  =  button.attr("row-count");
+            var tbl  =  block.attr("table-id")
+           
+            if (clickedButton == 'pageStart') {
+                var current = parseInt(pageSelected.text());
+                    pageNumber = 1;
+                    var stm  = 0
+                    var etm  = 49;
+                    stlm.val(stm);
+                    endlm.val(etm);
+                    button.html((stm+1)+'-'+(etm+1)+"/"+rowCount);
+                
+        
+            } else if (clickedButton == 'pageEnd') {
+                pageNumber = pageSelect.find('option:last-child').text();
+                if (current != parseInt(pageSelect.find('option:last-child').text())) {
+                    var ol = Math.ceil(parseFloat(pageNumber) * 50);
+                    var stm  = ol - 50;
+                    var etm  = ol ;
+                    stlm.val(stm);
+                    endlm.val(etm);
+                    button.html((stm+1)+'-'+(etm+1)+"/"+rowCount);
+                }
+            }
+            
+            pageSelect.val(pageNumber);
+            
+             if(stm >=0&&etm){
+                $("[data-pag-id='"+tbl+"']").trigger("change-page",[stm,etm]);
+            }
+           }
+   }
 }
 $.fn.selectInterActive = function (type,val) {
       if(type==='multi'||type==='single'){
@@ -223,6 +352,9 @@ $.fn.getVal = function (val) {
                     return cmpList.userBlock.getUserBlockValue(this); 
                  }
              } 
+}
+$.fn.genPaginition = function (rowCount) {
+    cmpList.tablePagintion.Init(this,rowCount);
 }
 
 $.fn.extend({
