@@ -299,9 +299,7 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
 
     if (list_count >= limit) {
 
-        $(tit).find("img:nth-child(-n+4)").addClass('active');
-        // $(tit).find("img:nth-child(n+5)").hide();
-                
+        $(tit).find("img:nth-child(-n+4)").addClass('active');               
         count_avatar_span.text('');
         count_avatar_span.text('+ '+(list_count-limit));
     }
