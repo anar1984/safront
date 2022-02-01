@@ -14855,7 +14855,7 @@ function resetAllEditStoryCard() {
         $("#UserStoryPopupModal-Toggle-new  span").removeAttr("ondblclick");
         $("#UserStoryPopupModal-Toggle-new  td").removeAttr("ondblclick");
         $("#UserStoryPopupModal-Toggle-new  .api-name").removeAttr("onclick");
-        $("#UserStoryPopupModal-Toggle-new  input").remove();
+        $("#UserStoryPopupModal-Toggle-new  .story-card-input-line-tr-2 input").remove();
         $("#UserStoryPopupModal-Toggle-new  .scg-button-box").remove();
         $("#UserStoryPopupModal-Toggle-new .live-prototype-show-story-card-hard-refresh").remove();
         $("#UserStoryPopupModal-Toggle-new .add_descriotion_btn ").remove();
