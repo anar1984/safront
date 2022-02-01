@@ -3628,8 +3628,8 @@ const taskManagement = {
                      `
                 },
                 genShowHideBlock4ch:function (params) {
-                    return ` <div class="showhide-col-main-info" style="display: none">
-                    <div class="showhide-col-main-info-in">
+                    return ` <div class="showhide-col-main-issue" style="display: none">
+                    <div class="showhide-col-main-info-in-issue">
                         <ul>
                             <li>
                                 <label>Hamısı 
@@ -3670,7 +3670,7 @@ const taskManagement = {
                 genTableHeaderBlock: function () {
                     return `<thead class="bugThead">
                     <tr>
-                    <th><div class="showhide-col-btn" ><i class="cs-svg-icon numbers"></i></div></th>
+                    <th><div class="showhide-col-btn-issue" ><i class="cs-svg-icon numbers"></i></div></th>
                     <th><input type="checkbox" class="all-bug-list-check"></th>
                     <th class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
                     <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>

@@ -18874,14 +18874,15 @@ function loadProjectList2SelectboxByClass(className) {
             o.attr("selected", true);
             f = false;
         }
-
-        if (pid[n] === global_var.current_project_id) {
-            o.attr("selected", true);
-        }
         cmd.append(o);
     }
-
-    //    cmd.val(global_var.current_project_id);
+     if(global_var.current_project_id){
+        cmd.val(global_var.current_project_id);
+     }
+     else if(global_var.current_backlog_id){
+        var fkProjectId = SACore.GetBacklogDetails(global_var.current_backlog_id, "fkProjectId");
+        cmd.val(fkProjectId);
+     }
     sortSelectBoxByElement(cmd);
     cmd.selectpicker('refresh');
     cmd.change();

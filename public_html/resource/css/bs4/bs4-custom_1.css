@@ -3878,3 +3878,6 @@ div.user-list-selectbox-single > .dropdown-menu,div.user-list-selectbox-multiple
     bottom: auto !important;
     width: 100% !important;
 }
+.user-addons-box-elm.multiple-addons >.user-dropdonw-btn img:nth-of-type(1n+5){
+    display: none;
+}
