@@ -7574,3 +7574,24 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     height: 14px;
     width: 12px;
 }
+/* .cs-next-element-box {
+    position:relative;
+}
+.cs-next-element-box-in {
+    position: absolute;
+    width: 250px;
+    height: 100%;
+    max-height: 160px;
+    right: 0;
+    bottom: 5px;
+}
+.cs-next-element-box-in .cs-next-element-box-bg {
+    background: #DFEEF7;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+.cs-next-element-box-in .cs-close-next-eb-btn {
+    width: 25px;
+    height: 25px;
+    background: #6497B2;
+} */
