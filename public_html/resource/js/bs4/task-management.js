@@ -971,6 +971,7 @@ const taskManagement = {
                       <div class="modal-footer">
                       <div class="assigne-div-update-issue"></div>
                       <div class="observer-div-update-issue"></div>
+                        ${this.genNextBlockPopUp()}
                           <button type="button" id="" class="cs-next-popup-btn btn btn-primary">---</button>
                       </div>
                   </div>
@@ -1028,6 +1029,34 @@ const taskManagement = {
                     </div>
                 </div>
             </div>`
+            },
+            genNextBlockPopUp:function (params) {
+                return `<div class="cs-next-element-box" id='nextBlockItemPopUp' style="position:relative;display:none;">
+                <div class="cs-next-element-box-in">
+                   <div class="cs-next-element-box-bg">
+                      <div class="d-flex">
+                        <div class="mr-auto">
+                          <div class="cs-input-group">
+                            <select id="nextElementListSelect" class='update-selectpicker'>
+                              <option value="ididit">${getOperName("ididit")}</option>
+                              <option value="ForwardTaskTo">${getOperName("ForwardTaskTo")}</option>
+                              <option value="rejectTask">${getOperName("rejectTask")}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="">
+                          <span class="cs-close-next-eb-btn"><i class="fa fa-close"></i></span>
+                        </div>
+                      </div>
+                      <div class="cs-input-group" style="margin-top:10px">
+                        <textarea class="form-control cs-nextTextarea" id="note"></textarea>
+                      </div>
+                      <div class="cs-input-group" style="margin-top:10px; text-align:right;">
+                        <button class="btn cs-nextsave-btn">Yadda saxla</button>
+                      </div>
+                   </div>
+                </div>
+              </div>`
             },
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
@@ -5249,40 +5278,9 @@ function uploadFile4IpoTAsk(id) {
 
 
 $(document).on('click', ".cs-next-popup-btn", function (e) {
-    $(this).closest('div').before().append(`
-        <div class="cs-next-element-box" style="position:relative">
-          <div class="cs-next-element-box-in">
-             <div class="cs-next-element-box-bg">
-                <div class="d-flex">
-                  <div class="mr-auto">
-                    <div class="cs-input-group">
-                      <select id="nextElementListSelect">
-                        <option value="1">hello world 1</option>
-                        <option value="2">hello world 2</option>
-                        <option value="3">hello world 3</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="">
-                    <span class="cs-close-next-eb-btn"><i class="fa fa-close"></i></span>
-                  </div>
-                </div>
-                <div class="cs-input-group" style="margin-top:10px">
-                  <textarea class="form-control cs-nextTextarea" id="note"></textarea>
-                </div>
-                <div class="cs-input-group" style="margin-top:10px; text-align:right;">
-                  <button class="btn cs-nextsave-btn">Yadda saxla</button>
-                </div>
-             </div>
-          </div>
-        </div>
-    `);
-    $(this).closest('div').find('#nextElementListSelect').selectpicker();
+    $(this).closest('.modal-footer').find("#nextBlockItemPopUp").toggle("fast");
 });
 $(document).on('click', ".cs-close-next-eb-btn", function (e) {
-    $(this).closest('.cs-next-element-box').remove();
-});
- $(document).on('change', "#nextElementListSelect", function (e) {
-    $(this).selectpicker('refresh');
+    $(this).closest('.cs-next-element-box').toggle('fast');
 });
 
