@@ -13636,6 +13636,7 @@ function setBacklogAsHtmlCodeGround(backlogId,js,css) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            Toaster.showMessage("Succesfuly Saved");
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -13657,6 +13658,16 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
 
 });
+$(window).keydown(function(e) {
+    if(global_var.current_modal==='loadCodeGround'){
+        if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) { /*ctrl+s or command+s*/
+            $("#save-code-ground-btn").click();
+            e.preventDefault();
+            return false;
+        }
+    }
+   
+  });
 function insertJSmanualBybacklogId(body) {
     var elm = $("#SUS_IPO_GUI_Design")
     elm.parent().find("#backlog-manual-js-body").remove();
@@ -13678,7 +13689,9 @@ function insertCssmanualBybacklogId(body) {
 }
 
 function insertJsSendDbBybacklogId(body) {
-
+    if(!body){
+        return
+   }
     var pid = global_var.current_backlog_id;
 
     var json = initJSON();
@@ -13701,6 +13714,9 @@ function insertJsSendDbBybacklogId(body) {
 }
 
 function insertCssSendDbBybacklogId(body) {
+    if(!body){
+         return
+    }
     var pid = global_var.current_backlog_id;
     var json = initJSON();
     json.kv.fkBacklogId = pid;
