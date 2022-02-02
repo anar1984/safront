@@ -1154,6 +1154,7 @@ function getBacklogJSCodeSync(bid) {
     json.kv.fkBacklogId = pid;
     var that = this;
     var data = JSON.stringify(json);
+    var body = ''
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmgetBacklogJsCode",
         type: "POST",
@@ -1163,16 +1164,17 @@ function getBacklogJSCodeSync(bid) {
         async: false,
         success: function (res) {
             try {
-               return res.tbl[0].r[0].fnBody
+                body= res.tbl[0].r[0].fnBody;
                
             } catch (error) {
-                return ''
+                body= '';
             }
            
         
 
         }
     });
+    return body
 }
 function getBacklogCssCodeSync(bid) {
     var pid = bid ? bid : global_var.current_backlog_id;
@@ -1181,6 +1183,7 @@ function getBacklogCssCodeSync(bid) {
     json.kv.fkBacklogId = pid;
     var that = this;
     var data = JSON.stringify(json);
+    var body  =''
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmgetBacklogCssCode",
         type: "POST",
@@ -1191,11 +1194,12 @@ function getBacklogCssCodeSync(bid) {
         success: function (res) {
            
             try {
-                return res.tbl[0].r[0].classBody
+              body  = res.tbl[0].r[0].classBody
                 
              } catch (error) {
                  return ''
              }
         }
     });
+    return body 
 }
