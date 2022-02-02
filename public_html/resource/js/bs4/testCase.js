@@ -953,6 +953,9 @@ $(document).on("click", '#update_multi_bug_change_btn', function (e) {
     else if(global_var.current_modal==='loadStoryCardMgmt'){
         var check = $("#tbl-"+idk+"  .task-tr-list input.checkbox-issue-task");
     }
+    else if(global_var.current_modal==='loadStoryCard'){
+        var check = $("#taskListCW >tbody> tr input.checkbox-issue-task");
+    }
 
     if (!fkAssigneeId == 0) {
         for (var indx = 0; indx < check.length; indx++) {
@@ -2050,6 +2053,9 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
     }
     else if(global_var.current_modal==='loadStoryCardMgmt'){
         var check = $("#tbl-"+idk+" .task-tr-list input.checkbox-issue-task");
+    }
+    else if(global_var.current_modal==='loadStoryCard'){
+        var check = $("#taskListCW tbody tr input.checkbox-issue-task");
     }
 
     var ast = [];

@@ -7349,36 +7349,6 @@ function getMultiSelectpickerValueById(elementId) {
     return getMultiSelectpickerValue(document.getElementById(elementId))
 }
 
-function iDidIt() {
-    $('#iDidItModal').modal('show');
-}
-
-function iDidItAction() {
-    var id = global_var.current_issue_id;
-    var json = initJSON();
-
-    json.kv.fkTaskId = id;
-    json.kv.comment = $('#iDidItModal_comment').val();
-    var that = this;
-    var data = JSON.stringify(json);
-
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmIDidItTask",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            AJAXCallFeedback(res);
-            getBugList();
-            $('#iDidItModal_comment').html('');
-            $('#iDidItModal').modal('hide');
-            $('#iDidItModal_comment').val('');
-        }
-    });
-
-}
 
 function userAcceptance() {
     $('#uatModal').modal('show');
@@ -16617,10 +16587,10 @@ function getBugList4StoryCard(bgId, tbody) {
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
                 var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
-                var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
+                var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" id='${ela[i].id}' >
                 <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
                 <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
-                    <input class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
+                    <input class="tdOperation checkbox-issue-task cst-clck-box" type="checkbox">
                 </td>
                 <td class="text-center" style="width: 100px;" >
                     <span class="brend-color" sa-data-value="9214">${ela[i].projectCode + "-" + ela[i].orderNoSeq}</span>
@@ -20217,34 +20187,6 @@ function rejectTask() {
 }
 
 
-
-function forwardTaskToAction() {
-    updateTask4ShortChangeDetailsWithSync($('#forwardTaskToModal_assignee').val(), 'fkAssigneeId');
-    if ($('#forwardTaskToModal_comment').val().trim()) {
-        $('#addComment4Task_comment').val($('#forwardTaskToModal_comment').val());
-        new UserStory().addCommentInput4Task('');
-    }
-    //    this.refreshCurrentBacklog();
-    $('#forwardTaskToModal_comment').val('');
-    $('#forwardTaskToModal').modal('hide');
-    $('.task-card-UserStory-edit-exit').click();
-    getBugList();
-}
-
-
-
-function rejectTaskAction() {
-    var comment = $('#rejectTaskModal_reason').val().trim();
-    updateTask4ShortChangePureWithSync('rejected', 'taskStatus', global_var.current_issue_id, comment, 'true');
-    if (comment) {
-        $('#addComment4Task_comment').val(comment);
-        new UserStory().addCommentInput4Task('');
-    }
-    //    this.refreshCurrentBacklog();
-    $('#rejectTaskModal_reason').val('');
-    $('#rejectTaskModal').modal('hide');
-    getBugList();
-}
 
 
 

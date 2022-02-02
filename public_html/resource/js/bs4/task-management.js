@@ -921,6 +921,7 @@ const taskManagement = {
                 $('body').append(this.genModalSelfBlock());
                 cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
                 cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
+                cmpList.userBlock.Init($('.forward-assignee-list'),'single');
                 setProjectListByID('bug_filter_project_id_add');
                 $("#taskMgmtModal select.update-selectpicker").selectpicker("refresh");
 
@@ -971,8 +972,7 @@ const taskManagement = {
                       <div class="modal-footer">
                       <div class="assigne-div-update-issue"></div>
                       <div class="observer-div-update-issue"></div>
-                        ${this.genNextBlockPopUp()}
-                          <button type="button" id="" class="cs-next-popup-btn btn btn-primary">---</button>
+                          <button type="button" id="" onclick="nextModalpopUpShow(this)" class="cs-next-popup-btn btn btn-primary">---</button>
                       </div>
                   </div>
               </div>
@@ -1023,7 +1023,7 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="p-0" style="margin-top: 3px;">
-                        <div  id="updateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
+                        <div  id="updateTask-priority-btn"  class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
                     </div>
@@ -1031,7 +1031,7 @@ const taskManagement = {
             </div>`
             },
             genNextBlockPopUp:function (params) {
-                return `<div class="cs-next-element-box" id='nextBlockItemPopUp' style="position:relative;display:none;">
+                return `<div class="cs-next-element-box d-none" id='nextBlockItemPopUp' style="position:fixed;">
                 <div class="cs-next-element-box-in">
                    <div class="cs-next-element-box-bg">
                       <div class="d-flex">
@@ -1041,6 +1041,7 @@ const taskManagement = {
                               <option value="ididit">${getOperName("ididit")}</option>
                               <option value="ForwardTaskTo">${getOperName("ForwardTaskTo")}</option>
                               <option value="rejectTask">${getOperName("rejectTask")}</option>
+                              <option value="canceledTask">${getOperName("cancel")}</option>
                             </select>
                           </div>
                         </div>
@@ -1052,6 +1053,7 @@ const taskManagement = {
                         <textarea class="form-control cs-nextTextarea" id="note"></textarea>
                       </div>
                       <div class="cs-input-group" style="margin-top:10px; text-align:right;">
+                         <div style="display:inline;" class="forward-assignee-list d-none"></div>
                         <button class="btn cs-nextsave-btn">Yadda saxla</button>
                       </div>
                    </div>
@@ -2589,24 +2591,24 @@ const taskManagement = {
             },
             genCheweekBtn: function (params) {
                 return `<div class="info-box multi-edit-menu d-none pl-0 mr-2" >
-                <div class="info-item-elements">
+                <div onclick="nextModalpopUpShow(this,'ididit','multi')" class="info-item-elements">
                     <i class="cs-svg-icon arrow-1"></i>
                 </div>
-                <div class="info-item-elements">
+                <div onclick="nextModalpopUpShow(this,'canceledTask','multi')" class="info-item-elements">
                     <i class="cs-svg-icon none-white"></i>
                 </div>
-                <div class="info-item-elements">
+                <div onclick="nextModalpopUpShow(this,'rejectTask','multi')" class="info-item-elements">
                     <i class="cs-svg-icon close-white"></i>
                 </div>
-                <div class="info-item-elements">
+                <div onclick="nextModalpopUpShow(this,'ForwardTaskTo','multi')" class="info-item-elements">
                     <i class="cs-svg-icon right-circle-02"></i>
                 </div>
-                <div class="info-item-elements">
+               <!--<div class="info-item-elements">
                     <i class="cs-svg-icon user-eye"></i>
                 </div>
                 <div class="info-item-elements">
                     <i class="cs-svg-icon task-02"></i>
-                </div>
+                </div>-->
                 <div class="info-item-elements">
                     <i class="cs-svg-icon chat-circle"></i>
                 </div>
@@ -3771,21 +3773,18 @@ const taskManagement = {
                 genContextMenu : function () {
                     return `<div id="contextMenu" class="dropdown contextMenu-dropdown-style position-fixed" style="z-index:555;display: none;">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
-                        <li class="dropdown-item" href="#" onclick="iDidIt()" >
+                        <li class="dropdown-item" href="#" onclick="nextModalpopUpShow(this,'ididit')" >
                             <i class="cs-svg-icon novbeti"></i> ${getOperName("ididit")}
                         </li>
-                        <li class="dropdown-item"  >
+                        <li class="dropdown-item" onclick="nextModalpopUpShow(this,'canceledTask')"  >
                                <i class="cs-svg-icon imtina"></i> ${getOperName("cancel")}
                         </li>
-                        <li class="dropdown-item" class="dropdown-item" href="#" onclick="rejectTask()">
+                        <li class="dropdown-item" class="dropdown-item" href="#" onclick="nextModalpopUpShow(this,'rejectTask')">
                               <i class="cs-svg-icon legv"></i> ${getOperName("rejectTask")}
                         </li>
-                        <li class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">
+                        <li class="dropdown-item forward-task" href="#" onclick="nextModalpopUpShow(this,'ForwardTaskTo')">
                         <i class="cs-svg-icon yonlendir"></i> ${getOperName("ForwardTaskTo")}
                          </li>                       
-                        ${notChwk()?`<li class="dropdown-item" href="#" onclick="userAcceptance()">
-                        <i class="cs-svg-icon tarixce"></i> ${getStatusName("UAT")}
-                    </li>`:""}
                         <li class="dropdown-item">
                             <i class="cs-svg-icon tarixce"></i> ${getOperName("history")}
                         </li>
@@ -4631,7 +4630,7 @@ $(document).on("click", '#multi-edit-menu-btn', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_multi');
     var dwlmt = $('#bug_task_type_id_multi');
     $("#update_multi_bug_change_btn").attr("data-pid",$(this).attr("pid"));
-    if(global_var.current_modal==='loadStoryCardMgmt'){
+    if(global_var.current_modal==='loadStoryCardMgmt'||global_var.current_modal==='loadStoryCard'){
         $("select.bug-mgmt-filter-select").selectpicker("refresh");
      
         loadUsersAs4ComboByElm($('#bug_filter_assignee_id_multi'))
@@ -5173,7 +5172,6 @@ function createChildTask() {
 }
 $(document).click(function () {
     $("#contextMenu").hide();
-
   })
 $(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
    
@@ -5202,9 +5200,139 @@ $(document).on('change', "#run_task_detail_detail_categories", function (e) {
 })
 $(document).on('change', "#run_task_detail_detail_sprint", function (e) {
  
-        updateSpirntTaskById($(this).val(),global_var.current_issue_id)
+        updateSpirntTaskById($(this).val(),global_var.current_issue_id);
     
 })
+$(document).on('change', "#nextElementListSelect", function (e) {
+        var value  = $(this).val();
+        $(".forward-assignee-list").addClass("d-none");
+       if(value==='ForwardTaskTo'){
+        $(".forward-assignee-list").removeClass("d-none"); 
+       }
+})
+$(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
+    var select  = $(this).closest('#nextBlockItemPopUp').find("#nextElementListSelect");
+     var value  = select.val();
+     var type  = select.attr('action-type');
+     if(!type){
+         if(value==='ididit'){
+            iDidItAction()
+          }
+          else if (value==='ForwardTaskTo'){
+            forwardTaskToAction();
+          } 
+          else if (value==='rejectTask'){
+            rejectTaskAction();
+          } 
+          else if (value==='canceledTask'){
+            cancelTaskAction();
+          } 
+     }else{
+
+            var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+            
+            for (var indx = 0; indx < check.length; indx++) {
+                if ($(check[indx]).prop('checked')) {
+                    var taskId = $(check[indx]).parents("tr").attr("id");
+                    if(value==='ididit'){
+                        iDidItAction(taskId)
+                      }
+                      else if (value==='ForwardTaskTo'){
+                        forwardTaskToAction(taskId);
+                      } 
+                      else if (value==='rejectTask'){
+                        rejectTaskAction(taskId);
+                      } 
+                      else if (value==='canceledTask'){
+                        cancelTaskAction(taskId);
+                      } 
+                }
+            }
+        
+     }
+    
+      $('#nextBlockItemPopUp textarea#note').val('');
+      $(this).closest('.cs-next-element-box').toggle('fast');
+})
+
+function nextModalpopUpShow(elm,value,multi) {
+    $("#nextBlockItemPopUp").remove();
+    var block  = taskManagement.updateTask.genBlockModal.genNextBlockPopUp();
+    $("body").append(block);
+     var k =   $("#nextBlockItemPopUp")
+    var top = $(elm).offset().top;
+    var left = $(elm).offset().left; 
+    var w  = 160;
+    var h  = 250;
+      k.css({
+          "top": (w>top)?top+w:top,
+          "left":(h>left)?left+h:left,
+          "z-index":"5000000"
+      }) 
+      if(multi==='multi'){
+        $("#nextElementListSelect").attr("action-type",'multi') 
+      }
+      $("#nextElementListSelect").val(value);
+      $("#nextElementListSelect").selectpicker("refresh");
+      $("#nextBlockItemPopUp").removeClass('d-none');
+ }
+
+function forwardTaskToAction(taskid) {
+     taskid  = taskid?taskid:global_var.current_issue_id;
+    updateTask4ShortChangeDetailsWithSync($('div.forward-assignee-list').getVal(), 'fkAssigneeId');
+    var comel  = $('#nextBlockItemPopUp textarea#note');
+    if (comel.val().trim()) {
+        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+    }
+    getBugList();
+}
+
+function rejectTaskAction(taskid) {
+    taskid  = taskid?taskid:global_var.current_issue_id;
+    var comel  = $('#nextBlockItemPopUp textarea#note');
+    updateTask4ShortChangePureWithSync('rejected', 'taskStatus',taskid, comel.val(), 'true');
+ 
+    if (comel.val().trim()) {
+        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+    }
+    getBugList();
+}
+
+function cancelTaskAction(taskid) {
+    taskid  = taskid?taskid:global_var.current_issue_id;
+    var comel  = $('#nextBlockItemPopUp textarea#note');
+    updateTask4ShortChangePureWithSync('canceled', 'taskStatus', taskid, comel.val(), 'true');
+ 
+    if (comel.val().trim()) {
+        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+    }
+    getBugList();
+}
+
+function iDidItAction(taskid) {
+    taskid  = taskid?taskid:global_var.current_issue_id;
+    var json = initJSON();
+
+    json.kv.fkTaskId = taskid;
+    json.kv.comment = $('#nextBlockItemPopUp textarea#note').val();
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmIDidItTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            getBugList();
+        }
+    });
+
+}
+
 
 function updateSpirntTaskById(list,taskid) {
        var ls  ='';
@@ -5276,11 +5404,7 @@ function uploadFile4IpoTAsk(id) {
     }
 }
 
-
-$(document).on('click', ".cs-next-popup-btn", function (e) {
-    $(this).closest('.modal-footer').find("#nextBlockItemPopUp").toggle("fast");
-});
 $(document).on('click', ".cs-close-next-eb-btn", function (e) {
-    $(this).closest('.cs-next-element-box').toggle('fast');
+    $(this).closest('.cs-next-element-box').remove();
 });
 
