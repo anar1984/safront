@@ -661,7 +661,7 @@ const taskManagement = {
             this.getValueCreateModalScreen();
 
         },
-        insertNewTaskApi: function (dataCore) {
+        insertNewTaskApi: function (dataCore,itmlist) {
             var json = initJSON();
             var dataPure = $.extend(json.kv, dataCore);
             json.kv = dataPure;
@@ -678,7 +678,7 @@ const taskManagement = {
                 success: function (res) {
                     that.insertEventByTaskId(res.kv.id);
                     that.insertObserverTask(res.kv.id);
-                    that.insertCheckListComulativ(res.kv.id);
+                    that.insertCheckListComulativ(res.kv.id,itmlist);
                     getBugList();
                     Toaster.showMessage(lang_task.windowAddTask.addTaskMessageSucc);
                     if ($("#after_insert_modal").prop("checked")) {
@@ -741,9 +741,17 @@ const taskManagement = {
 
 
             // data.description = $("#bug_filter_project_id_add").val();
+       
+            //$(this).attr("disabled",'disabled');
+            var itmList = ''
+            var items = $(".issue-managment-add-task .task-check-list-box ul>li");
+            for (let i = 0; i < items.length; i++) {
+                const o = items[i];
+
+                itmList += $(o).find('textarea').val() + '|';
+            }
             reset_task_data();
-            $(this).attr("disabled",'disabled');
-            this.insertNewTaskApi(data);
+            this.insertNewTaskApi(data,itmList);
         },
         insertEventByTaskId: function (id) {
 
@@ -849,16 +857,10 @@ const taskManagement = {
 
 
         },
-        insertCheckListComulativ: function (taskId) {
-            var itmList = ''
-            var items = $(".issue-managment-add-task .task-check-list-box ul>li");
-            for (let i = 0; i < items.length; i++) {
-                const o = items[i];
+        insertCheckListComulativ: function (taskId,itmList) {
+            
 
-                itmList += $(o).find('textarea').val() + '|';
-            }
-
-            this.insertCheckListComulativCore(itmList, taskId)
+            this.insertCheckListComulativCore(itmList, taskId);
 
         },
         insertCheckListComulativCore: function (list, taskId, type) {

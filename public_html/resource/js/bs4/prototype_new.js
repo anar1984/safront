@@ -1139,9 +1139,12 @@ function getBacklogCSSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-           
+           try {
+            insertCssmanualBybacklogId(res.tbl[0].r[0].classBody);    
+           } catch (error) {
+               
+           }
                     
-            insertCssmanualBybacklogId(res.tbl[0].r[0].classBody);
             
         }
     });

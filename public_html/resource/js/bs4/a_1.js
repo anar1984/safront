@@ -13811,7 +13811,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
             }
         });
         Prototype.Init();
-        editorGenerateJSCSS();
+       /// editorGenerateJSCSS();
 
 
 
