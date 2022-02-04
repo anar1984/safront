@@ -984,7 +984,7 @@ const taskManagement = {
             genTitleBlock: function () {
                 return ` <div class="cs-input-group mb-2">
                 <div class="d-flex">
-                    <div class="mr-auto" style="width: 93%;">
+                    <div class="mr-auto" style="width: 93%;align-self:center;">
                         <div class="Story-card-Header-task">
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
@@ -1001,27 +1001,7 @@ const taskManagement = {
                                 </div>                    
                             </div>
         
-                            <div class="card-UserStory-edit-task cs-input-group">
-                                <div class="dropdown-task show dropright">
-                                    <a class="btn dropdown-toggle-task" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                    </a>
-        
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">${getOperName("childTask")}</a>
-                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">${getOperName("ForwardTaskTo")}</a>
-                                    
-                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${getOperName("Duplicate")}</a>
-                                        <a class="dropdown-item" href="#" onclick="rejectTask()">${getOperName("rejectTask")}</a>
-                                        <a class="dropdown-item" href="#" onclick="iDidIt()">${getOperName("ididit")}
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="deleteTask()">${lang_task.windowUpdateTask.Delete}</a>
-                                    </div>
-                                </div>
-        
-                            </div>
-        
+                                
                         </div>
                     </div>
                     <div class="p-0" style="margin-top: 3px;">
