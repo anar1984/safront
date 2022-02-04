@@ -407,6 +407,12 @@
 .cs-svg-icon.clear-filter:after {
   background-image: url(../ch-icons/clear-filter.svg);
 }
+.cs-svg-icon.filter-group:after {
+  background-image: url(../ch-icons/filter-group.svg);
+}
+.cs-svg-icon.filter-sorting:after {
+  background-image: url(../ch-icons/sort-filter.svg);
+}
 .cs-svg-icon.tapshiriq-dark:after {
   background-image: url(../ch-icons/tapshiriq-dark.svg);
 }
