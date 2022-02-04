@@ -921,12 +921,9 @@ const taskManagement = {
                 $('body').find("#taskMgmtModal").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-                cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
-                cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
-                cmpList.userBlock.Init($('.forward-assignee-list'),'single');
-                setProjectListByID('bug_filter_project_id_add');
+              
                 $("#taskMgmtModal select.update-selectpicker").selectpicker("refresh");
-
+              return
 
             },
             genModalSelfBlock: function () {
@@ -1894,72 +1891,79 @@ const taskManagement = {
         },
         callTaskCard4BugTask: function (el, projectId, taskId) {
             taskManagement.updateTask.genBlockModal.Init();
-            loadBugTaskDeadlineScripts();
-            if (!taskId) {
-                return;
-            }
-            global_var.active_canvas = 'comment';
-            global_var.current_issue_id = taskId;
-            Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
-            /*   global_var.current_issue_is_hide = "0";
-              Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
-
-            //Task card-da Story Card-linke basanda istifade edilir.
-            var dwlmt = $('#task-info-modal-tasktype')
-            taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
-            if (projectId !== global_var.current_project_id) {
-                global_var.current_project_id = projectId;
-                new UserStory().refreshBacklog4Bug(true);
-            }
+             loadBugTaskDeadlineScripts(); 
+               $("#taskMgmtModal").modal("show");
+               $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
+               let headerText = $(el).html();
+               $(".card-UserStory-header-text").html(headerText);
+               $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
+                $("#task-info-modal-status").selectpicker('refresh');
+                $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
+                $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
+                $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
+                $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
+                $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
+                $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
+                if (coreBugKV[taskId].isMeet === '1') {
+                    $("#toplanti-d-btn").click();
+                } else {
+                    $("#tapshiriq-btn").click();
+                }
             
-            this.getLabelTask($('#run_task_detail_detail_categories'));
-            this.getSprintTask($('#run_task_detail_detail_sprint'));
-            this.getTaskSpirntList(taskId)
-            this.getTaskLabelList(taskId)
+                //set backlog infos
+                if (coreBugKV[taskId].taskPriority === '9') {
+                    $("#updateTask-priority-btn").addClass("active");
+                } else {
+                    $("#updateTask-priority-btn").removeClass("active");
+                }
+                $('#addComment4Task_comment').autoHeight();
+                if (coreBugKV[taskId].backlogName) {
+                    $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
+                        .attr('pid', coreBugKV[taskId].fkBacklogId)
+                        .html(coreBugKV[taskId].backlogName);
+                }
+                cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
+                cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
+                cmpList.userBlock.Init($('.forward-assignee-list'),'single');
+                $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
 
-            getProjectUsers();
-            $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
-
-            let headerText = $(el).html();
-            $(".card-UserStory-header-text").html(headerText);
-
+         setTimeout(() => {
+             
           
-            $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
-            loadTaskInfoToContainer(taskId, projectId);
-            taskManagement.updateTask.genCommentListOfTask();
-            $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
-            $("#task-info-modal-status").selectpicker('refresh');
-            $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
-            $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
-            $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
-            $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
-            $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
-            $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
-            if (coreBugKV[taskId].isMeet === '1') {
-                $("#toplanti-d-btn").click();
-            } else {
-                $("#tapshiriq-btn").click();
-            }
-            $("#taskMgmtModal").modal("show");
-            //set backlog infos
-            if (coreBugKV[taskId].taskPriority === '9') {
-                $("#updateTask-priority-btn").addClass("active");
-            } else {
-                $("#updateTask-priority-btn").removeClass("active");
-            }
-            $('#addComment4Task_comment').autoHeight();
-            if (coreBugKV[taskId].backlogName) {
-                $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
-                    .attr('pid', coreBugKV[taskId].fkBacklogId)
-                    .html(coreBugKV[taskId].backlogName);
-            }
+        if (!taskId) {
+            return;
+        }
+        global_var.active_canvas = 'comment';
+        global_var.current_issue_id = taskId;
+        Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
+        /*   global_var.current_issue_is_hide = "0";
+          Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
 
-            this.getCheckListComulativ(taskId);
-            this.getTaskObserverList(taskId);
+        //Task card-da Story Card-linke basanda istifade edilir.
+        var dwlmt = $('#task-info-modal-tasktype')
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
+        if (projectId !== global_var.current_project_id) {
+            global_var.current_project_id = projectId;
+            new UserStory().refreshBacklog4Bug(true);
+        }
+        
+        this.getLabelTask($('#run_task_detail_detail_categories'));
+        this.getSprintTask($('#run_task_detail_detail_sprint'));
+        this.getTaskSpirntList(taskId)
+        this.getTaskLabelList(taskId)
 
-            this.getTaskEvent(taskId);
-            getChildTasks();
-            getParentTask();
+        getProjectUsers();      
+      
+        loadTaskInfoToContainer(taskId, projectId);
+        taskManagement.updateTask.genCommentListOfTask();
+        
+        this.getCheckListComulativ(taskId);
+        this.getTaskObserverList(taskId);
+
+        this.getTaskEvent(taskId);
+        getChildTasks();
+        getParentTask();
+         }, 700);
             
 
         },
