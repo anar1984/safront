@@ -988,7 +988,7 @@ const taskManagement = {
                         <div class="Story-card-Header-task">
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
-                                <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 0;">
+                                <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 30px;">
                                     <input class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
                                     <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
