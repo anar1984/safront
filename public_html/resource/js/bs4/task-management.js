@@ -1943,7 +1943,8 @@ const taskManagement = {
             let headerText = $(el).html();
             $(".card-UserStory-header-text").html(headerText);
 
-            taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'update')
+          
+            $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
             loadTaskInfoToContainer(taskId, projectId);
             taskManagement.updateTask.genCommentListOfTask();
             $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
@@ -3004,7 +3005,7 @@ const taskManagement = {
                 </div>
             </div>`
             },
-            genNotificationItemBlock: function (id, taskId, title, deadline, body,time,msg,img,taskStatus) {
+            genNotificationItemBlock: function (id, taskId, title, deadline, body,time,msg,img,taskStatus,fktaskId) {
                 return `  <div class="notification-elements" id='${id}'>
               <div class="d-flex p-2 notify-top-section">
                   <div class="mr-auto">
@@ -3024,7 +3025,7 @@ const taskManagement = {
               </div>
               <div class="d-flex pl-2 pr-2 pb-2 pt-0 mb-0 notify-title-box">
                   <div class="mr-auto ncs-ellipsis"><span class="id">${taskId}</span>
-                      <span class="notefy-title">${body}</span>
+                      <a href='#'  onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'-1','${fktaskId}')" class="notefy-title ">${body}</a>
                       <div class="d-flex mt-1 notify-msg">
                           <span>${msg?"Mesaj:":""} </span><span>${msg}</span>
                       </div>
@@ -3036,7 +3037,7 @@ const taskManagement = {
                   <div class="d-flex mt-2 status-box status-box-${taskStatus}">
                       <div class="mr-auto">
                           <div class="author-img"><img class="author" src="${img}" title="Creator"></div>
-                          <span class="notefy-status">${taskStatus}</span>
+                          <span class="notefy-status">${getStatusName(taskStatus)}</span>
                       </div>
                       <div class="notify-bottom-right pr-2">
                           <ul>
@@ -3103,8 +3104,9 @@ const taskManagement = {
                                     o.noteType,
                                     o.orderNoSeq,
                                     endTime,
-                                    getStatusName(o.taskStatus),
-                                    o.isMeet
+                                    o.taskStatus,
+                                    o.isMeet,
+                                    o.fkTaskId
                                 )
                                 elm.append(html);
                             }
@@ -3115,7 +3117,7 @@ const taskManagement = {
                 });
               
             },
-            genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
+            genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet,fktaskId) {
                 if(!notType){
                     return
                 }
@@ -3153,7 +3155,7 @@ const taskManagement = {
                                img  =  fileUrl(img)
                              var deadLine = getTimeDifference(endTime, new Date());
                              var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
-                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,getStatusName(taskStatus));
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus,fktaskId);
                     
                 } catch (error) {
                    console.log(error)
@@ -4286,7 +4288,7 @@ const taskManagement = {
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: true,
             success: function (res) {
 
                 if (type === 'update') {
