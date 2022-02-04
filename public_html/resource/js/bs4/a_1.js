@@ -13593,6 +13593,7 @@ $(document).on("change", '#show_hidden_carrier', function (e) {
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
+    $('.loading.editor').show();
     var js = window.editorJSGround.getValue();
     var css = window.editorCSSGround.getValue();
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
@@ -13637,6 +13638,7 @@ function setBacklogAsHtmlCodeGround(backlogId,js,css) {
         async: true,
         success: function (res) {
             Toaster.showMessage("Succesfuly Saved");
+            $('.loading.editor').hide();
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -16215,10 +16217,10 @@ function setPrmFilterSprintValuesUs() {
                 crossDomain: true,
                 async: false,
                 success: function (res) {
-                    var dt = res.tbl[0].r
+                    var dt = res.tbl[0].r;
                     for (let i = 0; i < dt.length; i++) {
 
-
+                        
                         st += dt[i].fkBacklogId + "%IN%";
                     }
                     UsSprint = st;

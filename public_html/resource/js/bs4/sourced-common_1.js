@@ -14263,6 +14263,35 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
+    getSprintValue: function () {
+        var list  =''
+        var elm  =  $('.us-filter-checkbox-sprint:checked');
+        elm.each(function (index) {
+            if ($(this).is(":checked")) {
+                  if((index+1)===elm.length){
+                    list+= "'"+$(this).val()+"'";
+                  }else{
+                    list+= "'"+$(this).val()+"'"+","; 
+                  }
+             
+            }
+        })
+        return list
+    },
+    getLabelValue: function () {
+        var list  =''
+        var elm = $('.prManag-task-filter-checkbox-label:checked');
+        elm.each(function (index) {
+            if ($(this).is(":checked")) {
+                if((index+1)===elm.length){
+                    list+= "'"+$(this).val()+"'";
+                  }else{
+                    list+= "'"+$(this).val()+"'"+","; 
+                  }
+            }
+        })
+        return list
+    },
     getManualStatusList: function () {
         data = {};//createTechizatTelebProducts
 
@@ -14319,7 +14348,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
         var search = $("#search-us-managmenet").val();
         data.fkProjectId = "(" + priD + ")";
-
+            
+        if (this.getSprintValue()) {
+            data.fkSprintId = '(' + this.getSprintValue() + ')';
+        }
+        if (this.getLabelValue()) {
+            data.fkLabelId = '(' + this.getLabelValue() + ')';
+        }
         if (TaskNatue) {
             data.taskNature = '(' + TaskNatue + ')';
         }
