@@ -5239,23 +5239,23 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 11px;
+    top: 3px;
     left: auto;
     right: 28px;
     position: absolute;
-    height: 21px;
-    width: 21px;
-    font-size: 13px;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
     padding: 1px;
 }
 .card-UserStory-header-delete {
+    top: 3px;
     left: auto;
-    top: 11px;
     right: 5px;
     position: absolute;
-    height: 21px;
-    width: 21px;
-    font-size: 13px;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
     padding: 1px;
 }
 .card-Userstory-detail .cs-forum-group .cs-label-name {
