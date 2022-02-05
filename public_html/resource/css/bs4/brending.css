@@ -4673,6 +4673,7 @@ table.lbl-list-table tr td {
     color: #fff;
 }
 .task-check-list-box textarea {
+    resize: none;
     width: 100%;
     background: transparent !important;
     border: none;
