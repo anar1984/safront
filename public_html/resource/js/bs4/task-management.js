@@ -1903,11 +1903,13 @@ const taskManagement = {
                 $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
                 $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
                 $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
-                $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
+                $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].orderNoSeq);
                 if (coreBugKV[taskId].isMeet === '1') {
                     $("#toplanti-d-btn").click();
+                    $(".card-UserStory-header-text-code").html("Toplantı-"+coreBugKV[taskId].orderNoSeq+"");
                 } else {
                     $("#tapshiriq-btn").click();
+                    $(".card-UserStory-header-text-code").html("Tapşırıq-"+coreBugKV[taskId].orderNoSeq+"");
                 }
             
                 //set backlog infos
@@ -4436,7 +4438,8 @@ $(document).on("change", '#newAddCheckList', function (e) {
     </div>
     <div class="pl-1 p2-1 d-table">
     <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;"><i class="fas fa-trash-alt" aria-hidden="true"></i></a></div></li>`)
-    $(this).val('')
+    $(this).val('');
+    $(this).parent().find("ul textarea").autoHeight();
 
 })
 
