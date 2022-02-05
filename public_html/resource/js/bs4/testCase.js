@@ -20,6 +20,7 @@ var bug_filter = {
     showChildTask: '1',
     createdDate: '',
     fkTaskTypeId: '',
+    is_meet: '',
 }
 
 var sprintTaskIds = "";
@@ -1254,6 +1255,7 @@ function getBugList() {
         json.kv.showChildTask = bug_filter.showChildTask;
         json.kv.createdDate = bug_filter.createdDate;
         json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
+        json.kv.isMeet = bug_filter.is_meet;
         json.kv.startLimit = 0;
         json.kv.endLimit = 25;
       
@@ -1713,7 +1715,9 @@ function getBugListDetails(res) {
 
 }
 function genUserTrblock(names,img,filed,uid) {
-  
+ /*  if(names===""||!names){
+     names = SAProjectUser.Users[uid].userPersonName; 
+  } */
     try {
         return $('<a>')
             .attr('tabindex', "0")
