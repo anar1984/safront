@@ -4755,3 +4755,59 @@ td.selected{
     background-color: greenyellow !important;
     border-radius: 5px;
 }
+
+
+.contextMenu-dropdown-style.dropdown ul.dropdown-menu {
+    margin-top: 0;
+    background: #DFEEF7;
+    box-shadow: 0px 0px 7px rgb(0 0 0 / 55%);
+    border-radius: 6px;
+}
+.contextMenu-dropdown-style.dropdown ul.dropdown-menu .dropdown-submenu ul.dropdown-menu {
+    background: #03396c;
+    margin-top: -25px;
+    left: 100% !important;
+    margin-left: -7px;
+}
+ .contextMenu-dropdown-style ul li{
+    font-family: 'Quicksand',sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #03396C;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+.contextMenu-dropdown-style li.dropdown-submenu li {
+ padding: 0 !important;
+}
+.contextMenu-dropdown-style .dropdown-item:focus, #contextMenu .dropdown-item:hover {
+    background-color: rgb(255 255 255 / 60%);
+    color: #03396C
+}
+.contextMenu-dropdown-style ul li:first-child{
+    padding-top: 5px;
+}
+.contextMenu-dropdown-style ul li:last-child{
+    padding-bottom: 5px;
+}
+ .contextMenu-dropdown-style ul li i{
+    width: 30px;
+    text-align: center;
+    margin-right: 3px;
+}
+ .contextMenu-dropdown-style{
+    position: fixed;
+     display: none;
+}
+.contextMenu-dropdown-style a.dropdown-toggle::before{
+    display: none;
+}
+.contextMenu-dropdown-style .dropdown-menu > li a{
+    padding: 0;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    color: #03396C
+}
