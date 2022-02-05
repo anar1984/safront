@@ -5239,23 +5239,23 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 11px;
+    top: 3px;
     left: auto;
     right: 28px;
     position: absolute;
-    height: 21px;
-    width: 21px;
-    font-size: 13px;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
     padding: 1px;
 }
 .card-UserStory-header-delete {
+    top: 3px;
     left: auto;
-    top: 11px;
     right: 5px;
     position: absolute;
-    height: 21px;
-    width: 21px;
-    font-size: 13px;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
     padding: 1px;
 }
 .card-Userstory-detail .cs-forum-group .cs-label-name {
@@ -7546,6 +7546,7 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     color: #ffffff;
     background-color: rgba(3, 57, 108, 0.5);
     border: none;
+    border-radius: 0;
     border-top-left-radius: 14px !important;
     border-bottom-left-radius: 14px !important;
     padding: 0.2rem 0.75rem;
@@ -7573,6 +7574,17 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 .cs-input-group .task-clear-filter-btn i.cs-svg-icon:after{
     height: 14px;
     width: 12px;
+}
+.bugList-elements .cs-input-group.icon-input-group .btn {
+    font-size: 13px;
+    line-height: 18px;
+    padding: 2px 12px 2px 0;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+.bugList-elements .cs-input-group.icon-input-group .bootstrap-select {
+    display: inline-flex;
+    width: 100% !important;
 }
 /* next elements */
 .cs-next-element-box {
@@ -7626,4 +7638,8 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     line-height: initial !important;
     height: 25px !important;
     padding: 3px 10px;
+}
+.cs-next-element-box-in .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    max-width: 160px;
 }

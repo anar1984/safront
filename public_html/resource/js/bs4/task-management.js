@@ -985,7 +985,7 @@ const taskManagement = {
                         <div class="Story-card-Header-task">
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
-                                <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 0;">
+                                <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 30px;">
                                     <input class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
                                     <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
@@ -2870,7 +2870,7 @@ const taskManagement = {
                     <!--<label class="label-name" for="">Closed Dates</label>-->
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
-                        </div>
+                    </div>
                     <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
                     </div>
                         <div class="mt-3">
@@ -2887,16 +2887,19 @@ const taskManagement = {
                             <b id="table-row-count"> </b>
                         </div>
                         <div class="cs-input-group text-center mt-3">
-                         <div class="task-clear-filter-btn">
-                            <i class="cs-svg-icon clear-filter"></i>
-                         </div>
+                            <div class="task-clear-filter-btn">
+                                <i class="cs-svg-icon clear-filter"></i>
+                            </div>
                         </div>
                 </div>
            
-            <div class="cs-input-group cs-pagination-group-by col-12">
-                    <div class="input-group-addon cs-group-by">Group By</div>
+            <div class="cs-input-group cs-pagination-group-by icon-input-group d-flex col-12 mt-3">
+                    <!-- <div class="input-group-addon cs-group-by">Group By</div>-->
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="cs-svg-icon filter-group"></i></div>
+                    </div>
                     <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
-                        <option value='0' >None</option>
+                        <option value='0' >Group By...</option>
                         <option value='5' >Task Status</option>
                         ${
                             notChwk()?`<option value='7' >Task Nature</option>
@@ -2913,13 +2916,17 @@ const taskManagement = {
             },
             genFilterSortBy: function () {
                 return `
-                <divv class="row ml-0 mr-0">
-                    <div class="cs-input-group col-12 mt-2">
+                <div class="row ml-0 mr-0">
+                <!--<div class="cs-input-group col-12 mt-2">
                         <div class="input-group-addon">Sort by</div>
-                    </div>
-                    <div class="cs-input-group col-4">
+                    </div>-->
+                    <div class="cs-input-group icon-input-group d-flex col-4 mt-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="cs-svg-icon filter-sorting"></i></div>
+                        </div>
                         <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
                         id='bug_filter_sortby' title="Columns">
+                            <option value='0' >Sort by...</option>
                             <option value='task_status' selected>Status</option>
                             <option value='id' selected>Task ID</option>
                             <option value='task_name'  accesskey="">Description</option>
@@ -2934,7 +2941,7 @@ const taskManagement = {
                         </select>
                     </div>
 
-                    <div class="cs-input-group col-4">
+                    <div class="cs-input-group col-4 mt-3">
                         <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby-asc" data-actions-box="true"    
                                 id='bug_filter_sortby_asc' title="Columns">
                             <option value='asc' >ASC</option>
@@ -2942,7 +2949,7 @@ const taskManagement = {
                         </select>
                     </div>
                     
-                </divv>`
+                </div>`
             },
             genLabelBlock:function (param) {  
                 return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
