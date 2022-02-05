@@ -25,7 +25,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
                    <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">
                         
                      <input type="hidden" id=popupTrigger pid="${triggerId}" value="nonenone">
-                   <div class="row redirectClass" bid="${backlogId}"  bcode="${makeId(10)}" id="userstory-gui-input-component-res-sus-id">
+                   <div class="row redirectClass" bid="${backlogId}"   id="${backlogId}" bcode="${makeId(10)}" id="userstory-gui-input-component-res-sus-id">
                         ${modalBody}
                    </div>
                 </div>

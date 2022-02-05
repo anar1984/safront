@@ -1860,9 +1860,10 @@ var Component = {
         }
 
 
-        div.append($('<label class="cs-file-upload">')
+        div.append($('<span class="cs-btn-border">')
+                    .append($('<label class="cs-file-upload">')
          .append('<span class="btn-name" style="display:none">'+comp.label+'</span>')
-        .append(el));
+        .append(el)));
         div.append('<div id="progress_bar_new"></div>');
         return $('<div></div>').append(div).html();
     },

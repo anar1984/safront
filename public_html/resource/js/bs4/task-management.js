@@ -1927,7 +1927,7 @@ const taskManagement = {
                 cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
                 cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
                 cmpList.userBlock.Init($('.forward-assignee-list'),'single');
-                $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+         
 
          setTimeout(() => {
              
@@ -1948,13 +1948,13 @@ const taskManagement = {
             global_var.current_project_id = projectId;
             new UserStory().refreshBacklog4Bug(true);
         }
-        
+        $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
         this.getLabelTask($('#run_task_detail_detail_categories'));
         this.getSprintTask($('#run_task_detail_detail_sprint'));
         this.getTaskSpirntList(taskId)
         this.getTaskLabelList(taskId)
 
-        getProjectUsers();      
+        getProjectUsers();    
       
         loadTaskInfoToContainer(taskId, projectId);
         taskManagement.updateTask.genCommentListOfTask();
