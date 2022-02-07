@@ -60,6 +60,9 @@ const lang_task = {
     label: 'Label',
     bank: 'Bank',
     bonus: 'Bonus',
+    meet: 'Meet',
+    task: 'Task',
+    all: 'All',
   },
   bottomBar: {
     sortTasksByDate: 'Sort tasks by date',

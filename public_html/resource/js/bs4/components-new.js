@@ -533,6 +533,60 @@ var cmpList = {
                 allinp.prop("checked",false);
              }
         }
+    },
+    tableRightClick:{
+            Init: function(table){
+                    var elm  = $(table); 
+                    if (elm.prop('tagName') === 'TABLE') {
+                        var tbid = makeId(10);
+                        $(elm).attr("right-click", tbid);
+                        $(elm).parent().find(".contextMenu-dropdown-style").remove();
+                      
+                        var btns = $(elm).find("thead .right-click-btn");
+                        var list  = $("<ul>");
+                        var that = this;
+                        btns.each(function () {
+                             var order =  $(this).index();
+                             var text  = $(this).text();
+                            list.append(that.clickItem(order,text,tbid));
+                        })
+                        $(elm).find("thead th.right-click-btn").hide();
+                        $(elm).find("tbody .right-click-btn").closest("td").hide();
+                        $(elm).after(this.genBlock(tbid,list.html()));
+                        this.clickRight(tbid);
+                    }
+                
+            },
+            onClickItem: function (elm,tbid) {
+                var order  = $(elm).attr('order-no')
+                var item  = $("[right-click="+tbid+"] tbody .last_click_class td:eq("+order+")");
+                item.find('.right-click-btn').click();
+            },
+            clickItem : function(order,text,tbid) {
+                return `<li onclick="cmpList.tableRightClick.onClickItem(this,'${tbid}')" class="dropdown-item" order-no="${order}">
+                        <i class="cs-svg-icon imtina"></i> ${text}
+                      </li>`
+            },
+            clickRight: function (tableId) {
+                $(document).on("contextmenu","[right-click="+tableId+"] tbody tr",function (e) {
+                    $(this).closest('tbody').find("tr").removeClass("last_click_class");
+                    var menu  = $("#contextMenu"+tableId);
+                     $(this).addClass("last_click_class");
+                      menu.css({
+                        display: "block",
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                    return false;
+                })
+            },
+            genBlock: function (tbid,list) {
+                return `<div id="contextMenu${tbid}" class="dropdown contextMenu-dropdown-style" style="">
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+                      ${list}
+                </ul>
+            </div>`
+            },
     }
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -562,6 +616,9 @@ $.fn.genPaginition = function (rowCount) {
 }
 $.fn.genShowHideList = function (val) {
     cmpList.tableShowHideColumn.Init(this, val);
+}
+$.fn.genRightClickMenu = function (val) {
+    cmpList.tableRightClick.Init(this);
 }
 $.fn.extend({
     autoHeight: function () {
@@ -655,8 +712,10 @@ $(document).on('click', '.user-addons-box-elm .dropdown-menu', function (e) {
 $(document).on("click", 'body', function () {
     $('.user-addons-box-elm > .dropdown-menu').removeClass('show');
     $('.showhide-col-main-info').hide();
+    $(".contextMenu-dropdown-style").hide();
 })
 $(document).on("click", '.showhide-col-main-info', function (e) {
     e.stopPropagation();
  });
+
 /*  // userList Block End */

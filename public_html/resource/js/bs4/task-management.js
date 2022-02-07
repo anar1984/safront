@@ -1903,7 +1903,7 @@ const taskManagement = {
                 $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
                 $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
                 $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
-                $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].orderNoSeq);
+                $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
                 if (coreBugKV[taskId].isMeet === '1') {
                     $("#toplanti-d-btn").click();
                     $(".card-UserStory-header-text-code").html("Toplantı-"+coreBugKV[taskId].orderNoSeq+"");
@@ -1927,7 +1927,7 @@ const taskManagement = {
                 cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
                 cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
                 cmpList.userBlock.Init($('.forward-assignee-list'),'single');
-                $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+         
 
          setTimeout(() => {
              
@@ -1948,13 +1948,13 @@ const taskManagement = {
             global_var.current_project_id = projectId;
             new UserStory().refreshBacklog4Bug(true);
         }
-        
+        $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
         this.getLabelTask($('#run_task_detail_detail_categories'));
         this.getSprintTask($('#run_task_detail_detail_sprint'));
         this.getTaskSpirntList(taskId)
         this.getTaskLabelList(taskId)
 
-        getProjectUsers();      
+        getProjectUsers();    
       
         loadTaskInfoToContainer(taskId, projectId);
         taskManagement.updateTask.genCommentListOfTask();
@@ -2785,7 +2785,18 @@ const taskManagement = {
                     data-type="created_by" title="Created by"></select>
             </div>`
             },
-            genFilterShowChildTask: function (params) {
+            genFilterIsmeetBy: function () {
+                return `  <div class="cs-input-group mt-3">
+                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)'  data-live-search="true" id='bug_filter_is_meet'
+                    data-type="is_meet" >
+                    <option value=''>${lang_task.rightBar.all}</option>
+                    <option value='0'>${lang_task.rightBar.task}</option>
+                    <option value='1'>${lang_task.rightBar.meet}</option>
+                    </select>
+            </div>`
+            },
+            genFilterShowChildTask: function () {
                 return `  <div class="cs-input-group mt-3">
     
                 <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
@@ -2794,7 +2805,7 @@ const taskManagement = {
                 </label>                    
             </div>`
             },
-            genFilterPriorty: function (params) {
+            genFilterPriorty: function () {
                 return `  <div class="cs-input-group mt-3">
             
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
@@ -2852,6 +2863,7 @@ const taskManagement = {
                   ${notChwk()?this.genFilterProject():""}
                   ${notChwk()?this.genFilterStoryCard():""}
                   ${this.genFilterAssigne()}
+                  ${this.genFilterIsmeetBy()}
                   ${notChwk()?this.genFilterClosedBy():""}               
                   ${this.genFilterStatus()}
                   ${notChwk()?this.genFilterTaskType():""}  
