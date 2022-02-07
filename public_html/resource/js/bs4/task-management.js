@@ -5418,3 +5418,15 @@ $(document).on('click', ".cs-close-next-eb-btn", function (e) {
     $(this).closest('.cs-next-element-box').remove();
 });
 
+$(document).on("click", '#pills-tab .nav-link', function (e) {
+    if ($(this).hasClass('d-task-tab2')) {
+      $('.d-schedule-dcbtn').show();  
+    }else{
+       $('.d-schedule-dcbtn').hide();     
+    }
+    if ($(this).hasClass('task-tab2')) {
+      $('.schedule-dcbtn').show();  
+    }else{
+       $('.schedule-dcbtn').hide();     
+    }
+}); 
