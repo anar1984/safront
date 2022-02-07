@@ -5427,6 +5427,7 @@ $(document).on("click", '#pills-tab .nav-link', function (e) {
     if ($(this).hasClass('task-tab2')) {
       $('.schedule-dcbtn').show();  
     }else{
-       $('.schedule-dcbtn').hide();     
+       $('.schedule-dcbtn').hide();
     }
 }); 
+
