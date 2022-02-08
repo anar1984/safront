@@ -4672,7 +4672,11 @@ table.lbl-list-table tr td {
     border-radius: 10px;
     color: #fff;
 }
+label.cs-file-upload input[type="file"].form-control {
+    display: none;
+}
 .task-check-list-box textarea {
+    resize: none;
     width: 100%;
     background: transparent !important;
     border: none;
@@ -7261,9 +7265,11 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     display: block;
 }
 .cs-btn-border {
-    border: 1px solid #ffffffeb;
-    padding: 8px 1px;
+    border: 1px solid rgb(255 255 255 / 92%);
+    padding: 1px 0px;
     border-radius: 6px;
+    width: 100%;
+    display: block;
 }
 .bootstrap-select.nezaretci-user-list button.btn {
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
