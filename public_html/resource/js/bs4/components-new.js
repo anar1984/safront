@@ -5,6 +5,7 @@ var cmpList = {
             $(elm).empty();
             $(elm).css("text-align", 'left');
             $(elm).attr("el-name", "selectInterActive");
+            $(elm).attr('component-type',"selectInterActive");
             if (type === 'multi') {
                 var block = this.genObserverBlockM();
                 $(elm).attr("action-type", 'multi');
@@ -223,7 +224,8 @@ var cmpList = {
             if (elm.prop('tagName') === 'TABLE') {
 
                 var tbid = makeId(10);
-                $(elm).attr("data-pag-id", tbid)
+                $(elm).attr("data-pag-id", tbid);
+                $(elm).attr('component-type',"table-paginiton");
                 $(elm).parent().find(".table-paginition-block-component").remove();
                 $(elm).after(this.genBlock(rowCount, tbid));
                 var select = $(elm).parent().find("select.count-row-select-global");
@@ -358,7 +360,7 @@ var cmpList = {
                 var tableId = makeId(10);
                 table.find("thead >tr>th:first-child").html(this.openBlockBtn(tableId));
                 table.attr("data-colum-id",tableId);
-
+                $(elm).attr('component-type',"table-show-hide-column");
                 var ul  = $("<ul>")
                 var headerList = table.find("thead > tr > th");
                 var that  = this ;
@@ -541,7 +543,7 @@ var cmpList = {
                         var tbid = makeId(10);
                         $(elm).attr("right-click", tbid);
                         $(elm).parent().find(".contextMenu-dropdown-style").remove();
-                      
+                        $(elm).attr('component-type',"table-right-click");
                         var btns = $(elm).find("thead .right-click-btn");
                         var list  = $("<ul>");
                         var that = this;
@@ -587,6 +589,35 @@ var cmpList = {
                 </ul>
             </div>`
             },
+    },
+    aktivPassivBtn:{
+        Init: function (elm) {
+              var elm  = $(elm); 
+                  var newId = makeId(10);
+                 
+                  $(elm).attr('data-mode-id',newId);
+                  $(elm).attr('component-type',"mode-aktiv");
+                  $(elm).html(this.genBlock(newId));
+                             
+        },
+        genBlock: function (newId) {
+            return `<div class="dropdown info-box-dropdown mode-aktiv-all" data-val='A' id="">
+            <a class="btn dropdown-toggle" href="#" role="button" id="" data-toggle="dropdown" aria-expanded="false">
+                <span class="title">A</span> <span id="row-count-table"></span>
+            </a>
+           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-table-aktiv-all1">
+              <a class="dropdown-item" onclick="cmpList.aktivPassivBtn.clickDropdownItem(this,'${newId}')" all-aktiv="A" href="#">Aktiv</a>
+              <a class="dropdown-item" onclick="cmpList.aktivPassivBtn.clickDropdownItem(this,'${newId}')" all-aktiv="P" href="#">Passiv</a>
+              <a class="dropdown-item" onclick="cmpList.aktivPassivBtn.clickDropdownItem(this,'${newId}')" all-aktiv="H" href="#">Hamısı</a>
+            </div>
+          </div>`        
+        },
+        clickDropdownItem: function (elm,newId) {
+            var type  = $(elm).attr("all-aktiv");
+            $(elm).closest('.mode-aktiv-all').find('.title').text(type);
+            $(elm).closest('.mode-aktiv-all').attr("data-val",type);
+            $("[data-mode-id='" + newId + "']").trigger("change-mode", [type]);
+        }
     }
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -602,17 +633,50 @@ $.fn.selectInterActive = function (type, val) {
     }
 }
 $.fn.getVal = function (val) {
-    var detect = $(this).find('.user-addons-box-elm');
-    if (detect.length > 0) {
-        if (val || val === "") {
-            cmpList.userBlock.setUserBlockValue(this, val);
-        } else {
-            return cmpList.userBlock.getUserBlockValue(this);
+    var type  = $(this).attr("component-type");
+       if(type==='selectInterActive'){
+        var detect = $(this).find('.user-addons-box-elm');
+        if (detect.length > 0) {
+            if (val || val === "") {
+                cmpList.userBlock.setUserBlockValue(this, val);
+            } else {
+                return cmpList.userBlock.getUserBlockValue(this);
+            }
         }
-    }
+       }
+       else if (type==='mode-aktiv'){
+        if (val==='A'||val==='B'||val==='H') {
+          
+        } else {
+            var value =$(this).find('.mode-aktiv-all').attr('data-val');
+           return value?value:"A";
+        }
+           
+       }
+   
+}
+$.fn.setRowCount = function (val) {
+
+      if(!val){
+        return;
+      } 
+      val = parseFloat(val);
+    var type  = $(this).attr("component-type");
+       if(type==='selectInterActive'){
+       
+       }
+       else if (type==='mode-aktiv'){
+        if(typeof val ==="number"){
+             $(this).find('#row-count-table').text(val);
+        }           
+       }
+   
 }
 $.fn.genPaginition = function (rowCount) {
     cmpList.tablePagintion.Init(this, rowCount);
+}
+$.fn.genModeAktivPassiv = function () {
+    cmpList.aktivPassivBtn.Init(this);
 }
 $.fn.genShowHideList = function (val) {
     cmpList.tableShowHideColumn.Init(this, val);
@@ -717,5 +781,21 @@ $(document).on("click", 'body', function () {
 $(document).on("click", '.showhide-col-main-info', function (e) {
     e.stopPropagation();
  });
+
+ function geDateRangePickerValueBT(elm) {
+    try {
+        var val  = elm.val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+       var  stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+       var  endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+        var inns = stTime.trim() + '%BN%' + endTime.trim();
+           return  inns;
+    } catch (error) {
+        return  '';
+    }
+
+}
 
 /*  // userList Block End */

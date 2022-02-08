@@ -46,6 +46,7 @@ var moduleList = {
     "loadTaskManagement": "Task Management",
     "loadActivityDiagram": "Activity Diagram",
     "loadBugChange": "Issue Management",
+    "loadCodeGround": "Code Ground",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
     "loadBusinessCase": "Business Case",

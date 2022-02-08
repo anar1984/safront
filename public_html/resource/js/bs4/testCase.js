@@ -21,6 +21,7 @@ var bug_filter = {
     createdDate: '',
     fkTaskTypeId: '',
     is_meet: '',
+    observer_by: '',
 }
 
 var sprintTaskIds = "";
@@ -679,33 +680,24 @@ function setBugFilterAssignees() {
             var select3 = $('#bug_filter_detail_assignee_id_add');
             var select4 = $('#bug_filter_assignee_id_multi');
             var select5 = $('#bug_filter_closed_by');
-            select.html('');
-            select2.html('');
-            select5.html('');
-            var obj = res.tbl[0].r;
-            for (var id in obj) {
-                var o = obj[id];
-                var op = $("<option>").val(o.fkUserId).text(o.userName);
-                var op2 = $("<option>").val(o.fkUserId).text(o.userName);
-                var op3 = $("<option>").val(o.fkUserId).text(o.userName);
-                var op4 = $("<option>").val(o.fkUserId).text(o.userName);
-                var op5 = $("<option>").val(o.fkUserId).text(o.userName);
-                select.append(op);
-                select2.append(op2);
-                select3.append(op3);
-                select4.append(op4);
-                select5.append(op5);
-            }
+              var elm  =  $('select.user_filter_element_selectpicker');
+                elm.empty();
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                    elm.append(opt);
 
+                }
+            } catch (error) {
+
+            }
             if (global_var.current_user_type === 'S') {
                 select.val(global_var.current_ticker_id)
             }
-
-            select.selectpicker('refresh');
-            select2.selectpicker('refresh');
-            select3.selectpicker('refresh');
-            select4.selectpicker('refresh');
-            select5.selectpicker('refresh');
+            elm.append(opt);
+            elm.selectpicker('refresh');
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -907,6 +899,7 @@ function setBugFilterCreatedDateValues() {
    
     
 }
+
 function setBugFilterClosedDatesValues() {
     try {
         var val  = $("#issue_management_closed_date_from").val();
@@ -1205,7 +1198,9 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-    
+  
+    $("#bugListTable .all-bug-list-check").prop("checked",false);
+    $(".multi-edit-menu").addClass('d-none');
       var me = "'"+global_var.current_ticker_id+"'"
       var lastmnId  =  Utility.getParamFromUrl('lastMenuId');
     if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
@@ -1256,6 +1251,7 @@ function getBugList() {
         json.kv.createdDate = bug_filter.createdDate;
         json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
         json.kv.isMeet = bug_filter.is_meet;
+        json.kv.observerBy = bug_filter.observer_by;
         json.kv.startLimit = 0;
         json.kv.endLimit = 25;
       
@@ -2107,10 +2103,10 @@ $(document).on("change", '#bug_filter_project_id', function (e) {
 
 })
 $(document).on("change", '#bug_filter_project_id_add_pop', function (e) {
-    var id = $(this).val();
+    var id = $(this).val();/* 
     $('#bug_filter_project_id').val(id);
-    $('#bug_filter_project_id').change();
-    loadStoryCardByProjectAdd(id)
+    $('#bug_filter_project_id').change(); */
+    loadStoryCardByProjectAdd(id);
 
 
 })

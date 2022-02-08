@@ -877,40 +877,22 @@ const taskManagement = {
             });
         },
         loadAssigneesByProjectDetails: function (res) {
-            $('#bug_filter_assignee_id').html('');
-            $('#bug_filter_detail_assignee_id_add').html('');
-            $('#bug_filter_assignee_id_multi').html('');
-            $('#bug_filter_created_by').html('');
-            $('#testcase_createdbyfilter').html('');
-            $('#createdtask_oblerverlist').html('');
+    
+           var elm  =  $('select.user_filter_element_selectpicker');
+                elm.empty();
             try {
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
                     var o = obj[i];
                     var opt = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
-                    $('#bug_filter_assignee_id').append(opt);
-                    $('#bug_filter_detail_assignee_id_add').append(opt4);
-                    $('#bug_filter_assignee_id_multi').append(opt5);
-                    $('#bug_filter_created_by').append(opt2);
-                    $('#testcase_createdbyfilter').append(opt3);
-                    $('#createdtask_oblerverlist').append(opt6);
+                    elm.append(opt);
 
                 }
             } catch (error) {
 
             }
-
-            $('#bug_filter_created_by').selectpicker('refresh');
-            $('#bug_filter_assignee_id').selectpicker('refresh');
-            $('#bug_filter_detail_assignee_id_add').selectpicker('refresh');
-            $('#bug_filter_assignee_id_multi').selectpicker('refresh');
-            $('#testcase_createdbyfilter').selectpicker('refresh');
-            $('#createdtask_oblerverlist').selectpicker('refresh');
+            elm.append(opt);
+            elm.selectpicker('refresh');
 
         }
 
@@ -2732,14 +2714,14 @@ const taskManagement = {
             },
             genFilterAssigne: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select user_filter_element_selectpicker" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
                 data-type="assignee_id" title="Assignee"></select>
             </div>`
             },
             genFilterClosedBy: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select user_filter_element_selectpicker" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
                 data-type="closed_by" title="Closed By"></select>
             </div>`
@@ -2780,19 +2762,26 @@ const taskManagement = {
             },
             genFilterCreatedBy: function (params) {
                 return `  <div class="cs-input-group mt-3">
-                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
                     data-type="created_by" title="Created by"></select>
             </div>`
             },
+            genFilterObserverBy: function (params) {
+                return `  <div class="cs-input-group mt-3">
+                <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
+                    data-type="observer_by" title="Observer by"></select>
+            </div>`
+            },
             genFilterIsmeetBy: function () {
                 return `  <div class="cs-input-group mt-3">
-                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                <select class=" form-control bug-filter  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)'  data-live-search="true" id='bug_filter_is_meet'
                     data-type="is_meet" >
-                    <option value=''>${lang_task.rightBar.all}</option>
-                    <option value='0'>${lang_task.rightBar.task}</option>
-                    <option value='1'>${lang_task.rightBar.meet}</option>
+                    <option value="">${lang_task.rightBar.all}</option>
+                    <option value="0">${lang_task.rightBar.task}</option>
+                    <option value="1">${lang_task.rightBar.meet}</option>
                     </select>
             </div>`
             },
@@ -2869,6 +2858,7 @@ const taskManagement = {
                   ${notChwk()?this.genFilterTaskType():""}  
                   ${notChwk()?this.genFilterTaskNature():""}
                   ${this.genFilterCreatedBy()}
+                  ${this.genFilterObserverBy()}
                   ${notChwk()?this.genFilterShowChildTask():""}
                   ${notChwk()?this.genFilterPriorty():""}
                   ${this.genFilterShowHide()}    
@@ -5258,7 +5248,7 @@ $(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
                       } 
                 }
             }
-        
+         
      }
     
       $('#nextBlockItemPopUp textarea#note').val('');
