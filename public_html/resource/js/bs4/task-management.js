@@ -2878,13 +2878,27 @@ const taskManagement = {
             genFilterClosed: function () {
                 return `  <div class="row ml-0 mr-0">
                 <div class="d-flex justify-content-center">
-                    <div class="cs-input-group input-group mt-3">
-                    <!--<label class="label-name" for="">Closed Dates</label>-->
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                    <div class="cs-input-group cs-pagination-group-by icon-input-group d-flex mt-3" style="min-width: 270px;">
+                    
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="cs-svg-icon filter-group"></i></div>
+                        </div>
+                        <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
+                            <option value='0' >Group By...</option>
+                            <option value='5' >Task Status</option>
+                            ${
+                                notChwk()?`<option value='7' >Task Nature</option>
+                                <option value='8' >Task Type</option>
+                                <option value='9' >Story Card</option>
+                                <option value='10' >Project</option>
+                            `:""
+                            }
+                            <option value='12' >Create By</option>
+                            <option value='11' >Assignee</option>
+                        </select>
                     </div>
-                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
-                    </div>
+
+
                         <div class="mt-3">
                             <div class="cs-input-group  cs-pagination-limit">
                                 <select data-type='' class="bug-mgmt-filter-select" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
@@ -2903,27 +2917,15 @@ const taskManagement = {
                                 <i class="cs-svg-icon clear-filter"></i>
                             </div>
                         </div>
+
                 </div>
-           
-            <div class="cs-input-group cs-pagination-group-by icon-input-group d-flex col-12 mt-3">
-                    <!-- <div class="input-group-addon cs-group-by">Group By</div>-->
+                <div class="cs-input-group input-group mt-3 col-12 sw-datetime-absolute">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="cs-svg-icon filter-group"></i></div>
+                        <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                     </div>
-                    <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
-                        <option value='0' >Group By...</option>
-                        <option value='5' >Task Status</option>
-                        ${
-                            notChwk()?`<option value='7' >Task Nature</option>
-                            <option value='8' >Task Type</option>
-                            <option value='9' >Story Card</option>
-                            <option value='10' >Project</option>
-                        `:""
-                        }
-                        <option value='12' >Create By</option>
-                        <option value='11' >Assignee</option>
-                    </select>
-                </div>
+                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
+                 </div>
+         
             </div>`
             },
             genFilterSortBy: function () {
