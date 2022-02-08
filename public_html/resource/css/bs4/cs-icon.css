@@ -8,423 +8,575 @@
   background-repeat: no-repeat;
   vertical-align: middle;
 }
+.bootstrap-select.cs-svg-icon .dropdown-toggle:before {
+  content: "";
+  display: inline-block;
+  text-indent: -9999px;
+  width: 17px;
+  height: 18px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  margin-right: 18px;
+}
+.bootstrap-select.cs-svg-icon:after {
+  display: none;
+}
 .cs-svg-icon.cs-xs-icon:after, i.cs-svg-icon.cs-xs-icon:after, span.cs-svg-icon.cs-xs-icon:after {
   width: 14px !important;
   height: 20px !important;
 }
 
-.cs-svg-icon.arrow-1:after {
+.cs-svg-icon.arrow-1:after,
+.cs-svg-icon.arrow-1 .dropdown-toggle:before {
   background-image: url(../ch-icons/arrow-1.svg);
 }
-.cs-svg-icon.arrow-bottom:after {
+.cs-svg-icon.arrow-bottom:after,
+.cs-svg-icon.arrow-bottom .dropdown-toggle:before {
   background-image: url(../ch-icons/arrow-bottom.svg);
 }
-.cs-svg-icon.attach-01:after {
+.cs-svg-icon.attach-01:after,
+.cs-svg-icon.attach-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/attach-01.svg);
 }
-.cs-svg-icon.calendar-empty:after {
+.cs-svg-icon.calendar-empty:after,
+.cs-svg-icon.calendar-empty .dropdown-toggle:before {
   background-image: url(../ch-icons/calendar-empty.svg);
 }
-.cs-svg-icon.calendar-01-dark:after {
+.cs-svg-icon.calendar-01-dark:after,
+.cs-svg-icon.calendar-01-dark .dropdown-toggle:before {
   background-image: url(../ch-icons/calendar-01-dark.svg);
 }
-.cs-svg-icon.calendar-01:after {
+.cs-svg-icon.calendar-01:after,
+.cs-svg-icon.calendar-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/calendar-01.svg);
 }
-.cs-svg-icon.calendar-02:after {
+.cs-svg-icon.calendar-02:after,
+.cs-svg-icon.calendar-02 .dropdown-toggle:before {
   background-image: url(../ch-icons/calendar-02.svg);
 }
-.cs-svg-icon.cedvel:after {
+.cs-svg-icon.cedvel:after,
+.cs-svg-icon.cedvel .dropdown-toggle:before {
   background-image: url(../ch-icons/cedvel.svg);
 }
-.cs-svg-icon.chat:after {
+.cs-svg-icon.chat:after,
+.cs-svg-icon.chat .dropdown-toggle:before {
   background-image: url(../ch-icons/chat.svg);
 }
-.cs-svg-icon.chat-circle:after {
+.cs-svg-icon.chat-circle:after,
+.cs-svg-icon.chat-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/chat-circle.svg);
 }
-.cs-svg-icon.checkbox-circle:after {
+.cs-svg-icon.checkbox-circle:after,
+.cs-svg-icon.checkbox-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/checkbox-circle.svg);
 }
-.cs-svg-icon.circle:after {
+.cs-svg-icon.circle:after,
+.cs-svg-icon.circle .dropdown-toggle:before {
   background-image: url(../ch-icons/circle.svg);
 }
-.cs-svg-icon.clock-03:after {
+.cs-svg-icon.clock-03:after,
+.cs-svg-icon.clock-03 .dropdown-toggle:before {
   background-image: url(../ch-icons/clock-03.svg);
 }
-.cs-svg-icon.x-close:after {
+.cs-svg-icon.x-close:after,
+.cs-svg-icon.x-close .dropdown-toggle:before {
   background-image: url(../ch-icons/x-close.svg);
 }
-.cs-svg-icon.close-icon:after {
+.cs-svg-icon.close-icon:after,
+.cs-svg-icon.close-icon .dropdown-toggle:before {
   background-image: url(../ch-icons/close-icon.svg);
 }
-.cs-svg-icon.close-white:after {
+.cs-svg-icon.close-white:after,
+.cs-svg-icon.close-white .dropdown-toggle:before {
   background-image: url(../ch-icons/close-white.svg);
 }
-.cs-svg-icon.dot-circle:after {
+.cs-svg-icon.dot-circle:after,
+.cs-svg-icon.dot-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/dot-circle.svg);
 }
-.cs-svg-icon.dot-radar:after {
+.cs-svg-icon.dot-radar:after,
+.cs-svg-icon.dot-radar .dropdown-toggle:before {
   background-image: url(../ch-icons/dot-radar.svg);
 }
-.cs-svg-icon.double-checkbox:after {
+.cs-svg-icon.double-checkbox:after,
+.cs-svg-icon.double-checkbox .dropdown-toggle:before {
   background-image: url(../ch-icons/double-checkbox.svg);
 }
-.cs-svg-icon.eye-01:after {
+.cs-svg-icon.eye-01:after,
+.cs-svg-icon.eye-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/eye-01.svg);
 }
-.cs-svg-icon.eye-02:after {
+.cs-svg-icon.eye-01:after,
+.cs-svg-icon.eye-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/eye-02.svg);
 }
-.cs-svg-icon.filter:after {
+.cs-svg-icon.filter:after,
+.cs-svg-icon.filter .dropdown-toggle:before {
   background-image: url(../ch-icons/filter.svg);
 }
-.cs-svg-icon.fullscreen:after {
+.cs-svg-icon.fullscreen:after,
+.cs-svg-icon.fullscreen .dropdown-toggle:before {
   background-image: url(../ch-icons/fullscreen.svg);
 }
-.cs-svg-icon.help-icon:after {
+.cs-svg-icon.help-icon:after,
+.cs-svg-icon.help-icon .dropdown-toggle:before {
   background-image: url(../ch-icons/help-icon.svg);
 }
-.cs-svg-icon.hour-01:after {
+.cs-svg-icon.hour-01:after,
+.cs-svg-icon.hour-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/hour-01.svg);
 }
-.cs-svg-icon.hour-02:after {
+.cs-svg-icon.hour-02:after,
+.cs-svg-icon.hour-02 .dropdown-toggle:before {
   background-image: url(../ch-icons/hour-02.svg);
 }
-.cs-svg-icon.hour-03:after {
+.cs-svg-icon.hour-03:after,
+.cs-svg-icon.hour-03 .dropdown-toggle:before {
   background-image: url(../ch-icons/hour-03.svg);
 }
-.cs-svg-icon.hours:after {
+.cs-svg-icon.hours:after,
+.cs-svg-icon.hours .dropdown-toggle:before {
   background-image: url(../ch-icons/hours.svg);
 }
-.cs-svg-icon.hour-update:after {
+.cs-svg-icon.hour-update:after,
+.cs-svg-icon.hour-update .dropdown-toggle:before {
   background-image: url(../ch-icons/hour-update.svg);
 }
-.cs-svg-icon.icrada:after {
+.cs-svg-icon.icrada:after,
+.cs-svg-icon.icrada .dropdown-toggle:before {
   background-image: url(../ch-icons/icrada.svg);
 }
-.cs-svg-icon.id:after {
+.cs-svg-icon.id:after,
+.cs-svg-icon.id .dropdown-toggle:before {
   background-image: url(../ch-icons/id.svg);
 }
-.cs-svg-icon.id-white:after {
+.cs-svg-icon.id-white:after,
+.cs-svg-icon.id-white .dropdown-toggle:before {
   background-image: url(../ch-icons/id-white.svg);
 }
-.cs-svg-icon.info:after {
+.cs-svg-icon.info:after,
+.cs-svg-icon.info .dropdown-toggle:before {
   background-image: url(../ch-icons/info.svg);
 }
-.cs-svg-icon.kanban:after {
+.cs-svg-icon.kanban:after,
+.cs-svg-icon.kanban .dropdown-toggle:before {
   background-image: url(../ch-icons/kanban.svg);
 }
-.cs-svg-icon.list-checking:after {
+.cs-svg-icon.list-checking:after,
+.cs-svg-icon.list-checking .dropdown-toggle:before {
   background-image: url(../ch-icons/list-checking.svg);
 }
-.cs-svg-icon.menu-01:after {
+.cs-svg-icon.menu-01:after,
+.cs-svg-icon.menu-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/menu-01.svg);
 }
-.cs-svg-icon.money:after {
+.cs-svg-icon.money:after,
+.cs-svg-icon.money .dropdown-toggle:before {
   background-image: url(../ch-icons/money.svg);
 }
-.cs-svg-icon.none:after {
+.cs-svg-icon.none:after,
+.cs-svg-icon.none .dropdown-toggle:before {
   background-image: url(../ch-icons/none.svg);
 }
-.cs-svg-icon.none-white:after {
+.cs-svg-icon.none-white:after,
+.cs-svg-icon.none-white .dropdown-toggle:before {
   background-image: url(../ch-icons/none-white.svg);
 }
-.cs-svg-icon.note:after {
+.cs-svg-icon.note:after,
+.cs-svg-icon.note .dropdown-toggle:before {
   background-image: url(../ch-icons/note.svg);
 }
-.cs-svg-icon.page-left:after {
+.cs-svg-icon.page-left:after,
+.cs-svg-icon.page-left .dropdown-toggle:before {
   background-image: url(../ch-icons/page-left.svg);
 }
-.cs-svg-icon.page-right:after {
+.cs-svg-icon.page-right:after,
+.cs-svg-icon.page-right .dropdown-toggle:before {
   background-image: url(../ch-icons/page-right.svg);
 }
-.cs-svg-icon.plus-circle:after {
+.cs-svg-icon.plus-circle:after,
+.cs-svg-icon.plus-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/plus-circle.svg);
 }
-.cs-svg-icon.refresh:after {
+.cs-svg-icon.refresh:after,
+.cs-svg-icon.refresh .dropdown-toggle:before {
   background-image: url(../ch-icons/refresh.svg);
 }
-.cs-svg-icon.refresh-three:after {
+.cs-svg-icon.refresh-three:after,
+.cs-svg-icon.refresh-three .dropdown-toggle:before {
   background-image: url(../ch-icons/refresh-three.svg);
 }
-.cs-svg-icon.right-circle:after {
+.cs-svg-icon.right-circle:after,
+.cs-svg-icon.right-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/right-circle.svg);
 }
-.cs-svg-icon.right-circle-02:after {
+.cs-svg-icon.right-circle-02:after,
+.cs-svg-icon.right-circle-02 .dropdown-toggle:before {
   background-image: url(../ch-icons/right-circle-02.svg);
 }
-.cs-svg-icon.search:after {
+.cs-svg-icon.search:after,
+.cs-svg-icon.search .dropdown-toggle:before {
   background-image: url(../ch-icons/search.svg);
 }
-.cs-svg-icon.setting-checkbox:after {
+.cs-svg-icon.setting-checkbox:after,
+.cs-svg-icon.setting-checkbox .dropdown-toggle:before {
   background-image: url(../ch-icons/setting-checkbox.svg);
 }
-.cs-svg-icon.shtamp-circle:after {
+.cs-svg-icon.shtamp-circle:after,
+.cs-svg-icon.shtamp-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/shtamp-circle.svg);
 }
-.cs-svg-icon.simple-icon:after {
+.cs-svg-icon.shtamp-icon:after,
+.cs-svg-icon.shtamp-icon .dropdown-toggle:before {
   background-image: url(../ch-icons/simple-icon.svg);
 }
-.cs-svg-icon.subtract:after {
+.cs-svg-icon.subtract:after,
+.cs-svg-icon.subtract .dropdown-toggle:before {
   background-image: url(../ch-icons/subtract.svg);
 }
-.cs-svg-icon.task-01:after {
+.cs-svg-icon.task-01:after,
+.cs-svg-icon.task-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/task-01.svg);
 }
-.cs-svg-icon.task-02:after {
+.cs-svg-icon.task-02:after,
+.cs-svg-icon.task-02 .dropdown-toggle:before {
   background-image: url(../ch-icons/task-02.svg);
 }
-.cs-svg-icon.task-03:after {
+.cs-svg-icon.task-03:after,
+.cs-svg-icon.task-03 .dropdown-toggle:before {
   background-image: url(../ch-icons/task-03.svg);
 }
-.cs-svg-icon.task-checking:after {
+.cs-svg-icon.task-checking:after,
+.cs-svg-icon.task-checking .dropdown-toggle:before {
   background-image: url(../ch-icons/task-checking.svg);
 }
-.cs-svg-icon.task-plus:after {
+.cs-svg-icon.task-plus:after,
+.cs-svg-icon.task-plus .dropdown-toggle:before {
   background-image: url(../ch-icons/task-plus.svg);
 }
-.cs-svg-icon.user-circle:after {
+.cs-svg-icon.user-circle:after,
+.cs-svg-icon.user-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/user-circle.svg);
 }
-.cs-svg-icon.user-eye:after {
+.cs-svg-icon.user-eye:after,
+.cs-svg-icon.user-eye .dropdown-toggle:before {
   background-image: url(../ch-icons/user-eye.svg);
 }
-.cs-svg-icon.user-eye-o:after {
+.cs-svg-icon.user-eye-o:after,
+.cs-svg-icon.user-eye-o .dropdown-toggle:before {
   background-image: url(../ch-icons/user-eye-o.svg);
 }
-.cs-svg-icon.users-circle:after {
+.cs-svg-icon.users-circle:after,
+.cs-svg-icon.users-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/users-circle.svg);
 }
-.cs-svg-icon.user-circle-white:after {
+.cs-svg-icon.user-circle-white:after,
+.cs-svg-icon.user-circle-white .dropdown-toggle:before {
   background-image: url(../ch-icons/user-circle-white.svg);
 }
-.cs-svg-icon.users-circle-white:after {
+.cs-svg-icon.users-circle-white:after,
+.cs-svg-icon.users-circle-white .dropdown-toggle:before {
   background-image: url(../ch-icons/users-circle-white.svg);
 }
-.cs-svg-icon.star-rating:after {
+.cs-svg-icon.star-rating:after,
+.cs-svg-icon.star-rating .dropdown-toggle:before {
   background-image: url(../ch-icons/star-rating.svg);
 }
-.cs-svg-icon.home-white:after {
+.cs-svg-icon.home-white:after,
+.cs-svg-icon.home-white .dropdown-toggle:before {
   background-image: url(../ch-icons/home-white.svg);
 }
-.cs-svg-icon.sticky-notes:after {
+.cs-svg-icon.sticky-notes:after,
+.cs-svg-icon.sticky-notes .dropdown-toggle:before {
   background-image: url(../ch-icons/sticky-notes.svg);
 }
-.cs-svg-icon.cs-row-style:after {
+.cs-svg-icon.cs-row-style:after,
+.cs-svg-icon.cs-row-style .dropdown-toggle:before {
   background-image: url(../ch-icons/row-style.svg);
 }
-.cs-svg-icon.cs-col-style:after {
+.cs-svg-icon.cs-col-style:after,
+.cs-svg-icon.cs-col-style .dropdown-toggle:before {
   background-image: url(../ch-icons/col-style.svg);
 }
-.cs-svg-icon.user-question:after {
+.cs-svg-icon.user-question:after,
+.cs-svg-icon.user-question .dropdown-toggle:before {
   background-image: url(../ch-icons/user-question.svg);
 }
-.cs-svg-icon.situation:after {
+.cs-svg-icon.situation:after,
+.cs-svg-icon.situation .dropdown-toggle:before {
   background-image: url(../ch-icons/situation.svg);
 }
-.cs-svg-icon.financial-situation:after {
+.cs-svg-icon.financial-situation:after,
+.cs-svg-icon.financial-situation .dropdown-toggle:before {
   background-image: url(../ch-icons/financial-situation.svg);
 }
-.cs-svg-icon.quality-situation:after {
+.cs-svg-icon.quality-situation:after,
+.cs-svg-icon.quality-situation .dropdown-toggle:before {
   background-image: url(../ch-icons/quality-situation.svg);
 }
-.cs-svg-icon.arrow-right-doc:after {
+.cs-svg-icon.arrow-right-doc:after,
+.cs-svg-icon.arrow-right-doc .dropdown-toggle:before {
   background-image: url(../ch-icons/arrow-right-doc.svg);
 }
-.cs-svg-icon.arrow-left-doc:after {
+.cs-svg-icon.arrow-left-doc:after,
+.cs-svg-icon.arrow-left-doc .dropdown-toggle:before {
   background-image: url(../ch-icons/arrow-left-doc.svg);
 }
-.cs-svg-icon.status:after {
+.cs-svg-icon.status:after,
+.cs-svg-icon.status .dropdown-toggle:before {
   background-image: url(../ch-icons/status.svg);
 }
-.cs-svg-icon.numbers:after {
+.cs-svg-icon.numbers:after,
+.cs-svg-icon.numbers .dropdown-toggle:before {
   background-image: url(../ch-icons/numbers.svg);
 }
-.cs-svg-icon.deadline:after {
+.cs-svg-icon.deadline:after,
+.cs-svg-icon.deadline .dropdown-toggle:before {
   background-image: url(../ch-icons/deadline.svg);
 }
-.cs-svg-icon.flame:after {
+.cs-svg-icon.flame:after,
+.cs-svg-icon.flame .dropdown-toggle:before {
   background-image: url(../ch-icons/flame.svg);
 }
-.cs-svg-icon.task-user-1:after {
+.cs-svg-icon.task-user-1:after,
+.cs-svg-icon.task-user-1 .dropdown-toggle:before {
   background-image: url(../ch-icons/task-user-1.svg);
 }
-.cs-svg-icon.task-user-2:after {
+.cs-svg-icon.task-user-2:after,
+.cs-svg-icon.task-user-2 .dropdown-toggle:before {
   background-image: url(../ch-icons/task-user-2.svg);
 }
-.cs-svg-icon.user-group:after {
+.cs-svg-icon.user-group:after,
+.cs-svg-icon.user-group .dropdown-toggle:before {
   background-image: url(../ch-icons/user-group.svg);
 }
-.cs-svg-icon.sub-task:after {
+.cs-svg-icon.sub-task:after,
+.cs-svg-icon.sub-task .dropdown-toggle:before {
   background-image: url(../ch-icons/sub-task.svg);
 }
-.cs-svg-icon.new-task:after {
+.cs-svg-icon.new-task:after,
+.cs-svg-icon.new-task .dropdown-toggle:before {
   background-image: url(../ch-icons/new-task.svg);
 }
-.cs-svg-icon.link:after {
+.cs-svg-icon.link:after,
+.cs-svg-icon.link .dropdown-toggle:before {
   background-image: url(../ch-icons/link.svg);
 }
-.cs-svg-icon.tapshiriq:after {
+.cs-svg-icon.tapshiriq:after,
+.cs-svg-icon.tapshiriq .dropdown-toggle:before {
   background-image: url(../ch-icons/tapshiriq.svg);
 }
-.cs-svg-icon.tapshiriq-light:after {
+.cs-svg-icon.tapshiriq-light:after,
+.cs-svg-icon.tapshiriq-light .dropdown-toggle:before {
   background-image: url(../ch-icons/tapshiriq-light.svg);
 }
-.cs-svg-icon.toplanti:after {
+.cs-svg-icon.toplanti:after,
+.cs-svg-icon.toplanti .dropdown-toggle:before {
   background-image: url(../ch-icons/toplanti.svg);
 }
-.cs-svg-icon.toplanti-light:after {
+.cs-svg-icon.toplanti-light:after,
+.cs-svg-icon.toplanti-light .dropdown-toggle:before {
   background-image: url(../ch-icons/toplanti-light.svg);
 }
-.cs-svg-icon.details:after {
+.cs-svg-icon.details:after,
+.cs-svg-icon.details .dropdown-toggle:before {
   background-image: url(../ch-icons/details.svg);
   height: 20px;
 }
-.cs-svg-icon.schedule:after {
+.cs-svg-icon.schedule:after,
+.cs-svg-icon.schedule .dropdown-toggle:before {
   background-image: url(../ch-icons/schedule.svg);
 }
-.cs-svg-icon.observer:after {
+.cs-svg-icon.observer:after,
+.cs-svg-icon.observer .dropdown-toggle:before {
   background-image: url(../ch-icons/observer.svg);
 }
-.cs-svg-icon.subtask:after {
+.cs-svg-icon.subtask:after,
+.cs-svg-icon.subtask .dropdown-toggle:before {
   background-image: url(../ch-icons/subtask.svg);
 }
-.cs-svg-icon.subtask-o:after {
+.cs-svg-icon.subtask-o:after,
+.cs-svg-icon.subtask-o .dropdown-toggle:before {
   background-image: url(../ch-icons/subtask-o.svg);
 }
-.cs-svg-icon.subtask-o-light:after {
+.cs-svg-icon.subtask-o-light:after,
+.cs-svg-icon.subtask-o-light .dropdown-toggle:before {
   background-image: url(../ch-icons/subtask-o-light.svg);
 }
-.cs-svg-icon.subtask-light:after {
+.cs-svg-icon.subtask-light:after,
+.cs-svg-icon.subtask-light .dropdown-toggle:before {
   background-image: url(../ch-icons/subtask-light.svg);
 }
-.cs-svg-icon.participant:after {
+.cs-svg-icon.participant:after,
+.cs-svg-icon.participant .dropdown-toggle:before {
   background-image: url(../ch-icons/participant.svg);
 }
-.cs-svg-icon.title-decor-left:after {
+.cs-svg-icon.title-decor-left:after,
+.cs-svg-icon.title-decor-left .dropdown-toggle:before {
   background-image: url(../ch-icons/title-decor-left.svg);
 }
-.cs-svg-icon.title-decor-right:after {
+.cs-svg-icon.title-decor-right:after,
+.cs-svg-icon.title-decor-right .dropdown-toggle:before {
   background-image: url(../ch-icons/title-decor-right.svg);
 }
-.cs-svg-icon.hammer:after {
+.cs-svg-icon.hammer:after,
+.cs-svg-icon.hammer .dropdown-toggle:before {
   background-image: url(../ch-icons/hammer.svg);
 }
-.cs-svg-icon.comment:after {
+.cs-svg-icon.comment:after,
+.cs-svg-icon.comment .dropdown-toggle:before {
   background-image: url(../ch-icons/comment.svg);
 }
-.cs-svg-icon.comment-01:after {
+.cs-svg-icon.comment-01:after,
+.cs-svg-icon.comment-01 .dropdown-toggle:before {
   background-image: url(../ch-icons/comment-01.svg);
 }
-.cs-svg-icon.input:after {
+.cs-svg-icon.input:after,
+.cs-svg-icon.input .dropdown-toggle:before {
   background-image: url(../ch-icons/input.svg);
 }
-.cs-svg-icon.live:after {
+.cs-svg-icon.live:after,
+.cs-svg-icon.live .dropdown-toggle:before {
   background-image: url(../ch-icons/live.svg);
 }
-.cs-svg-icon.created-task-btn-bg:after {
+.cs-svg-icon.created-task-btn-bg:after,
+.cs-svg-icon.created-task-btn-bg .dropdown-toggle:before {
   background-image: url(../ch-icons/created-task-btn-bg.svg);
 }
-.cs-svg-icon.humidity:after {
+.cs-svg-icon.humidity:after,
+.cs-svg-icon.humidity .dropdown-toggle:before {
   background-image: url(../ch-icons/humidity.svg);
 }
-.cs-svg-icon.wind-speed:after {
+.cs-svg-icon.wind-speed:after,
+.cs-svg-icon.wind-speed .dropdown-toggle:before {
   background-image: url(../ch-icons/wind-speed.svg);
 }
-.cs-svg-icon.novbeti:after {
+.cs-svg-icon.novbeti:after,
+.cs-svg-icon.novbeti .dropdown-toggle:before {
   background-image: url(../ch-icons/novbeti.svg);
 }
-.cs-svg-icon.imtina:after {
+.cs-svg-icon.imtina:after,
+.cs-svg-icon.imtina .dropdown-toggle:before {
   background-image: url(../ch-icons/imtina.svg);
 }
-.cs-svg-icon.legv:after {
+.cs-svg-icon.legv:after,
+.cs-svg-icon.legv .dropdown-toggle:before {
   background-image: url(../ch-icons/legv.svg);
 }
-.cs-svg-icon.yonlendir:after {
+.cs-svg-icon.yonlendir:after,
+.cs-svg-icon.yonlendir .dropdown-toggle:before {
   background-image: url(../ch-icons/yonlendir.svg);
 }
-.cs-svg-icon.nezaretci:after {
+.cs-svg-icon.nezaretci:after,
+.cs-svg-icon.nezaretci .dropdown-toggle:before {
   background-image: url(../ch-icons/nezaretci.svg);
 }
-.cs-svg-icon.nezaretci:after {
+.cs-svg-icon.nezaretci:after,
+.cs-svg-icon.nezaretci .dropdown-toggle:before {
   background-image: url(../ch-icons/nezaretci.svg);
 }
-.cs-svg-icon.nezaretci-o:after {
+.cs-svg-icon.nezaretci-o:after,
+.cs-svg-icon.nezaretci-o .dropdown-toggle:before {
   background-image: url(../ch-icons/nezaretci-o.svg);
 }
-.cs-svg-icon.tarixce:after {
+.cs-svg-icon.tarixce:after,
+.cs-svg-icon.tarixce .dropdown-toggle:before {
   background-image: url(../ch-icons/tarixce.svg);
 }
-.cs-svg-icon.c-icon-1:after {
+.cs-svg-icon.c-icon-1:after,
+.cs-svg-icon.c-icon-1 .dropdown-toggle:before {
   background-image: url(../ch-icons/c-icon-1.svg);
 }
-.cs-svg-icon.c-icon-2:after {
+.cs-svg-icon.c-icon-2:after,
+.cs-svg-icon.c-icon-2 .dropdown-toggle:before {
   background-image: url(../ch-icons/c-icon-2.svg);
 }
-.cs-svg-icon.c-icon-3:after {
+.cs-svg-icon.c-icon-3:after,
+.cs-svg-icon.c-icon-3 .dropdown-toggle:before {
   background-image: url(../ch-icons/c-icon-3.svg);
 }
-.cs-svg-icon.c-icon-4:after {
+.cs-svg-icon.c-icon-4:after,
+.cs-svg-icon.c-icon-4 .dropdown-toggle:before {
   background-image: url(../ch-icons/c-icon-4.svg);
 }
-.cs-svg-icon.c-icon-5:after {
+.cs-svg-icon.c-icon-5:after,
+.cs-svg-icon.c-icon-5 .dropdown-toggle:before {
   background-image: url(../ch-icons/c-icon-5.svg);
 }
-.cs-svg-icon.c-icon-6:after {
+.cs-svg-icon.c-icon-6:after,
+.cs-svg-icon.c-icon-6 .dropdown-toggle:before {
   background-image: url(../ch-icons/c-icon-6.svg);
 }
-.cs-svg-icon.сategory:after {
+.cs-svg-icon.сategory:after,
+.cs-svg-icon.сategory .dropdown-toggle:before {
   background-image: url(../ch-icons/сategory.svg);
 }
-.cs-svg-icon.сategory-o:after {
+.cs-svg-icon.сategory-o:after,
+.cs-svg-icon.сategory-o .dropdown-toggle:before {
   background-image: url(../ch-icons/сategory-o.svg);
 }
-.cs-svg-icon.siralama:after {
+.cs-svg-icon.siralama:after,
+.cs-svg-icon.siralama .dropdown-toggle:before {
   background-image: url(../ch-icons/siralama.svg);
 }
-.cs-svg-icon.daxil-eden:after {
+.cs-svg-icon.daxil-eden:after,
+.cs-svg-icon.daxil-eden .dropdown-toggle:before {
   background-image: url(../ch-icons/daxil-eden.svg);
 }
-.cs-svg-icon.icra-eden:after {
+.cs-svg-icon.icra-eden:after,
+.cs-svg-icon.icra-eden .dropdown-toggle:before {
   background-image: url(../ch-icons/icra-eden.svg);
 }
-.cs-svg-icon.label:after {
+.cs-svg-icon.label:after,
+.cs-svg-icon.label .dropdown-toggle:before {
   background-image: url(../ch-icons/label.svg);
 }
-.cs-svg-icon.category:after {
+.cs-svg-icon.category:after,
+.cs-svg-icon.category .dropdown-toggle:before {
   background-image: url(../ch-icons/category.svg);
 }
-.cs-svg-icon.box:after {
+.cs-svg-icon.box:after,
+.cs-svg-icon.box .dropdown-toggle:before {
   background-image: url(../ch-icons/box.svg);
 }
-.cs-svg-icon.password:after {
+.cs-svg-icon.password:after,
+.cs-svg-icon.password .dropdown-toggle:before {
   background-image: url(../ch-icons/password.svg);
 }
-.cs-svg-icon.show-password:after {
+.cs-svg-icon.show-password:after,
+.cs-svg-icon.show-password .dropdown-toggle:before {
   background-image: url(../ch-icons/show-password.svg);
 }
-.cs-svg-icon.clear-filter:after {
+.cs-svg-icon.clear-filter:after,
+.cs-svg-icon.clear-filter .dropdown-toggle:before {
   background-image: url(../ch-icons/clear-filter.svg);
 }
-.cs-svg-icon.filter-group:after {
+.cs-svg-icon.filter-group:after,
+.cs-svg-icon.filter-group .dropdown-toggle:before {
   background-image: url(../ch-icons/filter-group.svg);
 }
-.cs-svg-icon.filter-sorting:after {
+.cs-svg-icon.filter-sorting:after,
+.cs-svg-icon.filter-sorting .dropdown-toggle:before {
   background-image: url(../ch-icons/sort-filter.svg);
 }
-.cs-svg-icon.tapshiriq-dark:after {
+.cs-svg-icon.tapshiriq-dark:after,
+.cs-svg-icon.tapshiriq-dark .dropdown-toggle:before {
   background-image: url(../ch-icons/tapshiriq-dark.svg);
 }
-.cs-svg-icon.users-dark:after {
+.cs-svg-icon.users-dark:after,
+.cs-svg-icon.users-dark .dropdown-toggle:before {
   background-image: url(../ch-icons/users-dark.svg);
 }
-.cs-svg-icon.hour-circle:after {
+.cs-svg-icon.hour-circle:after,
+.cs-svg-icon.hour-circle .dropdown-toggle:before {
   background-image: url(../ch-icons/hour-circle.svg);
 }
-.cs-svg-icon.user-addons-icon:after {
+.cs-svg-icon.user-addons-icon:after,
+.cs-svg-icon.user-addons-icon .dropdown-toggle:before {
   background-image: url(../ch-icons/user-addons-icon.svg);
 }
-.cs-svg-icon.user-addons-icon-1:after {
+.cs-svg-icon.user-addons-icon-1:after,
+.cs-svg-icon.user-addons-icon-1 .dropdown-toggle:before {
   background-image: url(../ch-icons/user-addons-icon-1.svg);
 }

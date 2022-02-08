@@ -2732,7 +2732,7 @@ const taskManagement = {
             },
             genFilterAssigne: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                <select class="form-control  bug-filter-multi bug-mgmt-filter-select bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
                 data-type="assignee_id" title="Assignee"></select>
             </div>`
