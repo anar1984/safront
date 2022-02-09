@@ -2061,10 +2061,9 @@ $(document).on('click', '.generate-selected-fields-from-api-relation', function 
         if (val) {
             addSelectedFieldList.push(val);
             var selectedField = $(this).closest('tr')
-                .find('td.input-relation-selected-name-for-zad')
-                .attr('iname');
+                .find('select.input-relation-selected-name-for-zad')
+                .val();
             //            alert(val +' - '+text+ ' - ' + selectedField);
-
 
             var data = {};
             data.attrValue = selectedField;

@@ -3735,9 +3735,9 @@ function uploadFile4Ipo(id) {
     var trc = 0;
 
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
-    pbDiv.html('');
+   // pbDiv.html('');
 
-    $('#' + id).attr('fname', '');
+  //  $('#' + id).attr('fname', '');
 
     for (var i = 0, f; f = files[i]; i++) {
         //            var file = files[0];
@@ -3949,7 +3949,8 @@ function importSendNameApi(filNm) {
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
-
+      var attr  = $('#' + id).attr("view-type");
+          attr  = attr?attr:"list";
 
     var idx = makeId(10);
 
@@ -3970,7 +3971,9 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         contentType: "application/json",
         async: true,
         beforeSend: function () {
-            pbDiv.append(
+            if(attr==='list'){
+                pbDiv.removeClass("d-flex flex-nowrap");
+                pbDiv.append(
                     $('<div>')
                     .addClass("file-item")
                     .attr('id', 'pro_zad_span' + idx)
@@ -3979,26 +3982,53 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                             .attr('id', 'pro_zad_' + idx)
                             .attr('src', 'resource/img/loader.gif'))
                     )
+            }
+            else if(attr==='block'){
+                pbDiv.addClass("d-flex flex-nowrap");
+                pbDiv.append(`<div class="cs-img-col" id='pro_element_${idx}'>
+                <div class="file_upload_div cs_new_file_upload">
+                <img src="resource/img/loader.gif" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer"  alt="">
+                <span class="cs-img-title"></span>
+                <div class="see-detail-img"><a target="_blank"  href="">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                </a>
+                <span class="lbl-action" id='pro_zad_${idx}' pid='${idx}' onclick="removeFilenameFromZad(this,'${file_name}')">
+                <i class="fa fa-trash-o" aria-hidden="true">
+                </i>
+                </span></div></div></div>`) 
+            }
+           
         },
         uploadProgress: function (event, position, total, percentComplete) {
-            //            console.log('test')
+                   console.log(percentComplete);
             var percentVal = percentComplete + '%';
-            pbDiv.text(percentVal);
+           // pbDiv.text(percentVal);
         },
         success: function (data) {
             finalname = data.kv.uploaded_file_name;
 
-            $('#pro_zad_' + idx).remove();
-            $('#pro_zad_span' + idx)
+              if(attr==='list'){
+               $('#pro_zad_' + idx).remove();
+               $('#pro_zad_span' + idx)
                     .append($('<i class="fa fa-times">')
                             .attr('pid', idx)
                             .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
-
+              }
+              else if(attr==='block'){
+                $('#pro_element_' + idx).find('.cs-img-title').text(finalname);
+                $('#pro_element_' + idx).find('.comment_img')
+                                           .attr("src",fileUrl(finalname))
+                                           .attr("onclick",`new UserStory().setCommentFileImageViewerUrl(${finalname})`);
+                $('#pro_element_' + idx).find('.see-detail-img a').attr("href",fileUrl(finalname));
+                       
+                $('#pro_zad_' + idx)
+                        .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')');
+              }
 
 
             var st = $('#' + id).attr('fname');
-            st = (st && st !== 'undefined') ? st : '';
-            st += (st) ? global_var.vertical_seperator + finalname :
+                
+            st = (st||st!=="|") ? st + finalname +global_var.vertical_seperator :
                     finalname;
 
             $('#' + id).attr('fname', st);
@@ -4056,18 +4086,22 @@ function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
 }
 
 function removeFilenameFromZad(el, filename) {
-    var st = $(el).closest('div.component-class')
-            .find('.saTypeFilePicherUploadFile')
-            .attr('fname');
-    st = st.replace(filename, '');
+   if(confirm("Are You sure ?")){
+        var st = $(el).closest('div.component-class')
+                    .find('.saTypeFilePicherUploadFile')
+                    .attr('fname');
+            st = st.replace(filename, '');
 
-    $(el).closest('div.component-class')
-            .find('.saTypeFilePicherUploadFile')
-            .attr('fname', st);
+            $(el).closest('div.component-class')
+                    .find('.saTypeFilePicherUploadFile')
+                    .attr('fname', st);
 
-    var id = $(el).attr("pid");
-    $('#pro_zad_span' + id).remove();
-    $(el).remove();
+            var id = $(el).attr("pid");
+            $('#pro_zad_span' + id).remove();
+            $('#pro_element_' + id).remove();
+            $(el).remove();
+   }
+    
 
 }
 
@@ -7192,7 +7226,8 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
             $(el).attr('src', fileUrl(val));
             $(el).closest('div').find('.biyzad').remove();
         } else if ($(el).attr('sa-type') === 'filepicker') {
-            $(el).attr('fname', val);
+          //  $(el).attr('fname', val);
+            setFilePickerValue($(el),val)
 
         } else if ($(el).attr('sa-type') === 'checkbox') {
             if (val === '1')
@@ -12831,7 +12866,7 @@ function showApiRelationModalCore(backLogId,inputid) {
     data = {};
     data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        var selectin = $("<select class='form-control apiInputSelect' >")
+        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
 var selectout = $("<select class='form-control apiInputSelect' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");

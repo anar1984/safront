@@ -424,9 +424,19 @@ var cmpList = {
         },
         openBlock: function (elm) {
             var  block  = $(".toggle-block-"+$(elm).attr('table-id'));
-              block.toggle('fast');
+                 block.toggle('fast');
+
+                var top = $(elm).offset().top;
+                var left = $(elm).offset().left; 
+                var w  = $(block).css("height");
+                var h  = $(block).css("width");
+                block.css({
+                      "top": (w>top)?top+w:top,
+                      "left":(h>left)?left+h:left,
+                      "z-index":"5000000"
+                  }) 
               block.draggable({
-               "containment":"parent"
+               "containment":".redirectClass"
             })
         },
         showHideClick: function (elm) {
@@ -623,6 +633,7 @@ var cmpList = {
             $("[data-mode-id='" + newId + "']").trigger("change-mode", [type]);
         }
     }
+    
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 $.fn.selectInterActive = function (type, val) {
