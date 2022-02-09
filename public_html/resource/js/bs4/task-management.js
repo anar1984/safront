@@ -3636,7 +3636,7 @@ const taskManagement = {
 
                    <div class="mr-auto">
                        <div class="task-list-datetime">
-                           <input type="text" onchange="callBugFilterMulti()" id="issue-list-datetime" class="form-control" placeholder="Tarixə görə">
+                           <input type="text" onchange="callBugFilterMulti()" id="issue-list-datetime" class="form-control text-center" placeholder="Tarixə görə">
                         </div>
                    </div>
                      <div class="d-none">
@@ -4325,8 +4325,8 @@ function startTimeCurrent(id) {
     var curDay = today.getDate();
     var curMonth = today.getMonth()+1;
     var curYear = today.getFullYear();
-    var date = curDay+"."+curMonth+"."+curYear;
-    $("#"+id).attr("placeholder",date+"/"+dt)
+    var date = checkTime(curDay)+"."+checkTime(curMonth)+"."+checkTime(curYear);
+    $("#"+id).attr("placeholder",date+" "+dt)
 }
 function checkTime(i) {
     if (i < 10) {

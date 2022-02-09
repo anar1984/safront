@@ -596,12 +596,16 @@ var cmpList = {
                   var newId = makeId(10);
                  
                   $(elm).attr('data-mode-id',newId);
+                  $(elm).css({
+                      "align-self":"center",
+                      "max-width":"100%",
+                  });
                   $(elm).attr('component-type',"mode-aktiv");
                   $(elm).html(this.genBlock(newId));
                              
         },
         genBlock: function (newId) {
-            return `<div class="dropdown info-box-dropdown mode-aktiv-all" data-val='A' id="">
+            return `<div class="dropdown info-box-dropdown mode-aktiv-all" data-val='A' style='width:max-content;margin:auto' id="">
             <a class="btn dropdown-toggle" href="#" role="button" id="" data-toggle="dropdown" aria-expanded="false">
                 <span class="title">A</span> <span id="row-count-table"></span>
             </a>
