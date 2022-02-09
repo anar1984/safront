@@ -101,7 +101,7 @@
         <div class="col-border"></div>
         
         <div class="mt-4">
-            <div class="cs-input-group input-group">
+            <div class="cs-input-group input-group input-datatime-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                 </div>
@@ -109,34 +109,62 @@
              </div>
         </div>
 
-        <div class="col-border"></div>
-
-        <div class="mt-2">
-            <div class="cs-input-group" >
-                <span class="comp-title-span">Group By</span>
-                <select class="form-control usmg-selectpicker " data-actions-box="true"
-                style="text-overflow: ellipsis"  id='story_mn_groupBy_id'
-                    title="Group By">
+        <div class="mt-4">
+            <div class="cs-input-group">
+                <select class="form-control usmg-selectpicker bug-filter-multi bug-mgmt-filter-select cs-svg-icon icra-eden"
+                data-type="assignee_id" title="Assignee"
+                style="text-overflow: ellipsis">
                     <option value="fkProjectId">Project</option>
                     <option value="backlogStatus">Status</option>
                     <option value="manualStatus">Status(with Manual)</option>
                 </select>
             </div>
         </div>
-        <div class="mt-2 manual-list-combo">
+        <div class="mt-4">
             <div class="cs-input-group">
-                <span class="comp-title-span">Manual Status</span>
-                <select class="form-control usmg-selectpicker " multiple data-actions-box="true"
-                style="text-overflow: ellipsis"  id='story_mn_manual_status_id'
-                    title="Group By">
+                <select class="form-control usmg-selectpicker bug-filter-multi bug-mgmt-filter-select cs-svg-icon daxil-eden"
+                data-type="created_by" title="Created By"
+                style="text-overflow: ellipsis">
+                    <option value="fkProjectId">Project</option>
+                    <option value="backlogStatus">Status</option>
+                    <option value="manualStatus">Status(with Manual)</option>
                 </select>
             </div>
         </div>
-        <div class="mt-4">
-            <div class="cs-input-group">
-                <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
-                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                </button>
+        <div class="usm-more-filter d-flex justify-content-center">
+            <div class="cs-input-group mt-4">
+                <button type="button" class="btn btn-light usm-more-filter-btn" title="Taleh Hasan"> More Filter <i class="fa fa-plus"></i></button>
+            </div>
+            <div class="usm-more-filter-bg d-flex justify-content-center">
+                <!-- <div class="col-border"></div> -->
+                <div class="mt-2">
+                    <div class="cs-input-group" >
+                        <span class="comp-title-span">Group By</span>
+                        <select class="form-control usmg-selectpicker " data-actions-box="true"
+                        style="text-overflow: ellipsis"  id='story_mn_groupBy_id'
+                            title="Group By">
+                            <option value="fkProjectId">Project</option>
+                            <option value="backlogStatus">Status</option>
+                            <option value="manualStatus">Status(with Manual)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-2 manual-list-combo">
+                    <div class="cs-input-group">
+                        <span class="comp-title-span">Manual Status</span>
+                        <select class="form-control usmg-selectpicker " multiple data-actions-box="true"
+                        style="text-overflow: ellipsis"  id='story_mn_manual_status_id'
+                            title="Group By">
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="cs-input-group">
+                        <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
+                            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
