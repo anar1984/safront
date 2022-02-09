@@ -12,7 +12,7 @@
             <div class="cs-input-group" >
                 <span class="comp-title-span">Task Nature</span>
                 <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
-                style="text-overflow: ellipsis"  id='story_mn_filter_nature_id'
+                style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"  id='story_mn_filter_nature_id'
                 data-type="updated_id" multiple title="Nature">
                 <option value='bug' >Bug</option>
                 <option value='change' >Change Request</option>
@@ -21,12 +21,18 @@
         </div> 
         <div class="mt-2">
             <div class="cs-input-group" >
-                <span class="comp-title-span">Assignee</span>
-                <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
-                style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
-                data-type="assigne_id" multiple title="Assignee"></select>
+                <span class="comp-title-span">Group By</span>
+                <select class="form-control usmg-selectpicker " data-actions-box="true"
+                style="text-overflow: ellipsis"  id='story_mn_groupBy_id'
+                    title="Group By">
+                    <option value="fkProjectId">Project</option>
+                    <option value="assigne">Assigne</option>
+                    <option value="backlogStatus">Status</option>
+                    <option value="manualStatus">TaskType</option>
+                </select>
             </div>
         </div>
+       
         <div class="col-border"></div>
         <div class="mt-4">
             <div class="cs-input-group">
@@ -92,42 +98,47 @@
                 <!-- <input type="checkbox" class="us-mngm-is-api" > -->
                 <div class="xl-checkbox">
                     <label class="checkmarkcontainer">
-                        <input type="checkbox" class="us-mngm-is-api" value="0">
+                        <input type="checkbox" onchange="filterOnChnageUSM()" class="us-mngm-is-api" value="0">
                         <span class="checkmark"></span>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="col-border"></div>
-        
-        <div class="mt-4">
-            <div class="cs-input-group input-group input-datatime-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
-                </div>
-                <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
-             </div>
-        </div>
-
         <div class="mt-4">
             <div class="cs-input-group">
-                <select class="form-control usmg-selectpicker bug-filter-multi bug-mgmt-filter-select cs-svg-icon icra-eden"
-                data-type="assignee_id" title="Assignee"
+                <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
+                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="col-border"></div>
+    
+
+        <div class="mt-2">
+            <div class="cs-input-group">
+                <span class="comp-title-span">Closed By</span>
+                <select class="form-control story_mn_filter_user_list usmg-selectpicker  "
+                 id='story_mn_filter_closed_id' data-live-search="true" multiple onchange="filterOnChnageUSM()" title="Closed By"
                 style="text-overflow: ellipsis">
-                    <option value="fkProjectId">Project</option>
-                    <option value="backlogStatus">Status</option>
-                    <option value="manualStatus">Status(with Manual)</option>
                 </select>
             </div>
         </div>
-        <div class="mt-4">
+       
+        <div class="mt-2">
+            <div class="cs-input-group" >
+                <span class="comp-title-span">Assignee</span>
+                <select class="form-control usmg-selectpicker story_mn_filter_user_list cs-svg-icon icra-eden " data-live-search="true" data-actions-box="true"
+                style="text-overflow: ellipsis"   id='story_mn_filter_assigne_id'
+                data-type="assigne_id" multiple title="Assignee"></select>
+            </div>
+        </div>
+        <div class="mt-2 ">
             <div class="cs-input-group">
-                <select class="form-control usmg-selectpicker bug-filter-multi bug-mgmt-filter-select cs-svg-icon daxil-eden"
-                data-type="created_by" title="Created By"
-                style="text-overflow: ellipsis">
-                    <option value="fkProjectId">Project</option>
-                    <option value="backlogStatus">Status</option>
-                    <option value="manualStatus">Status(with Manual)</option>
+                <span class="comp-title-span">Task Type</span>
+                <select class="form-control usmg-selectpicker " multiple data-actions-box="true"
+                style="text-overflow: ellipsis"  id='story_mn_manual_status_id'
+                    title="Task Type">
                 </select>
             </div>
         </div>
@@ -137,34 +148,27 @@
             </div>
             <div class="usm-more-filter-bg d-flex justify-content-center">
                 <!-- <div class="col-border"></div> -->
+               
+        <div class="mt-2">
+            <div class="cs-input-group input-group input-datatime-group">
+                <span class="comp-title-span w-100">Closed Date</span>
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                </div>
+                <input onchange="filterOnChnageUSM()" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="us_management_created_date_from" type="text">
+             </div>
+        </div>
                 <div class="mt-2">
-                    <div class="cs-input-group" >
-                        <span class="comp-title-span">Group By</span>
-                        <select class="form-control usmg-selectpicker " data-actions-box="true"
-                        style="text-overflow: ellipsis"  id='story_mn_groupBy_id'
-                            title="Group By">
-                            <option value="fkProjectId">Project</option>
-                            <option value="backlogStatus">Status</option>
-                            <option value="manualStatus">Status(with Manual)</option>
+                    <div class="cs-input-group">
+                        <span class="comp-title-span">Created By</span>
+                        <select class="form-control story_mn_filter_user_list usmg-selectpicker cs-svg-icon daxil-eden"
+                            id="story_mn_filter_created_id" data-live-search="true" multiple onchange="filterOnChnageUSM()" title="Created By"
+                        style="text-overflow: ellipsis">
                         </select>
                     </div>
                 </div>
-                <div class="mt-2 manual-list-combo">
-                    <div class="cs-input-group">
-                        <span class="comp-title-span">Manual Status</span>
-                        <select class="form-control usmg-selectpicker " multiple data-actions-box="true"
-                        style="text-overflow: ellipsis"  id='story_mn_manual_status_id'
-                            title="Group By">
-                        </select>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="cs-input-group">
-                        <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
-                            <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
+            
+              
             </div>
         </div>
     </div>

@@ -15282,15 +15282,12 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         if (prId) {
             $("#story_mn_filter_project_id").val(prId).change();
         }
-
+        genTimePickerById("us_management_created_date_from",'down');
         var dwlmt = $('#zona-list-select4move');
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         new Label().load();
         new Sprint().load();
-
-
-        new UserStory().genUsFilterCreatedBy();
-        new UserStory().genUsFilterTaskTypes();
+        new UserStory().getFktaskTypList4USMn();
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
@@ -19373,23 +19370,22 @@ $(document).on('change', '#priority-change-story-card-filter', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 
-    UsLabel = '';
-    UsSprint = '';
     localStorage.setItem('assigne-list-usm', $(this).val());
-    labelOrSplitValuesUs();
+    filterOnChnageUSM()
 });
 $(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
 
+   
+});
+function filterOnChnageUSM(){
     UsLabel = '';
     UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
     labelOrSplitValuesUs();
-});
+}
 /* $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 
 
@@ -19406,10 +19402,7 @@ $(document).on('change', '#story_mn_manual_status_id', function (evt) {
 
        localStorage.setItem('manual_list_val',$(this).val());
        
-    UsLabel = '';
-    UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
-    labelOrSplitValuesUs();
+       filterOnChnageUSM();
        
 });
 $(document).on('change', '#story_mn_filter_nature_id', function (evt) {
@@ -19434,26 +19427,21 @@ function loadAssigneesByProjectUSM(projectId) {
         async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
-            $('#story_mn_filter_assigne_id_mng').html('');
-            $('#story_mn_filter_assigne_id').html('');
-            $('#story_mn_filter_assigne_id_mng').append('<option></option>');
+            var elm  = $('select.story_mn_filter_user_list')
+            elm.html('');
             for (var i in obj) {
                 var o = obj[i];
                 var opt = $('<option>').val(o.fkUserId).text(o.userName);
-                $('#story_mn_filter_assigne_id_mng').append(opt.clone());
-                $('#story_mn_filter_assigne_id').append(opt.clone());
-                $('#bug_filter_assignee_id_add').append(opt.clone());
-                $('#story_mn_filter_updated_id').append(opt.clone());
+                elm.append(opt);
+               
+
             }
             var lst  = localStorage.getItem("assigne-list-usm")
             var fkAssigneId = lst?lst.split(','):[global_var.current_ticker_id];
             if (fkAssigneId) {
                 $('#story_mn_filter_assigne_id').val(fkAssigneId);
-                        }
-            $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
-            $('#story_mn_filter_assigne_id').selectpicker('refresh');
-            $('#bug_filter_assignee_id_add').selectpicker('refresh');
-            $('#story_mn_filter_updated_id').selectpicker('refresh');
+             }
+            $(elm).selectpicker('refresh');
             
         },
         error: function () {

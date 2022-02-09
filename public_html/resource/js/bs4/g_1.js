@@ -1532,11 +1532,6 @@ $(document).on('click', '#element-edit-button-hover', function (event) {
 
 
 });
-$(document).on('change', '.us-mngm-is-api', function (e) {
-
-    labelOrSplitValuesUs();
-
-});
 
 
 $(document).on('dblclick', '.comp-title-span', function (e) {

@@ -14231,7 +14231,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanView: function () {
-        $(".manual-list-combo").addClass('d-none').removeClass('d-flex');
+     
         var div = $(".task-panel")
         div.empty();
         var groupBy = localStorage.getItem("usm_groupBy");
@@ -14248,8 +14248,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
                 this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
              } */
-            $(".manual-list-combo").addClass('d-flex').removeClass('d-none');
-            this.getManualStatusList();
+            this.getManualStatusList(groupBy);
+        }
+        else if (groupBy === 'assigne') {
+            /*  for (let si = 0; si < stl.length; si++) {
+                div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
+                this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
+             } */
+            this.getAssigneeList();
         }
         else if (groupBy === 'fkProjectId') {
             var stl = $("#story_mn_filter_project_id").val();
@@ -14292,11 +14298,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         })
         return list
     },
-    getManualStatusList: function () {
+    getFktaskTypList4USMn:function (params) {
         data = {};//createTechizatTelebProducts
 
-        var that = this;
-        var div = $(".task-panel")
+    
         callApi('220102225238057110391', data, true, function (res) {
             var combo = $("#story_mn_manual_status_id");
             combo.empty();
@@ -14310,42 +14315,35 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     .attr('order', o.orderNo));
             }
             combo.selectpicker('refresh');
-            try {
-                var dt = localStorage.getItem('manual_list_val');
-                if (!dt) {
-                    return
-                }
-                dt = dt.split(',');
-                for (let l = 0; l < dt.length; l++) {
-                    const k = dt[l];
-                    var znm = combo.find('[value="' + k + '"]').text().toUpperCase();
-                    var orderNo = combo.find('[value="' + k + '"]').attr('order');
-                    div.append(that.genUsManagementZone(k, znm, orderNo, 'manual'))
-                    var dkl = 0;
-                    if (dt.length === (l + 1)) {
-                        dkl = 1;
-                    }
-                    that.getBacklogListByManualStatusId(k, '"new","ongoing"', dkl);
-                }
-                combo.val(dt);
-                combo.selectpicker('refresh');
+           
+        }) 
+    },
+    getManualStatusList: function () {
+        var items = $("select#story_mn_manual_status_id");
 
-            } catch (error) {
-
-            }
-        })
+        var div = $(".task-panel")
+        var arr  = items.val();  
+        var json  = this.getUsFilterValue();                     
+      for (let index = 0; index < arr.length; index++) {
+          const al = arr[index];
+             var nm =items.find('[value='+al+']').text();
+        
+          div.append(this.genUsManagementZone(al, nm));
+          this.getBacklogListByManualStatusId(json,al, '"new","ongoing"',"fkTaskTypeId",arr.length);
+       }
+       
+      
 
     },
-    getBacklogListByManualStatusId: function (stl, statusList, draggable) {
+    getUsFilterValue: function(){
         data = {};//createTechizatTelebProducts
-        data.fkTaskTypeId = '(' + stl + ')';
-        data.backlogStatus = '(' + statusList + ')';
-        $('#kanban_view_' + stl + '_count').html(0);
-        $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
-
         var priD = getProjectValueUsManageMultiByelIn($('#story_mn_filter_project_id'));
         var TaskNatue = getProjectValueUsManageMultiByelIn($("#story_mn_filter_nature_id"));
         var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
+        var fkTaskTypeId = getProjectValueUsManageMultiByelIn($("#story_mn_manual_status_id"));
+        var closedBy = getProjectValueUsManageMultiByelIn($("#story_mn_filter_closed_id"));
+        var createdBy = getProjectValueUsManageMultiByelIn($("#story_mn_filter_created_id"));
+        var createdDate = geDateRangePickerValueBT($("#us_management_created_date_from"));
         var search = $("#search-us-managmenet").val();
         data.fkProjectId = "(" + priD + ")";
             
@@ -14358,12 +14356,49 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (TaskNatue) {
             data.taskNature = '(' + TaskNatue + ')';
         }
+        if (closedBy) {
+            data.closedBy = '(' + closedBy + ')';
+        }
+        if (createdDate) {
+            data.createdDate = '(' + createdDate + ')';
+        }
+        if (createdBy) {
+            data.createdBy = '(' + createdBy + ')';
+        }
         if (fkAsId) {
             data.fkAssigneeId = "(" + fkAsId + ")";
+        }
+        if (fkTaskTypeId) {
+            data.fkTaskTypeId = "(" + fkTaskTypeId + ")";
         }
         if (search.length > 2) {
             data.backlogName = "%%" + search + "%%";
         }
+        return data;
+    },
+    getAssigneeList: function () {
+        var items = $("select#story_mn_filter_assigne_id");
+
+        var div = $(".task-panel")
+        var arr  = items.val();  
+        var json  = this.getUsFilterValue();                     
+      for (let index = 0; index < arr.length; index++) {
+          const al = arr[index];
+             var nm =items.find('[value='+al+']').text();
+        
+          div.append(this.genUsManagementZone(al, nm));
+          this.getBacklogListByManualStatusId(json,al, '"new","ongoing"',"fkAssigneeId",arr.length);
+       }
+       
+    },
+    getBacklogListByManualStatusId: function (json,stl, statusList, type,count) {
+          var data  = json
+     
+        $('#kanban_view_' + stl + '_count').html(0);
+        $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
+       
+        data.backlogStatus = '(' + statusList + ')';
+        data[type] = '(' + stl + ')';
         data.startLimit = 0;
         data.endLimit = 20;
         callApi('21122313051700845260', data, true, function (res) {
@@ -14399,8 +14434,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_label_assign_checked = 0;
             //$('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.content-drag').arrangeable();
 
-            if (draggable === 1) {
-                contentArrangableUI()
+            if (count === 1) {
+                contentArrangableUI();
             }
             //  contentArrangableUI();
             $('[data-toggle="popover"]').popover({ html: true });

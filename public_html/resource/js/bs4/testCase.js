@@ -914,7 +914,6 @@ function setBugFilterClosedDatesValues() {
     } catch (error) {
         
     }
-   
     
 }
 
