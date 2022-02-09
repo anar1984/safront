@@ -7649,3 +7649,119 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     width: 100%;
     max-width: 160px;
 }
+.usm-header-nav-section {
+    position: fixed;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    z-index: 100;
+}
+.usm-header-nav-bg {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.usm-header-nav-section .cs-input-group .comp-title-span {
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+    margin-bottom: 5px;
+    display: block;
+}
+#main_div_of_backlog_info_kanban_view {
+    padding-top: 80px;
+}
+.usm-header-nav-section .col-border {
+    border-left: 1px solid rgb(255 255 255 / 15%);
+    height: 60px;
+    display: block;
+    margin-right: 10px;
+    margin-left: 10px;
+    position: relative;
+    width: 1px;
+    margin-top: 1%;
+}
+.usm-header-nav-section .bootstrap-select.form-control {
+    max-width: 170px;
+}
+
+.usm-header-nav-section .has-search .form-control-feedback {
+    width: 30px;
+    height: 30px;
+    line-height: 2;
+}
+.usm-header-nav-section .has-search .form-control {
+    padding: 0;
+}
+.usm-header-nav-section .has-search .form-control:focus {
+    padding: 5px 10px 5px 30px;
+    width: 270px;
+}
+.usm-header-nav-section .has-search input[type="text"], .usm-header-nav-section .has-search input[type=search] {
+    font-size: 13px;
+    line-height: 25px;
+    height: 30px;
+    width: 30px;
+}
+.usm-header-nav-section  .popover-badges i{
+    color: #fff;
+    font-size: 15px;
+    background: #525596;
+    padding: 8px;
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+}
+.usm-header-nav-section .cs-input-group .dropdown.bootstrap-select {
+    background-color: transparent;
+}
+.usm-header-nav-section .cs-input-group .btn {
+    height: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.usm-header-nav-section .xl-checkbox .checkmark {
+    height: 30px;
+    width: 30px;
+    border: 2px solid #525596;
+}
+.usm-header-nav-section .xl-checkbox .checkmarkcontainer .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 7px;
+    height: 12px;
+}
+.usm-header-nav-section .mt-4, .usm-header-nav-section .my-4 {
+    margin-top: 1.75rem !important;
+}
+.usm-header-nav-section .cs-input-group .input-group-prepend {
+    margin-right: 0;
+    height: 30px;
+}
+.usm-header-nav-section .cs-input-group .input-group-text {
+    line-height: 1%;
+    color: #ffffff;
+    background-color: rgba(3, 57, 108, 0.5);
+    border: none;
+    border-radius: 0;
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+    padding: 0.2rem 0.75rem;
+    height: 30px;
+}
+.usm-header-nav-section .cs-input-group input.form-control[type=date], .usm-header-nav-section .cs-input-group input.form-control[type=text] {
+    color: #ffffff;
+    background-color: rgb(49 53 130 / 50%);
+    border-color: rgb(49 53 130 / 50%);
+    font-family: Quicksand;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 4px 12px;
+    font-weight: 400;
+    height: 30px;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

@@ -15269,6 +15269,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     $.get("resource/child/" + f + ".html", function (html_string) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
+        $('.popover-badges').popover();
         $(".usmg-selectpicker").selectpicker();
         setProjectListByID('story_mn_filter_project_id');
         var groupBy = localStorage.getItem('usm_groupBy');
