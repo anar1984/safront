@@ -2699,6 +2699,7 @@ const taskManagement = {
             },
             genFilterProject: function (params) {
                 return ` <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Project</div>
                 <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
                 style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
                 data-type="project_id" title="Project"></select>
@@ -2706,6 +2707,7 @@ const taskManagement = {
             },
             genFilterStoryCard: function (params) {
                 return ` <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Story Card</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
                 data-type="backlog_id" title="Story Card">
@@ -2714,6 +2716,7 @@ const taskManagement = {
             },
             genFilterAssigne: function (params) {
                 return ` <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Assignee</div>
                 <select class="form-control  bug-filter-multi bug-mgmt-filter-select bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
                 data-type="assignee_id" title="Assignee"></select>
@@ -2721,6 +2724,7 @@ const taskManagement = {
             },
             genFilterClosedBy: function (params) {
                 return ` <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Closed By</div>
                 <select class="form-control  bug-filter-multi  bug-mgmt-filter-select user_filter_element_selectpicker" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
                 data-type="closed_by" title="Closed By"></select>
@@ -2728,6 +2732,7 @@ const taskManagement = {
             },
             genFilterStatus: function (params) {
                 return `<div class="cs-input-group mt-3">
+                <div class="input-group-addon">Statuse</div>
                 <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                     title="Status">
@@ -2744,6 +2749,7 @@ const taskManagement = {
             },
             genFilterTaskType: function (params) {
                 return `<div class="cs-input-group mt-3">
+                <div class="input-group-addon">Task Type</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
                     title="Task Type">
@@ -2752,6 +2758,7 @@ const taskManagement = {
             },
             genFilterTaskNature: function (params) {
                 return ` <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Task Nature</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
                     <option value='bug' selected>Bug</option>
@@ -2762,6 +2769,7 @@ const taskManagement = {
             },
             genFilterCreatedBy: function (params) {
                 return `  <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Created by</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
                     data-type="created_by" title="Created by"></select>
@@ -2769,6 +2777,7 @@ const taskManagement = {
             },
             genFilterObserverBy: function (params) {
                 return `  <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Observer by</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
                     data-type="observer_by" title="Observer by"></select>
@@ -2776,6 +2785,7 @@ const taskManagement = {
             },
             genFilterIsmeetBy: function () {
                 return `  <div class="cs-input-group mt-3">
+                <div class="input-group-addon">Type</div>
                 <select class=" form-control bug-filter  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)'  data-live-search="true" id='bug_filter_is_meet'
                     data-type="is_meet" >
@@ -2796,7 +2806,7 @@ const taskManagement = {
             },
             genFilterPriorty: function () {
                 return `  <div class="cs-input-group mt-3">
-            
+                <div class="input-group-addon">Priority</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
                     data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
                     <option value=''>None</option>
@@ -2815,6 +2825,7 @@ const taskManagement = {
             },
             genFilterShowHide: function (params) {
                 return ` <div class="cs-input-group ${notChwk()?"":"d-none"}  mt-3">
+                <div class="input-group-addon">Columns</div>
                 <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple
                     id='bug_filter_columns' title="Columns">
                     <option value='task-status' selected>Status</option>
@@ -2868,7 +2879,7 @@ const taskManagement = {
             genFilterClosed: function () {
                 return `  <div class="row ml-0 mr-0">
                 <div class="d-flex justify-content-center">
-                    <div class="cs-input-group cs-pagination-group-by icon-input-group d-flex mt-3" style="min-width: 270px;">
+                    <div class="cs-input-group cs-pagination-group-by icon-input-group d-flex mt-3" style="min-width: 250px;">
                     
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="cs-svg-icon filter-group"></i></div>
@@ -2924,28 +2935,30 @@ const taskManagement = {
                 <!--<div class="cs-input-group col-12 mt-2">
                         <div class="input-group-addon">Sort by</div>
                     </div>-->
-                    <div class="cs-input-group icon-input-group d-flex col-4 mt-3">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="cs-svg-icon filter-sorting"></i></div>
+                    <div class="cs-input-group icon-input-group col-6 mt-3">
+                       <div class="d-flex">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="cs-svg-icon filter-sorting"></i></div>
+                            </div>
+                            <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
+                                id='bug_filter_sortby' title="Columns">
+                                    <option value='0' >Sort by...</option>
+                                    <option value='task_status' selected>Status</option>
+                                    <option value='id' selected>Task ID</option>
+                                    <option value='task_name'  accesskey="">Description</option>
+                                    <option value='task_nature'  >Task Nature</option>
+                                    <option value='fk_assignee_id' >Assignee</option>
+                                    <option value='fk_task_type_id' >Task Type</option>
+                                    <option value='close_status_date'>Closed Date</option> 
+                                    <option value='closed_by'>Closed By</option> 
+                                    <option value='task_priority'>Priority</option>  
+                                    <option value='created_by'  >Create By</option>
+                                    <option value='created_date'  >Create Date</option>  
+                                    </select>
                         </div>
-                        <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
-                        id='bug_filter_sortby' title="Columns">
-                            <option value='0' >Sort by...</option>
-                            <option value='task_status' selected>Status</option>
-                            <option value='id' selected>Task ID</option>
-                            <option value='task_name'  accesskey="">Description</option>
-                            <option value='task_nature'  >Task Nature</option>
-                            <option value='fk_assignee_id' >Assignee</option>
-                            <option value='fk_task_type_id' >Task Type</option>
-                            <option value='close_status_date'>Closed Date</option> 
-                            <option value='closed_by'>Closed By</option> 
-                            <option value='task_priority'>Priority</option>  
-                            <option value='created_by'  >Create By</option>
-                            <option value='created_date'  >Create Date</option>  
-                        </select>
                     </div>
 
-                    <div class="cs-input-group col-4 mt-3">
+                    <div class="cs-input-group col-6 mt-3">
                         <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby-asc" data-actions-box="true"    
                                 id='bug_filter_sortby_asc' title="Columns">
                             <option value='asc' >ASC</option>
