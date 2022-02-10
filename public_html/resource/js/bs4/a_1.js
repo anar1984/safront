@@ -7226,8 +7226,8 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
             $(el).attr('src', fileUrl(val));
             $(el).closest('div').find('.biyzad').remove();
         } else if ($(el).attr('sa-type') === 'filepicker') {
-          //  $(el).attr('fname', val);
-            setFilePickerValue($(el),val)
+            $(el).attr('fname', val);
+           // setFilePickerValue($(el),val)
 
         } else if ($(el).attr('sa-type') === 'checkbox') {
             if (val === '1')
@@ -15276,18 +15276,19 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         var prId = localStorage.getItem('current_project_id');
         $("#story_mn_groupBy_id").val(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").selectpicker("refresh");
-
-        getUsers()
+        getUsers();
+        new UserStory().getFktaskTypList4USMn();
         prId = prId.split('%IN%');
         if (prId) {
             $("#story_mn_filter_project_id").val(prId).change();
         }
         genTimePickerById("us_management_created_date_from",'down');
+        genTimePickerById("us_management_closed_date_from",'down');
         var dwlmt = $('#zona-list-select4move');
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         new Label().load();
         new Sprint().load();
-        new UserStory().getFktaskTypList4USMn();
+     
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
@@ -16552,11 +16553,17 @@ function getBugList4UserStory(bgId, tbody) {
                     .append('<td><b>Task Type</b></td>')
                     .append('<td><b>Created</b></td>')
                     .append('<td><b>Assignee</b></td>')
+                    .append('<td><b>Closed By</b></td>')
                     .append('<td><b>Date</b></td>')
+                    .append('<td><b>Closed Date</b></td>')
                     )
 
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                var closedDate  =  ela[i].closeStatusDate;
+                 if(closedDate){
+                  closedDate= Utility.convertDate(ela[i].closeStatusDate)+"/"+ Utility.convertTime(ela[i].closeStatusTime)
+                 }
                 $(tbody)
                 .append($("<tr>")
                           .attr("data-assignee",ela[i].fkAssigneeId)
@@ -16580,7 +16587,9 @@ function getBugList4UserStory(bgId, tbody) {
                         .append('<td>' + ela[i].taskTypeName + '</td>')
                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
+                        .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
+                        .append('<td class="task-time-td">' +closedDate + '</td>')
                         )
 
             }

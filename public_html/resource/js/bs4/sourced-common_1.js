@@ -10,6 +10,7 @@
 var guiZadList4Ever = {};
 var popupSiyahiList = {};
 var backLogIdListForSearch = "";
+var global_counter_4_us =0;
 var filtUsm = {
     TableFields: {},
     SetTableFields: function (tableId, InputId) {
@@ -14302,7 +14303,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data = {};//createTechizatTelebProducts
 
     
-        callApi('220102225238057110391', data, true, function (res) {
+        callApi('220102225238057110391', data, false, function (res) {
             var combo = $("#story_mn_manual_status_id");
             combo.empty();
             var tbl = res.tbl[0].r;
@@ -14314,6 +14315,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     .text(o.statusName)
                     .attr('order', o.orderNo));
             }
+         var list  =   localStorage.getItem('manual_list_val');
+            combo.val(list.split(','))
             combo.selectpicker('refresh');
            
         }) 
@@ -14334,6 +14337,26 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
        
       
 
+    },getValueRangePickerForUSm: function (elm,lk) {
+         try {
+        var val  = elm.val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+       var  stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+       var  endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+
+       // var inns = stTime.trim() + '%BN%' + endTime.trim();
+        if(lk==="1"){
+            return stTime ;
+        }
+        if(lk==="2"){
+            return endTime;
+        }
+           
+    } catch (error) {
+        return  '';
+    }
     },
     getUsFilterValue: function(){
         data = {};//createTechizatTelebProducts
@@ -14342,11 +14365,17 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
         var fkTaskTypeId = getProjectValueUsManageMultiByelIn($("#story_mn_manual_status_id"));
         var closedBy = getProjectValueUsManageMultiByelIn($("#story_mn_filter_closed_id"));
+        var taskStatus = getProjectValueUsManageMultiByelIn($("#story_mn_filter_status_id"));
         var createdBy = getProjectValueUsManageMultiByelIn($("#story_mn_filter_created_id"));
-        var createdDate = geDateRangePickerValueBT($("#us_management_created_date_from"));
+        var createdDate1 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
+        var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
+        var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"1");
+        var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"2");
         var search = $("#search-us-managmenet").val();
         data.fkProjectId = "(" + priD + ")";
-            
+         if(closedBy||closedDate2||closedDate1){
+            taskStatus+=",'closed'";
+         }
         if (this.getSprintValue()) {
             data.fkSprintId = '(' + this.getSprintValue() + ')';
         }
@@ -14356,11 +14385,26 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (TaskNatue) {
             data.taskNature = '(' + TaskNatue + ')';
         }
+        if (taskStatus) {
+            data.backlogStatus = '(' + taskStatus + ')'       
+        }
+        if (TaskNatue) {
+            data.taskNature = '(' + TaskNatue + ')';
+        }
         if (closedBy) {
             data.closedBy = '(' + closedBy + ')';
         }
-        if (createdDate) {
-            data.createdDate = '(' + createdDate + ')';
+        if (createdDate2) {
+            data.createdDate2 =  createdDate2 ;
+        }
+        if (createdDate1) {
+            data.createdDate1 =  createdDate1 ;
+        }
+        if (closedDate1) {
+            data.closedDate1 =  closedDate1 ;
+        }
+        if (closedDate2) {
+            data.closedDate2 = closedDate2 ;
         }
         if (createdBy) {
             data.createdBy = '(' + createdBy + ')';
@@ -14397,7 +14441,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#kanban_view_' + stl + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
        
-        data.backlogStatus = '(' + statusList + ')';
+       // data.backlogStatus = '(' + statusList + ')';
         data[type] = '(' + stl + ')';
         data.startLimit = 0;
         data.endLimit = 20;
@@ -14433,8 +14477,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0;
             //$('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.content-drag').arrangeable();
-
-            if (count === 1) {
+            global_counter_4_us++
+            if ((count+1) === global_counter_4_us) {
                 contentArrangableUI();
             }
             //  contentArrangableUI();
@@ -14443,9 +14487,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         })
     },
     getBacklogListByManualStatusIdMore: function (st, end, stl) {
-        data = {};//createTechizatTelebProducts
-        data.fkTaskTypeId = '(' + stl + ')';
-        data.backlogStatus = "('new','ongoing')";
+        var data  = this.getUsFilterValue();
+        var type  = $("#story_mn_groupBy_id").val();
+         if(type==='assigne'){
+             type  = "fkAssigneeId"
+         }
+         if(type==='manualStatus'){
+             type  = "fkTaskTypeId"
+         }
+        data[type] = '(' + stl + ')';
         data.startLimit = st;
         data.endLimit = end;
         callApi('21122313051700845260', data, true, function (res) {
@@ -15467,6 +15517,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .append($('<span class="backlog-status">')
                     .append("&nbsp;&nbsp;")
                     .append(assigneeImg))
+                .append((o.bugCount>0)?$('<span class="backlog-status">')
+                    .append("&nbsp;&nbsp;")
+                    .append('<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>-'+o.bugCount):"")
 
 
 

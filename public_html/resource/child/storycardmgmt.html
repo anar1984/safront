@@ -1,5 +1,15 @@
 <div class="usm-header-nav-section">
     <div class="d-flex justify-content-center usm-header-nav-bg">
+        <div class="mt-4">
+            <div class="cs-input-group">
+                <div class="form-group  has-search">
+                    <div class="has-search-in">
+                        <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
+                        <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="search-us-managmenet">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="mt-2">
             <div class="cs-input-group" >
                 <span class="comp-title-span">Project</span>
@@ -21,18 +31,9 @@
                 </select>
             </div>
         </div>
+       <!-- 
+        <div class="col-border"></div> -->
        
-        <div class="col-border"></div>
-        <div class="mt-4">
-            <div class="cs-input-group">
-                <div class="form-group  has-search">
-                    <div class="has-search-in">
-                        <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                        <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="search-us-managmenet">
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="mt-4">
             <div class="cs-input-group">
                     <div class="dropdown-toggle1 "  data-toggle="dropdown">
@@ -81,10 +82,10 @@
                     </div>
             </div>
         </div>
-        <div class="mt-2">
+       <!--  <div class="mt-2">
             <div class="cs-input-group" >
                 <span class="comp-title-span">Is Api</span>
-                <!-- <input type="checkbox" class="us-mngm-is-api" > -->
+             
                 <div class="xl-checkbox">
                     <label class="checkmarkcontainer">
                         <input type="checkbox" onchange="filterOnChnageUSM()" class="us-mngm-is-api" value="0">
@@ -92,7 +93,7 @@
                     </label>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="mt-4">
             <div class="cs-input-group">
                 <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
@@ -115,13 +116,18 @@
         </div>
         <div class="mt-2">
             <div class="cs-input-group" >
-                <span class="comp-title-span">Task Nature</span>
+                <span class="comp-title-span">Task Status</span>
                 <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
-                style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"  id='story_mn_filter_nature_id'
-                data-type="updated_id" multiple title="Nature">
-                <option value='bug' >Bug</option>
-                <option value='change' >Change Request</option>
-                <option value='new' >New Request</option></select>
+                style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"  id='story_mn_filter_status_id'
+                data-type="taskStatus" multiple title="Task Status">
+                    <option value="new" selected>New</option>
+                    <option value="ongoing" selected>Ongoing</option>
+                    <option value="closed">Closed</option>
+                    <option value="waiting">Waiting</option>
+                    <option value="canceled">Canceled</option>
+                    <option value="rejected">Rejected</option>
+                
+            </select>
             </div>
         </div> 
         <div class="mt-2">
@@ -141,6 +147,15 @@
                 </select>
             </div>
         </div>
+        <div class="mt-2">
+            <div class="cs-input-group">
+                <span class="comp-title-span">Created By</span>
+                <select class="form-control story_mn_filter_user_list usmg-selectpicker cs-svg-icon daxil-eden"
+                    id="story_mn_filter_created_id" data-live-search="true" multiple onchange="filterOnChnageUSM()" title="Created By"
+                style="text-overflow: ellipsis">
+                </select>
+            </div>
+        </div>
         <div class="usm-more-filter d-flex justify-content-center">
             <div class="cs-input-group mt-4">
                 <button type="button" class="btn btn-light usm-more-filter-btn" title="Taleh Hasan"> More Filter <i class="fa fa-plus"></i></button>
@@ -154,18 +169,30 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                 </div>
+                <input onchange="filterOnChnageUSM()" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="us_management_closed_date_from" type="text">
+             </div>
+        </div>
+              
+        <div class="mt-2">
+            <div class="cs-input-group input-group input-datatime-group">
+                <span class="comp-title-span w-100">Created Date</span>
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                </div>
                 <input onchange="filterOnChnageUSM()" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="us_management_created_date_from" type="text">
              </div>
         </div>
-                <div class="mt-2">
-                    <div class="cs-input-group">
-                        <span class="comp-title-span">Created By</span>
-                        <select class="form-control story_mn_filter_user_list usmg-selectpicker cs-svg-icon daxil-eden"
-                            id="story_mn_filter_created_id" data-live-search="true" multiple onchange="filterOnChnageUSM()" title="Created By"
-                        style="text-overflow: ellipsis">
-                        </select>
-                    </div>
-                </div>
+        <div class="mt-2">
+            <div class="cs-input-group" >
+                <span class="comp-title-span">Task Nature</span>
+                <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
+                style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"  id='story_mn_filter_nature_id'
+                data-type="updated_id" multiple title="Nature">
+                <option value='bug' >Bug</option>
+                <option value='change' >Change Request</option>
+                <option value='new' >New Request</option></select>
+            </div>
+        </div> 
             
               
             </div>
