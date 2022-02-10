@@ -967,7 +967,7 @@ const taskManagement = {
                         <div class="Story-card-Header-task">
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
-                                <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 30px;">
+                                <div class="card-UserStory-header-edit position-relative" style="display: none; width: 100%;top: 0;height: 30px;">
                                     <input class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
                                     <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
@@ -4499,6 +4499,9 @@ $(document).on('click', '#addProjectBugIssueTaskMng', function (event) {
     var prId = manId ? manId : '21062415244905361923'; //$("#story_mn_filter_project_id").val();
     $("#bug_filter_project_id_add").val(prId).change();
     $("#bug_filter_backlog_id_add").val(bgid).change();
+    $("#bug_task_nature_id_add").val("bug");
+    $("#bug_task_nature_id_add").selectpicker("refresh");
+
     global_var.active_canvas = 'taskCreate';
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
@@ -5429,3 +5432,26 @@ $(document).on('click', ".usm-more-filter-btn", function (e) {
     $('.usm-more-filter').toggleClass('show');
     $(this).find('i').toggleClass('fa-plus fa-minus');
 });
+
+$(document).on("dblclick", ".card-UserStory-header-text", function () {
+    $(this).hide();
+    $(this).parent().find(".card-UserStory-header-edit").css("display", "inline-block")
+    let Namestory = $(this).parent().parent().find(".card-UserStory-header-text").text()
+    $(this).parent().find(".card-UserStory-header-input").val(Namestory)
+})
+
+
+$(document).on("click", "#AcceptText", function (e) {
+    let InputText = $(this).parent().find(".card-UserStory-header-input").val()
+    if (InputText.trim().length > 0) {
+        $(this).parent().parent().find(".card-UserStory-header-text").text(InputText)
+        $(this).parent().parent().find(".card-UserStory-header-text").show();
+        $(this).parent().find(".card-UserStory-header-input").val("")
+        $(this).parent().css("display", "none")
+    }
+})
+
+$(document).on("click", "#DeleteText", function (e) {
+    $(this).parent().css("display", "none");
+    $(this).parent().parent().find(".card-UserStory-header-text").show();
+})

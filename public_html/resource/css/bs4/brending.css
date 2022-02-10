@@ -7805,3 +7805,74 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     visibility: visible;
     opacity: 1;
 }
+
+
+.box-loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* margin: 20px 0; */
+    display: block;
+    background: #ebf1f3;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+.box-loader .circle {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+}
+.box-loader .lines {
+    position: absolute;
+    width: calc(100% - 150px);
+    height: 100%;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.box-loader .line {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin: 2.5px 0;
+}
+.box-loader .line:nth-child(2n) {
+    height: calc(13% - 5px);
+}
+.box-loader .line:nth-child(2n+1) {
+    height: calc(25% - 5px);
+}
+.box-loader .s_shimmer {
+    background: rgba(0, 0, 0, 0.08);
+}
+.box-loader.shimmer {
+    overflow: hidden;
+}
+.box-loader.shimmer::after {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0));
+    animation: gradient 1600ms infinite;
+    animation-timing-function: cubic-bezier(0.38, 0.55, 0.34, 0.95);
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%) rotate(0deg);
+    border-radius: 5px;
+}
+@keyframes gradient {
+    100% {
+        transform: translateX(100%) rotate(0deg);
+    }
+}
+
+
