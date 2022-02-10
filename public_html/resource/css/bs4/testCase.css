@@ -957,7 +957,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 .setting-views-panel .setting-headline{
     vertical-align: middle;
-    padding: 12px 17px;
+    padding: 12px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
