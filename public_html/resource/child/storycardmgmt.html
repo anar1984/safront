@@ -10,17 +10,6 @@
         </div>
         <div class="mt-2">
             <div class="cs-input-group" >
-                <span class="comp-title-span">Task Nature</span>
-                <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
-                style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"  id='story_mn_filter_nature_id'
-                data-type="updated_id" multiple title="Nature">
-                <option value='bug' >Bug</option>
-                <option value='change' >Change Request</option>
-                <option value='new' >New Request</option></select>
-            </div>
-        </div> 
-        <div class="mt-2">
-            <div class="cs-input-group" >
                 <span class="comp-title-span">Group By</span>
                 <select class="form-control usmg-selectpicker " data-actions-box="true"
                 style="text-overflow: ellipsis"  id='story_mn_groupBy_id'
@@ -124,7 +113,17 @@
                 </select>
             </div>
         </div>
-       
+        <div class="mt-2">
+            <div class="cs-input-group" >
+                <span class="comp-title-span">Task Nature</span>
+                <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
+                style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"  id='story_mn_filter_nature_id'
+                data-type="updated_id" multiple title="Nature">
+                <option value='bug' >Bug</option>
+                <option value='change' >Change Request</option>
+                <option value='new' >New Request</option></select>
+            </div>
+        </div> 
         <div class="mt-2">
             <div class="cs-input-group" >
                 <span class="comp-title-span">Assignee</span>
