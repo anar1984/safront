@@ -234,7 +234,7 @@ $(function () {
 
 
     });
-    $(document).on("click", '.open-modal-hide-modal-btn', function (e) {
+    $(document).on("click", '.sa-section-modal .open-modal-hide-modal-btn', function (e) {
         var elm = $(this).closest('.component-class');
         var cntnt = elm.find('.component-section-row').first();
         cntnt.toggleClass('closed-modal');
@@ -264,6 +264,15 @@ $(function () {
 
 
 
+
+    });
+    $(document).on("click", '.table-title-show .open-modal-hide-modal-btn', function (e) {
+        var elm = $(this).closest('.component-container-dashed');
+        var cntnt = elm.find('table').first();
+        cntnt.toggleClass('d-none');
+           console.log(cntnt);
+        $(this).find("i").toggleClass("fa-chevron-down");
+        $(this).find("i").toggleClass("fa-chevron-up");
 
     });
     $(document).on("click", '.tab-dash-trig', function (e) {

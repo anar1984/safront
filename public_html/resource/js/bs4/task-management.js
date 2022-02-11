@@ -3261,7 +3261,6 @@ const taskManagement = {
                 <div class="input-group-addon">Priority</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
                     data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
-                    <option value=''>None</option>
                     <option value='1'>1- Lowest</option>
                     <option value='2'>2</option>
                     <option value='3'>3</option>
