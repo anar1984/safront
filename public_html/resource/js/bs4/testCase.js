@@ -1714,7 +1714,7 @@ function genUserTrblock(names,img,filed,uid) {
      names = SAProjectUser.Users[uid].userPersonName; 
   } */
     try {
-        return $('<a>')
+        var a  =  $('<a>')
             .attr('tabindex', "0")
             .attr('data-placement', "left")
             //.attr('data-original-title', filed === "createdBy" ? "Daxil Edən" : "İcra Edən")
@@ -1729,6 +1729,8 @@ function genUserTrblock(names,img,filed,uid) {
                 .attr("uid",uid)
                 .attr("src", img)
             )
+             var div  = $("<div>").append(a);
+            return div.html();
 
     } catch (error) {
         return ''

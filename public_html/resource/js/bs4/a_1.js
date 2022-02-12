@@ -3736,8 +3736,12 @@ function uploadFile4Ipo(id) {
 
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
    // pbDiv.html('');
+     if($("#"+id).attr("multiple")){
 
-  //  $('#' + id).attr('fname', '');
+     }else{
+       $('#' + id).attr('fname', '');
+     }
+  
 
     for (var i = 0, f; f = files[i]; i++) {
         //            var file = files[0];
@@ -3949,6 +3953,11 @@ function importSendNameApi(filNm) {
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    if($("#"+id).attr("multiple")){
+
+    }else{
+        pbDiv.empty();
+    }
       var attr  = $('#' + id).attr("view-type");
           attr  = attr?attr:"list";
 
@@ -4010,15 +4019,20 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
               if(attr==='list'){
                $('#pro_zad_' + idx).remove();
                $('#pro_zad_span' + idx)
+                     .attr('data-toggle', "modal")
+                     .attr('data-target', "#commentFileImageViewer")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
                     .append($('<i class="fa fa-times">')
                             .attr('pid', idx)
                             .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
               }
               else if(attr==='block'){
-                $('#pro_element_' + idx).find('.cs-img-title').text(finalname);
+                $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
                 $('#pro_element_' + idx).find('.comment_img')
                                            .attr("src",fileUrl(finalname))
-                                           .attr("onclick",`new UserStory().setCommentFileImageViewerUrl(${finalname})`);
+                                           .attr('data-toggle', "modal")
+                                           .attr('data-target', "#commentFileImageViewer")
+                                           .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
                 $('#pro_element_' + idx).find('.see-detail-img a').attr("href",fileUrl(finalname));
                        
                 $('#pro_zad_' + idx)
@@ -4027,10 +4041,14 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
 
             var st = $('#' + id).attr('fname');
-                
-            st = (st||st!=="|") ? st + finalname +global_var.vertical_seperator :
-                    finalname;
-
+             if(st){
+                st = (st.length>1&&st!=="|") ? st + global_var.vertical_seperator+finalname:
+                finalname;
+             } else{
+                 st=finalname
+             }
+          
+           
             $('#' + id).attr('fname', st);
 
         },
@@ -15278,10 +15296,15 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         $("#story_mn_groupBy_id").selectpicker("refresh");
         getUsers();
         new UserStory().getFktaskTypList4USMn();
-        prId = prId.split('%IN%');
-        if (prId) {
-            $("#story_mn_filter_project_id").val(prId).change();
+        try {
+            prId = prId.split('%IN%');
+            if (prId) {
+                $("#story_mn_filter_project_id").val(prId).change();
+            }   
+        } catch (error) {
+            
         }
+        getGroupListAssigneLocal();
         genTimePickerById("us_management_created_date_from",'down');
         genTimePickerById("us_management_closed_date_from",'down');
         var dwlmt = $('#zona-list-select4move');
@@ -19386,9 +19409,72 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
     localStorage.setItem('assigne-list-usm', $(this).val());
     filterOnChnageUSM()
 });
-$(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
 
-   
+var assigne_group ={};
+$(document).on('click', '.set-assigne-gorup-usm', function (evt) {
+    var id  = $(this).attr("id");
+      var list  =  assigne_group[id].list;
+      $("#story_mn_filter_assigne_id").val(list);
+      $("#story_mn_filter_assigne_id").selectpicker("refresh");
+      $("#story_mn_filter_assigne_id").change();
+
+});
+$(document).on('change', '#assignee-group-name-save', function (evt) {
+        
+      if($(this).val().trim().length> 0) {
+           var list  = $("#story_mn_filter_assigne_id").val();
+           var count  = list.length;
+        $(this).addClass("d-none");
+        $(".assignee-group-name-list").removeClass("d-none");
+        var block  = {};
+           block.groupName  =  $(this).val();
+           block.listCount  =  count;
+           block.list  =  list;
+           var id  = makeId(10);
+           assigne_group[id] = block;
+           localStorage.setItem("assigne_group",JSON.stringify(assigne_group));
+           getGroupListAssigneLocal(); 
+           $(this).val('')
+      }
+
+
+     
+});
+function getGroupListAssigneLocal(){
+
+     
+   try { 
+        var list  = localStorage.getItem('assigne_group');
+        if(list){
+            assigne_group  = JSON.parse(list);  
+            var block  = $("#assignee-group-list-history");
+                block.empty('');
+                var group = Object.keys(assigne_group);
+                for (var i in group) {
+                  var id = group[i];
+                  var obj = assigne_group[id];
+                  block.append($('<a class="dropdown-item set-assigne-gorup-usm" href="#">')
+                  .attr("id",id)
+                  .text(obj.groupName +"("+obj.listCount+")"));
+              }
+        }
+      
+         
+    } catch (error) {
+        
+    }
+    
+}
+$(document).on('focusout', '#assignee-group-name-save', function (evt) {
+
+       $(this).addClass("d-none");
+       $(".assignee-group-name-list").removeClass("d-none");
+});
+$(document).on('click', '#assignee-group-name-add', function (evt) {
+
+       $("#assignee-group-name-save").removeClass("d-none");
+       $("#assignee-group-name-save").focus();
+       $(".assignee-group-name-list").addClass("d-none");
 });
 function filterOnChnageUSM(){
     UsLabel = '';

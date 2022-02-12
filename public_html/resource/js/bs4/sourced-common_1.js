@@ -14232,10 +14232,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanView: function () {
-     
+           global_counter_4_us = 0 ;
         var div = $(".task-panel")
         div.empty();
         var groupBy = localStorage.getItem("usm_groupBy");
+           groupBy = groupBy?groupBy:"backlogStatus";
         var stl = ['draft', "new", "ongoing", 'closed']
         if (groupBy === 'backlogStatus') {
 
@@ -14316,7 +14317,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     .attr('order', o.orderNo));
             }
          var list  =   localStorage.getItem('manual_list_val');
-            combo.val(list.split(','))
+           try {
+            combo.val(list.split(','));  
+           } catch (error) {
+               
+           } 
             combo.selectpicker('refresh');
            
         }) 
@@ -14478,7 +14483,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_label_assign_checked = 0;
             //$('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.content-drag').arrangeable();
             global_counter_4_us++
-            if ((count+1) === global_counter_4_us) {
+            if (count === global_counter_4_us) {
                 contentArrangableUI();
             }
             //  contentArrangableUI();

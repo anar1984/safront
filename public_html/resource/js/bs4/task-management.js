@@ -259,7 +259,7 @@ const taskManagement = {
                      ${this.genTabHeader()}
                      <div class="tab-content" id="myTabContent">
                      ${/* notChwk()? */this.genDetailsBlock()/* :"" */}
-                     ${this.genScheduleBlockInsertNew()}
+                     ${this.genScheduleBlock()}
                      ${this.genObserverBlock()}
                      ${this.genEventBlock()}
                      </div>
@@ -1178,7 +1178,7 @@ const taskManagement = {
                      <div class="tab-content" id="pills-tabContent" >
                      ${this.genCommentBlock()}
                      ${this.genDetailsBlock()}
-                     ${this.genScheduleBlockNew()}
+                     ${this.genScheduleBlock()}
                      ${this.genObserverBlock()}
                      ${this.genSubtaskBlock()}
                      ${this.genEventBlock()}

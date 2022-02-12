@@ -221,14 +221,15 @@ var cmpList = {
     tablePagintion: {
         Init: function (elm, rowCount) {
             var elm = $(elm);
+               var attr  =  $(elm).attr('data-pag-id')
             if (elm.prop('tagName') === 'TABLE') {
-
+                $("#paginiton_id_"+attr).remove();
                 var tbid = makeId(10);
                 $(elm).attr("data-pag-id", tbid);
                 $(elm).attr('component-type',"table-paginiton");
-                $(elm).parent().find(".table-paginition-block-component").remove();
-                $(elm).after(this.genBlock(rowCount, tbid));
-                var select = $(elm).parent().find("select.count-row-select-global");
+         
+                $(elm).parent().after(this.genBlock(rowCount, tbid));
+                var select = $('#paginiton_id_'+tbid).find("select.count-row-select-global");
                 select.empty();
                 var page = Math.ceil(rowCount / 50);
                 for (let i = 0; i < page; i++) {
@@ -239,7 +240,7 @@ var cmpList = {
             }
         },
         genBlock: function (rowCount, tbid) {
-            return `<div id="" pid=""  class="d-flex w-100 table-paginition-block-component task-list-bottom ">
+            return `<div id="paginiton_id_${tbid}" pid=""  class="d-flex w-100 table-paginition-block-component task-list-bottom ">
               <div class="mr-auto task-list-datetime">
                   
               </div>
@@ -271,7 +272,7 @@ var cmpList = {
           </div>`
         },
         clickBtnLeftRight: function (elm) {
-            var block = $(elm).closest(".task-list-pagination")
+            var block = $(elm).closest(".task-list-pagination");
             var stlm = block.find('.startLimitNew');
             var endlm = block.find('.endLimitNew');
             var clickedButton = $(elm).attr('data-page-icon');
@@ -280,7 +281,7 @@ var cmpList = {
             var pageNumber = null;
             var button = block.find('.pagination_btn');
             var rowCount = button.attr("row-count");
-            var tbl = block.attr("table-id")
+            var tbl = block.attr("table-id");
 
             if (clickedButton == 'pageLeft') {
                 var current = parseInt(pageSelected.text());
@@ -616,7 +617,7 @@ var cmpList = {
                       $(menu).css("left", "auto");
                       $(menu).css("bottom", "auto");
                     }
-                    $(menu).fadeIn(500, FocusContextOut());
+                    /* By Revan :)) */
                       doubleClicked = true;
                     } else {
                       e.preventDefault();
@@ -665,8 +666,55 @@ var cmpList = {
             $(elm).closest('.mode-aktiv-all').attr("data-val",type);
             $("[data-mode-id='" + newId + "']").trigger("change-mode", [type]);
         }
+    },
+    genTableToggleBtn:{
+        Init: function (elm,title) {
+            var elm = $(elm);
+               var attr  =  $(elm).attr('data-toggle-id');
+            if (elm.prop('tagName') === 'TABLE') {
+                $("#table_toggle_id_"+attr).remove();
+                $(elm).parent().find(".modal-inside-table-expand").remove();
+                
+                var tbid = makeId(10);
+                $(elm).parent().append(this.genCloseBtn(tbid));
+                $(elm).attr("data-toggle-id", tbid);
+                $(elm).attr('component-type',"table-toggle");
+                $(elm).parent().before(this.genBlock(tbid,title));
+               
+            }
+        },
+        genCloseBtn: function (tbid) {
+            return  `<span onclick="cmpList.genTableToggleBtn.clickCloseExpandTable(this,'${tbid}')" class="btn btn-sm btn-light position-absolute top-0 right-0 d-none toggle-table-close-${tbid}" style="top: 0px; right: 0px; z-index: 22;">
+            <i class="fas fa-times" aria-hidden="true"></i>
+            </span>`
+        },
+        genBlock: function (tableId,title) {
+                return  `<div id='table_toggle_id_${tableId}' class="d-flex border-bottom-1px pb-1 m-1 mb-2 w-100">
+                                        <div class="mr-auto toggle-body-title">
+                                            <div class="result-box"><i class="cs-svg-icon  task-03"></i> <span class="name">${title?title:""}</span></div>
+                                        </div>
+                                        <div class="toggle-min-elements">
+                                            <a class="cs-url" onclick="cmpList.genTableToggleBtn.clickExpandTable(this,'${tableId}')" ><i class="cs-svg-icon fullscreen"></i></a>
+                                            <a onclick="cmpList.genTableToggleBtn.clickToggleTable(this,'${tableId}')" class="cs-url "><i class="fal fa-angle-down" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>`
+        },
+        clickToggleTable: function (elm,tableId) {
+            $(elm).find('i').toggleClass("fa-angle-up");
+            $(elm).find('i').toggleClass("fa-angle-down");
+            $("[data-toggle-id='"+tableId+"']").toggleClass("d-none");
+        },
+        clickExpandTable: function (elm,tableId) {
+            $("[data-toggle-id='"+tableId+"']").closest('.component-container-dashed').addClass("modal-table-large-mod");
+            $(".toggle-table-close-"+tableId).removeClass('d-none');
+        },
+        clickCloseExpandTable: function (elm,tableId) {
+            $("[data-toggle-id='"+tableId+"']").closest('.component-container-dashed').removeClass("modal-table-large-mod");
+            $(elm).addClass('d-none');
+        }
+
+
     }
-    
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 $.fn.selectInterActive = function (type, val) {
@@ -731,6 +779,9 @@ $.fn.genShowHideList = function (val) {
 }
 $.fn.genRightClickMenu = function (val) {
     cmpList.tableRightClick.Init(this);
+}
+$.fn.genToggleTable = function (val) {
+    cmpList.genTableToggleBtn.Init(this,val);
 }
 $.fn.extend({
     autoHeight: function () {

@@ -761,7 +761,9 @@ function genFileBlockMulti4Table(names, cell) {
     var list  = ''
    for (let i = 0; i < names.length; i++) {
        const o = names[i];
-       list+= generateFileLine4Table(o, cell);
+       if(o.length > 0){
+        list+= generateFileLine4Table(o, cell);
+       }
    }
    return list
 }
@@ -772,10 +774,14 @@ function genFileBlockMulti4Table(names, cell) {
    } catch (error) {
        
    }
+   var container  = $(element).closest(".component-class");
+   var block  =  container.find('#progress_bar_new');
+      if(empty!='noEmpty'){
+        block.html(''); 
+      }
+     
    var list  = '';
-    var oldFname  = $(element).attr("fname");
-        oldFname = (oldFname === "undefined")?"":oldFname;
-      $(element).attr("fname",oldFname?oldFname+"|":""+value);
+      $(element).attr("fname",value);
 
   for (let i = 0; i < value.length; i++) {
       const o = value[i];
@@ -794,16 +800,20 @@ function setFilePickerValueCore(element,value,empty){
 
         var container  = $(elm).closest(".component-class");
         var block  =  container.find('#progress_bar_new');
-           if(empty==="empty"){
-             block.html(''); 
-           }
+           
           if(attr==='list'){
               block.removeClass("d-flex flex-nowrap");
              block.append(
                 $('<div>')
+               
                 .addClass("file-item")
                 .attr('id', 'pro_zad_span' + idx)
-                .append($("<span class='file-name-attach'>").text(value))
+                .append($("<span class='file-name-attach'>")
+                           .text(add3Dots2Filename(value)
+                           .attr('data-toggle', "modal")
+                           .attr('data-target', "#commentFileImageViewer")
+                           .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + value + '")')
+                           ))
                 .append($('<i class="fa fa-times">')
                             .attr('pid', idx)
                             .attr('onclick', 'removeFilenameFromZad(this,\'' + value + '\')')))
@@ -813,7 +823,7 @@ function setFilePickerValueCore(element,value,empty){
               block.append(`<div class="cs-img-col" id='pro_zad_span${idx}'>
               <div class="file_upload_div cs_new_file_upload">
               <img src="${fileUrl(value)}" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl(${value})" alt="Screenshot_16_7D2CA51B0D646.jpg">
-              <span class="cs-img-title">Screenshot...jpg</span>
+              <span class="cs-img-title">${add3Dots2Filename(value)}</span>
               <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
               <i class="fa fa-download" aria-hidden="true"></i>
               </a>
@@ -848,11 +858,14 @@ function generateFileLine4Table(name, cell) {
          if (global_var.video_formats.includes(fileFormat)) {
             fileUrlVar = videoFileURL(name);
 
-          
             //                    
         } else if (fileFormat === 'pdf') {
             fileUrlVar = pdfFileURL(name);
 
+        }else{
+                div12lik.attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFileImageViewer")
+                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
         }
         div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b>');
 
@@ -1513,21 +1526,27 @@ function GetConvertedDateDT(componentId) {
     return d;
 }
 function GetConvertedTimeDT(componentId) {
-    var val  = $('#' + componentId).val();
-      val = val.split(" ");
-    if (!val)
-        return "";
-
-      nev = val[1].split(":")
-    var hour = nev[0];
-    hour = hour.toString(10).length === 1 ? '0' + hour : hour;
-    var minut = nev[1];
-    var second = "00";
-    var d = hour + "" + minut+""+second ;
-    return d;
+    try {
+        var val  = $('#' + componentId).val();
+        val = val.split(" ");
+      if (!val)
+          return "";
+  
+        nev = val[1].split(":")
+      var hour = nev[0];
+      hour = hour.toString(10).length === 1 ? '0' + hour : hour;
+      var minut = nev[1];
+      var second = "00";
+      var d = hour + "" + minut+""+second ;
+      return d;
+    } catch (error) {
+        return ""
+    }
+   
 }
 function GetReConvertedDT(componentId,time,date) {
-    // convert Date
+    try {
+        // convert Date
     var day = date.substring(6, 8);
     var month = date.substring(4, 6);
     var year = date.substring(0, 4);
@@ -1543,6 +1562,10 @@ function GetReConvertedDT(componentId,time,date) {
         date: new Date(d1),
         time: new Date(d),
     }); */
+    } catch (error) {
+        
+    }
+    
 }
 
 function ConvertedDateToStringDate(date) {

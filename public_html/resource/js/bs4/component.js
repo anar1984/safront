@@ -1455,7 +1455,7 @@ var Component = {
 
         div.append(el);
         div.addClass("table-responsive");
-        try {
+       /*  try {
             if(cr_input_comp_attribute_kv[comp.id]['sa-table-toggle']){
                 var title = SAInput.getInputDetails(comp.id, "inputName")
                 div.attr("data-table-title",title);
@@ -1463,13 +1463,13 @@ var Component = {
             } 
         } catch (error) {
             
-        }
+        } */
        
         
 
         div.append(this.InputTableAction.GenFilterBodyForInputTable(tableId, comp, tabDepId));
         div.append(this.InputTableAction.GenFilterBodyForTableColumn(tableId, comp, tabDepId));
-        div.append(this.InputTableAction.GenShowHideBtn(comp))
+        /* div.append(this.InputTableAction.GenShowHideBtn(comp)) */
 
         return $('<div></div>').append(div).html();
     },
