@@ -2501,15 +2501,41 @@ label h6{
     font-weight: bold;
     font-size: 14px;
 }
+.table-title-show::after{
+    content: attr(data-table-title);
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 3%;
+    background-color: initial;
+    /* padding: 3px; */
+    font-weight: bold;
+    font-size: 14px;
+}
 .open-modal-hide-modal-btn{
     display: none;
 }
-.sa-section-modal>.open-modal-hide-modal-btn{
+.sa-section-modal>.open-modal-hide-modal-btn,.table-title-show>.open-modal-hide-modal-btn {
 
     display: block !important;
     position: absolute;
     top: 12px;
     right: 0px;
+    border-radius: 50%;
+    font-size: 12px;
+    text-align: center;
+    background: white;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    box-shadow: rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px;
+}
+.table-title-show>.modal-inside-table-expand,.table-title-show>.modal-inside-table-close{
+
+    display: block !important;
+    position: absolute;
+    top: 12px;
+    right: 22px;
     border-radius: 50%;
     font-size: 12px;
     text-align: center;
@@ -4628,12 +4654,6 @@ td.selected{
     left: 0px;
     background: white;
     z-index: 1;
-}
-.modal-inside-table-expand {
-    display: none;
-}
-.modal-body .modal-inside-table-expand {
-    display: block;
 }
 
 .iconDrag {

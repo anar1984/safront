@@ -580,16 +580,49 @@ var cmpList = {
                       </li>`
             },
             clickRight: function (tableId) {
+                var doubleClicked = false;
                 $(document).on("contextmenu","[right-click="+tableId+"] tbody tr",function (e) {
                     $(this).closest('tbody').find("tr").removeClass("last_click_class");
                     var menu  = $("#contextMenu"+tableId);
                      $(this).addClass("last_click_class");
-                      menu.css({
-                        display: "block",
-                        left: e.pageX,
-                        top: e.pageY
-                    });
-                    return false;
+                                        
+                if(doubleClicked == false) {
+                    menu.show();     
+                    e.preventDefault(); // To prevent the default context menu.
+                    var windowHeight = $(window).height()/2;
+                    var windowWidth = $(window).width()/2;
+                    //When user click on bottom-left part of window
+                    if(e.clientY > windowHeight && e.clientX <= windowWidth) {
+                      $(menu).css("left", e.clientX);
+                      $(menu).css("bottom", $(window).height()-e.clientY);
+                      $(menu).css("right", "auto");
+                      $(menu).css("top", "auto");
+                    } else if(e.clientY > windowHeight && e.clientX > windowWidth) {
+                      //When user click on bottom-right part of window
+                      $(menu).css("right", $(window).width()-e.clientX);
+                      $(menu).css("bottom", $(window).height()-e.clientY);
+                      $(menu).css("left", "auto");
+                      $(menu).css("top", "auto");
+                    } else if(e.clientY <= windowHeight && e.clientX <= windowWidth) {
+                      //When user click on top-left part of window
+                      $(menu).css("left", e.clientX);
+                      $(menu).css("top", e.clientY);
+                      $(menu).css("right", "auto");
+                      $(menu).css("bottom", "auto");
+                    } else {
+                       //When user click on top-right part of window
+                      $(menu).css("right", $(window).width()-e.clientX);
+                      $(menu).css("top", e.clientY);
+                      $(menu).css("left", "auto");
+                      $(menu).css("bottom", "auto");
+                    }
+                    $(menu).fadeIn(500, FocusContextOut());
+                      doubleClicked = true;
+                    } else {
+                      e.preventDefault();
+                      doubleClicked = false;
+                      $(menu).fadeOut(500);
+                    }
                 })
             },
             genBlock: function (tbid,list) {
