@@ -275,8 +275,8 @@ const taskManagement = {
                                         <label class="switch bcs-swith">
                                             <input type="checkbox" id="runTaskAvtivateSchedule">
                                             <span class="slider round">
-                                                <small class="deactive">Deactive</small>
-                                                <small class="active">Active</small>
+                                                <small class="deactive">${lang_task.topBar.tableTypeSelector.passive}</small>
+                                                <small class="active">${lang_task.topBar.tableTypeSelector.active}</small>
                                             </span>
                                         </label>
                                     </div>
@@ -390,15 +390,6 @@ const taskManagement = {
                                    <option value="10">10</option>
                                    <option value="11">11</option>
                                    <option value="12">12</option>
-                               </select>
-                           </div>
-                       </div>
-                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                           <div class="cs-input-group">
-                               <div class="input-group-addon">Status</div>
-                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
-                                   <option value="active">${lang_task.topBar.tableTypeSelector.active}</option>
-                                   <option value="passive">${lang_task.topBar.tableTypeSelector.active}</option>
                                </select>
                            </div>
                        </div>
@@ -622,31 +613,44 @@ const taskManagement = {
                        </div>
                        
                        <div class="col-lg-2 cs-col-padding flex-item mt-2">
-                           <div class="cs-input-group">
-                               <div class="input-group-addon">Status</div>
-                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
-                                   <option value="active">${lang_task.topBar.tableTypeSelector.active}</option>
-                                   <option value="passive">${lang_task.topBar.tableTypeSelector.active}</option>
-                               </select>
-                           </div>
-                       </div>
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Başlat</div>
+                                <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
+                                    <option value="at_start_time">At start time</option>
+                                    <option value="5_minutes_before">5 minutes before</option>
+                                    <option value="10_minutes_before">10 minutes before</option>
+                                    <option value="15_minutes_before">15 minutes before</option>
+                                    <option value="20_minutes_before">20 minutes before</option>
+                                    <option value="25_minutes_before">25 minutes before</option>
+                                    <option value="30_minutes_before">30 minutes before</option>
+                                    <option value="45_minutes_before">45 minutes before</option>
+                                    <option value="1_hour_before">1 hour before</option>
+                                    <option value="2_hours_before">2 hours before</option>
+                                    <option value="3_hours_before">3 hours before</option>
+                                    <option value="12_hours_before">12 hours before</option>
+                                    <option value="24_hours_before">24 hour before</option>
+                                    <option value="2_days_before">2 days before</option>
+                                    <option value="1_week_before">1 week before</option>
+                                </select>
+                            </div>
+                        </div>
                    </div>
                    <div class="row rsoon weekly-actions run-intensive run-enabled">
-                       <div class="col-12">
-                           <h5 class="section-title"><strong>${lang_task.windowAddTask.weeklyAction}</strong></h5>
-                       </div>
-                       <div class="col-md-3 cs-flex-col flex-item mt-2">
+                
+                       <div class="col-md-12 mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
-                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
-                                   <option value="monday">Monday</option>
-                                   <option value="tuesday">Tuesday</option>
-                                   <option value="wednesday">Wednesday</option>
-                                   <option value="thursday">Thursday</option>
-                                   <option value="friday">Friday</option>
-                                   <option value="saturday">Saturday</option>
-                                   <option value="sunday">Sunday</option>
-                               </select>
+
+                                <div class="cs-horizontal-checkboxes" id="run_task_weekday_select">
+                                    <label><input type="checkbox" value="monday" name="run_task_weekday_select"><span>Monday</span></label>
+                                    <label><input type="checkbox" value="tuesday" name="run_task_weekday_select"><span>Tuesday</span></label>
+                                    <label><input type="checkbox" value="wednesday" name="run_task_weekday_select"><span>Wednesday</span></label>
+                                    <label><input type="checkbox" value="thursday" name="run_task_weekday_select"><span>Thursday</span></label>
+                                    <label><input type="checkbox" value="friday" name="run_task_weekday_select"><span>Friday</span></label>
+                                    <label><input type="checkbox" value="saturday" name="run_task_weekday_select"><span>Saturday</span></label>
+                                    <label><input type="checkbox" value="sunday" name="run_task_weekday_select"><span>Sunday</span></label>
+                                </div>
+
                            </div>
                        </div>
                    </div>
@@ -769,10 +773,10 @@ const taskManagement = {
                        </div>
                    </div>
 
-                   <div class="row rsoon">
+                   <!--<div class="row rsoon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Select Reminder</div>
+                               <div class="input-group-addon">Başlat</div>
                                <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>
@@ -792,7 +796,7 @@ const taskManagement = {
                                </select>
                            </div>
                        </div>
-                   </div>
+                   </div>-->
 
                </div>`
                 },
@@ -1910,7 +1914,7 @@ const taskManagement = {
                    <div class="row soon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <label class="input-group-addon">Select Reminder</label>
+                               <label class="input-group-addon">Başlat</label>
                                <select class="issue_selectpicker" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>
@@ -2136,7 +2140,7 @@ const taskManagement = {
                    <div class="row soon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <label class="input-group-addon">Select Reminder</label>
+                               <label class="input-group-addon">Başlat</label>
                                <select class="issue_selectpicker" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>

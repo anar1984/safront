@@ -2663,7 +2663,7 @@ $(document).on("change", "#run_task_intensive_select", function (e) {
     if (run_intensive == 'weekly') {
         $('#hide_actions').val('');
         $('#hide_actions_param').val('');
-        var run_sw_select = $('#run_task_weekday_select').val();
+        var run_sw_select = $('#run_task_weekday_select input[type="checkbox"]').val();
         $('#hide_actions_param').val(run_sw_select);
     }
     if (run_intensive == 'monthly') {
@@ -2716,16 +2716,16 @@ $(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", funct
     $('#hide_actions_param').val(swofm_a1);
     $('#hide_actions_param_2').val(swofm_a2);
 });
-$(document).on("change", "#run_task_weekday_select", function (e) {
+$(document).on("change", "#run_task_weekday_select input[type='checkbox']", function (e) {
     $('#hide_actions').val('');
     $('#hide_actions_param').val('');
-    var run_task_weekday_select = $('#run_task_weekday_select').val();
+    var run_task_weekday_select = $('#run_task_weekday_select input[type="checkbox"]').val();
     $('#hide_actions_param').val(run_task_weekday_select);
     if ($('#run_task_weekday_select').val() == 0) {
-        $('[data-id="run_task_weekday_select"]').css('border', '1px solid red').css('background', 'red').css('box-shadow', '0px 0px 10px rgb(255 0 0 / 35%)');
+        $('#run_task_weekday_select').closest('.weekly-actions').find('input-group-addon').css('color', 'red');
         return false;
     } else {
-        $('[data-id="run_task_weekday_select"]').removeAttr('style');
+        $('#run_task_weekday_select').closest('.weekly-actions').find('input-group-addon').removeAttr('style');
     }
 });
 $(document).on("change", "#sdofm_day_of_Month_select", function (e) {
