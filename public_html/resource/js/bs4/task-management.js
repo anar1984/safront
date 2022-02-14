@@ -4211,35 +4211,40 @@ const taskManagement = {
                         sumExecCount = 0,
                         sumEstBudget = 0,
                         sumSpentBudget = 0;
-                    var obj = res.tbl[0].r;
-                    for (var i = 0; i < obj.length; i++) {
-                        var o = obj[i];
-                        sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
-                        sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
-                        sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
-                        sumExecCount = increaseValue(sumExecCount, o.executedCounter);
-                        sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
-                        sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
-                        
-
-                        var t = this.genTaskTableForm(o,i);
-                        tbody.append(t);
-                        $('[data-toggle="popover"]').popover({
-                            html: true
-                        });
-                    }
-
-                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-                    //         sumEstBudget, sumSpentBudget);
-
-                    global_var.bug_task_sprint_assign_checked = '';
-                    global_var.bug_task_sprint_assign_name = '';
-                    global_var.bug_task_sprint_assign_id = '';
-
-
-                    global_var.bug_task_label_assign_checked = '';
-                    global_var.bug_task_label_assign_name = '';
-                    global_var.bug_task_label_assign_id = '';
+                        try {
+                            var obj = res.tbl[0].r;
+                            for (var i = 0; i < obj.length; i++) {
+                                var o = obj[i];
+                                sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                                sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                                sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                                sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                                sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                                sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+                                
+        
+                                var t = this.genTaskTableForm(o,i);
+                                tbody.append(t);
+                                $('[data-toggle="popover"]').popover({
+                                    html: true
+                                });
+                            }
+        
+                            // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                            //         sumEstBudget, sumSpentBudget);
+        
+                            global_var.bug_task_sprint_assign_checked = '';
+                            global_var.bug_task_sprint_assign_name = '';
+                            global_var.bug_task_sprint_assign_id = '';
+        
+        
+                            global_var.bug_task_label_assign_checked = '';
+                            global_var.bug_task_label_assign_name = '';
+                            global_var.bug_task_label_assign_id = '';
+                        } catch (error) {
+                            
+                        }
+                   
                 },
                 genContextMenu : function () {
                     return `<div id="contextMenu" class="dropdown contextMenu-dropdown-style position-fixed" style="z-index:555;display: none;">

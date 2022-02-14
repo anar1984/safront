@@ -559,12 +559,15 @@ var cmpList = {
                         var list  = $("<ul>");
                         var that = this;
                         btns.each(function () {
+                            var icon  = $(this).attr("sa-data-content")
                              var order =  $(this).index();
                              var text  = $(this).text();
-                            list.append(that.clickItem(order,text,tbid));
+                            list.append(that.clickItem(order,text,tbid,icon.trim()));
                         })
-                        $(elm).find("thead th.right-click-btn").hide();
+                        var title  =  $(elm).find("thead th.right-click-btn");
+                            title.hide();
                         $(elm).find("tbody .right-click-btn").closest("td").hide();
+                     
                         $(elm).after(this.genBlock(tbid,list.html()));
                         this.clickRight(tbid);
                     }
@@ -575,9 +578,9 @@ var cmpList = {
                 var item  = $("[right-click="+tbid+"] tbody .last_click_class td:eq("+order+")");
                 item.find('.right-click-btn').click();
             },
-            clickItem : function(order,text,tbid) {
+            clickItem : function(order,text,tbid,icon) {
                 return `<li onclick="cmpList.tableRightClick.onClickItem(this,'${tbid}')" class="dropdown-item" order-no="${order}">
-                        <i class="cs-svg-icon imtina"></i> ${text}
+                        <i class="cs-svg-icon ${icon}"></i> ${text}
                       </li>`
             },
             clickRight: function (tableId) {
