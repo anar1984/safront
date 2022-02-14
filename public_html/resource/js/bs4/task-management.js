@@ -259,7 +259,7 @@ const taskManagement = {
                      ${this.genTabHeader()}
                      <div class="tab-content" id="myTabContent">
                      ${/* notChwk()? */this.genDetailsBlock()/* :"" */}
-                     ${this.genScheduleBlock()}
+                     ${this.genScheduleBlockInsertNew()}
                      ${this.genObserverBlock()}
                      ${this.genEventBlock()}
                      </div>
@@ -660,9 +660,32 @@ const taskManagement = {
                        <input type="hide" id="hide_actions_param_2">
                    </div>
                    <div class="row rsoon monthly-actions run-intensive">
-                       <div class="col-12">
-                           <h5 class="section-title"><strong>Monthly Action</strong></h5>
-                       </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+                                    <div class="cs-horizontal-checkboxes" id="run_task_weekday_yearly_select">
+                                        <label><input type="checkbox" value="monday" name="run_task_weekday_select"><span>Monday</span></label>
+                                        <label><input type="checkbox" value="tuesday" name="run_task_weekday_select"><span>Tuesday</span></label>
+                                        <label><input type="checkbox" value="wednesday" name="run_task_weekday_select"><span>Wednesday</span></label>
+                                        <label><input type="checkbox" value="thursday" name="run_task_weekday_select"><span>Thursday</span></label>
+                                        <label><input type="checkbox" value="friday" name="run_task_weekday_select"><span>Friday</span></label>
+                                        <label><input type="checkbox" value="saturday" name="run_task_weekday_select"><span>Saturday</span></label>
+                                        <label><input type="checkbox" value="sunday" name="run_task_weekday_select"><span>Sunday</span></label>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+                                    <div class="cs-horizontal-checkboxes" id="run_task_day_yearly_select">
+                                        <label><input type="checkbox" value="1_week" name="run_task_weekday_select"><span>1-ci həftə</span></label>
+                                        <label><input type="checkbox" value="2_week" name="run_task_weekday_select"><span>2-ci həftə</span></label>
+                                        <label><input type="checkbox" value="3_week" name="run_task_weekday_select"><span>3-cü həftə</span></label>
+                                        <label><input type="checkbox" value="4_week" name="run_task_weekday_select"><span>4-cü həftə</span></label>
+                                        <label><input type="checkbox" value="last_week" name="run_task_weekday_select"><span>Last week</span></label>
+                                    </div>
+                                </div>
+                        </div>
                        <div class="cs-flex-col flex-item mt-2">
                            <div class="cs-input-group horizontal ml-3 mt-2">
                                <div class="input-group-addon">Specification</div>
@@ -1393,7 +1416,7 @@ const taskManagement = {
               <div class="col-12">
                   <hr>
               </div>
-              <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
+              <div class="col-12">
                   <div class="cs-input-group mt-2">
                       <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
                           <input type="checkbox" id="sendnotification_detail">
