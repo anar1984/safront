@@ -606,12 +606,18 @@ const taskManagement = {
                            </div>
                        </div>
                        <div class="col-lg-2 mt-2">
-                           <div class="cs-input-group">
-                               <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
-                               <input class="form-control" name="runTaskTime" id="runTaskTime" type="text" required>
-                           </div>
-                       </div>
-                       
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
+                                <div class="cs-date-time d-flex">
+                                        <div>
+                                            <div class="d-flex">
+                                                <span class="input-group-icon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                                <input type="text" name="runTaskTime" id="runTaskTime" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>                       
                        <div class="col-lg-2 pl-0 mt-2">
                             <div class="cs-input-group">
                                 <div class="input-group-addon">Başlat</div>
