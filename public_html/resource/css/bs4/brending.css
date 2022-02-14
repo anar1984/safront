@@ -7878,6 +7878,10 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     padding-left: 8px;
     padding-right: 8px;
 }
+.cs-col-padding.col-lg-12 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
 .cs-horizontal-checkboxes {
     width: 100%;
     height: 25px;
