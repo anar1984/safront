@@ -5205,11 +5205,17 @@
                     </button>
                  
                 </div>
-                <div class="modal-body">
-                    <div class="col-lg-6">
-                        <select name="" class="form-control" id="zona-list-select4move">
+                <div class="modal-body d-flex flex-wrap">
+                    <div class="col-lg-4">
+                                Assignee
+                        
+                        <select name="" class="form-control story_mn_filter_user_list " id="user-list-select4move">
 
                         </select>
+                    </div>
+                    <div class="col-lg-8">
+                        Task Name
+                        <textarea name="" placeholder="task Name" class="form-control" id="newTaskCreate4Ididt"  rows="1"></textarea>
                     </div>
                     <div class="col-12">
                         <table class="table cst-table-hover tablePaginatione component-input-class" id="taskListClosedMulti" style="width: 100% !important;">
@@ -5249,7 +5255,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="submitmultipleClosedTask()"
-                        data-dismiss="modal">Apply
+                        >Apply
                     </button>
                     <!--<button type="button" class="btn btn-primary" onclick="new UserStory().deleteInputBySUSOutputId()">Delete</button>-->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

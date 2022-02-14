@@ -15526,7 +15526,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append("&nbsp;&nbsp;")
                     .append('<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>-'+o.bugCount):"")
 
-
+                .append($("<button>")
+                    .addClass("baclog-large-modal-ididit btn btn-sm btn-light")
+                    .attr("data-status", o.id)
+                    .append('I did it')
+                )
 
                 .append(`
                         <label class="switch ">
@@ -15540,6 +15544,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("data-status", 'baclog-large-modal-next-id')
                     .append('<i class="fas fa-expand" aria-hidden="true"></i>')
                 )
+                
                 .append($("<button>")
                     .addClass("baclog-large-modal-history btn btn-sm btn-light")
                     .attr("data-status", o.id)
@@ -19316,7 +19321,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: true,
             success: function (res) {
-                $(obj).closest('div[class="col-6"]').first().remove();
+                $(obj).closest('div.cs-img-col').remove();
             },
             error: function () {
                 //                Toaster.showError("error");

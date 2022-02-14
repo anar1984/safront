@@ -4018,13 +4018,14 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
               if(attr==='list'){
                $('#pro_zad_' + idx).remove();
-               $('#pro_zad_span' + idx)
+               $('#pro_zad_span' + idx+' .file-name-attach')
                      .attr('data-toggle', "modal")
                      .attr('data-target', "#commentFileImageViewer")
                     .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
-                    .append($('<i class="fa fa-times">')
-                            .attr('pid', idx)
-                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+                    $('#pro_zad_span' + idx)
+                         .append($('<i class="fa fa-times">')
+                                 .attr('pid', idx)
+                                 .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
               }
               else if(attr==='block'){
                 $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
@@ -15307,8 +15308,8 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         getGroupListAssigneLocal();
         genTimePickerById("us_management_created_date_from",'down');
         genTimePickerById("us_management_closed_date_from",'down');
-        var dwlmt = $('#zona-list-select4move');
-        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
+/*         var dwlmt = $('#zona-list-select4move');
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load'); */
         new Label().load();
         new Sprint().load();
      
@@ -18349,11 +18350,7 @@ function updateManualStatus4DragDrop(params) {
 }
 let dragElment  
 function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
-    var val  = $(dragelm).closest(".task-column").attr("status");
-
-    $('#zona-list-select4move').val(val);
-    $('#zona-list-select4move').selectpicker("refresh");
-
+   
     dragElment =$(dragelm);
     var json = {
         kv: {}
@@ -18363,9 +18360,9 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     } catch (err) {
     }
     json.kv.fkBacklogId = bgId;
-    json.kv.fkTaskTypeId = $(firstZone).attr("id");
+   /// json.kv.fkTaskTypeId = $(firstZone).attr("id");
     json.kv.pageNo = 1;
-    json.kv.searchLimit = 50;
+    json.kv.searchLimit = 200;
     json.kv.taskStatus = "'new','ongoing','waiting'";
     json.kv.fkAssigneeId = "'"+global_var.current_ticker_id +"'";
     var that = this;
@@ -18390,7 +18387,7 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
                     var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
                     <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
                     <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
-                        <input id="${ela[i].id}" class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
+                        <input id="${ela[i].id}" class="tdOperation cst-chkc-bl2 cst-clck-box" checked='true' type="checkbox">
                     </td>
                     <td class="text-center" style="width: 100px;" >
                         <span class="brend-color" sa-data-value="9214">${ela[i].projectCode + "-" + ela[i].orderNoSeq}</span>
@@ -18440,7 +18437,9 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     });
 }
 function submitmultipleClosedTask() {
-          var ekm  = $("#taskListClosedMulti .cst-chkc-bl2");
+    var txt  = $("#newTaskCreate4Ididt").val();
+         if(txt.trim().length>1){
+            var ekm  = $("#taskListClosedMulti .cst-chkc-bl2");
             var list  = '';
             ekm.each(function () {
                 if($(this).prop("checked")){
@@ -18449,32 +18448,40 @@ function submitmultipleClosedTask() {
             })
         if(dragElment){
             multipleClosedTask(list,dragElment);
-        } 
+        }    
+         }else{
+            Toaster.showError(("Task name is not entered"));
+ 
+         }
+          
 }
 function multipleClosedTask(list,dragelm) {
     var data = {};
     data.fkTaskId  = list;
+   
    callService('serviceTmcloseMultipleBacklogTasks',data,true,function (res) {
-    getDefautUserByTaskTypeId(dragelm);
-         
+   /// getDefautUserByTaskTypeId(dragelm);
+   var bgId  = $(dragelm).attr("bid");
+   var pid  = $(dragelm).attr("pidd");
+   var asId  = $('#user-list-select4move').val();
+    insertAutoTaskOnDrag(bgId,asId,pid);
    }) 
 }
 function getDefautUserByTaskTypeId(dragelm) {
     var tasTypeId  = $('#zona-list-select4move').val();
     var bgId  = $(dragelm).attr("bid");
     var pid  = $(dragelm).attr("pidd");
-    var data = {};
-      data.id  = tasTypeId;
-   callApi('22011222234409531876',data,true,function (res) {
+
+      insertAutoTaskOnDrag(bgId,asId,pid);
+  /*  callApi('22011222234409531876',data,true,function (res) {
         var asId = res.kv.fkAssigneeId;
-     insertAutoTaskOnDrag(bgId,asId,pid,tasTypeId);
+   
          
-   }) 
+   })  */
 }
 
-function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
-    var txt  = $("[status='"+typId+"']").find("span.headerContentText").text();
-    var nm  = $("[status='"+typId+"']").find(".headerInputColumn").text();
+function insertAutoTaskOnDrag(bgId,asId,prid) {
+    var txt  = $("#newTaskCreate4Ididt").val();
     var json = {
         kv: {}
     };
@@ -18483,12 +18490,12 @@ function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
     } catch (err) {
     }
     json.kv.fkBacklogId = bgId;
-    json.kv.taskName = txt +"(From "+nm+")";
+    json.kv.taskName = txt;
     json.kv.fkProjectId = prid;
-    json.kv.fkTaskTypeId = typId;
     json.kv.fkAssigneeId = asId;
     var that = this;
     var data = JSON.stringify(json);
+    $("#multipleClosedTask").modal("hide");
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmInsertNewBacklogTaskCoreNew",
         type: "POST",
@@ -18497,7 +18504,7 @@ function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-             
+           
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -19523,10 +19530,18 @@ function loadAssigneesByProjectUSM(projectId) {
         success: function (res) {
             var obj = res.tbl[0].r;
             var elm  = $('select.story_mn_filter_user_list')
-            elm.html('');
+                elm.html('');
+             
             for (var i in obj) {
+            
                 var o = obj[i];
-                var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                var userImage = SAProjectUser.GetDetails(o.fkUserId, "userImage");
+                var img = (userImage) ?
+                        fileUrl(userImage) :
+                        fileUrl(new User().getDefaultUserprofileName());
+                var opt = $(`<option value='${o.fkUserId}'
+                data-content="<div pid='${o.fkUserId}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${o.userName}</span></div>">
+                ${o.userName}</option>`)
                 elm.append(opt);
                
 

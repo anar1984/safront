@@ -113,7 +113,7 @@ function sortTable(sv, cls) {
         var tbl = "id-row" + cl
         fTr = $(trList[0]);
         if (index === 0) {
-            var tx = fTr.find("." + cls).find(".get-data-group").html();
+            var tx = fTr.find("td:eq("+sv+")").html();
 
             if (tx.length < 1) {
                 tx = "undefined"
@@ -129,8 +129,8 @@ function sortTable(sv, cls) {
                                     .addClass("groupTableDivInside"))))
         }
 
-        var htm = $(trList[index]).find("." + cls).find(".get-data-group").html();
-        var htm1 = $(trList[index + 1]).find("." + cls).find(".get-data-group").html();
+        var htm = $(trList[index]).find("td:eq("+sv+")").html();
+        var htm1 = $(trList[index + 1]).find("td:eq("+sv+")").html();
 
 
         if (htm === htm1) {
@@ -180,15 +180,16 @@ function getGroupList() {
 
         var td = $("#bugListTable tbody tr td:eq(" + sv + ")").attr("class").split(/\s+/);
 
+        sortTable(sv, td);
+      /*   $.each(td, function (index, item) {
+       
+           if (item === 'bug-list-column') {
 
-        $.each(td, function (index, item) {
-            if (item === 'bug-list-column') {
+            } else { 
 
-            } else {
-
-                sortTable(sv, item);
-            }
-        })
+              
+             }
+        }) */
     } catch (error) {
 
     }
@@ -211,7 +212,7 @@ $(document).on('click', '.bugChangegroupArrow', function (evt) {
     }
     $("[data-aid=" + dst + "]").toggle("fast");
 })
-$(document).on('click', '.bug-task-filter-checkbox-label', function (evt) {
+$(document).on('click', '.label-assign-link-class', function (evt) {
 
     var rc = getLabelFilterCheckedCount();
     if (rc > 0) {
@@ -221,7 +222,8 @@ $(document).on('click', '.bug-task-filter-checkbox-label', function (evt) {
         $('.bug-filter-badge-label').hide();
     }
 
-    if (global_var.current_modal === 'loadBugChange') {
+    var lastmnId  =  Utility.getParamFromUrl('lastMenuId');
+    if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
         getBugList();
     } else if (global_var.current_modal === 'loadTaskManagement') {
         $('.' + global_var.task_mgmt_group_by).click();
@@ -249,7 +251,7 @@ $(document).on('click', '.bug-task-filter-checkbox-sprint', function (evt) {
 
 function getLabelFilterCheckedCount() {
     var rc = 0;
-    $('.bug-task-filter-checkbox-label').each(function () {
+    $('.label-assign-link-class').each(function () {
         if ($(this).is(":checked")) {
             rc++;
         }
@@ -806,7 +808,7 @@ function setBugFilterMultiValues() {
         var val = getBugFilterMultiSelect(this);
 
         bug_filter[data_type] = val;
-        if(data_type!=='nature'){
+        if(data_type!=='nature'||data_type!=='status'){
             if(bug_filter[data_type].length>0 ){
                 FilterCount++;
                 $(this).parent().addClass('cs-select-active')
@@ -857,7 +859,7 @@ function setBugFilterCheckBoxValues() {
 
 function setBugFilterLabelValues() {
     var st = ' ';
-    $('.bug-task-filter-checkbox-label').each(function () {
+    $('.label-assign-link-class').each(function () {
         if ($(this).is(":checked")) {
             st += "'" + $(this).val() + "',";
         }
@@ -894,7 +896,7 @@ function setBugFilterCreatedDateValues() {
         var inns = stTime.trim() + ' AND ' + endTime.trim();
         bug_filter.createdDate = inns;
     } catch (error) {
-        
+        bug_filter.createdDate = '';
     }
    
     
@@ -912,7 +914,8 @@ function setBugFilterClosedDatesValues() {
     bug_filter.closed_date_from = stTime.trim();
     bug_filter.closed_date_to = endTime.trim();
     } catch (error) {
-        
+        bug_filter.closed_date_from = '';
+        bug_filter.closed_date_to = ''; 
     }
     
 }
