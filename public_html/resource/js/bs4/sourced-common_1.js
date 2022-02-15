@@ -21481,6 +21481,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + obj[i].fileUrl+ '")')
                                 .append($("<img>")
                                            .width("40px")
+                                           .height("40px")
                                            .attr("src",fileUrl(obj[i].fileUrl))):"";
             var deleteBl =obj[i].fileUrl?
                      $("<span>")

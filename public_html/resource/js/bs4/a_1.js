@@ -18466,9 +18466,9 @@ function addPinInputToImage(elm) {
     $("#InputAddImagePinModal").modal('hide');
        SAInput.Inputs[inid].fileUrl =fileUrl ;
        $("[data-object-id='"+inid+"']").find('.pin-image-div').remove()
-       $("[data-object-id='"+inid+"']").prepend(`<span class="float-left pin-image-div">
+       $("[data-object-id='"+inid+"']").prepend(`<span class="float-left  pin-image-div">
        <span data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl('${fileUrlg}')">
-       <img src="${fileUrl(fileUrlg)}" style="width: 40px;"></span>
+       <img src="${fileUrl(fileUrlg)}" style="width: 40px;height:40px;"></span>
        <span class="delete-icon" onclick="deleteRelationPinInput(this,'${inid}')">
        <i class="fa fa-trash-o" aria-hidden="true"></i></span></span>`)
    }) 
@@ -19038,10 +19038,10 @@ function setZadi(height, width) {
 
 
 $(document).on('mouseover', 'tr.story-card-input-line-tr-2', function (ev) {
-    $(this).find('.description-style').show();
+    $(this).find('.description-style').css('visibility','visible');
 });
 $(document).on('mouseout', 'tr.story-card-input-line-tr-2', function (ev) {
-    $(this).find('.description-style').hide();
+    $(this).find('.description-style').css('visibility','hidden');;
 });
 $(document).on('focusin', '.description-style', function (ev) {
     $(this).show();
