@@ -559,10 +559,10 @@ var cmpList = {
                         var list  = $("<ul>");
                         var that = this;
                         btns.each(function () {
-                            var icon  = $(this).attr("sa-data-content")
+                            var icon  = $(this).attr("sa-data-content");
                              var order =  $(this).index();
                              var text  = $(this).text();
-                            list.append(that.clickItem(order,text,tbid,icon.trim()));
+                            list.append(that.clickItem(order,text,tbid,icon));
                         })
                         var title  =  $(elm).find("thead th.right-click-btn");
                             title.hide();
@@ -580,7 +580,7 @@ var cmpList = {
             },
             clickItem : function(order,text,tbid,icon) {
                 return `<li onclick="cmpList.tableRightClick.onClickItem(this,'${tbid}')" class="dropdown-item" order-no="${order}">
-                        <i class="cs-svg-icon ${icon}"></i> ${text}
+                        <i class="cs-svg-icon ${icon?icon.trim():"link-2"}"></i> ${text}
                       </li>`
             },
             clickRight: function (tableId) {
