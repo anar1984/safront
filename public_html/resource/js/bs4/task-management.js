@@ -1378,6 +1378,9 @@ const taskManagement = {
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                     <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon chat-circle"></i> <span>Chat</span></a>
+                                </li>
                              </ul>
                         </div>
                     </div>`

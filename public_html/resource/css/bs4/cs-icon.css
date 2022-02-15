@@ -59,6 +59,10 @@
 .cs-svg-icon.cedvel .dropdown-toggle:before {
   background-image: url(../ch-icons/cedvel.svg);
 }
+.cs-svg-icon.chat-alt:after,
+.cs-svg-icon.chat-alt .dropdown-toggle:before {
+  background-image: url(../ch-icons/chat-alt.svg);
+}
 .cs-svg-icon.chat:after,
 .cs-svg-icon.chat .dropdown-toggle:before {
   background-image: url(../ch-icons/chat.svg);
