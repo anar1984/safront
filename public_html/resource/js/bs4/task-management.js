@@ -2111,12 +2111,92 @@ const taskManagement = {
                 </div>`
                 },
                 genEventBlock: function () {
-                    return `   <div class="tab-pane fade task-events-updated cs-box-background" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">
-                       
+                    return `   <div class="tab-pane fade task-events-updated cs-box-background" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">  
                     <div class="row">
-                    
+                        <div class="col-lg-12">
+                            <div class="toggle-body-item toggle-top-box-5 " style="display: block;">
+                                <div class="d-flex border-bottom-1px pb-1 mt-2 mb-1">
+                                    <div class="mr-auto toggle-body-title">
+                                        <div class="result-box">
+                                            <img class="rounded-circle" src="https://test.sourcedagile.com/api/get/files/shekil1_77A7F3AC232D5.png" style="width: 33px; height: 33px; border: 1px solid rgb(3, 57, 108);" />
+                                            <span class="toggle-datatime">26.11.2021  13:42:36</span>
+                                        </div>
+                                    </div>
+                                    <div class="toggle-min-elements">
+                                        <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                        <a data-link="5" class="cs-url toggle-btn active"><i class="fal fa-angle-down" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                                <div class="toggle-box-5 table-box" orderno="7.3" style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;">
+                                    <table class="table cst-table-hover tablePaginatione component-input-class mb-0" id="taskListCW" style="width: 100% !important;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="width:46px"><i class="cs-svg-icon numbers"></i>
+                                                </th>
+                                                
+                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Tip</label> <span class="handle-drag"></span>
+                                                </th>
+
+                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Ad</label> <span class="handle-drag"></span>
+                                                </th>
+
+                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Tarix</label> <span class="handle-drag"></span>
+                                                </th>
+                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Saat</label> <span class="handle-drag"></span>
+                                                </th>
+
+                                                <th class="text-center">
+                                                    <label href="#" class="component-class"><i class="cs-svg-icon task-user-2"></i></label>
+                                                    <span class="handle-drag"></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="redirectClass" style="width: 46px;">
+                                                <td class="text-center brend-color" style="width: 20px;">1</td>
+                                                
+                                                <td class="text-center" style="width: 170px;">
+                                                    <a href="#" class="brend-color">Tapşırıq</a>
+                                                </td>
+
+                                                <td class="text-center" style="width: 170px;">
+                                                    <a href="#" class="brend-color">Tapşırıq</a>
+                                                </td>
+                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
+                                                    <a href="#" class="brend-color">24.11.2021</a>
+                                                </td>
+                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
+                                                    <a href="#" class="brend-color">15:41:43</a>
+                                                </td>
+                                            <td class="text-center" style="width: 80px;">
+                                                    <img class="rounded-circle personal-btn-img js-btn-popover--custom" src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&amp;v=beta&amp;t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg" data-placement="left" data-toggle="popover" data-trigger="hover" sa-selectedfield="fkAssigneeId" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
+                                                </td>
+                                            </tr>
+                                            <tr class="redirectClass" style="width: 46px;">
+                                                <td class="text-center brend-color" style="width: 20px;">2</td>
+                                                
+                                                <td class="text-center" style="width: 170px;">
+                                                    <a href="#" class="brend-color">Əməliyyat</a>
+                                                </td>
+                                                <td class="text-center" style="width: 170px;">
+                                                    <a href="#" class="brend-color">Əməliyyat</a>
+                                                </td>
+                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
+                                                    <a href="#" class="brend-color">24.11.2021</a>
+                                                </td>
+                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
+                                                    <a href="#" class="brend-color">15:41:43</a>
+                                                </td>
+                                                <td class="text-center" style="width: 80px;">
+                                                    <img class="rounded-circle personal-btn-img" src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&amp;v=beta&amp;t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg" data-placement="left" data-toggle="popover" data-trigger="hover" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
                 </div>`
                 },
             }
