@@ -94,10 +94,10 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
-                         <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">Tapşırıqı sürətli daxiletmə qısayolu SHİFT+ENTER</span>
+                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
+                        <!-- <span class='p-1' style=" color: #ffffff66; font-size: 12px; "></span>-->
                     </div>
-                    <div class="pt-1">
+                    <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
@@ -148,7 +148,7 @@ const taskManagement = {
                 return `<div class="mr-auto pl-0 pr-0 pb-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6  mt-3 cs-p-rem">
+                        <div class="col-lg-6  mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                                 <div class='cs-date-time d-flex'>
@@ -171,7 +171,7 @@ const taskManagement = {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                           <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                                 <div class='cs-date-time d-flex'>
@@ -195,7 +195,7 @@ const taskManagement = {
                           </div>
                         </div>
                        
-                        <div class="col-lg-6 mt-3 cs-p-rem">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
                                 <select multiple class="add_task_sprint issue_selectpicker"  id="add_task_sprint" data-live-search="true">
@@ -203,7 +203,7 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select multiple class="run_task_categories issue_selectpicker"  id="run_task_categories" data-live-search="true">
@@ -301,9 +301,9 @@ const taskManagement = {
                                     <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
                                 </li>-->
             
-                                <!--<li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
-                                </li>-->
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                </li>
                             </ul>
                         </div>
                     </div>`
@@ -732,7 +732,6 @@ const taskManagement = {
              </div>`
                 },
                 genEventBlock: function () {
-                    return ""
                     return `  <div class="tab-pane fade task-events-created cs-box-background" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
                     <div class="row">
                         <div class="col-lg-12 cs-flex-col flex-item mt-2">
@@ -2112,11 +2111,70 @@ const taskManagement = {
                 },
                 genEventBlock: function () {
                     return `   <div class="tab-pane fade task-events-updated cs-box-background" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">
-                       
+                                   
                     <div class="row">
-                    
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <label class="switch bcs-swith">
+                                    <input type="checkbox" id="activateUpdatedEvenets">
+                                    <span class="slider round">
+                                        <small class="deactive">Deactive</small>
+                                        <small class="active">Active</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    
+                    <div class="row">
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Subject</div>
+                                <input class="form-control updevents" name="mezmun" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Structure</div>
+                                <input class="form-control updevents" name="struktur" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Type</div>
+                                <input class="form-control updevents" name="nov" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Responsible person</div>
+                                <input class="form-control updevents" name="mesulShexs" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Participant</div>
+                                <input class="form-control updevents" name="istirakci" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Counterparty</div>
+                                <input class="form-control updevents" name="kontragent" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Location</div>
+                                <input class="form-control updevents" name="yer" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Note</div>
+                                <input class="form-control updevents" name="qeyd" type="text">
+                            </div>
+                        </div>
+                    </div>
                 </div>`
                 },
             }
@@ -5015,27 +5073,20 @@ function saveComment(el, commentId) {
     new UserStory().convertTextArea2HtmlAsText($('#' + commentId));
     $(el).hide();
 }
-
-// created
 $(document).on("click", '#toplanti-btn', function () {
     $(this).addClass('active');
     $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
-    // $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-    // $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-
-    $("#newAddCheckList").attr("placeholder",'Gündəm');
-    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
 });
 $(document).on("click", '#tapshiriq-btn', function () {
     $(this).addClass('active');
     $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
-    // $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-    
-    $("#newAddCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
-    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
+    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+    $('.loadUserForObserver span').text('').text('Observer');
+
 });
 
-// updated start
 $(document).on("click", '#toplanti-d-btn', function () {
     $(this).addClass('active');
     $(this).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
@@ -5045,24 +5096,7 @@ $(document).on("click", '#toplanti-d-btn', function () {
     $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
     $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
     updateTask4ShortChangeDetails('1', "isMeet");
-    $("#updateCheckList").attr("placeholder",'Gündəm');
-    $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
 });
-$(document).on("click", '#tapshiriq-d-btn', function () {
-    $(this).addClass('active');
-   
-    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
-
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
-
-    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
-    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
-    updateTask4ShortChangeDetails('0', "isMeet");
-    $("#updateCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
-    $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
-});
-// updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
       var val  = $(this).closest('.assigne-div-update-issue').getVal();
     updateTask4ShortChangeDetails(val, "fkAssigneeId");
@@ -5080,6 +5114,18 @@ $(document).on("delete-interactive", '.observer-div-update-issue', function (e,i
 });
 
 
+$(document).on("click", '#tapshiriq-d-btn', function () {
+    $(this).addClass('active');
+   
+    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
+
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
+    updateTask4ShortChangeDetails('0', "isMeet");
+});
 
 $(document).on('click', '#updateTask-priority-btn', function () {
     $(this).toggleClass('active');
