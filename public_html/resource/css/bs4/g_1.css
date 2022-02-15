@@ -4761,3 +4761,27 @@ td.selected{
     text-decoration: none;
     color: #03396C
 }
+.delete-icon {
+    position: absolute;
+    top: 0px;
+    left: 15px;
+}
+.delete-icon i {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    position: absolute;
+    color: #fff;
+    background: rgb(3 57 108 / 50%);
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    vertical-align: middle;
+    right: 0;
+    top: 0;
+    display: table-cell;
+    font-size: 9px;
+    padding-top: 2px;
+}

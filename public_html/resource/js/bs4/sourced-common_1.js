@@ -19285,6 +19285,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .append('  ')
                         .attr('onclick', 'new UserStory().pinImageToStoryCard(this,"' + id + '","' + name + '")')
                     : "")
+                .append(global_var.image_formats.includes(fileFormat)
+                    ? $('<i></i>')
+                        .addClass('lbl-action')
+                        .append($('<i class="fas fa-plus pinned-img-off" aria-hidden="true"></i>'))
+                        .append('  ')
+                        .attr('onclick', 'new UserStory().addInputToImage(this,"' + id + '","' + name + '")')
+                    : "")
             );
             div2.append(div12lik);
             div.append(div2);
@@ -19399,6 +19406,32 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
 
+    addInputToImage: function (elm,bid,img) {
+     
+        var inputs = $("#generalview_input_list .description-left");
+    var item = $("select#addPinImageInput");
+    item.empty();
+    item.append($("<option>").text('').val(''));
+    inputs.each(function () {
+        var idOption = $(this).closest("tr").attr("inid");
+        var elm = $(this).clone();
+        elm.find(".dropdown").first().remove();
+        var text = $(elm).text();
+        
+
+        item.append($("<option>").text(text).val(idOption));
+    })
+    item.each(function () {
+        var oldVal =  $(this).attr('sa-data-value');
+           $(this).val(oldVal);
+
+           $(this).selectpicker('refresh');
+    })
+   
+    $("select#addPinImageInput").selectpicker();
+    $("#InputAddImagePinModal").attr('fname',img);
+    $("#InputAddImagePinModal").modal('show');
+    },
     pinImageToStoryCard: function (obj, fid, fname) {
         if (!fname) {
             return;
@@ -21439,9 +21472,23 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             //            }
 
             trcount++;
-
+            var imgBlock  =  $("<span class='float-left pin-image-div'>")
+                               
+            var imgMini  =  obj[i].fileUrl?
+                            $('<span>') 
+                                .attr('data-toggle', "modal")
+                                .attr('data-target', "#commentFileImageViewer")
+                                .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + obj[i].fileUrl+ '")')
+                                .append($("<img>")
+                                           .width("40px")
+                                           .attr("src",fileUrl(obj[i].fileUrl))):"";
+            var deleteBl =obj[i].fileUrl?
+                     $("<span>")
+                         .addClass('delete-icon')
+                         .attr('onclick', 'deleteRelationPinInput(this,"' +  obj[i].id+ '")')
+                         .html('<i class="fa fa-trash-o" aria-hidden="true"></i>'):"";
             var inputName = obj[i].inputName;
-
+               
             inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
                 : "";
 
@@ -21456,11 +21503,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .addClass("us-input-list-item-check-box-class-new")
                     .val(obj[i].id)));
 
-
             tr.append($('<td></td>')
+                   .attr('data-object-id',obj[i].id)
                 .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
                 .attr("iname", replaceTags(Replace2Primes(inputName)))
                 .attr('class', 'description-left')
+                .append(imgBlock.append(imgMini).append(deleteBl))
                 .append($('<span>').text(inputName))
                 .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'

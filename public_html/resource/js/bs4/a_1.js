@@ -18455,6 +18455,38 @@ function submitmultipleClosedTask() {
          }
           
 }
+function addPinInputToImage(elm) {
+    var inid  =$("#addPinImageInput").val(); 
+    var fileUrlg  =  $("#InputAddImagePinModal").attr('fname')
+    var data = {};
+    data.id  =inid ;
+    data.fileUrl  =   $("#InputAddImagePinModal").attr('fname');
+   
+   callApi('22021512224607339255',data,true,function (res) {
+    $("#InputAddImagePinModal").modal('hide');
+       SAInput.Inputs[inid].fileUrl =fileUrl ;
+       $("[data-object-id='"+inid+"']").find('.pin-image-div').remove()
+       $("[data-object-id='"+inid+"']").prepend(`<span class="float-left pin-image-div">
+       <span data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl('${fileUrlg}')">
+       <img src="${fileUrl(fileUrlg)}" style="width: 40px;"></span>
+       <span class="delete-icon" onclick="deleteRelationPinInput(this,'${inid}')">
+       <i class="fa fa-trash-o" aria-hidden="true"></i></span></span>`)
+   }) 
+}
+function deleteRelationPinInput(elm,id) {
+      if(confirm("Are you sure?")){
+    var inid  =id
+    var data = {};
+    data.id  =inid ;
+    data.fileUrl  = '';
+     elm.closest('.pin-image-div').remove();
+   callApi('22021512224607339255',data,true,function (res) {
+       
+       SAInput.Inputs[inid].fileUrl = '';
+       
+   }) 
+}
+}
 function multipleClosedTask(list,dragelm) {
     var data = {};
     data.fkTaskId  = list;
