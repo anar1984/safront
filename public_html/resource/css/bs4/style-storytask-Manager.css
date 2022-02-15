@@ -205,7 +205,14 @@
     visibility: hidden;
   
 }
-.task-content:hover .baclog-large-modal-next,.task-content:hover .switch{
+.baclog-large-modal-ididit{
+    position: absolute;
+    right: 70px;
+    top: 2px;
+    visibility: hidden;
+  
+}
+.task-content:hover .baclog-large-modal-next,.task-content:hover .switch,.task-content:hover .baclog-large-modal-ididit{
    visibility: visible;
 }
 .story-priorty-selectbox{

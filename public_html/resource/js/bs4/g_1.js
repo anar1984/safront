@@ -1675,6 +1675,12 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
     $('[data-toggle="popover"]').popover();
 
 });
+$(document).on('click', '.baclog-large-modal-ididit', function (event) {
+    dragElment = $(this).closest('.task-content');
+    var bgId  = $(this).attr("data-status");
+    updateTaskTypeDragDrop(bgId)
+
+});
 $(document).on('click', '.baclog-large-modal-history', function (event) {
 
 

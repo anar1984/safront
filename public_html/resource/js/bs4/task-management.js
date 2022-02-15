@@ -120,13 +120,13 @@ const taskManagement = {
                         <h5>${lang_task.windowAddTask.copyPasteImg}</h5>
                     </div>
                 </div>
-                <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" >
+                <div class="commentsubmit-seqment component-class p-0 cm-file-upload-box ml-0 mr-0" >
                     <div data-toggle="tooltip" id="file1134"                                         
                          class=" tooltipMan component-class  
                          col-lg-12 hover-prototype-selector">
                          <span class="cs-btn-border">
                          <label class="cs-file-upload">
-                            <input class="form-control saTypeFilePicherUploadFileTask component-input-class" 
+                            <input class="form-control saTypeFilePicherUploadFile component-input-class" 
                                    sa-type="filepicker"  type="file" value="" row-no="" 
                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                    multiple="" 
@@ -1020,7 +1020,7 @@ const taskManagement = {
             });
         },
         loadAssigneesByProjectDetails: function (res) {
-    
+                       return
            var elm  =  $('select.user_filter_element_selectpicker');
                 elm.empty();
             try {
@@ -1189,7 +1189,7 @@ const taskManagement = {
                          col-lg-12 hover-prototype-selector">
                          <span class="cs-btn-border">
                             <label class="cs-file-upload">
-                                <input class="form-control saTypeFilePicherUploadFileTask component-input-class" 
+                                <input class="form-control saTypeFilePicherUploadFile component-input-class" 
                                     sa-type="filepicker"  type="file" value="" row-no="" 
                                     pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                     multiple="" 
@@ -3015,17 +3015,17 @@ const taskManagement = {
            <div class="info-box info-box-mob mr-2">
            <span class="title">Tarix</span>
                 <div class="info-box-in">
-                    <div class="info-item-elements static-class"  data-status="expired" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                    <div class="info-item-elements static-class deadline-class"  data-status="expired" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
                         <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
                     </div>
-                    <div class="info-item-elements static-class"  data-status="todays" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                    <div class="info-item-elements static-class deadline-class"  data-status="todays" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
                         <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
                     </div>
-                    <div class="info-item-elements static-class"  data-status="notTodays" data-placement="bottom" data-toggle="p
+                    <div class="info-item-elements static-class deadline-class"  data-status="notTodays" data-placement="bottom" data-toggle="p
                     opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
                         <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
                     </div>
-                    <div class="info-item-elements static-class"  data-status="noDeadline" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                    <div class="info-item-elements static-class deadline-class"  data-status="noDeadline" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
                         <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
                     </div>
                 </div>
@@ -3060,7 +3060,7 @@ const taskManagement = {
                     <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='closed' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib">
                         <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
                     </div>
-                    <div class="${lt==='P'||lt==='H'?'':"d-none "} static-class status-class info-item-elements" data-status='tamamlanib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
+                    <div class="${/* lt==='P'||lt==='H'?'': */"d-none "} static-class status-class info-item-elements" data-status='tamamlanib' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib">
                         <i class="cs-svg-icon shtamp-circle"></i> <span>${tamamlanib}</span>
                     </div>
                 </div>
@@ -3086,7 +3086,7 @@ const taskManagement = {
             genFilterAssigne: function (params) {
                 return ` <div class="cs-input-group mt-3">
                 <div class="input-group-addon">Assignee</div>
-                <select class="form-control  bug-filter-multi bug-mgmt-filter-select bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
+                <select class="form-control  bug-filter-multi bug-mgmt-filter-select user_filter_element_selectpicker  bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
                 data-type="assignee_id" title="Assignee"></select>
             </div>`
@@ -3100,7 +3100,7 @@ const taskManagement = {
             </div>`
             },
             genFilterStatus: function (params) {
-                return `<div class="cs-input-group mt-3">
+                return `<div class="cs-input-group mt-3 d-none">
                 <div class="input-group-addon">Statuse</div>
                 <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
@@ -3254,7 +3254,7 @@ const taskManagement = {
                         </div>
                         <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
                             <option value='0' >Group By...</option>
-                            <option value='5' >Task Status</option>
+                            <option value='4' >Task Status</option>
                             ${
                                 notChwk()?`<option value='7' >Task Nature</option>
                                 <option value='8' >Task Type</option>
@@ -3262,8 +3262,8 @@ const taskManagement = {
                                 <option value='10' >Project</option>
                             `:""
                             }
-                            <option value='12' >Create By</option>
-                            <option value='11' >Assignee</option>
+                            <option value='13' >Create By</option>
+                            <option value='12' >Assignee</option>
                         </select>
                     </div>
 
@@ -4122,35 +4122,40 @@ const taskManagement = {
                         sumExecCount = 0,
                         sumEstBudget = 0,
                         sumSpentBudget = 0;
-                    var obj = res.tbl[0].r;
-                    for (var i = 0; i < obj.length; i++) {
-                        var o = obj[i];
-                        sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
-                        sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
-                        sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
-                        sumExecCount = increaseValue(sumExecCount, o.executedCounter);
-                        sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
-                        sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
-                        
-
-                        var t = this.genTaskTableForm(o,i);
-                        tbody.append(t);
-                        $('[data-toggle="popover"]').popover({
-                            html: true
-                        });
-                    }
-
-                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-                    //         sumEstBudget, sumSpentBudget);
-
-                    global_var.bug_task_sprint_assign_checked = '';
-                    global_var.bug_task_sprint_assign_name = '';
-                    global_var.bug_task_sprint_assign_id = '';
-
-
-                    global_var.bug_task_label_assign_checked = '';
-                    global_var.bug_task_label_assign_name = '';
-                    global_var.bug_task_label_assign_id = '';
+                        try {
+                            var obj = res.tbl[0].r;
+                            for (var i = 0; i < obj.length; i++) {
+                                var o = obj[i];
+                                sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                                sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                                sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                                sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                                sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                                sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+                                
+        
+                                var t = this.genTaskTableForm(o,i);
+                                tbody.append(t);
+                                $('[data-toggle="popover"]').popover({
+                                    html: true
+                                });
+                            }
+        
+                            // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                            //         sumEstBudget, sumSpentBudget);
+        
+                            global_var.bug_task_sprint_assign_checked = '';
+                            global_var.bug_task_sprint_assign_name = '';
+                            global_var.bug_task_sprint_assign_id = '';
+        
+        
+                            global_var.bug_task_label_assign_checked = '';
+                            global_var.bug_task_label_assign_name = '';
+                            global_var.bug_task_label_assign_id = '';
+                        } catch (error) {
+                            
+                        }
+                   
                 },
                 genContextMenu : function () {
                     return `<div id="contextMenu" class="dropdown contextMenu-dropdown-style position-fixed" style="z-index:555;display: none;">
@@ -4849,7 +4854,7 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -4866,7 +4871,7 @@ $(document).on('click', '#addModalBugIssueTaskMng', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -4887,7 +4892,7 @@ $(document).on('click', '#addProjectBugIssueTaskMng', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -4913,7 +4918,7 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#issue-managment-add-task").modal("show");
 
 })
@@ -4999,7 +5004,7 @@ $(document).on("click", '#add-child-task-open-modal', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+    //taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#parent-task-id-input").val(taskId);
     $("#issue-managment-add-task").modal("show");
 
@@ -5209,6 +5214,10 @@ $(document).on('click', '#issue-list-statistic-block .info-item-elements.status-
     sel.selectpicker("refresh");
     getBugList();
 })
+$(document).on('click', '#issue-list-statistic-block .info-item-elements.deadline-class', function () {
+    $(this).toggleClass('active');
+    getBugList();
+})
 $(document).on('click', '.more-button-forIssue', function () {
      var type  = $(this).attr('data-type');
      var pageNo  = $(this).attr('start-limit');
@@ -5270,6 +5279,10 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
     $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
     $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
+    $('#issue-list-datetime').val('');
+    $('#issue_management_closed_date_from').val('');
+    $('#inputGroupSelect01').val('0');
+    $('#inputGroupSelect01').selectpicker('refresh');
     getBugList();
 });
 
