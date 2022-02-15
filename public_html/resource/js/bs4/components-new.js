@@ -160,7 +160,7 @@ var cmpList = {
         },
         genObserverBlockM: function () {
             return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi'>
-                    Nəzarətci:
+                    <span class='add-userList-title'>${lang_task.windowAddTask.observer} :</span>
                 <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="cs-svg-icon user-addons-icon"></i>
                 </span>
