@@ -768,6 +768,7 @@ function genFileBlockMulti4Table(names, cell) {
    return list
 }
  function setFilePickerValue(element,value,empty){
+    $(element).attr("fname",value);
     try {
         value  = value.split("|");
 
@@ -781,7 +782,7 @@ function genFileBlockMulti4Table(names, cell) {
       }
      
    var list  = '';
-      $(element).attr("fname",value);
+   
 
   for (let i = 0; i < value.length; i++) {
       const o = value[i];
@@ -821,7 +822,7 @@ function setFilePickerValueCore(element,value,empty){
               block.addClass("d-flex flex-nowrap");
               block.append(`<div class="cs-img-col" id='pro_zad_span${idx}'>
               <div class="file_upload_div cs_new_file_upload">
-              <img src="${fileUrl(value)}" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl(${value})" alt="Screenshot_16_7D2CA51B0D646.jpg">
+              <img src="${fileUrl(value)}" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl(${value})" alt="${value}">
               <span class="cs-img-title">${add3Dots2Filename(value)}</span>
               <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
               <i class="fa fa-download" aria-hidden="true"></i>
@@ -851,27 +852,31 @@ function generateFileLine4Table(name, cell) {
         var fileFormat = name.substr(ind);
         var fileUrlVar = fileUrl(name);
 
-
+      
         var div2 = $('<div></div>').addClass("d-inline-block");
         var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+        div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b>');
          if (global_var.video_formats.includes(fileFormat)) {
             fileUrlVar = videoFileURL(name);
 
             //                    
-        } else if (fileFormat === 'pdf') {
+        } 
+        else if (fileFormat === 'pdf') {
             fileUrlVar = pdfFileURL(name);
 
-        }else{
-                div12lik.attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFileImageViewer")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
         }
-        div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b>');
+        else if (global_var.image_formats.includes(fileFormat)) {
+            div12lik.find("b")
+                          .attr('data-toggle', "modal")
+                          .attr('data-target', "#commentFileImageViewer")
+                          .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+        }
+      
 
 
 
         div12lik.append($('<a target="_blank"></a>')
-                .attr("href", fileUrlVar)
+                .attr("href", fileUrlPrivate(name))
                 .append($('<i class="fa fa-download"></i>'))
                 .append('  '))
 

@@ -2830,7 +2830,7 @@ function run_task_valid() {
         }
     }
 
-    if ($('#run_task_intensive_select').val() == 'monthly') {
+    if (val_sw_select == 'monthly') {
         if ($('#before_last_day_of_month').is(':checked')) {
             if ($.trim($('input:required#days_before_last_day_of_month').val()).length == 0) {
                 $('input:required#days_before_last_day_of_month').css('border', '1px solid red');
@@ -2841,7 +2841,7 @@ function run_task_valid() {
         }
     }
 
-    if ($('#run_task_intensive_select').val() == 'yearly') {
+    if (val_sw_select == 'yearly') {
 
         if ($.trim($('input:required#runTaskExecutiveDate').val()).length == 0) {
             $('input:required#runTaskExecutiveDate').css('border', '1px solid red');
