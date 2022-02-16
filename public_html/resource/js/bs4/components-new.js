@@ -21,6 +21,14 @@ var cmpList = {
                     callback();
                 }
             })
+        
+        },
+        clickfocusElementSeacrh:function (elm) {
+            setTimeout(function() { 
+                $(elm).closest(".user-addons-box-elm").find('.bs-searchbox input').focus();
+        }, 300);
+            
+            console.log($(elm).closest(".user-addons-box-elm").find('.bs-searchbox input'));
         },
         getUserBlockValue: function (elm) {
             var type = $(elm).attr("action-type");
@@ -137,7 +145,7 @@ var cmpList = {
         genObserverBlockS: function () {
             return `<div class="user-addons-box-elm single-addons dropup" action-type='single'>
                 Məsul şəxs:
-                <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span type="button" class="dropdown-toggle user-dropdonw-btn" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  
                 <i class="cs-svg-icon user-addons-icon"></i>      
                 </span>
@@ -161,7 +169,7 @@ var cmpList = {
         genObserverBlockM: function () {
             return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi'>
                     <span class='add-userList-title'>${lang_task.windowAddTask.observer} :</span>
-                <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span type="button" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="cs-svg-icon user-addons-icon"></i>
                 </span>
                 <span class="count_avatar_users"></span>
@@ -865,6 +873,7 @@ $(document).on('change', 'select.user-list-selectbox-single', function (e) {
     $('[data-toggle="popover"]').popover({
         html: true
     });
+    $(this).closest(".dropdown-menu").removeClass('show')
 });
 $(document).on("click", '.showhide-col-btn', function (e) {
    e.stopPropagation();

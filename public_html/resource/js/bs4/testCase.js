@@ -2642,10 +2642,9 @@ $(document).on("change", '#sendnotification_detail', function () {
 })
 
 $(document).on("change", "#run_task_intensive_select", function (e) {
-    $('#hide_actions').val();
-    $('#hide_actions_param').val();
-    var run_intensive = $('#run_task_intensive_select').val();
-    run_action = run_intensive;
+  
+    var run_intensive = $('#issue-managment-add-task #run_task_intensive_select').val();
+    var  run_action = run_intensive;
     switch (run_action) {
         case 'weekly':
             run_enabled = 'run-enabled';
@@ -2658,62 +2657,21 @@ $(document).on("change", "#run_task_intensive_select", function (e) {
             break;
     }
     if (run_enabled) {
-        $('.run-intensive').removeClass('run-enabled');
-        $('.' + run_intensive + '-actions').addClass(run_enabled);
+        $('#issue-managment-add-task .run-intensive').removeClass('run-enabled');
+        $('#issue-managment-add-task .' + run_intensive + '-actions').addClass(run_enabled);
     }
     if (run_intensive == 'yearly') {
-        $('#hide_actions').val('');
-        $('#hide_actions_param').val('');
+        
     }
     if (run_intensive == 'weekly') {
-        $('#hide_actions').val('');
-        $('#hide_actions_param').val('');
-        var run_sw_select = $('#run_task_weekday_select input[type="checkbox"]').val();
-        $('#hide_actions_param').val(run_sw_select);
+        $("#issue-managment-add-task .weekly-and-monthly-actions").addClass(run_enabled);
     }
     if (run_intensive == 'monthly') {
-        $('#hide_actions').val('');
-        $('#hide_actions_param').val('');
-        if ($('#first_day_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('first_day_of_month');
-        }
-        if ($('#last_day_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('last_day_of_month');
-        }
-
-        if ($('#specific_day_of_month').is(':checked')) {
-            $('.run_spa').removeClass('spa_enable');
-            $('.hr_spa').hide();
-            $('.hr_spa').show();
-            $('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
-            $('#hide_actions').val('specific_day_of_month');
-            var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select').val();
-            $('#hide_actions_param').val(sdofm_day_of_Month_select);
-        }
-        if ($('#before_last_day_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('before_last_day_of_month');
-            var days_before_last_day_of_month = $('#days_before_last_day_of_month').val();
-            $('#hide_actions_param').val(days_before_last_day_of_month);
-        }
-        if ($('#specific_weekday_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('specific_weekday_of_month');
-            var swofm_a1 = $('#swofm_fl_action_select').val();
-            var swofm_a2 = $('#swofm_weekday_select').val();
-            $('#hide_actions_param').val(swofm_a1);
-            $('#hide_actions_param_2').val(swofm_a2);
-        }
-
+        $("#issue-managment-add-task .weekly-and-monthly-actions").addClass(run_enabled);
     }
 
 });
+
 $(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", function (e) {
     $('#hide_actions_param').val('');
     var swofm_a1 = $('#swofm_fl_action_select').val();
@@ -2856,9 +2814,12 @@ function run_task_valid() {
 
 // TASK DETAILS ON
 $(document).on("change", "#run_task_intensive_select_detail", function (e) {
-    $('#hide_actions_detail').val();
-    $('#hide_actions_param_detail').val();
+
     var run_intensive = $('#run_task_intensive_select_detail').val();
+    changeModeSchedule4Update(run_intensive)
+
+});
+function changeModeSchedule4Update(run_intensive){
     run_action = run_intensive;
     switch (run_action) {
         case 'weekly':
@@ -2872,66 +2833,19 @@ $(document).on("change", "#run_task_intensive_select_detail", function (e) {
             break;
     }
     if (run_enabled) {
-        $('.run-intensive').removeClass('run-enabled');
-        $('.' + run_intensive + '-actions').addClass(run_enabled);
+        $('#taskMgmtModal .run-intensive').removeClass('run-enabled');
+        $('#taskMgmtModal .' + run_intensive + '-actions').addClass(run_enabled);
     }
     if (run_intensive == 'yearly') {
-        $('#hide_actions_detail').val('');
-        $('#hide_actions_param_detail').val('');
+        
     }
     if (run_intensive == 'weekly') {
-        $('#hide_actions_detail').val('');
-        $('#hide_actions_param_detail').val('');
-        var run_sw_select = $('#run_task_weekday_select_detail').val();
-        $('#hide_actions_param_detail').val(run_sw_select);
+        $("#taskMgmtModal .weekly-and-monthly-actions").addClass(run_enabled);
     }
     if (run_intensive == 'monthly') {
-        $('#hide_actions_detail').val('');
-        $('#hide_actions_param_detail').val('');
-
-        if ($('#first_day_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-            $('#hide_actions').val('first_day_of_month_detail');
-        }
-        if ($('#last_day_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-            $('#hide_actions_detail').val('last_day_of_month');
-        }
-
-        if ($('#specific_day_of_month_detail').is(':checked')) {
-            $('.run_spa').removeClass('spa_enable');
-            $('.hr_spa').hide();
-            $('.hr_spa').show();
-
-            $('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
-            $('#hide_actions_detail').val('specific_day_of_month');
-            var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select_detail').val();
-            $('#hide_actions_param_detail').val(sdofm_day_of_Month_select);
-        }
-        if ($('#before_last_day_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-
-            $('#hide_actions_detail').val('before_last_day_of_month');
-            var days_before_last_day_of_month = $('#days_before_last_day_of_month_detail').val();
-            $('#hide_actions_param_detail').val(days_before_last_day_of_month);
-        }
-        if ($('#specific_weekday_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-
-            $('#hide_actions_detail').val('specific_weekday_of_month');
-            var swofm_a1 = $('#swofm_fl_action_select_detail').val();
-            var swofm_a2 = $('#swofm_weekday_select_detail').val();
-            $('#hide_actions_param_detail').val(swofm_a1);
-            $('#hide_actions_param_2_detail').val(swofm_a2);
-        }
-
+        $("#taskMgmtModal .weekly-and-monthly-actions").addClass(run_enabled);
     }
-
-});
+ }
 
 $(document).on("change", "#swofm_fl_action_select_detail, #swofm_weekday_select_detail", function (e) {
     $('#hide_actions_param_detail').val('');
@@ -3026,33 +2940,33 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
 $(document).on("change", "#runTaskStartDate_activateschedule", function (e) {
 
     if ($(this).is(':checked')) {
-        $('.shedule-elements.el-disabled .soon').css("pointer-events", "auto");
-        $('.shedule-elements.el-disabled .soon').css("opacity", "1");
-        $('.shedule-elements.el-disabled .soon input').attr("disabled", false);
-        $('.shedule-elements.el-disabled .soon select').attr("disabled", false);
-        $('.shedule-elements').removeClass('el-disabled');
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
+        $('#taskMgmtModal .run-shedule-elements').removeClass('el-disabled');
     } else {
-        $('.shedule-elements').addClass('el-disabled');
-        $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
-        $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
-        $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
-        $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+        $('#taskMgmtModal .run-shedule-elements').addClass('el-disabled');
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     }
 });
 $(document).on("change", "#runTaskAvtivateSchedule", function (e) {
 
     if ($(this).is(':checked')) {
-        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
-        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
-        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
-        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
-        $('.run-shedule-elements').removeClass('el-disabled');
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
+        $('#issue-managment-add-task .run-shedule-elements').removeClass('el-disabled');
     } else {
-        $('.run-shedule-elements').addClass('el-disabled');
-        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
-        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
-        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
-        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
+        $('#issue-managment-add-task .run-shedule-elements').addClass('el-disabled');
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     }
 });
 
@@ -3060,6 +2974,11 @@ $(document).on('change', '#run_task_project_name_detail', function (event) {
     var elm = $("#run_task_name_detail").selectpicker('refresh');
     var val = $(this).val();
     getBacklogListByProject4Element(val, elm);
+});
+$(document).on('change', '#sendnotification_detail', function (event) {
+    var val  = $(this).prop('checked')?"1":"0";
+    updateTask4ShortChangePureDetail(val, "notificationMail", global_var.current_issue_id);
+    updateTask4ShortChangePureDetail(val, "sendNotification", global_var.current_issue_id);
 });
 // TASK DETAILS OFF
 

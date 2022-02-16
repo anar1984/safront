@@ -18858,6 +18858,57 @@ function updateTask4ShortChangePureWithSync(val, ustype, taskId, comment, change
     });
 }
 
+function updateTask4Details(elm, ustype) {
+    var val  = $(elm).val();
+    updateTask4ShortChangePureDetail(val, ustype, global_var.current_issue_id);
+}
+
+function updateTask4ShortChangePureDetail(val, ustype, taskId) {
+    try {
+
+        if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
+            return;
+        }
+    } catch (e) {
+        return;
+    }
+
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = taskId;
+    json.kv.key = ustype;
+    json.kv.value = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateTaskDetails4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+           /*  SATask.addTaskByRes(res);
+            SACore.updateBacklogByRes(res); */
+            getBugList();
+            try {
+                genTaskTypeManagmentView4None();
+            } catch (error) {
+
+            }
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function updateTask4ShortChangePure(val, ustype, taskId) {
     try {
 
@@ -18904,7 +18955,6 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
         }
     });
 }
-
 
 function loadMainProjectList4Class() {
 
