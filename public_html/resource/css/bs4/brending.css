@@ -7942,3 +7942,9 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 .cs-horizontal-checkboxes label input[type=checkbox]{
     display: none;
 }
+.toggle-datatime {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+}

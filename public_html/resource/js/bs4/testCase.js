@@ -122,11 +122,16 @@ function sortTable(sv, cls) {
             fTr.before($("<tr>")
                     .addClass("groupTrElement")
                     .append($("<td>")
+                            .attr('colspan','100%')
                             .addClass("groupTdElement")
                             .append($("<div>")
                                     .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
                                     .append(tx)
-                                    .addClass("groupTableDivInside"))))
+                                    .addClass("groupTableDivInside"))
+                                    .append($("<div>")
+                                        .addClass('group-count-box')
+                                            .append('<span>0</span>')
+                                        )))
         }
 
         var htm = $(trList[index]).find("td:eq("+sv+")").html();
@@ -150,12 +155,16 @@ function sortTable(sv, cls) {
             $(trList[index]).after($("<tr>")
                     .addClass("groupTrElement")
                     .append($("<td>")
+                            .attr('colspan','100%')
                             .addClass("groupTdElement")
-
                             .append($("<div>")
                                     .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
                                     .append(htm1)
-                                    .addClass("groupTableDivInside"))));
+                                    .addClass("groupTableDivInside"))
+                                        .append($("<div>")
+                                        .addClass('group-count-box')
+                                            .append('<span>0</span>')
+                                    )));
 
         }
 
@@ -207,7 +216,7 @@ $(document).on('click', '.bugChangegroupArrow', function (evt) {
     }
     if (dt == 0) {
 
-        $(this).html('<i class="fas fa-chevron-right"></i>');
+        $(this).html('<i class="fas fa-chevron-up"></i>');
         $(this).attr("data-closed", 1);
     }
     $("[data-aid=" + dst + "]").toggle("fast");
