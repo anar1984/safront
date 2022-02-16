@@ -3244,7 +3244,7 @@ const taskManagement = {
                             </div>
                             <b id="table-row-count"> </b>
                         </div>
-                        <div class="cs-input-group text-center mt-3">
+                        <div class="cs-input-group text-center mt-3 pr-0">
                             <div class="task-clear-filter-btn">
                                 <i class="cs-svg-icon clear-filter"></i>
                             </div>
