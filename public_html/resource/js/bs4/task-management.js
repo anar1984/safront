@@ -311,7 +311,7 @@ const taskManagement = {
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                     <div class='row'>
-                    <div class="col-lg-6  mt-2">
+                        <div class="col-lg-6  mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
                                         style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
@@ -345,6 +345,54 @@ const taskManagement = {
                             </div>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                            <div class="col-4 estimateHours">
+                                <div class="cs-input-group">
+                                    <label class="input-group-addon">Estimated Hour(s)</label>
+                                    <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
+                                           class="taskEstimationHoursInput estimateHourseInput form-control cs-input" type="number" name=""
+                                           id="">
+                                </div>
+                            </div>
+                            <div class="col-4 spentHours">
+                                <div class="cs-input-group">
+                                    <label class="input-group-addon">Spent Hour(s)</label>
+                                    <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control cs-input"
+                                           onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
+                                </div>
+                            </div>
+                            <div class="col-4 estimateHours">
+                                <div class="cs-input-group">
+                                    <label class="input-group-addon">Estimated Counter</label>
+                                    <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
+                                           class="taskEstimatedCounterInput estimateHourseInput form-control cs-input" type="number" name=""
+                                           id="">
+                                </div>
+                            </div>
+                            <div class="col-4 spentHours">
+                                <div class="cs-input-group">
+                                    <label class="input-group-addon">Executed Counter</label>
+                                    <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control cs-input"
+                                           onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
+                                </div>
+                            </div>
+                            <div class="col-4 estimateHours">
+                                <div class="cs-input-group">
+                                    <label class="input-group-addon">Estimated Budget</label>
+                                    <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
+                                           class="taskEstimatedBudgetInput estimateHourseInput form-control cs-input" type="number" name=""
+                                           id="">
+                                </div>
+                            </div>
+                            <div class="col-4 spentHours">
+                                <div class="cs-input-group">
+                                    <label class="input-group-addon">Spent Budget</label>
+                                    <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control cs-input"
+                                           onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
+                                </div>
+                            </div>
+                        </div>
                 </div>`
                 },
                 genScheduleBlockInsertNew: function () {
@@ -1149,42 +1197,8 @@ const taskManagement = {
 
                     <div class="col-lg-12">
                         <div class="row">
-                            <div class="col-lg-4 statusCardStorymb-3">
-                                <div class="cs-input-group">
-                                    <label class="input-group-addon">Status</label>
-                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
-                                    <div class="form-group ">
-
-                                        <select class="form-control update-selectpicker issue_selectpicker task-info-modal-status" style="width:auto"
-                                                onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
-                                            <option value='new'><span
-                                                class="us-item-status-new comment-content-header-status">New</span></option>
-                                            <option value='ongoing'> <span
-                                                class="us-item-status-ongoing comment-content-header-status"
-                                                id="">Ongoing</span></option>
-                                          
-                                            <option value='waiting'><span
-                                                class="us-item-status-waiting comment-content-header-status"
-                                                id="">Waiting</span></option>
-                                            
-                                            <option value='rejected'><span
-                                                class="us-item-status-rejected comment-content-header-status"
-                                                id="">Rejected</span></option>
-                                            <option value='canceled'><span
-                                                class="us-item-status-rejected comment-content-header-status"
-                                                id="">Canceled</span></option>
-                                            <option value='UAT'><span
-                                                class="us-item-status-rejected comment-content-header-status"
-                                                id="">UAT</span></option>
-
-                                        </select>
-                                    </div>
-                                </div>            
-                            </div>
-
-
-
-                            <div class="col-lg-4 statusCardStory mb-3">
+                            
+                            <div class="col-lg-6 statusCardStory mb-3">
                                 <div class="cs-input-group">
                                     <label class="input-group-addon">Task Nature</label>
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
@@ -1205,7 +1219,7 @@ const taskManagement = {
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 statusCardStory task-mgmt-tasktype mb-3" id='task-mgmt-tasktype'>
+                            <div class="col-lg-6 statusCardStory task-mgmt-tasktype mb-3" id='task-mgmt-tasktype'>
                                 <div class="cs-input-group">
                                     <label class="input-group-addon">Task Type</label>
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
@@ -1220,27 +1234,23 @@ const taskManagement = {
                                     </div>
                                 </div>            
                             </div>
-                            <div class="col-lg-4 statusCardStory">
-                                <div class="cs-input-group">
-                                    <label class="input-group-addon">Priority</label>
-                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
-                                    <div class="form-group ">
-                                        <select class="form-control update-selectpicker issue_selectpicker task-info-modal-priority" style="width:auto"
-                                                onchange="updateTask4ShortChange(this, 'taskPriority')"
-                                                id="task-info-modal-priority">
-                                            <option value='1' selected>1- Lowest</option>
-                                            <option value='2'>2</option>
-                                            <option value='3'>3</option>
-                                            <option value='4'>4</option>
-                                            <option value='5'>5</option>
-                                            <option value='6'>6</option>
-                                            <option value='7'>7</option>
-                                            <option value='8'>8</option>
-                                            <option value='9'>9 - Highest</option>
-                                        </select>
-                                    </div>
+
+                            <div class="col-lg-6  mt-2">
+                            <div class="cs-input-group">
+                                    <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
+                                            style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_detail'
+                                            title="${lang_task.rightBar.project}"></select>
                                 </div>
                             </div>
+                    
+                            <div class="col-lg-6 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
+                                            data-live-search="true" id='bug_filter_backlog_id_detail' title="${lang_task.rightBar.storyCart}">
+                                    </select>
+                                </div>
+                            </div>
+                         
                         </div>
                         <hr>
                         <div class="row addEpicTask">           
@@ -1255,36 +1265,7 @@ const taskManagement = {
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <div class="col-md-4">
-                            <div class="cs-input-group Assigne-card-story">
-                            <label class="input-group-addon">Created by</label>
-
-                            <div class="Assigne-card-story-select form-control">
-                                <div id="task-mgmt-create-by">
-                                    <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt="" srcset="">
-                                    <span class="Assigne-card-story-select-name">Unassigned</span>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
-
-                            <div class="col-md-4">
-                            <div class="cs-input-group Assigne-card-story">
-                            <label class="input-group-addon">Updated By: <span class="by-last-updated" style="float:right"><span class="task_detail_created_date">..</span> / <span class="task_detail_created_time">::</span></span></label>
-
-                            <div class="Assigne-card-story-select form-control">
-                                <div id="task-mgmt-closed-by">
-                                    <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt="" srcset="">
-                                    <span class="Assigne-card-story-select-name">Unassigned</span>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
+                 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="cs-forum-group addEpicTask mt-0">
@@ -2730,7 +2711,7 @@ const taskManagement = {
                         </div>
 
                 </div>
-                <div class="cs-input-group input-group mt-3 col-12 sw-datetime-absolute">
+                <div class="cs-input-group input-group mt-3 col-12">
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                     </div>
@@ -3459,7 +3440,10 @@ const taskManagement = {
 
                    <div class="mr-auto">
                        <div class="task-list-datetime">
-                           <input type="text" autocomplete="off" onchange="callBugFilterMulti()" id="issue-list-datetime" class="form-control text-center" placeholder="Tarixə görə">
+                           <div class="d-flex">
+                           <span class="input-group-icon"><i class="cs-svg-icon calendar-01"></i></span>
+                           <input type="text" autocomplete="off" onchange="callBugFilterMulti()" id="issue-list-datetime" class="form-control text-center sss" placeholder="Tarixə görə">
+                           </div>
                         </div>
                    </div>
                      <div class="d-none">
