@@ -22,6 +22,14 @@ var bug_filter = {
     fkTaskTypeId: '',
     is_meet: '',
     observer_by: '',
+
+    afterDueDate: '',
+    dueDate: '',
+    isPrivate: '',
+    noDeadLine: '',
+    observedByMe: '',
+    myTask: '',
+    currentDueDate: '',
 }
 
 var sprintTaskIds = "";
@@ -856,6 +864,24 @@ function setBugFilterValues() {
         
     })
 }
+function getValueHeaderFilterIconList() {
+     var item = $("#issue-list-statistic-block .deadline-class");
+
+     item.each(function () {
+        var st  = $(this).attr("data-filed");
+            if($(this).hasClass("active")){
+               
+                bug_filter[st] = '1'; 
+            }else{
+                bug_filter[st] = ''; 
+            }
+        
+     })
+}
+$(document).on("click",'#issue-list-statistic-block .deadline-class',function (e) {
+    $(this).toggleClass("active");
+    getBugList();
+})
 
 function setBugFilterCheckBoxValues() {
     $('.bug-filter-checkbox').each(function () {
@@ -1192,6 +1218,7 @@ function setBugListInitialData() {
     FilterCount =0;
     setBugFilterCheckBoxValues();
     setBugFilterValues();
+    getValueHeaderFilterIconList();
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
@@ -1265,6 +1292,13 @@ function getBugList() {
         json.kv.observerBy = bug_filter.observer_by;
         json.kv.startLimit = 0;
         json.kv.endLimit = 25;
+        json.kv.afterDueDate =bug_filter.afterDueDate;
+        json.kv.dueDate =bug_filter.dueDate;
+        json.kv.isPrivate =bug_filter.isPrivate;
+        json.kv.noDeadLine =bug_filter.noDeadLine;
+        json.kv.observedByMe = bug_filter.observedByMe;
+        json.kv.myTask =bug_filter.myTask;
+        json.kv.currentDueDate=bug_filter.currentDueDate;
       
         var view = localStorage.getItem('task-view-format');
         taskManagement.readTask.genBlockTask.getstatisticListLoadAfter(json);

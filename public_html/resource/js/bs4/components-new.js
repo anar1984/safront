@@ -379,11 +379,11 @@ var cmpList = {
                     var text = $(this).text();
                       text = text.trim();
                     if(text.length >0 &&orderNo){
-                        if($(this).css("display")==='none'){
+                         if($(this).hasClass("right-click-btn")){
                             
-                        }else{
+                        }else{ 
                             ul.append(that.genCheckItem(orderNo,text));
-                        }
+                        } 
                     } 
                   })
 
@@ -462,17 +462,17 @@ var cmpList = {
             var td  = $("[data-colum-id='"+tableId+"'] > tbody > tr").find("td:eq("+order+")");
             if(item.prop("checked")){
                 td.each(function () {
-                     $(this).show(); 
+                     $(this).removeClass("d-none"); 
                 })
                 th.each(function () {
-                     $(this).show(); 
+                     $(this).removeClass('d-none'); 
                 })
             }else{
                td.each(function () {
-                    $(this).hide(); 
+                    $(this).addClass('d-none'); 
               })
                th.each(function () {
-                   $(this).hide(); 
+                   $(this).addClass('d-none'); 
                })
             }
         },

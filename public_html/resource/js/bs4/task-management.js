@@ -2421,34 +2421,34 @@ const taskManagement = {
                 const  lt  = localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"
                 return `
                <div class="info-box mr-2">
-               <div class="info-item-elements filter-task-list-btn static-class"  data-status="meSend" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
+               <div class="info-item-elements  static-class deadline-class"  data-status="meSend" data-filed='isPrivate' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
                <div class="info-item-elements  dropdown-toggle "    data-toggle="dropdown">
-                    <span data-placement="bottom" class='static-class' data-status="myTask" data-toggle="popover" data-trigger="hover" data-content="İş">
+                    <span data-placement="bottom" class='static-class' data-status="myTask"  data-toggle="popover" data-trigger="hover" data-content="İş">
                     <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
                     </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
-                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
-                    <a class="dropdown-item filter-task-list-btn" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
+                    <a class="dropdown-item  deadline-class" href="#" data-placement="right" data-filed='createdByMe' data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
+                    <a class="dropdown-item  deadline-class" href="#" data-placement="right" data-filed='myTask' data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
+                    <a class="dropdown-item deadline-class" href="#" data-placement="right" data-filed='observedByMe' data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
                 </div>
            </div> 
            <div class="info-box info-box-mob mr-2">
            <span class="title">Tarix</span>
                 <div class="info-box-in">
-                    <div class="info-item-elements static-class deadline-class"  data-status="expired" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                    <div class="info-item-elements static-class deadline-class"  data-status="expired" data-filed='dueDate' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
                         <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
                     </div>
-                    <div class="info-item-elements static-class deadline-class"  data-status="todays" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                    <div class="info-item-elements static-class deadline-class"  data-status="todays" data-filed='currentDueDate' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
                         <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
                     </div>
-                    <div class="info-item-elements static-class deadline-class"  data-status="notTodays" data-placement="bottom" data-toggle="p
+                    <div class="info-item-elements static-class deadline-class"  data-status="notTodays"  data-filed='afterDueDate' data-placement="bottom" data-toggle="p
                     opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
                         <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
                     </div>
-                    <div class="info-item-elements static-class deadline-class"  data-status="noDeadline" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                    <div class="info-item-elements static-class deadline-class"  data-status="noDeadline" data-filed='noDeadline' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
                         <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
                     </div>
                 </div>
@@ -2491,40 +2491,40 @@ const taskManagement = {
             },
             genFilterProject: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Project</div>
+                <div class="input-group-addon">${lang_task.rightBar.project}</div>
                 <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
                 style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
-                data-type="project_id" title="Project"></select>
+                data-type="project_id" title="${lang_task.rightBar.project}"></select>
             </div>`
             },
             genFilterStoryCard: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Story Card</div>
+                <div class="input-group-addon">${lang_task.rightBar.storyCart}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
-                data-type="backlog_id" title="Story Card">
+                data-type="backlog_id" title="${lang_task.rightBar.storyCart}">
                </select>
             </div>`
             },
             genFilterAssigne: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Assignee</div>
+                <div class="input-group-addon">${lang_task.rightBar.assignee}</div>
                 <select class="form-control  bug-filter-multi bug-mgmt-filter-select user_filter_element_selectpicker  bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
-                data-type="assignee_id" title="Assignee"></select>
+                data-type="assignee_id" title="${lang_task.rightBar.assignee}"></select>
             </div>`
             },
             genFilterClosedBy: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Closed By</div>
+                <div class="input-group-addon">${lang_task.rightBar.closedBy}</div>
                 <select class="form-control  bug-filter-multi  bug-mgmt-filter-select user_filter_element_selectpicker" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
-                data-type="closed_by" title="Closed By"></select>
+                data-type="closed_by" title="${lang_task.rightBar.closedBy}"></select>
             </div>`
             },
             genFilterStatus: function (params) {
                 return `<div class="cs-input-group mt-3 d-none">
-                <div class="input-group-addon">Statuse</div>
+                <div class="input-group-addon">Status</div>
                 <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                     title="Status">
@@ -2541,19 +2541,19 @@ const taskManagement = {
             },
             genFilterTaskType: function (params) {
                 return `<div class="cs-input-group mt-3">
-                <div class="input-group-addon">Task Type</div>
+                <div class="input-group-addon">${lang_task.rightBar.taskType}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
-                    title="Task Type">
+                    title="${lang_task.rightBar.taskType}">
                 </select>
             </div>`
             },
             genFilterTaskNature: function (params) {
                 return ` <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Task Nature</div>
+                <div class="input-group-addon">${lang_task.rightBar.taskNature}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
-                    multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
-                    <option value='bug' selected>Bug</option>
+                    multiple id='bug_filter_nature' data-type="nature" title="${lang_task.rightBar.taskNature}">
+                    <option value='bug' selected>${lang_task.rightBar.taskNature}</option>
                     <option value='change' selected>Change Request</option>
                     <option value='new' selected>New Request</option>
                 </select>
@@ -2561,23 +2561,23 @@ const taskManagement = {
             },
             genFilterCreatedBy: function (params) {
                 return `  <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Created by</div>
+                <div class="input-group-addon">${lang_task.rightBar.createdBy}</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
-                    data-type="created_by" title="Created by"></select>
+                    data-type="created_by" title="${lang_task.rightBar.createdBy}"></select>
             </div>`
             },
             genFilterObserverBy: function (params) {
                 return `  <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Observer by</div>
+                <div class="input-group-addon">${lang_task.rightBar.observer}</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
-                    data-type="observer_by" title="Observer by"></select>
+                    data-type="observer_by" title="${lang_task.rightBar.observer}"></select>
             </div>`
             },
             genFilterIsmeetBy: function () {
                 return `  <div class="cs-input-group mt-3">
-                <div class="input-group-addon">Type</div>
+                <div class="input-group-addon">${lang_task.rightBar.type}</div>
                 <select class=" form-control bug-filter  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)'  data-live-search="true" id='bug_filter_is_meet'
                     data-type="is_meet" >
@@ -2676,17 +2676,17 @@ const taskManagement = {
                             <div class="input-group-text"><i class="cs-svg-icon filter-group"></i></div>
                         </div>
                         <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
-                            <option value='0' >Group By...</option>
-                            <option value='4' >Task Status</option>
+                            <option value='0' >${lang_task.rightBar.groupBy}</option>
+                            <option value='4' >${lang_task.table.tableColums.taskStatus}</option>
                             ${
-                                notChwk()?`<option value='7' >Task Nature</option>
-                                <option value='8' >Task Type</option>
-                                <option value='9' >Story Card</option>
-                                <option value='10' >Project</option>
+                                notChwk()?`<option value='7' >${lang_task.rightBar.taskNature}</option>
+                                <option value='8' >${lang_task.rightBar.taskNature}</option>
+                                <option value='9' >${lang_task.rightBar.storyCart}</option>
+                                <option value='10' >${lang_task.rightBar.project}</</option>
                             `:""
                             }
-                            <option value='13' >Create By</option>
-                            <option value='12' >Assignee</option>
+                            <option value='13' >${lang_task.rightBar.createdBy}</</option>
+                            <option value='12' >${lang_task.rightBar.assignee}</</option>
                         </select>
                     </div>
 
@@ -2733,25 +2733,25 @@ const taskManagement = {
                             </div>
                             <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
                                 id='bug_filter_sortby' title="Columns">
-                                    <option value='0' >Sort by...</option>
-                                    <option value='task_status' selected>Status</option>
-                                    <option value='id' selected>Task ID</option>
-                                    <option value='task_name'  accesskey="">Description</option>
-                                    <option value='task_nature'  >Task Nature</option>
-                                    <option value='fk_assignee_id' >Assignee</option>
-                                    <option value='fk_task_type_id' >Task Type</option>
-                                    <option value='close_status_date'>Closed Date</option> 
-                                    <option value='closed_by'>Closed By</option> 
-                                    <option value='task_priority'>Priority</option>  
-                                    <option value='created_by'  >Create By</option>
-                                    <option value='created_date'  >Create Date</option>  
+                                    <option value='0' >${lang_task.rightBar.sortBy}</option>
+                                    <option value='task_status' selected>${lang_task.table.tableColums.taskStatus}</option>
+                                    <option value='id' selected>${lang_task.table.tableColums.taskId}</option>
+                                    <option value='task_name'  accesskey="">${lang_task.table.tableColums.description}</option>
+                                    <option value='task_nature'  >${lang_task.rightBar.taskNature}</option>
+                                    <option value='fk_assignee_id' >${lang_task.rightBar.assignee}</option>
+                                    <option value='fk_task_type_id' >${lang_task.rightBar.taskType}</option>
+                                    <option value='close_status_date'>${lang_task.rightBar.closedDates}</option> 
+                                    <option value='closed_by'>${lang_task.rightBar.closedBy}</option> 
+                                    <option value='task_priority'>${lang_task.rightBar.priority}</option>  
+                                    <option value='created_by'  >${lang_task.rightBar.createdBy}</</option>
+                                    <option value='created_date'  >${lang_task.rightBar.createdDate}</</option>  
                                     </select>
                         </div>
                     </div>
 
                     <div class="cs-input-group col-6 mt-3">
                         <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby-asc" data-actions-box="true"    
-                                id='bug_filter_sortby_asc' title="Columns">
+                                id='bug_filter_sortby_asc' title="${lang_task.rightBar.colums}">
                             <option value='asc' >ASC</option>
                             <option value='desc' selected>Desc</option>
                         </select>
@@ -4716,10 +4716,6 @@ $(document).on('click', '#issue-list-statistic-block .info-item-elements.status-
     })
     sel.val(statlist);
     sel.selectpicker("refresh");
-    getBugList();
-})
-$(document).on('click', '#issue-list-statistic-block .info-item-elements.deadline-class', function () {
-    $(this).toggleClass('active');
     getBugList();
 })
 $(document).on('click', '.more-button-forIssue', function () {

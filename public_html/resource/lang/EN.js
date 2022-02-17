@@ -18,7 +18,7 @@ const lang_task = {
   table: {
     tableColums: {
       taskOrderNo: 'Task order number',
-      description: 'Descriptiomn',
+      description: 'Description',
       storyCart: 'Story cart',
       project: 'Project',
       inputDate: 'Input date',
@@ -63,6 +63,9 @@ const lang_task = {
     meet: 'Meet',
     task: 'Task',
     all: 'All',
+    observer: 'Observer By',
+    type: 'Type',
+    createdDate: 'Created By',
   },
   bottomBar: {
     sortTasksByDate: 'Sort tasks by date',
