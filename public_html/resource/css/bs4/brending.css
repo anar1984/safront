@@ -6548,24 +6548,39 @@ label.cs-file-upload input[type="file"].form-control {
     color: #fff !important;
 }
 .paginationStyle .task-list-datetime {
-    display: table-cell;
-    height: 100%;
-    vertical-align: middle;
-    line-height: 2;
-}
-.paginationStyle .task-list-datetime input {
-    height: 30px;
+    height: 25px;
+    line-height: 1;
     color: #fff;
     background: #03396C;
     border: none;
     mix-blend-mode: normal;
     border-radius: 50px;
-    display: table-cell;
     vertical-align: middle;
+    margin-top: 5px;
+    min-width: 110%;
+}
+.paginationStyle .task-list-datetime .input-group-icon {
+    padding: 2px 8px;
+}
+.paginationStyle .task-list-datetime .input-group-icon .cs-svg-icon:after{
+    width: 16px;
+    height: 16px;
+}
+.paginationStyle .task-list-datetime input {
+    height: 25px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    mix-blend-mode: normal;
+    border-radius: 50px;
+    display: table-cell;
+    font-size: 13px;
+    vertical-align: middle;
+    padding-left: 0;
 }
 .paginationStyle .task-list-datetime input::placeholder {
     color: rgb(255 255 255 / 70%) !important;
-    font-size: 16px;
+    font-size: 13px;
     line-height: 20px;
     display: table-cell;
     vertical-align: middle;
