@@ -14,11 +14,11 @@ and open the template in the editor.
 #body_of_nature{
     position: fixed;
 }
-.sa-sct-full-width .dropdown-menu{
+/* .sa-sct-full-width .dropdown-menu{
     transform: none !important;
     min-width:100% !important;
     width: 100% !important;
-}
+} */
 
 .loading_custom {
     position: absolute;
@@ -1073,17 +1073,13 @@ table tr.active {
 /* -----------------------------------------
    Dropdown
 ----------------------------------------- */
-.dropdown-menu{
-    padding:0 0 0 0;
-}
+
 a.dropdown-menu-header {
     background: #f7f9fe;
     font-weight: bold;
     border-bottom: 1px solid #e3e3e3;
 }
-.dropdown-menu > li a {
-    padding: 10px 20px;
-}
+
 
 /* -----------------------------------------
    Badge
@@ -2067,11 +2063,6 @@ button#inline-proje-attr:focus {
 td.lbl-list-td {
     width: 30px;
 }
-.dropdown-menu {
-    min-width: 175px;
-}
-
-
 button#dropdownMenuLink{
 
 
@@ -3877,4 +3868,49 @@ div.user-list-selectbox-single > .dropdown-menu,div.user-list-selectbox-multiple
     overflow: hidden !important;
     bottom: auto !important;
     width: 100% !important;
+}
+.user-addons-box-elm.multiple-addons >.user-dropdonw-btn img:nth-of-type(1n+5){
+    display: none;
+}
+.editor-frame .loading {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, .5);
+    margin: 0 auto;
+/*     display: none; */
+    z-index: 100
+}
+
+.editor-frame .progress {
+    width: 50%;
+    margin: 15% auto 0
+}
+
+ .editor-frame .progress .bar {
+    width: 100%;
+    background-color: #4bb1cf
+}
+.progress.active .bar {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -moz-animation: progress-bar-stripes 2s linear infinite;
+    -ms-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+.progress-striped .bar {
+    background-color: #149bdf;
+    background-image: -webkit-gradient(linear,0 100%,100% 0,color-stop(.25,rgba(255,255,255,.15)),color-stop(.25,transparent),color-stop(.5,transparent),color-stop(.5,rgba(255,255,255,.15)),color-stop(.75,rgba(255,255,255,.15)),color-stop(.75,transparent),to(transparent));
+    background-image: -webkit-linear-gradient(
+45deg
+,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: -moz-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: -o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: linear-gradient(
+45deg
+,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    -webkit-background-size: 40px 40px;
+    -moz-background-size: 40px 40px;
+    -o-background-size: 40px 40px;
+    background-size: 40px 40px;
 }

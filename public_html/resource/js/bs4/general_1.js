@@ -751,6 +751,146 @@ function add3Dots2Filename(fname) {
     var st = fname.substring(0, idx) + '...' + extension;
     return st;
 }
+function genFileBlockMulti4Table(names, cell) {
+    try {
+         names  = names.split("|");
+
+    } catch (error) {
+        
+    }
+    var list  = ''
+   for (let i = 0; i < names.length; i++) {
+       const o = names[i];
+       if(o.length > 0){
+        list+= generateFileLine4Table(o, cell);
+       }
+   }
+   return list
+}
+ function setFilePickerValue(element,value,empty){
+    $(element).attr("fname",value);
+    try {
+        value  = value.split("|");
+
+   } catch (error) {
+       
+   }
+   var container  = $(element).closest(".component-class");
+   var block  =  container.find('#progress_bar_new');
+      if(empty!='noEmpty'){
+        block.html(''); 
+      }
+     
+   var list  = '';
+   
+
+  for (let i = 0; i < value.length; i++) {
+      const o = value[i];
+      if(o.length>0){
+        list += setFilePickerValueCore(element,o,empty);
+      }
+  }
+ }
+function setFilePickerValueCore(element,value,empty){
+       var idx = makeId(10)
+       var elm  = $(element);
+       var attr  = $(element).attr("view-type");
+           attr  = attr?attr:"list";
+       var type = $(element).attr("type");
+       if(type==='file'){
+
+        var container  = $(elm).closest(".component-class");
+        var block  =  container.find('#progress_bar_new');
+           
+          if(attr==='list'){
+              block.removeClass("d-flex flex-nowrap");
+             block.append(
+                $('<div>')
+               
+                .addClass("file-item")
+                .attr('id', 'pro_zad_span' + idx)
+                .append($("<span class='file-name-attach'>")
+                             .text(add3Dots2Filename(value))
+                             .attr('data-toggle', "modal")
+                             .attr('data-target', "#commentFileImageViewer")
+                             .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + value + '")'))
+                .append($('<i class="fa fa-times">')
+                            .attr('pid', idx)
+                            .attr('onclick', 'removeFilenameFromZad(this,\'' + value + '\')')))
+          }
+          else if(attr==='block'){
+              block.addClass("d-flex flex-nowrap");
+              block.append(`<div class="cs-img-col" id='pro_zad_span${idx}'>
+              <div class="file_upload_div cs_new_file_upload">
+              <img src="${fileUrl(value)}" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl(${value})" alt="${value}">
+              <span class="cs-img-title">${add3Dots2Filename(value)}</span>
+              <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
+              <i class="fa fa-download" aria-hidden="true"></i>
+              </a>
+              <span class="lbl-action" pid='${idx}' onclick="removeFilenameFromZad(this,'${value}')">
+              <i class="fa fa-trash-o" aria-hidden="true">
+              </i>
+              </span></div></div></div>`) 
+          }
+       }
+      
+       
+}
+function generateFileLine4Table(name, cell) {
+
+    try {
+
+        cell = (cell === 'undefined' || !cell) ? 'col-6' : cell;
+
+        var div = $('<div></div>');
+
+        if (name.trim().length === 0) {
+            return;
+        }
+
+        var ind = name.lastIndexOf(".") + 1;
+        var fileFormat = name.substr(ind);
+        var fileUrlVar = fileUrl(name);
+
+      
+        var div2 = $('<div></div>').addClass("d-inline-block");
+        var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+        div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b>');
+         if (global_var.video_formats.includes(fileFormat)) {
+            fileUrlVar = videoFileURL(name);
+
+            //                    
+        } 
+        else if (fileFormat === 'pdf') {
+            fileUrlVar = pdfFileURL(name);
+
+        }
+        else if (global_var.image_formats.includes(fileFormat)) {
+            div12lik.find("b")
+                          .attr('data-toggle', "modal")
+                          .attr('data-target', "#commentFileImageViewer")
+                          .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+        }
+      
+
+
+
+        div12lik.append($('<a target="_blank"></a>')
+                .attr("href", fileUrlPrivate(name))
+                .append($('<i class="fa fa-download"></i>'))
+                .append('  '))
+
+
+                ;
+        div2.append(div12lik);
+        div.append(div2);
+
+        var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
+        div_col.append(div);
+        return div.html();
+    } catch (err) {
+    }
+}
 
 function add3Dots2String(string, length) {
     try {
@@ -1390,21 +1530,27 @@ function GetConvertedDateDT(componentId) {
     return d;
 }
 function GetConvertedTimeDT(componentId) {
-    var val  = $('#' + componentId).val();
-      val = val.split(" ");
-    if (!val)
-        return "";
-
-      nev = val[1].split(":")
-    var hour = nev[0];
-    hour = hour.toString(10).length === 1 ? '0' + hour : hour;
-    var minut = nev[1];
-    var second = "00";
-    var d = hour + "" + minut+""+second ;
-    return d;
+    try {
+        var val  = $('#' + componentId).val();
+        val = val.split(" ");
+      if (!val)
+          return "";
+  
+        nev = val[1].split(":")
+      var hour = nev[0];
+      hour = hour.toString(10).length === 1 ? '0' + hour : hour;
+      var minut = nev[1];
+      var second = "00";
+      var d = hour + "" + minut+""+second ;
+      return d;
+    } catch (error) {
+        return ""
+    }
+   
 }
 function GetReConvertedDT(componentId,time,date) {
-    // convert Date
+    try {
+        // convert Date
     var day = date.substring(6, 8);
     var month = date.substring(4, 6);
     var year = date.substring(0, 4);
@@ -1420,6 +1566,10 @@ function GetReConvertedDT(componentId,time,date) {
         date: new Date(d1),
         time: new Date(d),
     }); */
+    } catch (error) {
+        
+    }
+    
 }
 
 function ConvertedDateToStringDate(date) {

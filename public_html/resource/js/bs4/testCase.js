@@ -20,6 +20,8 @@ var bug_filter = {
     showChildTask: '1',
     createdDate: '',
     fkTaskTypeId: '',
+    is_meet: '',
+    observer_by: '',
 }
 
 var sprintTaskIds = "";
@@ -111,7 +113,7 @@ function sortTable(sv, cls) {
         var tbl = "id-row" + cl
         fTr = $(trList[0]);
         if (index === 0) {
-            var tx = fTr.find("." + cls).find(".get-data-group").html();
+            var tx = fTr.find("td:eq("+sv+")").html();
 
             if (tx.length < 1) {
                 tx = "undefined"
@@ -120,15 +122,20 @@ function sortTable(sv, cls) {
             fTr.before($("<tr>")
                     .addClass("groupTrElement")
                     .append($("<td>")
+                            .attr('colspan','100%')
                             .addClass("groupTdElement")
                             .append($("<div>")
                                     .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
                                     .append(tx)
-                                    .addClass("groupTableDivInside"))))
+                                    .addClass("groupTableDivInside"))
+                                    .append($("<div>")
+                                        .addClass('group-count-box')
+                                            .append('<span>0</span>')
+                                        )))
         }
 
-        var htm = $(trList[index]).find("." + cls).find(".get-data-group").html();
-        var htm1 = $(trList[index + 1]).find("." + cls).find(".get-data-group").html();
+        var htm = $(trList[index]).find("td:eq("+sv+")").html();
+        var htm1 = $(trList[index + 1]).find("td:eq("+sv+")").html();
 
 
         if (htm === htm1) {
@@ -148,12 +155,16 @@ function sortTable(sv, cls) {
             $(trList[index]).after($("<tr>")
                     .addClass("groupTrElement")
                     .append($("<td>")
+                            .attr('colspan','100%')
                             .addClass("groupTdElement")
-
                             .append($("<div>")
                                     .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
                                     .append(htm1)
-                                    .addClass("groupTableDivInside"))));
+                                    .addClass("groupTableDivInside"))
+                                        .append($("<div>")
+                                        .addClass('group-count-box')
+                                            .append('<span>0</span>')
+                                    )));
 
         }
 
@@ -178,15 +189,16 @@ function getGroupList() {
 
         var td = $("#bugListTable tbody tr td:eq(" + sv + ")").attr("class").split(/\s+/);
 
+        sortTable(sv, td);
+      /*   $.each(td, function (index, item) {
+       
+           if (item === 'bug-list-column') {
 
-        $.each(td, function (index, item) {
-            if (item === 'bug-list-column') {
+            } else { 
 
-            } else {
-
-                sortTable(sv, item);
-            }
-        })
+              
+             }
+        }) */
     } catch (error) {
 
     }
@@ -204,12 +216,12 @@ $(document).on('click', '.bugChangegroupArrow', function (evt) {
     }
     if (dt == 0) {
 
-        $(this).html('<i class="fas fa-chevron-right"></i>');
+        $(this).html('<i class="fas fa-chevron-up"></i>');
         $(this).attr("data-closed", 1);
     }
     $("[data-aid=" + dst + "]").toggle("fast");
 })
-$(document).on('click', '.bug-task-filter-checkbox-label', function (evt) {
+$(document).on('click', '.label-assign-link-class', function (evt) {
 
     var rc = getLabelFilterCheckedCount();
     if (rc > 0) {
@@ -219,7 +231,8 @@ $(document).on('click', '.bug-task-filter-checkbox-label', function (evt) {
         $('.bug-filter-badge-label').hide();
     }
 
-    if (global_var.current_modal === 'loadBugChange') {
+    var lastmnId  =  Utility.getParamFromUrl('lastMenuId');
+    if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
         getBugList();
     } else if (global_var.current_modal === 'loadTaskManagement') {
         $('.' + global_var.task_mgmt_group_by).click();
@@ -247,7 +260,7 @@ $(document).on('click', '.bug-task-filter-checkbox-sprint', function (evt) {
 
 function getLabelFilterCheckedCount() {
     var rc = 0;
-    $('.bug-task-filter-checkbox-label').each(function () {
+    $('.label-assign-link-class').each(function () {
         if ($(this).is(":checked")) {
             rc++;
         }
@@ -678,33 +691,24 @@ function setBugFilterAssignees() {
             var select3 = $('#bug_filter_detail_assignee_id_add');
             var select4 = $('#bug_filter_assignee_id_multi');
             var select5 = $('#bug_filter_closed_by');
-            select.html('');
-            select2.html('');
-            select5.html('');
-            var obj = res.tbl[0].r;
-            for (var id in obj) {
-                var o = obj[id];
-                var op = $("<option>").val(o.fkUserId).text(o.userName);
-                var op2 = $("<option>").val(o.fkUserId).text(o.userName);
-                var op3 = $("<option>").val(o.fkUserId).text(o.userName);
-                var op4 = $("<option>").val(o.fkUserId).text(o.userName);
-                var op5 = $("<option>").val(o.fkUserId).text(o.userName);
-                select.append(op);
-                select2.append(op2);
-                select3.append(op3);
-                select4.append(op4);
-                select5.append(op5);
-            }
+              var elm  =  $('select.user_filter_element_selectpicker');
+                elm.empty();
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                    elm.append(opt);
 
+                }
+            } catch (error) {
+
+            }
             if (global_var.current_user_type === 'S') {
                 select.val(global_var.current_ticker_id)
             }
-
-            select.selectpicker('refresh');
-            select2.selectpicker('refresh');
-            select3.selectpicker('refresh');
-            select4.selectpicker('refresh');
-            select5.selectpicker('refresh');
+            elm.append(opt);
+            elm.selectpicker('refresh');
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -813,7 +817,7 @@ function setBugFilterMultiValues() {
         var val = getBugFilterMultiSelect(this);
 
         bug_filter[data_type] = val;
-        if(data_type!=='nature'){
+        if(data_type!=='nature'||data_type!=='status'){
             if(bug_filter[data_type].length>0 ){
                 FilterCount++;
                 $(this).parent().addClass('cs-select-active')
@@ -864,7 +868,7 @@ function setBugFilterCheckBoxValues() {
 
 function setBugFilterLabelValues() {
     var st = ' ';
-    $('.bug-task-filter-checkbox-label').each(function () {
+    $('.label-assign-link-class').each(function () {
         if ($(this).is(":checked")) {
             st += "'" + $(this).val() + "',";
         }
@@ -901,11 +905,12 @@ function setBugFilterCreatedDateValues() {
         var inns = stTime.trim() + ' AND ' + endTime.trim();
         bug_filter.createdDate = inns;
     } catch (error) {
-        
+        bug_filter.createdDate = '';
     }
    
     
 }
+
 function setBugFilterClosedDatesValues() {
     try {
         var val  = $("#issue_management_closed_date_from").val();
@@ -918,9 +923,9 @@ function setBugFilterClosedDatesValues() {
     bug_filter.closed_date_from = stTime.trim();
     bug_filter.closed_date_to = endTime.trim();
     } catch (error) {
-        
+        bug_filter.closed_date_from = '';
+        bug_filter.closed_date_to = ''; 
     }
-   
     
 }
 
@@ -952,6 +957,9 @@ $(document).on("click", '#update_multi_bug_change_btn', function (e) {
     }
     else if(global_var.current_modal==='loadStoryCardMgmt'){
         var check = $("#tbl-"+idk+"  .task-tr-list input.checkbox-issue-task");
+    }
+    else if(global_var.current_modal==='loadStoryCard'){
+        var check = $("#taskListCW >tbody> tr input.checkbox-issue-task");
     }
 
     if (!fkAssigneeId == 0) {
@@ -1201,7 +1209,9 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-    
+  
+    $("#bugListTable .all-bug-list-check").prop("checked",false);
+    $(".multi-edit-menu").addClass('d-none');
       var me = "'"+global_var.current_ticker_id+"'"
       var lastmnId  =  Utility.getParamFromUrl('lastMenuId');
     if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
@@ -1236,8 +1246,7 @@ function getBugList() {
               
                  sel.selectpicker("refresh");
                  json.kv.taskStatus = getBugFilterMultiSelect(sel);
-        }
-        
+        } 
         json.kv.priority = bug_filter.priority;
         json.kv.taskNature = bug_filter.nature;
         json.kv.searchText = bug_filter.search_text;
@@ -1252,6 +1261,8 @@ function getBugList() {
         json.kv.showChildTask = bug_filter.showChildTask;
         json.kv.createdDate = bug_filter.createdDate;
         json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
+        json.kv.isMeet = bug_filter.is_meet;
+        json.kv.observerBy = bug_filter.observer_by;
         json.kv.startLimit = 0;
         json.kv.endLimit = 25;
       
@@ -1639,7 +1650,7 @@ function getBugListDetails(res) {
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-assignee')
-                        .append(genUserTrblock(o.userName,img,'Assignee'))
+                        .append(genUserTrblock(o.userName,img,'Assignee',o.fkAssigneeId))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                             .css("display", "none")
@@ -1653,7 +1664,7 @@ function getBugListDetails(res) {
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-by ')
-                            .append(genUserTrblock(o.createByName,createdByImg,'Created By'))
+                            .append(genUserTrblock(o.createByName,createdByImg,'Created By',o.createdBy))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
                             .css("display", "none")
@@ -1710,10 +1721,12 @@ function getBugListDetails(res) {
     global_var.bug_task_label_assign_id = '';
 
 }
-function genUserTrblock(names,img,filed) {
-  
+function genUserTrblock(names,img,filed,uid) {
+ /*  if(names===""||!names){
+     names = SAProjectUser.Users[uid].userPersonName; 
+  } */
     try {
-        return $('<a>')
+        var a  =  $('<a>')
             .attr('tabindex', "0")
             .attr('data-placement', "left")
             //.attr('data-original-title', filed === "createdBy" ? "Daxil Edən" : "İcra Edən")
@@ -1721,12 +1734,15 @@ function genUserTrblock(names,img,filed) {
             .attr('data-trigger', "focus")
             .attr('data-content', genHoverImageBlock(img, names,filed))
                 .append($('<img>')
-                .addClass("rounded-circle personal-btn-img js-btn-popover--custom")
+                .addClass("rounded-circle personal-btn-img get-details-info-user-btn js-btn-popover--custom")
                 .css("width", '22px')
                 .css("height", '22px')
                 .css("border", '1px solid #03396C')
+                .attr("uid",uid)
                 .attr("src", img)
             )
+             var div  = $("<div>").append(a);
+            return div.html();
 
     } catch (error) {
         return ''
@@ -1747,58 +1763,67 @@ function genUserTrblock(names,img,filed) {
      </ul>
      ${notChwk()?"":
      `<ul class="main-info user-main-info-popover">
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Şirkət</span></div>
-                 <div class="mr-auto info-desc"><span>ELCOM GROUP</span></div>
-             </div>
-         </li>
-         <li>
-              <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Filial</span></div>
-                 <div class="mr-auto info-desc"><span>Reklam</span></div>
-             </div>
-         </li>
-         <li>
-         <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Dep.</span></div>
-                 <div class="mr-auto info-desc"><span>Planlama</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Şöbə</span></div>
-                 <div class="mr-auto info-desc"><span>Dizayn</span></div>
-             </div>
-         </li>
-         <li>
-          <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Sektor</span></div>
-                 <div class="mr-auto info-desc"><span>Qrafik</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Vəzifə</span></div>
-                 <div class="mr-auto info-desc"><span>Qrafik Dizayner</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Email</span></div>
-                 <div class="mr-auto info-desc"><span>info@elcom.az</span></div>
-             </div>
-         </li>
-         <li>
-             <div class="d-flex">
-                 <div class="left-min-box info-title"><span>Mobil</span></div>
-                 <div class="mr-auto info-desc"><span>+994 10 101 01 01</span></div>
-             </div>
-         </li>
+             
      </ul>`}
     </div>
     `
  };
+ function genDetailsUSerBlock(company,branch,dep,part,sector,position,email,number,direct) {
+     return  `<li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Şirkət</span></div>
+         <div class="mr-auto info-desc"><span>${company}</span></div>
+     </div>
+ </li>
+ <li>
+      <div class="d-flex">
+         <div class="left-min-box info-title"><span>Filial</span></div>
+         <div class="mr-auto info-desc"><span>${branch}</span></div>
+     </div>
+ </li>
+ <li>
+ <div class="d-flex">
+         <div class="left-min-box info-title"><span>Dep.</span></div>
+         <div class="mr-auto info-desc"><span>${dep}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Şöbə</span></div>
+         <div class="mr-auto info-desc"><span>${part}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>İstiqamət</span></div>
+         <div class="mr-auto info-desc"><span>${direct}</span></div>
+     </div>
+ </li>
+ <li>
+  <div class="d-flex">
+         <div class="left-min-box info-title"><span>Sektor</span></div>
+         <div class="mr-auto info-desc"><span>${sector}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Vəzifə</span></div>
+         <div class="mr-auto info-desc"><span>${position}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Email</span></div>
+         <div class="mr-auto info-desc"><span>${email}</span></div>
+     </div>
+ </li>
+ <li>
+     <div class="d-flex">
+         <div class="left-min-box info-title"><span>Nömrə</span></div>
+         <div class="mr-auto info-desc"><span>${number}</span></div>
+     </div>
+ </li>`
+ }
 function callTaskCard4BugTask(el, projectId, taskId) {
       
     if (!taskId) {
@@ -2042,6 +2067,9 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
     else if(global_var.current_modal==='loadStoryCardMgmt'){
         var check = $("#tbl-"+idk+" .task-tr-list input.checkbox-issue-task");
     }
+    else if(global_var.current_modal==='loadStoryCard'){
+        var check = $("#taskListCW tbody tr input.checkbox-issue-task");
+    }
 
     var ast = [];
     var pids = [];
@@ -2088,10 +2116,10 @@ $(document).on("change", '#bug_filter_project_id', function (e) {
 
 })
 $(document).on("change", '#bug_filter_project_id_add_pop', function (e) {
-    var id = $(this).val();
+    var id = $(this).val();/* 
     $('#bug_filter_project_id').val(id);
-    $('#bug_filter_project_id').change();
-    loadStoryCardByProjectAdd(id)
+    $('#bug_filter_project_id').change(); */
+    loadStoryCardByProjectAdd(id);
 
 
 })
@@ -2314,11 +2342,27 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
 
 function toggleColumns() {
  //   $('#bug_filter_columns option:selected').removeAttr("selected");
+    var elm = $('#bug_filter_columns');
+    var list  = localStorage.getItem("bug_list_colum");
     $('.bug-list-column').hide();
-    var colList = $('#bug_filter_columns').val();
+    $(".showhide-col-main-info-in li input").prop("checked",false);
+      if(list){
+           elm.val(list.split(','));
+           elm.selectpicker("refresh");
+      }
+      var colList = elm.val();
     for (var col in colList) {
         $('.bug-list-column-' + colList[col]).show();
+        if(!notChwk()){
+            $(".showhide-col-main-info-in li input[data-id='"+colList[col]+"']").prop("checked",true);
+
+        }
     }
+    if(colList.length > 5){
+        $(".showhide-col-main-info-in li input.showhide-allcheckbox").prop("checked",true);
+
+    }
+
 }
 
 function getProjectListIn() {
@@ -2607,10 +2651,9 @@ $(document).on("change", '#sendnotification_detail', function () {
 })
 
 $(document).on("change", "#run_task_intensive_select", function (e) {
-    $('#hide_actions').val();
-    $('#hide_actions_param').val();
-    var run_intensive = $('#run_task_intensive_select').val();
-    run_action = run_intensive;
+  
+    var run_intensive = $('#issue-managment-add-task #run_task_intensive_select').val();
+    var  run_action = run_intensive;
     switch (run_action) {
         case 'weekly':
             run_enabled = 'run-enabled';
@@ -2623,62 +2666,21 @@ $(document).on("change", "#run_task_intensive_select", function (e) {
             break;
     }
     if (run_enabled) {
-        $('.run-intensive').removeClass('run-enabled');
-        $('.' + run_intensive + '-actions').addClass(run_enabled);
+        $('#issue-managment-add-task .run-intensive').removeClass('run-enabled');
+        $('#issue-managment-add-task .' + run_intensive + '-actions').addClass(run_enabled);
     }
     if (run_intensive == 'yearly') {
-        $('#hide_actions').val('');
-        $('#hide_actions_param').val('');
+        
     }
     if (run_intensive == 'weekly') {
-        $('#hide_actions').val('');
-        $('#hide_actions_param').val('');
-        var run_sw_select = $('#run_task_weekday_select').val();
-        $('#hide_actions_param').val(run_sw_select);
+        $("#issue-managment-add-task .weekly-and-monthly-actions").addClass(run_enabled);
     }
     if (run_intensive == 'monthly') {
-        $('#hide_actions').val('');
-        $('#hide_actions_param').val('');
-        if ($('#first_day_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('first_day_of_month');
-        }
-        if ($('#last_day_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('last_day_of_month');
-        }
-
-        if ($('#specific_day_of_month').is(':checked')) {
-            $('.run_spa').removeClass('spa_enable');
-            $('.hr_spa').hide();
-            $('.hr_spa').show();
-            $('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
-            $('#hide_actions').val('specific_day_of_month');
-            var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select').val();
-            $('#hide_actions_param').val(sdofm_day_of_Month_select);
-        }
-        if ($('#before_last_day_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('before_last_day_of_month');
-            var days_before_last_day_of_month = $('#days_before_last_day_of_month').val();
-            $('#hide_actions_param').val(days_before_last_day_of_month);
-        }
-        if ($('#specific_weekday_of_month').is(':checked')) {
-            $('#hide_actions').val('');
-            $('#hide_actions_param').val('');
-            $('#hide_actions').val('specific_weekday_of_month');
-            var swofm_a1 = $('#swofm_fl_action_select').val();
-            var swofm_a2 = $('#swofm_weekday_select').val();
-            $('#hide_actions_param').val(swofm_a1);
-            $('#hide_actions_param_2').val(swofm_a2);
-        }
-
+        $("#issue-managment-add-task .weekly-and-monthly-actions").addClass(run_enabled);
     }
 
 });
+
 $(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", function (e) {
     $('#hide_actions_param').val('');
     var swofm_a1 = $('#swofm_fl_action_select').val();
@@ -2686,16 +2688,16 @@ $(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", funct
     $('#hide_actions_param').val(swofm_a1);
     $('#hide_actions_param_2').val(swofm_a2);
 });
-$(document).on("change", "#run_task_weekday_select", function (e) {
+$(document).on("change", "#run_task_weekday_select input[type='checkbox']", function (e) {
     $('#hide_actions').val('');
     $('#hide_actions_param').val('');
-    var run_task_weekday_select = $('#run_task_weekday_select').val();
+    var run_task_weekday_select = $('#run_task_weekday_select input[type="checkbox"]').val();
     $('#hide_actions_param').val(run_task_weekday_select);
     if ($('#run_task_weekday_select').val() == 0) {
-        $('[data-id="run_task_weekday_select"]').css('border', '1px solid red').css('background', 'red').css('box-shadow', '0px 0px 10px rgb(255 0 0 / 35%)');
+        $('#run_task_weekday_select').closest('.weekly-actions').find('input-group-addon').css('color', 'red');
         return false;
     } else {
-        $('[data-id="run_task_weekday_select"]').removeAttr('style');
+        $('#run_task_weekday_select').closest('.weekly-actions').find('input-group-addon').removeAttr('style');
     }
 });
 $(document).on("change", "#sdofm_day_of_Month_select", function (e) {
@@ -2795,7 +2797,7 @@ function run_task_valid() {
         }
     }
 
-    if ($('#run_task_intensive_select').val() == 'monthly') {
+    if (val_sw_select == 'monthly') {
         if ($('#before_last_day_of_month').is(':checked')) {
             if ($.trim($('input:required#days_before_last_day_of_month').val()).length == 0) {
                 $('input:required#days_before_last_day_of_month').css('border', '1px solid red');
@@ -2806,7 +2808,7 @@ function run_task_valid() {
         }
     }
 
-    if ($('#run_task_intensive_select').val() == 'yearly') {
+    if (val_sw_select == 'yearly') {
 
         if ($.trim($('input:required#runTaskExecutiveDate').val()).length == 0) {
             $('input:required#runTaskExecutiveDate').css('border', '1px solid red');
@@ -2821,9 +2823,12 @@ function run_task_valid() {
 
 // TASK DETAILS ON
 $(document).on("change", "#run_task_intensive_select_detail", function (e) {
-    $('#hide_actions_detail').val();
-    $('#hide_actions_param_detail').val();
+
     var run_intensive = $('#run_task_intensive_select_detail').val();
+    changeModeSchedule4Update(run_intensive)
+
+});
+function changeModeSchedule4Update(run_intensive){
     run_action = run_intensive;
     switch (run_action) {
         case 'weekly':
@@ -2837,66 +2842,19 @@ $(document).on("change", "#run_task_intensive_select_detail", function (e) {
             break;
     }
     if (run_enabled) {
-        $('.run-intensive').removeClass('run-enabled');
-        $('.' + run_intensive + '-actions').addClass(run_enabled);
+        $('#taskMgmtModal .run-intensive').removeClass('run-enabled');
+        $('#taskMgmtModal .' + run_intensive + '-actions').addClass(run_enabled);
     }
     if (run_intensive == 'yearly') {
-        $('#hide_actions_detail').val('');
-        $('#hide_actions_param_detail').val('');
+        
     }
     if (run_intensive == 'weekly') {
-        $('#hide_actions_detail').val('');
-        $('#hide_actions_param_detail').val('');
-        var run_sw_select = $('#run_task_weekday_select_detail').val();
-        $('#hide_actions_param_detail').val(run_sw_select);
+        $("#taskMgmtModal .weekly-and-monthly-actions").addClass(run_enabled);
     }
     if (run_intensive == 'monthly') {
-        $('#hide_actions_detail').val('');
-        $('#hide_actions_param_detail').val('');
-
-        if ($('#first_day_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-            $('#hide_actions').val('first_day_of_month_detail');
-        }
-        if ($('#last_day_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-            $('#hide_actions_detail').val('last_day_of_month');
-        }
-
-        if ($('#specific_day_of_month_detail').is(':checked')) {
-            $('.run_spa').removeClass('spa_enable');
-            $('.hr_spa').hide();
-            $('.hr_spa').show();
-
-            $('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
-            $('#hide_actions_detail').val('specific_day_of_month');
-            var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select_detail').val();
-            $('#hide_actions_param_detail').val(sdofm_day_of_Month_select);
-        }
-        if ($('#before_last_day_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-
-            $('#hide_actions_detail').val('before_last_day_of_month');
-            var days_before_last_day_of_month = $('#days_before_last_day_of_month_detail').val();
-            $('#hide_actions_param_detail').val(days_before_last_day_of_month);
-        }
-        if ($('#specific_weekday_of_month_detail').is(':checked')) {
-            $('#hide_actions_detail').val('');
-            $('#hide_actions_param_detail').val('');
-
-            $('#hide_actions_detail').val('specific_weekday_of_month');
-            var swofm_a1 = $('#swofm_fl_action_select_detail').val();
-            var swofm_a2 = $('#swofm_weekday_select_detail').val();
-            $('#hide_actions_param_detail').val(swofm_a1);
-            $('#hide_actions_param_2_detail').val(swofm_a2);
-        }
-
+        $("#taskMgmtModal .weekly-and-monthly-actions").addClass(run_enabled);
     }
-
-});
+ }
 
 $(document).on("change", "#swofm_fl_action_select_detail, #swofm_weekday_select_detail", function (e) {
     $('#hide_actions_param_detail').val('');
@@ -2991,33 +2949,33 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
 $(document).on("change", "#runTaskStartDate_activateschedule", function (e) {
 
     if ($(this).is(':checked')) {
-        $('.shedule-elements.el-disabled .soon').css("pointer-events", "auto");
-        $('.shedule-elements.el-disabled .soon').css("opacity", "1");
-        $('.shedule-elements.el-disabled .soon input').attr("disabled", false);
-        $('.shedule-elements.el-disabled .soon select').attr("disabled", false);
-        $('.shedule-elements').removeClass('el-disabled');
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
+        $('#taskMgmtModal .run-shedule-elements').removeClass('el-disabled');
     } else {
-        $('.shedule-elements').addClass('el-disabled');
-        $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
-        $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
-        $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
-        $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+        $('#taskMgmtModal .run-shedule-elements').addClass('el-disabled');
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+        $('#taskMgmtModal .run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     }
 });
 $(document).on("change", "#runTaskAvtivateSchedule", function (e) {
 
     if ($(this).is(':checked')) {
-        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
-        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
-        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
-        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
-        $('.run-shedule-elements').removeClass('el-disabled');
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
+        $('#issue-managment-add-task .run-shedule-elements').removeClass('el-disabled');
     } else {
-        $('.run-shedule-elements').addClass('el-disabled');
-        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
-        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
-        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
-        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
+        $('#issue-managment-add-task .run-shedule-elements').addClass('el-disabled');
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+        $('#issue-managment-add-task .run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     }
 });
 
@@ -3025,6 +2983,11 @@ $(document).on('change', '#run_task_project_name_detail', function (event) {
     var elm = $("#run_task_name_detail").selectpicker('refresh');
     var val = $(this).val();
     getBacklogListByProject4Element(val, elm);
+});
+$(document).on('change', '#sendnotification_detail', function (event) {
+    var val  = $(this).prop('checked')?"1":"0";
+    updateTask4ShortChangePureDetail(val, "notificationMail", global_var.current_issue_id);
+    updateTask4ShortChangePureDetail(val, "sendNotification", global_var.current_issue_id);
 });
 // TASK DETAILS OFF
 

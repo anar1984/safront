@@ -94,10 +94,10 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" id="taskNameInputNew2">
-                         <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
+                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
+                        <!-- <span class='p-1' style=" color: #ffffff66; font-size: 12px; "></span>-->
                     </div>
-                    <div class="pt-1">
+                    <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
@@ -148,7 +148,7 @@ const taskManagement = {
                 return `<div class="mr-auto pl-0 pr-0 pb-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6  mt-3 cs-p-rem">
+                        <div class="col-lg-6  mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                                 <div class='cs-date-time d-flex'>
@@ -171,7 +171,7 @@ const taskManagement = {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                           <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                                 <div class='cs-date-time d-flex'>
@@ -195,7 +195,7 @@ const taskManagement = {
                           </div>
                         </div>
                        
-                        <div class="col-lg-6 mt-3 cs-p-rem">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
                                 <select multiple class="add_task_sprint issue_selectpicker"  id="add_task_sprint" data-live-search="true">
@@ -203,7 +203,7 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select multiple class="run_task_categories issue_selectpicker"  id="run_task_categories" data-live-search="true">
@@ -301,9 +301,9 @@ const taskManagement = {
                                     <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
                                 </li>-->
             
-                                <!--<li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
-                                </li>-->
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                </li>
                             </ul>
                         </div>
                     </div>`
@@ -347,17 +347,234 @@ const taskManagement = {
                     </div>
                 </div>`
                 },
+                genScheduleBlock: function () {
+                    return ` <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
+                   <div class="row rsoon">
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>
+                               <input class="form-control" name="runTaskStartDate" id="runTaskStartDate" type="date" required>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                               <input class="form-control" name="runTaskiceEndDate" id="runTaskEndDate" type="text" required>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
+                               <input class="form-control" name="runTaskTime" id="runTaskTime" type="text" required>
+                           </div>
+                       </div>
+
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
+                               <select class="issue_selectpicker" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
+                                   <option value="weekly">${lang_task.windowAddTask.weekly}</option>
+                                   <option value="monthly">${lang_task.windowAddTask.monthly}</option>
+                                   <option value="yearly">${lang_task.windowAddTask.yearly}</option>
+                               </select>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
+                                   <option value="1">1</option>
+                                   <option value="2">2</option>
+                                   <option value="3">3</option>
+                                   <option value="4">4</option>
+                                   <option value="5">5</option>
+                                   <option value="6">6</option>
+                                   <option value="7">7</option>
+                                   <option value="8">8</option>
+                                   <option value="9">9</option>
+                                   <option value="10">10</option>
+                                   <option value="11">11</option>
+                                   <option value="12">12</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row rsoon weekly-actions run-intensive run-enabled">
+                       <div class="col-12">
+                           <h5 class="section-title"><strong>${lang_task.windowAddTask.weeklyAction}</strong></h5>
+                       </div>
+                       <div class="col-md-3 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
+                                   <option value="monday">Monday</option>
+                                   <option value="tuesday">Tuesday</option>
+                                   <option value="wednesday">Wednesday</option>
+                                   <option value="thursday">Thursday</option>
+                                   <option value="friday">Friday</option>
+                                   <option value="saturday">Saturday</option>
+                                   <option value="sunday">Sunday</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row rsoon" style="display: none;">
+                       <input type="hide" id="hide_actions">
+                       <input type="hide" id="hide_actions_param">
+                       <input type="hide" id="hide_actions_param_2">
+                   </div>
+                   <div class="row rsoon monthly-actions run-intensive">
+                       <div class="col-12">
+                           <h5 class="section-title"><strong>Monthly Action</strong></h5>
+                       </div>
+                       <div class="cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group horizontal ml-3 mt-2">
+                               <div class="input-group-addon">Specification</div>
+                               <label class="checkcontainer">Last day of month
+                                   <input type="radio" checked="checked" name="monthlyAction" id="monthlyAction" value="last_day_of_month">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer">First day of month
+                                   <input type="radio" name="monthlyAction" id="monthlyAction" value="first_day_of_month">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer spa">Specific day of month
+                                   <input type="radio" name="monthlyAction" id="monthlyAction" value="specific_day_of_month">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer spa">Before last day of month
+                                   <input type="radio" name="monthlyAction" id="monthlyAction" value="before_last_day_of_month">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer spa">Specific weekday of month 
+                                   <input type="radio" name="monthlyAction" id="monthlyAction" value="specific_weekday_of_month">
+                                   <span class="radiobtn"></span>
+                               </label>
+                           </div>
+                       </div>
+                       <div class="col-12">
+                           <hr class="hr_spa">
+                           <div class="row">
+                               <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
+                                   <div class="cs-input-group ml-3">
+                                       <div class="input-group-addon">Day of Month</div>
+                                       <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true">
+                                           <option value="1">1</option>
+                                           <option value="2">3</option>
+                                           <option value="3">3</option>
+                                           <option value="4">4</option>
+                                           <option value="5">5</option>
+                                           <option value="6">6</option>
+                                           <option value="7">7</option>
+                                           <option value="8">8</option>
+                                           <option value="9">9</option>
+                                           <option value="10">10</option>
+                                           <option value="11">11</option>
+                                           <option value="12">12</option>
+                                           <option value="13">13</option>
+                                           <option value="14">14</option>
+                                           <option value="15">15</option>
+                                           <option value="16">16</option>
+                                           <option value="17">17</option>
+                                           <option value="18">18</option>
+                                           <option value="19">19</option>
+                                           <option value="20">20</option>
+                                           <option value="21">21</option>
+                                           <option value="22">22</option>
+                                           <option value="23">23</option>
+                                           <option value="24">24</option>
+                                           <option value="25">25</option>
+                                           <option value="26">26</option>
+                                           <option value="27">27</option>
+                                           <option value="28">28</option>
+                                           <option value="29">29</option>
+                                           <option value="30">30</option>
+                                           <option value="31">31</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="spa_days_before_last_day_of_month run_spa cs-flex-col flex-item ml-3 mt-2">
+                                   <div class="cs-input-group">
+                                       <div class="input-group-addon">Day(s) before last day of month</div>
+                                       <input class="form-control" name="days_before_last_day_of_month" id="days_before_last_day_of_month" type="number" required>
+                                   </div>
+                               </div>
+                               <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
+                                   <div class="cs-input-group">
+                                       <div class="input-group-addon">Action</div>
+                                       <select class="issue_selectpicker" name="swofm_fl_action_select" id="swofm_fl_action_select" data-live-search="true">
+                                           <option value="first">First</option>
+                                           <option value="last">Last</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
+                                   <div class="cs-input-group">
+                                       <div class="input-group-addon">Weekdays</div>
+                                       <select class='issue_selectpicker' name="swofm_weekday_select" id="swofm_weekday_select" data-live-search="true">
+                                           <option value="monday">Monday</option>
+                                           <option value="tuesday">Tuesday</option>
+                                           <option value="wednesday">Wednesday</option>
+                                           <option value="thursday">Thursday</option>
+                                           <option value="friday">Friday</option>
+                                           <option value="saturday">Saturday</option>
+                                           <option value="sunday">Sunday</option>
+                                       </select>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row rsoon yearly-actions run-intensive">
+                       <div class="col-12">
+                           <h5 class="section-title"><strong>Yearly</strong></h5>
+                       </div>
+                       <div class="cs-flex-col flex-item ml-3 mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">Execution Data</div>
+                               <input class="form-control" id="runTaskExecutiveDate" type="text" name="runTaskExecutiveDate" required>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="row rsoon">
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">Select Reminder</div>
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
+                                   <option value="at_start_time">At start time</option>
+                                   <option value="5_minutes_before">5 minutes before</option>
+                                   <option value="10_minutes_before">10 minutes before</option>
+                                   <option value="15_minutes_before">15 minutes before</option>
+                                   <option value="20_minutes_before">20 minutes before</option>
+                                   <option value="25_minutes_before">25 minutes before</option>
+                                   <option value="30_minutes_before">30 minutes before</option>
+                                   <option value="45_minutes_before">45 minutes before</option>
+                                   <option value="1_hour_before">1 hour before</option>
+                                   <option value="2_hours_before">2 hours before</option>
+                                   <option value="3_hours_before">3 hours before</option>
+                                   <option value="12_hours_before">12 hours before</option>
+                                   <option value="24_hours_before">24 hour before</option>
+                                   <option value="2_days_before">2 days before</option>
+                                   <option value="1_week_before">1 week before</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+
+               </div>`
+                },
                 genScheduleBlockInsertNew: function () {
                     return ` <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
                    <div class="row rsoon">
-                      <div class="col-lg-3 pr-0 mt-2">
+                      <div class="col-lg-2 pr-0 mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
                                <input class="form-control" name="run_task_repeat_select" id='run_task_repeat_select' type="number" required>
                            </div>
                        </div>
                    
-                       <div class="col-lg-4 pr-0 mt-2">
+                       <div class="col-lg-2 pr-0 mt-2">
                             <div class="cs-input-group">
                                 <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
                                 <select class="issue_selectpicker" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
@@ -366,70 +583,130 @@ const taskManagement = {
                                     <option value="yearly">${lang_task.windowAddTask.yearly}</option>
                                 </select>
                             </div>
-                       </div>                 
-                       <div class="col-lg-5  mt-2">
+                       </div>
+                       <div class="col-lg-2 pr-0 mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>
+                               <div class="cs-date-time d-flex">
+                                    <div>
+                                         <div class="d-flex">
+                                            <span class="input-group-icon"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+                                           <input type="text" name="runTaskStartDate" id="runTaskStartDate" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+                       <div class="col-lg-2 pr-0 mt-2">
+                           <div class="cs-input-group">
+                               <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                               <div class="cs-date-time d-flex">
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+                                            <input type="text" name="runTaskiceEndDate" id="runTaskEndDate" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+                       <div class="col-lg-2 mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">${lang_task.windowAddTask.selectReminder}</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
+                                <div class="cs-date-time d-flex">
+                                        <div>
+                                            <div class="d-flex">
+                                                <span class="input-group-icon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                                <input type="text" name="runTaskTime" id="runTaskTime" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>                       
+                       <div class="col-lg-2 pl-0 mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Başlat</div>
                                 <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
                                     <option value="at_start_time">At start time</option>
-                                    <option value="5_minutes_before">5 minutes before</option><option value="10_minutes_before">10 minutes before</option><option value="15_minutes_before">15 minutes before</option> 
-                                     <option value="20_minutes_before">20 minutes before</option><option value="25_minutes_before">25 minutes before</option>                                    <option value="30_minutes_before">30 minutes before</option>                                    <option value="45_minutes_before">45 minutes before</option>                                    <option value="1_hour_before">1 hour before</option>                                    <option value="2_hours_before">2 hours before</option>                                    <option value="3_hours_before">3 hours before</option>                                    <option value="12_hours_before">12 hours before</option>                                    <option value="24_hours_before">24 hour before</option>                        <option value="2_days_before">2 days before</option>
+                                    <option value="5_minutes_before">5 minutes before</option>
+                                    <option value="10_minutes_before">10 minutes before</option>
+                                    <option value="15_minutes_before">15 minutes before</option>
+                                    <option value="20_minutes_before">20 minutes before</option>
+                                    <option value="25_minutes_before">25 minutes before</option>
+                                    <option value="30_minutes_before">30 minutes before</option>
+                                    <option value="45_minutes_before">45 minutes before</option>
+                                    <option value="1_hour_before">1 hour before</option>
+                                    <option value="2_hours_before">2 hours before</option>
+                                    <option value="3_hours_before">3 hours before</option>
+                                    <option value="12_hours_before">12 hours before</option>
+                                    <option value="24_hours_before">24 hour before</option>
+                                    <option value="2_days_before">2 days before</option>
                                     <option value="1_week_before">1 week before</option>
                                 </select>
                             </div>
                         </div>
-                      
-                   </difv>
                    </div>
-                  
-                   <div class="row rsoon weekly-and-monthly-actions run-intensive run-enabled">
+                   <div class="row rsoon weekly-actions run-intensive run-enabled">
                 
                        <div class="col-lg-12 cs-col-padding mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
 
                                 <div class="cs-horizontal-checkboxes" id="run_task_weekday_select">
-                                    <label><input type="checkbox" value="monday" ><span>Monday</span></label>
-                                    <label><input type="checkbox" value="tuesday" ><span>Tuesday</span></label>
-                                    <label><input type="checkbox" value="wednesday" ><span>Wednesday</span></label>
-                                    <label><input type="checkbox" value="thursday" ><span>Thursday</span></label>
-                                    <label><input type="checkbox" value="friday" ><span>Friday</span></label>
-                                    <label><input type="checkbox" value="saturday" ><span>Saturday</span></label>
-                                    <label><input type="checkbox" value="sunday" ><span>Sunday</span></label>
+                                    <label><input type="checkbox" value="monday" name="run_task_weekday_select"><span>Monday</span></label>
+                                    <label><input type="checkbox" value="tuesday" name="run_task_weekday_select"><span>Tuesday</span></label>
+                                    <label><input type="checkbox" value="wednesday" name="run_task_weekday_select"><span>Wednesday</span></label>
+                                    <label><input type="checkbox" value="thursday" name="run_task_weekday_select"><span>Thursday</span></label>
+                                    <label><input type="checkbox" value="friday" name="run_task_weekday_select"><span>Friday</span></label>
+                                    <label><input type="checkbox" value="saturday" name="run_task_weekday_select"><span>Saturday</span></label>
+                                    <label><input type="checkbox" value="sunday" name="run_task_weekday_select"><span>Sunday</span></label>
                                 </div>
 
                            </div>
                        </div>
                    </div>
+                   <div class="row rsoon" style="display: none;">
+                       <input type="hide" id="hide_actions">
+                       <input type="hide" id="hide_actions_param">
+                       <input type="hide" id="hide_actions_param_2">
+                   </div>
                    <div class="row rsoon monthly-actions run-intensive">
-                       
+                        <div class="col-lg-12 cs-col-padding mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+                                    <div class="cs-horizontal-checkboxes" id="run_task_weekday_yearly_select">
+                                        <label><input type="checkbox" value="monday" name="run_task_weekday_select"><span>Monday</span></label>
+                                        <label><input type="checkbox" value="tuesday" name="run_task_weekday_select"><span>Tuesday</span></label>
+                                        <label><input type="checkbox" value="wednesday" name="run_task_weekday_select"><span>Wednesday</span></label>
+                                        <label><input type="checkbox" value="thursday" name="run_task_weekday_select"><span>Thursday</span></label>
+                                        <label><input type="checkbox" value="friday" name="run_task_weekday_select"><span>Friday</span></label>
+                                        <label><input type="checkbox" value="saturday" name="run_task_weekday_select"><span>Saturday</span></label>
+                                        <label><input type="checkbox" value="sunday" name="run_task_weekday_select"><span>Sunday</span></label>
+                                    </div>
+                                </div>
+                        </div>
                         <div class="col-lg-9 mt-2">
                                 <div class="cs-input-group">
                                     <div class="input-group-addon">Ay həftəsi</div>
                                         <div class="cs-horizontal-checkboxes" id="run_task_day_yearly_select">
-                                            <label><input type="checkbox" value="1_week" ><span>1-ci həftə</span></label>
-                                            <label><input type="checkbox" value="2_week" ><span>2-ci həftə</span></label>
-                                            <label><input type="checkbox" value="3_week" ><span>3-cü həftə</span></label>
-                                            <label><input type="checkbox" value="4_week" ><span>4-cü həftə</span></label>
-                                            <label><input type="checkbox" value="last_week" ><span>Last week</span></label>
+                                            <label><input type="checkbox" value="1_week" name="run_task_weekday_select"><span>1-ci həftə</span></label>
+                                            <label><input type="checkbox" value="2_week" name="run_task_weekday_select"><span>2-ci həftə</span></label>
+                                            <label><input type="checkbox" value="3_week" name="run_task_weekday_select"><span>3-cü həftə</span></label>
+                                            <label><input type="checkbox" value="4_week" name="run_task_weekday_select"><span>4-cü həftə</span></label>
+                                            <label><input type="checkbox" value="last_week" name="run_task_weekday_select"><span>Last week</span></label>
                                         </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 pl-0 mt-2">
                                 <div class="cs-input-group">
                                     <div class="input-group-addon">Gün:</div>
-                                    <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true" tabindex="null">
-                                    <option value="1">1</option><option value="2">3</option><option value="3">3</option>
-                                    <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-                                    <option value="7">7</option><option value="8">8</option><option value="9">9</option>
-                                    <option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                                    <option value="13">13</option><option value="14">14</option><option value="15">15</option>
-                                    <option value="16">16</option><option value="17">17</option><option value="18">18</option>
-                                    <option value="19">19</option><option value="20">20</option><option value="21">21</option>
-                                    <option value="22">22</option><option value="23">23</option><option value="24">24</option>
-                                    <option value="25">25</option><option value="26">26</option><option value="27">27</option>
-                                    <option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
-                                </select>
+                                    <select class="issue_selectpicker" name="run_task_repeat_select" id='monthlyAction' data-live-search="true">
+                                        <option value="last_day_of_month">Last day of month</option>
+                                        <option value="first_day_of_month">First day of month</option>
+                                        <option value="specific_day_of_month">Specific day of month</option>
+                                        <option value="before_last_day_of_month">Before last day of month</option>
+                                        <option value="specific_weekday_of_month">Specific weekday of month</option>
+                                    </select>
                                 </div>
                             </div>
                       
@@ -455,7 +732,6 @@ const taskManagement = {
              </div>`
                 },
                 genEventBlock: function () {
-                    return ""
                     return `  <div class="tab-pane fade task-events-created cs-box-background" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
                     <div class="row">
                         <div class="col-lg-12 cs-flex-col flex-item mt-2">
@@ -548,13 +824,9 @@ const taskManagement = {
                 crossDomain: true,
                 async: true,
                 success: function (res) {
-                    AJAXCallFeedback(res);
-                //    that.insertEventByTaskId(res.kv.id);
+                    that.insertEventByTaskId(res.kv.id);
                     that.insertObserverTask(res.kv.id);
                     that.insertCheckListComulativ(res.kv.id,itmlist);
-                   
-                    taskManagement.insertTask.insertBacklogTaskDetail(res.kv.id);
-                     
                     getBugList();
                     Toaster.showMessage(lang_task.windowAddTask.addTaskMessageSucc);
                     if ($("#after_insert_modal").prop("checked")) {
@@ -576,13 +848,8 @@ const taskManagement = {
         },
         getValueCreateModalScreen: function () {
             var val = $('#taskNameInputNew2').val();
-            var backlog = $('#bug_filter_backlog_id_add').val();
             if (!val) {
                 Toaster.showError(lang_task.windowAddTask.errorMessageTask);
-                return
-            }
-            if (!backlog) {
-                Toaster.showError('StoryCard Not entered');
                 return
             }
 
@@ -612,16 +879,15 @@ const taskManagement = {
             data.taskPriority = $("#bug_filter_priority_add").val();
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
-            data.startDate = toDate('taskDeadlineStartDade');
-            data.startTime = GetConvertedTime('taskDeadlineStartTime');
-            data.endTime = GetConvertedTime('taskDeadlineEndTime');
-            data.endDate = toDate('taskDeadlineEndDade');
+            data.startDate = $('#taskDeadlineStartDade').val();
+            data.startTime = $('#taskDeadlineStartTime').val();
+            data.endTime = $('#taskDeadlineEndTime').val();
+            data.endDate = $('#taskDeadlineEndDade').val();
             data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "0" : "1";
             data.fkParentTaskId = $("#parent-task-id-input").val();
-            data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
-            data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
-           // schedulle 
-            
+
+
+
             // data.description = $("#bug_filter_project_id_add").val();
        
             //$(this).attr("disabled",'disabled');
@@ -629,6 +895,7 @@ const taskManagement = {
             var items = $(".issue-managment-add-task .task-check-list-box ul>li");
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
+
                 itmList += $(o).find('textarea').val() + '|';
             }
             reset_task_data();
@@ -704,34 +971,36 @@ const taskManagement = {
 
         insertBacklogTaskDetail: function (taskId) {
             try {
-
                 var data = {};
                 data.fkTaskId = taskId;
+                data.actionParam = getMultiSelectpickerValueByElementName("run_task_weekday_select");
+                data.action = $("#bug_filter_project_id_add").val();
+                data.weekdays = $("#swofm_weekday_select").val();
+                data.startDate = toDate("runTaskStartDate");
+                data.endDate = toDate("runTaskEndDate");
+                data.runTime = GetConvertedTime("runTaskTime");
+                data.intensive = $("#run_task_intensive_select").val();
+                data.repeatInterval = $("#run_task_repeat_select").val();
+                data.scheduleStatus = $("#run_task_status_select").val();
+                data.projectId = $('#bug_filter_project_id_add').val();
+                data.projectName = $('#bug_filter_project_id_add option:selected').text();
                 data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
                 data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
-                if($('#runTaskAvtivateSchedule').prop("checked")){
-                    data.intensive = $("#run_task_intensive_select").val();
-                    data.repeatInterval = $("#run_task_repeat_select").val();
-                    data.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
-                 
-                    data.weekdays = getValueScheduleWeekDay('run_task_weekday_yearly_select');
-                    data.remindMeParam = $("#run_task_reminder_select").val();
-                    data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
-                    data.monthlyAction = getValueScheduleWeekAction('run_task_day_yearly_select');
-                    data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
-                    data.startDate = toDate("taskDeadlineStartDade");
-                    data.endDate = toDate("taskDeadlineEndDade");
-                    data.runTime = GetConvertedTime("taskDeadlineStartTime");
-                    
-                 }
-               
+                data.remindMeParam = $("#bug_filter_project_id_add").val();
+                data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+                data.monthlyAction = $("#monthlyAction:checked").val();
+                data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
+                data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
+                data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
+                data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
+                data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
 
-                callService('serviceRsCreateBacklogTaskDetail', data, true, function (res) {
+
+                callService('serviceRsCreateBacklogTaskDetail', data, true, function () {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
-                    AJAXCallFeedback(res);
                 });
             } catch (error) {
-                
+                console.log('task Observer ++++' + error);
             }
 
 
@@ -1050,7 +1319,7 @@ const taskManagement = {
               <div class="col-12">
                   <div class="cs-input-group mt-2">
                       <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
-                          <input type="checkbox" onchange="updateTask4Details(this, 'sendNotification')" id="sendnotification_detail">
+                          <input type="checkbox" id="sendnotification_detail">
                           <span class="checkmark"></span>
                       </label>
                   </div>
@@ -1072,7 +1341,6 @@ const taskManagement = {
                      `
                     return div
                 },
-
                 genTabHeader: function () {
                     return `<div class="d-flex" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important;">
                         <div class="d-schedule-dcbtn" style="display:none">
@@ -1105,11 +1373,9 @@ const taskManagement = {
                                     <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                                 </li>
                                 
+                
                                 <li class="nav-item" role="presentation">
-                                     <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon chat-alt"></i> <span>Chat</span></a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
+                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
                                 </li>
                              </ul>
                         </div>
@@ -1368,128 +1634,384 @@ const taskManagement = {
                     </div>
                 </div>`
                 },
-                genScheduleBlock: function () {
-                    return ` <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="d-task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
-                    <div class="row rsoon">
-                       <div class="col-lg-3 pr-0 mt-2">
-                            <div class="cs-input-group">
-                                <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
-                                <input class="form-control" name="run_task_repeat_select" id='run_task_repeat_select_detail' onchange="updateTask4Details(this, 'repeatInterval')" type="number" required>
-                            </div>
-                        </div>
-                    
-                        <div class="col-lg-4 pr-0 mt-2">
-                             <div class="cs-input-group">
-                                 <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
-                                 <select class="issue_selectpicker" onchange="updateTask4Details(this, 'intensive')" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
-                                     <option value="weekly">${lang_task.windowAddTask.weekly}</option>
-                                     <option value="monthly">${lang_task.windowAddTask.monthly}</option>
-                                     <option value="yearly">${lang_task.windowAddTask.yearly}</option>
-                                 </select>
-                             </div>
-                        </div>                
-                        <div class="col-lg-5  mt-2">
-                             <div class="cs-input-group">
-                                 <div class="input-group-addon">${lang_task.windowAddTask.selectReminder}</div>
-                                 <select class="issue_selectpicker" name="run_task_repeat_select" onchange="updateTask4Details(this, 'remindMeParam')"  id='run_task_reminder_select_detail' data-live-search="true">
-                                     <option value="at_start_time">At start time</option>
-                                     <option value="5_minutes_before">5 minutes before</option>
-                                     <option value="10_minutes_before">10 minutes before</option>
-                                     <option value="15_minutes_before">15 minutes before</option>
-                                     <option value="20_minutes_before">20 minutes before</option>
-                                     <option value="25_minutes_before">25 minutes before</option>
-                                     <option value="30_minutes_before">30 minutes before</option>
-                                     <option value="45_minutes_before">45 minutes before</option>
-                                     <option value="1_hour_before">1 hour before</option>
-                                     <option value="2_hours_before">2 hours before</option>
-                                     <option value="3_hours_before">3 hours before</option>
-                                     <option value="12_hours_before">12 hours before</option>
-                                     <option value="24_hours_before">24 hour before</option>
-                                     <option value="2_days_before">2 days before</option>
-                                     <option value="1_week_before">1 week before</option>
-                                 </select>
-                             </div>
-                         </div>
-                       
-                    </difv>
-                    </div>
+                genScheduleBlockNew: function () {
+                    return `<div class="tab-pane fade shedule-elements cs-box-background" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
                    
-                    <div class="row rsoon weekly-and-monthly-actions run-intensive run-enabled">
+                   <div class="row soon">
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Start Date</label>
+                               <input class="form-control runTaskDate_detail cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">End Date</label>
+                               <input class="form-control cs-input runTaskDate_detail" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Run Time</label>
+                               <input class="form-control cs-input taskDeadlineTime" name="runTaskTime" id="runTaskTime_detail" type="text" required>
+                           </div>
+                       </div>
+
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Intensive</label>
+                               <select class="issue_selectpicker" name="run_task_intensive_select issue_selectpicker" id='run_task_intensive_select_detail' data-live-search="true">
+                                   <option value="weekly">Weekly</option>
+                                   <option value="monthly">Monthly</option>
+                                   <option value="yearly">Yearly</option>
+                               </select>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Repeat every</label>
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
+                                   <option value="1">1</option>
+                                   <option value="2">2</option>
+                                   <option value="3">3</option>
+                                   <option value="4">4</option>
+                                   <option value="5">5</option>
+                                   <option value="6">6</option>
+                                   <option value="7">7</option>
+                                   <option value="8">8</option>
+                                   <option value="9">9</option>
+                                   <option value="10">10</option>
+                                   <option value="11">11</option>
+                                   <option value="12">12</option>
+                               </select>
+                           </div>
+                       </div>
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Status</label>
+                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
+                                   <option value="active">Active</option>
+                                   <option value="passive">Passive</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row soon weekly-actions run-intensive run-enabled mt-3">
+                       <div class="col-12">
+                           <h5 class="section-title"><strong>Weekly Actions</strong></h5>
+                       </div>
+                       <div class="col-md-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Weekday</label>
+                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
+                                   <option value="monday">Monday</option>
+                                   <option value="tuesday">Tuesday</option>
+                                   <option value="wednesday">Wednesday</option>
+                                   <option value="thursday">Thursday</option>
+                                   <option value="friday">Friday</option>
+                                   <option value="saturday">Saturday</option>
+                                   <option value="sunday">Sunday</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row soon" style="display: none;">
+                       <input type="hide" id="hide_actions_detail">
+                       <input type="hide" id="hide_actions_param_detail">
+                       <input type="hide" id="hide_actions_param_2_detail">
+                   </div>
+                   <div class="row soon monthly-actions run-intensive mt-3">
+                       <div class="col-12">
+                           <h5 class="section-title"><strong>Monthly Action</strong></h5>
+                       </div>
+                       <div class="cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group horizontal ml-3 mt-2">
+                               <div class="input-group-addon">Specification</div>
+                               <label class="checkcontainer">Last day of month
+                                   <input type="radio" checked="checked" name="radio" id="last_day_of_month_detail">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer">First day of month
+                                   <input type="radio" name="radio" id="first_day_of_month_detail">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer spa">Specific day of month
+                                   <input type="radio" name="radio" id="specific_day_of_month_detail">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer spa">Before last day of month
+                                   <input type="radio" name="radio" id="before_last_day_of_month_detail">
+                                   <span class="radiobtn"></span>
+                               </label>
+                               <label class="checkcontainer spa">Specific weekday of month 
+                                   <input type="radio" name="radio" id="specific_weekday_of_month_detail">
+                                   <span class="radiobtn"></span>
+                               </label>
+                           </div>
+                       </div>
+                       <div class="col-12">
+                           <hr class="hr_spa">
+                           <div class="row">
+                               <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
+                                   <div class="cs-input-group ml-3">
+                                       <label class="input-group-addon">Day of Month</label>
+                                       <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
+                                           <option value="1">1</option>
+                                           <option value="2">3</option>
+                                           <option value="3">3</option>
+                                           <option value="4">4</option>
+                                           <option value="5">5</option>
+                                           <option value="6">6</option>
+                                           <option value="7">7</option>
+                                           <option value="8">8</option>
+                                           <option value="9">9</option>
+                                           <option value="10">10</option>
+                                           <option value="11">11</option>
+                                           <option value="12">12</option>
+                                           <option value="13">13</option>
+                                           <option value="14">14</option>
+                                           <option value="15">15</option>
+                                           <option value="16">16</option>
+                                           <option value="17">17</option>
+                                           <option value="18">18</option>
+                                           <option value="19">19</option>
+                                           <option value="20">20</option>
+                                           <option value="21">21</option>
+                                           <option value="22">22</option>
+                                           <option value="23">23</option>
+                                           <option value="24">24</option>
+                                           <option value="25">25</option>
+                                           <option value="26">26</option>
+                                           <option value="27">27</option>
+                                           <option value="28">28</option>
+                                           <option value="29">29</option>
+                                           <option value="30">30</option>
+                                           <option value="31">31</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="spa_days_before_last_day_of_month run_spa cs-flex-col flex-item ml-3 mt-2">
+                                   <div class="cs-input-group">
+                                       <label class="input-group-addon">Day(s) before last day of month</label>
+                                       <input class="form-control" name="days_before_last_day_of_month" id="days_before_last_day_of_month_detail" type="number" required>
+                                   </div>
+                               </div>
+                               <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
+                                   <div class="cs-input-group">
+                                       <label class="input-group-addon">Action</label>
+                                       <select class="issue_selectpicker" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
+                                           <option value="first">First</option>
+                                           <option value="last">Last</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
+                                   <div class="cs-input-group">
+                                       <label class="input-group-addon">Weekdays</label>
+                                       <select name="swofm_weekday_select issue_selectpicker" id="swofm_weekday_select_detail" data-live-search="true">
+                                           <option value="monday">Monday</option>
+                                           <option value="tuesday">Tuesday</option>
+                                           <option value="wednesday">Wednesday</option>
+                                           <option value="thursday">Thursday</option>
+                                           <option value="friday">Friday</option>
+                                           <option value="saturday">Saturday</option>
+                                           <option value="sunday">Sunday</option>
+                                       </select>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row soon yearly-actions run-intensive mt-3">
+                       <div class="col-12">
+                           <h5 class="section-title"><strong>Yearly</strong> </h5>
+                       </div>
+                       <div class="cs-flex-col flex-item ml-3 mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Execution Data</label>
+                               <input class="form-control" id="runTaskExecutiveDate_detail" type="text" name="runTaskExecutiveDate" required>
+                           </div>
+                       </div>
+                   </div>
+                   <hr>
+                   <div class="row soon">
+                       <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                           <div class="cs-input-group">
+                               <label class="input-group-addon">Başlat</label>
+                               <select class="issue_selectpicker" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
+                                   <option value="at_start_time">At start time</option>
+                                   <option value="5_minutes_before">5 minutes before</option>
+                                   <option value="10_minutes_before">10 minutes before</option>
+                                   <option value="15_minutes_before">15 minutes before</option>
+                                   <option value="20_minutes_before">20 minutes before</option>
+                                   <option value="25_minutes_before">25 minutes before</option>
+                                   <option value="30_minutes_before">30 minutes before</option>
+                                   <option value="45_minutes_before">45 minutes before</option>
+                                   <option value="1_hour_before">1 hour before</option>
+                                   <option value="2_hours_before">2 hours before</option>
+                                   <option value="3_hours_before">3 hours before</option>
+                                   <option value="12_hours_before">12 hours before</option>
+                                   <option value="24_hours_before">24 hour before</option>
+                                   <option value="2_days_before">2 days before</option>
+                                   <option value="1_week_before">1 week before</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+               </div>`
+                },
+                genScheduleBlock: function () {
+                    return `<div class="tab-pane fade shedule-elements cs-box-background" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
+                   
+                    <div class="row rsoon">
+                    <div class="col-lg-2 pr-0 mt-2">
+                         <div class="cs-input-group">
+                             <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
+                             <input class="form-control" name="run_task_repeat_select" id='run_task_repeat_select' type="number" required>
+                         </div>
+                     </div>
                  
-                        <div class="col-lg-12 cs-col-padding mt-2">
-                            <div class="cs-input-group">
-                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
- 
-                                 <div class="cs-horizontal-checkboxes" id="run_task_weekday_select_detail">
-                                     <label><input type="checkbox" value="monday" ><span>Monday</span></label>
-                                     <label><input type="checkbox" value="tuesday" ><span>Tuesday</span></label>
-                                     <label><input type="checkbox" value="wednesday" ><span>Wednesday</span></label>
-                                     <label><input type="checkbox" value="thursday" ><span>Thursday</span></label>
-                                     <label><input type="checkbox" value="friday" ><span>Friday</span></label>
-                                     <label><input type="checkbox" value="saturday" ><span>Saturday</span></label>
-                                     <label><input type="checkbox" value="sunday" ><span>Sunday</span></label>
-                                 </div>
- 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row rsoon monthly-actions  run-intensive">
-                         <div class="col-lg-9 mt-2">
-                                 <div class="cs-input-group">
-                                     <div class="input-group-addon">Ay həftəsi</div>
-                                         <div class="cs-horizontal-checkboxes" id="run_task_day_yearly_select_detail">
-                                             <label><input type="checkbox" value="1_week" ><span>1-ci həftə</span></label>
-                                             <label><input type="checkbox" value="2_week" ><span>2-ci həftə</span></label>
-                                             <label><input type="checkbox" value="3_week" ><span>3-cü həftə</span></label>
-                                             <label><input type="checkbox" value="4_week" ><span>4-cü həftə</span></label>
-                                             <label><input type="checkbox" value="last_week" ><span>Last week</span></label>
-                                         </div>
-                                 </div>
-                             </div>
-                             <div class="col-lg-3 pl-0 mt-2">
-                                 <div class="cs-input-group">
-                                     <div class="input-group-addon">Gün:</div>
-                                     <select onchange='updateTask4Details(this,"actionDayOfMonth")' class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true" tabindex="null">
-                                     <option value="1">1</option>
-                                     <option value="2">3</option>
-                                     <option value="3">3</option>
-                                     <option value="4">4</option>
-                                     <option value="5">5</option>
-                                     <option value="6">6</option>
-                                     <option value="7">7</option>
-                                     <option value="8">8</option>
-                                     <option value="9">9</option>
-                                     <option value="10">10</option>
-                                     <option value="11">11</option>
-                                     <option value="12">12</option>
-                                     <option value="13">13</option>
-                                     <option value="14">14</option>
-                                     <option value="15">15</option>
-                                     <option value="16">16</option>
-                                     <option value="17">17</option>
-                                     <option value="18">18</option>
-                                     <option value="19">19</option>
-                                     <option value="20">20</option>
-                                     <option value="21">21</option>
-                                     <option value="22">22</option>
-                                     <option value="23">23</option>
-                                     <option value="24">24</option>
-                                     <option value="25">25</option>
-                                     <option value="26">26</option>
-                                     <option value="27">27</option>
-                                     <option value="28">28</option>
-                                     <option value="29">29</option>
-                                     <option value="30">30</option>
-                                     <option value="31">31</option>
-                                 </select>
-                                 </div>
-                             </div>
-                       
-                    </div>
-                    <div class="row rsoon yearly-actions run-intensive">
-                      
-                    </div>
-                </div>`
+                     <div class="col-lg-2 pr-0 mt-2">
+                          <div class="cs-input-group">
+                              <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
+                              <select class="issue_selectpicker" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
+                                  <option value="weekly">${lang_task.windowAddTask.weekly}</option>
+                                  <option value="monthly">${lang_task.windowAddTask.monthly}</option>
+                                  <option value="yearly">${lang_task.windowAddTask.yearly}</option>
+                              </select>
+                          </div>
+                     </div>
+                     <div class="col-lg-2 pr-0 mt-2">
+                         <div class="cs-input-group">
+                             <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>
+                             <div class="cs-date-time d-flex">
+                                  <div>
+                                       <div class="d-flex">
+                                          <span class="input-group-icon"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+                                         <input type="text" name="runTaskStartDate" id="runTaskStartDate" class="form-control" required>
+                                      </div>
+                                  </div>
+                              </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-2 pr-0 mt-2">
+                         <div class="cs-input-group">
+                             <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                             <div class="cs-date-time d-flex">
+                                  <div>
+                                      <div class="d-flex">
+                                          <span class="input-group-icon"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+                                          <input type="text" name="runTaskiceEndDate" id="runTaskEndDate" class="form-control" required>
+                                      </div>
+                                  </div>
+                              </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-2 mt-2">
+                          <div class="cs-input-group">
+                              <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
+                              <div class="cs-date-time d-flex">
+                                      <div>
+                                          <div class="d-flex">
+                                              <span class="input-group-icon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                              <input type="text" name="runTaskTime" id="runTaskTime" class="form-control" required>
+                                          </div>
+                                      </div>
+                                  </div>
+                          </div>
+                      </div>                       
+                     <div class="col-lg-2 pl-0 mt-2">
+                          <div class="cs-input-group">
+                              <div class="input-group-addon">Başlat</div>
+                              <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
+                                  <option value="at_start_time">At start time</option>
+                                  <option value="5_minutes_before">5 minutes before</option>
+                                  <option value="10_minutes_before">10 minutes before</option>
+                                  <option value="15_minutes_before">15 minutes before</option>
+                                  <option value="20_minutes_before">20 minutes before</option>
+                                  <option value="25_minutes_before">25 minutes before</option>
+                                  <option value="30_minutes_before">30 minutes before</option>
+                                  <option value="45_minutes_before">45 minutes before</option>
+                                  <option value="1_hour_before">1 hour before</option>
+                                  <option value="2_hours_before">2 hours before</option>
+                                  <option value="3_hours_before">3 hours before</option>
+                                  <option value="12_hours_before">12 hours before</option>
+                                  <option value="24_hours_before">24 hour before</option>
+                                  <option value="2_days_before">2 days before</option>
+                                  <option value="1_week_before">1 week before</option>
+                              </select>
+                          </div>
+                      </div>
+                 </div>
+                 <div class="row rsoon weekly-actions run-intensive run-enabled">
+              
+                     <div class="col-lg-12 cs-col-padding mt-2">
+                         <div class="cs-input-group">
+                             <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+
+                              <div class="cs-horizontal-checkboxes" id="run_task_weekday_select">
+                                  <label><input type="checkbox" value="monday" name="run_task_weekday_select"><span>Monday</span></label>
+                                  <label><input type="checkbox" value="tuesday" name="run_task_weekday_select"><span>Tuesday</span></label>
+                                  <label><input type="checkbox" value="wednesday" name="run_task_weekday_select"><span>Wednesday</span></label>
+                                  <label><input type="checkbox" value="thursday" name="run_task_weekday_select"><span>Thursday</span></label>
+                                  <label><input type="checkbox" value="friday" name="run_task_weekday_select"><span>Friday</span></label>
+                                  <label><input type="checkbox" value="saturday" name="run_task_weekday_select"><span>Saturday</span></label>
+                                  <label><input type="checkbox" value="sunday" name="run_task_weekday_select"><span>Sunday</span></label>
+                              </div>
+
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row rsoon" style="display: none;">
+                     <input type="hide" id="hide_actions">
+                     <input type="hide" id="hide_actions_param">
+                     <input type="hide" id="hide_actions_param_2">
+                 </div>
+                 <div class="row rsoon monthly-actions run-intensive">
+                      <div class="col-lg-12 cs-col-padding mt-2">
+                          <div class="cs-input-group">
+                              <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
+                                  <div class="cs-horizontal-checkboxes" id="run_task_weekday_yearly_select">
+                                      <label><input type="checkbox" value="monday" name="run_task_weekday_select"><span>Monday</span></label>
+                                      <label><input type="checkbox" value="tuesday" name="run_task_weekday_select"><span>Tuesday</span></label>
+                                      <label><input type="checkbox" value="wednesday" name="run_task_weekday_select"><span>Wednesday</span></label>
+                                      <label><input type="checkbox" value="thursday" name="run_task_weekday_select"><span>Thursday</span></label>
+                                      <label><input type="checkbox" value="friday" name="run_task_weekday_select"><span>Friday</span></label>
+                                      <label><input type="checkbox" value="saturday" name="run_task_weekday_select"><span>Saturday</span></label>
+                                      <label><input type="checkbox" value="sunday" name="run_task_weekday_select"><span>Sunday</span></label>
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="col-lg-9 mt-2">
+                              <div class="cs-input-group">
+                                  <div class="input-group-addon">Ay həftəsi</div>
+                                      <div class="cs-horizontal-checkboxes" id="run_task_day_yearly_select">
+                                          <label><input type="checkbox" value="1_week" name="run_task_weekday_select"><span>1-ci həftə</span></label>
+                                          <label><input type="checkbox" value="2_week" name="run_task_weekday_select"><span>2-ci həftə</span></label>
+                                          <label><input type="checkbox" value="3_week" name="run_task_weekday_select"><span>3-cü həftə</span></label>
+                                          <label><input type="checkbox" value="4_week" name="run_task_weekday_select"><span>4-cü həftə</span></label>
+                                          <label><input type="checkbox" value="last_week" name="run_task_weekday_select"><span>Last week</span></label>
+                                      </div>
+                              </div>
+                          </div>
+                          <div class="col-lg-3 pl-0 mt-2">
+                              <div class="cs-input-group">
+                                  <div class="input-group-addon">Gün:</div>
+                                  <select class="issue_selectpicker" name="run_task_repeat_select" id='monthlyAction' data-live-search="true">
+                                      <option value="last_day_of_month">Last day of month</option>
+                                      <option value="first_day_of_month">First day of month</option>
+                                      <option value="specific_day_of_month">Specific day of month</option>
+                                      <option value="before_last_day_of_month">Before last day of month</option>
+                                      <option value="specific_weekday_of_month">Specific weekday of month</option>
+                                  </select>
+                              </div>
+                          </div>
+                    
+                 </div>
+                 <div class="row rsoon yearly-actions run-intensive">
+                   
+                 </div>
+               </div>`
                 },
                 genObserverBlock: function () {
                     return ""
@@ -1588,89 +2110,68 @@ const taskManagement = {
                 </div>`
                 },
                 genEventBlock: function () {
-                    return `   <div class="tab-pane fade task-events-updated cs-box-background" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">  
+                    return `   <div class="tab-pane fade task-events-updated cs-box-background" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">
+                                   
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="toggle-body-item toggle-top-box-5 " style="display: block;">
-                                <div class="d-flex border-bottom-1px pb-1 mt-2 mb-1">
-                                    <div class="mr-auto toggle-body-title">
-                                        <div class="result-box">
-                                            <img class="rounded-circle" src="https://test.sourcedagile.com/api/get/files/shekil1_77A7F3AC232D5.png" style="width: 33px; height: 33px; border: 1px solid rgb(3, 57, 108);" />
-                                            <span class="toggle-datatime">26.11.2021  13:42:36</span>
-                                        </div>
-                                    </div>
-                                    <div class="toggle-min-elements">
-                                        <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                        <a data-link="5" class="cs-url toggle-btn active"><i class="fal fa-angle-down" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="toggle-box-5 table-box" orderno="7.3" style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;">
-                                    <table class="table cst-table-hover tablePaginatione component-input-class mb-0" id="taskListCW" style="width: 100% !important;">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" style="width:46px"><i class="cs-svg-icon numbers"></i>
-                                                </th>
-                                                
-                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Tip</label> <span class="handle-drag"></span>
-                                                </th>
-
-                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Ad</label> <span class="handle-drag"></span>
-                                                </th>
-
-                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Tarix</label> <span class="handle-drag"></span>
-                                                </th>
-                                                <th class="text-center cst-a-font"><label href="#" class="component-class">Saat</label> <span class="handle-drag"></span>
-                                                </th>
-
-                                                <th class="text-center">
-                                                    <label href="#" class="component-class"><i class="cs-svg-icon task-user-2"></i></label>
-                                                    <span class="handle-drag"></span>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="redirectClass" style="width: 46px;">
-                                                <td class="text-center brend-color" style="width: 20px;">1</td>
-                                                
-                                                <td class="text-center" style="width: 170px;">
-                                                    <a href="#" class="brend-color">Tapşırıq</a>
-                                                </td>
-
-                                                <td class="text-center" style="width: 170px;">
-                                                    <a href="#" class="brend-color">Tapşırıq</a>
-                                                </td>
-                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
-                                                    <a href="#" class="brend-color">24.11.2021</a>
-                                                </td>
-                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
-                                                    <a href="#" class="brend-color">15:41:43</a>
-                                                </td>
-                                            <td class="text-center" style="width: 80px;">
-                                                    <img class="rounded-circle personal-btn-img js-btn-popover--custom" src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&amp;v=beta&amp;t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg" data-placement="left" data-toggle="popover" data-trigger="hover" sa-selectedfield="fkAssigneeId" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
-                                                </td>
-                                            </tr>
-                                            <tr class="redirectClass" style="width: 46px;">
-                                                <td class="text-center brend-color" style="width: 20px;">2</td>
-                                                
-                                                <td class="text-center" style="width: 170px;">
-                                                    <a href="#" class="brend-color">Əməliyyat</a>
-                                                </td>
-                                                <td class="text-center" style="width: 170px;">
-                                                    <a href="#" class="brend-color">Əməliyyat</a>
-                                                </td>
-                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
-                                                    <a href="#" class="brend-color">24.11.2021</a>
-                                                </td>
-                                                <td class="text-center" style="padding-left: 5px; max-width: 1px;">
-                                                    <a href="#" class="brend-color">15:41:43</a>
-                                                </td>
-                                                <td class="text-center" style="width: 80px;">
-                                                    <img class="rounded-circle personal-btn-img" src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&amp;v=beta&amp;t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg" data-placement="left" data-toggle="popover" data-trigger="hover" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <label class="switch bcs-swith">
+                                    <input type="checkbox" id="activateUpdatedEvenets">
+                                    <span class="slider round">
+                                        <small class="deactive">Deactive</small>
+                                        <small class="active">Active</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Subject</div>
+                                <input class="form-control updevents" name="mezmun" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Structure</div>
+                                <input class="form-control updevents" name="struktur" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Type</div>
+                                <input class="form-control updevents" name="nov" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Responsible person</div>
+                                <input class="form-control updevents" name="mesulShexs" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Participant</div>
+                                <input class="form-control updevents" name="istirakci" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Counterparty</div>
+                                <input class="form-control updevents" name="kontragent" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Location</div>
+                                <input class="form-control updevents" name="yer" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                            <div class="cs-input-group">
+                                <div class="input-group-addon">Note</div>
+                                <input class="form-control updevents" name="qeyd" type="text">
                             </div>
                         </div>
                     </div>
@@ -1694,10 +2195,10 @@ const taskManagement = {
                 $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
                 $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
                 if (coreBugKV[taskId].isMeet === '1') {
-                    changeMeetAndTask($("#toplanti-d-btn"),'1');
+                    $("#toplanti-d-btn").click();
                     $(".card-UserStory-header-text-code").html("Toplantı-"+coreBugKV[taskId].orderNoSeq+"");
                 } else {
-                    changeMeetAndTask($("#tapshiriq-btn"),'0');
+                    $("#tapshiriq-btn").click();
                     $(".card-UserStory-header-text-code").html("Tapşırıq-"+coreBugKV[taskId].orderNoSeq+"");
                 }
             
@@ -1744,10 +2245,9 @@ const taskManagement = {
         this.getTaskLabelList(taskId)
 
         getProjectUsers();    
-        
+      
         loadTaskInfoToContainer(taskId, projectId);
         taskManagement.updateTask.genCommentListOfTask();
-        taskManagement.updateTask.updateBacklogTaskDetail(taskId);
         
         this.getCheckListComulativ(taskId);
         this.getTaskObserverList(taskId);
@@ -1820,39 +2320,36 @@ const taskManagement = {
         },
         updateBacklogTaskDetail: function (taskId) {
             try {
-
                 var data = {};
-                data.fkTaskId = taskId;               
-                callService('serviceRsGetBacklogTaskListByTaskId', data, true, function (res) {
+                data.fkTaskId = taskId;
+                data.actionParam = getMultiSelectpickerValueByElementName("run_task_weekday_select");
+                data.action = $("#bug_filter_project_id_add").val();
+                data.weekdays = $("#swofm_weekday_select").val();
+                data.startDate = toDate("runTaskStartDate");
+                data.endDate = toDate("runTaskEndDate");
+                data.runTime = GetConvertedTime("runTaskTime");
+                data.intensive = $("#run_task_intensive_select").val();
+                data.repeatInterval = $("#run_task_repeat_select").val();
+                data.scheduleStatus = $("#run_task_status_select").val();
+                data.projectId = $('#bug_filter_project_id_add').val();
+                data.projectName = $('#bug_filter_project_id_add option:selected').text();
+                data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
+                data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
+                data.remindMeParam = $("#bug_filter_project_id_add").val();
+                data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+                data.monthlyAction = $("#monthlyAction:checked").val();
+                data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
+                data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
+                data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
+                data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
+                data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
+
+                callService('serviceRsCreateBacklogTaskDetail', data, true, function () {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
-                    AJAXCallFeedback(res);
-                    console.log(res);
-                    try {
-                        const  o  = res.tbl[0].r[0];
-                        console.log(o);
-                        $("#runTaskStartDate_activateschedule").prop("checked",o.scheduleStatus==='1'?true:false);
-                        changeModeSchedule4Update(o.intensive);
-                        $("#sendnotification_detail").prop("checked",o.sendNotification==='1'?true:false);
-                        $("#runTaskStartDate_activateschedule").change();
-                        $("#run_task_intensive_select_detail").val(o.intensive)
-                                                              .selectpicker("refresh");
-                        $("#run_task_repeat_select_detail").val(o.repeatInterval);
-                        $("#run_task_reminder_select_detail").val(o.remindMeParam)
-                                                             .selectpicker("refresh");
-                        $("#sdofm_day_of_Month_select_detail").val(o.actionDayOfMonth)
-                                                             .selectpicker("refresh");
-                        setValueScheduleWeekDay("run_task_weekday_yearly_select_detail",o.weekdays);
-                        setValueScheduleWeekDay("run_task_day_yearly_select_detail",o.monthlyAction);
-                        
-                    } catch (error) {
-                        console.log(error);
-                    }
-                   
                 });
             } catch (error) {
-                
+                console.log('task Observer ++++' + error);
             }
-
 
 
         },
@@ -2610,7 +3107,7 @@ const taskManagement = {
                 return `  <div class="cs-input-group mt-3">
     
                 <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
-                    <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="" title="Show Child Tasks">
+                    <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
                     <span class="checkmark"></span>
                 </label>                    
             </div>`
@@ -2723,7 +3220,7 @@ const taskManagement = {
                             </div>
                             <b id="table-row-count"> </b>
                         </div>
-                        <div class="cs-input-group text-center mt-3 pr-0">
+                        <div class="cs-input-group text-center mt-3">
                             <div class="task-clear-filter-btn">
                                 <i class="cs-svg-icon clear-filter"></i>
                             </div>
@@ -4129,49 +4626,6 @@ const taskManagement = {
         });
     }
 }
-function getValueScheduleWeekDay(elmId) {
-       var list =''; 
-       var block  =  $("#"+elmId).find('input[type="checkbox"]');
-          block.each(function (params) {
-              if($(this).prop("checked")){
-                  list += $(this).val() + '%IN%'
-              }
-          })
-       return list ;
-}
-function getValueScheduleWeekAction(elmId) {
-       var list =''; 
-       var block  =  $("#"+elmId).find('input[type="checkbox"]');
-          block.each(function () {
-              if($(this).prop("checked")){
-                  list += $(this).val() + '%IN%'
-              }
-          })
-       return list ;
-}
-function setValueScheduleWeekDay(elmId,val) {
-    try {
-        var val =val.split('%IN%'); 
-        for (let i = 0; i < val.length; i++) {
-            const o = val[i];
-            $("#"+elmId).find('input[value="'+o+'"]').prop("checked",true);
-        }   
-    } catch (error) {
-        
-    }
-      
-         
-}
-function setValueScheduleWeekAction(elmId) {
-       var list =''; 
-       var block  =  $("#"+elmId).find('input[type="checkbox"]');
-          block.each(function () {
-              if($(this).prop("checked")){
-                  list += $(this).val() + '%IN%'
-              }
-          })
-       return list ;
-}
 function getStatusName(id) {
        
     var nm  = lang_task.taskStatus[id.trim()];
@@ -4284,21 +4738,6 @@ $(document).on("change", '#updateCheckList', function (e) {
 
     taskManagement.insertTask.insertCheckListComulativCore($(this).val() + "|", tskId, 'update')
     $(this).val('');
-
-})
-
-$(document).on("change", '#run_task_weekday_select_detail input', function (e) {
-
-        var val  = getValueScheduleWeekDay("run_task_weekday_select_detail");
-        updateTask4ShortChangePureDetail(val, "weekdays", global_var.current_issue_id);
-    
-
-})
-$(document).on("change", '#run_task_day_yearly_select_detail input', function (e) {
-
-        var val  = getValueScheduleWeekAction("run_task_day_yearly_select_detail");
-        updateTask4ShortChangePureDetail(val, "monthlyAction", global_var.current_issue_id);
-    
 
 })
 
@@ -4634,62 +5073,30 @@ function saveComment(el, commentId) {
     new UserStory().convertTextArea2HtmlAsText($('#' + commentId));
     $(el).hide();
 }
-
-// created
 $(document).on("click", '#toplanti-btn', function () {
     $(this).addClass('active');
     $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
-    // $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-    // $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-
-    $("#newAddCheckList").attr("placeholder",'Gündəm');
-    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
 });
 $(document).on("click", '#tapshiriq-btn', function () {
     $(this).addClass('active');
     $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
-    // $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-    
-    $("#newAddCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
-    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
+    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+    $('.loadUserForObserver span').text('').text('Observer');
+
 });
 
-// updated start
 $(document).on("click", '#toplanti-d-btn', function () {
-   
+    $(this).addClass('active');
+    $(this).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
     updateTask4ShortChangeDetails('1', "isMeet");
-    changeMeetAndTask(this,'1');
 });
-function changeMeetAndTask(elm,value){
-    if(value==='1'){
-        $(elm).addClass('active');
-        $(elm).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
-        $(elm).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-        $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-    
-        $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
-        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
-        $("#updateCheckList").attr("placeholder",'Gündəm');
-        $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
-    }else {
-        $(elm).addClass('active');
-   
-        $(elm).closest('.modal-body').find('.toplanti-btn').removeClass('active');
-    
-        $(elm).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-        $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
-    
-        $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
-        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
-        $("#updateCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
-        $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
-    }
-}
-$(document).on("click", '#tapshiriq-d-btn', function () {
-    updateTask4ShortChangeDetails('0', "isMeet");
-    changeMeetAndTask(this,'0');
-});
-// updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
       var val  = $(this).closest('.assigne-div-update-issue').getVal();
     updateTask4ShortChangeDetails(val, "fkAssigneeId");
@@ -4707,6 +5114,18 @@ $(document).on("delete-interactive", '.observer-div-update-issue', function (e,i
 });
 
 
+$(document).on("click", '#tapshiriq-d-btn', function () {
+    $(this).addClass('active');
+   
+    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
+
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
+    updateTask4ShortChangeDetails('0', "isMeet");
+});
 
 $(document).on('click', '#updateTask-priority-btn', function () {
     $(this).toggleClass('active');

@@ -1182,9 +1182,14 @@ function getBacklogAsHtml(bid1, isAsync) {
         success: function (res) {
             out = res;
             if (out.length === 0) {
-                var js = window.editorJSnew.getValue();
-                var css = window.editorCSSnew.getValue();
-                setBacklogAsHtml(bid, css, js);
+                try {
+                  
+                js = getBacklogJSCodeSync(global_var.current_backlog_id);
+                css = getBacklogCssCodeSync(global_var.current_backlog_id);
+                setBacklogAsHtml(bid, css, js);  
+                } catch (error) {
+                    
+                }
 
             }
         }
@@ -2056,10 +2061,9 @@ $(document).on('click', '.generate-selected-fields-from-api-relation', function 
         if (val) {
             addSelectedFieldList.push(val);
             var selectedField = $(this).closest('tr')
-                .find('td.input-relation-selected-name-for-zad')
-                .attr('iname');
+                .find('select.input-relation-selected-name-for-zad')
+                .val();
             //            alert(val +' - '+text+ ' - ' + selectedField);
-
 
             var data = {};
             data.attrValue = selectedField;

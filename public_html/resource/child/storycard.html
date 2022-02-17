@@ -353,7 +353,10 @@
                         <div class="toggle-box-5 open table-box" orderno="7.3"
                             style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;"
                             class="tooltipMan component-container-dashed col-lg-12  table-responsive">
-                            <div class="d-flex justify-content-start mt-3 mb-2">
+                          <div class="d-flex justify-content-start mt-3 mb-2">
+                            <div class="text-center multi-edit-menu d-none">
+                                <span href1="#"  class="btn btn-sm btn-warning ml-1" id="multi-edit-menu-btn" data-target="#multieditpopUp" data-toggle="modal"><i class="far fa-edit" aria-hidden="true"></i></span></div>
+                            
                                 <div class="info-box storecard-status-filet-elements" id="task-list-statistic-4backlog">
                                     <span class="title">Status</span>
                                     <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="New" data-original-title="" title="">
@@ -393,7 +396,7 @@
                                         <th class="text-center border-none taskListTableCheckboxTH" style="width:30px">
                                             <label href="#" class="component-class"><input
                                                     style="width: 15px; height: 15px; vertical-align:middle;"
-                                                    type="checkbox" class="all-check-button-allTable"></label>
+                                                    type="checkbox" class="all-bug-list-check"></label>
                                             <span class="handle-drag"></span>
                                         </th>
                                         <th class="text-center" style="width:46px"><i class="cs-svg-icon id"></i></th>
@@ -581,6 +584,12 @@
                             </div>
                         </div>
                         <div class="toggle-box-7 open">
+                            <div class="cs-input-group mt-3 ">
+                                <label class="cs-label-name">Description</label>
+                                <div class="cs-textarea">      
+                                    <textarea rows='2' type="number" id="user-story-description" class="form-control user-story-short-change" data-type="description" step=any required></textarea>           
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="row mt-3">
                                     <div class="col-12 story-card-right-menu-panels story-card-right-menu-panels-api right-menu-description">

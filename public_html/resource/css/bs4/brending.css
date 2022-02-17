@@ -3713,8 +3713,10 @@ hr.hr-ss {
 .cs-textarea {
 
 }
-.cs-forum-group textarea {
-
+.cs-modal-box.story-card-modal .cs-textarea  textarea {
+    background-color: #295883;
+    border-color: #295883;
+    color: #fff;
 }
 .storecard-sidebarin .Assigne-card-story-select, .card-Userstory-rightbody .Assigne-card-story-select{
     text-decoration: none;
@@ -4669,10 +4671,14 @@ table.lbl-list-table tr td {
     width: 100%;
     border: none;
     background: rgba(3, 57, 108, 0.5);
-    border-radius: 10px;
+    border-radius: 7px;
     color: #fff;
 }
+label.cs-file-upload input[type="file"].form-control {
+    display: none;
+}
 .task-check-list-box textarea {
+    resize: none;
     width: 100%;
     background: transparent !important;
     border: none;
@@ -4741,8 +4747,8 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
     color: #fff;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 12px;
+    line-height: 15px;
     margin-bottom: 5px;
 }
 .issue-managment-add-task .cs-input-group .tapshiriq-btn i, .issue-managment-add-task .cs-input-group .toplanti-btn i {
@@ -4846,6 +4852,10 @@ table.lbl-list-table tr td {
   .issue-managment-add-task .cs-input-group .bootstrap-select{
     width: 100% !important;
     max-width: 410px;
+    vertical-align: top;
+  }
+  .issue-managment-add-task .cs-input-group .bootstrap-select .btn {
+    vertical-align: top;
   }
   .issue-managment-add-task .cs-input-group.select-max-width .bootstrap-select{
     max-width: 100% !important;
@@ -4964,9 +4974,9 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .cs-input-group .btn, .issue-managment-add-task .task-deadline-boxes .cs-input-group input {
     color: #ffffff;
-    font-size: 16px;
-    line-height: 20px;
-    height: 30px;
+    font-size: 13px;
+    line-height: 14px;
+    height: 25px;
     border: none;
     background: rgba(3, 57, 108, 0.5);
     border-radius: 7px;
@@ -4975,10 +4985,10 @@ table.lbl-list-table tr td {
 .issue-managment-add-task .priority-btn {
     position: relative;
     display: table;
-    width: 34px;
-    height: 34px;
+    width: 25px;
+    height: 25px;
     background: rgba(3, 57, 108, 0.5);
-    border-radius: 10px;
+    border-radius: 7px;
     cursor: pointer;
     padding: 5px;
     text-align: center;
@@ -5239,23 +5249,23 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 11px;
+    top: 3px;
     left: auto;
     right: 28px;
     position: absolute;
-    height: 21px;
-    width: 21px;
-    font-size: 13px;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
     padding: 1px;
 }
 .card-UserStory-header-delete {
+    top: 3px;
     left: auto;
-    top: 11px;
     right: 5px;
     position: absolute;
-    height: 21px;
-    width: 21px;
-    font-size: 13px;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
     padding: 1px;
 }
 .card-Userstory-detail .cs-forum-group .cs-label-name {
@@ -5681,7 +5691,7 @@ table.lbl-list-table tr td {
 .cs-date-time {
     background-color: rgba(3, 57, 108, 0.5);
     border-radius: 7px;
-    padding: 1px 2px 1px 12px;
+    padding: 0px 2px 0px 12px;
 }
 .cs-date-time input {
     background: transparent !important;
@@ -5689,6 +5699,8 @@ table.lbl-list-table tr td {
 }
 .cs-date-time .input-group-icon{
     color: #fff;
+    padding: 3px 0px;
+    font-size: 13px;
 }
 .input-group-icon i {
     vertical-align: middle;
@@ -7261,9 +7273,11 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     display: block;
 }
 .cs-btn-border {
-    border: 1px solid #ffffffeb;
-    padding: 8px 1px;
+    border: 1px solid rgb(255 255 255 / 92%);
+    padding: 1px 0px;
     border-radius: 6px;
+    width: 100%;
+    display: block;
 }
 .bootstrap-select.nezaretci-user-list button.btn {
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
@@ -7546,6 +7560,7 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     color: #ffffff;
     background-color: rgba(3, 57, 108, 0.5);
     border: none;
+    border-radius: 0;
     border-top-left-radius: 14px !important;
     border-bottom-left-radius: 14px !important;
     padding: 0.2rem 0.75rem;
@@ -7573,4 +7588,363 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 .cs-input-group .task-clear-filter-btn i.cs-svg-icon:after{
     height: 14px;
     width: 12px;
+}
+.bugList-elements .cs-input-group.icon-input-group .btn {
+    font-size: 13px;
+    line-height: 18px;
+    padding: 2px 12px 2px 0;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+.bugList-elements .cs-input-group.icon-input-group .bootstrap-select {
+    display: inline-flex;
+    width: 100% !important;
+}
+/* next elements */
+.cs-next-element-box {
+    position:relative;
+}
+.cs-next-element-box-in {
+    position: absolute;
+    width: 250px;
+    height: 100%;
+    max-height: 160px;
+    min-height: 160px;
+    right: 8px;
+    bottom: -9px;
+}
+.cs-next-element-box-in .cs-next-element-box-bg {
+    padding:10px;
+    background: #DFEEF7;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+.cs-next-element-box-in .cs-close-next-eb-btn {
+    width: 25px;
+    height: 25px;
+    background: #6497B2;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 50px;
+    padding: 3px 5px;
+    display: block;
+    text-align: center;
+}
+.cs-next-element-box-in .cs-close-next-eb-btn:hover{
+    background: #03396c;
+}
+.cs-next-element-box-in .cs-nextTextarea {
+    height: 74px !important;
+    background: #6497B2 !important;
+    padding: 6px 10px !important;
+}
+.cs-next-element-box-in .cs-nextsave-btn {
+    height: 25px;
+    background: #6497B2;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border:none;
+}
+.cs-next-element-box-in .dropdown.bootstrap-select .btn.dropdown-toggle {
+    background: rgb(100 151 178);
+}
+.cs-next-element-box-in .btn {
+    line-height: initial !important;
+    height: 25px !important;
+    padding: 3px 10px;
+}
+.cs-next-element-box-in .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    max-width: 160px;
+}
+.usm-header-nav-section {
+    position: fixed;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    z-index: 100;
+}
+.usm-header-nav-bg {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.usm-header-nav-section .cs-input-group .comp-title-span {
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+    margin-bottom: 5px;
+    display: block;
+}
+#main_div_of_backlog_info_kanban_view {
+    padding-top: 80px;
+}
+.usm-header-nav-section .col-border {
+    border-left: 1px solid rgb(255 255 255 / 15%);
+    height: 60px;
+    display: block;
+    margin-right: 10px;
+    margin-left: 10px;
+    position: relative;
+    width: 1px;
+    margin-top: 10px;
+}
+.usm-header-nav-section .bootstrap-select.form-control {
+    max-width: 170px;
+}
+
+.usm-header-nav-section .has-search .form-control-feedback {
+    width: 30px;
+    height: 30px;
+    line-height: 2;
+}
+.usm-header-nav-section .has-search .form-control {
+    padding: 0;
+}
+.usm-header-nav-section .has-search .form-control:focus {
+    padding: 5px 10px 5px 30px;
+    width: 270px;
+}
+.usm-header-nav-section .has-search input[type="text"], .usm-header-nav-section .has-search input[type=search] {
+    font-size: 13px;
+    line-height: 25px;
+    height: 30px;
+    width: 30px;
+}
+.usm-header-nav-section  .popover-badges i{
+    color: #fff;
+    font-size: 15px;
+    background: #525596;
+    padding: 8px;
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+}
+.usm-header-nav-section .cs-input-group .dropdown.bootstrap-select {
+    background-color: transparent;
+}
+.usm-header-nav-section .cs-input-group .btn {
+    height: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.usm-header-nav-section .xl-checkbox .checkmark {
+    height: 30px;
+    width: 30px;
+    border: 2px solid #525596;
+}
+.usm-header-nav-section .xl-checkbox .checkmarkcontainer .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 7px;
+    height: 12px;
+}
+.usm-header-nav-section .mt-4, .usm-header-nav-section .my-4 {
+    margin-top: 1.75rem !important;
+}
+.usm-header-nav-section .cs-input-group .input-group-prepend {
+    margin-right: 0;
+    height: 30px;
+}
+.usm-header-nav-section .cs-input-group .input-group-text {
+    line-height: 1%;
+    color: #ffffff;
+    background-color: rgba(3, 57, 108, 0.5);
+    border: none;
+    border-radius: 0;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    padding: 0.2rem 0.75rem;
+    height: 30px;
+}
+.usm-header-nav-section  .input-datatime-group {
+    width: 255px;
+}
+.usm-header-nav-section .cs-input-group input.form-control[type=date], .usm-header-nav-section .cs-input-group input.form-control[type=text] {
+    background-color: rgb(49 53 130 / 50%);
+    border-color: rgb(49 53 130 / 50%);
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 4px 12px;
+    font-weight: 400;
+    height: 30px;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    max-width: 193px;
+}
+.usm-header-nav-section  .bootstrap-select.cs-svg-icon .dropdown-toggle:before {
+    width: 30px;
+    height: 18px;
+}
+.usm-more-filter-btn {
+ 
+}
+.usm-more-filter {
+    position: relative;
+}
+.usm-more-filter-bg {
+
+}
+.usm-more-filter .usm-more-filter-bg {
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+.usm-more-filter .usm-more-filter-bg {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    height: 100%;
+    background-color: rgb(167 170 235);
+    top: 100%;
+    right: 10px;
+    margin-right: 0;
+    margin-top: 0px;
+    padding: 0px 10px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 3px rgb(0 0 0 / 15%);
+}
+.usm-more-filter.show .usm-more-filter-bg {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.box-loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* margin: 20px 0; */
+    display: block;
+    background: #ebf1f3;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+.box-loader .circle {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+}
+.box-loader .lines {
+    position: absolute;
+    width: calc(100% - 150px);
+    height: 100%;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.box-loader .line {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin: 2.5px 0;
+}
+.box-loader .line:nth-child(2n) {
+    height: calc(13% - 5px);
+}
+.box-loader .line:nth-child(2n+1) {
+    height: calc(25% - 5px);
+}
+.box-loader .s_shimmer {
+    background: rgba(0, 0, 0, 0.08);
+}
+.box-loader.shimmer {
+    overflow: hidden;
+}
+.box-loader.shimmer::after {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0));
+    animation: gradient 1600ms infinite;
+    animation-timing-function: cubic-bezier(0.38, 0.55, 0.34, 0.95);
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%) rotate(0deg);
+    border-radius: 5px;
+}
+@keyframes gradient {
+    100% {
+        transform: translateX(100%) rotate(0deg);
+    }
+}
+.cs-col-padding {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.cs-col-padding.col-lg-12 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.cs-horizontal-checkboxes {
+    width: 100%;
+    height: 25px;
+    border-radius: 25px;
+    mix-blend-mode: normal;
+    background: transparent;
+    border: 0.7px solid rgba(255, 255, 255, 0.5);
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    display: table;
+}
+.cs-horizontal-checkboxes span.title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    color: #fff;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 5px 4px 4px 9px;
+}
+
+.cs-horizontal-checkboxes label {
+    cursor: pointer;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    text-align: center;
+}
+.cs-horizontal-checkboxes label span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #fff;
+    background: transparent;
+    padding: 4px 10px 4px 10px;
+    vertical-align: middle;
+    width: 100%;
+    display: table;
+}
+.cs-horizontal-checkboxes label:nth-child(even) span {
+    background: rgba(255, 255, 255, 0.11);
+}
+.cs-horizontal-checkboxes label span:hover, .cs-horizontal-checkboxes label.active span, .cs-horizontal-checkboxes label input[type=checkbox]:checked ~ span {
+    background: #DFEEF7;
+    color: #03396c;
+}
+.cs-horizontal-checkboxes label input[type=checkbox]{
+    display: none;
+}
+.toggle-datatime {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
 }

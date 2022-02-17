@@ -500,6 +500,24 @@ var Component = {
                     .css("cursor", "pointer")
                     .attr("onclick", "fillInputTableColumnsCombo('" + comp.fkInputTableId + "')")
         },
+        GenShowHideBtn: function (comp) {
+            try {
+                var div  = $("<div>");
+                if (cr_input_comp_attribute_kv[comp.id]['sa-table-toggle']) {
+                 
+                    div.append( $("<span>")
+                            .append($('<i class="fas fa-chevron-up">'))
+                            .addClass("open-modal-hide-modal-btn"))
+                        .append( $("<span>")
+                            .append($('<i class="fas fa-expand">'))
+                            .addClass("modal-inside-table-expand"));
+                }else{
+                
+                }
+                return div.html();
+            } catch (err) {
+            }
+        },
         GenTableProperties: function (comp) {
             return $('<i class="fa fa-table">')
                     .css("font-size", "14px")
@@ -1437,15 +1455,21 @@ var Component = {
 
         div.append(el);
         div.addClass("table-responsive");
+       /*  try {
+            if(cr_input_comp_attribute_kv[comp.id]['sa-table-toggle']){
+                var title = SAInput.getInputDetails(comp.id, "inputName")
+                div.attr("data-table-title",title);
+                div.addClass("table-title-show");
+            } 
+        } catch (error) {
+            
+        } */
+       
+        
 
         div.append(this.InputTableAction.GenFilterBodyForInputTable(tableId, comp, tabDepId));
         div.append(this.InputTableAction.GenFilterBodyForTableColumn(tableId, comp, tabDepId));
-        div.append($("<span>")
-                .addClass("btn btn-sm btn-light modal-inside-table-expand position-absolute top-0 right-0")
-                .css("top", '0')
-                .css("right", '0')
-                .css("z-index", '22')
-                .append('<i class="fas fa-expand"></i>'))
+        /* div.append(this.InputTableAction.GenShowHideBtn(comp)) */
 
         return $('<div></div>').append(div).html();
     },
@@ -1860,9 +1884,10 @@ var Component = {
         }
 
 
-        div.append($('<label class="cs-file-upload">')
+        div.append($('<span class="cs-btn-border">')
+                    .append($('<label class="cs-file-upload">')
          .append('<span class="btn-name" style="display:none">'+comp.label+'</span>')
-        .append(el));
+        .append(el)));
         div.append('<div id="progress_bar_new"></div>');
         return $('<div></div>').append(div).html();
     },

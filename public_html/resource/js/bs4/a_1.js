@@ -46,6 +46,7 @@ var moduleList = {
     "loadTaskManagement": "Task Management",
     "loadActivityDiagram": "Activity Diagram",
     "loadBugChange": "Issue Management",
+    "loadCodeGround": "Code Ground",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
     "loadBusinessCase": "Business Case",
@@ -3734,9 +3735,13 @@ function uploadFile4Ipo(id) {
     var trc = 0;
 
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
-    pbDiv.html('');
+   // pbDiv.html('');
+     if($("#"+id).attr("multiple")){
 
-    $('#' + id).attr('fname', '');
+     }else{
+       $('#' + id).attr('fname', '');
+     }
+  
 
     for (var i = 0, f; f = files[i]; i++) {
         //            var file = files[0];
@@ -3948,7 +3953,13 @@ function importSendNameApi(filNm) {
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    if($("#"+id).attr("multiple")){
 
+    }else{
+        pbDiv.empty();
+    }
+      var attr  = $('#' + id).attr("view-type");
+          attr  = attr?attr:"list";
 
     var idx = makeId(10);
 
@@ -3969,7 +3980,9 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         contentType: "application/json",
         async: true,
         beforeSend: function () {
-            pbDiv.append(
+            if(attr==='list'){
+                pbDiv.removeClass("d-flex flex-nowrap");
+                pbDiv.append(
                     $('<div>')
                     .addClass("file-item")
                     .attr('id', 'pro_zad_span' + idx)
@@ -3978,28 +3991,65 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                             .attr('id', 'pro_zad_' + idx)
                             .attr('src', 'resource/img/loader.gif'))
                     )
+            }
+            else if(attr==='block'){
+                pbDiv.addClass("d-flex flex-nowrap");
+                pbDiv.append(`<div class="cs-img-col" id='pro_element_${idx}'>
+                <div class="file_upload_div cs_new_file_upload">
+                <img src="resource/img/loader.gif" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer"  alt="">
+                <span class="cs-img-title"></span>
+                <div class="see-detail-img"><a target="_blank"  href="">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                </a>
+                <span class="lbl-action" id='pro_zad_${idx}' pid='${idx}' onclick="removeFilenameFromZad(this,'${file_name}')">
+                <i class="fa fa-trash-o" aria-hidden="true">
+                </i>
+                </span></div></div></div>`) 
+            }
+           
         },
         uploadProgress: function (event, position, total, percentComplete) {
-            //            console.log('test')
+                   console.log(percentComplete);
             var percentVal = percentComplete + '%';
-            pbDiv.text(percentVal);
+           // pbDiv.text(percentVal);
         },
         success: function (data) {
             finalname = data.kv.uploaded_file_name;
 
-            $('#pro_zad_' + idx).remove();
-            $('#pro_zad_span' + idx)
-                    .append($('<i class="fa fa-times">')
-                            .attr('pid', idx)
-                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
-
+              if(attr==='list'){
+               $('#pro_zad_' + idx).remove();
+               $('#pro_zad_span' + idx+' .file-name-attach')
+                     .attr('data-toggle', "modal")
+                     .attr('data-target', "#commentFileImageViewer")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
+                    $('#pro_zad_span' + idx)
+                         .append($('<i class="fa fa-times">')
+                                 .attr('pid', idx)
+                                 .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+              }
+              else if(attr==='block'){
+                $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
+                $('#pro_element_' + idx).find('.comment_img')
+                                           .attr("src",fileUrl(finalname))
+                                           .attr('data-toggle', "modal")
+                                           .attr('data-target', "#commentFileImageViewer")
+                                           .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
+                $('#pro_element_' + idx).find('.see-detail-img a').attr("href",fileUrl(finalname));
+                       
+                $('#pro_zad_' + idx)
+                        .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')');
+              }
 
 
             var st = $('#' + id).attr('fname');
-            st = (st && st !== 'undefined') ? st : '';
-            st += (st) ? global_var.vertical_seperator + finalname :
-                    finalname;
-
+             if(st){
+                st = (st.length>1&&st!=="|") ? st + global_var.vertical_seperator+finalname:
+                finalname;
+             } else{
+                 st=finalname
+             }
+          
+             $('#' + id).trigger("load-file", [st]);
             $('#' + id).attr('fname', st);
 
         },
@@ -4055,18 +4105,22 @@ function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
 }
 
 function removeFilenameFromZad(el, filename) {
-    var st = $(el).closest('div.component-class')
-            .find('.saTypeFilePicherUploadFile')
-            .attr('fname');
-    st = st.replace(filename, '');
+   if(confirm("Are You sure ?")){
+        var st = $(el).closest('div.component-class')
+                    .find('.saTypeFilePicherUploadFile')
+                    .attr('fname');
+            st = st.replace(filename, '');
 
-    $(el).closest('div.component-class')
-            .find('.saTypeFilePicherUploadFile')
-            .attr('fname', st);
+            $(el).closest('div.component-class')
+                    .find('.saTypeFilePicherUploadFile')
+                    .attr('fname', st);
 
-    var id = $(el).attr("pid");
-    $('#pro_zad_span' + id).remove();
-    $(el).remove();
+            var id = $(el).attr("pid");
+            $('#pro_zad_span' + id).remove();
+            $('#pro_element_' + id).remove();
+            $(el).remove();
+   }
+    
 
 }
 
@@ -7192,6 +7246,7 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
             $(el).closest('div').find('.biyzad').remove();
         } else if ($(el).attr('sa-type') === 'filepicker') {
             $(el).attr('fname', val);
+           // setFilePickerValue($(el),val)
 
         } else if ($(el).attr('sa-type') === 'checkbox') {
             if (val === '1')
@@ -7349,36 +7404,6 @@ function getMultiSelectpickerValueById(elementId) {
     return getMultiSelectpickerValue(document.getElementById(elementId))
 }
 
-function iDidIt() {
-    $('#iDidItModal').modal('show');
-}
-
-function iDidItAction() {
-    var id = global_var.current_issue_id;
-    var json = initJSON();
-
-    json.kv.fkTaskId = id;
-    json.kv.comment = $('#iDidItModal_comment').val();
-    var that = this;
-    var data = JSON.stringify(json);
-
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmIDidItTask",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            AJAXCallFeedback(res);
-            getBugList();
-            $('#iDidItModal_comment').html('');
-            $('#iDidItModal').modal('hide');
-            $('#iDidItModal_comment').val('');
-        }
-    });
-
-}
 
 function userAcceptance() {
     $('#uatModal').modal('show');
@@ -12860,7 +12885,7 @@ function showApiRelationModalCore(backLogId,inputid) {
     data = {};
     data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        var selectin = $("<select class='form-control apiInputSelect' >")
+        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
 var selectout = $("<select class='form-control apiInputSelect' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
@@ -13623,6 +13648,7 @@ $(document).on("change", '#show_hidden_carrier', function (e) {
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
+    $('.loading.editor').show();
     var js = window.editorJSGround.getValue();
     var css = window.editorCSSGround.getValue();
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
@@ -13666,6 +13692,8 @@ function setBacklogAsHtmlCodeGround(backlogId,js,css) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            Toaster.showMessage("Succesfuly Saved");
+            $('.loading.editor').hide();
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -13687,6 +13715,16 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
 
 });
+$(window).keydown(function(e) {
+    if(global_var.current_modal==='loadCodeGround'){
+        if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) { /*ctrl+s or command+s*/
+            $("#save-code-ground-btn").click();
+            e.preventDefault();
+            return false;
+        }
+    }
+   
+  });
 function insertJSmanualBybacklogId(body) {
     var elm = $("#SUS_IPO_GUI_Design")
     elm.parent().find("#backlog-manual-js-body").remove();
@@ -13708,7 +13746,9 @@ function insertCssmanualBybacklogId(body) {
 }
 
 function insertJsSendDbBybacklogId(body) {
-
+    if(!body){
+        return
+   }
     var pid = global_var.current_backlog_id;
 
     var json = initJSON();
@@ -13731,6 +13771,9 @@ function insertJsSendDbBybacklogId(body) {
 }
 
 function insertCssSendDbBybacklogId(body) {
+    if(!body){
+         return
+    }
     var pid = global_var.current_backlog_id;
     var json = initJSON();
     json.kv.fkBacklogId = pid;
@@ -13825,7 +13868,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
             }
         });
         Prototype.Init();
-        editorGenerateJSCSS();
+       /// editorGenerateJSCSS();
 
 
 
@@ -14855,7 +14898,7 @@ function resetAllEditStoryCard() {
         $("#UserStoryPopupModal-Toggle-new  span").removeAttr("ondblclick");
         $("#UserStoryPopupModal-Toggle-new  td").removeAttr("ondblclick");
         $("#UserStoryPopupModal-Toggle-new  .api-name").removeAttr("onclick");
-        $("#UserStoryPopupModal-Toggle-new  input").remove();
+        $("#UserStoryPopupModal-Toggle-new  .story-card-input-line-tr-2 input").remove();
         $("#UserStoryPopupModal-Toggle-new  .scg-button-box").remove();
         $("#UserStoryPopupModal-Toggle-new .live-prototype-show-story-card-hard-refresh").remove();
         $("#UserStoryPopupModal-Toggle-new .add_descriotion_btn ").remove();
@@ -15245,27 +15288,31 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     $.get("resource/child/" + f + ".html", function (html_string) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
+        $('.popover-badges').popover();
         $(".usmg-selectpicker").selectpicker();
         setProjectListByID('story_mn_filter_project_id');
         var groupBy = localStorage.getItem('usm_groupBy');
         var prId = localStorage.getItem('current_project_id');
         $("#story_mn_groupBy_id").val(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").selectpicker("refresh");
-
-        getUsers()
-        prId = prId.split('%IN%');
-        if (prId) {
-            $("#story_mn_filter_project_id").val(prId).change();
+        getUsers();
+        new UserStory().getFktaskTypList4USMn();
+        try {
+            prId = prId.split('%IN%');
+            if (prId) {
+                $("#story_mn_filter_project_id").val(prId).change();
+            }   
+        } catch (error) {
+            
         }
-
-        var dwlmt = $('#zona-list-select4move');
-        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
+        getGroupListAssigneLocal();
+        genTimePickerById("us_management_created_date_from",'down');
+        genTimePickerById("us_management_closed_date_from",'down');
+/*         var dwlmt = $('#zona-list-select4move');
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load'); */
         new Label().load();
         new Sprint().load();
-
-
-        new UserStory().genUsFilterCreatedBy();
-        new UserStory().genUsFilterTaskTypes();
+     
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
@@ -16229,10 +16276,10 @@ function setPrmFilterSprintValuesUs() {
                 crossDomain: true,
                 async: false,
                 success: function (res) {
-                    var dt = res.tbl[0].r
+                    var dt = res.tbl[0].r;
                     for (let i = 0; i < dt.length; i++) {
 
-
+                        
                         st += dt[i].fkBacklogId + "%IN%";
                     }
                     UsSprint = st;
@@ -16530,11 +16577,17 @@ function getBugList4UserStory(bgId, tbody) {
                     .append('<td><b>Task Type</b></td>')
                     .append('<td><b>Created</b></td>')
                     .append('<td><b>Assignee</b></td>')
+                    .append('<td><b>Closed By</b></td>')
                     .append('<td><b>Date</b></td>')
+                    .append('<td><b>Closed Date</b></td>')
                     )
 
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                var closedDate  =  ela[i].closeStatusDate;
+                 if(closedDate){
+                  closedDate= Utility.convertDate(ela[i].closeStatusDate)+"/"+ Utility.convertTime(ela[i].closeStatusTime)
+                 }
                 $(tbody)
                 .append($("<tr>")
                           .attr("data-assignee",ela[i].fkAssigneeId)
@@ -16558,7 +16611,9 @@ function getBugList4UserStory(bgId, tbody) {
                         .append('<td>' + ela[i].taskTypeName + '</td>')
                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
+                        .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
+                        .append('<td class="task-time-td">' +closedDate + '</td>')
                         )
 
             }
@@ -16617,10 +16672,10 @@ function getBugList4StoryCard(bgId, tbody) {
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
                 var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
-                var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
+                var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" id='${ela[i].id}' >
                 <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
                 <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
-                    <input class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
+                    <input class="tdOperation checkbox-issue-task cst-clck-box" type="checkbox">
                 </td>
                 <td class="text-center" style="width: 100px;" >
                     <span class="brend-color" sa-data-value="9214">${ela[i].projectCode + "-" + ela[i].orderNoSeq}</span>
@@ -18295,11 +18350,7 @@ function updateManualStatus4DragDrop(params) {
 }
 let dragElment  
 function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
-    var val  = $(dragelm).closest(".task-column").attr("status");
-
-    $('#zona-list-select4move').val(val);
-    $('#zona-list-select4move').selectpicker("refresh");
-
+   
     dragElment =$(dragelm);
     var json = {
         kv: {}
@@ -18309,9 +18360,9 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     } catch (err) {
     }
     json.kv.fkBacklogId = bgId;
-    json.kv.fkTaskTypeId = $(firstZone).attr("id");
+   /// json.kv.fkTaskTypeId = $(firstZone).attr("id");
     json.kv.pageNo = 1;
-    json.kv.searchLimit = 50;
+    json.kv.searchLimit = 200;
     json.kv.taskStatus = "'new','ongoing','waiting'";
     json.kv.fkAssigneeId = "'"+global_var.current_ticker_id +"'";
     var that = this;
@@ -18336,7 +18387,7 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
                     var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
                     <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
                     <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
-                        <input id="${ela[i].id}" class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
+                        <input id="${ela[i].id}" class="tdOperation cst-chkc-bl2 cst-clck-box" checked='true' type="checkbox">
                     </td>
                     <td class="text-center" style="width: 100px;" >
                         <span class="brend-color" sa-data-value="9214">${ela[i].projectCode + "-" + ela[i].orderNoSeq}</span>
@@ -18386,7 +18437,9 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     });
 }
 function submitmultipleClosedTask() {
-          var ekm  = $("#taskListClosedMulti .cst-chkc-bl2");
+    var txt  = $("#newTaskCreate4Ididt").val();
+         if(txt.trim().length>1){
+            var ekm  = $("#taskListClosedMulti .cst-chkc-bl2");
             var list  = '';
             ekm.each(function () {
                 if($(this).prop("checked")){
@@ -18395,32 +18448,72 @@ function submitmultipleClosedTask() {
             })
         if(dragElment){
             multipleClosedTask(list,dragElment);
-        } 
+        }    
+         }else{
+            Toaster.showError(("Task name is not entered"));
+ 
+         }
+          
+}
+function addPinInputToImage(elm) {
+    var inid  =$("#addPinImageInput").val(); 
+    var fileUrlg  =  $("#InputAddImagePinModal").attr('fname')
+    var data = {};
+    data.id  =inid ;
+    data.fileUrl  =   $("#InputAddImagePinModal").attr('fname');
+   
+   callApi('22021512224607339255',data,true,function (res) {
+    $("#InputAddImagePinModal").modal('hide');
+       SAInput.Inputs[inid].fileUrl =fileUrl ;
+       $("[data-object-id='"+inid+"']").find('.pin-image-div').remove()
+       $("[data-object-id='"+inid+"']").prepend(`<span class="float-left  pin-image-div">
+       <span data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl('${fileUrlg}')">
+       <img src="${fileUrl(fileUrlg)}" style="width: 40px;height:40px;"></span>
+       <span class="delete-icon" onclick="deleteRelationPinInput(this,'${inid}')">
+       <i class="fa fa-trash-o" aria-hidden="true"></i></span></span>`)
+   }) 
+}
+function deleteRelationPinInput(elm,id) {
+      if(confirm("Are you sure?")){
+    var inid  =id
+    var data = {};
+    data.id  =inid ;
+    data.fileUrl  = '';
+     elm.closest('.pin-image-div').remove();
+   callApi('22021512224607339255',data,true,function (res) {
+       
+       SAInput.Inputs[inid].fileUrl = '';
+       
+   }) 
+}
 }
 function multipleClosedTask(list,dragelm) {
     var data = {};
     data.fkTaskId  = list;
+   
    callService('serviceTmcloseMultipleBacklogTasks',data,true,function (res) {
-    getDefautUserByTaskTypeId(dragelm);
-         
+   /// getDefautUserByTaskTypeId(dragelm);
+   var bgId  = $(dragelm).attr("bid");
+   var pid  = $(dragelm).attr("pidd");
+   var asId  = $('#user-list-select4move').val();
+    insertAutoTaskOnDrag(bgId,asId,pid);
    }) 
 }
 function getDefautUserByTaskTypeId(dragelm) {
     var tasTypeId  = $('#zona-list-select4move').val();
     var bgId  = $(dragelm).attr("bid");
     var pid  = $(dragelm).attr("pidd");
-    var data = {};
-      data.id  = tasTypeId;
-   callApi('22011222234409531876',data,true,function (res) {
+
+      insertAutoTaskOnDrag(bgId,asId,pid);
+  /*  callApi('22011222234409531876',data,true,function (res) {
         var asId = res.kv.fkAssigneeId;
-     insertAutoTaskOnDrag(bgId,asId,pid,tasTypeId);
+   
          
-   }) 
+   })  */
 }
 
-function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
-    var txt  = $("[status='"+typId+"']").find("span.headerContentText").text();
-    var nm  = $("[status='"+typId+"']").find(".headerInputColumn").text();
+function insertAutoTaskOnDrag(bgId,asId,prid) {
+    var txt  = $("#newTaskCreate4Ididt").val();
     var json = {
         kv: {}
     };
@@ -18429,12 +18522,12 @@ function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
     } catch (err) {
     }
     json.kv.fkBacklogId = bgId;
-    json.kv.taskName = txt +"(From "+nm+")";
+    json.kv.taskName = txt;
     json.kv.fkProjectId = prid;
-    json.kv.fkTaskTypeId = typId;
     json.kv.fkAssigneeId = asId;
     var that = this;
     var data = JSON.stringify(json);
+    $("#multipleClosedTask").modal("hide");
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmInsertNewBacklogTaskCoreNew",
         type: "POST",
@@ -18443,7 +18536,7 @@ function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-             
+           
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -18765,6 +18858,57 @@ function updateTask4ShortChangePureWithSync(val, ustype, taskId, comment, change
     });
 }
 
+function updateTask4Details(elm, ustype) {
+    var val  = $(elm).val();
+    updateTask4ShortChangePureDetail(val, ustype, global_var.current_issue_id);
+}
+
+function updateTask4ShortChangePureDetail(val, ustype, taskId) {
+    try {
+
+        if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
+            return;
+        }
+    } catch (e) {
+        return;
+    }
+
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = taskId;
+    json.kv.key = ustype;
+    json.kv.value = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateTaskDetails4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+           /*  SATask.addTaskByRes(res);
+            SACore.updateBacklogByRes(res); */
+            getBugList();
+            try {
+                genTaskTypeManagmentView4None();
+            } catch (error) {
+
+            }
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function updateTask4ShortChangePure(val, ustype, taskId) {
     try {
 
@@ -18811,7 +18955,6 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
         }
     });
 }
-
 
 function loadMainProjectList4Class() {
 
@@ -18874,14 +19017,15 @@ function loadProjectList2SelectboxByClass(className) {
             o.attr("selected", true);
             f = false;
         }
-
-        if (pid[n] === global_var.current_project_id) {
-            o.attr("selected", true);
-        }
         cmd.append(o);
     }
-
-    //    cmd.val(global_var.current_project_id);
+     if(global_var.current_project_id){
+        cmd.val(global_var.current_project_id);
+     }
+     else if(global_var.current_backlog_id){
+        var fkProjectId = SACore.GetBacklogDetails(global_var.current_backlog_id, "fkProjectId");
+        cmd.val(fkProjectId);
+     }
     sortSelectBoxByElement(cmd);
     cmd.selectpicker('refresh');
     cmd.change();
@@ -18944,10 +19088,10 @@ function setZadi(height, width) {
 
 
 $(document).on('mouseover', 'tr.story-card-input-line-tr-2', function (ev) {
-    $(this).find('.description-style').show();
+    $(this).find('.description-style').css('visibility','visible');
 });
 $(document).on('mouseout', 'tr.story-card-input-line-tr-2', function (ev) {
-    $(this).find('.description-style').hide();
+    $(this).find('.description-style').css('visibility','hidden');;
 });
 $(document).on('focusin', '.description-style', function (ev) {
     $(this).show();
@@ -19347,23 +19491,85 @@ $(document).on('change', '#priority-change-story-card-filter', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 
-    UsLabel = '';
-    UsSprint = '';
     localStorage.setItem('assigne-list-usm', $(this).val());
-    labelOrSplitValuesUs();
+    filterOnChnageUSM()
 });
-$(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
 
+var assigne_group ={};
+$(document).on('click', '.set-assigne-gorup-usm', function (evt) {
+    var id  = $(this).attr("id");
+      var list  =  assigne_group[id].list;
+      $("#story_mn_filter_assigne_id").val(list);
+      $("#story_mn_filter_assigne_id").selectpicker("refresh");
+      $("#story_mn_filter_assigne_id").change();
+
+});
+$(document).on('change', '#assignee-group-name-save', function (evt) {
+        
+      if($(this).val().trim().length> 0) {
+           var list  = $("#story_mn_filter_assigne_id").val();
+           var count  = list.length;
+        $(this).addClass("d-none");
+        $(".assignee-group-name-list").removeClass("d-none");
+        var block  = {};
+           block.groupName  =  $(this).val();
+           block.listCount  =  count;
+           block.list  =  list;
+           var id  = makeId(10);
+           assigne_group[id] = block;
+           localStorage.setItem("assigne_group",JSON.stringify(assigne_group));
+           getGroupListAssigneLocal(); 
+           $(this).val('')
+      }
+
+
+     
+});
+function getGroupListAssigneLocal(){
+
+     
+   try { 
+        var list  = localStorage.getItem('assigne_group');
+        if(list){
+            assigne_group  = JSON.parse(list);  
+            var block  = $("#assignee-group-list-history");
+                block.empty('');
+                var group = Object.keys(assigne_group);
+                for (var i in group) {
+                  var id = group[i];
+                  var obj = assigne_group[id];
+                  block.append($('<a class="dropdown-item set-assigne-gorup-usm" href="#">')
+                  .attr("id",id)
+                  .text(obj.groupName +"("+obj.listCount+")"));
+              }
+        }
+      
+         
+    } catch (error) {
+        
+    }
+    
+}
+$(document).on('focusout', '#assignee-group-name-save', function (evt) {
+
+       $(this).addClass("d-none");
+       $(".assignee-group-name-list").removeClass("d-none");
+});
+$(document).on('click', '#assignee-group-name-add', function (evt) {
+
+       $("#assignee-group-name-save").removeClass("d-none");
+       $("#assignee-group-name-save").focus();
+       $(".assignee-group-name-list").addClass("d-none");
+});
+function filterOnChnageUSM(){
     UsLabel = '';
     UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
     labelOrSplitValuesUs();
-});
+}
 /* $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 
 
@@ -19380,10 +19586,7 @@ $(document).on('change', '#story_mn_manual_status_id', function (evt) {
 
        localStorage.setItem('manual_list_val',$(this).val());
        
-    UsLabel = '';
-    UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
-    labelOrSplitValuesUs();
+       filterOnChnageUSM();
        
 });
 $(document).on('change', '#story_mn_filter_nature_id', function (evt) {
@@ -19408,26 +19611,29 @@ function loadAssigneesByProjectUSM(projectId) {
         async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
-            $('#story_mn_filter_assigne_id_mng').html('');
-            $('#story_mn_filter_assigne_id').html('');
-            $('#story_mn_filter_assigne_id_mng').append('<option></option>');
+            var elm  = $('select.story_mn_filter_user_list')
+                elm.html('');
+             
             for (var i in obj) {
+            
                 var o = obj[i];
-                var opt = $('<option>').val(o.fkUserId).text(o.userName);
-                $('#story_mn_filter_assigne_id_mng').append(opt.clone());
-                $('#story_mn_filter_assigne_id').append(opt.clone());
-                $('#bug_filter_assignee_id_add').append(opt.clone());
-                $('#story_mn_filter_updated_id').append(opt.clone());
+                var userImage = SAProjectUser.GetDetails(o.fkUserId, "userImage");
+                var img = (userImage) ?
+                        fileUrl(userImage) :
+                        fileUrl(new User().getDefaultUserprofileName());
+                var opt = $(`<option value='${o.fkUserId}'
+                data-content="<div pid='${o.fkUserId}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${o.userName}</span></div>">
+                ${o.userName}</option>`)
+                elm.append(opt);
+               
+
             }
             var lst  = localStorage.getItem("assigne-list-usm")
             var fkAssigneId = lst?lst.split(','):[global_var.current_ticker_id];
             if (fkAssigneId) {
                 $('#story_mn_filter_assigne_id').val(fkAssigneId);
-                        }
-            $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
-            $('#story_mn_filter_assigne_id').selectpicker('refresh');
-            $('#bug_filter_assignee_id_add').selectpicker('refresh');
-            $('#story_mn_filter_updated_id').selectpicker('refresh');
+             }
+            $(elm).selectpicker('refresh');
             
         },
         error: function () {
@@ -20216,34 +20422,6 @@ function rejectTask() {
 }
 
 
-
-function forwardTaskToAction() {
-    updateTask4ShortChangeDetailsWithSync($('#forwardTaskToModal_assignee').val(), 'fkAssigneeId');
-    if ($('#forwardTaskToModal_comment').val().trim()) {
-        $('#addComment4Task_comment').val($('#forwardTaskToModal_comment').val());
-        new UserStory().addCommentInput4Task('');
-    }
-    //    this.refreshCurrentBacklog();
-    $('#forwardTaskToModal_comment').val('');
-    $('#forwardTaskToModal').modal('hide');
-    $('.task-card-UserStory-edit-exit').click();
-    getBugList();
-}
-
-
-
-function rejectTaskAction() {
-    var comment = $('#rejectTaskModal_reason').val().trim();
-    updateTask4ShortChangePureWithSync('rejected', 'taskStatus', global_var.current_issue_id, comment, 'true');
-    if (comment) {
-        $('#addComment4Task_comment').val(comment);
-        new UserStory().addCommentInput4Task('');
-    }
-    //    this.refreshCurrentBacklog();
-    $('#rejectTaskModal_reason').val('');
-    $('#rejectTaskModal').modal('hide');
-    getBugList();
-}
 
 
 
