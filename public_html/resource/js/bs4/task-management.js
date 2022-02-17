@@ -94,11 +94,11 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" id="taskNameInputNew2">
+                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2">
                          <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="pt-1">
-                        <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
+                        <div id="cerateTask-priority-btn" class="priority-btn">
                              <i class="cs-svg-icon flame"></i>
                         </div>
                     </div>
@@ -613,8 +613,8 @@ const taskManagement = {
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
             data.startDate = toDate('taskDeadlineStartDade');
-            data.startTime = GetConvertedTime('taskDeadlineStartTime');
-            data.endTime = GetConvertedTime('taskDeadlineEndTime');
+            data.startTime = GetConvertedTimeDT('taskDeadlineStartTime');
+            data.endTime = GetConvertedTimeDT('taskDeadlineEndTime');
             data.endDate = toDate('taskDeadlineEndDade');
             data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "0" : "1";
             data.fkParentTaskId = $("#parent-task-id-input").val();
@@ -728,7 +728,7 @@ const taskManagement = {
 
                 callService('serviceRsCreateBacklogTaskDetail', data, true, function (res) {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
-                    AJAXCallFeedback(res);
+                   // AJAXCallFeedback(res);
                 });
             } catch (error) {
                 
@@ -1689,10 +1689,10 @@ const taskManagement = {
                 $("#task-info-modal-status").selectpicker('refresh');
                 $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
                 $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
-                $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
-                $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
-                $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
-                $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
+                $('#taskDetailDeadlineStartDade').val(Utility.convertDate(coreBugKV[taskId].startDate,'-'));
+                $('#taskDetailDeadlineStartTime').val(Utility.convertTime(coreBugKV[taskId].startTime,'-'));
+                $('#taskDetailDeadlineEndTime').val(Utility.convertTime(coreBugKV[taskId].endTime,'-'));
+                $('#taskDetailDeadlineEndDade').val(Utility.convertDate(coreBugKV[taskId].endDate,'-'));
                 if (coreBugKV[taskId].isMeet === '1') {
                     changeMeetAndTask($("#toplanti-d-btn"),'1');
                     $(".card-UserStory-header-text-code").html("Toplantı-"+coreBugKV[taskId].orderNoSeq+"");

@@ -211,7 +211,7 @@ var cmpList = {
             try {
                 var list_count = $(elm).closest('.user-addons-box-elm').find(".user-list-avatar-multiple li").length;
                 var count_avatar_span = $(elm).closest('.user-addons-box-elm').find('.count_avatar_users');
-                count_avatar_span.text('');
+            
                 if (type === 'delete') {
                     list_count = parseFloat(list_count) - 1
                 }
@@ -576,7 +576,7 @@ var cmpList = {
                             title.hide();
                         $(elm).find("tbody .right-click-btn").closest("td").hide();
                      
-                        $(elm).after(this.genBlock(tbid,list.html()));
+                        $('body').append(this.genBlock(tbid,list.html()));
                         this.clickRight(tbid);
                     }
                 
@@ -592,18 +592,17 @@ var cmpList = {
                       </li>`
             },
             clickRight: function (tableId) {
-                var doubleClicked = false;
+              
                 $(document).on("contextmenu","[right-click="+tableId+"] tbody tr",function (e) {
                     $(this).closest('tbody').find("tr").removeClass("last_click_class");
                     var menu  = $("#contextMenu"+tableId);
                      $(this).addClass("last_click_class");
-                                        
-                if(doubleClicked == false) {
                     menu.show();     
                     e.preventDefault(); // To prevent the default context menu.
                     var windowHeight = $(window).height()/2;
                     var windowWidth = $(window).width()/2;
                     //When user click on bottom-left part of window
+                    $(menu).css("z-index", '55555555');
                     if(e.clientY > windowHeight && e.clientX <= windowWidth) {
                       $(menu).css("left", e.clientX);
                       $(menu).css("bottom", $(window).height()-e.clientY);
@@ -629,12 +628,7 @@ var cmpList = {
                       $(menu).css("bottom", "auto");
                     }
                     /* By Revan :)) */
-                      doubleClicked = true;
-                    } else {
-                      e.preventDefault();
-                      doubleClicked = false;
-                      $(menu).fadeOut(500);
-                    }
+                    
                 })
             },
             genBlock: function (tbid,list) {

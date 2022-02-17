@@ -554,12 +554,12 @@ function toTime(id) {
     var st = "";
     if ($('#' + id).val()) {
         var date = new Date($('#' + id).val());
-        var day = date.getHours();
+        var hour = date.getHours();
         day = day.toString(10).length === 1 ? '0' + day : day;
         var month = date.getMonth() + 1;
         month = month.toString(10).length === 1 ? '0' + month : month;
         var year = date.getFullYear();
-        st = year + "" + month + '' + day;
+        st = hour + "" + month + '' + day;
     }
     return st;
 }
