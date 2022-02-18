@@ -365,7 +365,8 @@ var cmpList = {
         Init: function (elm) {
             var table = $(elm);
             if (table.prop('tagName') === 'TABLE') {
-                table.parent().find(".showhide-col-main-info").remove();
+                var oldId  = $(elm).attr('data-colum-id')
+                $(".toggle-block-"+oldId).remove();
                 var tableId = makeId(10);
                 table.find("thead >tr>th:first-child").html(this.openBlockBtn(tableId));
                 table.attr("data-colum-id",tableId);
@@ -788,6 +789,14 @@ $.fn.genRightClickMenu = function (val) {
 $.fn.genToggleTable = function (val) {
     cmpList.genTableToggleBtn.Init(this,val);
 }
+$.fn.textWidth = function(){
+    var html_org = $(this).html();
+    var html_calc = '<span>' + html_org + '</span>';
+    $(this).html(html_calc);
+    var width = $(this).find('span:first').width();
+    $(this).html(html_org);
+    return width;
+  };
 $.fn.extend({
     autoHeight: function () {
         function autoHeight_(element) {

@@ -9,7 +9,7 @@ const taskManagement = {
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
-        genTimePickerById("issue_management_closed_date_from",'');
+        genTimePickerById("issue_management_closed_date_from",'down');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genLabelBlock());
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genSprintBlock());
         var dwlmt = $('#bug_filter_tasktype')
@@ -28,6 +28,10 @@ const taskManagement = {
                 cmpList.userBlock.Init($('.observer-div-add-issue'),'multi');
                 taskManagement.updateTask.getSprintTask($('#add_task_sprint'));
                 taskManagement.updateTask.getLabelTask($('#run_task_categories'));
+                taskManagement.updateTask.getLabelTask($('#run_task_categories'));
+                setTimeout(() => {    
+                $("#taskNameInputNew2").focus();
+                }, 1000);
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
 
@@ -732,7 +736,12 @@ const taskManagement = {
 
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
-                    userList += o + ",";
+                    if((i+1)===tbl.length){
+                        userList += o ;
+                    }else{
+                        userList += o + ",";
+                    }
+                  
                 }
                 if (!userList) {
                     return
@@ -753,31 +762,46 @@ const taskManagement = {
         insertBacklogTaskDetail: function (taskId) {
             try {
 
-                var data = {};
-                data.fkTaskId = taskId;
-                data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
-                data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
+        
+                var json = {kv: {}};
+                try {
+                    json.kv.cookie = getToken();
+                } catch (err) {
+                }
+                json.kv.fkTaskId = taskId;
+                json.kv.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
+                json.kv.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
                 if($('#runTaskAvtivateSchedule').prop("checked")){
-                    data.intensive = $("#run_task_intensive_select").val();
-                    data.repeatInterval = $("#run_task_repeat_select").val();
-                    data.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+                    json.kv.intensive = $("#run_task_intensive_select").val();
+                    json.kv.repeatInterval = $("#run_task_repeat_select").val();
+                    json.kv.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
                  
-                    data.weekdays = getValueScheduleWeekDay('run_task_weekday_yearly_select');
-                    data.remindMeParam = $("#run_task_reminder_select").val();
-                    data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
-                    data.monthlyAction = getValueScheduleWeekAction('run_task_day_yearly_select');
-                    data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
-                    data.startDate = toDate("taskDeadlineStartDade");
-                    data.endDate = toDate("taskDeadlineEndDade");
-                    data.runTime = GetConvertedTime("taskDeadlineStartTime");
+                    json.kv.weekdays = getValueScheduleWeekDay('run_task_weekday_yearly_select');
+                    json.kv.remindMeParam = $("#run_task_reminder_select").val();
+                    json.kv.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+                    json.kv.monthlyAction = getValueScheduleWeekAction('run_task_day_yearly_select');
+                    json.kv.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
+                    json.kv.startDate = toDate("taskDeadlineStartDade");
+                    json.kv.endDate = toDate("taskDeadlineEndDade");
+                    json.kv.runTime = GetConvertedTime("taskDeadlineStartTime");
                     
                  }
-               
-
-                callService('serviceRsCreateBacklogTaskDetail', data, true, function (res) {
-                    // getTaskkObserverList(global_var.current_task_id_4_comment)
-                   // AJAXCallFeedback(res);
-                });
+                    var that = this;
+                    var data = JSON.stringify(json);
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceRsCreateBacklogTaskDetail",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: true,
+                        success: function (res) {
+                            
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
             } catch (error) {
                 
             }
@@ -1174,7 +1198,7 @@ const taskManagement = {
                                  style="width:100%;display: none; padding:0px;margin:0px;">
                                 <div class="col-12 text-center canvas_canvas_msg "
                                      style='border: 1px dashed #ffffff52;border-radius: 5px;color: white;'>
-                                    <h5 class="copy-title">Copy and Paste Image Here</h5>
+                                    <h5 class="copy-title">${lang_task.windowAddTask.copyPasteImg}</h5>
                                 </div>
                             </div>
                             <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
@@ -1670,10 +1694,10 @@ const taskManagement = {
                 $("#task-info-modal-status").selectpicker('refresh');
                 $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
                 $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
-                $('#taskDetailDeadlineStartDade').val(Utility.convertDate(coreBugKV[taskId].startDate,'-'));
-                $('#taskDetailDeadlineStartTime').val(Utility.convertTime(coreBugKV[taskId].startTime,'-'));
-                $('#taskDetailDeadlineEndTime').val(Utility.convertTime(coreBugKV[taskId].endTime,'-'));
-                $('#taskDetailDeadlineEndDade').val(Utility.convertDate(coreBugKV[taskId].endDate,'-'));
+                $('#taskDetailDeadlineStartDade').val(Utility.convertDTpicker(coreBugKV[taskId].startDate,'-'));
+                $('#taskDetailDeadlineStartTime').val(Utility.convertTMpicker(coreBugKV[taskId].startTime,'-'));
+                $('#taskDetailDeadlineEndTime').val(Utility.convertTMpicker(coreBugKV[taskId].endTime,'-'));
+                $('#taskDetailDeadlineEndDade').val(Utility.convertDTpicker(coreBugKV[taskId].endDate,'-'));
                 if (coreBugKV[taskId].isMeet === '1') {
                     changeMeetAndTask($("#toplanti-d-btn"),'1');
                     $(".card-UserStory-header-text-code").html("Toplantı-"+coreBugKV[taskId].orderNoSeq+"");
@@ -2733,9 +2757,9 @@ const taskManagement = {
                             </div>
                             <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
                                 id='bug_filter_sortby' title="Columns">
-                                    <option value='0' >${lang_task.rightBar.sortBy}</option>
-                                    <option value='task_status' selected>${lang_task.table.tableColums.taskStatus}</option>
-                                    <option value='id' selected>${lang_task.table.tableColums.taskId}</option>
+                                    <option value='' selected >${lang_task.rightBar.sortBy}</option>
+                                    <option value='task_status' >${lang_task.table.tableColums.taskStatus}</option>
+                                    <option value='id' >${lang_task.table.tableColums.taskId}</option>
                                     <option value='task_name'  accesskey="">${lang_task.table.tableColums.description}</option>
                                     <option value='task_nature'  >${lang_task.rightBar.taskNature}</option>
                                     <option value='fk_assignee_id' >${lang_task.rightBar.assignee}</option>
@@ -2892,7 +2916,7 @@ const taskManagement = {
                                 elm.empty();
                             for (let i = 0; i < list.length; i++) {
                                 const o = list[i];
-                                var endTime = new Date(o.endDate + ' ' + o.endTime);
+                                var endTime = new Date( Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
                                 var html = that.genTypeNotMessaje(
                                     o.id,
                                     o.fkTaskId,
@@ -3163,7 +3187,7 @@ const taskManagement = {
                             sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
                             sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
                             var startTime = new Date();
-                            var endTime = new Date(o.endDate + ' ' + o.endTime);
+                            var endTime =new Date( Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
 
                             var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
                             row += " " /* + rs + rsLabelFilter; */
@@ -3453,8 +3477,8 @@ const taskManagement = {
                        <div class="dropdown">
                            <button class="btn pagination_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">1-50/212</button>
                            <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
-                               <button class="btn-minus-pag dropdown-item" type="button" style="border-bottom: 1px solid #9a9a9a45;">Ən başa</button>
-                               <button class="btn-plus-pag dropdown-item" type="button">Ən sona</button>
+                               <button data-st='start' class="pagination_btn_end_start dropdown-item" type="button" style="border-bottom: 1px solid #9a9a9a45;">Ən başa</button>
+                               <button data-st='end' class="pagination_btn_end_start dropdown-item" type="button">Ən sona</button>
                            </div>
                        </div>
                        <div class="d-table">
@@ -3467,8 +3491,8 @@ const taskManagement = {
                      `
                 },
                 genShowHideBlock4ch:function (params) {
-                    return ` <div class="showhide-col-main-issue" style="display: none">
-                    <div class="showhide-col-main-info-in-issue">
+                    return ` <div class="showhide-col-main-issue showhide-col-main-info" style="display: none">
+                    <div class="showhide-col-main-info-in-issue showhide-col-main-info-in">
                         <ul>
                             <li>
                                 <label>Hamısı 
@@ -3515,7 +3539,7 @@ const taskManagement = {
                     <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
                     <th class="bug-list-column bug-list-column-ismeet" style="width: 90px;">AD</th>
-                    <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
+                    <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">${lang_task.table.tableColums.description}</th>
                     <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
@@ -3562,11 +3586,28 @@ const taskManagement = {
         
                                 var t = this.genTaskTableForm(o,i);
                                 tbody.append(t);
-                                $('[data-toggle="popover"]').popover({
-                                    html: true
-                                });
+                                
+                               
                             }
-        
+                            setTimeout(() => {
+                                var a  = $(".bug-list-column-task-name");
+                                a.each(function (params) {
+                                   var textWidth  = $(this).textWidth();
+                                   var width   =  $(this).width();
+
+                                   if(textWidth<width){
+
+                                      $(this).removeAttr('data-toggle');
+                                    
+                                   } else{
+                                       console.log(textWidth,width);
+                                   }
+                                })
+                            $('[data-toggle="popover"]').popover({
+                                html: true
+                            });
+                            }, 200);
+                           
                             // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
                             //         sumEstBudget, sumSpentBudget);
         
@@ -3636,7 +3677,7 @@ const taskManagement = {
                 },
                 genTaskTableFormMini: function (o,i) {
                     var startTime = new Date();
-                        var endTime = new Date(o.endDate + ' ' + o.endTime);
+                        var endTime = new Date(Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
 
                         var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
                         row += " " /* + rs + rsLabelFilter; */
@@ -3714,8 +3755,8 @@ const taskManagement = {
                 },
                 genTaskTableForm: function (o,i) {
                     var startTime = new Date();
-                        var endTime = new Date(o.endDate + ' ' + o.endTime);
-
+                        var endTime = new Date( Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
+                           
                         var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
                         row += " " /* + rs + rsLabelFilter; */
 
@@ -4217,7 +4258,7 @@ function getTaskCode(taskId) {
 // task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 var getTimeDifference = function (from, to) {
-
+     
 
     var difMs = (from - to);
     var colorClass
@@ -4228,16 +4269,16 @@ var getTimeDifference = function (from, to) {
     var difDays = Math.floor(difMs / 86400000);
     var difHrs = Math.floor((difMs % 86400000) / 3600000);
     var difMins = Math.round(((difMs % 86400000) % 3600000) / 60000);
-    var txt = difDays + " d, " + difHrs + " h, " + difMins + " m";
+    var txt = difDays + " gün, " + difHrs + " saat, " + difMins + " dəqiqə";
     var time = '';
     if (parseFloat(difMins) !== 0) {
-        time = difMins + "m"
+        time = difMins + "d"
     }
     if (parseFloat(difHrs) !== 0) {
-        time = difHrs + "h"
+        time = difHrs + "s"
     }
     if (parseFloat(difDays) !== 0) {
-        time = difDays + "d"
+        time = difDays + "g"
     }
     if (difMs < 0) {
         colorClass = 'kecib'
@@ -4783,6 +4824,8 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('#issue_management_closed_date_from').val('');
     $('#inputGroupSelect01').val('0');
     $('#inputGroupSelect01').selectpicker('refresh');
+    $('#bug_filter_search_text').val('');
+    $('#global-search-input').val('');
     getBugList();
 });
 
@@ -4862,24 +4905,29 @@ function loadBugTaskDeadlineScripts() {
             format: 'YYYY-MM-DD',
             // inline: true
         }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'startDate');
+            var val  =  toDate($(this).attr("id"));
+            updateTask4ShortChangeDetails(val, 'startDate');
         });
         $("#taskDetailDeadlineStartTime").datetimepicker({
             format: 'HH:mm',
             // inline: true
         }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'startTime');
+            var val  =  toTime($(this).attr("id"));
+            updateTask4ShortChangeDetails(val, 'startTime');
         });
         $("#taskDetailDeadlineEndDade").datetimepicker({
             format: 'YYYY-MM-DD',
         }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'endDate');
+            var val  =  toDate($(this).attr("id"));
+            updateTask4ShortChangeDetails(val, 'endDate');
         });
         $("#taskDetailDeadlineEndTime").datetimepicker({
              format: 'HH:mm',
             // singleDatePicker: true
         }).on('dp.change', function(event) {
-            updateTask4ShortChange(this, 'endTime');
+     
+            var val  =  toTime($(this).attr("id"));
+            updateTask4ShortChangeDetails(val, 'endTime');
         });
 
 }

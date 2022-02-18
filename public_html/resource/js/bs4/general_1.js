@@ -443,11 +443,19 @@ var Utility = {
         return st;
     },
     convertDTpicker: function (d, seperator) {
-        var d = d.split(";");
+        var st = "";
+        var sep = (seperator) ? seperator : global_var.data_eliminator;
+        try {
+            st = d.substring(0, 4) + sep + d.substring(4, 6) + sep + d.substring(6, 8)
+        } catch (e) {
+        }
+        return st;
+    },
+    convertTMpicker: function (d, seperator) {
         var st = "";
         var sep = (seperator) ? seperator : global_var.time_eliminator;
         try {
-            st = d.substring(0, 2) + sep + d.substring(2, 4) + sep + d.substring(4, 6);
+            st = d.substring(0, 2) + sep + d.substring(2, 4);
         } catch (e) {
         }
         return st;
@@ -552,14 +560,11 @@ function toDate(id) {
 
 function toTime(id) {
     var st = "";
-    if ($('#' + id).val()) {
-        var date = new Date($('#' + id).val());
-        var hour = date.getHours();
-        day = day.toString(10).length === 1 ? '0' + day : day;
-        var month = date.getMonth() + 1;
-        month = month.toString(10).length === 1 ? '0' + month : month;
-        var year = date.getFullYear();
-        st = hour + "" + month + '' + day;
+    var times = $('#'+id).val().split(':');
+    if (times) {
+        var hour = times[0];
+        var minut = times[1];
+        st = hour + "" + minut + '' + "00";
     }
     return st;
 }

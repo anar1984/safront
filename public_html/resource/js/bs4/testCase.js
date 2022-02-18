@@ -665,6 +665,19 @@ $(document).on("click", '.page-item-core-next', function (e) {
     }
 
 })
+$(document).on("click", '.pagination_btn_end_start', function (e) {
+     var select = $("#pagintion-selectbox-issue");
+    
+   var st  = $(this).attr("data-st");
+     if(st==='end'){
+         var val  =  select.val();
+         bug_filter.page_no = val;
+     }else{
+        bug_filter.page_no = "1";
+     }
+     getBugList();
+
+})
 
 $(document).on("click", '.page-item-core', function (e) {
     bug_filter.page_no = $(this).attr("page-no");
@@ -825,9 +838,10 @@ function setBugFilterMultiValues() {
         var val = getBugFilterMultiSelect(this);
 
         bug_filter[data_type] = val;
-        if(data_type!=='nature'||data_type!=='status'){
+        if(data_type !=='nature' && data_type !=='status'){
             if(bug_filter[data_type].length>0 ){
                 FilterCount++;
+               
                 $(this).parent().addClass('cs-select-active')
             }
         }
@@ -858,6 +872,7 @@ function setBugFilterValues() {
          if(data_type!=='limit'){
             if(bug_filter[data_type].length>0 ){
                 FilterCount++;
+                
                 $(this).parent().addClass('cs-select-active')
             }
          }
@@ -930,6 +945,7 @@ function setBugFilterCreatedDateValues() {
         endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
         var inns = stTime.trim() + ' AND ' + endTime.trim();
         bug_filter.createdDate = inns;
+        FilterCount++;
     } catch (error) {
         bug_filter.createdDate = '';
     }
@@ -948,6 +964,7 @@ function setBugFilterClosedDatesValues() {
                
     bug_filter.closed_date_from = stTime.trim();
     bug_filter.closed_date_to = endTime.trim();
+     FilterCount++;
     } catch (error) {
         bug_filter.closed_date_from = '';
         bug_filter.closed_date_to = ''; 
@@ -1222,8 +1239,8 @@ function setBugListInitialData() {
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
-    setBugFilterCreatedDateValues()
-    setBugFilterClosedDatesValues()
+    setBugFilterCreatedDateValues();
+    setBugFilterClosedDatesValues();
    
     bug_filter.sortBy = $('#bug_filter_sortby').val();
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
@@ -1232,7 +1249,12 @@ function setBugListInitialData() {
 }
 
 $(document).on("change", ".issue-mgmt-general-filter", function (e) {
-    getBugList();
+    if($(this).hasClass('bug-mgmt-filter-closed-date-from')){
+        $('#issue-table-aktiv-all a[all-aktiv="H"]').click();
+    }else{
+        getBugList();
+
+    }
 })
 
 function getBugList() {
