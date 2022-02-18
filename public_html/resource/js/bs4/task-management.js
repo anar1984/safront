@@ -2531,7 +2531,7 @@ const taskManagement = {
             </div>`
             },
             genFilterAssigne: function (params) {
-                return ` <div class="cs-input-group mt-3">
+                return ` <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.assignee}</div>
                 <select class="form-control  bug-filter-multi bug-mgmt-filter-select user_filter_element_selectpicker  bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
@@ -2539,7 +2539,7 @@ const taskManagement = {
             </div>`
             },
             genFilterClosedBy: function (params) {
-                return ` <div class="cs-input-group mt-3">
+                return ` <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.closedBy}</div>
                 <select class="form-control  bug-filter-multi  bug-mgmt-filter-select user_filter_element_selectpicker" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
@@ -2547,7 +2547,7 @@ const taskManagement = {
             </div>`
             },
             genFilterStatus: function (params) {
-                return `<div class="cs-input-group mt-3 d-none">
+                return `<div class="cs-input-group mt-2 d-none">
                 <div class="input-group-addon">Status</div>
                 <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
@@ -2564,7 +2564,7 @@ const taskManagement = {
             </div>`
             },
             genFilterTaskType: function (params) {
-                return `<div class="cs-input-group mt-3">
+                return `<div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.taskType}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
@@ -2573,7 +2573,7 @@ const taskManagement = {
             </div>`
             },
             genFilterTaskNature: function (params) {
-                return ` <div class="cs-input-group mt-3">
+                return ` <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.taskNature}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     multiple id='bug_filter_nature' data-type="nature" title="${lang_task.rightBar.taskNature}">
@@ -2584,7 +2584,7 @@ const taskManagement = {
             </div>`
             },
             genFilterCreatedBy: function (params) {
-                return `  <div class="cs-input-group mt-3">
+                return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.createdBy}</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
@@ -2592,7 +2592,7 @@ const taskManagement = {
             </div>`
             },
             genFilterObserverBy: function (params) {
-                return `  <div class="cs-input-group mt-3">
+                return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.observer}</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
@@ -2600,7 +2600,7 @@ const taskManagement = {
             </div>`
             },
             genFilterIsmeetBy: function () {
-                return `  <div class="cs-input-group mt-3">
+                return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.type}</div>
                 <select class=" form-control bug-filter  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)'  data-live-search="true" id='bug_filter_is_meet'
@@ -2671,7 +2671,7 @@ const taskManagement = {
             genFilterBlock: function () {
 
                 return `<div class="bugListNavMenu bugList-elements">
-                <div class="main-sorting">
+                <div class="main-sorting pb-4" >
                      ${this.genFilterClosed()}
                      ${this.genFilterSortBy()}
                 </div>
