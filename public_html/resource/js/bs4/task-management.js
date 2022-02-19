@@ -2786,14 +2786,29 @@ const taskManagement = {
             genLabelBlock:function (param) {  
                 return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
                                         <div class="category-case-box text-left">
-                                            <span class="first-icon"><i class="cs-svg-icon label"></i></span> Cheweek <span class="last-icon">8</span>
+                                            <span class="first-icon"><i class="cs-svg-icon box"></i></span> Qutu <span class="last-icon">8</span>
                                         </div>
                                         <div class="category-item-boxes text-left">
                                             <div href="#" class="category-show-hide d-flex">
-                                                <div class="category">
-                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kategoriyalar
+                                                <div class="category">  
+                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kateqoriya
                                                 </div>
                                                 <div class="created new-label-modal" title="New Label" data-target="#insertNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>
+                                            <div class="category-create-input cs-input-group">
+                                                <div class="d-flex">
+                                                    <input type="text" class="mr-auto sw-color-main-input" />
+                                                    <span class="color-main-btn cs-svg-icon color-main"></span>
+                                                    <div class="add-cat-label"><i class="fa fa-plus"></i></div>
+                                                </div>
+                                                <ul class="color-skin-items">
+                                                    <li class="circle">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="checkbox" class="noteCheckListItem" value="0">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
                                             </div>
                                             <ul id="tasklabellist4Task" >
                     
