@@ -15295,6 +15295,8 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         var prId = localStorage.getItem('current_project_id');
         $("#story_mn_groupBy_id").val(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").selectpicker("refresh");
+        var dwlmt = $('#tasktype-list-select4move')
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         getUsers();
         new UserStory().getFktaskTypList4USMn();
         try {
@@ -16484,7 +16486,7 @@ function getSTatsUserManagmentTableKanban(elm) {
                         .append('<td class="text-center"></td>')
 
             }
-            $("#body-large-modal-in-us4backlog .more-table-details").click();
+           /// $(div).find(".more-table-details").click();
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -16539,7 +16541,7 @@ function getProjectValueUsManageMulti() {
     return val
 }
 
-function getBugList4UserStory(bgId, tbody) {
+function getBugList4UserStory(bgId, tbody,list) {
 
     var json = {
         kv: {}
@@ -16588,8 +16590,7 @@ function getBugList4UserStory(bgId, tbody) {
                  if(closedDate){
                   closedDate= Utility.convertDate(ela[i].closeStatusDate)+"/"+ Utility.convertTime(ela[i].closeStatusTime)
                  }
-                $(tbody)
-                .append($("<tr>")
+               var tr =  $("<tr>")
                           .attr("data-assignee",ela[i].fkAssigneeId)
                           .attr("data-nature",ela[i].taskNature)
                           .attr("data-taskType",ela[i].fkTaskTypeId)
@@ -16605,7 +16606,7 @@ function getBugList4UserStory(bgId, tbody) {
                                  .css("overflow",'hidden')
                                 .append($("<a>")
                                         .attr('href', '#')
-                                        .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
+                                        .attr("onclick", 'taskManagement.updateTask.callTaskCard4BugTask(this,"' + prd + '","' + ela[i].id + '")')
                                         .text(ela[i].taskName)))
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
@@ -16614,11 +16615,40 @@ function getBugList4UserStory(bgId, tbody) {
                         .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
                         .append('<td class="task-time-td">' +closedDate + '</td>')
-                        )
-
+                     
+                        $(tbody).append(tr)
+                 if(list){
+                     var newtr  =`
+                     <div class="d-flex text-center">
+                     <span>
+                     <div class="p-1"><b>Id</b></div>
+                     <div>${ ela[i].projectCode + "-" + ela[i].orderNoSeq}</div>
+                   </span>
+                   <span>
+                    <div class="p-1"><b>Status</b></div>
+                    <span class="us-item-status-${ela[i].taskStatus}">${ela[i].taskStatus }</span>
+                   </span>
+                   <span>
+                      <div class="p-1"><b>Assigne</b></div>
+                       <img class="Assigne-card-story-select-img assigne" src="${fileUrl(ela[i].userImage)}" data-trigger="hover" data-toggle="popover" data-content="${ela[i].userName}" title="" data-original-title="Assignee">
+                   </span>
+                  <span>
+                      <div class="p-1"><b>Created By</b></div>
+                      <img class="Assigne-card-story-select-img created" src="${fileUrl(ela[i].createByImage)}" data-trigger="hover" data-toggle="popover" data-content="${ela[i].createByName}" title="" data-original-title="Created By">
+                   </span>
+                     </div>
+                    
+                     `
+                       
+                     var content  =  ''
+                     $(list).append(`<li class="task-tr-list" data-tasktype="${ela[i].fkTaskTypeId}"  data-nature="${ela[i].taskNature}" data-tr-status="${ela[i].taskStatus}" data-assignee="${ela[i].createBy}"  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}'>${ela[i].taskNature==='bug'?'<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>':""}
+                              <a href='#' onclick='taskManagement.updateTask.callTaskCard4BugTask(this,"${prd}"," ${ela[i].id} ")'>${ela[i].taskName}</a></li>`)
+                 }
             }
 
-            $('[data-toggle="popover"]').popover();
+            $('[data-toggle="popover"]').popover({
+                "html": true
+            });
             $(tbody).find('.trigger-status-filter').click();
             $(tbody).closest("table").find('.us-item-status-new').click();
             $(tbody).closest("table").find('.us-item-status-ongoing').click();
@@ -18495,8 +18525,8 @@ function multipleClosedTask(list,dragelm) {
    /// getDefautUserByTaskTypeId(dragelm);
    var bgId  = $(dragelm).attr("bid");
    var pid  = $(dragelm).attr("pidd");
-   var asId  = $('#user-list-select4move').val();
-    insertAutoTaskOnDrag(bgId,asId,pid);
+   var typid  = $('#tasktype-list-select4move').val();
+    insertAutoTaskOnDrag(bgId,typid,pid);
    }) 
 }
 function getDefautUserByTaskTypeId(dragelm) {
@@ -18512,8 +18542,8 @@ function getDefautUserByTaskTypeId(dragelm) {
    })  */
 }
 
-function insertAutoTaskOnDrag(bgId,asId,prid) {
-    var txt  = $("#newTaskCreate4Ididt").val();
+function insertAutoTaskOnDrag(bgId,typid,prid) {
+    var txt  = $('[pid="'+bgid+'"].ContentText span.headerContentText').text()+" (send to "+ $('#tasktype-list-select4move option:selected').text() +")";
     var json = {
         kv: {}
     };
@@ -18524,7 +18554,7 @@ function insertAutoTaskOnDrag(bgId,asId,prid) {
     json.kv.fkBacklogId = bgId;
     json.kv.taskName = txt;
     json.kv.fkProjectId = prid;
-    json.kv.fkAssigneeId = asId;
+    json.kv.tasktypeId = typid;
     var that = this;
     var data = JSON.stringify(json);
     $("#multipleClosedTask").modal("hide");
@@ -19499,31 +19529,44 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
     filterOnChnageUSM()
 });
 
-var assigne_group ={};
-$(document).on('click', '.set-assigne-gorup-usm', function (evt) {
+var us_group ={
+    "assignee":{},
+    "tasktype":{}
+};
+$(document).on('click', '.set-assignee-gorup-usm', function (evt) {
     var id  = $(this).attr("id");
-      var list  =  assigne_group[id].list;
+      var list  =  us_group.assignee[id].list;
       $("#story_mn_filter_assigne_id").val(list);
       $("#story_mn_filter_assigne_id").selectpicker("refresh");
       $("#story_mn_filter_assigne_id").change();
 
 });
-$(document).on('change', '#assignee-group-name-save', function (evt) {
+$(document).on('click', '.set-tasktype-gorup-usm', function (evt) {
+    var id  = $(this).attr("id");
+      var list  =  us_group.tasktype[id].list;;
+      $("#story_mn_manual_status_id").val(list);
+      $("#story_mn_manual_status_id").selectpicker("refresh");
+      $("#story_mn_manual_status_id").change();
+
+});
+$(document).on('change', '.group-name-save', function (evt) {
         
       if($(this).val().trim().length> 0) {
-           var list  = $("#story_mn_filter_assigne_id").val();
+           var list  = $(this).closest('.cs-input-group').find('select.group-select-list').val();
            var count  = list.length;
-        $(this).addClass("d-none");
-        $(".assignee-group-name-list").removeClass("d-none");
+           $(this).addClass("d-none");
+           $(this).closest('.cs-input-group').find('div.group-select-list').removeClass("d-none");
+           var type  = $(this).attr("data-type");
         var block  = {};
            block.groupName  =  $(this).val();
            block.listCount  =  count;
            block.list  =  list;
+           block.type  =  type;
            var id  = makeId(10);
-           assigne_group[id] = block;
-           localStorage.setItem("assigne_group",JSON.stringify(assigne_group));
+           us_group[type][id] = block;
+           localStorage.setItem("us_group",JSON.stringify(us_group));
            getGroupListAssigneLocal(); 
-           $(this).val('')
+           $(this).val('');
       }
 
 
@@ -19533,37 +19576,56 @@ function getGroupListAssigneLocal(){
 
      
    try { 
-        var list  = localStorage.getItem('assigne_group');
+        var list  = localStorage.getItem('us_group');
         if(list){
-            assigne_group  = JSON.parse(list);  
-            var block  = $("#assignee-group-list-history");
-                block.empty('');
-                var group = Object.keys(assigne_group);
+            us_group  = JSON.parse(list);
+           
+                var group = Object.keys(us_group);
                 for (var i in group) {
-                  var id = group[i];
-                  var obj = assigne_group[id];
-                  block.append($('<a class="dropdown-item set-assigne-gorup-usm" href="#">')
-                  .attr("id",id)
-                  .text(obj.groupName +"("+obj.listCount+")"));
+                  var item = group[i];
+                  var list  =  Object.keys(us_group[item]);
+                  
+                  var block  = $("#"+item+"-group-list-history");
+                      block.empty('');
+                      for (var i in list) {
+                        var id = list[i];
+                        var obj = us_group[item][id];
+                        block
+                        .append($("<div class='dropdown-item'>")
+                                    .append($('<a class="set-'+item+'-gorup-usm w-100" href="#">')
+                                               .attr("id",id)
+                                               .text(obj.groupName +"("+obj.listCount+")"))
+                                    .append(`<i class="fa fa-trash " style="color:red" type='${item}'  onclick="groupDeleteUSM('${id}','${item}')" aria-hidden="true"></i>`));
+                      }
+                  
               }
         }
       
          
     } catch (error) {
-        
+        console.log(error);
     }
     
 }
-$(document).on('focusout', '#assignee-group-name-save', function (evt) {
+function groupDeleteUSM(id,item) {
+       if(confirm('Are You Sure?!!!!')){
+        delete  us_group[item][id];
+           localStorage.setItem("us_group",JSON.stringify(us_group));
+           getGroupListAssigneLocal();
+       }
+
+}
+$(document).on('focusout', '.group-name-save', function (evt) {
 
        $(this).addClass("d-none");
-       $(".assignee-group-name-list").removeClass("d-none");
+       $(this).closest('.cs-input-group').find('div.group-select-list').removeClass("d-none");
 });
 $(document).on('click', '#assignee-group-name-add', function (evt) {
 
-       $("#assignee-group-name-save").removeClass("d-none");
-       $("#assignee-group-name-save").focus();
-       $(".assignee-group-name-list").addClass("d-none");
+      var elm = $(this).closest('.cs-input-group').find(".group-name-save");
+          elm.removeClass("d-none")
+          elm.focus();
+          $(this).closest('.cs-input-group').find('div.group-select-list').addClass("d-none");
 });
 function filterOnChnageUSM(){
     UsLabel = '';

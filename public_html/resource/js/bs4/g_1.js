@@ -1668,8 +1668,11 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
     var elm = elm1.clone();
     elm.css("width", '100%')
     elm.find('.baclog-large-modal-next').hide();
+    elm.find('.baclog-large-modal-next').hide();
     $("#task-ongoing-large-modal4backlog").modal('show');
     $("#body-large-modal-in-us4backlog").append(elm);
+    $("#body-large-modal-in-us4backlog .stat-div-task-content table.stat-table-us tbody").removeClass('d-none');
+    $("#body-large-modal-in-us4backlog .stat-div-task-content > ul").addClass('d-none');
     $("#body-large-modal-in-us4backlog .user-story-prototype-change1").prop("checked",true).change();
 
     $('[data-toggle="popover"]').popover();
@@ -1961,8 +1964,9 @@ $(document).on('click', '.trigger-modal-us-header .status-large-menu-total', fun
 $(document).on('click', '.more-table-details', function (event) {
 
     var bgId = $(this).attr("pid");
-    var tbody = $(this).parents('.stat-table-us').find("tbody")
-    getBugList4UserStory(bgId, tbody);
+    var tbody = $(this).parents('.stat-div-task-content').find("tbody")
+    var list = $(this).parents('.stat-div-task-content').find("ul")
+    getBugList4UserStory(bgId, tbody,list);
 
 
     $(this).html('<i class="fas fa-angle-double-left"></i>')
@@ -1974,8 +1978,10 @@ $(document).on('click', '.more-table-details', function (event) {
 $(document).on('click', '.showAll-table-details', function (event) {
 
     var bgId = $(this).attr("pid");
-    var tbody = $(this).parents('.stat-table-us').find("tbody")
-      tbody.find("tr").removeClass("d-none")
+    var tbody = $(this).parents('.stat-table-us').find("tbody");
+    var ul = $(this).parents('.stat-div-task-content').find("ul");
+      tbody.find("tr").removeClass("d-none");
+      ul.find("li.task-tr-list").removeClass("d-none");
 
 
     $(this).html('Hide');
@@ -1988,16 +1994,19 @@ $(document).on('click', '.hide-all-table', function (event) {
 
     var bgId = $(this).attr("pid");
     var tbody = $(this).parents('.stat-table-us').find("tbody");
+    var ul = $(this).parents('.stat-div-task-content').find("ul");
       var asID  = $("#story_mn_filter_assigne_id").val();
       var ntId  = $("#story_mn_filter_nature_id").val();
      if(asID.length>0||ntId.length>0){
       $(tbody).find("tr.task-tr-list").addClass("d-none");
+      ul.find("li.task-tr-list").addClass("d-none");
      }
    if(asID.length>0){
     
       for (let i = 0; i < asID.length; i++) {
           const o = asID[i];
           $(tbody).find("tr[data-assignee='"+o+"']").removeClass("d-none");
+          $(ul).find("li[data-assignee='"+o+"']").removeClass("d-none");
       }
    }
 
@@ -2005,6 +2014,7 @@ $(document).on('click', '.hide-all-table', function (event) {
       for (let i = 0; i < ntId.length; i++) {
           const o = asID[i];
           $(tbody).find("tr[data-nature='"+o+"']").removeClass("d-none");
+          $(ul).find("li[data-nature='"+o+"']").removeClass("d-none");
       }
    }
     $(this).html('All');
@@ -2086,6 +2096,7 @@ $(document).on('click', '.stat-table-us thead .new-tapsiriq-rew', function (even
 });
 $(document).on('click', '.stat-table-us thead .task-for-backlog-event-prm', function (event) {
     var tbody = $(this).parents('table').find('tbody');
+    var ul = $(this).parents('.stat-div-task-content').find('ul');
     var log = $(this).attr("status");
     if (log === 'total') {
         tbody.find(".task-tr-list").show();
@@ -2094,14 +2105,17 @@ $(document).on('click', '.stat-table-us thead .task-for-backlog-event-prm', func
         $(this).toggleClass('active');
         var bgId = $(this).parents('tr').find('.task-for-backlog-event-prm.active');
         tbody.find(".task-tr-list").hide();
+        ul.find(".task-tr-list").hide();
 
         for (let i = 0; i < bgId.length; i++) {
 
             tbody.find('[data-tr-status="' + $(bgId[i]).attr("status") + '"]').show();
+            ul.find('[data-tr-status="' + $(bgId[i]).attr("status") + '"]').show();
 
         }
         if (bgId.length === 0) {
             tbody.find(".task-tr-list").show();
+            ul.find(".task-tr-list").show();
         }
     }
 

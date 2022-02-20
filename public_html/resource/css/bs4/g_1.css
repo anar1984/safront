@@ -4799,3 +4799,27 @@ td.selected{
     font-size: 9px;
     padding-top: 2px;
 }
+
+.stat-div-task-content ul {
+    padding: 0;
+    counter-reset: section;                /* Creates a new instance of the
+    section counter with each ol
+    element */
+    list-style-type: none;
+    max-height: 400px;
+    overflow: auto;
+}
+.stat-div-task-content ul li {
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    padding: 5px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.stat-div-task-content ul li::before{
+    counter-increment: section;          
+  content: counters(section, ".") " ";
+  font-weight: bold;
+}
