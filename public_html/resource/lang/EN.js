@@ -190,6 +190,8 @@ const lang_task = {
     Delete: 'Delete ',
     subtask: 'Sub task ',
     comment:"Comment",
+    addComment:"Add a comment..",
+    emptyPicker:"Add a comment..",
     ididit: 'I Did It!',
     history: 'History',
     chat: 'Chat',

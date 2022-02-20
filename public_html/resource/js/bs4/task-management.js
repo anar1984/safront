@@ -678,7 +678,7 @@ const taskManagement = {
        
             //$(this).attr("disabled",'disabled');
             var itmList = ''
-            var items = $(".issue-managment-add-task .task-check-list-box ul>li");
+            var items = $("#issue-managment-add-task .task-check-list-box ul>li");
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
                 itmList += $(o).find('textarea').val() + '|';
@@ -758,6 +758,24 @@ const taskManagement = {
 
 
         },
+        insertObserverTaskByVal: function (taskId,val) {
+            try {
+                   val= val.toString();
+                if (!val) {
+                    return
+                }
+                callService('serviceTminsertTaskObserver', {
+                    "fkTaskId": taskId,
+                    "fkUserId": val
+                }, true, function () {
+                    // getTaskkObserverList(global_var.current_task_id_4_comment)
+                });
+            } catch (error) {
+               // console.log('task Observer ++++' + error);
+            }
+
+
+        },
 
         insertBacklogTaskDetail: function (taskId) {
             try {
@@ -796,7 +814,7 @@ const taskManagement = {
                         crossDomain: true,
                         async: true,
                         success: function (res) {
-                            
+
                         },
                         error: function () {
                             Toaster.showError(('somethingww'));
@@ -961,6 +979,7 @@ const taskManagement = {
                               <option value="ForwardTaskTo">${getOperName("ForwardTaskTo")}</option>
                               <option value="rejectTask">${getOperName("rejectTask")}</option>
                               <option value="canceledTask">${getOperName("cancel")}</option>
+                              <option value="observer">${lang_task.windowAddTask.addObserver}</option>
                             </select>
                           </div>
                         </div>
@@ -972,7 +991,8 @@ const taskManagement = {
                         <textarea class="form-control cs-nextTextarea" id="note"></textarea>
                       </div>
                       <div class="cs-input-group" style="margin-top:10px; text-align:right;">
-                         <div style="display:inline;" class="forward-assignee-list d-none"></div>
+                         <div style="background: #6497b2;border-radius: 10px;" class="mb-2 pl-2 text-left forward-assignee-list d-none"></div>
+                         <div style="background: #6497b2;border-radius: 10px;"  class="mb-2 pl-2 text-left add-observer-list d-none"></div>
                         <button class="btn cs-nextsave-btn">Yadda saxla</button>
                       </div>
                    </div>
@@ -1071,7 +1091,7 @@ const taskManagement = {
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
-                                <select class="run_task_categories update-selectpicker issue_selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
+                                <select class="run_task_categories update-selectpicker issue_selectpicker" multiple title='${lang_task.windowUpdateTask.emptyPicker}' id="run_task_detail_detail_categories" data-live-search="true">
                                  
                                 </select>
                             </div>
@@ -1079,7 +1099,7 @@ const taskManagement = {
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
-                                <select class="run_task_sprint update-selectpicker issue_selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
+                                <select class="run_task_sprint update-selectpicker issue_selectpicker" title='${lang_task.windowUpdateTask.emptyPicker}' multiple id="run_task_detail_detail_sprint" data-live-search="true">
                                 
                                 </select>
                             </div>
@@ -1191,8 +1211,8 @@ const taskManagement = {
                     return `<div class="tab-pane fade active show cs-box-background" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab4">
                     <div class="cs-input-group mb-3 mt-0">
                         <div class="commentwritepanel">
-                            <div class="input-group-addon">Description</div>
-                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput addComment4Task_comment form-control cs-taskcomment-textarea" placeholder="Add a comment.." rows="1"></textarea>
+                            <div class="input-group-addon">${lang_task.windowUpdateTask.comment}</div>
+                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput addComment4Task_comment form-control cs-taskcomment-textarea" placeholder="${lang_task.windowUpdateTask.addComment}" rows="1"></textarea>
                            
                             <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
                                  style="width:100%;display: none; padding:0px;margin:0px;">
@@ -1205,11 +1225,11 @@ const taskManagement = {
 
                                 <div class="acceptcomment flex-fill mr-1">
                                     <button class="btn btn-primary" type="submit"
-                                            onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
+                                            onclick="new UserStory().addTaskCommentToTask(this)">${lang_task.windowUpdateTask.add}</button>
                                 </div>
                            
                                 <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
-                                       multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
+                                       multiple="" type="file" file_type="general" placeholder='fff' onchange1="new UserStory().addFileForTaskComment()">
                             </div>
                         </div>
                     </div>
@@ -1720,7 +1740,7 @@ const taskManagement = {
                 }
                 cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
                 cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
-                cmpList.userBlock.Init($('.forward-assignee-list'),'single');
+               
          
 
          setTimeout(() => {
@@ -2024,41 +2044,9 @@ const taskManagement = {
  */
             try {
                 var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
-                var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
-                var ts  =  []
-                for (var n = 0; n < obj.length; n++) {
-                    var o = obj[n];
-                        ts.push(o.fkUserId)
-                   // var lst = o.fkUserId.split(',');
-                   
-                  /*   for (let l = 0; l < lst.length; l++) {
-                        const k = lst[l];
-                        var userSpan = (k && userList[k]) ?
-                            $('<span>')
-                            .attr('title', 'Observer ')
-                            .addClass('peronal-info')
-                            .append($('<img>')
-                                .addClass('Assigne-card-story-select-img')
-                                .attr('width', '40px')
-                                .attr('src', fileUrl(userList[k].userImage)))
-                            .append($('<span>').text(userList[k].userPersonName))
-
-                            :
-                            '';
-
-                        var tr = $("<tr>")
-                            .append($('<td>').text((parseFloat(l) + 1)))
-                            .append($('<td>')
-                                .append(userSpan))
-                            .append($('<td>')
-                                .append($('<a href="#">')
-                                    .attr('oid', o.id)
-                                    .addClass("taskObserverDelete")
-                                    .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')));
-                        table.append(tr);
-                    }
- */
-                }
+                var obj =  res.tbl[idy].r[0] ;
+                var ts  =  obj.fkUserId.split(",")
+              
                 $(".observer-div-update-issue").getVal(ts);
                // div.html(table);
             } catch (error) {
@@ -2390,9 +2378,10 @@ const taskManagement = {
                 <div onclick="nextModalpopUpShow(this,'ForwardTaskTo','multi')" class="info-item-elements">
                     <i class="cs-svg-icon right-circle-02"></i>
                 </div>
-               <!--<div class="info-item-elements">
+               <div onclick="nextModalpopUpShow(this,'observer')" class="info-item-elements">
                     <i class="cs-svg-icon user-eye"></i>
                 </div>
+                <!--
                 <div class="info-item-elements">
                     <i class="cs-svg-icon task-02"></i>
                 </div>-->
@@ -2739,7 +2728,7 @@ const taskManagement = {
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                     </div>
-                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
+                    <input placeholder='Bitmə tarixinə görə' autocomplete="off" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
                  </div>
          
             </div>`
@@ -2988,7 +2977,7 @@ const taskManagement = {
                 }
                 
             },
-            getstatisticListLoadAfter: function (json) {
+            getstatisticListLoadAfter: function () {
                 try {
                     var json = initJSON();
                     json.kv.fkProjectId = bug_filter.project_id;
@@ -3011,6 +3000,16 @@ const taskManagement = {
                     json.kv.showChildTask = bug_filter.showChildTask;
                     json.kv.createdDate = bug_filter.createdDate;
                     json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
+                    var ty = localStorage.getItem("issue_mode_active");
+                        ty = ty?ty:"A"; 
+                       if(ty==='A'){
+                         json.kv.taskStatus = "'new','ongoing','waiting'";
+                       }else if(ty==='P'){
+                          json.kv.taskStatus = "'rejected','UAT','closed','canceled'";
+                     
+                       }else if(ty==='H'){
+                        json.kv.taskStatus = ''
+                       }
                     var that = this
                     var data = JSON.stringify(json);
                     $.ajax({
@@ -3041,7 +3040,9 @@ const taskManagement = {
                         //getInfoBoxResponsive();
                     }); */
 
-                } catch (error) {}
+                } catch (error) {
+                    console.log(error);
+                }
 
 
             },
@@ -3466,7 +3467,7 @@ const taskManagement = {
                        <div class="task-list-datetime">
                            <div class="d-flex">
                            <span class="input-group-icon"><i class="cs-svg-icon calendar-01"></i></span>
-                           <input type="text" autocomplete="off" onchange="callBugFilterMulti()" id="issue-list-datetime" class="form-control text-center sss" placeholder="Tarixə görə">
+                           <input type="text" autocomplete="off" onchange="callBugFilterMulti()" id="issue-list-datetime" autocomplete="off" class="form-control text-center sss" placeholder="Tarixə görə">
                            </div>
                         </div>
                    </div>
@@ -3639,6 +3640,9 @@ const taskManagement = {
                         <li class="dropdown-item forward-task" href="#" onclick="nextModalpopUpShow(this,'ForwardTaskTo')">
                         <i class="cs-svg-icon yonlendir"></i> ${getOperName("ForwardTaskTo")}
                          </li>                       
+                        <li class="dropdown-item forward-task" href="#" onclick="nextModalpopUpShow(this,'observer')">
+                        <i class="cs-svg-icon nezaretci"></i> ${lang_task.windowAddTask.addObserver}
+                         </li>                       
                         <li class="dropdown-item">
                             <i class="cs-svg-icon tarixce"></i> ${getOperName("history")}
                         </li>
@@ -3798,6 +3802,7 @@ const taskManagement = {
                                 .css("text-align", 'left')
                                 .css("padding-left", '3px')
                                 .css("overflow", 'initial')
+                                .attr("gid",o.taskStatus)
                                 .append($("<div>")
                                     .append($("<div>")
                                         .addClass('position-relative us-item-status-' + o.taskStatus)
@@ -3896,6 +3901,7 @@ const taskManagement = {
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column')
                                 .addClass('bug-list-column-assignee')
+                                .attr("gid",o.fkAssigneeId)
                                 .append(genUserTrblock(o.userName, img,"Assigne",o.fkAssigneeId))
                                 .append($('<i class="fa fa-filter">')
                                     .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
@@ -3910,6 +3916,7 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column-created-by ')
+                                .attr("gid",o.createdBy)
                                 .append(genUserTrblock(o.createByName, createdByImg,"Created by",o.createdBy))
                                 .append($('<i class="fa fa-filter">')
                                     .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
@@ -4346,7 +4353,7 @@ $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
 })
 $(document).on("change", '#newAddCheckList', function (e) {
 
-    $(this).parent().find('ul').prepend(`<li class="d-flex">
+    $(this).parent().find('ul').append(`<li class="d-flex">
     <div class="item-checkbox">
     <label class="checkmarkcontainer">
     <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
@@ -5152,9 +5159,13 @@ $(document).on('change', "#run_task_detail_detail_sprint", function (e) {
 })
 $(document).on('change', "#nextElementListSelect", function (e) {
         var value  = $(this).val();
-        $(".forward-assignee-list").addClass("d-none");
+        $("#nextBlockItemPopUp .forward-assignee-list").addClass("d-none");
+        $("#nextBlockItemPopUp .add-observer-list").addClass("d-none");
        if(value==='ForwardTaskTo'){
-        $(".forward-assignee-list").removeClass("d-none"); 
+        $("#nextBlockItemPopUp .forward-assignee-list").removeClass("d-none"); 
+       }
+       if(value==='observer'){
+        $("#nextBlockItemPopUp .add-observer-list").removeClass("d-none"); 
        }
 })
 $(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
@@ -5173,6 +5184,9 @@ $(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
           } 
           else if (value==='canceledTask'){
             cancelTaskAction();
+          } 
+          else if (value==='observer'){
+            addObserverTask();
           } 
      }else{
 
@@ -5193,6 +5207,9 @@ $(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
                       else if (value==='canceledTask'){
                         cancelTaskAction(taskId);
                       } 
+                      else if (value==='observer'){
+                        addObserverTask(taskId);
+                      } 
                 }
             }
          
@@ -5205,7 +5222,10 @@ $(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
 function nextModalpopUpShow(elm,value,multi) {
     $("#nextBlockItemPopUp").remove();
     var block  = taskManagement.updateTask.genBlockModal.genNextBlockPopUp();
+ 
     $("body").append(block);
+    cmpList.userBlock.Init($('#nextBlockItemPopUp .forward-assignee-list'),'single');
+    cmpList.userBlock.Init($('#nextBlockItemPopUp .add-observer-list'),'multi');
      var k =   $("#nextBlockItemPopUp")
     var top = $(elm).offset().top;
     var left = $(elm).offset().left; 
@@ -5221,6 +5241,8 @@ function nextModalpopUpShow(elm,value,multi) {
       }
       $("#nextElementListSelect").val(value);
       $("#nextElementListSelect").selectpicker("refresh");
+      $("#nextElementListSelect").change();
+
       $("#nextBlockItemPopUp").removeClass('d-none');
  }
 
@@ -5232,6 +5254,16 @@ function forwardTaskToAction(taskid) {
         new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
     }
     getBugList();
+}
+function addObserverTask(taskid) {
+     taskid  = taskid?taskid:global_var.current_issue_id;
+     var val  = $('#nextBlockItemPopUp div.add-observer-list').getVal();
+     taskManagement.insertTask.insertObserverTaskByVal(taskid,val);
+    var comel  = $('#nextBlockItemPopUp textarea#note');
+    if (comel.val().trim()) {
+        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+    }
+  //  getBugList();
 }
 
 function rejectTaskAction(taskid) {

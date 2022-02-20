@@ -15529,15 +15529,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .append($("<button>")
                     .addClass("baclog-large-modal-ididit btn btn-sm btn-light")
                     .attr("data-status", o.id)
-                    .append('I did it')
+                    .append('<i class="fa fa-mail-forward text-success" aria-hidden="true"></i>')
                 )
 
-                .append(`
-                        <label class="switch ">
-            <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
-            <span class="slider round hide-off "></span>
-
-        </label>`)
+                .append(`<label class="switch ">
+                         <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
+                         <span class="slider round hide-off "></span></label>`)
                 .append($("<button>")
                     .addClass("baclog-large-modal-next btn btn-sm btn-light")
                     .attr("data-status", o.id)
@@ -15557,7 +15554,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                             .append($("<tr class=total>"))
                             .append($("<tr class='bug'>"))
                         )
-                        .append($("<tbody>")))
+                        .append($("<tbody class='d-none'>")))
+                        .append($("<ul>"))
                        
                         .css("display", 'none'))
                 //                        .append($('<i  class="fa fa-info-circle">')
@@ -21548,7 +21546,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
                 .append($('<input type="text">')
                     .attr("iid", obj[i].id)
-                    .css('display', 'none')
+                    .css('visibility', 'hidden')
                     .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
                     .attr("placeholder", "Add new description")
                     .attr('class', 'description-style')

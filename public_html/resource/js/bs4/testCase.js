@@ -126,53 +126,62 @@ function sortTable(sv, cls) {
             if (tx.length < 1) {
                 tx = "undefined"
             }
-
-            fTr.before($("<tr>")
-                    .addClass("groupTrElement")
-                    .append($("<td>")
-                            .attr('colspan','100%')
-                            .addClass("groupTdElement")
-                            .append($("<div>")
-                                    .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
-                                    .append(tx)
-                                    .addClass("groupTableDivInside"))
-                                    .append($("<div>")
-                                        .addClass('group-count-box')
-                                            .append('<span>0</span>')
-                                        )))
+            if(tx.length>0){
+                fTr.before($("<tr>")
+                .addClass("groupTrElement")
+                .append($("<td>")
+                        .attr('colspan','100%')
+                        .addClass("groupTdElement")
+                        .append($("<div>")
+                                .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-up"></i></span>')
+                                .append(tx)
+                                .addClass("groupTableDivInside"))
+                                .append($("<div>")
+                                    .addClass('group-count-box')
+                                        .append('<span id="counter-span'+tbl+'">0</span>')
+                                    )))
+            }
+           
         }
 
-        var htm = $(trList[index]).find("td:eq("+sv+")").html();
-        var htm1 = $(trList[index + 1]).find("td:eq("+sv+")").html();
-
+        var htm = $(trList[index]).find("td:eq("+sv+")").attr('gid');
+        var htm1 = $(trList[index + 1]).find("td:eq("+sv+")").attr('gid');
+        var htmlk = $(trList[index + 1]).find("td:eq("+sv+")").html();
+          
 
         if (htm === htm1) {
-            $(trList[index]).attr("data-aid", tbl)
+            $(trList[index]).attr("data-aid", tbl).hide();
 
         } else {
-            $(trList[index]).attr("data-aid", tbl);
+            $(trList[index]).attr("data-aid", tbl).hide();
+            var count  = $('[data-aid="' + tbl + '"]').length;
+            $("#counter-span"+tbl+"").text(count)
             cl++
             tbl = "id-row" + cl;
             if (htm1 === '') {
                 htm1 = "undefined"
             }
             if (index === trList.length) {
-                console.log(index);
-                $(trList[index]).attr("data-aid", tbl);
+                $(trList[index]).attr("data-aid", tbl).hide();
             }
-            $(trList[index]).after($("<tr>")
-                    .addClass("groupTrElement")
-                    .append($("<td>")
-                            .attr('colspan','100%')
-                            .addClass("groupTdElement")
-                            .append($("<div>")
-                                    .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
-                                    .append(htm1)
-                                    .addClass("groupTableDivInside"))
-                                        .append($("<div>")
-                                        .addClass('group-count-box')
-                                            .append('<span>0</span>')
-                                    )));
+            if(htmlk){
+                $(trList[index]).after($("<tr>")
+                .addClass("groupTrElement")
+                .append($("<td>")
+                        .attr('colspan','100%')
+                        .addClass("groupTdElement")
+                        .append($("<div>")
+                                .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-up"></i></span>')
+                                .append(htmlk)
+                                .addClass("groupTableDivInside"))
+                                    .append($("<div>")
+                                    .addClass('group-count-box')
+                                        .append('<span id="counter-span'+tbl+'">0</span>')
+                                )));
+            }
+          
+
+            
 
         }
 
@@ -1323,7 +1332,7 @@ function getBugList() {
         json.kv.currentDueDate=bug_filter.currentDueDate;
       
         var view = localStorage.getItem('task-view-format');
-        taskManagement.readTask.genBlockTask.getstatisticListLoadAfter(json);
+        taskManagement.readTask.genBlockTask.getstatisticListLoadAfter();
         if (!view) {
             view = "table"
         }
