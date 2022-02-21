@@ -16486,7 +16486,7 @@ function getSTatsUserManagmentTableKanban(elm) {
                         .append('<td class="text-center"></td>')
 
             }
-           /// $(div).find(".more-table-details").click();
+            $("#body-large-modal-in-us4backlog .more-table-details").click();
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -16570,6 +16570,7 @@ function getBugList4UserStory(bgId, tbody,list) {
             SATask.updateTaskByRes(res);
             var ela = res.tbl[0].r
             $(tbody).html('')
+            $(list).html('')
             $(tbody).append($("<tr>").addClass('theader-table')
                     .append('<td><b>Task Id</b></td>')
                     .append('<td><b><input type="checkbox" class="all-bug-list-check"></b></td>')
@@ -16622,7 +16623,7 @@ function getBugList4UserStory(bgId, tbody,list) {
                      <div class="d-flex text-center">
                      <span>
                      <div class="p-1"><b>Id</b></div>
-                     <div>${ ela[i].projectCode + "-" + ela[i].orderNoSeq}</div>
+                     <div>${ela[i].projectCode + "-" + ela[i].orderNoSeq}</div>
                    </span>
                    <span>
                     <div class="p-1"><b>Status</b></div>
@@ -16654,9 +16655,9 @@ function getBugList4UserStory(bgId, tbody,list) {
             $(tbody).closest("table").find('.us-item-status-ongoing').click();
                 var asID  = $("#story_mn_filter_assigne_id").val();
                 var ntId  = $("#story_mn_filter_nature_id").val();
-               if(asID.length>0||ntId.length>0){
+               /* if(asID.length>0||ntId.length>0){
                 $(tbody).closest("table").find('.btn-show-hide-table-row').click();
-               }
+               } */
            
         },
         error: function () {
