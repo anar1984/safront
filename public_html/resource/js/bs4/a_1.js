@@ -18469,7 +18469,7 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
 }
 function submitmultipleClosedTask() {
     var txt  = $("#newTaskCreate4Ididt").val();
-         if(txt.trim().length>1){
+        /*  if(txt.trim().length>1){ */
             var ekm  = $("#taskListClosedMulti .cst-chkc-bl2");
             var list  = '';
             ekm.each(function () {
@@ -18480,10 +18480,10 @@ function submitmultipleClosedTask() {
         if(dragElment){
             multipleClosedTask(list,dragElment);
         }    
-         }else{
+        /*  }else{
             Toaster.showError(("Task name is not entered"));
  
-         }
+         } */
           
 }
 function addPinInputToImage(elm) {
@@ -18544,7 +18544,7 @@ function getDefautUserByTaskTypeId(dragelm) {
 }
 
 function insertAutoTaskOnDrag(bgId,typid,prid) {
-    var txt  = $('[pid="'+bgid+'"].ContentText span.headerContentText').text()+" (send to "+ $('#tasktype-list-select4move option:selected').text() +")";
+    var txt  = $('[pid="'+bgId+'"].ContentText span.headerContentText').text()+" (send to "+ $('#tasktype-list-select4move option:selected').text() +")";
     var json = {
         kv: {}
     };
