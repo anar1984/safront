@@ -584,3 +584,15 @@
 .cs-svg-icon.user-addons-icon-1 .dropdown-toggle:before {
   background-image: url(../ch-icons/user-addons-icon-1.svg);
 }
+.cs-svg-icon.trash:after, .cs-svg-icon.trash .dropdown-toggle:before {
+  background-image: url(../ch-icons/trash.svg);
+}
+.cs-svg-icon.edit:after, .cs-svg-icon.edit .dropdown-toggle:before {
+  background-image: url(../ch-icons/edit.svg);
+}
+.cs-svg-icon.star-o:after, .cs-svg-icon.star-o .dropdown-toggle:before {
+  background-image: url(../ch-icons/star-o.svg);
+}
+.cs-svg-icon.color-main:after, .cs-svg-icon.color-main .dropdown-toggle:before {
+  background-image: url(../ch-icons/color-main.svg);
+}

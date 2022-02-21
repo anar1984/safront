@@ -1249,7 +1249,7 @@ a.dropdown-menu-header {
 }
 
 .component-class{
-    padding:3px 5px;
+    /* padding:3px 5px; */
 }
 
 .component-class1:hover{
@@ -2982,8 +2982,8 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .component-section-row{
-    margin-left:0px;
-    margin-right: 0px;
+    /* margin-left:0px;
+    margin-right: 0px; */
 }
 
 .apd-form-error-msg{

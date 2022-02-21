@@ -2520,7 +2520,7 @@ const taskManagement = {
             </div>`
             },
             genFilterAssigne: function (params) {
-                return ` <div class="cs-input-group mt-3">
+                return ` <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.assignee}</div>
                 <select class="form-control  bug-filter-multi bug-mgmt-filter-select user_filter_element_selectpicker  bug_filter_assignee_id cs-svg-icon daxil-eden" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
@@ -2528,7 +2528,7 @@ const taskManagement = {
             </div>`
             },
             genFilterClosedBy: function (params) {
-                return ` <div class="cs-input-group mt-3">
+                return ` <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.closedBy}</div>
                 <select class="form-control  bug-filter-multi  bug-mgmt-filter-select user_filter_element_selectpicker" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
@@ -2536,7 +2536,7 @@ const taskManagement = {
             </div>`
             },
             genFilterStatus: function (params) {
-                return `<div class="cs-input-group mt-3 d-none">
+                return `<div class="cs-input-group mt-2 d-none">
                 <div class="input-group-addon">Status</div>
                 <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
@@ -2553,7 +2553,7 @@ const taskManagement = {
             </div>`
             },
             genFilterTaskType: function (params) {
-                return `<div class="cs-input-group mt-3">
+                return `<div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.taskType}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
@@ -2562,7 +2562,7 @@ const taskManagement = {
             </div>`
             },
             genFilterTaskNature: function (params) {
-                return ` <div class="cs-input-group mt-3">
+                return ` <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.taskNature}</div>
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                     multiple id='bug_filter_nature' data-type="nature" title="${lang_task.rightBar.taskNature}">
@@ -2573,7 +2573,7 @@ const taskManagement = {
             </div>`
             },
             genFilterCreatedBy: function (params) {
-                return `  <div class="cs-input-group mt-3">
+                return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.createdBy}</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
@@ -2581,7 +2581,7 @@ const taskManagement = {
             </div>`
             },
             genFilterObserverBy: function (params) {
-                return `  <div class="cs-input-group mt-3">
+                return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.observer}</div>
                 <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
@@ -2589,7 +2589,7 @@ const taskManagement = {
             </div>`
             },
             genFilterIsmeetBy: function () {
-                return `  <div class="cs-input-group mt-3">
+                return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.type}</div>
                 <select class=" form-control bug-filter  bug-mgmt-filter-select" data-actions-box="true"
                     onchange='callBugFilterMulti(this)'  data-live-search="true" id='bug_filter_is_meet'
@@ -2660,7 +2660,7 @@ const taskManagement = {
             genFilterBlock: function () {
 
                 return `<div class="bugListNavMenu bugList-elements">
-                <div class="main-sorting">
+                <div class="main-sorting pb-4" >
                      ${this.genFilterClosed()}
                      ${this.genFilterSortBy()}
                 </div>
@@ -2775,14 +2775,29 @@ const taskManagement = {
             genLabelBlock:function (param) {  
                 return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
                                         <div class="category-case-box text-left">
-                                            <span class="first-icon"><i class="cs-svg-icon label"></i></span> Cheweek <span class="last-icon">8</span>
+                                            <span class="first-icon"><i class="cs-svg-icon box"></i></span> Qutu <span class="last-icon">8</span>
                                         </div>
                                         <div class="category-item-boxes text-left">
                                             <div href="#" class="category-show-hide d-flex">
-                                                <div class="category">
-                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kategoriyalar
+                                                <div class="category">  
+                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kateqoriya
                                                 </div>
                                                 <div class="created new-label-modal" title="New Label" data-target="#insertNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>
+                                            <div class="category-create-input cs-input-group">
+                                                <div class="d-flex">
+                                                    <input type="text" class="mr-auto sw-color-main-input" />
+                                                    <span class="color-main-btn cs-svg-icon color-main"></span>
+                                                    <div class="add-cat-label"><i class="fa fa-plus"></i></div>
+                                                </div>
+                                                <ul class="color-skin-items">
+                                                    <li class="circle">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="checkbox" class="noteCheckListItem" value="0">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
                                             </div>
                                             <ul id="tasklabellist4Task" >
                     
