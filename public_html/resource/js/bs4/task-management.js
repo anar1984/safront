@@ -2782,18 +2782,60 @@ const taskManagement = {
                                                 <div class="category">  
                                                     <span class="icon"><i class="cs-svg-icon category"></i></span> Kateqoriya
                                                 </div>
-                                                <div class="created new-label-modal" title="New Label" data-target="#insertNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                                <div class="created new-label-btn" title="New Label" data-target="#openNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true" tabindex="-1"></i></div>
                                             </div>
-                                            <div class="category-create-input cs-input-group">
+                                            <div class="category-create-input cs-input-group fade" id="openNewLabel4Taskk">
                                                 <div class="d-flex">
                                                     <input type="text" class="mr-auto sw-color-main-input" />
                                                     <span class="color-main-btn cs-svg-icon color-main"></span>
                                                     <div class="add-cat-label"><i class="fa fa-plus"></i></div>
                                                 </div>
-                                                <ul class="color-skin-items">
-                                                    <li class="circle">
+                                                <ul class="color-skin-items fade" style="display:none">
+                                                    <li class="circle color_1">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="checkbox" class="noteCheckListItem" value="0">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="0">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_2">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="1">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_3">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="2">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_4">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="3">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_5">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="0">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_6">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="1">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_7">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="2">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_8">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="3">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
@@ -5443,4 +5485,12 @@ $(document).on("click", "#AcceptText", function (e) {
 $(document).on("click", "#DeleteText", function (e) {
     $(this).parent().css("display", "none");
     $(this).parent().parent().find(".card-UserStory-header-text").show();
+})
+
+$(document).on("click", ".new-label-btn", function (e) {
+    $(this).closest('.category-item-boxes').find('.category-create-input').animate({height: "toggle"}, 350).toggleClass('show');
+    $(this).find('i').toggleClass('fa-plus fa-minus');
+})
+$(document).on("click", ".color-main-btn", function (e) {
+    $(this).closest('.category-create-input').find('.color-skin-items').animate({height: "toggle"}, 350).toggleClass('show');
 })
