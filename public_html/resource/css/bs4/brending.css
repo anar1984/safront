@@ -7963,3 +7963,37 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     font-size: 16px;
     line-height: 20px;
 }
+/* checkboxes group */
+.checkbox-group.checkmarkcontainer {
+    padding: 0;
+    line-height: 1%;
+    color: #ffffff;
+    background-color: rgba(3, 57, 108, 0.5);
+    border: none;
+    border-radius: 0;
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+    padding: 0.2rem 0.75rem;
+    height: 25px;
+}
+.checkbox-group .icon {
+    margin-right: 10px;
+}
+.checkbox-group .icon .cs-svg-icon::after {
+    width: 1rem;
+    height: 1.05rem;
+}
+.checkbox-group .checkmark {
+    right: 0;
+    left: auto;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.checkbox-group .text {
+    text-align: left;
+    font-size: 13px;
+    vertical-align: middle;
+}

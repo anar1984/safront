@@ -2575,7 +2575,7 @@ const taskManagement = {
             genFilterCreatedBy: function (params) {
                 return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.createdBy}</div>
-                <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
+                <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select cs-svg-icon icra-eden" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
                     data-type="created_by" title="${lang_task.rightBar.createdBy}"></select>
             </div>`
@@ -2583,7 +2583,7 @@ const taskManagement = {
             genFilterObserverBy: function (params) {
                 return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.observer}</div>
-                <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
+                <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select cs-svg-icon nezaretci-o" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
                     data-type="observer_by" title="${lang_task.rightBar.observer}"></select>
             </div>`
@@ -2666,8 +2666,8 @@ const taskManagement = {
                 </div>
                   ${notChwk()?this.genFilterProject():""}
                   ${notChwk()?this.genFilterStoryCard():""}
-                  ${this.genFilterAssigne()}
                   ${this.genFilterIsmeetBy()}
+                  ${this.genFilterAssigne()}
                   ${notChwk()?this.genFilterClosedBy():""}               
                   ${this.genFilterStatus()}
                   ${notChwk()?this.genFilterTaskType():""}  
@@ -2724,12 +2724,6 @@ const taskManagement = {
                         </div>
 
                 </div>
-                <div class="cs-input-group input-group mt-3 col-12">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
-                    </div>
-                    <input placeholder='Bitmə tarixinə görə' autocomplete="off" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
-                 </div>
          
             </div>`
             },
@@ -2768,6 +2762,20 @@ const taskManagement = {
                             <option value='asc' >ASC</option>
                             <option value='desc' selected>Desc</option>
                         </select>
+                    </div>
+                    <div class="cs-input-group input-group mt-3 col-12">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                        </div>
+                        <input placeholder='Bitmə tarixinə görə' autocomplete="off" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
+                     </div>
+                    <div class="cs-input-group mt-3 col-12">
+                        <label class="checkmarkcontainer checkbox-group">
+                            <span class="icon"><i class="cs-svg-icon task-01"></i></span>
+                            <span class="text">Planlanmış Tapşırıqlar</span>
+                            <input type="checkbox" id="prokect-planning" value="0">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                     
                 </div>`
