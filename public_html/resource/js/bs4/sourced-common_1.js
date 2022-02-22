@@ -12493,7 +12493,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     clearAndShowAll: function () {
         this.clearAll();
-        this.load();
+       // this.load();
     },
     clearAll: function () {
         this.pureClearAll();
@@ -12528,6 +12528,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.us_filter_assignedlabel_class').prop("checked", false);
         $('.us-filter-checkbox-sprint').prop("checked", false);
         $('.us-filter-checkbox-label').prop("checked", false);
+        $('.us-filter-checkbox-label').closest('li').removeClass("rt-label-checking");
         $('.us_filter_assignee_class').prop("checked", false);
         $('#us_core_filter_fromdate').val('');
         $('#us_core_filter_todate').val('');
@@ -14268,9 +14269,136 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
 
         }
+        else if (groupBy === 'matrixView') { 
+               this.getMatrixList(div);              
+        }
+        else if (groupBy === 'staticView') {
+               this.getStatisticView(div);             
+        }
 
 
     },
+    getStatisticView: function(div){
+
+        var data  = {};
+        var that  = this
+        callApi('22021913172900532650', data, true, function (res) {   
+            res.tbl[0].r.map((o) => {
+                var nm  = o.labelName;
+               var id  = nm.replace(' ', "_");
+               if($('.card-'+id).length<1){
+                div.append(that.genStaticMatrixBlock(id,nm));  
+               }
+                $("#card-body-"+id).append(
+                    `<li class="list-group-item">${o.typeName} <span class="badge badge-info  float-right badge-pill">${o.itemCount}</span></li>`
+                )
+            })      
+              
+          })
+    },
+    genStaticMatrixBlock: function (id,nm) {
+        return  `<div class="card m-2 card-${id}" style="min-width: 18rem;">
+        <h6 class="card-header">
+         ${nm};
+        </h6>
+        <ul id='card-body-${id}' class="list-group list-group-flush">
+          
+        </ul>
+      </div>`
+    },
+    getMatrixList: function(div){
+  
+        var xtype  = 'fkAssigneeId';
+        var ytype  = 'date';
+        var table = $('<table>')
+                   .addClass('table  cst-table-hover');
+           
+        $(div).append(table);
+        this.genMarixYType(ytype);
+        this.genMarixXType(xtype);
+        _22022019434402082398.add_header(table);
+        _22022019434402082398.date_body(table);
+        this.getMarixListUsMNgm(xtype,table);
+    },
+    genMarixXType : function (xtype) {
+        var items  =  '';
+        if(xtype==='fkAssigneeId'){
+            items = $("select#story_mn_filter_assigne_id");
+        
+            var arr  = items.val();
+            if(arr.length<1){
+                arr=[];
+                var itm = items.find("option")
+                  itm.each(function (index) {
+                       if(index<3){
+                           arr.push($(this).val())
+                       }
+                    })
+            }   
+            _22022019434402082398.column_list = {}                      
+          for (let index = 0; index < arr.length; index++) {
+                const al = arr[index];
+                 var nm =items.find('[value='+al+']').text();
+                 _22022019434402082398.column_list[al] = nm;
+           }
+        }
+     },
+     genMarixYType : function (YType) {
+        try {
+            var item  =  ''
+            _22022019434402082398.row_list = [];
+            var difConv  = 1000*60*60*24;
+        if(YType === 'date'){
+           try {
+            var item  =  $("#us_management_created_date_from");
+            var val =  item.val().split('-');
+               if(val){
+                   var createdDate1 = parseDate(val[0]);
+                   var createdDate2 =  parseDate(val[1]);
+                   _22022019434402082398.row_list.push(this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1")
+                   ); 
+                 var count  =  Math.round((createdDate2-createdDate1)/difConv);
+                      for (let t = 0; t < count; t++) {
+                         var time  =  createdDate1.getTime()+((t+1)*difConv) ;
+                             time  =  new Date(time);
+                             time  = ConvertedDateToStringDate(time);
+                         _22022019434402082398.row_list.push(time);                   
+                      }
+               }
+           } catch (error) {
+            var d  = getCurrentDate();
+               _22022019434402082398.row_list.push(d);
+           }
+            
+        }      
+        } catch (error) {
+            
+        }
+             
+
+     },
+     getMarixListUsMNgm : function (type,table) {
+         var fromDt  = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
+         var toDt  = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
+        var data  = {};   
+            data.startLimit = 0;
+            data.endLimit = 400;
+            data.fromDate = fromDt?fromDt:getCurrentDate();
+            data.toDate = toDt?toDt:getCurrentDate() ;
+        
+            var theaders = Object.keys(_22022019434402082398.column_list);
+            for (var i in theaders) {
+                var id = theaders[i];
+                data[type] = id;
+             callApi('22022019331509987206', data, true, function (res) {          
+    
+                        _22022019434402082398.add_body(res, table);
+                    
+              })
+            }
+       
+
+     },
     getSprintValue: function () {
         var list  =''
         var elm  =  $('.us-filter-checkbox-sprint:checked');
@@ -14284,7 +14412,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
              
             }
         })
-        return list
+        return list;
     },
     getLabelValue: function () {
         var list  =''
@@ -14292,13 +14420,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         elm.each(function (index) {
             if ($(this).is(":checked")) {
                 if((index+1)===elm.length){
-                    list+= "'"+$(this).val()+"'";
+                    list+= $(this).val()+"|";
                   }else{
-                    list+= "'"+$(this).val()+"'"+","; 
+                    list+= $(this).val(); 
                   }
             }
         })
-        return list
+        return list;
     },
     getFktaskTypList4USMn:function (params) {
         data = {};//createTechizatTelebProducts
@@ -14318,13 +14446,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
          var list  =   localStorage.getItem('manual_list_val');
            try {
-            combo.val(list.split(','));  
+                combo.val(list.split(',')); 
            } catch (error) {
                
            } 
             combo.selectpicker('refresh');
            
-        }) 
+        });
     },
     getManualStatusList: function () {
         var items = $("select#story_mn_manual_status_id");
@@ -14342,7 +14470,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
        
       
 
-    },getValueRangePickerForUSm: function (elm,lk) {
+    }
+    ,getValueRangePickerForUSm: function (elm,lk) {
          try {
         var val  = elm.val();
         val = val.split('-')
@@ -14385,7 +14514,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data.fkSprintId = '(' + this.getSprintValue() + ')';
         }
         if (this.getLabelValue()) {
-            data.fkLabelId = '(' + this.getLabelValue() + ')';
+            data.fkLabelId =  this.getLabelValue();
         }
         if (TaskNatue) {
             data.taskNature = '(' + TaskNatue + ')';
@@ -14419,6 +14548,68 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         if (fkTaskTypeId) {
             data.fkTaskTypeId = "(" + fkTaskTypeId + ")";
+        }
+        if (search.length > 2) {
+            data.backlogName = "%%" + search + "%%";
+        }
+        return data;
+    },
+    getUsFilterValueNew: function(){
+        data = {};//createTechizatTelebProducts
+        var priD = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
+        var TaskNatue = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_nature_id"));
+        var fkAsId = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_assigne_id"));
+        var fkTaskTypeId = getProjectValueUsManageMultiByelInNew($("#story_mn_manual_status_id"));
+        var closedBy = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_closed_id"));
+        var taskStatus = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_status_id"));
+        var createdBy = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_created_id"));
+        var createdDate1 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
+        var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
+        var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"1");
+        var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"2");
+        var search = $("#search-us-managmenet").val();
+        data.fkProjectId = "(" + priD + ")";
+         if(closedBy||closedDate2||closedDate1){
+            taskStatus+=",'closed'";
+         }
+        if (this.getSprintValue()) {
+            data.fkSprintId =  this.getSprintValue() ;
+        }
+        if (this.getLabelValue()) {
+            data.fkLabelId =  this.getLabelValue();
+        }
+        if (TaskNatue) {
+            data.taskNature = TaskNatue ;
+        }
+        if (taskStatus) {
+            data.backlogStatus =  taskStatus ;       
+        }
+        if (TaskNatue) {
+            data.taskNature =  TaskNatue ;
+        }
+        if (closedBy) {
+            data.closedBy =  closedBy ;
+        }
+        if (createdDate2) {
+            data.createdDate2 =  createdDate2 ;
+        }
+        if (createdDate1) {
+            data.createdDate1 =  createdDate1 ;
+        }
+        if (closedDate1) {
+            data.closedDate1 =  closedDate1 ;
+        }
+        if (closedDate2) {
+            data.closedDate2 = closedDate2 ;
+        }
+        if (createdBy) {
+            data.createdBy =  createdBy ;
+        }
+        if (fkAsId) {
+            data.fkAssigneeId = fkAsId ;
+        }
+        if (fkTaskTypeId) {
+            data.fkTaskTypeId = fkTaskTypeId ;
         }
         if (search.length > 2) {
             data.backlogName = "%%" + search + "%%";
@@ -23184,10 +23375,10 @@ Label.prototype = {
         });
     },
     insert: function () {
-        if (!global_var.current_project_id) {
+      /*   if (!global_var.current_project_id) {
             Toaster.showError("Please choose project first!");
             return;
-        }
+        } */
         var ismenu = '0';
         var id = 'insertLabelUseAsMenu';
         var checked = $("input[id=" + id + "]:checked").length;
@@ -23339,9 +23530,9 @@ Label.prototype = {
         $('.tasklabellist').each(function () {
             $(this).html("");
         })
-        if (!global_var.current_project_id) {
+      /*   if (!global_var.current_project_id) {
             return;
-        }
+        } */
         var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
@@ -23475,23 +23666,35 @@ Label.prototype = {
                     .append(replaceTags(obj[n].name) + " (" + obj[n].backlogCount + ")")));
 
             tr.append($('<span class="cs-button-group">')
-                .append($('<span class="  last-icon story-card-label-assign prManag-task-label-assign ">')
-                    .css("padding", "0px 6px")
-                    .attr("sname", replaceTags(obj[n].name))
-                    .val(obj[n].id)
-                    .html('<i class="fa fa-star-o"></i>')
-                    .attr('id', obj[n].id))
-                .append($('<span class=" last-icon ">')
-                    .append($('<i class="cs-svg-icon edit" ></i>')
-                        .attr('id', obj[n].id)
-                        .attr('data-toggle', "modal")
-                        .attr("onclick", "new Label().select('" + obj[n].id + "')")
-                        .attr("data-target", "#updateLabel")))
-                .append($('<span class="last-icon" >')
-                    .html(`<i class='cs-svg-icon trash'>`)
-                    .attr('id', obj[n].id)
-                    .attr("onclick", "new Label().delete('" + obj[n].id + "')"))
+              
+                .append( `<div class="dropdown last-icon  " >
+                <a class=" " href="#" role="button" id='label-table' data-toggle="dropdown" aria-expanded="true">
+                      <i class="fas fa-ellipsis-h" style='color:#fff'></i>
+                </a>
+               <div class="dropdown-menu dropdown-menu-right " aria-labelledby="label-table" x-placement="bottom-end" >
+                
+                  <a class="dropdown-item" data-toggle="modal" data-target="#updateLabel" onclick="new Label().select('${obj[n].id}')" href="#">
+                     <i class="cs-svg-icon edit"></i>Edit
+                  </a>
+                  <a class="dropdown-item"  href="#">
+                     <i class="fa fa-star-o" aria-hidden="true"></i> Add Favorites
+                  </a>
+                  <a class="dropdown-item" onclick="new Label().delete('${obj[n].id}')" href="#">
+                     <i class="cs-svg-icon text-red trash"></i> Delete
+                  </a>
+                </div>
+              </div>`)
+                .append($('<span class=" last-icon story-card-label-assign prManag-task-label-assign ">')
+                         .css("padding", "0px 6px")
+                         .html('<i class="fas fa-plus"></i>')
+                         .attr('id', obj[n].id))
+                .append($('<span class=" last-icon story-card-label-unassigne prManag-task-label-assign ">')
+                         .css("padding", "0px 6px")
+                         .html('<i class="fas fa-minus"></i>')
+                         .attr('id', obj[n].id))
+                
             )
+             
 
 
 
@@ -23851,6 +24054,7 @@ Sprint.prototype = {
         this.addController4Insert();
         this.insert();
         this.load();
+        
     },
     add4Task: function () {
         this.addController4Insert4Task();

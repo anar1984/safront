@@ -15321,6 +15321,9 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
       //  $('#date_timepicker_start_end-usmn').daterangepicker({}).val('');
     });
 });
+$(document).on('click','.someyourContainer .category-item-boxes li', function (e) {
+         e.stopPropagation();
+  });
 $(document).on('click', '.loadBugChange', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
@@ -16466,7 +16469,7 @@ function getSTatsUserManagmentTableKanban(elm) {
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-canceled" pid=' + le.fkBacklogId + ' action="overall" status="canceled">canceled(' + le.statusCanceled + ')</span></td>')
                             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid=' + le.fkBacklogId + ' action="overall" status="waiting">waiting(' + le.statusWaiting + ')</span></td>')
                             .append('<td class="text-center"><span class="add-task-us-card-managmenet btn btn-sm btn-info ml-1" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
-                            .append('<td class="text-center"><span href1="#" pid=' + le.fkBacklogId + ' class="btn btn-sm btn-danger ml-1 more-table-details"  ><i class="fas fa-angle-double-right"></i></span></td>')
+                           // .append('<td class="text-center"><span href1="#" pid=' + le.fkBacklogId + ' class="btn btn-sm btn-danger ml-1 more-table-details"  ><i class="fas fa-angle-double-right"></i></span></td>')
                             .append('<td class="text-center"><span href1="#" pid=' + le.fkBacklogId + ' class=" btn btn-sm btn-success ml-1 btn-show-hide-table-row hide-all-table"  >Hide</span></td>')
                             .append('<td class="text-center multi-edit-menu d-none"><span href1="#" pid=' + le.fkBacklogId + ' class="  btn btn-sm btn-warning ml-1 " id="multi-edit-menu-btn" data-target="#multieditpopUp" data-toggle="modal" ><i class="far fa-edit"></i></span></td>')
 
@@ -16486,14 +16489,125 @@ function getSTatsUserManagmentTableKanban(elm) {
                         .append('<td class="text-center"></td>')
 
             }
-            $("#body-large-modal-in-us4backlog .more-table-details").click();
+         //   $("#body-large-modal-in-us4backlog .more-table-details").click();
+            var bgId = $(div).closest(".task-content").attr("bid");
+            var tbody = $(div).find("tbody");
+            var list = $(div).find('ul');
+            getBugList4UserStory(bgId, tbody,list);
         },
         error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
+var _22022019434402082398 = {
+    three_dot_length: 50,
+    column_list: { },
+    row_list:[],
+    add_body: (res, table) => {
+        try {
+            res.tbl[0].r.map((o) => {
+                var pid = o.insertDate + "_" + o.createdBy;
+                var olid = o.insertDate + "_" + o.createdBy + "_" + o.fkBacklogId;
+                var newtr  =`<div class="d-flex text-center">
+                <span>
+                <div class="p-1"><b>Id</b></div>
+                <div>${o.projectCode + "-" + o.orderNoSeq}</div>
+              </span>
+              <span>
+               <div class="p-1"><b>Status</b></div>
+               <span class="us-item-status-${o.taskStatus}">${o.taskStatus}</span>
+              </span>
+              <span>
+                 <div class="p-1"><b>Assigne</b></div>
+                  <img class="Assigne-card-story-select-img assigne" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-content="${o.userName}" title="" data-original-title="Assignee">
+              </span>
+             <span>
+                 <div class="p-1"><b>Created By</b></div>
+                 <img class="Assigne-card-story-select-img created" src="${fileUrl(o.createByImage)}" data-trigger="hover" data-toggle="popover" data-content="${o.createByName}" title="" data-original-title="Created By">
+              </span>
+                </div>
+                `    
+    
+                _22022019434402082398.ol_item_for_td_backlog(pid, olid, o.backlogName);
+                var task_name = o.taskName;
+                $(`#${olid}`)
+                    .append(`<li class='list-group-item' style='max-width:320px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}' title='${task_name}'>${task_name}</li>`);
+            })
+    
+            $('[data-toggle="popover"]').popover({
+                "html": true
+            }); 
+        } catch (error) {
+            
+        }
+        
 
+    },
+    ol_item_for_td_backlog: (pid, olid, backlogName) => {
+        if ($(`#${olid}`).first().attr('id')) {
+           /// console.log('bu elementden var');
+        }
+        else {
+          ///  console.log('bu elementden yoxdur dana');
+          if( $(`[pid=${pid}] ul`).length<1){
+            $(`[pid=${pid}]`).empty();
+          }
+            $(`[pid=${pid}]`)
+                .append(`
+                    <b>${backlogName}</b>
+                    <ul class="list-group" id='${olid}' title='${backlogName}'></ul>
+                    `);
+
+        }
+    },
+    three_dots: (arg) => {
+        if (arg.length > _22022019434402082398.three_dot_length) {
+            return arg.substr(0, _22022019434402082398.three_dot_length) + '...';
+        }
+    },
+    add_header: (table) => {
+        var key = Object.keys(_22022019434402082398.column_list);
+        var thead = $('<thead>');
+        var tr = $('<tr>');
+        tr.append(`<th class='text-center'><i class="cs-svg-icon calendar-01-dark"></i></th>`)
+
+        for (var i in key) {
+            var id = key[i];
+            var name = _22022019434402082398.column_list[id];
+            tr.append($('<th class="text-center">').text(name));
+        }
+        thead.append(tr);
+        table.append(thead);
+    },
+    date_body: (table) => {
+
+
+        var key = _22022019434402082398.row_list;
+        var tbody = $('<tbody>');
+
+
+        for (var i in key) {
+            var dt = key[i];
+            var tr = $('<tr>');
+            tr.append($('<td>').text(Utility.convertDate(dt.toString()) ));
+            var theaders = Object.keys(_22022019434402082398.column_list);
+            for (var i in theaders) {
+                var id = theaders[i];
+                var kvt = dt + "_" + id;
+                tr.append($(`<td class='sa-ellipsis'>`)
+                    .attr('pid', kvt)
+                    .text('------'));
+            }
+
+
+            tbody.append(tr);
+        }
+
+
+        table.append(tbody);
+    }
+}
 function getProjectValueUsManageMultiByel(el) {
     var prd = $(el).val();
     var val = ''
@@ -16510,6 +16624,7 @@ function getProjectValueUsManageMultiByel(el) {
     return val
 }
 function getProjectValueUsManageMultiByelIn(el) {
+    
     var prd = $(el).val();
     var val = ''
     for (let i = 0; i < prd.length; i++) {
@@ -16517,6 +16632,22 @@ function getProjectValueUsManageMultiByelIn(el) {
             val += "'"+prd[i] + "'"
         } else {
             val += "'"+prd[i] + "',"
+        }
+
+
+    }
+
+    return val
+}
+function getProjectValueUsManageMultiByelInNew(el) {
+    
+    var prd = $(el).val();
+    var val = ''
+    for (let i = 0; i < prd.length; i++) {
+        if (prd.length == (i + 1)) {
+            val += prd[i];
+        } else {
+            val += prd[i] + "|";
         }
 
 
@@ -19176,6 +19307,50 @@ function showToggleMain() {
     $('.main-toggle').show()
 }
 
+function lableAddUnAssigneeUSerStoryManagement(elm) {
+    var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+    var labelId = $(elm).attr("id");
+    for (var indx = 0; indx < check.length; indx++) {
+
+
+        if ($(check[indx]).prop('checked')) {
+
+            var projectId = $(check[indx]).closest('div.task-content').attr("pidd");
+            var id = $(check[indx]).attr("pid");
+            var checked = '0';
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv['fkLabelId'] = labelId;
+            json.kv['fkProjectId'] = projectId;
+            json.kv['fkBacklogId'] = id;
+            json.kv.assign = checked;
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmAssignLabel",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    new Label().load()
+                },
+                error: function () {
+                    Toaster.showError(('Something went wrong!!!'));
+                }
+            });
+        }
+
+    }
+
+
+}
 function lableAddAssignUSerStoryManagement(elm) {
     var check = $(".task-panel .task-column .assign-label-story-card-item-new");
     var labelId = $(elm).attr("id");
@@ -19184,7 +19359,7 @@ function lableAddAssignUSerStoryManagement(elm) {
 
         if ($(check[indx]).prop('checked')) {
 
-            var projectId = getProjectValueUsManageMulti();
+            var projectId = $(check[indx]).closest('div.task-content').attr("pidd");
             var id = $(check[indx]).attr("pid");
             var checked = '1';
             var json = {
@@ -19709,14 +19884,32 @@ $(document).on('click', '.story-card-label-assign', function (evt) {
     global_var.story_card_label_assign_name = $(this).attr('sname');
     global_var.story_card_label_assign_id = $(this).val();
     if (global_var.current_modal === "loadStoryCardMgmt") {
-        lableAddAssignUSerStoryManagement(this)
+        lableAddAssignUSerStoryManagement(this);
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
     } else if (global_var.current_modal === "loadProjectManagement") {
-        lableAddAssignProjectManagement(this)
+        lableAddAssignProjectManagement(this);
     } else {
         new UserStory().loadDetailesPure(SACore.toJSON());
     }
+});
+$(document).on('click', '.story-card-label-unassigne', function (evt) {
+    global_var.story_card_label_assign_checked = 1;
+    global_var.story_card_label_assign_name = $(this).attr('sname');
+    global_var.story_card_label_assign_id = $(this).val();
+    if (global_var.current_modal === "loadStoryCardMgmt") {
+        lableAddUnAssigneeUSerStoryManagement(this);
+    } else if (global_var.current_modal === "loadTaskManagement") {
+        $('.userStoryTab').click();
+    } else if (global_var.current_modal === "loadProjectManagement") {
+        lableAddAssignProjectManagement(this);
+    } else {
+        new UserStory().loadDetailesPure(SACore.toJSON());
+    }
+});
+$(document).on('click', '#label-table', function (evt) {
+           evt.stopPropagation();
+           console.log('fff');
 });
 $(document).on('click', '.assign-label-story-card-item', function (evt) {
     var id = $(this).attr("pid");

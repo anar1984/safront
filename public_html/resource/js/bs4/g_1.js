@@ -1607,7 +1607,7 @@ $(document).on('click', '.more-us-card-btn', function (event) {
 
 $(document).on('click', '.hide-more-table', function (event) {
 
-
+/* 
     var tbody = $(this).parents('.stat-table-us').find("tbody")
     tbody.empty()
 
@@ -1615,7 +1615,7 @@ $(document).on('click', '.hide-more-table', function (event) {
     $(this).html('<i class="fas fa-angle-double-right"></i>')
     $(this).addClass('more-table-details')
     $(this).removeClass('hide-more-table')
-
+ */
 
 });
 var time_in_minutes = 5;
@@ -1963,7 +1963,7 @@ $(document).on('click', '.trigger-modal-us-header .status-large-menu-total', fun
 });
 $(document).on('click', '.more-table-details', function (event) {
 
-    var bgId = $(this).attr("pid");
+   /*  var bgId = $(this).attr("pid");
     var tbody = $(this).parents('.stat-div-task-content').find("tbody")
     var list = $(this).parents('.stat-div-task-content').find("ul")
     getBugList4UserStory(bgId, tbody,list);
@@ -1971,7 +1971,7 @@ $(document).on('click', '.more-table-details', function (event) {
 
     $(this).html('<i class="fas fa-angle-double-left"></i>')
     $(this).addClass('hide-more-table')
-    $(this).removeClass('more-table-details')
+    $(this).removeClass('more-table-details') */
 
 
 });
