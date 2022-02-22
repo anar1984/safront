@@ -12534,7 +12534,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#us_core_filter_todate').val('');
         $('.nav-filter-main').attr("style", "color:white");
         $('#add-bkl-line').val('');
-        $('#general i .badge').text('');
+        $('#general  .badge').text('');
         $('#general').css('display', 'none');     //  Label bildirişi
         $('#general2').css('display', 'none');    //  Filter bildirişi
         $('#general3').css('display', 'none');     //  Sprint bildirişi- 29.07.2020 gulbahar yazdi
@@ -14238,7 +14238,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         div.empty();
         var groupBy = localStorage.getItem("usm_groupBy");
            groupBy = groupBy?groupBy:"backlogStatus";
-        var stl = ['draft', "new", "ongoing", 'closed']
+        var stl = ['draft', "new", "ongoing", 'closed'];
+        $(".matrix-view-combo-boxs").addClass("d-none");
         if (groupBy === 'backlogStatus') {
 
             for (let si = 0; si < stl.length; si++) {
@@ -14270,7 +14271,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         }
         else if (groupBy === 'matrixView') { 
-               this.getMatrixList(div);              
+               this.getMatrixList(div);       
+               $(".matrix-view-combo-boxs").removeClass("d-none");   
         }
         else if (groupBy === 'staticView') {
                this.getStatisticView(div);             
@@ -14279,9 +14281,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     getStatisticView: function(div){
-
+        var label  = this.getLabelValue()
         var data  = {};
-        var that  = this
+             if(label){
+                data.fkLabelId  = label;
+
+             }
+        var that  = this;
+
         callApi('22021913172900532650', data, true, function (res) {   
             res.tbl[0].r.map((o) => {
                 var nm  = o.labelName;
@@ -14290,7 +14297,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 div.append(that.genStaticMatrixBlock(id,nm));  
                }
                 $("#card-body-"+id).append(
-                    `<li class="list-group-item">${o.typeName} <span class="badge badge-info  float-right badge-pill">${o.itemCount}</span></li>`
+                    `<li class="list-group-item">${o.typeName}<span class="badge badge-info  float-right badge-pill">${o.itemCount}</span></li>`
                 )
             })      
               
@@ -14299,7 +14306,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     genStaticMatrixBlock: function (id,nm) {
         return  `<div class="card m-2 card-${id}" style="min-width: 18rem;">
         <h6 class="card-header">
-         ${nm};
+         ${nm}
         </h6>
         <ul id='card-body-${id}' class="list-group list-group-flush">
           
@@ -14308,10 +14315,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     getMatrixList: function(div){
   
-        var xtype  = 'fkAssigneeId';
-        var ytype  = 'date';
-        var table = $('<table>')
-                   .addClass('table  cst-table-hover');
+        var xtype  = $('#matrix-view-xtype').val();
+        var ytype  = $('#matrix-view-ytype').val();
+        var table = $('<table >')
+                   .addClass('table matrix-view-table cst-table-hover');
            
         $(div).append(table);
         this.genMarixYType(ytype);
@@ -14342,13 +14349,33 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                  _22022019434402082398.column_list[al] = nm;
            }
         }
+        if(xtype==='fkTaskTypeId'){
+            items = $("select#story_mn_manual_status_id");
+        
+            var arr  = items.val();
+            if(arr.length<1){
+                arr=[];
+                var itm = items.find("option")
+                  itm.each(function (index) {
+                       if(index<3){
+                           arr.push($(this).val())
+                       }
+                    })
+            }   
+            _22022019434402082398.column_list = {}                      
+          for (let index = 0; index < arr.length; index++) {
+                const al = arr[index];
+                 var nm =items.find('[value='+al+']').text();
+                 _22022019434402082398.column_list[al] = nm;
+           }
+        }
      },
      genMarixYType : function (YType) {
         try {
             var item  =  ''
             _22022019434402082398.row_list = [];
             var difConv  = 1000*60*60*24;
-        if(YType === 'date'){
+        if(YType === 'createdDate'){
            try {
             var item  =  $("#us_management_created_date_from");
             var val =  item.val().split('-');
@@ -14370,7 +14397,26 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                _22022019434402082398.row_list.push(d);
            }
             
-        }      
+        }  
+        else if(YType==='createdBy'){
+            items = $("select#story_mn_filter_created_id");
+        
+            var arr  = items.val();
+            if(arr.length<1){
+                arr=[];
+                var itm = items.find("option")
+                  itm.each(function (index) {
+                       if(index<3){
+                           arr.push($(this).val())
+                       }
+                    })
+            }   
+            _22022019434402082398.column_list = {}                      
+          for (let index = 0; index < arr.length; index++) {
+                const al = arr[index];
+                 _22022019434402082398.row_list.push(al);
+           }
+        }    
         } catch (error) {
             
         }
@@ -14380,7 +14426,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
      getMarixListUsMNgm : function (type,table) {
          var fromDt  = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
          var toDt  = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
-        var data  = {};   
+        var data  = this.getUsFilterValueNew();   
             data.startLimit = 0;
             data.endLimit = 400;
             data.fromDate = fromDt?fromDt:getCurrentDate();
@@ -14422,7 +14468,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 if((index+1)===elm.length){
                     list+= $(this).val()+"|";
                   }else{
-                    list+= $(this).val(); 
+                    list+= $(this).val()+"|"; 
                   }
             }
         })
@@ -14568,7 +14614,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"1");
         var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"2");
         var search = $("#search-us-managmenet").val();
-        data.fkProjectId = "(" + priD + ")";
+        if(priD){
+            data.fkProjectId =  priD ;
+        }
          if(closedBy||closedDate2||closedDate1){
             taskStatus+=",'closed'";
          }

@@ -4827,3 +4827,33 @@ td.selected{
   content: counters(section, ".") " ";
   font-weight: bold;
 }
+.matrix-view-ul {
+    padding: 0;
+    counter-reset: section;                /* Creates a new instance of the
+    section counter with each ol
+    element */
+    width: max-content;
+
+}
+.matrix-view-ul li {
+   
+    max-width: 400px;
+
+}
+.matrix-view-ul li::before{
+    counter-increment: section;          
+  content: counters(section, ".") ".";
+  font-weight: bold;
+}
+.matrix-view-table thead{
+    position: sticky;
+    top: 0px;
+    background: #f5f7f7;
+    z-index: 100;
+}
+.matrix-view-table tbody td:first-child{
+    position: sticky;
+    left: 0px;
+    background: #f5f7f7;
+    z-index: 100;
+}
