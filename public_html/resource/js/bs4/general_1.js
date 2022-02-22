@@ -289,7 +289,7 @@ function init() {
         } else {
             $('#general').css('display', 'block');
         }
-        $('#general i .badge').text(sum);
+        $('#general .badge').text(sum);
         $('.us-filter-checkbox-label').each(function (e) {
             if ($(this).is(":checked") && ($(this).val() !== 'all')) {
                 st += $(this).val() + '%IN%';

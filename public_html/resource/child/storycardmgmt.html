@@ -246,7 +246,25 @@
        
         <!--By G.R-->
         <div class="TaskPanel col-12" >
-           
+            <div class="col-12 d-none  p-0 m-0 matrix-view-combo-boxs row">
+                <div class="col-1 p-0">
+                    <select name="" onchange="filterOnChnageUSM()" class="form-control form-control-sm" id="matrix-view-xtype">
+                        <option value="fkAssigneeId">fkAssigneeId</option>                      
+                        <option value="fkTaskTypeId">Task Type</option>
+                    </select>
+                   </div>
+                   <div class="col-10 p-0">
+                    
+                   </div>
+                   <div class="col-1  p-0">
+                    <select name="" onchange="filterOnChnageUSM()" class="form-control form-control-sm" id="matrix-view-ytype">
+                        <option value="createdDate">created Date</option>
+                        <option value="createdBy">created by</option>
+                    </select>
+                   </div>
+            </div>
+             
+              
             <div class="task-panel" style="width:100%;overflow: auto;flex-wrap: nowrap;height: calc(100vh - 140px);">
                 <div class="task-column draft" status="draft">
 

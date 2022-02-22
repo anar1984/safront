@@ -16506,17 +16506,16 @@ var _22022019434402082398 = {
     row_list:[],
     add_body: (res, table) => {
         try {
+            var xtype  = $('#matrix-view-xtype').val();
+            var ytype  = $('#matrix-view-ytype').val();
             res.tbl[0].r.map((o) => {
-                var pid = o.insertDate + "_" + o.createdBy;
-                var olid = o.insertDate + "_" + o.createdBy + "_" + o.fkBacklogId;
+
+                var pid = o[ytype] + "_" + o[xtype];
+                var olid = o[ytype] + "_" + o[xtype] + "_" + o.fkBacklogId;
                 var newtr  =`<div class="d-flex text-center">
                 <span>
                 <div class="p-1"><b>Id</b></div>
                 <div>${o.projectCode + "-" + o.orderNoSeq}</div>
-              </span>
-              <span>
-               <div class="p-1"><b>Status</b></div>
-               <span class="us-item-status-${o.taskStatus}">${o.taskStatus}</span>
               </span>
               <span>
                  <div class="p-1"><b>Assigne</b></div>
@@ -16524,15 +16523,24 @@ var _22022019434402082398 = {
               </span>
              <span>
                  <div class="p-1"><b>Created By</b></div>
-                 <img class="Assigne-card-story-select-img created" src="${fileUrl(o.createByImage)}" data-trigger="hover" data-toggle="popover" data-content="${o.createByName}" title="" data-original-title="Created By">
+                 <img class="Assigne-card-story-select-img created" src="${fileUrl(o.createdByImage)}" data-trigger="hover" data-toggle="popover" data-content="${o.createByName}" title="" data-original-title="Created By">
               </span>
                 </div>
                 `    
     
-                _22022019434402082398.ol_item_for_td_backlog(pid, olid, o.backlogName);
+                _22022019434402082398.ol_item_for_td_backlog(pid, olid, o.backlogName,o.fkBacklogId);
+                var  bug  =  `<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>`
                 var task_name = o.taskName;
+                 
                 $(`#${olid}`)
-                    .append(`<li class='list-group-item' style='max-width:320px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}' title='${task_name}'>${task_name}</li>`);
+                    .append(`<li class='list-group-item p-1'  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}' title='${task_name}'>
+                               ${o.taskNature==='bug'?bug:""} <span class='d-inline-block' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${o.fkProjectId}',${o.fkTaskId})" style='max-width:260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' >${task_name}</span>
+                               <div>
+                               ${` <span   class="us-item-status-${o.taskStatus}">${o.taskStatus}</span>`}
+                               ${` <span >${Utility.convertDate(o.createdDate)}</span>`}
+                               ${` <span class='text-primary' >${o.closedDate?Utility.convertDate(o.closedDate)+"/"+Utility.convertTime(o.closedTime):""}</span>`}
+                               </div>
+                             </li>`);
             })
     
             $('[data-toggle="popover"]').popover({
@@ -16544,7 +16552,7 @@ var _22022019434402082398 = {
         
 
     },
-    ol_item_for_td_backlog: (pid, olid, backlogName) => {
+    ol_item_for_td_backlog: (pid, olid, backlogName,backlodId) => {
         if ($(`#${olid}`).first().attr('id')) {
            /// console.log('bu elementden var');
         }
@@ -16555,8 +16563,8 @@ var _22022019434402082398 = {
           }
             $(`[pid=${pid}]`)
                 .append(`
-                    <b>${backlogName}</b>
-                    <ul class="list-group" id='${olid}' title='${backlogName}'></ul>
+                    <b onclick="callStoryCard('${backlodId}');">${backlogName}</b>
+                    <ul class="list-group matrix-view-ul" id='${olid}' title='${backlogName}'></ul>
                     `);
 
         }
@@ -16582,15 +16590,22 @@ var _22022019434402082398 = {
     },
     date_body: (table) => {
 
-
         var key = _22022019434402082398.row_list;
         var tbody = $('<tbody>');
-
-
+           
         for (var i in key) {
             var dt = key[i];
             var tr = $('<tr>');
-            tr.append($('<td>').text(Utility.convertDate(dt.toString()) ));
+            var  ytype = $("#matrix-view-ytype").val();
+            var  txt  = '';
+            if(ytype ===  'createdDate'){
+                 txt  = Utility.convertDate(dt.toString());
+            }
+             else if (ytype ==='createdBy'){
+            
+               txt  =  getUserPopOverById(dt,"Created by")+SAProjectUser.Users[dt].userPersonName
+            }
+            tr.append($('<td>').append(txt));
             var theaders = Object.keys(_22022019434402082398.column_list);
             for (var i in theaders) {
                 var id = theaders[i];
@@ -16654,6 +16669,10 @@ function getProjectValueUsManageMultiByelInNew(el) {
     }
 
     return val
+}
+function getUserPopOverById(id,type) {
+    var user  =  SAProjectUser.Users[id];
+    return  genUserTrblock(user.userPersonName, fileUrl(user.userImage) ,type,id);
 }
 
 function getProjectValueUsManageMulti() {
