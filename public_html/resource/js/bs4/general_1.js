@@ -768,12 +768,16 @@ function genFileBlockMulti4Table(names, cell) {
         
     }
     var list  = ''
-   for (let i = 0; i < names.length; i++) {
-       const o = names[i];
-       if(o.length > 0){
-        list+= generateFileLine4Table(o, cell);
-       }
-   }
+ /*   for (let i = 0; i < names.length; i++) {
+       const o = names[i]; */
+       /* if(o.length > 0){ */
+        list+= generateFileLine4Table(names[0], cell);
+     /*   } */
+  /*  } */
+        if(names.length>1){
+            list +=  "<span class='badge badge-info ml-1' >+" + (names.length - 1)+"</span>";
+        }
+     
    return list
 }
  function setFilePickerValue(element,value,empty){
