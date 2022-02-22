@@ -2575,7 +2575,7 @@ const taskManagement = {
             genFilterCreatedBy: function (params) {
                 return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.createdBy}</div>
-                <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select" data-actions-box="true"
+                <select class=" form-control bug-filter-multi user_filter_element_selectpicker  bug-mgmt-filter-select cs-svg-icon icra-eden" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
                     data-type="created_by" title="${lang_task.rightBar.createdBy}"></select>
             </div>`
@@ -2583,7 +2583,7 @@ const taskManagement = {
             genFilterObserverBy: function (params) {
                 return `  <div class="cs-input-group mt-2">
                 <div class="input-group-addon">${lang_task.rightBar.observer}</div>
-                <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select" data-actions-box="true"
+                <select class=" form-control bug-filter-multi user_filter_element_selectpicker bug-mgmt-filter-select cs-svg-icon nezaretci-o" data-actions-box="true"
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_observer_by'
                     data-type="observer_by" title="${lang_task.rightBar.observer}"></select>
             </div>`
@@ -2666,8 +2666,8 @@ const taskManagement = {
                 </div>
                   ${notChwk()?this.genFilterProject():""}
                   ${notChwk()?this.genFilterStoryCard():""}
-                  ${this.genFilterAssigne()}
                   ${this.genFilterIsmeetBy()}
+                  ${this.genFilterAssigne()}
                   ${notChwk()?this.genFilterClosedBy():""}               
                   ${this.genFilterStatus()}
                   ${notChwk()?this.genFilterTaskType():""}  
@@ -2724,12 +2724,6 @@ const taskManagement = {
                         </div>
 
                 </div>
-                <div class="cs-input-group input-group mt-3 col-12">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
-                    </div>
-                    <input placeholder='Bitmə tarixinə görə' autocomplete="off" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
-                 </div>
          
             </div>`
             },
@@ -2769,6 +2763,20 @@ const taskManagement = {
                             <option value='desc' selected>Desc</option>
                         </select>
                     </div>
+                    <div class="cs-input-group input-group mt-3 col-12">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
+                        </div>
+                        <input placeholder='Bitmə tarixinə görə' autocomplete="off" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id="issue_management_closed_date_from" type="text">
+                     </div>
+                    <div class="cs-input-group mt-3 col-12">
+                        <label class="checkmarkcontainer checkbox-group">
+                            <span class="icon"><i class="cs-svg-icon task-01"></i></span>
+                            <span class="text">Planlanmış Tapşırıqlar</span>
+                            <input type="checkbox" id="prokect-planning" value="0">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
                     
                 </div>`
             },
@@ -2793,49 +2801,97 @@ const taskManagement = {
                                                 <ul class="color-skin-items fade" style="display:none">
                                                     <li class="circle color_1">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="0">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="E51C23">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_2">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="1">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="0E3494">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_3">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="2">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="18AF30">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_4">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="3">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="FFC107">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_5">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="0">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="9C27B0">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_6">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="1">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="3E55D8">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_7">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="2">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="009688">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
                                                     <li class="circle color_8">
                                                         <label class="checkmarkcontainer">
-                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="3">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="FF6F07">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_9">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="E91E63">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_10">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="04CEE8">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_11">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="5ADB8E">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_12">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="FF7E55">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_13">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="795548">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_14">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="9CBECE">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_15">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="8C9787">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </li>
+                                                    <li class="circle color_16">
+                                                        <label class="checkmarkcontainer">
+                                                            <input type="radio" name="color_main" class="noteCheckListItem" value="FFFFFF">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </li>
@@ -3168,7 +3224,7 @@ const taskManagement = {
                 },
                 genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
-                    <div class="cs-cart-head-title p-2" style="padding-bottom:5px;">
+                    <div class="cs-cart-head-title p-2" style="padding-bottom:5px;"> <i class="cs-svg-icon tapshiriq-dark"></i>
                     ${notChwk()?"":`<span href="#" class="operation " >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
                     <div class="d-flex pl-0 pr-0 pb-0 pt-0 mb-0 notify-title-box">
                     <div class="mr-auto ncs-ellipsis"><span class="id">${taskid}</span>
@@ -3179,7 +3235,9 @@ const taskManagement = {
                         </div>
                     </div>
                 </div>
-                    <span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span></div><div class="cs-task-card-body pl-2 pr-2" "="">
+                    <span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span>
+            </div>
+                    <div class="cs-task-card-body pl-2 pr-2" "="">
                                   
                            <div class="cs-task-card-desc">
                            <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
@@ -3191,14 +3249,22 @@ const taskManagement = {
                            <ul class='d-flex'>
                             <li><img class="Assigne-card-story-select-img ${stats}" src="${createdImg}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${createdName}" title="" data-original-title="Daxil Edən"></li>
                             <li><img class="Assigne-card-story-select-img ${stats}" src="${assigneImage}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${assignName}" title="" data-original-title="İcra Edən"></li>
-                                 </ul>
-                                 </div>
-                                 </div>
-                                 <div class="flex-fill text-right"><div class="cs-task-card-datatime d-block text-right">
-                                    <span>${ceratedDate} </span>
-                                </div><div class="bg-status-${stats}" style="height: 2px; margin: 10px 0px 0px 7px;"></div>
+                            </ul>
+                            </div>
+                            </div>
+                                 <div class="flex-fill text-right">
+                                    <div class="cs-task-card-datatime d-flex text-left ml-2">
+                                        <span>${ceratedDate} </span>
+                                        <div class="assignee-created-avatar ml-auto">
+                                            <ul>
+                                                <li><img src="https://test.sourcedagile.com/api/get/files/th-img_77E37A82556AC.png" /></li>
+                                                <li><img src="https://test.sourcedagile.com/api/get/files/shekil1_77A7F3AC232D5.png" /></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                <div class="bg-status-${stats}" style="height: 2px; margin: 0px 0px 0px 7px;"></div>
                                 <div class="cs-staturs-circle-note1 ml-2 d-inline-block float-left">
-                                <span>${stats}</span></div><div class="canban-item-btns d-flex float-right">
+                                <span>${getStatusName(stats)}</span></div><div class="canban-item-btns d-flex float-right">
                                             <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
                                                 <i class="cs-svg-icon c-icon-1"></i>
                                             </div>
@@ -3272,7 +3338,7 @@ const taskManagement = {
                                     o.isMeet,
                                     getTimeDifference(endTime, startTime),
                                      taskName, 
-                                     getStatusName(o.taskStatus), 
+                                     o.taskStatus, 
                                      Utility.convertDate(o.createdDate),
                                      createdByImg,
                                      o.createByName,

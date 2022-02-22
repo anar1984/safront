@@ -7159,7 +7159,8 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 }
 /* category section */
 .category-show-hide {
-    margin-left: 10px;
+    justify-content: space-between;
+    padding-left: 10px;
 }
 .category-show-hide .category {
     font-weight: 500;
@@ -7179,8 +7180,9 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 }  
 .category-show-hide .created {
     margin-left: 10px;
-    vertical-align: middle;
-    display: table;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .category-show-hide .created i {
     vertical-align: middle;
@@ -7963,3 +7965,313 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     font-size: 16px;
     line-height: 20px;
 }
+/* checkboxes group */
+.checkbox-group.checkmarkcontainer {
+    padding: 0;
+    line-height: 1%;
+    color: #ffffff;
+    background-color: rgba(3, 57, 108, 0.5);
+    border: none;
+    border-radius: 0;
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+    padding: 0.2rem 0.75rem;
+    height: 25px;
+}
+.checkbox-group .icon {
+    margin-right: 10px;
+}
+.checkbox-group .icon .cs-svg-icon::after {
+    width: 1rem;
+    height: 1.05rem;
+}
+.checkbox-group .checkmark {
+    right: 0;
+    left: auto;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.checkbox-group .text {
+    text-align: left;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* table-filter-group-elements on */
+.cst-table-hover tbody tr.groupTrElement {
+    width: 100%;
+}
+.cst-table-hover tbody tr.groupTrElement td.groupTdElement {
+    text-align: left;
+    padding: 0;
+}
+.cst-table-hover tbody td .groupTableDivInside {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+}
+.cst-table-hover tbody td .groupTableDivInside >div {
+    display: table;
+    height: 100%;
+    padding: 4px 0;
+    margin-left: 10px;
+}
+.cst-table-hover tbody td .groupTableDivInside >div>div {
+    display: table-cell;
+    vertical-align: middle;
+}
+.cst-table-hover tbody td .groupTableDivInside >div>div span{
+    height: 19px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+}
+.cst-table-hover tbody td .bugChangegroupArrow {
+    background: #ACCDDE;
+    font-size: 10px;
+    width: 16px;
+    color: #ffffff;
+    padding: 0px 2px;
+    background-position: center;
+    display: table;
+    height: 100%;
+    border-left: solid 1px rgba(0, 0, 0, 0.5);
+    border-right: solid 1px rgba(0, 0, 0, 0.5);
+}
+.cst-table-hover tbody td .bugChangegroupArrow i {
+    display: table-cell;
+    vertical-align: middle;
+}
+.cst-table-hover tbody td .groupTableDivInside img, .cst-table-hover tbody td .groupTableDivInside .personal-btn-img {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.cst-table-hover tbody td.groupTdElement .group-count-box {
+    padding: 4px 0;
+    margin-left: 10px;
+    position: relative;
+    display: inline-block;
+}
+.cst-table-hover tbody td.groupTdElement .group-count-box span {
+    vertical-align: middle;
+    background: #03396C;
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 50px;
+}
+.category-create-input {
+    margin-top: 10px;
+    position: relative;
+}
+.category-create-input {
+    display:none;
+}
+.category-create-input.show {
+    display:block;
+}
+.category-create-input>div {
+    background-color: #DFEEF7;
+    padding: 5px 5px;
+    border-radius: 50px;
+}
+.category-create-input input.sw-color-main-input {
+    width: 100%;
+    border-radius: 50px;
+}
+.category-create-input .color-main-btn {
+    vertical-align: middle;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.category-create-input .color-main-btn:after{
+    height: 25px;
+    width: 25px;
+    margin-top: -1px;
+}
+.category-create-input .add-cat-label {
+
+}
+.category-create-input .add-cat-label i {
+    font-size: 13px;
+    line-height: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    color: #fff;
+    padding: 3px 7px;
+}
+.category-create-input .color-skin-items {
+    width: 110px;
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    margin-top: 5px;
+    background-color: #DFEEF7;
+    border-radius: 7px;
+    padding: 5px;
+}
+.category-create-input .color-skin-items.show {
+    display: block;
+}
+.category-create-input ul.color-skin-items li{
+    display: inline-block;
+    background: transparent;
+    padding: 0;
+    height: 17px;
+    width: 17px;
+    margin: 2px;
+}
+.color-skin-items .checkmarkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 0;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.color-skin-items .checkmarkcontainer {
+    display: initial;
+}
+.color-skin-items .circle .checkmark {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    height: 17px;
+    width: 17px;
+    background-color: #78A812;
+    border-color: #fff;
+    border-radius: 50px;
+}
+.color-skin-itemsr input:checked ~ .checkmark:after {
+    display: none;
+}
+.color-skin-items .checkmarkcontainer .checkmark:after {
+    left: 4px;
+    top: 2px;
+    width: 5px;
+    height: 7px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.color-skin-items .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #78A812;
+}
+.color-skin-items .checkmarkcontainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.color-skin-items .color_1 .checkmark {
+    background-color: #E51C23;
+}
+.color-skin-items .color_1 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #E51C23;
+}
+.color-skin-items .color_2 .checkmark {
+    background-color: #0E3494;
+}
+.color-skin-items .color_2 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #0E3494;
+}
+.color-skin-items .color_3 .checkmark {
+    background-color: #18AF30;
+}
+.color-skin-items .color_3 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #18AF30;
+}
+.color-skin-items .color_4 .checkmark {
+    background-color: #FFC107;
+}
+.color-skin-items .color_4 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #FFC107;
+}
+.color-skin-items .color_5 .checkmark {
+    background-color: #9C27B0;
+}
+.color-skin-items .color_5 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #9C27B0;
+}
+.color-skin-items .color_6 .checkmark {
+    background-color: #3E55D8;
+}
+.color-skin-items .color_6 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #3E55D8;
+}
+.color-skin-items .color_7 .checkmark {
+    background-color: #009688;
+}
+.color-skin-items .color_7 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #009688;
+}
+.color-skin-items .color_8 .checkmark {
+    background-color: #FF6F07;
+}
+.color-skin-items .color_8 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #FF6F07;
+}
+.color-skin-items .color_9 .checkmark {
+    background-color: #E91E63;
+}
+.color-skin-items .color_9 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#E91E63;
+}
+.color-skin-items .color_10 .checkmark {
+    background-color: #04CEE8;
+}
+.color-skin-items .color_10 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#04CEE8;
+}
+.color-skin-items .color_11 .checkmark {
+    background-color: #5ADB8E;
+}
+.color-skin-items .color_11 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#5ADB8E;
+}
+.color-skin-items .color_12 .checkmark {
+    background-color: #FF7E55;
+}
+.color-skin-items .color_12 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#FF7E55;
+}
+.color-skin-items .color_13 .checkmark {
+    background-color: #795548;
+}
+.color-skin-items .color_13 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#795548;
+}
+.color-skin-items .color_14 .checkmark {
+    background-color:#9CBECE;
+}
+.color-skin-items .color_14 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#9CBECE;
+}
+.color-skin-items .color_15 .checkmark {
+    background-color:#8C9787;
+}
+.color-skin-items .color_15 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#8C9787;
+}
+.color-skin-items .color_16 .checkmark {
+    background-color:#ffffff;
+}
+.color-skin-items .color_16 .checkmarkcontainer input:checked ~ .checkmark {
+    background-color:#ffffff;
+}
+/* table-filter-group-elements off*/
