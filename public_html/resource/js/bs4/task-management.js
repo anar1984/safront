@@ -794,14 +794,14 @@ const taskManagement = {
                     json.kv.repeatInterval = $("#run_task_repeat_select").val();
                     json.kv.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
                  
-                    json.kv.weekdays = getValueScheduleWeekDay('run_task_weekday_yearly_select');
+                    json.kv.weekdays = getValueScheduleWeekDay('run_task_weekday_select');
                     json.kv.remindMeParam = $("#run_task_reminder_select").val();
                     json.kv.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
                     json.kv.monthlyAction = getValueScheduleWeekAction('run_task_day_yearly_select');
                     json.kv.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
                     json.kv.startDate = toDate("taskDeadlineStartDade");
                     json.kv.endDate = toDate("taskDeadlineEndDade");
-                    json.kv.runTime = GetConvertedTime("taskDeadlineStartTime");
+                    json.kv.runTime = toTime("taskDeadlineStartTime");
                     
                  }
                     var that = this;
@@ -3372,7 +3372,7 @@ const taskManagement = {
                                    if(index<3){
                                        arr.push($(this).val())
                                    }
-                                  })
+                                })
                         }                         
                       for (let index = 0; index < arr.length; index++) {
                           const al = arr[index];
@@ -5485,8 +5485,8 @@ $(document).on("click", "#AcceptText", function (e) {
     if (InputText.trim().length > 0) {
         $(this).parent().parent().find(".card-UserStory-header-text").text(InputText)
         $(this).parent().parent().find(".card-UserStory-header-text").show();
-        $(this).parent().find(".card-UserStory-header-input").val("")
-        $(this).parent().css("display", "none")
+        $(this).parent().find(".card-UserStory-header-input").val("");
+        $(this).parent().css("display", "none");
     }
 })
 

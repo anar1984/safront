@@ -121,6 +121,9 @@ select span img{
 
 #general{
     display: none;
+    position: absolute;
+    color: red;
+    top: -10px;
 }
 #general2{
     display: none;
@@ -929,7 +932,7 @@ button.dropdown-item:hover{
     display: inline-block;
     margin-bottom: 23px;
 }
-.badge{
+/* .badge{
     background-color: rgb(0, 82, 204);
     color: rgb(255, 255, 255);
     display: inline-block;
@@ -945,7 +948,7 @@ button.dropdown-item:hover{
     top: 5px;
     font-style: initial;
 
-}
+} */
 
 .bug-filter-badge-label{
     background-color: rgb(0, 82, 204);
@@ -1084,13 +1087,14 @@ table.lbl-list-table tr td {
     font-size: 14px;
 }
 .newlabelspan{
+
+    margin-top: -2px;
     font-weight: 600 !important;
     color: #727D91;
     vertical-align: -webkit-baseline-middle;
     font-size: 12px !important;
-    margin-top: -11px;
     float: right;
-    margin-left: 3px;
+
 }
 
 .label-show{

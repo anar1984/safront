@@ -1085,7 +1085,7 @@ a.dropdown-menu-header {
    Badge
 ----------------------------------------- */
 
-.badge{
+/* .badge{
     padding: 3px 5px 2px;
     position: absolute;
     top: 8px;
@@ -1103,7 +1103,7 @@ a.dropdown-menu-header {
 }
 .badge-danger {
     background-color: #db5565;
-}
+} */
 
 .activity-diagram-border, .activity-diagram-border-link {
 

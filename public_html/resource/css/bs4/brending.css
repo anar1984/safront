@@ -7212,7 +7212,7 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     cursor: pointer;
     margin-bottom: 10px;
     position: relative;
-    overflow: hidden;
+   /*  overflow: hidden; */
 }
 .category-item-boxes ul li label {
     cursor: pointer;

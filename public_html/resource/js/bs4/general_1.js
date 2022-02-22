@@ -568,6 +568,10 @@ function toTime(id) {
     }
     return st;
 }
+function parseDate(str) {
+    var mdy = str.split('/');
+    return new Date(mdy[2], mdy[0]-1, mdy[1]);
+}
 
 
 
@@ -1578,6 +1582,17 @@ function GetReConvertedDT(componentId,time,date) {
 }
 
 function ConvertedDateToStringDate(date) {
+    var day = date.getDate();
+    day = day.toString(10).length === 1 ? '0' + day : day;
+    var month = date.getMonth() + 1;
+    month = month.toString(10).length === 1 ? '0' + month : month;
+    var year = date.getFullYear();
+    var d = year + "" + month + '' + day;
+    return d;
+}
+
+function getCurrentDate(date) {
+    var date  =  new Date()
     var day = date.getDate();
     day = day.toString(10).length === 1 ? '0' + day : day;
     var month = date.getMonth() + 1;

@@ -28,6 +28,8 @@
                     <option value="assigne">Assigne</option>
                     <option value="backlogStatus">Status</option>
                     <option value="manualStatus">TaskType</option>
+                    <option value="matrixView">Matrix View</option>
+                    <option value="staticView">Statistic View</option>
                 </select>
             </div>
         </div>
@@ -35,23 +37,26 @@
         <div class="col-border"></div> -->
        
         <div class="mt-4">
-            <div class="cs-input-group">
+            <div class="cs-input-group someyourContainer position-relative">
                     <div class="dropdown-toggle1 "  data-toggle="dropdown">
-                        <div class="popover-badges" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Label">
+                        <div class="popover-badges" data-placement="bottom" data-bs-auto-close="false" data-toggle="popover" data-trigger="hover" data-content="Label">
                             <i class="fas fa-tag" aria-hidden="true"></i>
                         </div>
                     </div> 
                     <div id="general" class="">
-                        <i>
-                            <span class="badge">0</span>
-                        </i>
+                        
+                            <span class="badge badge-pill badge-warning">0</span>
+                        
                     </div>
-                    <div class="dropdown-menu drop-label-menu " style="width: 360px;">
-                        <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"
-                               data-target="#insertNewLabel" >Add Label</a></span>
-                        <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                    <div class="dropdown-menu  drop-label-menu category-item-boxes " style="width: 360px;background: #525596;">
+                        <span>
+                            <button class="new-label-modal btn" title="New Label" data-toggle="modal" href="#" data-target="#insertNewLabel" >
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                        <button class="newlabelspan btn" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)"><i class="fas fa-broom"></i></button>
                         <div class="dropdown-divider" style="padding:0px;"></div>
-                        <div id="tasklabellist" class="tasklabellist" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+                        <ul id="tasklabellist" class="tasklabellist" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></ul>
                     </div>
             
             </div>
@@ -64,9 +69,9 @@
                         </div>
                     </div> 
                     <div id="general3" class="">
-                        <i>
-                            <span class="badge">0</span>
-                        </i>
+                
+                            <span class="badge badge-pill badge-warning">0</span>
+                        
                     </div>
                     <div class="dropdown-menu drop-label-menu " style="width: 360px;">
                         <span>
@@ -242,7 +247,7 @@
         <!--By G.R-->
         <div class="TaskPanel col-12" >
            
-            <div class="task-panel" style="width:100%;overflow: scroll;flex-wrap: nowrap;">
+            <div class="task-panel" style="width:100%;overflow: auto;flex-wrap: nowrap;height: calc(100vh - 140px);">
                 <div class="task-column draft" status="draft">
 
                     <div draggable="true" class="task-column-header" >
