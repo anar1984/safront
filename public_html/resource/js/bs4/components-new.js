@@ -522,7 +522,7 @@ var cmpList = {
                     var ul  = $("[table-id='"+tableId+"'] ul");
                     var inpt  = ul.find('li input.show-hide-btn-4-global');
                     inpt.prop("checked",false);
-             
+                     list  =  list.split(',');
                  for (let i = 0; i < list.length; i++) {
                      const o = list[i];
                      ul.find("li[orderno='"+o+"'] input").prop("checked",true);

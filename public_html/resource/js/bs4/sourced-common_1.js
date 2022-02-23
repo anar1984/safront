@@ -14282,11 +14282,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     getStatisticView: function(div){
         var label  = this.getLabelValue()
+       var prid =  getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
         var data  = {};
-             if(label){
-                data.fkLabelId  = label;
-
-             }
+        if(label){
+            data.fkLabelId  = label;
+         }
+            data.fkProjectId = prid;
         var that  = this;
 
         callApi('22021913172900532650', data, true, function (res) {   
