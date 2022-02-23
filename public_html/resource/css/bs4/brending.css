@@ -6686,7 +6686,7 @@ div.cs-task-item-in-box {
     mix-blend-mode: normal;
     box-shadow: 0px 0px 8px rgb(0 0 0 / 50%);
     border-radius: 10px;
-    padding-bottom: 4px;
+    padding: 0;
 }
 .large-modal-expand div.cs-task-item-in-box {
     width: 24%;
@@ -6695,6 +6695,20 @@ div.cs-task-item-in-box {
     margin: 5px;
     height: fit-content;
     float: left;
+}
+.cs-task-item-in-box .notify-title-box [class*="us-item-status-"] {
+    vertical-align: middle;
+    display: inline-block;
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: auto;
+    height: 19px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
 }
 .cs-task-card-body {
     /* padding-bottom: 20px; */
@@ -6808,12 +6822,14 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     display: inline-block;
 }
 .cs-task-card-avatar-boxes .Assigne-card-story-select-img {
-    width: 36px;
-    height: 36px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    padding: 1px;
+    padding: 0;
     object-fit: cover;
     object-position: center center;
+    margin: 0;
+    border: none;
 }
 .cs-task-card-avatar-boxes .Assigne-card-story-select-img.updated {
     border: 2px #da3838 solid;
@@ -8098,7 +8114,8 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     margin-top: -1px;
 }
 .category-create-input .add-cat-label {
-
+    vertical-align: middle;
+    margin: 0 5px;
 }
 .category-create-input .add-cat-label i {
     font-size: 13px;
