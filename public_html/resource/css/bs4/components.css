@@ -1,0 +1,136 @@
+/* width */
+.RS-dots::-webkit-scrollbar {
+    height: 5px;
+    border-radius: 5px;
+  }
+  
+  /* Track */
+  .RS-dots::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
+  
+  /* Handle */
+  .RS-dots::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  .RS-dots::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  #RS-slider-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .RS-background-blur {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(1rem);
+    overflow: hidden;
+  }
+  .RS-hidden-slider {
+    display: none;
+  }
+  
+  .RS-close-full-slider {
+    color: #fff;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+  }
+  .RS-full-screen-slider {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .RS-slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .RS-slide {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.85s;
+  }
+  
+  .RS-slide > img {
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    max-width: 90%;
+    max-height: 90%;
+  }
+  
+  .RS-slider__btn {
+    position: absolute;
+    bottom: 50%;
+    z-index: 10;
+    border: none;
+    font-family: inherit;
+    color: #fff;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    font-size: 3.25rem;
+    cursor: pointer;
+  }
+  
+  .RS-slider__btn--left {
+    left: 2%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .RS-slider__btn--right {
+    right: 2%;
+    transform: translate(50%, -50%);
+  }
+  
+  .RS-dots {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 5px;
+  }
+  .RS-dots__dot {
+    border: none;
+    background-color: #b9b9b9;
+    opacity: 0.5;
+    height: 45px;
+    width: 45px;
+    border-radius: 5px;
+    margin-right: 1.75rem;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+  
+  .RS-dots__dot:last-child {
+    margin: 0;
+  }
+  
+  .RS-dots__dot--active {
+    background-color: #888;
+    opacity: 1;
+  }
+  

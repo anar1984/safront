@@ -14127,108 +14127,58 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var groupBy = localStorage.getItem('usm_groupBy') ? localStorage.getItem('usm_groupBy') : "backlogStatus";
         $('#kanban_view_' + stLm + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stLm).html('');
-        var priD = getProjectValueUsManageMulti();
-        var fkAsId = ""/* getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id")) */;
-        var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
-
-        var priorty = $("#priority-change-story-card-filter").val();
-        var search = $("#search-us-managmenet").val();
         var startLimit = stLm;
         var endLimit = endLm;
-        if (priD === '') {
-            return
-        }
-        var json = {
-            kv: {}
-        };
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        if (groupBy !== 'fkProjectId') {
-            json.kv.fkProjectId = priD;
-        }
-        if (UsSprint) {
-            json.kv.id = UsSprint + backLogIdListForSearch;
-
-        } else if (UsLabel) {
-            json.kv.id = UsLabel + backLogIdListForSearch;
-        } else {
-            json.kv.id = backLogIdListForSearch;
-        }
-        if (fkAsId) {
-            json.kv.updatedBy = fkAsId;
-        }
-        if (timeM) {
-            json.kv.updatedDate = timeM;
-        }
-        if (priorty) {
-            json.kv.priority = priorty;
-        }
-        if (search.length > 2) {
-            json.kv.backlogName = "%%" + search + "%%";
-        }
-        if (bsTat) {
-            json.kv[groupBy] = bsTat;
-        }
-        if ($(".us-mngm-is-api").prop("checked")) {
-            json.kv.isApi = 1;
-
-        } else {
-            json.kv.isApi = 'NE%1';
-        }
-        json.kv.startLimit = startLimit;
-
-        json.kv.endLimit = endLimit;
+   
+        if(groupBy ==='backlogStatus'){
+            groupBy ='coreBacklogStatus';
+         }else{
+            bsTat = "("+bsTat+")";
+         }
+    
+       // data.backlogStatus = '(' + statusList + ')';
+        var data  = this.getUsFilterValue();
+        data[groupBy] =bsTat;
+        data.startLimit = startLimit;
+        data.endLimit = endLimit;
+        data.joinType = "left";
         var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
+        callApi('21122313051700845260', data, true, function (res) {
+           
+            try {
+                //                     
+                var usIdList = res.tbl[0].r;
 
-                try {
-                    //                     
-                    var usIdList = res.tbl[0].r;
-
-                    for (var k = 0; k < usIdList.length; k++) {
+                for (var k = 0; k < usIdList.length; k++) {
 
 
 
-                        var obj = usIdList[k];
+                    var obj = usIdList[k];
 
 
-                        var html = new UserStory().genUSLine4KanbanView(obj);
-                        $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append(html);
-
-                    }
-
-                    $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).find('.more-us-card-btn').remove();
-                    if (res.kv.rowCount > endLm) {
-                        $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append('<a href="#" data-ople="' + bsTat + '" startLimit="' + (parseFloat(startLimit) + 20) + '" endLimit="' + (parseFloat(endLimit) + 20) + '" role="button" class="more-us-card-btn col-12">More</a>');
-
-                    }
-
-
-
-                } catch (e) {
+                    var html = new UserStory().genUSLine4KanbanView(obj);
+                    $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append(html);
 
                 }
-                global_var.story_card_sprint_assign_checked = 0;
-                global_var.story_card_label_assign_checked = 0;
-                contentArrangableUI();
-                $('[data-toggle="popover"]').popover(
-                    { html: true }
-                )
-            },
-            error: function () {
-                Toaster.showError(('somethingww'));
+
+                $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).find('.more-us-card-btn').remove();
+                if (res.kv.rowCount > endLm) {
+                    $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append('<a href="#" data-ople="' + bsTat + '" startLimit="' + (parseFloat(startLimit) + 20) + '" endLimit="' + (parseFloat(endLimit) + 20) + '" role="button" class="more-us-card-btn col-12">More</a>');
+
+                }
+
+
+
+            } catch (e) {
+
             }
-        });
+            global_var.story_card_sprint_assign_checked = 0;
+            global_var.story_card_label_assign_checked = 0;
+            contentArrangableUI();
+            $('[data-toggle="popover"]').popover(
+                { html: true }
+            )
+        })
 
 
     },
@@ -14293,7 +14243,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         callApi('22021913172900532650', data, true, function (res) {   
             res.tbl[0].r.map((o) => {
                 var nm  = o.labelName;
-               var id  = nm.replace(' ', "_");
+               var id  = o.id;
                if($('.card-'+id).length<1){
                 div.append(that.genStaticMatrixBlock(id,nm));  
                }
@@ -14599,6 +14549,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (search.length > 2) {
             data.backlogName = "%%" + search + "%%";
         }
+        if ($('.us-mngm-is-label').prop('checked')) {
+            data.notHaveLabel = "1";
+        }
+        data.joinType = "inner";
         return data;
     },
     getUsFilterValueNew: function(){
@@ -14619,7 +14573,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data.fkProjectId =  priD ;
         }
          if(closedBy||closedDate2||closedDate1){
-            taskStatus+=",'closed'";
+            taskStatus+="|'closed'";
          }
         if (this.getSprintValue()) {
             data.fkSprintId =  this.getSprintValue() ;
@@ -15006,113 +14960,57 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     </div>`
     },
     setUSLists4KanbanViewCore: function (stl, apiFiled) {
-
+         if(apiFiled ==='backlogStatus'){
+            apiFiled ='coreBacklogStatus';
+         }else{
+            apiFiled = "("+apiFiled+")";
+         }
         $('#kanban_view_' + stl + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
+        var data  = this.getUsFilterValue();
+            
+       // data.backlogStatus = '(' + statusList + ')';
+        data[apiFiled] =stl;
+        data.startLimit = 0;
+        data.endLimit = 20;
+        data.joinType = "left";
+        callApi('21122313051700845260', data, true, function (res) {
+            var c4new = 0
+            $('#kanban_view_' + stl + '_count').html(0);
+            $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
+            $('#kanban_view_' + stl + '_count').text(res.kv.rowCount)
+            try {
+                var usIdList = res.tbl[0].r;
+                for (var k = 0; k < usIdList.length; k++) {
+                    var obj = usIdList[k];
+                    var html = new UserStory().genUSLine4KanbanView(obj);
+                    $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
 
-        var priD = getProjectValueUsManageMulti();
-        var fkAsId ="" //getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
-        var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
+                    c4new++
+                }
+                if (c4new > 19) {
+                    $('.main_div_of_backlog_info_kanban_view_table_' + stl).find('.more-us-card-btn').remove();
+                    $('.main_div_of_backlog_info_kanban_view_table_' + stl).append('<a href="#" data-ople="' + stl + '" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
 
-        var priorty = $("#priority-change-story-card-filter").val();
-        var search = $("#search-us-managmenet").val();
-        if (priD === '') {
-            return
-        }
-        var json = {
-            kv: {}
-        };
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        if (apiFiled !== 'fkProjectId') {
-            json.kv.fkProjectId = priD;
-        }
-
-        if (UsSprint) {
-            json.kv.id = UsSprint + backLogIdListForSearch;
-
-        } else if (UsLabel) {
-            json.kv.id = UsLabel + backLogIdListForSearch;
-        } else {
-            json.kv.id = backLogIdListForSearch;
-        }
-        if (priorty) {
-            json.kv.priority = priorty;
-        }
-        if (fkAsId) {
-            json.kv.updatedBy = fkAsId;
-        }
-        if (timeM) {
-            json.kv.updatedDate = timeM;
-        }
-        if (search.length > 2) {
-            json.kv.backlogName = "%%" + search + "%%";
-        }
-
-        if ($(".us-mngm-is-api").prop("checked")) {
-        } else {
-            json.kv.isApi = 'NE%1';
-        }
-
-        json.kv[apiFiled] = stl;
-
-        json.kv.startLimit = 0;
-
-        json.kv.endLimit = 20;
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
-                var c4new = 0
-                $('#kanban_view_' + stl + '_count').html(0);
-                $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
-                $('#kanban_view_' + stl + '_count').text(res.kv.rowCount)
-                try {
-                    var usIdList = res.tbl[0].r;
-                    for (var k = 0; k < usIdList.length; k++) {
-                        var obj = usIdList[k];
-                        var html = new UserStory().genUSLine4KanbanView(obj);
-                        $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
-
-                        c4new++
-                    }
-                    if (c4new > 19) {
-                        $('.main_div_of_backlog_info_kanban_view_table_' + stl).find('.more-us-card-btn').remove();
-                        $('.main_div_of_backlog_info_kanban_view_table_' + stl).append('<a href="#" data-ople="' + stl + '" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
-
-
-                    }
-
-
-                } catch (e) {
-
-                    if (c4new < 1) {
-
-                        $('.main_div_of_backlog_info_kanban_view_table_' + stl)
-                            .append($('<div class="task-content content-drag">'));
-                    }
 
                 }
-                global_var.story_card_sprint_assign_checked = 0;
-                global_var.story_card_label_assign_checked = 0;
-                contentArrangableUI();
-                $('[data-toggle="popover"]').popover({ html: true });
 
-            },
-            error: function () {
-                Toaster.showError(('somethingww'));
+
+            } catch (e) {
+
+                if (c4new < 1) {
+
+                    $('.main_div_of_backlog_info_kanban_view_table_' + stl)
+                        .append($('<div class="task-content content-drag">'));
+                }
+
             }
-        });
+            global_var.story_card_sprint_assign_checked = 0;
+            global_var.story_card_label_assign_checked = 0;
+            contentArrangableUI();
+            $('[data-toggle="popover"]').popover({ html: true });
 
-
+        })
 
 
     },

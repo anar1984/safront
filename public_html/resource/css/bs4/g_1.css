@@ -4837,7 +4837,8 @@ td.selected{
 }
 .matrix-view-ul li {
    
-    max-width: 400px;
+    max-width: 280px;
+    min-width: 280px;
 
 }
 .matrix-view-ul li::before{

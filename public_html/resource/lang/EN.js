@@ -19,13 +19,16 @@ const lang_task = {
     tableColums: {
       taskOrderNo: 'Task order number',
       description: 'Description',
-      storyCart: 'Story cart',
+      storyCart: 'Story card',
       project: 'Project',
       inputDate: 'Input date',
       taskStatus: 'Task status',
       taskId: 'Tapşırıq nömrəsi',
       createdBy: 'Created by',
       assigined: 'Assigned to',
+      type: 'Type',
+      deadline: 'Deadline',
+      createdDate: 'Created Date',
     },
     taskNature: {
       bug: 'Bug',

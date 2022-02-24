@@ -16226,8 +16226,6 @@ function setPrmFilterSprintValues() {
 
 
 function labelOrSplitValuesUs() {
-    setPrmFilterSprintValuesUs()
-    setPrmFilterLabeValuesUs()
     new UserStory().setUSLists4KanbanView();
 }
 
@@ -16509,9 +16507,20 @@ var _22022019434402082398 = {
             var xtype  = $('#matrix-view-xtype').val();
             var ytype  = $('#matrix-view-ytype').val();
             res.tbl[0].r.map((o) => {
-
+                coreBugKV[o.fkTaskId] = o;
                 var pid = o[ytype] + "_" + o[xtype];
                 var olid = o[ytype] + "_" + o[xtype] + "_" + o.fkBacklogId;
+                try { 
+                    
+                    var userImage  =  SAProjectUser.Users[o.fkAssigneeId].userImage;
+                    var createdByImage  =  SAProjectUser.Users[o.createdBy].userImage;
+                    var userName  =  SAProjectUser.Users[o.fkAssigneeId].userPersonName;
+                    var createByName  =  SAProjectUser.Users[o.createdBy].userPersonName;
+                    
+                } catch (error) {
+                    
+                }
+               
                 var newtr  =`<div class="d-flex text-center">
                 <span>
                 <div class="p-1"><b>Id</b></div>
@@ -16519,11 +16528,11 @@ var _22022019434402082398 = {
               </span>
               <span>
                  <div class="p-1"><b>Assigne</b></div>
-                  <img class="Assigne-card-story-select-img assigne" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-content="${o.userName}" title="" data-original-title="Assignee">
+                  <img class="Assigne-card-story-select-img assigne" src="${fileUrl(userImage)}" data-trigger="hover" data-toggle="popover" data-content="${userName}" title="" data-original-title="Assignee">
               </span>
              <span>
                  <div class="p-1"><b>Created By</b></div>
-                 <img class="Assigne-card-story-select-img created" src="${fileUrl(o.createdByImage)}" data-trigger="hover" data-toggle="popover" data-content="${o.createByName}" title="" data-original-title="Created By">
+                 <img class="Assigne-card-story-select-img created" src="${fileUrl(createdByImage)}" data-trigger="hover" data-toggle="popover" data-content="${createByName}" title="" data-original-title="Created By">
               </span>
                 </div>
                 `    
@@ -16534,10 +16543,10 @@ var _22022019434402082398 = {
                  
                 $(`#${olid}`)
                     .append(`<li class='list-group-item p-1'  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}' title='${task_name}'>
-                               ${o.taskNature==='bug'?bug:""} <span class='d-inline-block' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${o.fkProjectId}',${o.fkTaskId})" style='max-width:260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' >${task_name}</span>
+                               ${o.taskNature==='bug'?bug:""} <span class='d-inline-block' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${o.fkProjectId}','${o.fkTaskId}')" style='max-width:260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' >${task_name}</span>
                                <div>
                                ${` <span   class="us-item-status-${o.taskStatus}">${o.taskStatus}</span>`}
-                               ${` <span >${Utility.convertDate(o.createdDate)}</span>`}
+                               ${` <span >${Utility.convertDate(o.createdDate)+"/"+Utility.convertTime(o.createdTime)}</span>`}
                                ${` <span class='text-primary' >${o.closedDate?Utility.convertDate(o.closedDate)+"/"+Utility.convertTime(o.closedTime):""}</span>`}
                                </div>
                              </li>`);
@@ -16563,7 +16572,7 @@ var _22022019434402082398 = {
           }
             $(`[pid=${pid}]`)
                 .append(`
-                    <b onclick="callStoryCard('${backlodId}');">${backlogName}</b>
+                    <b style="width: 280px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" title='${backlogName}' onclick="callStoryCard('${backlodId}');">${backlogName}</b>
                     <ul class="list-group matrix-view-ul" id='${olid}' title='${backlogName}'></ul>
                     `);
 
@@ -16611,12 +16620,15 @@ var _22022019434402082398 = {
                 var id = theaders[i];
                 var kvt = dt + "_" + id;
                 tr.append($(`<td class='sa-ellipsis'>`)
-                    .attr('pid', kvt)
-                    .text('------'));
+                          .css({
+                              "vertical-align":'baseline'
+                          })
+                         .attr('pid', kvt)
+                         .text('------'));
             }
 
 
-            tbody.append(tr);
+            tbody.prepend(tr);
         }
 
 
@@ -16737,6 +16749,7 @@ function getBugList4UserStory(bgId, tbody,list) {
 
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                coreBugKV[ela[i].id] = ela[i];
                 var closedDate  =  ela[i].closeStatusDate;
                  if(closedDate){
                   closedDate= Utility.convertDate(ela[i].closeStatusDate)+"/"+ Utility.convertTime(ela[i].closeStatusTime)
@@ -16851,6 +16864,7 @@ function getBugList4StoryCard(bgId, tbody) {
            $(".task-result-4us").text(res.kv.tableCount)
 
             for (let i = 0; i < ela.length; i++) {
+                coreBugKV[ela[i].id] = ela[i];
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
                 var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
                 var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" id='${ela[i].id}' >
@@ -18563,6 +18577,7 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
                    tbody.empty();
                 var ela = res.tbl[0].r;
                 for (let i = 0; i < ela.length; i++) {
+                    coreBugKV[ela[i].id] = ela[i];
                     var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
                     var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
                     var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
