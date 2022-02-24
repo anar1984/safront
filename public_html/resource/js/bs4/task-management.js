@@ -3368,7 +3368,7 @@ const taskManagement = {
                                             <span class="deadline"> ${deadline}</span>
                                         </div>
                                     </div>
-                                    <div class="position-relative us-item-status-new" style="background-color: transparent;"><span class="color-status-${stats}">${getStatusName(stats)}</span><div class="cs-tecili" style=" margin-top: -2px; margin-right: -12px;"><i class="cs-svg-icon flame"></i></div></div>
+                                    <div class="position-relative us-item-status"><span class="color-status-${stats}">${getStatusName(stats)}</span><div class="cs-tecili" style=" margin-top: -2px; margin-right: -12px;"><i class="cs-svg-icon flame"></i></div></div>
                                 </div>
                             </div>
                             </div>

@@ -6705,10 +6705,23 @@ div.cs-task-item-in-box {
     height: 19px;
     border-radius: 60px;
     font-style: normal;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 17px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
     color: #FFFFFF;
+}
+.us-item-status {
+    vertical-align: middle;
+    display: inline-block;
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: auto;
+    height: 19px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
 }
 .cs-task-card-body {
     /* padding-bottom: 20px; */
@@ -7000,6 +7013,34 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
  }
  .bg-status-tamamlanib{
      background-color: #a8dff4;
+ }
+ .color-status-new{
+    color: #D09838;
+ }
+ .color-status-ongoing{
+    color: #68B7BD;
+ }
+ .color-status-waiting{
+    color: #E45527;
+ }
+ .color-status-closed{
+     color: #78A812;
+   
+ }
+ .color-status-rejected{
+    color: #D285CF;
+ }
+ .color-status-canceled{
+    color: #CBA26E;
+ }
+ .color-status-defected{
+    color: #d0d9ea;
+ }
+ .color-status-tesdiqlenib{
+    color: #dce2ee;
+ }
+ .color-status-tamamlanib{
+     color: #a8dff4;
  }
  input#bug_filter_search_text::placeholder{
   color: #c2c2c2;
