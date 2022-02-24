@@ -24181,67 +24181,55 @@ Sprint.prototype = {
 
     getSprintListTableBody4Task: function (res, withProject, checkedLines) {
         var obj = res.tbl[0].r;
-        var tbl = $('<table></table>').attr("class", 'lbl-list-table');
+        var tbl = $('<ul></ul>');
 
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (checkedLines.includes(obj[n].id)) ? true : false;
             var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1')
                 ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
                 : "";
-
-            var tr = $('<tr class="lbl-list-tr"></tr>');
-            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                ? " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")"
-                : "";
-            tr.append($('<td class="lbl-list-td"></td>')
-                .append($('<input type="checkbox" class="bug-task-filter-checkbox-sprint" value="' + obj[n].id + '">')
-                    .attr('taskIds', obj[n].sprintTaskIds)
-                    .prop("checked", isFiltered))
-                .attr('id', obj[n].id))
-                ;
-            tr.append($('<td class="lbl-list-td"></td>')
-                .append(replaceTags(obj[n].sprintName))
-                .append(d)
-                .append(" (<b>" + obj[n].backlogCount + "</b>)")
-                .attr("class", "lbl-item")
-                .css("font-size", "12px")
-                .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
-
-            tr.append($('<td class="lbl-list-td"></td>')
-                .append($('<button class="bug-task-sprint-unassign btn btn-secondary">')
-                    .css("padding", "0px 6px")
-                    .attr("sname", replaceTags(obj[n].sprintName))
-                    .css("display", "none")
-                    .val(obj[n].id)
-                    .append("Unassign")
-                    .attr('id', obj[n].id)));
-
-            tr.append($('<td class="lbl-list-td"></td>')
-                .append($('<button class="bug-task-sprint-assign btn btn-primary">')
-                    .css("padding", "0px 6px")
-                    .attr("sname", replaceTags(obj[n].sprintName))
-                    .css("display", "none")
-                    .val(obj[n].id)
-                    .append("Assign")
-                    .attr('id', obj[n].id)));
-
-            var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
-                .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
+                var cl = obj[n].sprintColor;
+                var tr = $('<li class="">');
+                tr.append($('<label class="">')
                     .attr('id', obj[n].id)
-                    .attr('data-toggle', "modal")
-                    .attr("onclick", "new Sprint().select('" + obj[n].id + "')")
-                    .attr("data-target", "#updateSprint"));
-            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
-                .attr('id', obj[n].id)
-                .attr("onclick", "new Sprint().delete('" + obj[n].id + "')"));
-            tr.append(td);
-            tr.hover(function () {
-                $(this).find('.lbl-action, .bug-task-sprint-assign').show();
-                $(this).find('.lbl-action, .bug-task-sprint-unassign').show();
-            }, function () {
-                $(this).find('.lbl-action ,.bug-task-sprint-assign').hide();
-                $(this).find('.lbl-action ,.bug-task-sprint-unassign').hide();
-            });
+                    .attr('for', 'label-' + obj[n].id)
+                    .append(`<span style='color:${cl === '#000000' ? "#fff" : cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
+                    .append($('<input type="checkbox" id="label-' + obj[n].id + '" class="d-none bug-task-filter-checkbox-sprint" value="' + obj[n].id + '">')
+                        .attr('taskIds', obj[n].sprintTaskIds)
+                        .prop("checked", isFiltered))
+                    .append($('<span class="">')
+                        .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
+                        .append(replaceTags(obj[n].sprintName) + " (" + obj[n].backlogCount + ")")));
+    
+                tr.append($('<span class="cs-button-group">')
+                  
+                    .append( `<div class="dropdown last-icon  " >
+                    <a class=" " href="#" role="button" id='label-table' data-toggle="dropdown" aria-expanded="true">
+                          <i class="fas fa-ellipsis-h" style='color:#fff'></i>
+                    </a>
+                   <div class="dropdown-menu dropdown-menu-right " aria-labelledby="label-table" x-placement="bottom-end" >
+                    
+                      <a class="dropdown-item" data-toggle="modal" data-target="#updateSprint"" onclick="new Sprint().select('${obj[n].id}')" href="#">
+                         <i class="cs-svg-icon edit"></i>Edit
+                      </a>
+                      <a class="dropdown-item"  href="#">
+                         <i class="fa fa-star-o" aria-hidden="true"></i> Add Favorites
+                      </a>
+                      <a class="dropdown-item" onclick="new Sprint().delete('${obj[n].id}')" href="#">
+                         <i class="cs-svg-icon text-red trash"></i> Delete
+                      </a>
+                    </div>
+                  </div>`)
+                    .append($('<span class=" last-icon story-card-label-assign prManag-task-label-assign ">')
+                             .css("padding", "0px 6px")
+                             .html('<i class="fas fa-plus"></i>')
+                             .attr('id', obj[n].id))
+                    .append($('<span class=" last-icon story-card-label-unassigne prManag-task-label-assign ">')
+                             .css("padding", "0px 6px")
+                             .html('<i class="fas fa-minus"></i>')
+                             .attr('id', obj[n].id))
+                    
+                )
             tbl.append(tr);
         }
         return tbl;
