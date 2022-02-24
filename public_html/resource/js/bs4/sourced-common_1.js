@@ -14245,7 +14245,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 var nm  = o.labelName;
                var id  = o.id;
                if($('.card-'+id).length<1){
-                div.append(that.genStaticMatrixBlock(id,nm));  
+                var count  = $("#label-"+id).attr("data-count");
+                div.append(that.genStaticMatrixBlock(id,nm,count)); 
                }
                 $("#card-body-"+id).append(
                     `<li class="list-group-item">${o.typeName}<span class="badge badge-info  float-right badge-pill">${o.itemCount}</span></li>`
@@ -14254,10 +14255,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
               
           })
     },
-    genStaticMatrixBlock: function (id,nm) {
+    genStaticMatrixBlock: function (id,nm,count) {
         return  `<div class="card m-2 card-${id}" style="min-width: 18rem;">
         <h6 class="card-header">
-         ${nm}
+         ${nm}<b>(${count})</b>
         </h6>
         <ul id='card-body-${id}' class="list-group list-group-flush">
           
@@ -14573,7 +14574,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data.fkProjectId =  priD ;
         }
          if(closedBy||closedDate2||closedDate1){
-            taskStatus+="|'closed'";
+            taskStatus+="|closed";
          }
         if (this.getSprintValue()) {
             data.fkSprintId =  this.getSprintValue() ;
@@ -23607,6 +23608,7 @@ Label.prototype = {
                 .append(`<span style='color:${cl === '#000000' ? "#fff" : cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
                 .append($('<input type="checkbox" id="label-' + obj[n].id + '" class="d-none label-assign-link-class us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                     .attr('taskIds', obj[n].labelTaskIds)
+                    .attr("data-count",obj[n].backlogCount)
                     .prop("checked", isFiltered))
                 .append($('<span class="">')
                     .append(obj[n].isMenu === '1' ? "(Menu)-" : "")

@@ -720,6 +720,75 @@ var cmpList = {
         }
 
 
+    },
+    saConfirm:{
+       Init:function(data){
+               var container  = $(data.parent?data.parent:"body");
+
+               container.append(this.genBlock(data))
+       },
+       genBlock:function(data) {
+               var that  = this;
+                var title = data.title?data.title:'Are You Sure?';
+                var acceptButton = data.confrimButton?data.confrimButton:lang_task.windowUpdateTask.yes;
+                var cancelButton = data.cancelButton?data.cancelButton:lang_task.windowUpdateTask.no;
+                var buttonConfrim = $('<button type="button" class="btn cs-nextsave-btn w-50 mr-2">').html(acceptButton).click(function (e) {
+                     var res =  data.confirmAction();
+                    if(res){
+                        data.confirmAction();
+                      
+                    }
+                    that.close(this);
+                });
+                var buttonCancel = $('<button type="button" class="btn cs-nextsave-btn w-50">').html(cancelButton).click(function (e) {
+                    e.preventDefault();
+                    e.preventDefault();
+                    var res =  data.cancelAction();
+                   if(res){
+                       data.cancelAction();
+                       
+                   }
+                   that.close(this);
+                });
+                var closeButton = $('<span class="cs-close-confirm-eb-btn"><i class="fa fa-close"></i>').click(function (e) {
+                    e.preventDefault();
+                    var res =  data.closeAction();
+                   if(res){
+                       data.closeAction();
+                    
+                   }
+                   that.close(this);
+                });
+                var div  = $("<div>")
+                             
+
+          var container   =  $("<div class='sa-confirm-block'>");
+          var backGround   =  $("<div class='sa-confirm-background'>");
+              var block  = $("<div class='cs-confirm-element-box-in'>")
+                                 .append($("<div class='cs-confirm-element-box-bg'>")
+                                            .append($("<div class='d-flex'>")
+                                                        .append('<div class="mr-auto"></div>')
+                                                         .append($("<div>")
+                                                                      .append(closeButton)))
+                                            .append(`<div class="cs-input-group mt-1 text-center" ><h4>${title}</h4></div>`)
+                                            .append($("<div class='cs-input-group  d-flex'>")
+                                                            .append(buttonConfrim)
+                                                            .append(buttonCancel))
+                                            .append(` <div class="cs-input-group ${data.notShowAgain?"":"d-none"} mt-2" >
+                                                            <label class='checkmarkcontainer'>
+                                                                <span class='ml-1'>${lang_task.windowUpdateTask.notShowAgain}</span>
+                                                                <input type='checkbox'>
+                                                                <span class="checkmark"></span> 
+                                                        </label>
+                                                    </div>`)
+                                            )
+            
+           return  container.append(backGround)
+                            .append(block);
+       },
+       close:function(elm){
+          $(elm).closest(".sa-confirm-block").remove();
+       }
     }
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -814,6 +883,28 @@ $.fn.extend({
         });
     }
 });
+ 
+$.saConfirm = function(options, elements){
+    if (typeof options === "undefined") {
+        options = {};
+    }
+    if (typeof options === "string") {
+        options = {
+            content: options,
+            element: (option2) ? option2 : false
+        };
+    }
+    if (typeof options.buttons != "object") {
+        options.buttons = {};
+       
+    }
+    if (typeof options.closeAction === "function") {
+          
+    }
+    
+    return  cmpList.saConfirm.Init(options);
+};
+ 
 /* ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /*    // userList Block start */
 $(document).on('click', '.user-avatar-list li .item-click .removed-user-btn', function (e) {
