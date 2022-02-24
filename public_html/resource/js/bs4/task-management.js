@@ -3356,76 +3356,70 @@ const taskManagement = {
                 },
                 genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg d-flex" id="${id}" pid="">
-                        <div class="elm-left bg-status-${stats}">
-                            <div class="cs-task-card-avatar-boxes">
+                        <div class="elm-left p-2 bg-status-${stats}">
+                            <div class="cs-task-card-avatar-boxes mb-auto">
                                 <ul class='d-flex'>
                                     <li><img class="Assigne-card-story-select-img" width="18px" height="18px" src="${createdImg}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${createdName}" title="" data-original-title="Daxil Edən"></li>
                                     <li><img class="Assigne-card-story-select-img" width="18px" height="18px" src="${assigneImage}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${assignName}" title="" data-original-title="İcra Edən"></li>
                                 </ul>
                             </div>
-                            <div><i class="fas fa-ellipsis-v"></i></div>
-                            <div><i class="fas fa-angle-double-down"></i></div>
+                            <div class="cs-open-btn cs-open-btn-share" style="padding: 0 1px;"><i class="fas fa-ellipsis-v"></i></div>
+                            <div class="cs-open-btn cs-open-btn-more"><i class="fas fa-angle-double-down"></i></div>
                         </div>
                         <div class="elm-right ml-auro w-100">
-                            <div class="cs-cart-head-title p-2" style="padding-bottom:5px;">                        
-
+                            <div class="cs-cart-head-title pr-2 pt-2" style="padding-left: 10px;padding-bottom:0;">                        
                             <div class="d-flex">
-                                <div class="mr-auto">
+                                <div class="mr-auto title-operation">
                                     <i class="cs-svg-icon tapshiriq-dark"></i>
-                                    ${notChwk()?"":`<span href="#" class="operation " >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
+                                    ${notChwk()?"":`<span href="#" class="operation" >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
                                 </div>
                                 <div class="cs-task-card-datatime ml-2">
                                     <span>${ceratedDate} </span>
                                 </div>
                             </div>
-                           
-                           
-                            <div class="d-flex pl-0 pr-0 pb-0 pt-0 mb-0 notify-title-box">
-                                <div class="mr-auto "><span class="id">${taskid}</span>
-                                    <div class="d-inline-block notify-top-section">
+                            <div class="d-flex pl-0 pr-0 pb-0 pt-2 mb-0 notify-title-box">
+                                <div class="d-flex ">
+                                    <div class="id mr-auto">${taskid}</div>
+                                    <div class="notify-top-section">
                                         <div class="mr-auto">
                                             <span class="deadline"> ${deadline}</span>
                                         </div>
                                     </div>
-                                    <div class="position-relative us-item-status"><span class="color-status-${stats}">${getStatusName(stats)}</span><div class="cs-tecili" style=" margin-top: -2px; margin-right: -12px;"><i class="cs-svg-icon flame"></i></div></div>
+                                    <div class="position-relative us-item-status"><span class="color-status-${stats}">${getStatusName(stats)}</span><div class="cs-tecili"><i class="cs-svg-icon flame"></i></div></div>
                                 </div>
                             </div>
                             </div>
-                            <div class="cs-task-card-body pl-2">
-                                        
+                            <div class="cs-task-card-body" style="padding-left: 10px; padding-right:10px; padding-bottom: 0.3rem;">
                                 <div class="cs-task-card-desc">
                                 <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
                                 </div>
-                                </div><div class="cs-task-card-bottom">
-                                <div class="d-flex cs-flex-align-middle">
-                              
-                                <div class="flex-fill text-right">
-                                                                
-                                <div class="canban-item-btns d-flex float-right">
-                                                <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
-                                                    <i class="cs-svg-icon c-icon-1"></i>
-                                                </div>
-                                                <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("rejectTask")}"  >
-                                                    <i class="cs-svg-icon c-icon-2"></i>
-                                                </div>
-                                                <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("cancel")}">
-                                                    <i class="cs-svg-icon c-icon-3"></i>
-                                                </div>
-                                                <div class="btn-4 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ForwardTaskTo")}">
-                                                    <i class="cs-svg-icon c-icon-6"></i>
-                                                </div>
-                                                ${notChwk()?`<div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getStatusName("UAT")}">
-                                                <i class="cs-svg-icon c-icon-6"></i>
-                                            </div>`:""}
-                                                <div class="btn-6 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("history")}">
-                                                    <i class="cs-svg-icon c-icon-6"></i>
-                                                </div>
-                                                <div class="btn-7 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("chat")}">
-                                                    <i class="cs-svg-icon c-icon-6"></i>
-                                                </div>
-                                            </div> 
-                                    </div> 
-                                </div> 
+                            </div>
+                
+                            <div class="cs-task-card-bottom">
+                                <div class="canban-item-btns d-flex">
+                                    <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
+                                        <i class="cs-svg-icon c-icon-1"></i>
+                                    </div>
+                                    <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("rejectTask")}"  >
+                                        <i class="cs-svg-icon c-icon-2"></i>
+                                    </div>
+                                    <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("cancel")}">
+                                        <i class="cs-svg-icon c-icon-3"></i>
+                                    </div>
+                                    <div class="btn-4 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ForwardTaskTo")}">
+                                        <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>
+                                    ${notChwk()?`<div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getStatusName("UAT")}">
+                                    <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>`:""}
+                                    <div class="btn-6 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("history")}">
+                                        <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>
+                                    <div class="btn-7 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("chat")}">
+                                        <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>`
@@ -5699,4 +5693,10 @@ $(document).on("click", ".new-label-btn", function (e) {
 })
 $(document).on("click", ".color-main-btn", function (e) {
     $(this).closest('.category-create-input').find('.color-skin-items').animate({height: "toggle"}, 350).toggleClass('show');
+})
+$(document).on("click", ".cs-open-btn-share", function (e) {
+    $(this).closest('.cs-task-item-in-box').find('.cs-task-card-bottom').toggleClass('show');
+})
+$(document).on("click", ".cs-open-btn-more", function (e) {
+    $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
 })
