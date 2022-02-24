@@ -912,4 +912,136 @@ $(document).on("click", '.showhide-col-main-info', function (e) {
 
 }
 
+
 /*  // userList Block End */
+const CheweekSlider = function (parentDiv, imgArray) {
+    const sliderContainer = document.getElementById(`${parentDiv}`);
+    sliderContainer.insertAdjacentHTML(
+      'beforeend',
+      `<div class="RS-slider"></div>`
+    );
+  
+    function fillImages(imgArray) {
+      imgArray.forEach((_, i) => {
+        const sliderC = document.querySelector('.RS-slider');
+        sliderC.insertAdjacentHTML(
+          'beforeend',
+          `<div class="RS-slide">
+              <img
+                class="RS-slide-img"
+                src="${imgArray[i]}"
+              />
+          </div>`
+        );
+      });
+    }
+    function goFullSlider() {
+      const exitIcon = document.querySelector('.RS-close-full-slider');
+      sliderContainer.classList.add('RS-background-blur');
+      sliderContainer.style.position = 'absolute';
+      exitIcon.classList.remove('RS-hidden-slider');
+      document
+        .querySelector('.RS-close-full-slider')
+        .addEventListener('click', function () {});
+    }
+    fillImages(imgArray);
+    const sliderButtons = document.querySelector('.RS-slider');
+    sliderButtons.insertAdjacentHTML(
+      'afterend',
+      `
+    <div class="RS-slider-controls">
+    <div class="RS-slider__btn RS-slider__btn--left"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+    viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg></div>
+    <div class="RS-slider__btn RS-slider__btn--right"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+    viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg></div>
+    <div class="RS-dots"></div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" class="RS-close-full-slider RS-hidden-slider" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+    `
+    );
+    const slideImg = document.querySelectorAll('.RS-slide-img');
+    const slides = document.querySelectorAll('.RS-slide');
+    const btnLeft = document.querySelector('.RS-slider__btn--left');
+    const btnRight = document.querySelector('.RS-slider__btn--right');
+    const dotContainer = document.querySelector('.RS-dots');
+    const exitIcon = document.querySelector('.RS-close-full-slider');
+    exitIcon.addEventListener('click', function () {
+      sliderContainer.style.position = 'relative';
+      sliderContainer.classList.remove('RS-background-blur');
+      exitIcon.classList.add('RS-hidden-slider');
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        sliderContainer.style.position = 'relative';
+        sliderContainer.classList.remove('RS-background-blur');
+      }
+    });
+    slideImg.forEach((e) => e.addEventListener('click', goFullSlider));
+    let curSlide = 0;
+    const maxSlide = slides.length;
+    const createDots = function () {
+      slideImg.forEach(function (_, i) {
+        let img = slideImg[i].src;
+        dotContainer.insertAdjacentHTML(
+          'beforeend',
+          `<img width="50px" height="50px" class="RS-dots__dot" data-slide="${i}" src="${img}" />`
+        );
+      });
+    };
+    const activateDot = function (slide) {
+      document
+        .querySelectorAll('.RS-dots__dot')
+        .forEach((dot) => dot.classList.remove('RS-dots__dot--active'));
+      document
+        .querySelector(`.RS-dots__dot[data-slide="${slide}"]`)
+        .classList.add('RS-dots__dot--active');
+    };
+    const goToSlide = function (slide) {
+      slides.forEach(
+        (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+      );
+    };
+    const nextSlide = function () {
+      if (curSlide === maxSlide - 1) {
+        curSlide = 0;
+      } else {
+        curSlide++;
+      }
+      goToSlide(curSlide);
+      activateDot(curSlide);
+    };
+    const prevSlide = function () {
+      if (curSlide === 0) {
+        curSlide = maxSlide - 1;
+      } else {
+        curSlide--;
+      }
+      goToSlide(curSlide);
+      activateDot(curSlide);
+    };
+    const init = function () {
+      goToSlide(0);
+      createDots();
+      activateDot(0);
+    };
+    init();
+    btnRight.addEventListener('click', nextSlide);
+    btnLeft.addEventListener('click', prevSlide);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') prevSlide();
+      e.key === 'ArrowRight' && nextSlide();
+    });
+    dotContainer.addEventListener('click', function (e) {
+      if (e.target.classList.contains('RS-dots__dot')) {
+        const { slide } = e.target.dataset;
+        goToSlide(slide);
+        activateDot(slide);
+      }
+    });
+  };

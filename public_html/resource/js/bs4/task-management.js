@@ -98,7 +98,7 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2">
+                        <input type="text" autocomplete="off" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2">
                          <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="pt-1">
@@ -202,7 +202,7 @@ const taskManagement = {
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
-                                <select multiple class="add_task_sprint issue_selectpicker"  id="add_task_sprint" data-live-search="true">
+                                <select multiple class="add_task_sprint issue_selectpicker" title='${lang_task.windowUpdateTask.emptyPicker}' id="add_task_sprint" data-live-search="true">
                                    
                                 </select>
                             </div>
@@ -210,7 +210,7 @@ const taskManagement = {
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
-                                <select multiple class="run_task_categories issue_selectpicker"  id="run_task_categories" data-live-search="true">
+                                <select multiple class="run_task_categories issue_selectpicker"  title='${lang_task.windowUpdateTask.emptyPicker}'id="run_task_categories" data-live-search="true">
                                    
                                 </select>
                             </div>
@@ -746,7 +746,7 @@ const taskManagement = {
                 if (!userList) {
                     return
                 }
-                callService('serviceTminsertTaskObserver', {
+                callService('serviceTminsertTaskObserverCumulative', {
                     "fkTaskId": taskId,
                     "fkUserId": userList
                 }, true, function () {
@@ -760,13 +760,27 @@ const taskManagement = {
         },
         insertObserverTaskByVal: function (taskId,val) {
             try {
-                   val= val.toString();
                 if (!val) {
                     return
                 }
-                callService('serviceTminsertTaskObserver', {
+                var userList = "";
+                var tbl = val;
+
+                for (let i = 0; i < tbl.length; i++) {
+                    const o = tbl[i];
+                    if((i+1)===tbl.length){
+                        userList += o ;
+                    }else{
+                        userList += o + ",";
+                    }
+                  
+                }
+                if (!userList) {
+                    return
+                }
+                callService('serviceTminsertTaskObserverCumulative', {
                     "fkTaskId": taskId,
-                    "fkUserId": val
+                    "fkUserId": userList
                 }, true, function () {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
                 });
@@ -944,7 +958,7 @@ const taskManagement = {
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
                                 <div class="card-UserStory-header-edit position-relative" style="display: none; width: 100%;top: 0;height: 30px;">
-                                    <input class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
+                                    <input autocomplete="off" class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
                                     <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-check"></i>
@@ -1002,7 +1016,7 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
+                    <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
                     <ul>
                     </ul>
                 </div>
@@ -1024,7 +1038,7 @@ const taskManagement = {
                          col-lg-12 hover-prototype-selector">
                          <span class="cs-btn-border">
                             <label class="cs-file-upload">
-                                <input class="form-control saTypeFilePicherUploadFile component-input-class" 
+                                <input autocomplete="off" class="form-control saTypeFilePicherUploadFile component-input-class" 
                                     sa-type="filepicker"  type="file" value="" row-no="" 
                                     pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                     multiple="" 
@@ -1050,7 +1064,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
+                                            <input autocomplete="off" type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
                                         </div>
                                     </div>
                                     <div>
@@ -1058,7 +1072,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
+                                            <input autocomplete="off" type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
                                         </div>
                                     </div>
                                 </div>
@@ -1073,7 +1087,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                                 </span>
-                                                <input type='text' id="taskDetailDeadlineEndDade" class="form-control" />
+                                                <input autocomplete="off" type='text' id="taskDetailDeadlineEndDade" class="form-control" />
                                         </div>
                                     </div>
                                     <div>
@@ -1081,7 +1095,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                                                 </span>
-                                                <input type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
+                                                <input autocomplete="off" type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
                                         </div>
                                     </div>
                                 </div>
@@ -1224,7 +1238,7 @@ const taskManagement = {
                             <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
 
                                 <div class="acceptcomment flex-fill mr-1">
-                                    <button class="btn btn-primary" type="submit"
+                                    <button class="btn text-nowrap btn-primary" type="submit"
                                             onclick="new UserStory().addTaskCommentToTask(this)">${lang_task.windowUpdateTask.add}</button>
                                 </div>
                            
@@ -1543,7 +1557,7 @@ const taskManagement = {
                                 <th><i class="cs-svg-icon id"></i></th>
                                 <th><i class="cs-svg-icon deadline"></i></th>
                                 <th><i class="cs-svg-icon status"></i></th>
-                                    <th>Parent Task <a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
+                                    <th>${lang_task.windowUpdateTask.parentTask} <a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
                                             <i class="fas fa-plus" aria-hidden="true"></i>
                                         </a></th>
                                          
@@ -1580,7 +1594,7 @@ const taskManagement = {
                                     <th><i class="cs-svg-icon id"></i></th>
                                     <th><i class="cs-svg-icon deadline"></i></th>
                                     <th><i class="cs-svg-icon status"></i></th>
-                                    <th>Child Task
+                                    <th>${lang_task.windowUpdateTask.subtask}
                                     <a href="#" class='comment-content-header-history' id="add-child-task-open-modal" style="color: #03396c;">
                                      <i class="fas fa-plus" aria-hidden="true"></i>
                                      </a></th>  
@@ -2044,8 +2058,13 @@ const taskManagement = {
  */
             try {
                 var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
-                var obj =  res.tbl[idy].r[0] ;
-                var ts  =  obj.fkUserId.split(",")
+                var objUser = res.tbl[idy].r;
+                var ts  =  []
+                for (var k in objUser) {
+                    var o2 = objUser[k];
+                    ts.push(o2.fkUserId);
+                }
+            
               
                 $(".observer-div-update-issue").getVal(ts);
                // div.html(table);
@@ -3778,19 +3797,20 @@ const taskManagement = {
                     <tr>
                     <th><div class="showhide-col-btn-issue" ><i class="cs-svg-icon numbers"></i></div></th>
                     <th><input type="checkbox" class="all-bug-list-check"></th>
-                    <th class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
-                    <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
-                    <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
-                    <th class="bug-list-column bug-list-column-ismeet" style="width: 90px;">AD</th>
-                    <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">${lang_task.table.tableColums.description}</th>
-                    <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
-                    <th class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
+                    
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.deadline}" class="bug-list-column-0 bug-list-column-task-deadline" ><i class="cs-svg-icon deadline"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.taskStatus}" class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.taskId}" class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.type}" class="bug-list-column bug-list-column-ismeet" style="width: 90px;">${lang_task.table.tableColums.type}</th> 
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.description}" class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">${lang_task.table.tableColums.description}</th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="" class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
+                    <th data-placement="bottom" class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
                     <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>
-                    <th class="bug-list-column bug-list-column-assignee" style="width: 70px;"><i class="cs-svg-icon task-user-1"></i></th>
-                    <th class="bug-list-column bug-list-column-created-by" style="width: 70px;"><i class="cs-svg-icon task-user-2"></i></th>
-                    <th class="bug-list-column bug-list-column-created-date" style="width: 80px;"><i class="cs-svg-icon calendar-01-dark"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.assigined}" class="bug-list-column bug-list-column-assignee" style="width: 70px;"><i class="cs-svg-icon task-user-1"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.createdBy}" class="bug-list-column bug-list-column-created-by" style="width: 70px;"><i class="cs-svg-icon task-user-2"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.createdDate}" class="bug-list-column bug-list-column-created-date" style="width: 80px;"><i class="cs-svg-icon calendar-01-dark"></i></th>
                     <th class="bug-list-column bug-list-column-close-date" style="display: none;">Closed On</th><th class="bug-list-column bug-list-column-closed-by" style="display: none;">Closed By</th>
                     <th class="bug-list-column bug-list-column-last-update" style="display: none;">Last Update</th>
                     <th class="bug-list-column bug-list-column-estimated-hours" style="display: none;">Estimated Hour(s)</th>
@@ -4033,8 +4053,7 @@ const taskManagement = {
                                 .addClass('bug-list-checkbox')
                                 .append('<input class="checkbox-issue-task" type="checkbox">')
                             )
-                            .append($('<td>').addClass('bug-list-column').attr("style", "width:100px;")
-                                .addClass('bug-list-column-task-id').append(task_id))
+                            
                             .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
                                 .addClass('bug-list-column-task-deadline')
                                 .append(getTimeDifference(endTime, startTime))
@@ -4052,6 +4071,8 @@ const taskManagement = {
                                             .append(getStatusName(o.taskStatus)))
                                         .append((o.taskPriority === '9') ? prtDiv : ""))
                                 ))
+                           .append($('<td>').addClass('bug-list-column').attr("style", "width:100px;")
+                                .addClass('bug-list-column-task-id').append(task_id))
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-ismeet cs-input-group')
                                  .append(o.isMeet==='1'?'<i class="cs-svg-icon users-dark"></i>':'<i class="cs-svg-icon tapshiriq-dark"></i>')

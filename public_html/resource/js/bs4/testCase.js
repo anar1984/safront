@@ -2115,11 +2115,9 @@ $(document).on("click", '.all-bug-list-check', function (e) {
     var chck = $(this).closest('table').find("tbody > tr .checkbox-issue-task");
     if ($(this).is(':checked')) {
         $('.multi-edit-menu').removeClass('d-none');
-        $('body').addClass('res-multi-edit-menu');
         chck.prop('checked', true);
     } else {
         $('.multi-edit-menu').addClass('d-none');
-        $('body').removeClass('res-multi-edit-menu');
         chck.prop('checked', false);
     }
 
@@ -2160,12 +2158,11 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
 
     }
     if (ast.length > 1) {
-        $('.multi-edit-menu').removeClass('d-none');
-            $('body').addClass('res-multi-edit-menu');    
+        $('.multi-edit-menu').removeClass('d-none'); 
     } else {
 
         $('.multi-edit-menu').addClass('d-none');
-        $('body').removeClass('res-multi-edit-menu');
+      
 
     }
 
