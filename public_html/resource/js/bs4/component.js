@@ -1768,8 +1768,8 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                    .append(comp.label))
-                    .append(star);
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1790,8 +1790,8 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                    .append(comp.label))
-                    .append(star);
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -2131,8 +2131,9 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
-            div.append($('<span class="comp-title-span></span>').append(comp.label)
-                    .append(star))
+            div.append($('<span class="comp-title-span></span>')
+                         .append(comp.label)
+                         .append(star));
             div.append((comp.isLabelInTop ? "<br>" : ""))
         }
 
