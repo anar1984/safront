@@ -19784,6 +19784,14 @@ $(document).on('change', '.group-name-save', function (evt) {
 
      
 });
+// up to date click
+$(document).on('click', '#upToDateButtonUSM', function () {    
+    $('.upToDateSelectEmpty').val('');
+    $('select.upToDateSelectEmpty').selectpicker('refresh'); 
+    $('#story_mn_filter_status_id').val(['new', 'ongoing']);
+    $('#story_mn_filter_status_id').change();
+});
+
 function getGroupListAssigneLocal(){
 
      

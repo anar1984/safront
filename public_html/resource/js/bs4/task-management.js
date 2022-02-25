@@ -5614,7 +5614,7 @@ $(document).on("click", '#pills-tab .nav-link', function (e) {
 $(document).on('click', ".usm-more-filter-btn", function (e) {
     $(this).toggleClass('show');
     $('.usm-more-filter').toggleClass('show');
-    $(this).find('i').toggleClass('fa-plus fa-minus');
+    $(this).find('i').toggleClass('fa-angle-right fa-angle-down');
 });
 
 $(document).on("dblclick", ".card-UserStory-header-text", function () {
