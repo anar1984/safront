@@ -6704,7 +6704,7 @@ label.cs-file-upload input[type="file"].form-control {
     border-right: 1px solid #EEEEEE;
 }
 div.cs-task-item-in-box {
-    margin-bottom: 19px;
+    margin-bottom: 10px;
     overflow: hidden;
     background: #DFEEF7;
     mix-blend-mode: normal;
@@ -6800,8 +6800,8 @@ div.cs-task-item-in-box .elm-right {
 }
 .cs-task-card-bottom {
     position: absolute;
-    top: 50%;
-    margin-top: -20px;
+    top: 25px;
+    margin-top: 0;
 }
 .cs-task-card-bottom .canban-item-btns {
  opacity: 0;
