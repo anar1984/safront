@@ -15314,6 +15314,8 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load'); */
         new Label().load();
         new Sprint().load();
+        new Sprint().load4Task();
+        new Label().load4Task();
      
         Priority.load();
         hideToggleMain();
@@ -19867,6 +19869,46 @@ $(document).on('change', '#story_mn_filter_nature_id', function (evt) {
     UsSprint = '';
     labelOrSplitValuesUs();
 });
+function loadAssigneesByElement(element) {
+
+
+    var json = initJSON();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetUserList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            var elm  = element;
+                elm.html('');
+             
+            for (var i in obj) {
+            
+                var o = obj[i];
+                var userImage = SAProjectUser.GetDetails(o.id, "userImage");
+                var img = (userImage) ?
+                        fileUrl(userImage) :
+                        fileUrl(new User().getDefaultUserprofileName());
+                var opt = $(`<option value='${o.id}'
+                data-content="<div pid='${o.id}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${o.userPersonName}</span></div>">
+                ${o.userPersonName}</option>`)
+                elm.append(opt);
+               
+            }
+            
+            $(elm).selectpicker('refresh');
+            
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function loadAssigneesByProjectUSM(projectId) {
 
 

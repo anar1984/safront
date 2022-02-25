@@ -164,6 +164,7 @@ const lang_task = {
   },
   windowUpdateTask: {
     description: 'Description',
+    decisions: 'Decisions',
     add: 'Add',
     start: 'Start Task',
     yes: 'Yes',
@@ -198,7 +199,7 @@ const lang_task = {
     subtask: 'Sub task ',
     comment:"Comment",
     addComment:"Add a comment..",
-    emptyPicker:"Add a comment..",
+    emptyPicker:"Nothing Selected...",
     ididit: 'I Did It!',
     history: 'History',
     chat: 'Chat',

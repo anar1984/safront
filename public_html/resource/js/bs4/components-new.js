@@ -722,6 +722,7 @@ var cmpList = {
 
     },
     saConfirm:{
+        _hilightAnimating: false,
        Init:function(data){
                var container  = $(data.parent?data.parent:"body");
 
@@ -762,10 +763,27 @@ var cmpList = {
                 var div  = $("<div>")
                              
 
-          var container   =  $("<div class='sa-confirm-block'>");
-          var backGround   =  $("<div class='sa-confirm-background'>");
+          var container   =  $("<div class='sa-confirm-block'>")
+                                      .on('click',function(e){
+                                                 var $body  =   $(this).closest('.sa-confirm-block').find('.cs-confirm-element-box-bg');
+                                                    
+                                                      var that = this;
+                                                        if (this._hilightAnimating) {
+                                                            return;
+                                                        }
+                                                        $body.addClass("highilight");
+                                                        var duration = parseFloat($body.css("animation-duration")) || 2;
+                                                        this._hilightAnimating = true;
+                                                        setTimeout(function () {
+                                                            that._hilightAnimating = false;
+                                                            $body.removeClass("highilight");
+                                                        }, duration * 1000);
+                                              })
+          var backGround   =  $("<div class='sa-confirm-background'>")
+                                     
               var block  = $("<div class='cs-confirm-element-box-in'>")
                                  .append($("<div class='cs-confirm-element-box-bg'>")
+                                            
                                             .append($("<div class='d-flex'>")
                                                         .append('<div class="mr-auto"></div>')
                                                          .append($("<div>")
@@ -869,12 +887,14 @@ $.fn.textWidth = function(){
 $.fn.extend({
     autoHeight: function () {
         function autoHeight_(element) {
+          var  height  = element.scrollHeight>20?element.scrollHeight:"";
             return jQuery(element)
                 .css({
                     "height": "auto",
                     "overflow-y": "hidden"
                 })
-                .height(element.scrollHeight);
+             
+                .height(height);
         }
         return this.each(function () {
             autoHeight_(this).on("input", function () {
