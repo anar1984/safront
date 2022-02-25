@@ -2451,7 +2451,7 @@ const taskManagement = {
             },
             genHeader: function () {
                 return `    <div class="header-info-section d-flex w-100">
-                <div class="mr-auto d-flex p-2">
+                <div class="mr-auto d-flex pl-0 pr-2 pt-0 pb-0">
                     <div class="d-flex justify-content-start">
                         <div class="form-group ${notChwk()?"":"d-none"} has-search mr-2">
                         <div class="has-search-in">
@@ -2471,7 +2471,7 @@ const taskManagement = {
                     <div class="d-flex justify-content-start" id="issue-list-statistic-block">
                     </div>    
                 </div>
-                <div class="p-2 mt-2">
+                <div class="pl-2 pr-0 pt-0 pb-0 mt-2">
                     <div class="dropdown info-box-dropdown" id="issue-table-aktiv-all">
                         <a class="btn dropdown-toggle" href="#" role="button" id="task-table-aktiv-all1" data-toggle="dropdown" aria-expanded="false">
                             <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"}</span> <span id="row-count-table">125</span>
@@ -3168,6 +3168,7 @@ const taskManagement = {
                     json.kv.closedDateTo = bug_filter.closed_date_to;
                     json.kv.showChildTask = bug_filter.showChildTask;
                     json.kv.createdDate = bug_filter.createdDate;
+                    json.kv.createdTime = bug_filter.createdTime;
                     json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
                     var ty = localStorage.getItem("issue_mode_active");
                         ty = ty?ty:"A"; 
@@ -3239,7 +3240,7 @@ const taskManagement = {
                 },
                 genKanbanBlock: function () {
                     return `
-                    <div class="col pl-1 pr-1" id="">
+                    <div class="col pl-0 pr-0" id="">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
                        <div class="cs-task-panel-column cs-task-panel-column-issue">
@@ -3261,9 +3262,7 @@ const taskManagement = {
                     <span class="count-cs-${id} ">0</span>
                 </div>
             </div>
-            <div class="flex-fill d-flex bd-highlight minimze-hidden-block" id="${id}-total-task-list">
-           
-            </div>
+         
             <div class="flex-fill bd-highlight">
                 <div class="cs-card-fullview cs-next-large-modal-btn">
                     <a href="#"><i class="fas fa-expand" aria-hidden="true"></i></a>
@@ -3289,24 +3288,33 @@ const taskManagement = {
                                 <span class="deadline"> ${deadline}</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-                    <span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span>
-            </div>
-                    <div class="cs-task-card-body pl-2 pr-2" "="">
-                                  
-                           <div class="cs-task-card-desc">
-                           <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
-                           </div>
-                           </div><div class="cs-task-card-bottom">
-                           <div class="d-flex cs-flex-align-middle">
-                           <div class="align-items-center">
-                           <div class="cs-task-card-avatar-boxes">
-                           <ul class='d-flex'>
-                            <li><img class="Assigne-card-story-select-img ${stats}" src="${createdImg}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${createdName}" title="" data-original-title="Daxil Edən"></li>
-                            <li><img class="Assigne-card-story-select-img ${stats}" src="${assigneImage}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${assignName}" title="" data-original-title="İcra Edən"></li>
-                            </ul>
+                        <div class="elm-right ml-auro w-100">
+                            <div class="cs-cart-head-title pr-2 pt-2" style="padding-left: 7px;padding-bottom:0;">                        
+                            <div class="d-flex">
+                                <div class="mr-auto title-operation">
+                                    <i class="cs-svg-icon tapshiriq-dark"></i>
+                                    ${notChwk()?"":`<span href="#" class="operation" >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
+                                </div>
+                                <div class="cs-task-card-datatime ml-2">
+                                    <span>${ceratedDate} </span>
+                                </div>
                             </div>
+                            <div class="d-flex pl-0 pr-0 pb-0 pt-2 mb-0 notify-title-box">
+                                <div class="d-flex ">
+                                    <div class="id mr-auto">${taskid}</div>
+                                    <div class="notify-top-section">
+                                        <div class="mr-auto">
+                                            <span class="deadline"> ${deadline}</span>
+                                        </div>
+                                    </div>
+                                    <div class="position-relative us-item-status"><span class="color-status-${stats}">${getStatusName(stats)}</span><div class="cs-tecili"><i class="cs-svg-icon flame"></i></div></div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="cs-task-card-body" style="padding-left: 7px;padding-right:10px;padding-bottom: 0.3rem;margin-top: 6px;">
+                                <div class="cs-task-card-desc">
+                                <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
+                                </div>
                             </div>
                                  <div class="flex-fill text-right">
                                     <div class="cs-task-card-datatime d-flex text-left ml-2">
@@ -3395,7 +3403,7 @@ const taskManagement = {
                                     getTimeDifference(endTime, startTime),
                                      taskName, 
                                      o.taskStatus, 
-                                     Utility.convertDate(o.createdDate),
+                                     Utility.convertDate(o.createdDate)+" "+Utility.convertDate(o.createdTime),
                                      createdByImg,
                                      o.createByName,
                                      img,
@@ -3417,7 +3425,7 @@ const taskManagement = {
                     if (parseFloat(bug_filter.limit) < parseFloat(res.kv.tableCount)) {
                         $('#flex-col-' + st).find(".more-button-forIssue").remove();
                         $('#flex-col-' + st)
-                            .append(`<div class="more-button-forIssue text-center" data-type="${typeRow}" data-status="${st}" start-limit="${parseFloat(pageNo) +1}" end-limit="${bug_filter.limit}">More</div>`)
+                            .append(`<div class="more-button-forIssue text-center" data-type="${typeRow}" data-status="${st}" start-limit="${parseFloat(pageNo) +1}" end-limit="${bug_filter.limit}"><i class="fas fa-angle-double-down"></i>More</div>`)
                     }
 
 
@@ -3623,7 +3631,7 @@ const taskManagement = {
             },
             genTableView: {
                 genTableBlock: function () {
-                    return ` <div class="col pl-1 pr-1" id="addBuglist">
+                    return ` <div class="col pl-0 pr-0" id="addBuglist">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
                          ${notChwk()?"":this.genShowHideBlock4ch()}
