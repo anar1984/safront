@@ -1017,7 +1017,13 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
+                <div class="d-flex">
+                <div class="mr-auto"> <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;"></div>
+                    <div class="showhide-col-footer task-check-list-show-hide ">
+                        <span class="scm-show active"><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                   </div>
+                </div>
                     <ul>
                     </ul>
                 </div>
@@ -1724,7 +1730,11 @@ const taskManagement = {
                $("#taskMgmtModal").modal("show");
                $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
                let headerText = $(el).html();
-               $(".card-UserStory-header-text").html(headerText);
+                 var headerTit  = $(".card-UserStory-header-text")
+                     headerTit.html(headerText);
+                
+               
+
                $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
                 $("#task-info-modal-status").selectpicker('refresh');
                 $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
@@ -1780,7 +1790,12 @@ const taskManagement = {
 
          setTimeout(() => {
              
-          
+            if(headerTit.textWidth()>headerTit.width()){
+                headerTit.attr('data-placement', 'top')
+                .attr('data-trigger', 'hover')
+                .attr('data-toggle', 'popover')
+                .attr("data-content",headerText);
+             }
         if (!taskId) {
             return;
         }
@@ -1993,8 +2008,9 @@ const taskManagement = {
                         ) :
                         '';
 
-                    var tr = $("<li class='d-flex'>")
-                        .addClass((o.isChecked === '1') ? 'on-checked' : '')
+                    var tr = $("<li class=''>")
+                        .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
+                        .attr("data-checked",o.isChecked)
                         .append($('<div class="item-checkbox">')
                             .append($('<label class="checkmarkcontainer">')
                                 .append($('<input>')
@@ -5293,6 +5309,26 @@ function createChildTask() {
 $(document).click(function () {
     $("#contextMenu").hide();
   })
+$(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-show", function (e) {
+      
+         var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
+          list.each(function (params) {
+              $(this).addClass("d-flex");
+              $(this).removeClass("d-none");
+          })
+          $(this).addClass("active");
+          $(".task-check-list-box .task-check-list-show-hide .scm-hide").removeClass("active");
+});
+$(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-hide", function (e) {
+      
+         var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
+          list.each(function (params) {
+              $(this).addClass("d-none");
+              $(this).removeClass("d-flex");
+          })
+          $(this).addClass("active");
+          $(".task-check-list-box .task-check-list-show-hide .scm-show").removeClass("active");
+});
 $(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
    
     $(this).closest('tbody').find("tr").removeClass("active")
