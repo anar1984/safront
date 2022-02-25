@@ -3260,6 +3260,7 @@ const taskManagement = {
                     json.kv.closedDateTo = bug_filter.closed_date_to;
                     json.kv.showChildTask = bug_filter.showChildTask;
                     json.kv.createdDate = bug_filter.createdDate;
+                    json.kv.createdTime = bug_filter.createdTime;
                     json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
                     var ty = localStorage.getItem("issue_mode_active");
                         ty = ty?ty:"A"; 
@@ -3353,9 +3354,7 @@ const taskManagement = {
                     <span class="count-cs-${id} ">0</span>
                 </div>
             </div>
-            <div class="flex-fill d-flex bd-highlight minimze-hidden-block" id="${id}-total-task-list">
-           
-            </div>
+         
             <div class="flex-fill bd-highlight">
                 <div class="cs-card-fullview cs-next-large-modal-btn">
                     <a href="#"><i class="fas fa-expand" aria-hidden="true"></i></a>
@@ -3383,7 +3382,7 @@ const taskManagement = {
                             <div class="cs-open-btn cs-open-btn-more"><i class="fas fa-angle-double-down"></i></div>
                         </div>
                         <div class="elm-right ml-auro w-100">
-                            <div class="cs-cart-head-title pr-2 pt-2" style="padding-left: 10px;padding-bottom:0;">                        
+                            <div class="cs-cart-head-title pr-2 pt-2" style="padding-left: 7px;padding-bottom:0;">                        
                             <div class="d-flex">
                                 <div class="mr-auto title-operation">
                                     <i class="cs-svg-icon tapshiriq-dark"></i>
@@ -3405,7 +3404,7 @@ const taskManagement = {
                                 </div>
                             </div>
                             </div>
-                            <div class="cs-task-card-body" style="padding-left: 10px; padding-right:10px; padding-bottom: 0.3rem;">
+                            <div class="cs-task-card-body" style="padding-left: 7px;padding-right:10px;padding-bottom: 0.3rem;margin-top: 6px;">
                                 <div class="cs-task-card-desc">
                                 <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
                                 </div>
@@ -3487,7 +3486,7 @@ const taskManagement = {
                                     getTimeDifference(endTime, startTime),
                                      taskName, 
                                      o.taskStatus, 
-                                     Utility.convertDate(o.createdDate),
+                                     Utility.convertDate(o.createdDate)+" "+Utility.convertDate(o.createdTime),
                                      createdByImg,
                                      o.createByName,
                                      img,
@@ -3509,7 +3508,7 @@ const taskManagement = {
                     if (parseFloat(bug_filter.limit) < parseFloat(res.kv.tableCount)) {
                         $('#flex-col-' + st).find(".more-button-forIssue").remove();
                         $('#flex-col-' + st)
-                            .append(`<div class="more-button-forIssue text-center" data-type="${typeRow}" data-status="${st}" start-limit="${parseFloat(pageNo) +1}" end-limit="${bug_filter.limit}">More</div>`)
+                            .append(`<div class="more-button-forIssue text-center" data-type="${typeRow}" data-status="${st}" start-limit="${parseFloat(pageNo) +1}" end-limit="${bug_filter.limit}"><i class="fas fa-angle-double-down"></i>More</div>`)
                     }
 
 
