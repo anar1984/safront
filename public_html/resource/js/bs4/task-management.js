@@ -998,7 +998,7 @@ const taskManagement = {
                           </div>
                         </div>
                         <div class="">
-                          <span class="cs-close-next-eb-btn"><i class="fa fa-close"></i></span>
+                          <span class="cs-close-next-eb-btn remove-next-btn"><i class="fa fa-close"></i></span>
                         </div>
                       </div>
                       <div class="cs-input-group" style="margin-top:10px">
@@ -1738,6 +1738,22 @@ const taskManagement = {
                 } else {
                     changeMeetAndTask($("#tapshiriq-btn"),'0');
                     $(".card-UserStory-header-text-code").html("Tapşırıq-"+coreBugKV[taskId].orderNoSeq+"");
+                }
+                if (coreBugKV[taskId].taskStatus === 'new'||coreBugKV[taskId].taskStatus === 'waiting') {
+                      $.saConfirm({
+                          "title":lang_task.windowUpdateTask.start,
+                          "confirmButton":lang_task.windowUpdateTask.yes,
+                          "cancelButton":lang_task.windowUpdateTask.no,
+                          "parent":'#taskMgmtModal .modal-content',
+                          cancelAction: function (params) {
+                          },
+                          confirmAction: function (params) {
+                            updateTask4ShortChangeDetails('ongoing', "taskStatus");
+                          },
+                          closeAction:function (params) {
+                          }
+                      })
+
                 }
             
                 //set backlog infos
@@ -5640,7 +5656,7 @@ function uploadFile4IpoTAsk(id) {
     }
 }
 
-$(document).on('click', ".cs-close-next-eb-btn", function (e) {
+$(document).on('click', ".cs-next-element-box .remove-next-btn", function (e) {
     $(this).closest('.cs-next-element-box').remove();
 });
 

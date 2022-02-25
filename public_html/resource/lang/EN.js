@@ -165,6 +165,10 @@ const lang_task = {
   windowUpdateTask: {
     description: 'Description',
     add: 'Add',
+    start: 'Start Task',
+    yes: 'Yes',
+    no: 'No',
+    notShowAgain: 'Not Show Again',
     cancel: `Canceled`,
     chooseFile: 'Choose file',
     details: 'Details',
