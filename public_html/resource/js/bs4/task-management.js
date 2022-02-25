@@ -2430,7 +2430,7 @@ const taskManagement = {
             },
             genHeader: function () {
                 return `    <div class="header-info-section d-flex w-100">
-                <div class="mr-auto d-flex pl-0 pr-2 pt-2 pb-2">
+                <div class="mr-auto d-flex pl-0 pr-2 pt-0 pb-0">
                     <div class="d-flex justify-content-start">
                         <div class="form-group ${notChwk()?"":"d-none"} has-search mr-2">
                         <div class="has-search-in">
@@ -2450,7 +2450,7 @@ const taskManagement = {
                     <div class="d-flex justify-content-start" id="issue-list-statistic-block">
                     </div>    
                 </div>
-                <div class="pl-2 pr-0 pt-2 pb-2 mt-2">
+                <div class="pl-2 pr-0 pt-0 pb-0 mt-2">
                     <div class="dropdown info-box-dropdown" id="issue-table-aktiv-all">
                         <a class="btn dropdown-toggle" href="#" role="button" id="task-table-aktiv-all1" data-toggle="dropdown" aria-expanded="false">
                             <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"}</span> <span id="row-count-table">125</span>
