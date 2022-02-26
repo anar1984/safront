@@ -887,14 +887,14 @@ $.fn.textWidth = function(){
 $.fn.extend({
     autoHeight: function () {
         function autoHeight_(element) {
-          var  height  = element.scrollHeight>20?element.scrollHeight:"";
-            return jQuery(element)
-                .css({
+        
+         $(element).css({
                     "height": "auto",
                     "overflow-y": "hidden"
                 })
-             
-                .height(height);
+          var  height  = element.scrollHeight>20?element.scrollHeight:"";
+               $(element).height(height);
+         return $(element);
         }
         return this.each(function () {
             autoHeight_(this).on("input", function () {

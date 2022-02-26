@@ -13607,6 +13607,7 @@ function iframeLoaded() {
         global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
+            html=html.replace(/>[ ]+</g, "><");
     }
     var css = window.editorCSSGround.getValue();
     var block = getIframeBlockInside(pid, css, js, html);
@@ -13654,6 +13655,8 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
     } else {
         var html = window.editorHTMLGround.getValue();
+             
+            html = html.replace(/>[ ]+</g, "><");
         insertHtmlSendDbBybacklogId(html);
     }
     getIframeBlock(elm);
@@ -13677,11 +13680,12 @@ function setBacklogAsHtmlCodeGround(backlogId,js,css) {
         global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
+        html  = html.replace(/>[ ]+</g, "><");
     }
  
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = "<style>"+css+"</style>"+ html+"<script>"+js+"</script>" ;
+    json.kv.backlogHtml = "<style>"+css+"</style>"+ html.toString()+"<script>"+js+"</script>" ;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13798,7 +13802,7 @@ function insertHtmlSendDbBybacklogId(body) {
     var pid = global_var.current_backlog_id;
     var json = initJSON();
     json.kv.fkBacklogId = pid;
-    json.kv.backlogHtml = body;
+    json.kv.backlogHtml = body.toString();
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13809,7 +13813,7 @@ function insertHtmlSendDbBybacklogId(body) {
         crossDomain: true,
         async: true,
         success: function (res) {
-
+     
             setHistoryCodeGround(pid, body, "html")
         }
     });
@@ -16772,7 +16776,7 @@ function getBugList4UserStory(bgId, tbody,list) {
                                  .css("overflow",'hidden')
                                 .append($("<a>")
                                         .attr('href', '#')
-                                        .attr("onclick", 'taskManagement.updateTask.callTaskCard4BugTask(this,"' + prd + '","' + ela[i].id + '")')
+                                        .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + ela[i].fkProjectId + "','" + ela[i].id + "')")
                                         .text(ela[i].taskName)))
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
@@ -16808,7 +16812,7 @@ function getBugList4UserStory(bgId, tbody,list) {
                        
                      var content  =  ''
                      $(list).append(`<li class="task-tr-list" data-tasktype="${ela[i].fkTaskTypeId}"  data-nature="${ela[i].taskNature}" data-tr-status="${ela[i].taskStatus}" data-assignee="${ela[i].createBy}"  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}'>${ela[i].taskNature==='bug'?'<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>':""}
-                              <a href='#' onclick='taskManagement.updateTask.callTaskCard4BugTask(this,"${prd}"," ${ela[i].id} ")'>${ela[i].taskName}</a></li>`)
+                              <a href='#' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${ela[i].fkProjectId}','${ela[i].id}')">${ela[i].taskName}</a></li>`)
                  }
             }
 
@@ -18722,7 +18726,7 @@ function insertAutoTaskOnDrag(bgId,typid,prid) {
     json.kv.fkBacklogId = bgId;
     json.kv.taskName = txt;
     json.kv.fkProjectId = prid;
-    json.kv.tasktypeId = typid;
+    json.kv.fkTaskTypeId = typid;
     var that = this;
     var data = JSON.stringify(json);
     $("#multipleClosedTask").modal("hide");
