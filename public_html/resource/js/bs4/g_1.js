@@ -1679,9 +1679,9 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
 
 });
 $(document).on('click', '.baclog-large-modal-ididit', function (event) {
-    dragElment = $(this).closest('.task-content');
+    var dragElmenst = $(this).closest('.task-content');
     var bgId  = $(this).attr("data-status");
-    updateTaskTypeDragDrop(bgId)
+    updateTaskTypeDragDrop(bgId,dragElmenst)
 
 });
 $(document).on('click', '.baclog-large-modal-history', function (event) {

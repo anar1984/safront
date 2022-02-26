@@ -2224,16 +2224,19 @@ var Component = {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var star = Component.AddMandatoryStar(comp);
         var div = Component.ContainerDiv(comp);
-        var el = $('<input></input>')
+        var el = $('<input>')
                 .attr('sa-type', 'checkbox')
                 .attr('type', 'checkbox');
         Component.ComponentEvent.Init(el, comp);
-        div.append(el)
-                .append($("<span class='comp-title-span'></span>")
-                        .attr('style', gui_component.defaultCSS.InnerCheckBox + Component.ReplaceCSS(comp.css))
-                        .text((comp.content) ? comp.content : comp.label)
-                        .append(star)
-                        .append('<br>'));
+        div.append( $("<label class='checkmarkcontainer live-checkbox'>")
+           
+           .append(el)
+           .append(`<span class="checkmark"></span>`)
+           .append($("<span>")
+                     .attr('style', gui_component.defaultCSS.InnerCheckBox + Component.ReplaceCSS(comp.css))
+                     .text((comp.content) ? comp.content : comp.label)
+                     .append(star)));
+      
         return $('<div></div>').append(div).html();
     },
     InnerLine: function (comp) {

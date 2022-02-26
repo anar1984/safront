@@ -413,6 +413,7 @@ const taskManagement = {
                             <div class="cs-input-group">
                                 <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
                                 <select class="issue_selectpicker" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
+                                    <option value="daily">${lang_task.windowAddTask.daily}</option>
                                     <option value="weekly">${lang_task.windowAddTask.weekly}</option>
                                     <option value="monthly">${lang_task.windowAddTask.monthly}</option>
                                     <option value="yearly">${lang_task.windowAddTask.yearly}</option>
@@ -423,10 +424,21 @@ const taskManagement = {
                             <div class="cs-input-group">
                                 <div class="input-group-addon">${lang_task.windowAddTask.selectReminder}</div>
                                 <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
-                                    <option value="at_start_time">At start time</option>
-                                    <option value="5_minutes_before">5 minutes before</option><option value="10_minutes_before">10 minutes before</option><option value="15_minutes_before">15 minutes before</option> 
-                                     <option value="20_minutes_before">20 minutes before</option><option value="25_minutes_before">25 minutes before</option>                                    <option value="30_minutes_before">30 minutes before</option>                                    <option value="45_minutes_before">45 minutes before</option>                                    <option value="1_hour_before">1 hour before</option>                                    <option value="2_hours_before">2 hours before</option>                                    <option value="3_hours_before">3 hours before</option>                                    <option value="12_hours_before">12 hours before</option>                                    <option value="24_hours_before">24 hour before</option>                        <option value="2_days_before">2 days before</option>
-                                    <option value="1_week_before">1 week before</option>
+                                   <option value="at_start_time">${lang_task.scheduleBefore.at_start_time}</option>
+                                     <option value="5_minutes_before">${lang_task.scheduleBefore["5_minutes_before"]}</option>
+                                     <option value="10_minutes_before">${lang_task.scheduleBefore['10_minutes_before']}</option>
+                                     <option value="15_minutes_before">${lang_task.scheduleBefore['15_minutes_before']}</option>
+                                     <option value="20_minutes_before">${lang_task.scheduleBefore['20_minutes_before']}</option>
+                                     <option value="25_minutes_before">${lang_task.scheduleBefore['25_minutes_before']}</option>
+                                     <option value="30_minutes_before">${lang_task.scheduleBefore['30_minutes_before']}</option>
+                                     <option value="45_minutes_before">${lang_task.scheduleBefore['45_minutes_before']}</option>
+                                     <option value="1_hour_before">${lang_task.scheduleBefore['1_hour_before']}</option>
+                                     <option value="2_hours_before">${lang_task.scheduleBefore['2_hours_before']}</option>
+                                     <option value="3_hours_before">${lang_task.scheduleBefore['3_hours_before']}</option>
+                                     <option value="12_hours_before">${lang_task.scheduleBefore['12_hours_before']}</option>
+                                     <option value="24_hours_before">${lang_task.scheduleBefore['24_hours_before']}</option>
+                                     <option value="2_days_before">${lang_task.scheduleBefore['2_days_before']}</option>
+                                     <option value="1_week_before">${lang_task.scheduleBefore['1_week_before']}</option>
                                 </select>
                             </div>
                         </div>
@@ -441,13 +453,13 @@ const taskManagement = {
                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
 
                                 <div class="cs-horizontal-checkboxes" id="run_task_weekday_select">
-                                    <label><input type="checkbox" value="monday" ><span>Monday</span></label>
-                                    <label><input type="checkbox" value="tuesday" ><span>Tuesday</span></label>
-                                    <label><input type="checkbox" value="wednesday" ><span>Wednesday</span></label>
-                                    <label><input type="checkbox" value="thursday" ><span>Thursday</span></label>
-                                    <label><input type="checkbox" value="friday" ><span>Friday</span></label>
-                                    <label><input type="checkbox" value="saturday" ><span>Saturday</span></label>
-                                    <label><input type="checkbox" value="sunday" ><span>Sunday</span></label>
+                                    <label><input type="checkbox" value="monday" ><span>${lang_task.weekDays.monday}</span></label>
+                                    <label><input type="checkbox" value="tuesday" ><span>${lang_task.weekDays.tuesday}</span></label>
+                                    <label><input type="checkbox" value="wednesday" ><span>${lang_task.weekDays.wednesday}</span></label>
+                                    <label><input type="checkbox" value="thursday" ><span>${lang_task.weekDays.thursday}</span></label>
+                                    <label><input type="checkbox" value="friday" ><span>${lang_task.weekDays.friday}</span></label>
+                                    <label><input type="checkbox" value="saturday" ><span>${lang_task.weekDays.saturday}</span></label>
+                                    <label><input type="checkbox" value="sunday" ><span>${lang_task.weekDays.sunday}</span></label>
                                 </div>
 
                            </div>
@@ -1019,8 +1031,8 @@ const taskManagement = {
                 <div class="d-flex">
                 <div class="mr-auto"> <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;"></div>
                     <div class="showhide-col-footer task-check-list-show-hide ">
-                        <span class="scm-show active"><i class="fas fa-eye"></i></span>
-                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                        <span class="scm-show "><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide active"><i class="fas fa-eye-slash"></i></span>
                    </div>
                 </div>
                     <ul>
@@ -1427,6 +1439,7 @@ const taskManagement = {
                              <div class="cs-input-group">
                                  <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
                                  <select class="issue_selectpicker" onchange="updateTask4Details(this, 'intensive')" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
+                                     <option value="daily">${lang_task.windowAddTask.daily}</option>
                                      <option value="weekly">${lang_task.windowAddTask.weekly}</option>
                                      <option value="monthly">${lang_task.windowAddTask.monthly}</option>
                                      <option value="yearly">${lang_task.windowAddTask.yearly}</option>
@@ -1437,21 +1450,21 @@ const taskManagement = {
                              <div class="cs-input-group">
                                  <div class="input-group-addon">${lang_task.windowAddTask.selectReminder}</div>
                                  <select class="issue_selectpicker" name="run_task_repeat_select" onchange="updateTask4Details(this, 'remindMeParam')"  id='run_task_reminder_select_detail' data-live-search="true">
-                                     <option value="at_start_time">At start time</option>
-                                     <option value="5_minutes_before">5 minutes before</option>
-                                     <option value="10_minutes_before">10 minutes before</option>
-                                     <option value="15_minutes_before">15 minutes before</option>
-                                     <option value="20_minutes_before">20 minutes before</option>
-                                     <option value="25_minutes_before">25 minutes before</option>
-                                     <option value="30_minutes_before">30 minutes before</option>
-                                     <option value="45_minutes_before">45 minutes before</option>
-                                     <option value="1_hour_before">1 hour before</option>
-                                     <option value="2_hours_before">2 hours before</option>
-                                     <option value="3_hours_before">3 hours before</option>
-                                     <option value="12_hours_before">12 hours before</option>
-                                     <option value="24_hours_before">24 hour before</option>
-                                     <option value="2_days_before">2 days before</option>
-                                     <option value="1_week_before">1 week before</option>
+                                     <option value="at_start_time">${lang_task.scheduleBefore.at_start_time}</option>
+                                     <option value="5_minutes_before">${lang_task.scheduleBefore["5_minutes_before"]}</option>
+                                     <option value="10_minutes_before">${lang_task.scheduleBefore['10_minutes_before']}</option>
+                                     <option value="15_minutes_before">${lang_task.scheduleBefore['15_minutes_before']}</option>
+                                     <option value="20_minutes_before">${lang_task.scheduleBefore['20_minutes_before']}</option>
+                                     <option value="25_minutes_before">${lang_task.scheduleBefore['25_minutes_before']}</option>
+                                     <option value="30_minutes_before">${lang_task.scheduleBefore['30_minutes_before']}</option>
+                                     <option value="45_minutes_before">${lang_task.scheduleBefore['45_minutes_before']}</option>
+                                     <option value="1_hour_before">${lang_task.scheduleBefore['1_hour_before']}</option>
+                                     <option value="2_hours_before">${lang_task.scheduleBefore['2_hours_before']}</option>
+                                     <option value="3_hours_before">${lang_task.scheduleBefore['3_hours_before']}</option>
+                                     <option value="12_hours_before">${lang_task.scheduleBefore['12_hours_before']}</option>
+                                     <option value="24_hours_before">${lang_task.scheduleBefore['24_hours_before']}</option>
+                                     <option value="2_days_before">${lang_task.scheduleBefore['2_days_before']}</option>
+                                     <option value="1_week_before">${lang_task.scheduleBefore['1_week_before']}</option>
                                  </select>
                              </div>
                          </div>
@@ -1466,13 +1479,13 @@ const taskManagement = {
                                 <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
  
                                  <div class="cs-horizontal-checkboxes" id="run_task_weekday_select_detail">
-                                     <label><input type="checkbox" value="monday" ><span>Monday</span></label>
-                                     <label><input type="checkbox" value="tuesday" ><span>Tuesday</span></label>
-                                     <label><input type="checkbox" value="wednesday" ><span>Wednesday</span></label>
-                                     <label><input type="checkbox" value="thursday" ><span>Thursday</span></label>
-                                     <label><input type="checkbox" value="friday" ><span>Friday</span></label>
-                                     <label><input type="checkbox" value="saturday" ><span>Saturday</span></label>
-                                     <label><input type="checkbox" value="sunday" ><span>Sunday</span></label>
+                                     <label><input type="checkbox" value="monday" ><span>${lang_task.weekDays.monday}</span></label>
+                                    <label><input type="checkbox" value="tuesday" ><span>${lang_task.weekDays.tuesday}</span></label>
+                                    <label><input type="checkbox" value="wednesday" ><span>${lang_task.weekDays.wednesday}</span></label>
+                                    <label><input type="checkbox" value="thursday" ><span>${lang_task.weekDays.thursday}</span></label>
+                                    <label><input type="checkbox" value="friday" ><span>${lang_task.weekDays.friday}</span></label>
+                                    <label><input type="checkbox" value="saturday" ><span>${lang_task.weekDays.saturday}</span></label>
+                                    <label><input type="checkbox" value="sunday" ><span>${lang_task.weekDays.sunday}</span></label>
                                  </div>
  
                             </div>
@@ -2001,7 +2014,7 @@ const taskManagement = {
                         ) :
                         '';
 
-                    var tr = $("<li class='d-flex'>")
+                    var tr = $("<li >")
                                .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
                                .attr("data-checked",o.isChecked)
                         .append($('<div class="item-checkbox">')
@@ -4641,10 +4654,7 @@ $(document).on("change", '#newAddCheckList', function (e) {
 
     $(this).parent().find('ul').append(`<li class="d-flex">
     <div class="item-checkbox">
-    <label class="checkmarkcontainer">
-    <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
-    <span class="checkmark">
-    </span></label>
+    
     </div>
     <div class="mr-auto w-100">
     <textarea rows="1" class="form-control " oid="">${$(this).val()}</textarea></div>
