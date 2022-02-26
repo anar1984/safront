@@ -3348,7 +3348,7 @@ const taskManagement = {
                     return `
                     <div class="col pl-0 pr-0" id="">
                    <div class="row" style="margin: 0;">
-                       <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
+                       <div class='col-12 tableFixHead' id1="bugList" style="padding: 0; overflow-y: hidden; height: calc(100vh - 100px );">
                        <div class="cs-task-panel-column cs-task-panel-column-issue">
                        </div>
                        </div>
