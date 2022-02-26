@@ -34,7 +34,6 @@ const taskManagement = {
                 }, 1000);
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
-                $("#issue-managment-add-task #taskNameInputNew2").autoHeight();
 
             },
             genModalSelfBlock: function () {
@@ -99,7 +98,7 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <textarea type="text" autocomplete="off" row="1" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2"></textarea>
+                        <input type="text" autocomplete="off" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2">
                          <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="pt-1">
@@ -959,12 +958,12 @@ const taskManagement = {
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
                                 <div class="card-UserStory-header-edit position-relative" style="display: none; width: 100%;top: 0;height: 30px;">
-                                    <textarea autocomplete="off" class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}"></textarea>
-                                    <div class=" card-UserStory-header-accept text-center TextHeader "
+                                    <input autocomplete="off" class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
+                                    <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-check"></i>
                                     </div>
-                                    <div class=" card-UserStory-header-delete text-center TextHeader " id="DeleteText" style="color: #38628a;background: #dfeef7;">
+                                    <div class=" card-UserStory-header-delete TextHeader " id="DeleteText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-times"></i>
                                     </div>
         
@@ -999,7 +998,7 @@ const taskManagement = {
                           </div>
                         </div>
                         <div class="">
-                          <span class="cs-close-next-eb-btn"><i class="fa fa-close"></i></span>
+                          <span class="cs-close-next-eb-btn remove-next-btn"><i class="fa fa-close"></i></span>
                         </div>
                       </div>
                       <div class="cs-input-group" style="margin-top:10px">
@@ -1017,13 +1016,7 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                <div class="d-flex">
-                <div class="mr-auto"> <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;"></div>
-                    <div class="showhide-col-footer task-check-list-show-hide ">
-                        <span class="scm-show active"><i class="fas fa-eye"></i></span>
-                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
-                   </div>
-                </div>
+                    <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
                     <ul>
                     </ul>
                 </div>
@@ -1730,11 +1723,7 @@ const taskManagement = {
                $("#taskMgmtModal").modal("show");
                $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
                let headerText = $(el).html();
-                 var headerTit  = $(".card-UserStory-header-text")
-                     headerTit.html(headerText);
-                
-               
-
+               $(".card-UserStory-header-text").html(headerText);
                $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
                 $("#task-info-modal-status").selectpicker('refresh');
                 $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
@@ -1751,22 +1740,19 @@ const taskManagement = {
                     $(".card-UserStory-header-text-code").html("Tapşırıq-"+coreBugKV[taskId].orderNoSeq+"");
                 }
                 if (coreBugKV[taskId].taskStatus === 'new'||coreBugKV[taskId].taskStatus === 'waiting') {
-                       if(coreBugKV[taskId].fkAssigneeId===global_var.current_ticker_id){
-                        $.saConfirm({
-                            "title":lang_task.windowUpdateTask.start,
-                            "confirmButton":lang_task.windowUpdateTask.yes,
-                            "cancelButton":lang_task.windowUpdateTask.no,
-                            "parent":'#taskMgmtModal .modal-content',
-                            cancelAction: function (params) {
-                            },
-                            confirmAction: function (params) {
-                              updateTask4ShortChangeDetails('ongoing', "taskStatus");
-                            },
-                            closeAction:function (params) {
-                            }
-                        })
-                       }
-                     
+                      $.saConfirm({
+                          "title":lang_task.windowUpdateTask.start,
+                          "confirmButton":lang_task.windowUpdateTask.yes,
+                          "cancelButton":lang_task.windowUpdateTask.no,
+                          "parent":'#taskMgmtModal .modal-content',
+                          cancelAction: function (params) {
+                          },
+                          confirmAction: function (params) {
+                            updateTask4ShortChangeDetails('ongoing', "taskStatus");
+                          },
+                          closeAction:function (params) {
+                          }
+                      })
 
                 }
             
@@ -1777,7 +1763,6 @@ const taskManagement = {
                     $("#updateTask-priority-btn").removeClass("active");
                 }
                 $('#addComment4Task_comment').autoHeight();
-            
                 if (coreBugKV[taskId].backlogName) {
                     $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
                         .attr('pid', coreBugKV[taskId].fkBacklogId)
@@ -1790,12 +1775,7 @@ const taskManagement = {
 
          setTimeout(() => {
              
-            if(headerTit.textWidth()>headerTit.width()){
-                headerTit.attr('data-placement', 'top')
-                .attr('data-trigger', 'hover')
-                .attr('data-toggle', 'popover')
-                .attr("data-content",headerText);
-             }
+          
         if (!taskId) {
             return;
         }
@@ -2008,9 +1988,8 @@ const taskManagement = {
                         ) :
                         '';
 
-                    var tr = $("<li class=''>")
-                        .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
-                        .attr("data-checked",o.isChecked)
+                    var tr = $("<li class='d-flex'>")
+                        .addClass((o.isChecked === '1') ? 'on-checked' : '')
                         .append($('<div class="item-checkbox">')
                             .append($('<label class="checkmarkcontainer">')
                                 .append($('<input>')
@@ -2961,13 +2940,126 @@ const taskManagement = {
             `
             },
             genSprintBlock:function (param) {  
-                return`<div class="bugSprint-elements sprint-show-4-task">
-                <span><a class="btn" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
-                </span>
-                <span class="newlabelspan" style="cursor: pointer;"
-                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-                <div class="dropdown-divider" style="padding:0px;"></div>
-                <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+                return`<div class="bugSprint-elements category-elements">
+                <div class="category-item-boxes text-left">
+                    <div class="category-show-hide d-flex">
+                        <div class="category" style="cursor: pointer;">  
+                            <span class="icon"><i class="cs-svg-icon category"></i></span> New Sprint
+                        </div>
+                        <div class="created new-label-btn" title="New Label" data-target="#insertNewSprint4Task"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="category-create-input cs-input-group fade" id="insertNewSprint4Task">
+                        <div class="col-12" style="border-radius: 14px;">
+                            <div class="d-flex mb-1"><input type="text" class="mr-auto sw-color-main-input" />
+                                <span class="color-main-btn cs-svg-icon color-main"></span>
+                            </div>
+                            <div class="d-flex mb-1">
+                                <input type="text" class="mr-auto sw-color-main-input" />
+                            <div class="add-cat-label"><i class="fa fa-plus"></i></div>
+                          </div>
+                        </div>
+                        <ul class="color-skin-items fade" style="display:none">
+                            <li class="circle color_1">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="E51C23">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_2">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="0E3494">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_3">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="18AF30">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_4">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="FFC107">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_5">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="9C27B0">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_6">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="3E55D8">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_7">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="009688">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_8">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="FF6F07">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_9">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="E91E63">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_10">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="04CEE8">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_11">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="5ADB8E">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_12">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="FF7E55">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_13">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="795548">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_14">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="9CBECE">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_15">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="8C9787">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="circle color_16">
+                                <label class="checkmarkcontainer">
+                                    <input type="radio" name="color_main" class="noteCheckListItem" value="FFFFFF">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div id="sprintlist4Task" class="sprintlist4Task"></div>
+                </div>
             </div>`
             },
             genNotificationBlock: function () {
@@ -3278,15 +3370,16 @@ const taskManagement = {
             </div>`
                 },
                 genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
-                    return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
-                    <div class="cs-cart-head-title p-2" style="padding-bottom:5px;"> <i class="cs-svg-icon tapshiriq-dark"></i>
-                    ${notChwk()?"":`<span href="#" class="operation " >${isMeet==='1'?"Toplantı":"Tapşırıq"}</span>`}
-                    <div class="d-flex pl-0 pr-0 pb-0 pt-0 mb-0 notify-title-box">
-                    <div class="mr-auto ncs-ellipsis"><span class="id">${taskid}</span>
-                        <div class="d-inline-block notify-top-section">
-                            <div class="mr-auto">
-                                <span class="deadline"> ${deadline}</span>
+                    return `<div class="cs-task-item-in-box redirectClass cs-white-bg d-flex" id="${id}" pid="">
+                        <div class="elm-left p-2 bg-status-${stats}">
+                            <div class="cs-task-card-avatar-boxes mb-auto">
+                                <ul class='d-flex'>
+                                    <li><img class="Assigne-card-story-select-img" width="18px" height="18px" src="${createdImg}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${createdName}" title="" data-original-title="Daxil Edən"></li>
+                                    <li><img class="Assigne-card-story-select-img" width="18px" height="18px" src="${assigneImage}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${assignName}" title="" data-original-title="İcra Edən"></li>
+                                </ul>
                             </div>
+                            <div class="cs-open-btn cs-open-btn-share" style="padding: 0 1px;"><i class="fas fa-ellipsis-v"></i></div>
+                            <div class="cs-open-btn cs-open-btn-more"><i class="fas fa-angle-double-down"></i></div>
                         </div>
                         <div class="elm-right ml-auro w-100">
                             <div class="cs-cart-head-title pr-2 pt-2" style="padding-left: 7px;padding-bottom:0;">                        
@@ -3316,45 +3409,35 @@ const taskManagement = {
                                 <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
                                 </div>
                             </div>
-                                 <div class="flex-fill text-right">
-                                    <div class="cs-task-card-datatime d-flex text-left ml-2">
-                                        <span>${ceratedDate} </span>
-                                        <div class="assignee-created-avatar ml-auto">
-                                            <ul>
-                                                <li><img src="https://test.sourcedagile.com/api/get/files/th-img_77E37A82556AC.png" /></li>
-                                                <li><img src="https://test.sourcedagile.com/api/get/files/shekil1_77A7F3AC232D5.png" /></li>
-                                            </ul>
-                                        </div>
+                
+                            <div class="cs-task-card-bottom">
+                                <div class="canban-item-btns d-flex">
+                                    <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
+                                        <i class="cs-svg-icon c-icon-1"></i>
                                     </div>
-                                <div class="bg-status-${stats}" style="height: 2px; margin: 0px 0px 0px 7px;"></div>
-                                <div class="cs-staturs-circle-note1 ml-2 d-inline-block float-left">
-                                <span>${getStatusName(stats)}</span></div><div class="canban-item-btns d-flex float-right">
-                                            <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ididit")}">
-                                                <i class="cs-svg-icon c-icon-1"></i>
-                                            </div>
-                                            <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("rejectTask")}"  >
-                                                <i class="cs-svg-icon c-icon-2"></i>
-                                            </div>
-                                            <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("cancel")}">
-                                                <i class="cs-svg-icon c-icon-3"></i>
-                                            </div>
-                                            <div class="btn-4 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ForwardTaskTo")}">
-                                                <i class="cs-svg-icon c-icon-6"></i>
-                                            </div>
-                                            ${notChwk()?`<div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getStatusName("UAT")}">
-                                            <i class="cs-svg-icon c-icon-6"></i>
-                                        </div>`:""}
-                                            <div class="btn-6 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("history")}">
-                                                <i class="cs-svg-icon c-icon-6"></i>
-                                            </div>
-                                            <div class="btn-7 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("chat")}">
-                                                <i class="cs-svg-icon c-icon-6"></i>
-                                            </div>
-                                            </div> 
-                                            </div> 
-                                             </div> 
-                                              </div>
-                                               </div>`
+                                    <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("rejectTask")}"  >
+                                        <i class="cs-svg-icon c-icon-2"></i>
+                                    </div>
+                                    <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("cancel")}">
+                                        <i class="cs-svg-icon c-icon-3"></i>
+                                    </div>
+                                    <div class="btn-4 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("ForwardTaskTo")}">
+                                        <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>
+                                    ${notChwk()?`<div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getStatusName("UAT")}">
+                                    <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>`:""}
+                                    <div class="btn-6 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("history")}">
+                                        <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>
+                                    <div class="btn-7 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${getOperName("chat")}">
+                                        <i class="cs-svg-icon c-icon-6"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>`
                 },
                 getKanbanBodyBlock: function (res, typeRow, st,pageNo) {
                     $(".count-cs-" + st).text(res.kv.tableCount);
@@ -4301,14 +4384,13 @@ const taskManagement = {
             crossDomain: true,
             async: true,
             success: function (res) {
-                $(elm).empty();
+
                 var dt = res.tbl[0].r;
                 for (let index = 0; index < dt.length; index++) {
 
                     var nm = dt[index].typeName;
                     var ids = dt[index].id;
                     var opt = $('<option>').val(ids).text(nm);
-                   
                     $(elm).append(opt);
                     if (dlm = 'load') {
                         try {
@@ -4890,7 +4972,7 @@ function changeMeetAndTask(elm,value){
         $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
     
         $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
-        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text(lang_task.windowUpdateTask.decisions);
+        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
         $("#updateCheckList").attr("placeholder",'Gündəm');
         $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
     }else {
@@ -4902,7 +4984,7 @@ function changeMeetAndTask(elm,value){
         $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
     
         $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
-        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text(lang_task.windowUpdateTask.subtask);
+        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
         $("#updateCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
         $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
     }
@@ -5317,26 +5399,6 @@ function createChildTask() {
 $(document).click(function () {
     $("#contextMenu").hide();
   })
-$(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-show", function (e) {
-      
-         var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
-          list.each(function (params) {
-              $(this).addClass("d-flex");
-              $(this).removeClass("d-none");
-          })
-          $(this).addClass("active");
-          $(".task-check-list-box .task-check-list-show-hide .scm-hide").removeClass("active");
-});
-$(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-hide", function (e) {
-      
-         var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
-          list.each(function (params) {
-              $(this).addClass("d-none");
-              $(this).removeClass("d-flex");
-          })
-          $(this).addClass("active");
-          $(".task-check-list-box .task-check-list-show-hide .scm-show").removeClass("active");
-});
 $(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
    
     $(this).closest('tbody').find("tr").removeClass("active")
@@ -5593,7 +5655,7 @@ function uploadFile4IpoTAsk(id) {
     }
 }
 
-$(document).on('click', ".cs-close-next-eb-btn", function (e) {
+$(document).on('click', ".cs-next-element-box .remove-next-btn", function (e) {
     $(this).closest('.cs-next-element-box').remove();
 });
 
@@ -5614,19 +5676,15 @@ $(document).on("click", '#pills-tab .nav-link', function (e) {
 $(document).on('click', ".usm-more-filter-btn", function (e) {
     $(this).toggleClass('show');
     $('.usm-more-filter').toggleClass('show');
-    $(this).find('i').toggleClass('fa-angle-right fa-angle-down');
+    $(this).find('i').toggleClass('fa-plus fa-minus');
 });
 
 $(document).on("dblclick", ".card-UserStory-header-text", function () {
     $(this).hide();
     $(this).parent().find(".card-UserStory-header-edit").css("display", "inline-block")
-    let Namestory = $(this).text();
-    $(this).parent().find(".card-UserStory-header-input").val(Namestory);
-    $(this).parent().find(".card-UserStory-header-input").autoHeight();
-
-
-     
-}) 
+    let Namestory = $(this).parent().parent().find(".card-UserStory-header-text").text()
+    $(this).parent().find(".card-UserStory-header-input").val(Namestory)
+})
 
 
 $(document).on("click", "#AcceptText", function (e) {
@@ -5650,4 +5708,10 @@ $(document).on("click", ".new-label-btn", function (e) {
 })
 $(document).on("click", ".color-main-btn", function (e) {
     $(this).closest('.category-create-input').find('.color-skin-items').animate({height: "toggle"}, 350).toggleClass('show');
+})
+$(document).on("click", ".cs-open-btn-share", function (e) {
+    $(this).closest('.cs-task-item-in-box').find('.cs-task-card-bottom').toggleClass('show');
+})
+$(document).on("click", ".cs-open-btn-more", function (e) {
+    $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
 })
