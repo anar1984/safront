@@ -34,7 +34,7 @@ const taskManagement = {
                 }, 1000);
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
-
+                $("#issue-managment-add-task #taskNameInputNew2").autoHeight();
             },
             genModalSelfBlock: function () {
                 return ` <div class="modal fade cs-modal-box issue-managment-add-task ${notChwk()?"":"left  cs-modal-box story-card-modal"}" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
@@ -98,7 +98,7 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-2">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" autocomplete="off" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2">
+                    <textarea type="text" autocomplete="off" row="1" class="form-control newTaskNameInput bg-transparent pl-0 pr-0 pb-0 pb-0" name="testCaseTitle" placeholder='${lang_task.windowAddTask.taskName}' id="taskNameInputNew2"></textarea>
                          <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="pt-1">
@@ -958,12 +958,12 @@ const taskManagement = {
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
                                 <div class="card-UserStory-header-edit position-relative" style="display: none; width: 100%;top: 0;height: 30px;">
-                                    <input autocomplete="off" class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
-                                    <div class=" card-UserStory-header-accept TextHeader "
+                                <textarea autocomplete="off" class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}"></textarea>
+                                    <div class=" card-UserStory-header-accept text-center TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-check"></i>
                                     </div>
-                                    <div class=" card-UserStory-header-delete TextHeader " id="DeleteText" style="color: #38628a;background: #dfeef7;">
+                                    <div class=" card-UserStory-header-delete text-center TextHeader " id="DeleteText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-times"></i>
                                     </div>
         
@@ -998,7 +998,7 @@ const taskManagement = {
                           </div>
                         </div>
                         <div class="">
-                          <span class="cs-close-next-eb-btn remove-next-btn"><i class="fa fa-close"></i></span>
+                          <span class="cs-close-next-eb-btn "><i class="fa fa-close"></i></span>
                         </div>
                       </div>
                       <div class="cs-input-group" style="margin-top:10px">
@@ -1016,7 +1016,13 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
+                <div class="d-flex">
+                <div class="mr-auto"> <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;"></div>
+                    <div class="showhide-col-footer task-check-list-show-hide ">
+                        <span class="scm-show active"><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                   </div>
+                </div>
                     <ul>
                     </ul>
                 </div>
@@ -1723,7 +1729,8 @@ const taskManagement = {
                $("#taskMgmtModal").modal("show");
                $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
                let headerText = $(el).html();
-               $(".card-UserStory-header-text").html(headerText);
+               var headerTit  = $(".card-UserStory-header-text")
+                   headerTit.html(headerText);
                $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
                 $("#task-info-modal-status").selectpicker('refresh');
                 $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
@@ -1740,20 +1747,21 @@ const taskManagement = {
                     $(".card-UserStory-header-text-code").html("Tapşırıq-"+coreBugKV[taskId].orderNoSeq+"");
                 }
                 if (coreBugKV[taskId].taskStatus === 'new'||coreBugKV[taskId].taskStatus === 'waiting') {
-                      $.saConfirm({
-                          "title":lang_task.windowUpdateTask.start,
-                          "confirmButton":lang_task.windowUpdateTask.yes,
-                          "cancelButton":lang_task.windowUpdateTask.no,
-                          "parent":'#taskMgmtModal .modal-content',
-                          cancelAction: function (params) {
-                          },
-                          confirmAction: function (params) {
-                            updateTask4ShortChangeDetails('ongoing', "taskStatus");
-                          },
-                          closeAction:function (params) {
-                          }
-                      })
-
+                    if(coreBugKV[taskId].fkAssigneeId===global_var.current_ticker_id){
+                        $.saConfirm({
+                            "title":lang_task.windowUpdateTask.start,
+                            "confirmButton":lang_task.windowUpdateTask.yes,
+                            "cancelButton":lang_task.windowUpdateTask.no,
+                            "parent":'#taskMgmtModal .modal-content',
+                            cancelAction: function (params) {
+                            },
+                            confirmAction: function (params) {
+                              updateTask4ShortChangeDetails('ongoing', "taskStatus");
+                            },
+                            closeAction:function (params) {
+                            }
+                        })
+                       }
                 }
             
                 //set backlog infos
@@ -1774,7 +1782,12 @@ const taskManagement = {
          
 
          setTimeout(() => {
-             
+            if(headerTit.textWidth()>headerTit.width()){
+                headerTit.attr('data-placement', 'top')
+                .attr('data-trigger', 'hover')
+                .attr('data-toggle', 'popover')
+                .attr("data-content",headerText);
+             }
           
         if (!taskId) {
             return;
@@ -1989,7 +2002,8 @@ const taskManagement = {
                         '';
 
                     var tr = $("<li class='d-flex'>")
-                        .addClass((o.isChecked === '1') ? 'on-checked' : '')
+                               .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
+                               .attr("data-checked",o.isChecked)
                         .append($('<div class="item-checkbox">')
                             .append($('<label class="checkmarkcontainer">')
                                 .append($('<input>')
@@ -4384,7 +4398,7 @@ const taskManagement = {
             crossDomain: true,
             async: true,
             success: function (res) {
-
+                 $(elm).empty();
                 var dt = res.tbl[0].r;
                 for (let index = 0; index < dt.length; index++) {
 
@@ -4972,7 +4986,7 @@ function changeMeetAndTask(elm,value){
         $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
     
         $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
-        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
+        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text(lang_task.windowUpdateTask.decisions);
         $("#updateCheckList").attr("placeholder",'Gündəm');
         $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
     }else {
@@ -4984,7 +4998,7 @@ function changeMeetAndTask(elm,value){
         $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
     
         $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
-        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
+        $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text(lang_task.windowUpdateTask.subtask);
         $("#updateCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
         $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
     }
@@ -5671,7 +5685,26 @@ $(document).on("click", '#pills-tab .nav-link', function (e) {
        $('.schedule-dcbtn').hide();
     }
 }); 
-
+$(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-show", function (e) {
+      
+    var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
+     list.each(function (params) {
+         $(this).addClass("d-flex");
+         $(this).removeClass("d-none");
+     })
+     $(this).addClass("active");
+     $(".task-check-list-box .task-check-list-show-hide .scm-hide").removeClass("active");
+});
+$(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-hide", function (e) {
+ 
+    var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
+     list.each(function (params) {
+         $(this).addClass("d-none");
+         $(this).removeClass("d-flex");
+     })
+     $(this).addClass("active");
+     $(".task-check-list-box .task-check-list-show-hide .scm-show").removeClass("active");
+});
 
 $(document).on('click', ".usm-more-filter-btn", function (e) {
     $(this).toggleClass('show');
@@ -5682,10 +5715,11 @@ $(document).on('click', ".usm-more-filter-btn", function (e) {
 $(document).on("dblclick", ".card-UserStory-header-text", function () {
     $(this).hide();
     $(this).parent().find(".card-UserStory-header-edit").css("display", "inline-block")
-    let Namestory = $(this).parent().parent().find(".card-UserStory-header-text").text()
-    $(this).parent().find(".card-UserStory-header-input").val(Namestory)
-})
-
+    let Namestory = $(this).text();
+    $(this).parent().find(".card-UserStory-header-input").val(Namestory);
+    $(this).parent().find(".card-UserStory-header-input").autoHeight();
+     
+}) 
 
 $(document).on("click", "#AcceptText", function (e) {
     let InputText = $(this).parent().find(".card-UserStory-header-input").val()
@@ -5715,3 +5749,4 @@ $(document).on("click", ".cs-open-btn-share", function (e) {
 $(document).on("click", ".cs-open-btn-more", function (e) {
     $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
 })
+
