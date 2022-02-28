@@ -673,7 +673,7 @@ const taskManagement = {
             data.fkAssigneeId = $('.assigne-div-add-issue').getVal();
             data.fkTaskTypeId = $("#bug_task_type_id_add").val();
             data.taskNature = $("#bug_task_nature_id_add").val();
-            data.taskPriority = $("#cerateTask-priority-btn").hasClass("active")?"9":"1";
+            data.taskPriority = $("#bug_filter_priority_add").val();
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
             data.startDate = toDate('taskDeadlineStartDade');
@@ -1029,8 +1029,8 @@ const taskManagement = {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
                 <div class="d-flex">
-                <div class="mr-auto w-100"> <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;"></div>
-                    <div class="showhide-col-footer d-flex task-check-list-show-hide ">
+                <div class="mr-auto"> <input autocomplete="off" type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;"></div>
+                    <div class="showhide-col-footer task-check-list-show-hide ">
                         <span class="scm-show "><i class="fas fa-eye"></i></span>
                         <span class="scm-hide active"><i class="fas fa-eye-slash"></i></span>
                    </div>
@@ -1332,10 +1332,10 @@ const taskManagement = {
                         <div class="row addEpicTask">           
                             <div class="col-lg-12">
                                 <div class="cs-input-group">
-                                    <label class="input-group-addon">${lang_task.rightBar.storyCart} | </label>
+                                    <label class="input-group-addon">Story Card | </label>
                                     <span>
                                         <a href="#" class="cs-history-links comment-content-header-history" onclick="showUserStoryOfTaskCardModal(this)" id='task-mgmt-modal-user-story'></a>
-                                        <a href="#" class="cs-history-links btn comment-content-header-history mb-1" onclick="changeUserStoryOfTaskModal()"><i class="fas fa-exchange-alt"></i> ${lang_task.windowUpdateTask.change}</a>
+                                        <a href="#" class="cs-history-links btn comment-content-header-history mb-1" onclick="changeUserStoryOfTaskModal()"><i class="fas fa-exchange-alt"></i> Change</a>
                                     </span>
                                 </div>
                             </div>
@@ -2753,7 +2753,7 @@ const taskManagement = {
                         </div>
                         <select class='bug-mgmt-filter-select' id="inputGroupSelect01">
                             <option value='0' >${lang_task.rightBar.groupBy}</option>
-                            <option value='3' >${lang_task.table.tableColums.taskStatus}</option>
+                            <option value='4' >${lang_task.table.tableColums.taskStatus}</option>
                             ${
                                 notChwk()?`<option value='7' >${lang_task.rightBar.taskNature}</option>
                                 <option value='8' >${lang_task.rightBar.taskNature}</option>
@@ -2763,7 +2763,6 @@ const taskManagement = {
                             }
                             <option value='13' >${lang_task.rightBar.createdBy}</</option>
                             <option value='12' >${lang_task.rightBar.assignee}</</option>
-                            <option value='14' >${lang_task.rightBar.createdDate}</</option>
                         </select>
                     </div>
 
@@ -4249,7 +4248,6 @@ const taskManagement = {
                                 })
                             )
                             .append($('<td>').addClass('bug-list-column')
-                                  .attr("gid",o.createdDate)
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
                             .append($('<td>').addClass('bug-list-column')
@@ -4479,42 +4477,6 @@ const taskManagement = {
                 Toaster.showError(('somethingww'));
             }
         });
-    },
-    genModal:{
-           changeStoryCardModal: function(){
-               return   `    <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
-               style="z-index:50000;" aria-hidden="true">
-               <div class="modal-dialog modal-lg" role="document">
-                   <div class="modal-content">
-                       <div class="modal-header">
-                           <h5 class="modal-title" id="">Change User Story</h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                               <span aria-hidden="true">&times;</span>
-                           </button>
-                       </div>
-                       <div class="modal-body">
-                           <!--<form>-->
-                           <div class="row">
-                               <div class="form-group col-12">
-                                   <label for="sprintname" class="col-form-label control-label">User Story
-                                       <span style="color:red">*</span>
-                                   </label>
-                                   <select class="form-control required msg-clear" id="task-user-story-id-change"><select>
-                               </div>
-                               <div class="modal-footer">
-                                   <button type="button" class="btn btn-primary" onclick="assignUserStorytoTask()">
-                                       Assign
-                                   </button>
-                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       `
-           }
-          
     }
 }
 function getValueScheduleWeekDay(elmId) {
@@ -5130,13 +5092,14 @@ $(document).on('click', '.more-button-forIssue', function () {
 // task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function reset_task_data() {
-    $('#issue-managment-add-task .task-events-created').attr("data-taskid", '');
-    $('#issue-managment-add-task .task-events-created input').val('');
-    $('#issue-managment-add-task input#taskNameInputNew2').val('');
-    $('#issue-managment-add-task #addComment4Task_comment_new').val('');
+    $('.task-events-created').attr("data-taskid", '');
+    $('.task-events-created input').val('');
+    $('.task-events-created input').change('');
+    $('input#taskNameInputNew2').val('');
+    $('#addComment4Task_comment_new').val('');
     emptyCanvasDiv();
-    $("#issue-managment-add-task #progress_bar_new").empty();
-    $("#issue-managment-add-task .task-check-list-box ul").empty();
+    $("#progress_bar_new").empty();
+    $(".issue-managment-add-task .task-check-list-box ul").empty();
 }
 if (self.CavalryLogger) {
     CavalryLogger.start_js(["jMqsAf+"]);
@@ -5816,13 +5779,3 @@ $(document).on("click", ".cs-open-btn-more", function (e) {
     $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
 })
 
-
-function changeUserStoryOfTaskModal() {
-    $("body").append(taskManagement.genModal.changeStoryCardModal())
-    $('#change-user-story-task-modal').modal('show');
-    if (global_var.current_modal === 'loadBugChange') {
-        getBacklogListByProject();
-    } else if (global_var.current_modal === 'loadTaskManagement') {
-        SACore.FillInCombo('task-user-story-id-change');
-    }
-}

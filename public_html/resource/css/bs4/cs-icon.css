@@ -223,6 +223,15 @@
 .cs-svg-icon.search .dropdown-toggle:before {
   background-image: url(../ch-icons/search.svg);
 }
+.cs-svg-icon.search-hamisi:after, .cs-svg-icon.search-hamisi .dropdown-toggle:before {
+  background-image: url(../ch-icons/search-hamisi.svg);
+}
+.cs-svg-icon.search-daxiledilen:after, .cs-svg-icon.search-daxiledilen .dropdown-toggle:before {
+  background-image: url(../ch-icons/search-daxiledilen.svg);
+}
+.cs-svg-icon.search-icraedilen:after, .cs-svg-icon.search-icraedilen .dropdown-toggle:before {
+  background-image: url(../ch-icons/search-icraedilen.svg);
+}
 .cs-svg-icon.setting-checkbox:after,
 .cs-svg-icon.setting-checkbox .dropdown-toggle:before {
   background-image: url(../ch-icons/setting-checkbox.svg);
@@ -595,4 +604,10 @@
 }
 .cs-svg-icon.color-main:after, .cs-svg-icon.color-main .dropdown-toggle:before {
   background-image: url(../ch-icons/color-main.svg);
+}
+.cs-svg-icon.cs-svg-icon-import:after, .cs-svg-icon.cs-svg-icon-import .dropdown-toggle:before {
+  background-image: url(../ch-icons/import.svg);
+}
+.cs-svg-icon.cs-svg-icon-export:after, .cs-svg-icon.cs-svg-icon-export .dropdown-toggle:before {
+  background-image: url(../ch-icons/export.svg);
 }
