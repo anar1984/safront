@@ -15261,6 +15261,7 @@ $(document).on('change', '.user-story-prototype-change', function (evt) {
     var val = $(this).is(":checked") ? "1" : "0";
     updateUS4ShortChangeDetails(val, ustype);
 });
+
 $(document).on('change', '.user-story-short-change', function (evt) {
     var ustype = $(this).data('type');
     var val = $(this).val();
@@ -15298,8 +15299,10 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         var dwlmt = $('#tasktype-list-select4move')
         taskManagement.load_task_type_forward_to(dwlmt);
         var taskTyp = $('#story_mn_manual_status_id')
-        taskManagement.load_task_type_view_to(taskTyp);
+        taskManagement.load_task_type_view_to(taskTyp);        
         getUsers();
+    
+      
       //  new UserStory().getFktaskTypList4USMn();
         try {
             prId = prId.split('%IN%');
@@ -15325,6 +15328,11 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
       //  $('#date_timepicker_start_end-usmn').daterangepicker({}).val('');
     });
 });
+// show form permission user
+$(document).on('click', '#userStoryUserPermission12', function () {
+    console.log('salam');
+    usm_show_permission_users1();
+})
 $(document).on('click','.someyourContainer .category-item-boxes li', function (e) {
          e.stopPropagation();
   });
@@ -15509,6 +15517,17 @@ function clearManualProjectFromParam() {
     global_var.fkManualProjectId = "";
     Utility.addParamToUrl('fkManualProjectId', global_var.fkManualProjectId);
 }
+// usm permission user
+function usm_show_permission_users1(){
+        showForm('22022511522006802964');
+        $('#userAndtaskTypePermissionSAonloadCLic').click();
+    }
+function usm_nav_dropDownn_appendPermission (var_g){
+        var div = $('#upToDateButtonUSM').parent('div');
+        if (var_g == 'A') {
+            div.append(`<button class="dropdown-item" type="button" id="userStoryUserPermission12">Permission User</button>`);
+        };
+    }
 
 $(document).on('click', '.loadPermission', function (evt) {
     var f = "perm";
@@ -16434,9 +16453,25 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id) {
 }
 
 function getSTatsUserManagmentTableKanban(elm) {
+     var div = $(elm).parents(".task-content").find(".stat-div-task-content");
+    var tbody = $(div).find("tbody");
+    var list = $(div).find('ul');
+    tbody.empty();
+    list.empty();
+    // tbody append load
+    for (var i = 0; i < 5; i++){
+        tbody.append(`<div class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;position:relative;width:800px;"> 
+                                        <div class="box-loader w-100 shimmer">                                            
+                                          </div>
+                                      </div>`);
+        list.append(`<div class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;"> 
+                                        <div class="box-loader w-100 shimmer">
+                                            
+                                          </div>
+                                      </div>`)
+    }
 
-
-    var div = $(elm).parents(".task-content").find(".stat-div-task-content");
+   
     var json = {
         kv: {}
     };
@@ -16454,6 +16489,7 @@ function getSTatsUserManagmentTableKanban(elm) {
         crossDomain: true,
         async: true,
         success: function (res) {
+         
             // $(div).html('')
             var dt = res.tbl;
             for (let index = 0; index < dt.length; index++) {
@@ -16493,9 +16529,10 @@ function getSTatsUserManagmentTableKanban(elm) {
             }
          //   $("#body-large-modal-in-us4backlog .more-table-details").click();
             var bgId = $(div).closest(".task-content").attr("bid");
-            var tbody = $(div).find("tbody");
-            var list = $(div).find('ul');
-            getBugList4UserStory(bgId, tbody,list);
+         
+          
+            getBugList4UserStory(bgId, tbody, list);
+            
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -16708,7 +16745,7 @@ function getProjectValueUsManageMulti() {
 }
 
 function getBugList4UserStory(bgId, tbody,list) {
-
+    var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
     var json = {
         kv: {}
     };
@@ -16719,7 +16756,8 @@ function getBugList4UserStory(bgId, tbody,list) {
     json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
-    json.kv.considerAll = '1';
+   // json.kv.considerAll = '1';
+    json.kv.fkAssigneeId = fkAsId;
     var prd = getProjectValueUsManageMulti();
     var that = this;
     var data = JSON.stringify(json);
@@ -16825,7 +16863,7 @@ function getBugList4UserStory(bgId, tbody,list) {
                /* if(asID.length>0||ntId.length>0){
                 $(tbody).closest("table").find('.btn-show-hide-table-row').click();
                } */
-           
+              $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -18396,6 +18434,8 @@ function getUsers() {
         success: function (res) {
             try {
                 SAProjectUser.LoadUser(res);
+               var selfRes = SAProjectUser.Users[global_var.current_ticker_id]
+                loadModulPermissionSet(selfRes)
             } catch (err) {
             }
             queue4ProLoad.getUsers = true;
@@ -18405,6 +18445,11 @@ function getUsers() {
             Toaster.showError(('somethingww'));
         }
     });
+}
+
+function loadModulPermissionSet(res) {
+    var isAd = res.liUserPermissionCode;
+   usm_nav_dropDownn_appendPermission(isAd);
 }
 
 function loadAssignedLabel(backlogId, labelId) {
@@ -19788,11 +19833,26 @@ $(document).on('change', '.group-name-save', function (evt) {
 });
 // up to date click
 $(document).on('click', '#upToDateButtonUSM', function () {    
-    $('.upToDateSelectEmpty').val('');
-    $('select.upToDateSelectEmpty').selectpicker('refresh'); 
-    $('#story_mn_filter_status_id').val(['new', 'ongoing']);
-    $('#story_mn_filter_status_id').change();
+    upToDataFunction021();
 });
+// click supurge
+$(document).on('click', '#filterEmptySupurge12', function () {
+    clearDataNavFunction12();
+})
+function upToDataFunction021() {
+     $('.upToDateSelectEmpty').val('');
+     $('select.upToDateSelectEmpty').selectpicker('refresh');
+     $('#story_mn_filter_status_id').val(['new', 'ongoing']);
+     $('#story_mn_filter_status_id').change();
+}
+function clearDataNavFunction12() {
+    $('#story_mn_filter_assigne_id').val('');
+    $('#story_mn_filter_assigne_id').selectpicker('refresh');
+    $('.upToDateSelectEmpty').val('');
+    $('select.upToDateSelectEmpty').selectpicker('refresh');
+    $('#story_mn_filter_status_id').change();   
+    
+}
 
 function getGroupListAssigneLocal(){
 

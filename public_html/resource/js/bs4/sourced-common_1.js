@@ -14188,10 +14188,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         div.empty();
         var groupBy = localStorage.getItem("usm_groupBy");
            groupBy = groupBy?groupBy:"backlogStatus";
-        var stl = ['draft', "new", "ongoing", 'closed'];
+      
         $(".matrix-view-combo-boxs").addClass("d-none");
         if (groupBy === 'backlogStatus') {
-
+                 var stl = ['draft', "new", "ongoing", 'closed'];
             for (let si = 0; si < stl.length; si++) {
                 div.append(this.genUsManagementZone(stl[si], stl[si].toUpperCase()));
                 this.setUSLists4KanbanViewCore(stl[si], groupBy);
@@ -14961,24 +14961,23 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     </div>`
     },
     setUSLists4KanbanViewCore: function (stl, apiFiled) {
+        var rstl = stl;
          if(apiFiled ==='backlogStatus'){
             apiFiled ='coreBacklogStatus';
          }else{
-            apiFiled = "("+apiFiled+")";
+            rstl = "(" + stl + ")";
          }
         $('#kanban_view_' + stl + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
         var data  = this.getUsFilterValue();
             
        // data.backlogStatus = '(' + statusList + ')';
-        data[apiFiled] =stl;
+        data[apiFiled] = rstl;
         data.startLimit = 0;
         data.endLimit = 20;
         data.joinType = "left";
         callApi('21122313051700845260', data, true, function (res) {
             var c4new = 0
-            $('#kanban_view_' + stl + '_count').html(0);
-            $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
             $('#kanban_view_' + stl + '_count').text(res.kv.rowCount)
             try {
                 var usIdList = res.tbl[0].r;
@@ -15663,7 +15662,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append(assigneeImg))
                 .append((o.bugCount>0)?$('<span class="backlog-status">')
                     .append("&nbsp;&nbsp;")
-                    .append('<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>-'+o.bugCount):"")
+                    .append('<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>-' + o.bugCount) : "")
+                
+                .append($("<button>")
+                    .addClass("baclog-large-modal-ididit-refresh btn btn-sm btn-light")  
+                    .attr('data-bid',o.id)
+                    .append('<i class="fas fa-sync text-success"></i>')
+                )
 
                 .append($("<button>")
                     .addClass("baclog-large-modal-ididit btn btn-sm btn-light")
