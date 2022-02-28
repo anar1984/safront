@@ -15287,7 +15287,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string) {
         new UserStory().clearAndShowAll();
-        $('#mainBodyDivForAll').html(html_string);
+        $('#mainBodyDivForAll').html(html_string);        
         $('.popover-badges').popover();
         $(".usmg-selectpicker").selectpicker();
         setProjectListByID('story_mn_filter_project_id');
@@ -15296,9 +15296,11 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         $("#story_mn_groupBy_id").val(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").selectpicker("refresh");
         var dwlmt = $('#tasktype-list-select4move')
-        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
+        taskManagement.load_task_type_forward_to(dwlmt);
+        var taskTyp = $('#story_mn_manual_status_id')
+        taskManagement.load_task_type_view_to(taskTyp);
         getUsers();
-        new UserStory().getFktaskTypList4USMn();
+      //  new UserStory().getFktaskTypList4USMn();
         try {
             prId = prId.split('%IN%');
             if (prId) {

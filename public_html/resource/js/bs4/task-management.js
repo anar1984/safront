@@ -988,8 +988,8 @@ const taskManagement = {
                       <div class="d-flex">
                         <div class="mr-auto">
                           <div class="cs-input-group">
-                            <select id="nextElementListSelect" class='update-selectpicker'>
-                              <option value="ididit">${getOperName("ididit")}</option>
+                            <select id="nextElementListSelect" class='update-selectpicker' value="ididit">
+                              <option selected='true' value="ididit">${getOperName("ididit")}</option>
                               <option value="ForwardTaskTo">${getOperName("ForwardTaskTo")}</option>
                               <option value="rejectTask">${getOperName("rejectTask")}</option>
                               <option value="canceledTask">${getOperName("cancel")}</option>
@@ -998,7 +998,7 @@ const taskManagement = {
                           </div>
                         </div>
                         <div class="">
-                          <span class="cs-close-next-eb-btn "><i class="fa fa-close"></i></span>
+                          <span class="cs-close-next-eb-btn remove-next-btn"><i class="fa fa-close"></i></span>
                         </div>
                       </div>
                       <div class="cs-input-group" style="margin-top:10px">
@@ -4419,6 +4419,44 @@ const taskManagement = {
             }
         });
     },
+    load_task_type_forward_to: (elm) => {
+
+        callApi('220226155516021210809',{}, true, function (res) {
+            $(elm).empty();
+            try {
+                  var d = res.tbl[0].r;
+                  for (var i = 0; i < d.length; i++) {
+                      var o = d[i];
+                      $(elm).append($('<option>')
+                          .val(o.fkTaskTypeId)
+                          .text(o.typeName)
+                      )
+                  }                
+            } catch (error) {
+                
+            }
+            $(elm).selectpicker('refresh');
+        })
+    },
+     load_task_type_view_to: (elm) => {
+
+         callApi('22022617324009239044', {}, true, function (res) {
+             $(elm).empty();
+             try {
+                 var d = res.tbl[0].r;
+                 for (var i = 0; i < d.length; i++) {
+                     var o = d[i];
+                     $(elm).append($('<option>')
+                         .val(o.fkTaskTypeId)
+                         .text(o.typeName)
+                     )
+                 }
+             } catch (error) {
+
+             }
+             $(elm).selectpicker('refresh');
+         })
+     },
     getUserListWithImageSelectbox: function (projectId, type) {
         var json = initJSON();
         json.kv.fkProjectId = projectId ? projectId : global_var.current_project_id;
@@ -5524,8 +5562,10 @@ function nextModalpopUpShow(elm,value,multi) {
       }) 
       if(multi==='multi'){
         $("#nextElementListSelect").attr("action-type",'multi') 
-      }
-      $("#nextElementListSelect").val(value);
+    }
+    if (value) {
+          $("#nextElementListSelect").val(value);
+    }
       $("#nextElementListSelect").selectpicker("refresh");
       $("#nextElementListSelect").change();
 

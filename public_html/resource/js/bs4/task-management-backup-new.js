@@ -4598,6 +4598,7 @@ const taskManagement = {
             }
         });
     },
+    
     getUserListWithImageSelectbox: function (projectId, type) {
         var json = initJSON();
         json.kv.fkProjectId = projectId ? projectId : global_var.current_project_id;
