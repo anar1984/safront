@@ -1289,7 +1289,12 @@ function AJAXCallFeedback(res) {
             if (err[i].code === 'general') {
                 Toaster.showError(err[i].val);
 
-            } else {
+            } 
+            else if (err[i].code === 'notPermission') {
+                Toaster.showError(lang_task.message.notPermission);
+
+            } 
+            else {
                 var f = false;
                 $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
@@ -19098,7 +19103,14 @@ function updateTask4ShortChangePureDetail(val, ustype, taskId) {
         success: function (res) {
            /*  SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res); */
-            getBugList();
+            if(global_var.current_modal==='loadStoryCardMgmt'){
+                var bid  =  res.tbl[0].r[0].fkBacklogId;
+                $("#body-large-modal-in-us4backlog #user-story-show-stat[data-bid='"+bid+"']").change();
+                $("#user-story-show-stat[data-bid='"+bid+"']").change();
+            }
+            else if(global_var.current_modal==='loadBugChange'){
+                getBugList();
+            }
             try {
                 genTaskTypeManagmentView4None();
             } catch (error) {
@@ -19144,7 +19156,15 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
         success: function (res) {
             SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res);
-            getBugList();
+            if(global_var.current_modal==='loadStoryCardMgmt'){
+                var bid  =  res.tbl[0].r[0].fkBacklogId;
+                $("#body-large-modal-in-us4backlog #user-story-show-stat[data-bid='"+bid+"']").change();
+                $("#user-story-show-stat[data-bid='"+bid+"']").change();
+            }
+            else if(global_var.current_modal==='loadBugChange'){
+                getBugList();
+            }
+       
             try {
                 genTaskTypeManagmentView4None();
             } catch (error) {
@@ -20042,17 +20062,6 @@ function cloneTaskModal() {
 }
 
 
-
-function changeUserStoryOfTaskModal() {
-    $('#change-user-story-task-modal').modal('show');
-    if (global_var.current_modal === 'loadBugChange') {
-        getBacklogListByProject();
-    } else if (global_var.current_modal === 'loadTaskManagement') {
-        SACore.FillInCombo('task-user-story-id-change');
-    }
-
-
-}
 
 function showUserStoryOfTaskCardModal(el) {
     if (global_var.current_modal === 'loadStoryCard') {

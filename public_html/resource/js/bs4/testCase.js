@@ -207,15 +207,7 @@ function getGroupList() {
         var td = $("#bugListTable tbody tr td:eq(" + sv + ")").attr("class").split(/\s+/);
 
         sortTable(sv, td);
-      /*   $.each(td, function (index, item) {
-       
-           if (item === 'bug-list-column') {
-
-            } else { 
-
-              
-             }
-        }) */
+    
     } catch (error) {
 
     }
@@ -1099,7 +1091,7 @@ function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
         success: function (res) {
             SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res);
-
+            
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -3135,7 +3127,7 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
 
 
 $(document).on("click", ".taskCheckListItemDelete", function (e) {
-    if (!confirm("Are you sure?")) {
+    if (!confirm(lang_task.message.areYouSure)) {
         return;
     }
     var that = this;

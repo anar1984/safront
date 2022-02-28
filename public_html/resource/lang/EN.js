@@ -68,7 +68,7 @@ const lang_task = {
     all: 'All',
     observer: 'Observer By',
     type: 'Type',
-    createdDate: 'Created By',
+    createdDate: 'Created Date',
   },
   bottomBar: {
     sortTasksByDate: 'Sort tasks by date',
@@ -230,6 +230,9 @@ const lang_task = {
        "24_hours_before":"1 hour before",
        "2_days_before":"2 days before",
        "1_week_before":"1 week before",
+  },
+  message:{
+    notPermission:"Only owner has permission to delete this item.",
+    areYouSure:"Are you sure?",
   }
-
 };
