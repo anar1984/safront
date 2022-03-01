@@ -637,12 +637,12 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
     return id;
 }
 
-$(document).on("change", '.bug-filter', function (e) {
+/* $(document).on("change", '.bug-filter', function (e) {
     if (global_var.current_modal == "loadBugChange") {
         bug_filter.page_no = 1;
         getBugList();
     }
-})
+}) */
 
 $(document).on("click", '.page-item-core-previous', function (e) {
     if (global_var.current_modal == "loadBugChange") {
@@ -1243,7 +1243,7 @@ function setBugListInitialData() {
     setBugFilterCreatedDateValues();
     setBugFilterClosedDatesValues();
    
-    bug_filter.sortBy = $('#bug_filter_sortby').val();
+    bug_filter.sortBy = $('#bug_filter_sortby').val()==="0"?"":$('#bug_filter_sortby').val();
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
     bug_filter.limit = $('#bug_filter_limit').val();
     setFilterCount()
@@ -1331,13 +1331,49 @@ function getBugList() {
         if (view === 'kanban') {
             taskManagement.readTask.genBlockTask.genKanbanView.generAteBlockKanbanByGroupBy($('.cs-task-panel-column'),json);
         } else if (view === 'table') {
-            taskManagement.readTask.genBlockTask.genTableView.getTaskList4Table(json);
+            $("#bugListTable tbody").empty();
+            for (let i = 0; i < 20; i++) {
+                $("#bugListTable tbody").append(genShimmerBlock());
+            }
+          
+           taskManagement.readTask.genBlockTask.genTableView.getTaskList4Table(json);
         }
     }
    
 
 }
-
+function genShimmerBlock() {
+    return  `
+    <tr id="22022818485203323026" projectid="21120217192004514462" stidr="21082003275802222786" class="bug-tr">
+    <td style="width:25px;">${genShimmerSelfBlock()}</td>
+    <td style="width:30px;" class="bug-list-checkbox">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column-0 bug-list-column-task-deadline" style="width:30px; padding: 0;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-task-status cs-input-group" gid="new" style="text-align: left; padding-left: 3px; overflow: initial;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-task-id" style="width: 100px;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-ismeet cs-input-group" style="">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-task-name"  style="max-width: 240px;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-task-nature" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-tasktype"  style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-priority get-data-group" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-story-card" >${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-project" style="max-width: 200px; display: none;" >${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-assignee" >${genShimmerSelfBlock()}</i></td>
+    <td class="bug-list-column bug-list-column-created-by" style="white-space: nowrap; text-align: center;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-created-date"  style="white-space: nowrap; text-align: center;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-close-date" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-closed-by" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-last-update" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-estimated-hours" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-spent-hours" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-estimated-counter" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-executed-counter" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-estimated-budget" style="display: none;">${genShimmerSelfBlock()}</td>
+    <td class="bug-list-column bug-list-column-spent-budget" style="display: none;">${genShimmerSelfBlock()}</td></tr>`
+}
+function genShimmerSelfBlock () {
+    return `<div class="weather-container mb-1" style="min-height: 20px;overflow: hidden;box-shadow: none;background:none;"> 
+    <div class="box-loader shimmer"></div></div>`
+}
 function setKV4CoreBugList() {
     try {
         var obj = coreBugList.tbl[0].r;

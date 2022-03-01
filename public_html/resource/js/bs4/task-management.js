@@ -2463,7 +2463,7 @@ const taskManagement = {
                         <div class="form-group ${notChwk()?"":"d-none"} has-search mr-2">
                         <div class="has-search-in">
                             <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                            <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
+                            <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" onchange="callBugFilterMulti(this)" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
                         </div>
                         </div>
                   
@@ -2604,12 +2604,12 @@ const taskManagement = {
                 <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                     title="Status">
-                    <option value='new' >New</option>
-                    <option value='ongoing' >Ongoing</option>
-                    <option value='closed'>Closed</option>
-                    <option value='waiting'>Waiting</option>
-                    <option value='canceled'>Canceled</option>
-                    <option value='rejected' >Rejected</option>
+                    <option value='new' >${getStatusName("new")}</option>
+                    <option value='ongoing' >${getStatusName("ongoing")}</option>
+                    <option value='closed'>${getStatusName("closed")}</option>
+                    <option value='waiting'>${getStatusName("waiting")}</option>
+                    <option value='canceled'>${getStatusName("canceled")}</option>
+                    <option value='rejected' >${getStatusName("rejected")}</option>
                     ${notChwk()?`<option value='UAT' > UAT</option>`:""}
         
                 </select>
@@ -2804,15 +2804,15 @@ const taskManagement = {
                             </div>
                             <select class="issue-mgmt-general-filter bug-mgmt-filter-select bug-mgmt-filter-sortby" data-actions-box="true"    
                                 id='bug_filter_sortby' title="Columns">
-                                    <option value='' selected >${lang_task.rightBar.sortBy}</option>
+                                    <option value='0' selected >${lang_task.rightBar.sortBy}</option>
                                     <option value='task_status' >${lang_task.table.tableColums.taskStatus}</option>
-                                    <option value='id' >${lang_task.table.tableColums.taskId}</option>
-                                    <option value='task_name'  accesskey="">${lang_task.table.tableColums.description}</option>
-                                    <option value='task_nature'  >${lang_task.rightBar.taskNature}</option>
+                                    <!--<option value='id' >${lang_task.table.tableColums.taskId}</option>-->
+                                    <!--<option value='task_name'  accesskey="">${lang_task.table.tableColums.description}</option>-->
+                                    ${notChwk()?`<option value='task_nature'  >${lang_task.rightBar.taskNature}</option>`:""}
                                     <option value='fk_assignee_id' >${lang_task.rightBar.assignee}</option>
-                                    <option value='fk_task_type_id' >${lang_task.rightBar.taskType}</option>
+                                    ${notChwk()?`<option value='fk_task_type_id' >${lang_task.rightBar.taskType}</option>`:""}
                                     <option value='close_status_date'>${lang_task.rightBar.closedDates}</option> 
-                                    <option value='closed_by'>${lang_task.rightBar.closedBy}</option> 
+                                    ${notChwk()?` <option value='closed_by'>${lang_task.rightBar.closedBy}</option> `:""}
                                     <option value='task_priority'>${lang_task.rightBar.priority}</option>  
                                     <option value='created_by'  >${lang_task.rightBar.createdBy}</</option>
                                     <option value='created_date'  >${lang_task.rightBar.createdDate}</</option>  
@@ -3309,7 +3309,7 @@ const taskManagement = {
                         data: data,
                         contentType: "application/json",
                         crossDomain: true,
-                        async: false,
+                        async: true,
                         success: function (res) {
                            
                             const o = res.tbl[0].r[0];
@@ -3364,13 +3364,14 @@ const taskManagement = {
                     <div class="col pl-0 pr-0" id="">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0; overflow-y: hidden; height: calc(100vh - 100px );">
+                       ${taskManagement.readTask.genBlockTask.genTableView.genContextMenu()}
                        <div class="cs-task-panel-column cs-task-panel-column-issue">
                        </div>
                        </div>
                    </div></div>`
                 },
                 genZonaBlock: function (nameh, id) {
-        return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
+              return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
             <div class="flex-fill bd-highlight">
                
             </div>
@@ -3556,15 +3557,29 @@ const taskManagement = {
                 
                 generAteBlockKanbanByGroupBy: function (elm, data) {
                     var goupBy = $('#inputGroupSelect01').val();
-                    var items;
+                    var items='';
                     var type = "";
-                    if (goupBy === "5"||goupBy === "0") {
-                        items = $("select#bug_filter_status option");
-                        type = "taskStatus"
+                    if (goupBy === "3"||goupBy === "0") {
+                        items = $("select#bug_filter_status");
+                        type = "taskStatus";
+                        $(elm).empty();
+                        var arr  = items.val();                       
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+var KanbanTest = new jKanban({
+    element: "#myKanban",
+    boards: myBoards
+})
+
+                       return
                     }
                     if (goupBy === "7") {
                         items = $("select#bug_filter_nature option");
-                        type = "taskNature"
+                        type = "taskNature";
                     }
                     if (goupBy === "9") {
                         items = $("select#bug_filter_backlog_id");
@@ -3594,7 +3609,7 @@ const taskManagement = {
 
                        return
                     }
-                    if (goupBy === "11") {
+                    if (goupBy === "12") {
                         items = $("select#bug_filter_assignee_id");
                         type = "fkAssigneeId";
                         $(elm).empty();
@@ -3617,7 +3632,7 @@ const taskManagement = {
 
                        return
                     }
-                    if (goupBy === "12") {
+                    if (goupBy === "13") {
                         items = $("select#bug_filter_created_by");
                         type = "createdBy";
                         $(elm).empty();
@@ -3662,7 +3677,7 @@ const taskManagement = {
                     $(elm).empty();
                     items.each(function (index) {
                         var id = $(this).attr("value")
-                        var nm = $(this).text()
+                        var nm = $(this).text();
                         $(elm).append(that.genZonaBlock(nm, id));
                         that.getTaskList4Kanban(data, type, id);
 
@@ -3859,10 +3874,10 @@ const taskManagement = {
                     <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.taskId}" class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
                     <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.type}" class="bug-list-column bug-list-column-ismeet" style="width: 90px;">${lang_task.table.tableColums.type}</th> 
                     <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.description}" class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">${lang_task.table.tableColums.description}</th>
-                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="" class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
-                    <th data-placement="bottom" class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
+                    <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="" style="display: none;" class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
+                    <th data-placement="bottom" class="bug-list-column bug-list-column-tasktype" style="display: none;"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
-                    <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
+                    <th class="bug-list-column bug-list-column-story-card" style="display: none;"><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>
                     <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.assigined}" class="bug-list-column bug-list-column-assignee" style="width: 70px;"><i class="cs-svg-icon task-user-1"></i></th>
                     <th data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="${lang_task.table.tableColums.createdBy}" class="bug-list-column bug-list-column-created-by" style="width: 70px;"><i class="cs-svg-icon task-user-2"></i></th>
@@ -5181,8 +5196,10 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
     $('#issue-list-datetime').val('');
     $('#issue_management_closed_date_from').val('');
-    $('#inputGroupSelect01').val('0');
-    $('#inputGroupSelect01').selectpicker('refresh');
+    $('#inputGroupSelect01').val('0')
+                            .selectpicker('refresh');
+    $('#bug_filter_sortby').val('0')
+                           .selectpicker('refresh');
     $('#bug_filter_search_text').val('');
     $('#global-search-input').val('');
     getBugList();
@@ -5483,6 +5500,16 @@ $(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
    
     $(this).closest('tbody').find("tr").removeClass("active")
     $(this).addClass("active");
+    global_var.current_issue_id = $(this).attr("id")
+    $("#contextMenu").css({
+        display: "block",
+        left: e.pageX,
+        top: e.pageY
+    });
+    return false;
+});
+$(document).on("contextmenu", ".cs-task-panel-column-issue .cs-task-item-in-box", function (e) {
+   
     global_var.current_issue_id = $(this).attr("id")
     $("#contextMenu").css({
         display: "block",
