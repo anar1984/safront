@@ -3768,7 +3768,9 @@ const taskManagement = {
                                     <div class="task-list-datetime">
                                     <div class="d-flex">
                                     <span class="input-group-icon"><i class="cs-svg-icon calendar-01"></i></span>
-                                    <input type="text" autocomplete="off" onchange="callBugFilterMulti()" id="issue-list-datetime" autocomplete="off" class="form-control text-center sss" placeholder="Tarixə görə">
+                                    <div class="d-block">
+                                        <input type="text" autocomplete="off" onchange="callBugFilterMulti()" id="issue-list-datetime" autocomplete="off" class="form-control text-center sss" placeholder="Tarixə görə">
+                                    </div>
                                     </div>
                                     </div>
                                     <div class="task-list-hid cs-input-group">
