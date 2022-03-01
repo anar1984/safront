@@ -212,7 +212,16 @@
     visibility: hidden;
   
 }
-.task-content:hover .baclog-large-modal-next,.task-content:hover .switch,.task-content:hover .baclog-large-modal-ididit{
+.baclog-large-modal-ididit-refresh {
+    position: absolute;
+    right: 110px;
+    top: 2px;
+    visibility: hidden;
+}
+.task-content:hover .baclog-large-modal-next,
+.task-content:hover .switch,
+.task-content:hover .baclog-large-modal-ididit,
+.task-content:hover .baclog-large-modal-ididit-refresh {
    visibility: visible;
 }
 .story-priorty-selectbox{
@@ -229,8 +238,9 @@
     
 }
 .stat-table-us{
-    width: 100%;
+    
    display: block;
+   width: 100%;
 
 }
 

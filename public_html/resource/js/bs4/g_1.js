@@ -2213,6 +2213,14 @@ $(document).on('click', '.dropdown-menu-large-btn', function (event) {
     event.preventDefault();
 
 });
+
+// refres icon task kart
+$(document).on('click', '.baclog-large-modal-ididit-refresh', function (event) {
+    $(this).find('i').addClass('fa-spin'); 
+    getSTatsUserManagmentTableKanban(this);
+    
+})
+
 $(document).on('click', '#part-nav-menu-id4UserStory ul li >a', function (event) {
     $(this).toggleClass("active")
     //$(".toggle-btn[data-link="+$(this).attr("data-link")+"]").click();
