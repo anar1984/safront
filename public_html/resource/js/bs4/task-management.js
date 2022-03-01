@@ -2827,6 +2827,7 @@ const taskManagement = {
                             <option value='desc' selected>Desc</option>
                         </select>
                     </div>
+
                     <div class="cs-input-group input-group mt-3 col-12">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
