@@ -1,16 +1,16 @@
 'use strict';
 var cmpList = {
     userBlock: {
-        Init: function (elm, type) {
+        Init: function (elm, type,title,iconClass) {
             $(elm).empty();
             $(elm).css("text-align", 'left');
             $(elm).attr("el-name", "selectInterActive");
             $(elm).attr('component-type',"selectInterActive");
             if (type === 'multi') {
-                var block = this.genObserverBlockM();
+                var block = this.genObserverBlockM(title,iconClass);
                 $(elm).attr("action-type", 'multi');
             } else {
-                var block = this.genObserverBlockS();
+                var block = this.genObserverBlockS(title,iconClass);
                 $(elm).attr("action-type", 'single');
             }
             $(elm).append(block);
@@ -142,12 +142,12 @@ var cmpList = {
             elm.selectpicker('refresh');
 
         },
-        genObserverBlockS: function () {
+        genObserverBlockS: function (title,iconClass) {
             return `<div class="user-addons-box-elm single-addons dropup" action-type='single'>
-                Məsul şəxs:
+                ${title?title:"Məsul şəxs"}:
                 <span type="button" class="dropdown-toggle user-dropdonw-btn" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  
-                <i class="cs-svg-icon user-addons-icon"></i>      
+                <i class="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>      
                 </span>
                 
                 <div class="dropdown-menu">
@@ -166,11 +166,11 @@ var cmpList = {
                 </div>
             </div>`
         },
-        genObserverBlockM: function () {
+        genObserverBlockM: function (title,iconClass) {
             return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi'>
-                    <span class='add-userList-title'>${lang_task.windowAddTask.observer} :</span>
+                    <span class='add-userList-title'>${title?title:lang_task.windowAddTask.observer} :</span>
                 <span type="button" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="cs-svg-icon user-addons-icon"></i>
+                    <i class="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>
                 </span>
                 <span class="count_avatar_users"></span>
                 <div class="dropdown-menu">
@@ -810,16 +810,10 @@ var cmpList = {
     }
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-$.fn.selectInterActive = function (type, val) {
+$.fn.selectInterActive = function (type, title,iconClass) {
     if (type === 'multi' || type === 'single') {
-        cmpList.userBlock.Init(this, type);
-    } else if (type === 'setVal') {
-        cmpList.userBlock.setUserBlockValue(this, val);
-    } else if (type === 'getVal') {
-        return cmpList.userBlock.getUserBlockValue(this);
-    } else if (type === 'destroy') {
-        return $(elm).empty();
-    }
+        cmpList.userBlock.Init(this,type,title,iconClass);
+    }  
 }
 $.fn.getVal = function (val) {
     var type  = $(this).attr("component-type");
@@ -992,6 +986,13 @@ $(document).on('change', 'select.user-list-selectbox-single', function (e) {
 $(document).on("click", '.showhide-col-btn', function (e) {
    e.stopPropagation();
 });
+$(document).on("input", 'input[type="number"]', function (e) {
+    if($(this).attr('maxlength')){
+
+        if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
+
+    }
+});
 $(document).on('hide.bs.dropdown', '.user-addons-box-elm', function (e) {
     return false;
 })
@@ -1025,13 +1026,13 @@ $(document).on("click", '.showhide-col-main-info', function (e) {
 
 
 /*  // userList Block End */
+
 const CheweekSlider = function (parentDiv, imgArray) {
     const sliderContainer = document.getElementById(`${parentDiv}`);
     sliderContainer.insertAdjacentHTML(
       'beforeend',
       `<div class="RS-slider"></div>`
     );
-  
     function fillImages(imgArray) {
       imgArray.forEach((_, i) => {
         const sliderC = document.querySelector('.RS-slider');
@@ -1046,26 +1047,17 @@ const CheweekSlider = function (parentDiv, imgArray) {
         );
       });
     }
-    function goFullSlider() {
-      const exitIcon = document.querySelector('.RS-close-full-slider');
-      sliderContainer.classList.add('RS-background-blur');
-      sliderContainer.style.position = 'absolute';
-      exitIcon.classList.remove('RS-hidden-slider');
-      document
-        .querySelector('.RS-close-full-slider')
-        .addEventListener('click', function () {});
-    }
     fillImages(imgArray);
     const sliderButtons = document.querySelector('.RS-slider');
     sliderButtons.insertAdjacentHTML(
       'afterend',
       `
     <div class="RS-slider-controls">
-    <div class="RS-slider__btn RS-slider__btn--left"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+    <div class="RS-slider__btn RS-slider__btn--left"><svg xmlns="http://www.w3.org/2000/svg"  fill="none"
     viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
     </svg></div>
-    <div class="RS-slider__btn RS-slider__btn--right"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+    <div class="RS-slider__btn RS-slider__btn--right"><svg xmlns="http://www.w3.org/2000/svg"  fill="none"
     viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
     </svg></div>
@@ -1093,7 +1085,6 @@ const CheweekSlider = function (parentDiv, imgArray) {
         sliderContainer.classList.remove('RS-background-blur');
       }
     });
-    slideImg.forEach((e) => e.addEventListener('click', goFullSlider));
     let curSlide = 0;
     const maxSlide = slides.length;
     const createDots = function () {
@@ -1155,4 +1146,140 @@ const CheweekSlider = function (parentDiv, imgArray) {
         activateDot(slide);
       }
     });
+    const CheweekFullSlider = function (parentDiv, imgArray) {
+      const pageBody = document.getElementsByTagName(`body`)[0];
+      pageBody.style.margin = '0';
+      pageBody.style.overflow = 'hidden';
+      pageBody.insertAdjacentHTML(
+        'afterbegin',
+        `<div id="${parentDiv}-RSFULL-slider" class="RSFULL-slider RSFULL-hidden-slider">
+        </div>`
+      );
+      function fillImages(imgArray) {
+        imgArray.forEach((_, i) => {
+          const sliderC = document.getElementById(`${parentDiv}-RSFULL-slider`);
+          sliderC.insertAdjacentHTML(
+            'beforeend',
+            `<div class="RSFULL-slide">
+                <img
+                  class="RSFULL-slide-img"
+                  src="${imgArray[i]}"
+                />
+            </div>`
+          );
+        });
+      }
+      fillImages(imgArray);
+      const sliderButtons = document.getElementById(`${parentDiv}-RSFULL-slider`);
+      sliderButtons.insertAdjacentHTML(
+        'beforeend',
+        `
+      <div class="RSFULL-slider-controls">
+      <div class="RSFULL-slider__btn RSFULL-slider__btn--left"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg></div>
+      <div class="RSFULL-slider__btn RSFULL-slider__btn--right"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg></div>
+      <div class="RSFULL-dots"></div>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="RSFULL-close-full-slider " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+      `
+      );
+      const slideImg = document.querySelectorAll('.RS-slide-img');
+      const slides = document.querySelectorAll('.RSFULL-slide');
+      const btnLeft = document.querySelector('.RSFULL-slider__btn--left');
+      const btnRight = document.querySelector('.RSFULL-slider__btn--right');
+      const dotContainer = document.querySelector('.RSFULL-dots');
+      const exitIcon = document.querySelector('.RSFULL-close-full-slider');
+      const sliderFull = document.querySelector('.RSFULL-slider');
+      function closeFullSlider() {
+        sliderFull.classList.add('RSFULL-hidden-slider');
+      }
+      function openFullSlider() {
+        sliderFull.classList.remove('RSFULL-hidden-slider');
+      }
+      slideImg.forEach((e) => {
+        e.addEventListener('click', openFullSlider);
+      });
+  
+      exitIcon.addEventListener('click', closeFullSlider);
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeFullSlider();
+        }
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          sliderContainer.style.position = 'relative';
+          sliderContainer.classList.remove('RSFULL-background-blur');
+        }
+      });
+      let curSlide = 0;
+      const maxSlide = slides.length;
+      const createDots = function () {
+        slideImg.forEach(function (_, i) {
+          let img = slideImg[i].src;
+          dotContainer.insertAdjacentHTML(
+            'beforeend',
+            `<img width="50px" height="50px" class="RSFULL-dots__dot" data-slide="${i}" src="${img}" />`
+          );
+        });
+      };
+      const activateDot = function (slide) {
+        document
+          .querySelectorAll('.RSFULL-dots__dot')
+          .forEach((dot) => dot.classList.remove('RSFULL-dots__dot--active'));
+        document
+          .querySelector(`.RSFULL-dots__dot[data-slide="${slide}"]`)
+          .classList.add('RSFULL-dots__dot--active');
+      };
+      const goToSlide = function (slide) {
+        slides.forEach(
+          (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+        );
+      };
+      const nextSlide = function () {
+        if (curSlide === maxSlide - 1) {
+          curSlide = 0;
+        } else {
+          curSlide++;
+        }
+        goToSlide(curSlide);
+        activateDot(curSlide);
+      };
+      const prevSlide = function () {
+        if (curSlide === 0) {
+          curSlide = maxSlide - 1;
+        } else {
+          curSlide--;
+        }
+        goToSlide(curSlide);
+        activateDot(curSlide);
+      };
+      const init = function () {
+        goToSlide(0);
+        createDots();
+        activateDot(0);
+      };
+      init();
+      btnRight.addEventListener('click', nextSlide);
+      btnLeft.addEventListener('click', prevSlide);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') prevSlide();
+        e.key === 'ArrowRight' && nextSlide();
+      });
+      dotContainer.addEventListener('click', function (e) {
+        if (e.target.classList.contains('RSFULL-dots__dot')) {
+          const { slide } = e.target.dataset;
+          goToSlide(slide);
+          activateDot(slide);
+        }
+      });
+    };
+    CheweekFullSlider(parentDiv, imgArray);
   };
