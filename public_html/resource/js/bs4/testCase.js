@@ -770,7 +770,7 @@ function setBugFilterProject() {
 function addUserStoryNewPopupBug() {
     var usName = $('#addUserStoryPopupModal-userstoryname1').val();
     var prid = $('#bug_filter_project_id_add_pop').val();
-
+    var lab=$('#')
     if (!prid) {
         Toaster.showError("Please Choose Project")
         return

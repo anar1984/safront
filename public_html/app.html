@@ -45,10 +45,13 @@
     <script src="https://codemirror.net/mode/javascript/javascript.js"></script>
     <script src="https://codemirror.net/addon/display/autorefresh.js"></script>
     <script src="https://codemirror.net/mode/markdown/markdown.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.32.0-dev.20220113/min/vs/editor/editor.main.min.css" integrity="sha512-L6IAyZq1gr9Vu+zWnMnu2Tt9M6hzOxua61Z+7HENAHe6gqFOV3FFTH19vF8FjaQle0PvJcOoZ//CnHT4JScC5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.32.0-dev.20220113/min/vs/editor/editor.main.min.css"
+        integrity="sha512-L6IAyZq1gr9Vu+zWnMnu2Tt9M6hzOxua61Z+7HENAHe6gqFOV3FFTH19vF8FjaQle0PvJcOoZ//CnHT4JScC5g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/3.24.0/addon/display/fullscreen.js">
-        </script>
+    </script>
 
     <script src="resource/lang/EN.js"></script>
     <script src="resource/js/bs4/jquery.min.js"></script>
@@ -61,7 +64,7 @@
     <script src="resource/js/bs4/bootstrap.min.js"></script>
     <script src="resource/js/bs4/daterangepicker.js"></script>
     <script src="resource/js/bs4/excel.js"></script>
-    
+
     <script src="resource/js/bs4/component.js"></script>
     <script src="resource/js/bs4/components-new.js"></script>
     <script src="resource/js/bs4/main-kanban.js"></script>
@@ -112,7 +115,7 @@
     <!--<script src="https://app.sourcedagile.com/api/get/script/js/48edh/210102102810037910965.js"></script>-->
     <script src="resource/js/bs4/bc.js"></script>
 
-<!--     <script src="ace-builds-master/src-min/ace.js" type="text/javascript" charset="utf-8"></script> -->
+    <!--     <script src="ace-builds-master/src-min/ace.js" type="text/javascript" charset="utf-8"></script> -->
     <script src="https://unpkg.com/monaco-editor@0.8.3/min/vs/loader.js"></script>
 </head>
 
@@ -745,7 +748,8 @@
                     </li>
                     <li>
                         <div class="project-item-zad">
-                            <a class="loadFn openNavshow  left-menu-load " data-link="codeGorund" title="Function Editor">
+                            <a class="loadFn openNavshow  left-menu-load " data-link="codeGorund"
+                                title="Function Editor">
                                 <i class="fas fa-code" aria-hidden="true"></i>
                                 <span class="description-main" style="margin-top: 19px;">Function Editor</span>
                             </a>
@@ -1722,7 +1726,7 @@
     </div>
 
     <!--modal pages-->
-  <div class="modal fade" id="UserStoryPopupModal-Toggle" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="UserStoryPopupModal-Toggle" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="max-width: 90%" role="document">
             <div class="modal-content" style="min-height: 100%;">
                 <div class="modal-header">
@@ -3180,8 +3184,8 @@
         </div>
     </div>
 
-    <div class="modal fade cs-FileImageView" id="commentFileImageViewer" tabindex="-1" style="z-index: 50000;" role="dialog"
-        aria-hidden="true">
+    <div class="modal fade cs-FileImageView" id="commentFileImageViewer" tabindex="-1" style="z-index: 50000;"
+        role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="min-width: 90%;max-width:90%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -5157,13 +5161,15 @@
                                 <tr>
                                     <th>Story Card Input-Relation
 
-                                        <button onclick="" data-type="IN" class="btn relation-add-btn-table btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                        <button onclick="" data-type="IN" class="btn relation-add-btn-table btn-sm"><i
+                                                class="fas fa-plus" aria-hidden="true"></i></button>
                                     </th>
                                     <th> </th>
                                     <th>API</th>
                                     <th> </th>
                                     <th>Story Card Output-Relation
-                                        <button onclick="" data-type="OUT" class="btn relation-add-btn-table btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                        <button onclick="" data-type="OUT" class="btn relation-add-btn-table btn-sm"><i
+                                                class="fas fa-plus" aria-hidden="true"></i></button>
 
                                     </th>
                                 </tr>
@@ -5194,31 +5200,30 @@
 
 
 
-    <div class="modal fade" id="InputAddImagePinModal" tabindex="-1" style="z-index: 50000" role="dialog" aria-labelledby=""
-        aria-hidden="true">
-        <div class="modal-dialog"  role="document">
+    <div class="modal fade" id="InputAddImagePinModal" tabindex="-1" style="z-index: 50000" role="dialog"
+        aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    
-                    <h5 class="modal-title" >Choose input</h5>
+
+                    <h5 class="modal-title">Choose input</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                 
+
                 </div>
                 <div class="modal-body d-flex flex-wrap">
                     <div class="col-lg-4">
-                                Input List
-                        
-                        <select name="" class="form-control "  id="addPinImageInput" >
+                        Input List
+
+                        <select name="" class="form-control " id="addPinImageInput">
 
                         </select>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="addPinInputToImage()"
-                        >Apply
+                    <button type="button" class="btn btn-primary" onclick="addPinInputToImage()">Apply
                     </button>
                     <!--<button type="button" class="btn btn-primary" onclick="new UserStory().deleteInputBySUSOutputId()">Delete</button>-->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -5228,58 +5233,68 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="multipleClosedTask" tabindex="-1" style="z-index: 50000" role="dialog" aria-labelledby=""
-        aria-hidden="true">
+    <div class="modal fade" id="multipleClosedTask" tabindex="-1" style="z-index: 50000" role="dialog"
+        aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    
-                    <h5 class="modal-title" id="selectFromDbModal-title">Choose  tasks for close</h5>
+
+                    <h5 class="modal-title" id="selectFromDbModal-title">Choose tasks for close</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                 
+
                 </div>
                 <div class="modal-body d-flex flex-wrap">
                     <div class="col-lg-4">
-                                Task Type
-                        
+                        Task Type
+
                         <select name="" class="form-control  " id="tasktype-list-select4move">
 
                         </select>
                     </div>
                     <div class="d-none col-lg-8">
                         Task Name
-                        <textarea name="" placeholder="task Name" class="form-control" id="newTaskCreate4Ididt"  rows="1"></textarea>
+                        <textarea name="" placeholder="task Name" class="form-control" id="newTaskCreate4Ididt"
+                            rows="1"></textarea>
                     </div>
                     <div class="col-12">
-                        <table class="table cst-table-hover tablePaginatione component-input-class" id="taskListClosedMulti" style="width: 100% !important;">
+                        <table class="table cst-table-hover tablePaginatione component-input-class"
+                            id="taskListClosedMulti" style="width: 100% !important;">
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width:46px"><i class="cs-svg-icon numbers"></i>
                                     </th>
                                     <th class="text-center border-none taskListTableCheckboxTH" style="width:30px">
-                                        <label href="#" class="component-class"><input style="width: 15px; height: 15px; vertical-align:middle;" type="checkbox" class="all-check-button-allTable"></label>
+                                        <label href="#" class="component-class"><input
+                                                style="width: 15px; height: 15px; vertical-align:middle;"
+                                                type="checkbox" class="all-check-button-allTable"></label>
                                         <span class="handle-drag"></span>
                                     </th>
                                     <th class="text-center" style="width:46px"><i class="cs-svg-icon id"></i></th>
                                     <th class="text-center" style="width:50px"><i class="cs-svg-icon deadline"></i>
                                     </th>
                                     <th class="text-center"><i class="cs-svg-icon status"></i></th>
-                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Task Name</label> <span class="handle-drag"></span>
+                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Task
+                                            Name</label> <span class="handle-drag"></span>
                                     </th>
 
-                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Task Type</label> <span class="handle-drag"></span>
+                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Task
+                                            Type</label> <span class="handle-drag"></span>
                                     </th>
-                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Date</label> <span class="handle-drag"></span>
+                                    <th class="text-center cst-a-font"><label href="#"
+                                            class="component-class">Date</label> <span class="handle-drag"></span>
                                     </th>
 
                                     <th class="text-center">
-                                        <label href="#" class="component-class"><i class="cs-svg-icon arrow-right-doc"></i></label> <span class="handle-drag"></span>
+                                        <label href="#" class="component-class"><i
+                                                class="cs-svg-icon arrow-right-doc"></i></label> <span
+                                            class="handle-drag"></span>
                                     </th>
 
                                     <th class="text-center">
-                                        <label href="#" class="component-class"><i class="cs-svg-icon arrow-left-doc"></i></label>
+                                        <label href="#" class="component-class"><i
+                                                class="cs-svg-icon arrow-left-doc"></i></label>
                                         <span class="handle-drag"></span>
                                     </th>
                                 </tr>
@@ -5289,8 +5304,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="submitmultipleClosedTask()"
-                        >Apply
+                    <button type="button" class="btn btn-primary" onclick="submitmultipleClosedTask()">Apply
                     </button>
                     <!--<button type="button" class="btn btn-primary" onclick="new UserStory().deleteInputBySUSOutputId()">Delete</button>-->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -5334,31 +5348,31 @@
                                 </div>
                                 <div class="form-group create-new-text-4-desc col-7">
                                     <div class="create-new-text-4-newapi  d-none">
-                                        <span style="width: 100%;"> Name Api </span><br>   
-                                    <input type="text" id="addEventDescModal-new-api-nm"
-                                    class='form-control ' style=" padding:10px 0px;  ">
-                                        <button type="button" data-type='oldApi' class="btn float-right btn-change-mode-eventapi btn-primary"
-                                      >Back
+                                        <span style="width: 100%;"> Name Api </span><br>
+                                        <input type="text" id="addEventDescModal-new-api-nm" class='form-control '
+                                            style=" padding:10px 0px;  ">
+                                        <button type="button" data-type='oldApi'
+                                            class="btn float-right btn-change-mode-eventapi btn-primary">Back
                                         </button>
                                     </div>
-                                    <div class="create-new-text-4-newapi" >
+                                    <div class="create-new-text-4-newapi">
                                         <span style="width: 100%;"> Select Api </span><br>
                                         <select id="addEventDescModal-apiId" data-live-search="true"
                                             class='form-control create-new-db-4-select'>
                                         </select>
-                                        <button type="button" data-type='newApi' class="btn float-right btn-change-mode-eventapi tn-primary"
-                                     >New Api</button>
+                                        <button type="button" data-type='newApi'
+                                            class="btn float-right btn-change-mode-eventapi tn-primary">New Api</button>
                                     </div>
-                                
-                                    <button type="button"  data-type='text' class="btn btn-primary btn-change-mode-eventhesc"
-                                        >Add text</button>
+
+                                    <button type="button" data-type='text'
+                                        class="btn btn-primary btn-change-mode-eventhesc">Add text</button>
                                 </div>
                                 <div class="form-group create-new-text-4-desc d-none col-7">
                                     <span style="width: 100%;">Text Description</span><br>
                                     <input type="text" id="addEventDescModal-text"
                                         class='form-control create-new-db-4-select' style=" padding:10px 0px;">
-                                    <button type="button" data-type='api'  class="btn btn-change-mode-eventhesc btn-primary"
-                                      >Add api</button>
+                                    <button type="button" data-type='api'
+                                        class="btn btn-change-mode-eventhesc btn-primary">Add api</button>
                                 </div>
 
 
@@ -5502,8 +5516,7 @@
 
                                     <span style="width: 100%;" id="addRelatedSourceModal-projectlist">Project</span><br>
                                     <select id="us-related-project" class='form-control us-related-project-new'
-                                        style="width:100%;padding:1px;  " data-live-search='true'
-                                        >
+                                        style="width:100%;padding:1px;  " data-live-search='true'>
                                     </select>
 
                                     <span style="width: 100%;" id="addRelatedSourceModal-apititle">APIs</span><br>
@@ -6442,9 +6455,9 @@
                                     <select class="form-control " id="addNewRelatedSourceCodeModal-type"
                                         tabindex="null">
                                         <option selected value='javacore'>Core Java</option>
-                                        <option  value='csscore'>Core CSS</option>
-                                        <option  value='jscore'>Core JS</option>
-                                        <option  value="core">Core</option>
+                                        <option value='csscore'>Core CSS</option>
+                                        <option value='jscore'>Core JS</option>
+                                        <option value="core">Core</option>
                                         <option value="event">Event Based</option>
                                         <option value="java">Java</option>
                                         <option value="sql">SQL Query</option>
@@ -7126,7 +7139,7 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <select class="form-control required addUS" id="txtTaskTypeProject">
-                                    
+
                                 </select>
                             </div>
                             <div class="form-group col-12">
@@ -7237,27 +7250,27 @@
                     <div class="row">
                         <div class="col-12 hidden" hidden>
                             <b>Fields</b>
-                            <input type="hidden" rows=10 class="form-control" id="insertFieldAsLineModal_id"></textarea>
-                        </div>
+                            <input type="hidden" rows=10 class="form-control" id="insertFieldAsLineModal_id">
+    </textarea>
+    </div>
 
 
-                        <div class="col-12">
-                            <b>Fields</b>
-                            <textarea rows=10 class="form-control" id="insertFieldAsLineModal_fields"></textarea>
-                        </div>
+    <div class="col-12">
+        <b>Fields</b>
+        <textarea rows=10 class="form-control" id="insertFieldAsLineModal_fields"></textarea>
+    </div>
 
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary addTableFieldsAsLine"
-                        onclick="addTableFieldsAsLine1()">
-                        Add
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary addTableFieldsAsLine" onclick="addTableFieldsAsLine1()">
+            Add
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                </div>
-            </div>
-        </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <div class="modal fade" id="addNewDetailedTaskModal-multi-new" tabindex="-1" style="margin-top:50px;" role="dialog"
@@ -7427,21 +7440,21 @@
         </div>
     </div>
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="assignTaskToOthersModal" tabindex="-1" style="margin-top:50px;" role="dialog"
-        aria-labelledby="" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="assignTaskToOthersModal" tabindex="-1"
+        style="margin-top:50px;" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
                 <div class="justify-content-center modal-header task-modal-header">
                     <h6 class="modal-title task-modal-title">
                         <span class="text card-UserStory-header-text-code"><b>dd NewTask</b>
-                    
-                </span></h6>
-               </div>
+
+                        </span></h6>
+                </div>
                 <div class="modal-body" style="font-size: 12px;">
                     <div class="col-12">
                         <div class="row ">
                             <div class="col-9  hidden" hidden>
-    
+
                                 <input id="assignTaskToOthersModal_taskid" rows="2" type='hidden' value='-1'
                                     class="form-control">
                                 <input id="assignTaskToOthersModal_projectid" rows="2" type='hidden' value='-1'
@@ -7451,25 +7464,24 @@
                                 <div class="input-group-addon">Comment</div>
                                 <textarea id="assignTaskToOthersModal_comment" rows="4" class="form-control"></textarea>
                             </div>
-    
-                                <div class="col-4 cs-input-group mt-2">
-                                    <div class="input-group-addon">Assignee</div>
-                                    <select class="form-control" style="width:100%"
-                                        id="assignTaskToOthersModal_assignee">
-                                    </select>
-                                </div>
-                                <div class="col-5 cs-input-group mt-2">
-                                    <div class="input-group-addon">Task Type</div>
-                                    <select class="form-control" style="width:100%; "
-                                                        id="assignTaskToOthersModal_tasktype">
-                                    </select>
-                                </div>
-    
-                                <div class="col-1 cs-input-group mt-3">
-                                    <a class="btn assignTaskToOthersModal_addAssignees" onclick="assignTaskToOthersModal_addAssignees()"><i class="fa fa-plus"></i></a>
-                                    
-                                </div>
-    
+
+                            <div class="col-4 cs-input-group mt-2">
+                                <div class="input-group-addon">Assignee</div>
+                                <select class="form-control" style="width:100%" id="assignTaskToOthersModal_assignee">
+                                </select>
+                            </div>
+                            <div class="col-5 cs-input-group mt-2">
+                                <div class="input-group-addon">Task Type</div>
+                                <select class="form-control" style="width:100%; " id="assignTaskToOthersModal_tasktype">
+                                </select>
+                            </div>
+
+                            <div class="col-1 cs-input-group mt-3">
+                                <a class="btn assignTaskToOthersModal_addAssignees"
+                                    onclick="assignTaskToOthersModal_addAssignees()"><i class="fa fa-plus"></i></a>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -7527,7 +7539,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body"  >
+                <div class="modal-body">
                     <div class="row ">
                         <div class="col-12 hidden" hidden style="padding-bottom:30px;">
                             <label>Table Description</label>
@@ -7593,7 +7605,7 @@
                         </div>
 
                         <div class="col-lg-6">
-                            </div>
+                        </div>
 
 
                         <div class="col-lg-2">
@@ -7619,7 +7631,7 @@
                             <label>.</label>
                             <button type='text' placeholder='Update Form Name'
                                 id='fieldFormGeneratorModal_body_update_form_name_generate'
-                                class='btn btn-primary form-control'>Generate  
+                                class='btn btn-primary form-control'>Generate
                             </button>
                         </div>
                         <div class="col-lg-2">
@@ -7631,27 +7643,27 @@
                         <div class="col-lg-2">
                             <label>.</label>
                             <button type='text' id='fieldFormGeneratorModal_body_view_form_name_generate'
-                                class='btn btn-primary form-control'>Generate  
+                                class='btn btn-primary form-control'>Generate
                             </button>
                         </div>
 
 
                         <div class="col-lg-3">
                             <label>Story Card for Create</label>
-                            <select id='fieldFormGeneratorModal_body_list_form_name_story_card_create' data-live-search="true"
-                                class='form-control'>
+                            <select id='fieldFormGeneratorModal_body_list_form_name_story_card_create'
+                                data-live-search="true" class='form-control'>
                             </select>
                         </div>
                         <div class="col-lg-3">
                             <label>Story Card for Update</label>
-                            <select id='fieldFormGeneratorModal_body_list_form_name_story_card_update' data-live-search="true"
-                                class='form-control'>
+                            <select id='fieldFormGeneratorModal_body_list_form_name_story_card_update'
+                                data-live-search="true" class='form-control'>
                             </select>
                         </div>
                         <div class="col-lg-3">
                             <label>Story Card for View</label>
-                            <select id='fieldFormGeneratorModal_body_list_form_name_story_card_view' data-live-search="true"
-                                class='form-control'>
+                            <select id='fieldFormGeneratorModal_body_list_form_name_story_card_view'
+                                data-live-search="true" class='form-control'>
                             </select>
                         </div>
 
@@ -7663,7 +7675,7 @@
                         <div class="col-lg-1">
                             <br>
                             <button type='text' id='fieldFormGeneratorModal_body_list_form_name_generate'
-                                class='btn btn-primary form-control'>Generate  
+                                class='btn btn-primary form-control'>Generate
                             </button>
                         </div>
                     </div>
@@ -7718,14 +7730,14 @@
 
 
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="addUserStoryPopupModalwithProject" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="addUserStoryPopupModalwithProject" tabindex="-1"
+        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="justify-content-center modal-header task-modal-header">
                     <h6 class="modal-title task-modal-title">
                         <span class="text card-UserStory-header-text-code"><b>New Story Card</b>
-                    </button>
+                            </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -7735,16 +7747,40 @@
                                 <div class="col-12">
                                     <div class="cs-input-group select-max-width">
                                         <div class="input-group-addon">Project name</div>
-                                    <select class="form-control " data-live-search="true" data-actions-box="true"
-                                        onchange='' id='bug_filter_project_id_add_pop' title="Project"></select>
+                                        <select class="form-control " data-live-search="true" data-actions-box="true"
+                                            onchange='' id='bug_filter_project_id_add_pop' title="Project"></select>
                                     </div>
                                 </div>
+
+                                <div style="margin-top: 10px;" class="col-12">
+                                    <div class="cs-input-group select-max-width">
+                                        <div class="input-group-addon">Label name</div>
+                                        <select class="form-control " data-live-search="true" data-actions-box="true"
+                                            onchange='' id='add_newStoryCArd_label14' title="Project"></select>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 10px;" class="col-12">
+                                    <div class="cs-input-group select-max-width">
+                                        <div class="input-group-addon">Type</div>
+                                        <select class="form-control usmg-selectpicker" data-live-search="true" data-actions-box="true">
+                                            <option value="" ></option>
+                                            <option value="gui">GUI Mockup</option>
+                                            <option value="api">Backend API</option>
+                                            <option value="desc">Descriptive</option>
+                                            <option value="userstory">User Story</option>
+                                            <option value="process">Process</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12">
-                                   <div class="cs-input-group mt-2">
-                                    <div class="input-group-addon">User Story</div>
-                                    <input type="text" class="form-control" id="addUserStoryPopupModal-userstoryname1"
-                                        pid="">
-                                   </div>
+                                    <div class="cs-input-group mt-2">
+                                        <div class="input-group-addon">User Story</div>
+                                        <input type="text" class="form-control"
+                                            id="addUserStoryPopupModal-userstoryname1" pid="">
+                                    </div>
                                 </div>
 
 
@@ -7783,15 +7819,16 @@
     </div>
 
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="iDidItModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="z-index: 3000;">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="iDidItModal" tabindex="-1" role="dialog"
+        aria-labelledby="" aria-hidden="true" style="z-index: 3000;">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
                 <div class="justify-content-center modal-header task-modal-header">
                     <h6 class="modal-title task-modal-title">
                         <span class="text card-UserStory-header-text-code"><b>I Did It</b>
-                    
-                </span></h6>
-               </div>
+
+                        </span></h6>
+                </div>
                 <div class="modal-body" style="font-size: 12px;">
                     <div class="row">
 
@@ -7814,13 +7851,14 @@
 
 
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="uatModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="uatModal" tabindex="-1" role="dialog"
+        aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
                 <div class="justify-content-center modal-header task-modal-header">
                     <h6 class="modal-title task-modal-title">
                         <span class="text card-UserStory-header-text-code"><b>User Acceptance Testing</b></span></h6>
-               </div>
+                </div>
                 <!-- <div class="modal-header">
                     <h5 class="modal-title" id="">User Acceptance Testing</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -7999,7 +8037,7 @@
         </div>
     </div>
 
- 
+
     <div class="modal fade" id="copyClassCodeModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 80%;max-width: 80%" role="document">
             <div class="modal-content">
@@ -8161,8 +8199,8 @@
     </div>
 
 
-    <div class="modal fade" id="change-parent-task-modal" style="z-index: 5000;" tabindex="-1" role="dialog" aria-labelledby=""
-        aria-hidden="true">
+    <div class="modal fade" id="change-parent-task-modal" style="z-index: 5000;" tabindex="-1" role="dialog"
+        aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -8227,90 +8265,87 @@
             </div>
         </div>
     </div>
-     
-              <!-- Modal -->
-              <div class="modal fade cs-modal-box issue-managment-add-task bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                    <!-- <div class="modal-header">
+
+    <!-- Modal -->
+    <div class="modal fade cs-modal-box issue-managment-add-task bd-example-modal-lg" id="multieditpopUp" tabindex="-1"
+        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div> -->
-                    <div class="justify-content-center modal-header task-modal-header">
-                        <h6 class="modal-title task-modal-title">
-                            <span class="text" id="exampleModalLabel">Filter</span>
-                        </h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="cs-svg-icon x-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body" >
-                         <div class='row'>
-                            <div class="col-lg-4 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control" data-live-search="true" data-actions-box="true"
+                <div class="justify-content-center modal-header task-modal-header">
+                    <h6 class="modal-title task-modal-title">
+                        <span class="text" id="exampleModalLabel">Filter</span>
+                    </h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="cs-svg-icon x-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class='row'>
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control" data-live-search="true" data-actions-box="true"
                                     style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_multi'
-                                     title="Project"></select>
-                                </div>
+                                    title="Project"></select>
                             </div>
-                            <div class="col-lg-4 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control" data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_filter_assignee_id_multi'
-                                     title="Assignee"></select>
-                                </div>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
+                                    id='bug_filter_assignee_id_multi' title="Assignee"></select>
                             </div>
-                        
-                            <div class="col-lg-4 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control bug-mgmt-filter-select " data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_filter_backlog_id_multi'
-                                    title="Story Card">
-                        
+                        </div>
+
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                    data-live-search="true" id='bug_filter_backlog_id_multi' title="Story Card">
+
                                 </select>
-                                </div>
                             </div>
-                            <div class="col-lg-4 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_task_type_id_multi'
-                                    title="Task Type">
-                        
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                    onchange='' data-live-search="true" id='bug_task_type_id_multi' title="Task Type">
+
                                 </select>
-                                </div>
                             </div>
-                            <div class="col-lg-4 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_task_nature_id_multi'
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                    onchange='' data-live-search="true" id='bug_task_nature_id_multi'
                                     title="Task Nature">
-                                    <option value="" ></option>
-                                    <option value="bug" >Bug</option>
-                                    <option value="change" >Change Request</option>
-                                    <option value="new" >New Request</option>
-                        
+                                    <option value=""></option>
+                                    <option value="bug">Bug</option>
+                                    <option value="change">Change Request</option>
+                                    <option value="new">New Request</option>
+
                                 </select>
-                                </div>
                             </div>
-                            <div class="col-lg-4 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                        onchange=''   id='bug_task_status_id_zad'
-                                        title="Task Status">
-                                    <option value="" ></option>
-                                    <option value="new" >New</option>
-                                    <option value="ongoing" >Ongoing</option>
-                                    <option value="waiting" >Waiting</option>
-                                    <option value="canceled" >Canceled</option>
-        
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                    onchange='' id='bug_task_status_id_zad' title="Task Status">
+                                    <option value=""></option>
+                                    <option value="new">New</option>
+                                    <option value="ongoing">Ongoing</option>
+                                    <option value="waiting">Waiting</option>
+                                    <option value="canceled">Canceled</option>
+
                                 </select>
-                                </div>
                             </div>
-                            <div class="col-lg-4 mt-2" >
-                                <div class="cs-input-group">
-                                    <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <div class="cs-input-group">
+                                <select class="form-control bug-mgmt-filter-select" data-actions-box="true"
                                     data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
                                     <option value=''>None</option>
                                     <option value='1'>1- Lowest</option>
@@ -8322,20 +8357,20 @@
                                     <option value='7'>7</option>
                                     <option value='8'>8</option>
                                     <option value='9'>9 - Highest</option>
-                        
+
                                 </select>
-                                </div>
                             </div>
-                           
-                              </div>
-                       
+                        </div>
+
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" id="update_multi_bug_change_btn" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
+
                 </div>
-              </div>
+                <div class="modal-footer">
+                    <button type="button" id="update_multi_bug_change_btn" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Modal -->
@@ -8896,23 +8931,25 @@
     </div>
 
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="forwardTaskToModal" tabindex="-1" role="dialog"
+        aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
                 <div class="justify-content-center modal-header task-modal-header">
                     <h6 class="modal-title task-modal-title">
                         <span class="text card-UserStory-header-text-code"><b>Forward To</b>
-                    
-                </span></h6>
-               </div>
+
+                        </span></h6>
+                </div>
                 <div class="modal-body" style="font-size: 12px;">
                     <div class="col-12">
                         <div class="row">
                             <div class="col-12 cs-input-group">
                                 <div class="input-group-addon">Assignee</div>
-                                <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
+                                <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee">
+                                </select>
                             </div>
-    
+
                             <div class="col-12 cs-input-group mt-2">
                                 <div class="input-group-addon">Comment</div>
                                 <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
@@ -9156,7 +9193,6 @@
 </html>
 
 <script>
-
     $('.nav-toggle').click(function (e) {
         e.preventDefault();
         $("html").toggleClass("openNav");
@@ -9165,7 +9201,6 @@
     });
 </script>
 <script>
-
     $(document).ready(function () {
         tkn_var = localStorage.getItem('tk');
         init();
@@ -9203,8 +9238,5 @@
         $('.add-bkl-line').val('');
         $('.search-clear').css('display', 'none');
         $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
-    }
-    ;
-
-
+    };
 </script>

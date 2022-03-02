@@ -15308,7 +15308,8 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         var dwlmt = $('#tasktype-list-select4move')
         taskManagement.load_task_type_forward_to(dwlmt);
         var taskTyp = $('#story_mn_manual_status_id')
-        taskManagement.load_task_type_view_to(taskTyp);        
+        taskManagement.load_task_type_view_to(taskTyp); 
+        add_newStoryCArd_label_SetSelect();
         getUsers();
     
       
@@ -15338,10 +15339,29 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     });
 });
 // show form permission user
-$(document).on('click', '#userStoryUserPermission12', function () {
-    console.log('salam');
+$(document).on('click', '#userStoryUserPermission12', function () {   
     usm_show_permission_users1();
 })
+//set label select new SC
+function add_newStoryCArd_label_SetSelect() {
+    var data = {};
+    var sel = $('#add_newStoryCArd_label14');
+    callService('serviceTmGetLabelList', data, true, function (res) {
+        sel.empty();
+        var o = res.tbl[0].r;
+        sel.append($('<option>'));
+        for (var j = 0; j < o.length; j++) {
+            var t = o[j];
+            sel.append($('<option>')
+                .val(t.id)
+                .text(t.name)
+            )
+        }
+        sel.selectpicker('refresh');
+    })
+
+
+}
 $(document).on('click','.someyourContainer .category-item-boxes li', function (e) {
          e.stopPropagation();
   });
