@@ -7452,17 +7452,22 @@ function setMultiselectPickerValue(elementId, val) {
 }
 
 function getMultiSelectpickerValue(el) {
-    var id = $(el).val();
-    var st = "";
-    for (var i = 0; i < id.length; i++) {
-        if (!id[i])
-            continue;
-        st += id[i]
-        if (i < id.length - 1) {
-            st += ','
+    try {
+        var id = $(el).val();
+        var st = "";
+        for (var i = 0; i < id.length; i++) {
+            if (!id[i])
+                continue;
+            st += id[i]
+            if (i < id.length - 1) {
+                st += ','
+            }
         }
+        return st;  
+    } catch (error) {
+        return ''
     }
-    return st;
+    
 }
 
 function getGUIDataByStoryCard(el) {
@@ -13599,7 +13604,8 @@ function getIframeBlock(elm) {
 
 }
 function iframeLoaded() {
-    var pid = global_var.current_backlog_id;
+    try {
+        var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
@@ -13619,7 +13625,11 @@ function iframeLoaded() {
       $("#result-code-editor").html(block);
    /*  $("#result-iframe").contents().find('body').html(block +`<script>
     loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`); */
-   loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
+   loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass")); 
+    } catch (error) {
+        
+    }
+   
 }
 function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
@@ -13659,15 +13669,15 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     var css = window.editorCSSGround.getValue();
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
     } else {
-        var html = window.editorHTMLGround.getValue();
-             
-            html = html.replace(/>[ ]+</g, "><");
+        var html = String(window.editorHTMLGround.getValue());
+ 
         insertHtmlSendDbBybacklogId(html);
     }
-    getIframeBlock(elm);
+   
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     setBacklogAsHtmlCodeGround(global_var.current_backlog_id,js,css);
+    getIframeBlock(elm);
  ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
@@ -13807,7 +13817,7 @@ function insertHtmlSendDbBybacklogId(body) {
     var pid = global_var.current_backlog_id;
     var json = initJSON();
     json.kv.fkBacklogId = pid;
-    json.kv.backlogHtml = body.toString();
+    json.kv.backlogHtml = "'"+body+"'";
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({

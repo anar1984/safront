@@ -3571,11 +3571,6 @@ const taskManagement = {
                           $(elm).append(this.genZonaBlock(nm, al));
                           this.getTaskList4Kanban(data, type, al);
                        }
-var KanbanTest = new jKanban({
-    element: "#myKanban",
-    boards: myBoards
-})
-
                        return
                     }
                     if (goupBy === "7") {
@@ -5132,8 +5127,9 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 });
 // updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
-      var val  = $(this).closest('.assigne-div-update-issue').getVal();
-    updateTask4ShortChangeDetails(val, "fkAssigneeId");
+    var val  = $(this).closest('.assigne-div-update-issue').getVal();
+    ///  updateTask4ShortChangeDetails(val, "fkAssigneeId");
+      forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
 });
 $(document).on("change", '.observer-div-update-issue select.user-list-selectbox-multiple', function () {
       var val  = $(this).closest('.observer-div-update-issue').find('.user-list-avatar-multiple li:last-child').attr("id");
@@ -5670,12 +5666,23 @@ function nextModalpopUpShow(elm,value,multi) {
 
 function forwardTaskToAction(taskid) {
      taskid  = taskid?taskid:global_var.current_issue_id;
-    updateTask4ShortChangeDetailsWithSync($('div.forward-assignee-list').getVal(), 'fkAssigneeId');
+     var assigneId  = $('div.forward-assignee-list').getVal();
+
     var comel  = $('#nextBlockItemPopUp textarea#note');
-    if (comel.val().trim()) {
-        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
-    }
-    getBugList();
+     if(assigneId){
+        forwardTaskApi(taskid,assigneId,comel.val());
+     }
+   
+}
+function forwardTaskApi(taskId,assigneId,comments) {
+      var data  = {};
+          data.fkAssigneeId  = assigneId;
+          data.fkTaskId  = taskId;
+          data.comment  =comments;
+      callService("serviceTmForwardTask4RelatedTask",data,true,function (params) {
+        getBugList();
+        $('#nextBlockItemPopUp').remove();
+      })
 }
 function addObserverTask(taskid) {
      taskid  = taskid?taskid:global_var.current_issue_id;
