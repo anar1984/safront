@@ -18816,7 +18816,7 @@ function insertAutoTaskOnDrag(bgId,typid,prid,list) {
             for (let i = 0; i < list.length; i++) {
                 const o = list[i];
                var oldTaskName  = coreBugKV[o].taskName;
-                insertCheckListAddAciq(res.kv.id, o, oldTaskName);                
+                insertForwardCheckListAddAciq(res.kv.id, o, oldTaskName);
             }
         },
         error: function () {
@@ -18830,7 +18830,7 @@ function contentArrangableUI() {
     } catch (e) {
     }
 }
-function insertCheckListAddAciq(taskid,oldtaskid,oldTaskName){
+function insertForwardCheckListAddAciq(taskid,oldtaskid,oldTaskName){
       var data = {};
       data.fkTaskId = taskId;
       data.itemName = oldTaskName;
