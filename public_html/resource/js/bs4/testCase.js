@@ -770,7 +770,8 @@ function setBugFilterProject() {
 function addUserStoryNewPopupBug() {
     var usName = $('#addUserStoryPopupModal-userstoryname1').val();
     var prid = $('#bug_filter_project_id_add_pop').val();
-    var lab=$('#')
+    var typ = $('#_adNew_task_Type_123').val();
+    var lab = $('#add_newStoryCArd_label14').val();
     if (!prid) {
         Toaster.showError("Please Choose Project")
         return
@@ -781,6 +782,8 @@ function addUserStoryNewPopupBug() {
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = prid;
+    json.kv['backlogType'] = typ;
+    json.kv['fkLabelId'] = lab;
     json.kv['isApi'] = "0";
     var that = this;
     var data = JSON.stringify(json);

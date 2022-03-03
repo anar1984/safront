@@ -7742,9 +7742,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <div id="exampleModal-properties-tab" class="container tab-pane active"
-                                style=" max-height: 76vh;overflow:visible;">
-                                <div class="col-12">
+                            <div id="exampleModal-properties-tab" class="container tab-pane active d-flex"
+                                style=" max-height: 76vh;overflow:visible;flex-wrap: wrap;">
+                                <div class="col-6">
                                     <div class="cs-input-group select-max-width">
                                         <div class="input-group-addon">Project name</div>
                                         <select class="form-control " data-live-search="true" data-actions-box="true"
@@ -7752,21 +7752,20 @@
                                     </div>
                                 </div>
 
-                                <div style="margin-top: 10px;" class="col-12">
+                                <div  class="col-6">
                                     <div class="cs-input-group select-max-width">
                                         <div class="input-group-addon">Label name</div>
                                         <select class="form-control " data-live-search="true" data-actions-box="true"
-                                            onchange='' id='add_newStoryCArd_label14' title="Project"></select>
+                                            onchange='' id='add_newStoryCArd_label14' title="Label name"></select>
                                     </div>
                                 </div>
 
-                                <div style="margin-top: 10px;" class="col-12">
+                                <div style="margin-top: 10px;" class="col-6">
                                     <div class="cs-input-group select-max-width">
                                         <div class="input-group-addon">Type</div>
-                                        <select class="form-control usmg-selectpicker" data-live-search="true" data-actions-box="true">
+                                        <select class="form-control usmg-selectpicker" title="Type" id="_adNew_task_Type_123" data-live-search="true" data-actions-box="true">
                                             <option value="" ></option>
-                                            <option value="gui">GUI Mockup</option>
-                                            <option value="api">Backend API</option>
+                                            <option value="gui">GUI Mockup</option>                                            
                                             <option value="desc">Descriptive</option>
                                             <option value="userstory">User Story</option>
                                             <option value="process">Process</option>
@@ -7775,7 +7774,7 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="cs-input-group mt-2">
                                         <div class="input-group-addon">User Story</div>
                                         <input type="text" class="form-control"

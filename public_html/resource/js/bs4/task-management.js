@@ -5188,7 +5188,7 @@ $(document).on('click', '.more-button-forIssue', function () {
 function reset_task_data() {
     $('#issue-managment-add-task .task-events-created').attr("data-taskid", '');
     $('#issue-managment-add-task .task-events-created input').val('');
-    $('#issue-managment-add-task input#taskNameInputNew2').val('');
+    $('#issue-managment-add-task textarea#taskNameInputNew2').val('');
     $('#issue-managment-add-task #addComment4Task_comment_new').val('');
     emptyCanvasDiv();
     $("#issue-managment-add-task #progress_bar_new").empty();

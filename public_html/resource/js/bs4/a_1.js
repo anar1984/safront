@@ -16871,7 +16871,9 @@ function getBugList4UserStory(bgId, tbody,list) {
                       <div class="p-1"><b>Created By</b></div>
                       <img class="Assigne-card-story-select-img created" src="${fileUrl(ela[i].createByImage)}" data-trigger="hover" data-toggle="popover" data-content="${ela[i].createByName}" title="" data-original-title="Created By">
                    </span>
+                   
                      </div>
+                     <div>${ela[i].taskName}</div>
                     
                      `
                        
@@ -18770,7 +18772,7 @@ function multipleClosedTask(list,dragelm) {
    var bgId  = $(dragelm).attr("bid");
    var pid  = $(dragelm).attr("pidd");
    var typid  = $('#tasktype-list-select4move').val();
-    insertAutoTaskOnDrag(bgId,typid,pid);
+    insertAutoTaskOnDrag(bgId,typid,pid,list);
    }) 
 }
 function getDefautUserByTaskTypeId(dragelm) {
@@ -18786,7 +18788,7 @@ function getDefautUserByTaskTypeId(dragelm) {
    })  */
 }
 
-function insertAutoTaskOnDrag(bgId,typid,prid) {
+function insertAutoTaskOnDrag(bgId,typid,prid,list) {
     var txt  = $('[pid="'+bgId+'"].ContentText span.headerContentText').text()+" (send to "+ $('#tasktype-list-select4move option:selected').text() +")";
     var json = {
         kv: {}
@@ -18808,9 +18810,14 @@ function insertAutoTaskOnDrag(bgId,typid,prid) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
-           
+            list = list.split(',');
+            for (let i = 0; i < list.length; i++) {
+                const o = list[i];
+               var oldTaskName  = coreBugKV[o].taskName;
+                insertCheckListAddAciq(res.kv.id, o, oldTaskName);                
+            }
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -18822,6 +18829,20 @@ function contentArrangableUI() {
         $('.content-drag').arrangeable();
     } catch (e) {
     }
+}
+function insertCheckListAddAciq(taskid,oldtaskid,oldTaskName){
+      var data = {};
+      data.fkTaskId = taskId;
+      data.itemName = oldTaskName;
+      data.fkRelatedTaskId = oldtaskid;
+      if (!list) {
+          return
+      }
+      callService('serviceTmInsertSingleTaskCheckListCumulativeNew', data, true, function () {
+          if (type === 'update') {
+              taskManagement.updateTask.getCheckListComulativ();
+          }
+      });
 }
 
 function updateUS4ShortChange(el, ustype) {
