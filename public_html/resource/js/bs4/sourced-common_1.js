@@ -14148,18 +14148,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             try {
                 //                     
                 var usIdList = res.tbl[0].r;
-
+                var bgList = '';
                 for (var k = 0; k < usIdList.length; k++) {
 
 
 
                     var obj = usIdList[k];
-
+                      bgList+=obj.id+'|'
 
                     var html = new UserStory().genUSLine4KanbanView(obj);
                     $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append(html);
 
                 }
+                backlogBugCountSet12(bgList);
 
                 $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).find('.more-us-card-btn').remove();
                 if (res.kv.rowCount > endLm) {
@@ -14653,13 +14654,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             try {
 
                 var usIdList = res.tbl[0].r;
-
+                var bgList = '';
                 for (var k = 0; k < usIdList.length; k++) {
                     var obj = usIdList[k];
+                    bgList += obj.id + '|';
                     var html = new UserStory().genUSLine4KanbanView(obj,stl);
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
                     c4new++
                 }
+                backlogBugCountSet12(bgList);
                 if (c4new > 19) {
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).find('.more-us-card-btn-manual').remove();
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append('<a href="#" data-ople="' + stl + '" startLimit="20" endLimit="40" role="button" class="more-us-card-btn-manual col-12">More</a>');
@@ -14704,12 +14707,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('#kanban_view_' + stl + '_count').text(res.kv.rowCount);
             try {
                 var usIdList = res.tbl[0].r;
+                var bgList = '';
                 for (var k = 0; k < usIdList.length; k++) {
                     var obj = usIdList[k];
+                    bgList += obj.id + '|';
                     var html = new UserStory().genUSLine4KanbanView(obj);
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
                     c4new++
                 }
+                backlogBugCountSet12(bgList);
                 if (c4new > 19) {
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).find('.more-us-card-btn-manual').remove();
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append('<a href="#" data-ople="' + stl + '" startLimit="20" endLimit="40" role="button" class="more-us-card-btn-manual col-12">More</a>');
@@ -14978,16 +14984,20 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data.joinType = "left";
         callApi('21122313051700845260', data, true, function (res) {
             var c4new = 0
-            $('#kanban_view_' + stl + '_count').text(res.kv.rowCount)
+            $('#kanban_view_' + stl + '_count').text(res.kv.rowCount);
+           
             try {
+                var bgList = '';
                 var usIdList = res.tbl[0].r;
                 for (var k = 0; k < usIdList.length; k++) {
                     var obj = usIdList[k];
+                    bgList += obj.id + '|';
                     var html = new UserStory().genUSLine4KanbanView(obj);
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
 
                     c4new++
                 }
+                backlogBugCountSet12(bgList);
                 if (c4new > 19) {
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).find('.more-us-card-btn').remove();
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append('<a href="#" data-ople="' + stl + '" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
@@ -15660,9 +15670,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .append($('<span class="backlog-status">')
                     .append("&nbsp;&nbsp;")
                     .append(assigneeImg))
-                .append((o.bugCount>0)?$('<span class="backlog-status">')
-                    .append("&nbsp;&nbsp;")
-                    .append('<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>-' + o.bugCount) : "")
+                .append($('<span class="bugCountId' + o.id + ' " id="bugCountId' + o.id + '">'))
                 
                 .append($("<button>")
                     .addClass("baclog-large-modal-ididit-refresh btn btn-sm btn-light")  

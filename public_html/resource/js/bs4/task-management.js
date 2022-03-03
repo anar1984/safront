@@ -2013,7 +2013,8 @@ const taskManagement = {
                             .attr('data-title', 'Updated By')
                         ) :
                         '';
-
+                    var area = (`<textarea rows='1' oid='${o.id}' class='form-control updateTaskcheckListItemName'>${o.itemName}</textarea>`);
+                    var linkT = (`<a href='#' class='text-light' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'','${o.fkRelatedTaskId}')">${o.itemName}</a>`)
                     var tr = $("<li >")
                                .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
                                .attr("data-checked",o.isChecked)
@@ -2028,12 +2029,8 @@ const taskManagement = {
                         .append($('<div>')
                             .addClass('mr-auto w-100')
                             .addClass((o.isChecked === '1') ? 'text-checked' : '')
-                            .append($('<textarea>')
-                                .attr('rows', '1')
-                                .addClass('form-control')
-                                .attr("oid", o.id)
-                                .addClass("updateTaskcheckListItemName")
-                                .val(o.itemName)))
+                            .append($((o.fkRelatedTaskId) ? linkT : area))
+                        )
                         .append($('<div>')
                             .addClass('pl-1 p2-1')
                             .append(createdBySpan))

@@ -18822,12 +18822,9 @@ function insertAutoTaskOnDrag(bgId,typid,prid,list) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            list = list.split(',');
-            for (let i = 0; i < list.length; i++) {
-                const o = list[i];
-               var oldTaskName  = coreBugKV[o].taskName;
-                insertForwardCheckListAddAciq(res.kv.id, o, oldTaskName);
-            }
+           
+                insertForwardCheckListAddAciq(res.kv.id, list);
+            
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -18840,15 +18837,14 @@ function contentArrangableUI() {
     } catch (e) {
     }
 }
-function insertForwardCheckListAddAciq(taskid,oldtaskid,oldTaskName){
+function insertForwardCheckListAddAciq(newTask,fktask){
       var data = {};
-      data.fkTaskId = taskId;
-      data.itemName = oldTaskName;
-      data.fkRelatedTaskId = oldtaskid;
+      data.newTaskId = newTask;
+      data.fkTaskIds = fktask;
       if (!list) {
           return
       }
-      callService('serviceTmInsertSingleTaskCheckListCumulativeNew', data, true, function () {
+      callApi('22030312491808427944', data, true, function (res) {
           if (type === 'update') {
               taskManagement.updateTask.getCheckListComulativ();
           }
@@ -24576,4 +24572,16 @@ function updateOrderNo(id, iid) {
     });
 }
 
-
+function backlogBugCountSet12(list) {    
+    console.log('fffffffff');
+    var data = {};
+    data.fkBacklogId = list;
+    callApi('22022411164005257502', data, true, function (res) {
+        var tb = res.tbl[0].r;
+        for (let i = 0; i < tb.length; i++) {
+            const o = tb[i];           
+            $('.bugCountId' + o.fkBacklogId).html('<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>' + o.bugCount);
+            
+        }
+    })
+}
