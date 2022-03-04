@@ -453,7 +453,7 @@ const taskManagement = {
                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
 
                                 <div class="cs-horizontal-checkboxes" id="run_task_weekday_select">
-                                    <label><input type="checkbox" value="monday" ><span>${lang_task.weekDays.monday}</span></label>
+                                    <label><input type="checkbox" name='' value="monday" ><span>${lang_task.weekDays.monday}</span></label>
                                     <label><input type="checkbox" value="tuesday" ><span>${lang_task.weekDays.tuesday}</span></label>
                                     <label><input type="checkbox" value="wednesday" ><span>${lang_task.weekDays.wednesday}</span></label>
                                     <label><input type="checkbox" value="thursday" ><span>${lang_task.weekDays.thursday}</span></label>
@@ -827,7 +827,7 @@ const taskManagement = {
                     json.kv.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
                     json.kv.startDate = toDate("taskDeadlineStartDade");
                     json.kv.endDate = toDate("taskDeadlineEndDade");
-                    json.kv.runTime = toTime("taskDeadlineStartTime");
+                    json.kv.startTime = toTime("taskDeadlineStartTime");
                     
                  }
                     var that = this;
@@ -5888,6 +5888,14 @@ $(document).on("click", ".cs-open-btn-share", function (e) {
 })
 $(document).on("click", ".cs-open-btn-more", function (e) {
     $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
+})
+$(document).on("change", "#run_task_weekday_select input", function (e) {
+
+    if ($('#run_task_intensive_select').val() === 'monthly') {
+        $('#run_task_weekday_select label').removeClass('active');
+    }
+       $(this).closest('label').toggleClass('active');
+       
 })
 
 
