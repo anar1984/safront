@@ -16762,13 +16762,15 @@ var _220304054258036310054 = {
     add_child_backlog: (el, id) => {
       var data = {};
       data.fkFromBacklogId = id;
-      data.fkToBacklogId = $(el).closest('div').find('select').val();
-      data.description = $(el).closest('div').find('input').val();
+      data.fkToBacklogId = $(el).closest('.show-details-block').find('.selectpicker-mapping-element').val();
+      data.description = $(el).closest('.show-details-block').find('input').val();
       data.fkBacklogFlowId = $(el).closest('tr').attr('fid');
       callApi('22030400033000374400', data, true, function (res) {
         $(el).closest('div').find('select').val('');
         $(el).closest('div').find('input').val('');
-        Toaster.showMessage('Successfulli əlavə edildi. oh')
+        Toaster.showMessage('Successfulli əlavə edildi.');
+        _220304054258036310054.map_flow_details();
+
       })
     },
     delete_child_backlog: (el, id) => {
@@ -16779,13 +16781,14 @@ var _220304054258036310054 = {
       data.fkFromBacklogId = id;
       data.fkToBacklogId = $(el).closest('div').attr('id');
       callApi('22030412151009877861', data, true, function (res) {
+        _220304054258036310054.map_flow_details();
       })
     },
   
     map_show: (flow_id) => {
   
       var table = $(`<table border='1px solid gray'>`);
-      var tr = $(`<tr>`);
+      var tr = $(`<tr style="vertical-align: baseline; ">`);
       tr.attr('fid', flow_id)
       table.append(tr);
   
@@ -16796,10 +16799,13 @@ var _220304054258036310054 = {
       var idc = 1;
       _220304054258036310054.map_iteration(['-1'], res4, tr, idc);
   
+         
       var div = $(".task-panel");
       div.html(table);
-      $('.selectpicker1').selectpicker('refresh');
-  
+      
+     
+      // alert(JSON.stringify(child_id));
+      $('select.selectpicker-mapping-element').selectpicker('refresh');
      
   
     },
@@ -16827,7 +16833,7 @@ var _220304054258036310054 = {
                 
               } catch (err) { }
               bglist+= o+'|';
-              var div2 = $(`<div class="zad rounded m-5" style='background-color:#dfeef7;max-width:300px'>`);
+              var div2 = $(`<div class="zad rounded m-5" style='background-color:#dfeef7;max-width:300px;'>`);
               div2.append('<button class="btn btn-sm show-details-add "><i class="fas fa-angle-down" aria-hidden="true"></i></button>')
                 var addons  =  $("<div class='d-none show-details-block'>")
                 var backLogDiv  =  $('<div class="mapping-element-div-'+o+'">')
@@ -16847,11 +16853,12 @@ var _220304054258036310054 = {
             }
   
           })
+         
         }
+      
       })
-      _220304054258036310054.get_backLog_inside(bglist)
-      // alert(JSON.stringify(child_id));
-      $('select.selectpicker-mapping-element').selectpicker('refresh');
+      _220304054258036310054.get_backLog_inside(bglist);
+     
       idc++;
       if (child_id.length > 0)
         _220304054258036310054.map_iteration(child_id, res4, tr, idc);
@@ -16897,6 +16904,7 @@ var _220304054258036310054 = {
         
               })
               backlogBugCountSet12(bglist);
+              _220304054258036310054.set_leaderLine();
         })
     },
     create_flow: (el) => {
