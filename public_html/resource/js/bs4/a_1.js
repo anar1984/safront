@@ -12895,9 +12895,9 @@ function showApiRelationModalCore(backLogId,inputid) {
     data = {};
     data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad'>")
+        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
-var selectout = $("<select class='form-control apiInputSelect'>")
+var selectout = $("<select class='form-control apiInputSelect' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
 try {
   var b = res.tbl[0].r;
@@ -16515,7 +16515,6 @@ function getSTatsUserManagmentTableKanban(elm) {
     try {
         json.kv.cookie = getToken();
     } catch (err) {
-        
     }
     json.kv.fkBacklogId = $(elm).attr("data-bid");
     var data = JSON.stringify(json);
@@ -16829,14 +16828,13 @@ var _220304054258036310054 = {
               } catch (err) { }
               bglist+= o+'|';
               var div2 = $(`<div class="zad rounded m-5" style='background-color:#dfeef7;max-width:300px'>`);
-               div.append(``)
-                var addons  =  $("<div class='d-none'>")
+              div2.append('<button class="btn btn-sm show-details-add "><i class="fas fa-angle-down" aria-hidden="true"></i></button>')
+                var addons  =  $("<div class='d-none show-details-block'>")
                 var backLogDiv  =  $('<div class="mapping-element-div-'+o+'">')
                                      .append(`<div class="weather-container mb-1" style="min-height: 100px;overflow: hidden;box-shadow: none;background:none;"><div class="box-loader shimmer"></div></div>`)
               div2.attr("id", o)
-              addons
-                .append($('<div class="cs-input-group">').append(select))
-                .append(`<div class='d-flex cs-input-group'>
+              addons.append($('<div class="cs-input-group">').append(select))
+                    .append(`<div class='d-flex cs-input-group'>
                            <input class='form-control form-control-sm mr-auto' placeholder='Description' >
                           <button class='btn btn-sm ' onclick='_220304054258036310054.add_child_backlog(this,"${o}")'><i class="fas fa-plus-circle"></i></button>
                           <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${o}")'><i class="fas fa-trash-alt"></i></button>
@@ -16917,6 +16915,11 @@ var _220304054258036310054 = {
   
   $(document).on("change",'#comp_id_22030405435105928068',function () {
     _220304054258036310054.map_flow_details();
+  })
+  $(document).on("click",'.show-details-add',function () {
+       $(this).parent().find('.show-details-block').toggleClass('d-none');
+       $(this).find('i').toggleClass('fa-angle-down')
+       $(this).find('i').toggleClass('fa-angle-up')
   })
   $(document).on("click",'#comp_id_22030405442605466312',function () {
     var form_id = showForm('22030400071402369492');
@@ -17020,8 +17023,7 @@ function getBugList4UserStory(bgId, tbody,list) {
         crossDomain: true,
         async: false,
         success: function (res) {
-               try {
-             coreBugList = res;
+            coreBugList = res;
             setKV4CoreBugList();
             SATask.updateTaskByRes(res);
             var ela = res.tbl[0].r
@@ -17118,11 +17120,6 @@ function getBugList4UserStory(bgId, tbody,list) {
                 $(tbody).closest("table").find('.btn-show-hide-table-row').click();
                } */
               $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
-               } catch (error) {
-                   console.log('tapilmadi')
-                  $(tbody).append(`<tr>Data is not find</tr>`) 
-               }
-      
         },
         error: function () {
             Toaster.showError(('somethingww'));
