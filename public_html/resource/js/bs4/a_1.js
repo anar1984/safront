@@ -12895,9 +12895,9 @@ function showApiRelationModalCore(backLogId,inputid) {
     data = {};
     data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad' >")
+        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad'>")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
-var selectout = $("<select class='form-control apiInputSelect' >")
+var selectout = $("<select class='form-control apiInputSelect'>")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
 try {
   var b = res.tbl[0].r;
@@ -16517,6 +16517,7 @@ function getSTatsUserManagmentTableKanban(elm) {
     try {
         json.kv.cookie = getToken();
     } catch (err) {
+        
     }
     json.kv.fkBacklogId = $(elm).attr("data-bid");
     var data = JSON.stringify(json);
@@ -16808,7 +16809,8 @@ function getBugList4UserStory(bgId, tbody,list) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            coreBugList = res;
+               try {
+             coreBugList = res;
             setKV4CoreBugList();
             SATask.updateTaskByRes(res);
             var ela = res.tbl[0].r
@@ -16905,6 +16907,11 @@ function getBugList4UserStory(bgId, tbody,list) {
                 $(tbody).closest("table").find('.btn-show-hide-table-row').click();
                } */
               $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
+               } catch (error) {
+                   console.log('tapilmadi')
+                  $(tbody).append(`<tr>Data is not find</tr>`) 
+               }
+      
         },
         error: function () {
             Toaster.showError(('somethingww'));
