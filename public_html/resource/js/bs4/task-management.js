@@ -4569,7 +4569,7 @@ function getValueScheduleWeekDay(elmId) {
        var list =''; 
        var block  =  $("#"+elmId).find('input[type="checkbox"]');
           block.each(function (params) {
-              if($(this).prop("checked")){
+              if($(this).closest('label').hasClass("active")){
                   list += $(this).val() + '%IN%'
               }
           })
