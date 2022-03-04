@@ -14191,6 +14191,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
            groupBy = groupBy?groupBy:"backlogStatus";
       
         $(".matrix-view-combo-boxs").addClass("d-none");
+        $(".process-view-combo-boxs").addClass("d-none");
+       
         if (groupBy === 'backlogStatus') {
                  var stl = ['draft', "new", "ongoing", 'closed'];
             for (let si = 0; si < stl.length; si++) {
@@ -14227,6 +14229,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         else if (groupBy === 'staticView') {
                this.getStatisticView(div);             
+        }
+        else if (groupBy === 'processMap') {
+              
+               $(".task-panel").scroll(function() { //.box is the class of the div
+                      _220304054258036310054.set_leaderLine();
+                });
+                _220304054258036310054.loader(); 
+                $(".process-view-combo-boxs").removeClass("d-none");           
         }
 
 

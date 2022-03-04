@@ -3839,9 +3839,6 @@ div[data-closed="apisect"]{
 
 }
 
-.leader-line{
-    z-index: 1 !important;
-}
 .tool_element_edit{
     position: absolute;
     bottom: 100%;

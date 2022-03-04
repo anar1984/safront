@@ -368,7 +368,10 @@ var cmpList = {
                 var oldId  = $(elm).attr('data-colum-id')
                 $(".toggle-block-"+oldId).remove();
                 var tableId = makeId(10);
-                table.find("thead >tr>th:first-child").html(this.openBlockBtn(tableId));
+                var btn  = $(this.openBlockBtn(tableId))
+                table.find("thead >tr>th:first-child").html(btn);
+                this.openBlock(btn)
+                onclick='cmpList.tableShowHideColumn.openBlock(this)'
                 table.attr("data-colum-id",tableId);
                 $(elm).attr('component-type',"table-show-hide-column");
                 var ul  = $("<ul>")
@@ -427,27 +430,21 @@ var cmpList = {
                         `
         },
         openBlockBtn: function (tableId) {
-            return `<div onclick='cmpList.tableShowHideColumn.openBlock(this)' table-id='${tableId}' class="showhide-col-btn ">
+            return `<div  table-id='${tableId}' class="showhide-col-btn ">
                        <i class="cs-svg-icon numbers"></i>
                    </div>`
 
         },
         openBlock: function (elm) {
-            var  block  = $(".toggle-block-"+$(elm).attr('table-id'));
-                 block.toggle('fast');
-
-                var top = $(elm).offset().top;
-                var left = $(elm).offset().left; 
-                var w  = $(block).css("height");
-                var h  = $(block).css("width");
-                block.css({
-                      "top": (w>top)?top+w:top,
-                      "left":(h>left)?left+h:left,
-                      "z-index":"5000000"
-                  }) 
-              block.draggable({
-               "containment":".redirectClass"
-            })
+              $(elm).on('click',function(e){
+                   var  block  = $(".toggle-block-"+$(this).attr('table-id'));
+                    block.toggle('fast');
+                    cmpList.getElementPosition(e,block);
+                    block.draggable({
+                    "containment":".redirectClass"
+                })
+              })
+           
         },
         showHideClick: function (elm) {
             var tableId  = $(elm).closest('.showhide-col-main-info').attr('table-id');
@@ -600,36 +597,8 @@ var cmpList = {
                      $(this).addClass("last_click_class");
                     menu.show();     
                     e.preventDefault(); // To prevent the default context menu.
-                    var windowHeight = $(window).height()/2;
-                    var windowWidth = $(window).width()/2;
-                    //When user click on bottom-left part of window
-                    $(menu).css("z-index", '55555555');
-                    if(e.clientY > windowHeight && e.clientX <= windowWidth) {
-                      $(menu).css("left", e.clientX);
-                      $(menu).css("bottom", $(window).height()-e.clientY);
-                      $(menu).css("right", "auto");
-                      $(menu).css("top", "auto");
-                    } else if(e.clientY > windowHeight && e.clientX > windowWidth) {
-                      //When user click on bottom-right part of window
-                      $(menu).css("right", $(window).width()-e.clientX);
-                      $(menu).css("bottom", $(window).height()-e.clientY);
-                      $(menu).css("left", "auto");
-                      $(menu).css("top", "auto");
-                    } else if(e.clientY <= windowHeight && e.clientX <= windowWidth) {
-                      //When user click on top-left part of window
-                      $(menu).css("left", e.clientX);
-                      $(menu).css("top", e.clientY);
-                      $(menu).css("right", "auto");
-                      $(menu).css("bottom", "auto");
-                    } else {
-                       //When user click on top-right part of window
-                      $(menu).css("right", $(window).width()-e.clientX);
-                      $(menu).css("top", e.clientY);
-                      $(menu).css("left", "auto");
-                      $(menu).css("bottom", "auto");
-                    }
-                    /* By Revan :)) */
-                    
+                   
+                    cmpList.getElementPosition(e,menu);
                 })
             },
             genBlock: function (tbid,list) {
@@ -807,6 +776,37 @@ var cmpList = {
        close:function(elm){
           $(elm).closest(".sa-confirm-block").remove();
        }
+    },
+    getElementPosition:function (e,menu) {
+                   var windowHeight = $(window).height()/2;
+                    var windowWidth = $(window).width()/2;
+                    //When user click on bottom-left part of window
+                    $(menu).css("z-index", '55555555');
+                    if(e.clientY > windowHeight && e.clientX <= windowWidth) {
+                      $(menu).css("left", e.clientX);
+                      $(menu).css("bottom", $(window).height()-e.clientY);
+                      $(menu).css("right", "auto");
+                      $(menu).css("top", "auto");
+                    } else if(e.clientY > windowHeight && e.clientX > windowWidth) {
+                      //When user click on bottom-right part of window
+                      $(menu).css("right", $(window).width()-e.clientX);
+                      $(menu).css("bottom", $(window).height()-e.clientY);
+                      $(menu).css("left", "auto");
+                      $(menu).css("top", "auto");
+                    } else if(e.clientY <= windowHeight && e.clientX <= windowWidth) {
+                      //When user click on top-left part of window
+                      $(menu).css("left", e.clientX);
+                      $(menu).css("top", e.clientY);
+                      $(menu).css("right", "auto");
+                      $(menu).css("bottom", "auto");
+                    } else {
+                       //When user click on top-right part of window
+                      $(menu).css("right", $(window).width()-e.clientX);
+                      $(menu).css("top", e.clientY);
+                      $(menu).css("left", "auto");
+                      $(menu).css("bottom", "auto");
+                    }
+                    /* By Revan :)) */ 
     }
 }
 /* // fn fnction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -988,9 +988,7 @@ $(document).on("click", '.showhide-col-btn', function (e) {
 });
 $(document).on("input", 'input[type="number"]', function (e) {
     if($(this).attr('maxlength')){
-
         if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
-
     }
 });
 $(document).on('hide.bs.dropdown', '.user-addons-box-elm', function (e) {
@@ -1001,7 +999,6 @@ $(document).on('click', '.user-addons-box-elm .dropdown-menu', function (e) {
 })
 $(document).on("click", 'body', function () {
     $('.user-addons-box-elm > .dropdown-menu').removeClass('show');
-    $('.showhide-col-main-info').hide();
     $(".contextMenu-dropdown-style").hide();
 })
 $(document).on("click", '.showhide-col-main-info', function (e) {

@@ -12895,9 +12895,9 @@ function showApiRelationModalCore(backLogId,inputid) {
     data = {};
     data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad'>")
+        var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
-var selectout = $("<select class='form-control apiInputSelect'>")
+var selectout = $("<select class='form-control apiInputSelect' >")
         .attr("onchange","tableApiSelectBoxOnChange(this)");
 try {
   var b = res.tbl[0].r;
@@ -13618,7 +13618,7 @@ function iframeLoaded() {
         global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
-            html=html.replace(/>[ ]+</g, "><");
+          
     }
     var css = window.editorCSSGround.getValue();
     var block = getIframeBlockInside(pid, css, js, html);
@@ -13695,12 +13695,10 @@ function setBacklogAsHtmlCodeGround(backlogId,js,css) {
         global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
-        html  = html.replace(/>[ ]+</g, "><");
     }
- 
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = "<style>"+css+"</style>"+ html.toString()+"<script>"+js+"</script>" ;
+    json.kv.backlogHtml = "<style>"+css+"</style>"+ html +"<script>"+js+"</script>" ;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13817,7 +13815,7 @@ function insertHtmlSendDbBybacklogId(body) {
     var pid = global_var.current_backlog_id;
     var json = initJSON();
     json.kv.fkBacklogId = pid;
-    json.kv.backlogHtml = "'"+body+"'";
+    json.kv.backlogHtml = body;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -16517,7 +16515,6 @@ function getSTatsUserManagmentTableKanban(elm) {
     try {
         json.kv.cookie = getToken();
     } catch (err) {
-        
     }
     json.kv.fkBacklogId = $(elm).attr("data-bid");
     var data = JSON.stringify(json);
@@ -16716,6 +16713,231 @@ var _22022019434402082398 = {
         table.append(tbody);
     }
 }
+var _220304054258036310054 = {
+    loader: () => {
+      _220304054258036310054.load_flow_select();
+    },
+    load_flow_select: () => {
+      var select = $('#comp_id_22030405435105928068');
+      select.html('<option></option>');
+      callApi("22030405453401501463", {}, true, function (res) {
+        res.tbl[0].r.map((o) => {
+          select.append(`<option value='${o.id}'>${o.flowName}</option>`);
+        })
+        select.selectpicker('refresh')
+      })
+    },
+    flow_backlog_map: {},
+    flow_backlog_pair: {},
+    flow_backlog_desc: {},
+    map_flow_details: () => {
+      var id = $('#comp_id_22030405435105928068').val();
+      var div = $(".task-panel");
+      div.html('heş zad seçilməyib!!!!');
+      var dt = {};
+      _220304054258036310054.flow_backlog_map = dt;
+      callApi('22030406013701734834', { fkBacklogFlowId: id }, true, function (res) {
+        div.html(JSON.stringify(res));
+        res.tbl[0].r.map((o) => {
+          var fromId = o.fkFromBacklogId;
+          var fromName = o.fromBacklogName;
+          var toId = o.fkToBacklogId;
+          var toName = o.toBacklogName;
+          var desc = o.descripton;
+  
+          _220304054258036310054.flow_backlog_pair[fromId] = fromName;
+          _220304054258036310054.flow_backlog_pair[toId] = toName;
+          _220304054258036310054.map_flow_details[fromId + "_" + toId] = desc;
+              
+          if (!dt[fromId]) {
+            dt[fromId] = [];
+          }
+          dt[fromId].push(toId);
+  
+        })
+        _220304054258036310054.flow_backlog_map = dt;
+        _220304054258036310054.map_show(id);
+      })
+    },
+    add_child_backlog: (el, id) => {
+      var data = {};
+      data.fkFromBacklogId = id;
+      data.fkToBacklogId = $(el).closest('.show-details-block').find('.selectpicker-mapping-element').val();
+      data.description = $(el).closest('.show-details-block').find('input').val();
+      data.fkBacklogFlowId = $(el).closest('tr').attr('fid');
+      callApi('22030400033000374400', data, true, function (res) {
+        $(el).closest('div').find('select').val('');
+        $(el).closest('div').find('input').val('');
+        Toaster.showMessage('Successfulli əlavə edildi.');
+        _220304054258036310054.map_flow_details();
+
+      })
+    },
+    delete_child_backlog: (el, id) => {
+      if (!confirm('Are you sure')) {
+        return;
+      }
+      var data = {};
+      data.fkFromBacklogId = id;
+      data.fkToBacklogId = $(el).closest('div').attr('id');
+      callApi('22030412151009877861', data, true, function (res) {
+        _220304054258036310054.map_flow_details();
+      })
+    },
+  
+    map_show: (flow_id) => {
+  
+      var table = $(`<table border='1px solid gray'>`);
+      var tr = $(`<tr style="vertical-align: baseline; ">`);
+      tr.attr('fid', flow_id)
+      table.append(tr);
+  
+  
+  
+      var res4 = callApi('22030400352507334738', {}, false);
+  
+      var idc = 1;
+      _220304054258036310054.map_iteration(['-1'], res4, tr, idc);
+  
+         
+      var div = $(".task-panel");
+      div.html(table);
+      
+     
+      // alert(JSON.stringify(child_id));
+      $('select.selectpicker-mapping-element').selectpicker('refresh');
+     
+  
+    },
+    map_iteration: (ids, res4, tr, idc) => {
+      if (idc >= 10) {
+        return;
+      }
+      var dt = _220304054258036310054.flow_backlog_map;
+      var td = $('<td>');
+      var child_id = [];
+      var bglist  =  '';
+      ids.map((M) => {
+        if (dt[M]) {
+          dt[M].map((o) => {
+            //  alert(o+" --- "+JSON.stringify(child_id));
+            if (!child_id.includes(o)) {
+              child_id.push(o);
+  
+              var select = $('<select data-live-search="true" class="form-control selectpicker-mapping-element">');
+              select.append('<option></option>')
+              try {
+                res4.tbl[0].r.map((ob) => {
+                  select.append(`<option value='${ob.id}'>${ob.backlogName}</option>`)
+                })
+                
+              } catch (err) { }
+              bglist+= o+'|';
+              var div2 = $(`<div class="zad rounded m-5" style='background-color:#dfeef7;max-width:300px;'>`);
+              div2.append('<button class="btn btn-sm show-details-add "><i class="fas fa-angle-down" aria-hidden="true"></i></button>')
+                var addons  =  $("<div class='d-none show-details-block'>")
+                var backLogDiv  =  $('<div class="mapping-element-div-'+o+'">')
+                                     .append(`<div class="weather-container mb-1" style="min-height: 100px;overflow: hidden;box-shadow: none;background:none;"><div class="box-loader shimmer"></div></div>`)
+              div2.attr("id", o)
+              addons.append($('<div class="cs-input-group">').append(select))
+                    .append(`<div class='d-flex cs-input-group'>
+                           <input class='form-control form-control-sm mr-auto' placeholder='Description' >
+                          <button class='btn btn-sm ' onclick='_220304054258036310054.add_child_backlog(this,"${o}")'><i class="fas fa-plus-circle"></i></button>
+                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${o}")'><i class="fas fa-trash-alt"></i></button>
+                        </div>`);
+
+              div2.append(addons);
+              div2.append(backLogDiv);
+              td.append(div2);
+              tr.append(td);
+            }
+  
+          })
+         
+        }
+      
+      })
+      _220304054258036310054.get_backLog_inside(bglist);
+     
+      idc++;
+      if (child_id.length > 0)
+        _220304054258036310054.map_iteration(child_id, res4, tr, idc);
+    },
+    set_leaderLine:() =>{
+        try {
+            
+          var list = Object.keys(_220304054258036310054.flow_backlog_map);
+          $('.leader-line').remove();
+            for (let i = 0; i < list.length; i++) {
+                const from = list[i];
+               var toList = _220304054258036310054.flow_backlog_map[from];
+                   for (let k = 0; k < toList.length; k++) {
+                       const to = toList[k];
+                       try {
+                           new LeaderLine(document.getElementById(from), document.getElementById(to), {
+                             color: 'red',
+                             startPlug: 'square',
+                             endPlug: 'arrow',
+                             dash: {
+                               animation: true
+                             },
+                             size: 4,
+                           })
+                         } catch (err) {
+                           console.log(err);
+                         }
+                   }
+            }
+        } catch (error) {
+            
+        }
+    },
+    get_backLog_inside:(bglist) => {
+        var data = {};
+        data.fkBacklogId = bglist;
+       
+        callApi('22030413030503436111', data, true, function (res) {
+           
+              res.tbl[0].r.map((o) => {
+                var html = new UserStory().genUSLine4KanbanView(o);
+                $('.mapping-element-div-'+o.id+'').html(html);
+        
+              })
+              backlogBugCountSet12(bglist);
+              _220304054258036310054.set_leaderLine();
+        })
+    },
+    create_flow: (el) => {
+        //create flow 
+        var data = {};
+        data.flowName = $('#comp_id_22030400072902367021').val();
+        data.fkBacklogId = $('#comp_id_22030400080109517195').val();
+    
+        callApi("22030400142207108198", data, true, function (res) {
+           _220304054258036310054.load_flow_select();
+          Toaster.showMessage("Successfully added");
+    
+        })
+      }
+  }
+  
+  $(document).on("change",'#comp_id_22030405435105928068',function () {
+    _220304054258036310054.map_flow_details();
+  })
+  $(document).on("click",'.show-details-add',function () {
+       $(this).parent().find('.show-details-block').toggleClass('d-none');
+       $(this).find('i').toggleClass('fa-angle-down')
+       $(this).find('i').toggleClass('fa-angle-up')
+  })
+  $(document).on("click",'#comp_id_22030405442605466312',function () {
+    var form_id = showForm('22030400071402369492');
+  })
+  
+  $(document).on("click",'#comp_id_220304000825030110739',function () {
+    _220304054258036310054.create_flow(this);
+  })
+  
+ 
 function getProjectValueUsManageMultiByel(el) {
     var prd = $(el).val();
     var val = ''
@@ -16809,8 +17031,7 @@ function getBugList4UserStory(bgId, tbody,list) {
         crossDomain: true,
         async: false,
         success: function (res) {
-               try {
-             coreBugList = res;
+            coreBugList = res;
             setKV4CoreBugList();
             SATask.updateTaskByRes(res);
             var ela = res.tbl[0].r
@@ -16907,11 +17128,6 @@ function getBugList4UserStory(bgId, tbody,list) {
                 $(tbody).closest("table").find('.btn-show-hide-table-row').click();
                } */
               $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
-               } catch (error) {
-                   console.log('tapilmadi')
-                  $(tbody).append(`<tr>Data is not find</tr>`) 
-               }
-      
         },
         error: function () {
             Toaster.showError(('somethingww'));

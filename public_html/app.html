@@ -8624,6 +8624,13 @@
                                                 Editor</button>
                                         </div>
                                     </div>
+                                    <div class="cs-sql-edito">
+                                        <div class="cs-input-group">
+                                            <button type="button" id="entityDiagramHistory10014"
+                                                class="btn btn-secondary">History
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -8653,6 +8660,34 @@
                             </div>
 
                         </div>
+                        <div style="display: flex;">
+                            <div class="" style=" margin-top: 8px;width: 220px;margin-top: 6px;margin-right: 5px;" id="">
+                                <div class="input-group-addon" style="font-size: 14px;">İD'yə görə axtarış</div>
+                                <input type="text" id="entityDiagramHistoryFilterIDInput"
+                                    style="width: 220px;height: 25px;" class="form-control"
+                                    placeholder="id'yə görə">
+
+                            </div>
+                            <div class="cs-input-group" style="margin-top: 8px;" id="">
+                                <div class="input-group-addon">Start date</div>
+                                <input type="text" id="entityDiagramHistoryFilterDateStart"
+                                    style="width: 220px;margin-top: 15px;margin-top: -5px;border-radius: 4px;background-color: #525596;" class="form-control"
+                                    placeholder="start date">
+
+                            </div>
+
+                            <div class="cs-input-group" style="margin-top: 8px;margin-left: -6px;" id="">
+                                <div class="input-group-addon">End date</div>
+                                <input type="text" id="entityDiagramHistoryFilterDateEnd"
+                                    style="width: 220px;margin-top: 15px;margin-top: -5px;border-radius: 4px;background-color: #525596;" class="form-control"
+                                    placeholder="end date">
+
+                            </div>
+                        </div>
+                        <script>
+                            $("#entityDiagramHistoryFilterDateStart").datetimepicker();
+                            $("#entityDiagramHistoryFilterDateEnd").datetimepicker();
+                        </script>
                         <div class="cs-db-popup-body">
                             <div class="flex-container">
                                 <div class="cs-db-header-menu"></div>
