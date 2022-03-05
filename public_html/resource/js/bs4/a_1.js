@@ -16714,18 +16714,32 @@ var _22022019434402082398 = {
     }
 }
 var _220304054258036310054 = {
-    loader: () => {
-      _220304054258036310054.load_flow_select();
+    loader: () => {        
+        _220304054258036310054.load_flow_Group_select();
     },
-    load_flow_select: () => {
-      var select = $('#comp_id_22030405435105928068');
+    load_flow_select: (el) => {
+        var data = {};
+        data.fkFlowGroupId = el;
+        var select = $('#comp_id_22030405435105928068');
+        select.empty();
+        select.selectpicker('refresh');
       select.html('<option></option>');
-      callApi("22030405453401501463", {}, true, function (res) {
+      callApi("22030405453401501463", data, true, function (res) {
         res.tbl[0].r.map((o) => {
           select.append(`<option value='${o.id}'>${o.flowName}</option>`);
         })
         select.selectpicker('refresh')
       })
+    },
+    load_flow_Group_select: () => {
+        var select = $('#Flov_GRoup_comp_id_22030405435105928068');
+        select.html('<option></option>');
+        callApi("22030511170609167656", {}, true, function (res) {
+            res.tbl[0].r.map((o) => {
+                select.append(`<option value='${o.id}'>${o.groupName}</option>`);
+            })
+            select.selectpicker('refresh')
+        })
     },
     flow_backlog_map: {},
     flow_backlog_pair: {},
@@ -16779,10 +16793,22 @@ var _220304054258036310054 = {
       }
       var data = {};
       data.fkFromBacklogId = id;
-      data.fkToBacklogId = $(el).closest('div').attr('id');
+        data.fkToBacklogId = $(el).closest('.zad').attr('id');
+        data.fkBacklogFlowId = $('#comp_id_22030405435105928068').val();
       callApi('22030412151009877861', data, true, function (res) {
         _220304054258036310054.map_flow_details();
       })
+    },
+    update_child_refresh: (el, id)=>{
+        var dat = $(el).closest('div .show-details-block').find('.selectpicker-mapping-element').val();;
+        var data = {};
+        data.fkFromBacklogId =id;
+        data.fkOldToBacklogId = $(el).closest('div .zad').attr('id');
+        data.fkNewTToBacklogId = dat;
+        data.fkBacklogFlowId = $('#comp_id_22030405435105928068').val();
+        callApi('22030510404506604436', data, true, function () {
+            _220304054258036310054.map_flow_details();
+        })
     },
   
     map_show: (flow_id) => {
@@ -16842,8 +16868,9 @@ var _220304054258036310054 = {
               addons.append($('<div class="cs-input-group">').append(select))
                     .append(`<div class='d-flex cs-input-group'>
                            <input class='form-control form-control-sm mr-auto' placeholder='Description' >
+                           <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")'><i class="fas fa-redo"></i></i></button>
                           <button class='btn btn-sm ' onclick='_220304054258036310054.add_child_backlog(this,"${o}")'><i class="fas fa-plus-circle"></i></button>
-                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${o}")'><i class="fas fa-trash-alt"></i></button>
+                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${M}")'><i class="fas fa-trash-alt"></i></button>
                         </div>`);
 
               div2.append(addons);
@@ -16930,13 +16957,47 @@ var _220304054258036310054 = {
        $(this).find('i').toggleClass('fa-angle-up')
   })
   $(document).on("click",'#comp_id_22030405442605466312',function () {
-    var form_id = showForm('22030400071402369492');
+      var form_id = showForm('22030400071402369492');
+      $('#comp_id_22030400103203868372').click();
+      
   })
+$(document).on("click", '#_bussinesFollowuSilmek14', function () {
+    var data = {};
+    data.id = $('#comp_id_22030405435105928068').val();
+    if (confirm('Are You sure')) {
+        callApi('22030500134008555797', data, true, function () {
+            $('#Flov_GRoup_comp_id_22030405435105928068').change();
+           })
+       }
+       
+})
+
+$(document).on("click", '#_bussinesFollowuUpdateedit214', function () {
+    console.log('salllll');
+    var folowVal = $('#Flov_GRoup_comp_id_22030405435105928068').val();
+    var listVal = $('#comp_id_22030405435105928068 option:selected').text();
+    var listValID = $('#comp_id_22030405435105928068').val();
+
+   
+    var form_id = showForm('22030400071402369492');
+    $('#comp_id_22030400103203868372').click();
+    $('.createBAcligFlowForSilmekUPdatede12').hide();   
+    $('#22030517054901113840').show();
+    $('#comp_id_22030511403403431952').attr('sa-data-value', folowVal);
+    $('#comp_id_22030511403403431952').val(folowVal);
+    $('#comp_id_22030511403403431952').selectpicker('refresh');
+    $('#comp_id_22030400072902367021').val(listVal);
+    $('#comp_id_22030518473400099595').val(listValID);
+   
+})
   
   $(document).on("click",'#comp_id_220304000825030110739',function () {
     _220304054258036310054.create_flow(this);
   })
-  
+$(document).on("change", '#Flov_GRoup_comp_id_22030405435105928068', function () {
+    var el = $('#Flov_GRoup_comp_id_22030405435105928068').val();
+       _220304054258036310054.load_flow_select(el);
+   })
  
 function getProjectValueUsManageMultiByel(el) {
     var prd = $(el).val();
@@ -20059,6 +20120,8 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#story_mn_groupBy_id', function (evt) {
+
+    $('.leader-line').remove();
     localStorage.setItem("usm_groupBy", $(this).val());
 
     var val = getProjectValueUsManageMulti();
