@@ -8087,7 +8087,7 @@ div.cs-task-item-in-box:hover .cs-task-card-avatar-boxes ul li{
 .cs-horizontal-checkboxes label:nth-child(even) span {
     background: rgba(255, 255, 255, 0.11);
 }
-.cs-horizontal-checkboxes label span:hover, .cs-horizontal-checkboxes label.active span, .cs-horizontal-checkboxes label input[type=checkbox]:checked ~ span {
+.cs-horizontal-checkboxes label span:hover, .cs-horizontal-checkboxes label.active span{
     background: #DFEEF7;
     color: #03396c;
 }
