@@ -14479,8 +14479,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
        
       
 
-    }
-    ,getValueRangePickerForUSm: function (elm,lk) {
+    },getValueRangePickerForUSm: function (elm,lk) {
          try {
         var val  = elm.val();
         val = val.split('-')

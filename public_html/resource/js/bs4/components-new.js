@@ -2,25 +2,29 @@
 var cmpList = {
     userBlock: {
         Init: function (elm, type,title,iconClass) {
-            $(elm).empty();
-            $(elm).css("text-align", 'left');
-            $(elm).attr("el-name", "selectInterActive");
-            $(elm).attr('component-type',"selectInterActive");
-            if (type === 'multi') {
-                var block = this.genObserverBlockM(title,iconClass);
-                $(elm).attr("action-type", 'multi');
-            } else {
-                var block = this.genObserverBlockS(title,iconClass);
-                $(elm).attr("action-type", 'single');
-            }
-            $(elm).append(block);
-            var select = $(elm).find('select.selectpicker-user-list');
-            this.getUserList(select);
-            $(elm).on("sachange", function (e, callback) {
-                if (callback) {
-                    callback();
+            var that  = this
+              $(elm).each(function (params) {
+                $(this).empty();
+                $(this).css("text-align", 'left');
+                $(this).attr("el-name", "selectInterActive");
+                $(this).attr('component-type',"selectInterActive");
+                if (type === 'multi') {
+                    var block = that.genObserverBlockM(title,iconClass);
+                    $(this).attr("action-type", 'multi');
+                } else {
+                    var block = that.genObserverBlockS(title,iconClass);
+                    $(this).attr("action-type", 'single');
                 }
-            })
+                $(this).append(block);
+                var select = $(this).find('select.selectpicker-user-list');
+                that.getUserList(select);
+                $(this).on("sachange", function (e, callback) {
+                    if (callback) {
+                        callback();
+                    }
+                })
+              })
+           
         
         },
         clickfocusElementSeacrh:function (elm) {
@@ -70,7 +74,8 @@ var cmpList = {
             var tit = $(elm).find(".user-dropdonw-btn");
             if (list === '') {
                 block.empty();
-                tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
+                var iconClass  = tit.attr('data-icon')
+                tit.html(`<i class="user-interactive-icon  ${iconClass}"></i>`);
             }
             if (type === 'single') {
                 if (list && typeof list === 'string') {
@@ -100,7 +105,7 @@ var cmpList = {
                                 var userImage = SAProjectUser.Users[o].userImage;
                                 var userName = SAProjectUser.Users[o].userPersonName;
                                 block.append(this.genItemBlock(o, userImage, userName));
-                                tit.find(".user-addons-icon").remove();
+                                tit.find(".user-interactive-icon").remove();
                                 tit.append(this.genviewItemBlock(o, userImage, userName));
 
                                 $('[data-toggle="popover"]').popover({
@@ -143,11 +148,11 @@ var cmpList = {
 
         },
         genObserverBlockS: function (title,iconClass) {
-            return `<div class="user-addons-box-elm single-addons dropup" action-type='single'>
+            return `<div class="user-addons-box-elm single-addons dropup" action-type='single' >
                 ${title?title:"Məsul şəxs"}:
-                <span type="button" class="dropdown-toggle user-dropdonw-btn" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span type="button" data-id="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" class="dropdown-toggle user-dropdonw-btn" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  
-                <i class="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>      
+                <i class="user-interactive-icon ${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>      
                 </span>
                 
                 <div class="dropdown-menu">
@@ -167,10 +172,10 @@ var cmpList = {
             </div>`
         },
         genObserverBlockM: function (title,iconClass) {
-            return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi'>
+            return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi' >
                     <span class='add-userList-title'>${title?title:lang_task.windowAddTask.observer} :</span>
-                <span type="button" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>
+                <span type="button" data-id="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="user-interactive-icon ${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>
                 </span>
                 <span class="count_avatar_users"></span>
                 <div class="dropdown-menu">
@@ -928,12 +933,14 @@ $(document).on('click', '.user-avatar-list li .item-click .removed-user-btn', fu
     var ul = $(this).closest("ul");
     var tit = $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
     if (ul.hasClass("user-list-avatar-single")) {
-        tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
+        var iconClass  = tit.attr('data-icon')
+                tit.html(`<i class="user-interactive-icon  ${iconClass}"></i>`);
     } else {
         cmpList.userBlock.returnValueSelect(elm);
         tit.find("#" + elm.attr('id')).remove();
         if (tit.find("img").length < 1) {
-            tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
+               var iconClass  = tit.attr('data-icon')
+                  tit.html(`<i class="user-interactive-icon  ${iconClass}"></i>`);
         }
         cmpList.userBlock.genInterActiveView(this, 'delete');
     }
@@ -953,7 +960,7 @@ $(document).on('change', 'select.user-list-selectbox-multiple', function (e) {
     var block = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
     var has = block.find("#" + o);
     if (has.length < 1) {
-        tit.find(".user-addons-icon").remove();
+        tit.find(".user-interactive-icon").remove();
         tit.append(cmpList.userBlock.genviewItemBlock(o, userImage, userName));
         block.append(cmpList.userBlock.genItemBlock(o, userImage, userName));
 
