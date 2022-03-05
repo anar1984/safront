@@ -4579,7 +4579,7 @@ function getValueScheduleWeekAction(elmId) {
        var list =''; 
        var block  =  $("#"+elmId).find('input[type="checkbox"]');
           block.each(function () {
-              if($(this).prop("checked")){
+              if ($(this).closest('label').hasClass("active")) {
                   list += $(this).val() + '%IN%'
               }
           })
@@ -5896,6 +5896,13 @@ $(document).on("change", "#run_task_weekday_select input", function (e) {
     }
        $(this).closest('label').toggleClass('active');
        
+})
+
+$(document).on("change", "#run_task_day_yearly_select input", function (e) {    
+        $('#run_task_day_yearly_select label').removeClass('active');
+   
+       $(this).closest('label').toggleClass('active');
+
 })
 
 
