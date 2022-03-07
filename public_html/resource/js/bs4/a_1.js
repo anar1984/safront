@@ -16754,13 +16754,12 @@ var _220304054258036310054 = {
             _220304054258036310054.map_flow_details();
         })
     },
-    child_body: (item, M, backlogName, res4, flow_id, fkToBacklogId) => {
+    child_body: (item, M, backlogName, res4, flow_id, bgStatus, fkToBacklogId) => {
        var select = _220304054258036310054.backlog_select(res4);
-
+        select.addClass('margin-menfiii');        
         var div2 = $(`<div class="hollele_zad" style=""></div>`);
-        div2.append($('<div class="d-flex">')
-              .append(`<div class='d-flex cs-input-group'>
-                           <input class='form-control form-control-sm mr-auto' placeholder='Description' >
+        div2.append($(`<div class='cs-input-group prosesCartToolDiv'>
+                          <div style="margin-top: 3px;"> <input class='form-control form-control-sm mr-auto' placeholder='Description'></div>
                            <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")'><i class="fas fa-redo"></i></i></button>
                           <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")'><i class = "fas fa-plus-circle" > </i></button >
                           <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${M}")'><i class="fas fa-trash-alt"></i></button>
@@ -16768,7 +16767,8 @@ var _220304054258036310054 = {
         )
        div2.attr("parent_id", item)
         div2.append(select)
-            .append(`${backlogName}`)
+            .append(`<div ondblclick="callStoryCard('${fkToBacklogId}')" style="padding:10px;">${backlogName}</div>`)
+            .append(`<span class="backlog-status"><div style="margin-bottom:15px;" class="us-list-item us-item-status-${bgStatus}">${bgStatus}</div></span>`)
            
            
        return div2;
@@ -16898,9 +16898,7 @@ var _220304054258036310054 = {
                     // alert(JSON.stringify(item_obj))
 
 
-
-
-                    var div2 = _220304054258036310054.child_body(item, M, item_obj.toBacklogName, res4, flow_id);
+                    var div2 = _220304054258036310054.child_body(item, M, item_obj.toBacklogName, res4, flow_id, item_obj.toBacklogStatus, item_obj.fkToBacklogId);
 
                     td.append(div2);
                     if (fromTo[item]) {
