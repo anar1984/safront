@@ -471,11 +471,11 @@ const taskManagement = {
                                 <div class="cs-input-group">
                                     <div class="input-group-addon">Ay həftəsi</div>
                                         <div class="cs-horizontal-checkboxes" id="run_task_day_yearly_select">
-                                            <label><input type="checkbox" value="1_week" ><span>1-ci həftə</span></label>
-                                            <label><input type="checkbox" value="2_week" ><span>2-ci həftə</span></label>
-                                            <label><input type="checkbox" value="3_week" ><span>3-cü həftə</span></label>
-                                            <label><input type="checkbox" value="4_week" ><span>4-cü həftə</span></label>
-                                            <label><input type="checkbox" value="last_week" ><span>Last week</span></label>
+                                            <label><input type="checkbox" value="1" ><span>1-ci həftə</span></label>
+                                            <label><input type="checkbox" value="2" ><span>2-ci həftə</span></label>
+                                            <label><input type="checkbox" value="3" ><span>3-cü həftə</span></label>
+                                            <label><input type="checkbox" value="4" ><span>4-cü həftə</span></label>
+                                            <label><input type="checkbox" value="last" ><span>Last week</span></label>
                                         </div>
                                 </div>
                             </div>
@@ -817,7 +817,8 @@ const taskManagement = {
                 json.kv.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
                 if($('#runTaskAvtivateSchedule').prop("checked")){
                     json.kv.intensive = $("#run_task_intensive_select").val();
-                    json.kv.repeatInterval = $("#run_task_repeat_select").val();
+                    var repettt = $("#run_task_repeat_select").val();
+                    json.kv.repeatInterval = repettt ? repettt:'0';
                     json.kv.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
                  
                     json.kv.weekdays = getValueScheduleWeekDay('run_task_weekday_select');
@@ -4580,7 +4581,7 @@ function getValueScheduleWeekAction(elmId) {
        var block  =  $("#"+elmId).find('input[type="checkbox"]');
           block.each(function () {
               if ($(this).closest('label').hasClass("active")) {
-                  list += $(this).val() + '%IN%'
+                  list = $(this).val();
               }
           })
        return list ;
