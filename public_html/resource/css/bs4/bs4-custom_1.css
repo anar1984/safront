@@ -9,7 +9,31 @@ and open the template in the editor.
 */
 
 
+.hollele_zad {
+    margin: 10px;
+    max-width: 300px;
+    background-color: #dcdce6;
+    border-radius: 10px;
+    border-top1: 4px solid red;
 
+
+}
+
+.div_table_zad_shey {
+    border-radius: 40px;
+    border-top: 5px solid #525596;
+    margin: 1px 7px;
+}
+
+.table-zadi1 {
+    border: 22px solid transparent;
+    border-radius: 40px;
+}
+
+.at_ilxisi {
+    font-size: 20px;
+    color: #525596;
+}
 
 #body_of_nature{
     position: fixed;

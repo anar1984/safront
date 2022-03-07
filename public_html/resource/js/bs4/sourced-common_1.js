@@ -14232,9 +14232,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         else if (groupBy === 'processMap') {
               
-               $(".task-panel").scroll(function() { //.box is the class of the div
-                      _220304054258036310054.set_leaderLine();
-                });
+            //    $(".task-panel").scroll(function() { //.box is the class of the div
+            //           _220304054258036310054.set_leaderLine();
+            //     });
                 _220304054258036310054.loader(); 
                 $(".process-view-combo-boxs").removeClass("d-none");           
         }
@@ -15615,6 +15615,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append($("<input type='checkbox'>")
                         .addClass("assign-label-story-card-item-new")
                         .attr("pid", o.id))
+                    
                     .append(' ' + o.orderNo)
                     .append($('<span class="headerContentText">')
                         .attr('href', '#')

@@ -61,9 +61,7 @@ const taskManagement = {
                     <div class="row">
                         <div class="col-lg-12 mt-0"> 
                             <div class="d-flex task-deadline-boxes">
-                            ${this.genTaskDeadLineBlockTime()}
-                            ${this.genTaskDeadLineBlockTask()}
-                            ${this.genTaskDeadLineBlockEvent()}
+                            ${this.genTaskDeadLineBlockTime()}                            
                               </div>
                         </div>
                     </div>
@@ -83,7 +81,7 @@ const taskManagement = {
                         <div class="d-flex w-100">
                                 <div class="mr-auto">
                                     <div class="assigne-div-add-issue" style="display:inline-block; margin-right:15px"></div>
-                                    <div class="observer-div-add-issue" style="display:inline-block"></div>
+                                    
                                 </div>
                                 <div class="d-table" style="padding: 3px 0px;">
                                     <button type="button" id="addIssueButtonId" class="btn btn-primary align-middle">${lang_task.windowAddTask.add}</button>
@@ -249,10 +247,7 @@ const taskManagement = {
                 return `  <div class="row">
               <div class="cs-flex-col flex-item ml-3 mt-2 horizontal">
                   <div class="cs-input-group mt-2">
-                      <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
-                          <input type="checkbox" id="sendnotification">
-                          <span class="checkmark"></span>
-                      </label>
+                      
 
                       <label class="checkmarkcontainer"> ${lang_task.windowAddTask.closeAfterInsert}
                             <input type="checkbox" checked='true' id="after_insert_modal">
@@ -471,11 +466,11 @@ const taskManagement = {
                                 <div class="cs-input-group">
                                     <div class="input-group-addon">Ay həftəsi</div>
                                         <div class="cs-horizontal-checkboxes" id="run_task_day_yearly_select">
-                                            <label><input type="checkbox" value="1_week" ><span>1-ci həftə</span></label>
-                                            <label><input type="checkbox" value="2_week" ><span>2-ci həftə</span></label>
-                                            <label><input type="checkbox" value="3_week" ><span>3-cü həftə</span></label>
-                                            <label><input type="checkbox" value="4_week" ><span>4-cü həftə</span></label>
-                                            <label><input type="checkbox" value="last_week" ><span>Last week</span></label>
+                                            <label><input type="checkbox" value="1" ><span>1-ci həftə</span></label>
+                                            <label><input type="checkbox" value="2" ><span>2-ci həftə</span></label>
+                                            <label><input type="checkbox" value="3" ><span>3-cü həftə</span></label>
+                                            <label><input type="checkbox" value="4" ><span>4-cü həftə</span></label>
+                                            <label><input type="checkbox" value="last" ><span>Last week</span></label>
                                         </div>
                                 </div>
                             </div>
@@ -617,7 +612,7 @@ const taskManagement = {
                     that.insertObserverTask(res.kv.id);
                     that.insertCheckListComulativ(res.kv.id,itmlist);
                    
-                    taskManagement.insertTask.insertBacklogTaskDetail(res.kv.id);
+                   // taskManagement.insertTask.insertBacklogTaskDetail(res.kv.id);
                      
                     getBugList();
                     Toaster.showMessage(lang_task.windowAddTask.addTaskMessageSucc);
@@ -682,8 +677,8 @@ const taskManagement = {
             data.endDate = toDate('taskDeadlineEndDade');
             data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "0" : "1";
             data.fkParentTaskId = $("#parent-task-id-input").val();
-            data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
-            data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
+            // data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
+            // data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
            // schedulle 
             
             // data.description = $("#bug_filter_project_id_add").val();
@@ -813,11 +808,12 @@ const taskManagement = {
                 } catch (err) {
                 }
                 json.kv.fkTaskId = taskId;
-                json.kv.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
-                json.kv.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
+                // json.kv.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
+                // json.kv.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
                 if($('#runTaskAvtivateSchedule').prop("checked")){
                     json.kv.intensive = $("#run_task_intensive_select").val();
-                    json.kv.repeatInterval = $("#run_task_repeat_select").val();
+                    var repettt = $("#run_task_repeat_select").val();
+                    json.kv.repeatInterval = repettt ? repettt:'0';
                     json.kv.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
                  
                     json.kv.weekdays = getValueScheduleWeekDay('run_task_weekday_select');
@@ -928,9 +924,7 @@ const taskManagement = {
                       <div class="row">
                       <div class="col-lg-12 mt-0"> 
                           <div class="d-flex task-deadline-boxes">
-                          ${this.genTaskDeadLineBlockTime()}
-                          ${this.genTaskDeadLineBlockTask()}
-                          ${this.genTaskDeadLineBlockEvent()}
+                          ${this.genTaskDeadLineBlockTime()}                         
                             </div>
                       </div>
                   </div>
@@ -941,15 +935,14 @@ const taskManagement = {
                     </div>
                    </div>
                   </div>
-                      ${this.genNotifyButton()}
+                      
  
 
                       </div>
                       <div class="modal-footer">
                         <div class="d-flex w-100">
                             <div class="mr-auto">
-                                <div class="assigne-div-update-issue" style="display:inline-block; margin-right:15px"></div>
-                                <div class="observer-div-update-issue" style="display:inline-block"></div>
+                                <div class="assigne-div-update-issue" style="display:inline-block; margin-right:15px"></div>                                
                             </div>
                             <div class="d-table" style="padding: 3px 0px;">
                             <button type="button" id="" onclick="nextModalpopUpShow(this)" class="cs-next-popup-btn btn btn-primary">---</button>
@@ -1004,8 +997,7 @@ const taskManagement = {
                               <option selected='true' value="ididit">${getOperName("ididit")}</option>
                               <option value="ForwardTaskTo">${getOperName("ForwardTaskTo")}</option>
                               <option value="rejectTask">${getOperName("rejectTask")}</option>
-                              <option value="canceledTask">${getOperName("cancel")}</option>
-                              <option value="observer">${lang_task.windowAddTask.addObserver}</option>
+                              <option value="canceledTask">${getOperName("cancel")}</option>                              
                             </select>
                           </div>
                         </div>
@@ -1166,21 +1158,7 @@ const taskManagement = {
                 </div>
             </div> `
             },
-            genNotifyButton: function () {
-                return `    <div class="row">
-              <div class="col-12">
-                  <hr>
-              </div>
-              <div class="col-12">
-                  <div class="cs-input-group mt-2">
-                      <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
-                          <input type="checkbox" onchange="updateTask4Details(this, 'sendNotification')" id="sendnotification_detail">
-                          <span class="checkmark"></span>
-                      </label>
-                  </div>
-              </div>
-          </div> `
-            },
+           
             genTabBlock: {
                 Init: function () {
                     var div = `
@@ -1221,10 +1199,7 @@ const taskManagement = {
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link d-task-tab2" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowUpdateTask.subtask}</span></a>
-                                </li>
+                                </li>                               
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                                 </li>
@@ -1232,9 +1207,7 @@ const taskManagement = {
                                 <li class="nav-item" role="presentation">
                                      <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon chat-alt"></i> <span>Chat</span></a>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
-                                </li>
+                                
                              </ul>
                         </div>
                     </div>`
@@ -1311,54 +1284,11 @@ const taskManagement = {
                                 </div>            
                             </div>
 
-                            <div class="col-lg-6  mt-2">
-                            <div class="cs-input-group">
-                                    <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
-                                            style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_detail'
-                                            title="${lang_task.rightBar.project}"></select>
-                                </div>
-                            </div>
-                    
-                            <div class="col-lg-6 mt-2">
-                                <div class="cs-input-group">
-                                    <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
-                                            data-live-search="true" id='bug_filter_backlog_id_detail' title="${lang_task.rightBar.storyCart}">
-                                    </select>
-                                </div>
-                            </div>
+                           
                          
                         </div>
                         <hr>
-                        <div class="row addEpicTask">           
-                            <div class="col-lg-12">
-                                <div class="cs-input-group">
-                                    <label class="input-group-addon">${lang_task.rightBar.storyCart} | </label>
-                                    <span>
-                                        <a href="#" class="cs-history-links comment-content-header-history" onclick="showUserStoryOfTaskCardModal(this)" id='task-mgmt-modal-user-story'></a>
-                                        <a href="#" class="cs-history-links btn comment-content-header-history mb-1" onclick="changeUserStoryOfTaskModal()"><i class="fas fa-exchange-alt"></i> ${lang_task.windowUpdateTask.change}</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="cs-forum-group addEpicTask mt-0">
-                                    <div class="dropdown-task show">
-                                        <span href="#" class="comment-content-header-history">
-                                            Sprint<br>
-                                        </span>
-
-                                        <span class="comment-content-header-history task-mgmt-modal-sprintname"
-                                              style="color:black;" id="task-mgmt-modal-sprintname">
-
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                      
                         <div class="row">
                             <div class="col-4 estimateHours">
                                 <div class="cs-input-group">
@@ -1736,8 +1666,9 @@ const taskManagement = {
                 },
             }
         },
-        callTaskCard4BugTask: function (el, projectId, taskId) {
+        callTaskCard4BugTask: function (el, projectId, taskId) {            
             taskManagement.updateTask.genBlockModal.Init();
+            updateEkrantaskTypeBYuserId();
              loadBugTaskDeadlineScripts(); 
                $("#taskMgmtModal").modal("show");
                $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
@@ -1812,8 +1743,7 @@ const taskManagement = {
           Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
 
         //Task card-da Story Card-linke basanda istifade edilir.
-        var dwlmt = $('#task-info-modal-tasktype')
-        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
+
         if (projectId !== global_var.current_project_id) {
             global_var.current_project_id = projectId;
             new UserStory().refreshBacklog4Bug(true);
@@ -1836,9 +1766,8 @@ const taskManagement = {
         this.getTaskEvent(taskId);
         getChildTasks();
         getParentTask();
-         }, 700);
+         }, 700);            
             
-
         },
         updateEventByTaskId: function (id) {
 
@@ -4580,7 +4509,7 @@ function getValueScheduleWeekAction(elmId) {
        var block  =  $("#"+elmId).find('input[type="checkbox"]');
           block.each(function () {
               if ($(this).closest('label').hasClass("active")) {
-                  list += $(this).val() + '%IN%'
+                  list = $(this).val();
               }
           })
        return list ;
@@ -5071,7 +5000,7 @@ function saveComment(el, commentId) {
 // created
 $(document).on("click", '#toplanti-btn', function () {
     $(this).addClass('active');
-    $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
+    //$(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
     // $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
     // $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
 
@@ -5080,7 +5009,7 @@ $(document).on("click", '#toplanti-btn', function () {
 });
 $(document).on("click", '#tapshiriq-btn', function () {
     $(this).addClass('active');
-    $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
+    //$(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
     // $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
     
     $("#newAddCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
@@ -5124,10 +5053,27 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 });
 // updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
-    var val  = $(this).closest('.assigne-div-update-issue').getVal();
-    ///  updateTask4ShortChangeDetails(val, "fkAssigneeId");
-      forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
+    
+    updateTask4ShortChangeDetails(val, "fkAssigneeId");
+   // updateUserTaskChangeMesulShexs(val);
+    ///  forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
 });
+
+function updateUserTaskChangeMesulShexs(dat) {
+    data = {};
+    data.fkTaskId = global_var.current_issue_id;
+    data.fkAssigneeId = dat;
+   try {
+       callApi('22030711362203045618', data, true, function (res) {
+           Toaster.showMessage('Məsul şəxs müvəffəqiyyətlə dəyişdirildi');
+       })
+   }
+   catch (error) {
+      $('#taskMgmtModal').modal('hide');
+   }
+    
+}
+
 $(document).on("change", '.observer-div-update-issue select.user-list-selectbox-multiple', function () {
       var val  = $(this).closest('.observer-div-update-issue').find('.user-list-avatar-multiple li:last-child').attr("id");
       console.log(val);
@@ -5808,6 +5754,33 @@ function uploadFile4IpoTAsk(id) {
         }
     }
 }
+//update task type
+function updateEkrantaskTypeBYuserId() {
+    var data = {};
+    data.fkUserId = global_var.current_ticker_id;
+    var select = $('#task-info-modal-tasktype');
+    select.empty();
+    select.selectpicker('refresh');
+    try {
+        callApi('22011212074208795118', data, true, function (res) {
+
+            var sel = res.tbl[0].r;
+            for (let i = 0; i < sel.length; i++) {
+                const o = sel[i];
+                select.append($('<option>')
+                    .val(o.id)
+                    .text(o.taskTypeName)
+                )
+            }
+            select.selectpicker('refresh');
+
+        })
+    } catch (error) {
+        
+    }
+    
+    
+}
 
 $(document).on('click', ".cs-next-element-box .remove-next-btn", function (e) {
     $(this).closest('.cs-next-element-box').remove();
@@ -5890,11 +5863,11 @@ $(document).on("click", ".cs-open-btn-more", function (e) {
     $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
 })
 $(document).on("change", "#run_task_weekday_select input", function (e) {
-
+        
     if ($('#run_task_intensive_select').val() === 'monthly') {
         $('#run_task_weekday_select label').removeClass('active');
     }
-       $(this).closest('label').toggleClass('active');
+    $(this).closest('label').toggleClass('active');  
        
 })
 
@@ -5904,8 +5877,6 @@ $(document).on("change", "#run_task_day_yearly_select input", function (e) {
        $(this).closest('label').toggleClass('active');
 
 })
-
-
 function changeUserStoryOfTaskModal() {
     $("body").append(taskManagement.genModal.changeStoryCardModal())
     $('#change-user-story-task-modal').modal('show');
