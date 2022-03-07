@@ -647,10 +647,10 @@ function editRunBusinessServace(id) {
              $("#swofm_weekday_select").val(obj.actionParam2);
              $("#swofm_weekday_select").change();
              
-             if((obj.sendNotification) == '1') {
-                $("#sendnotification").prop('checked', true);
-                $("#sendnotification").change();
-              }
+            //  if((obj.sendNotification) == '1') {
+            //     $("#sendnotification").prop('checked', true);
+            //     //$("#sendnotification").change();
+            //   }
              $('#notification-email').val(obj.notificationMail);
              $('#notification-email').change();
              
@@ -699,7 +699,7 @@ function updatedRunServiceData(id) {
     json.kv.repeatInterval = $('#run_service_repeat_select').val();
     json.kv.scheduleStatus = $('#run_service_status_select').val();
     json.kv.description = $('#RunServiceDescTextarea').val();
-    json.kv.sendNotification = $('#sendnotification').val();
+    //json.kv.sendNotification = $('#sendnotification').val();
     json.kv.notificationMail = $('#notification-email').val();
 
     json.kv.action = $('#hide_actions').val();

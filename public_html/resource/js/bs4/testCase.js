@@ -2744,6 +2744,7 @@ $(document).on("change", '#sendnotification_detail', function () {
 })
 
 $(document).on("change", "#run_task_intensive_select", function (e) {
+     $("#run_task_weekday_select input").closest('label').removeClass('active');
   
     var run_intensive = $('#issue-managment-add-task #run_task_intensive_select').val();
     var  run_action = run_intensive;
