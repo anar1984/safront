@@ -1,23 +1,23 @@
 'use strict';
 var cmpList = {
     userBlock: {
-        Init: function (elm, type,title,iconClass) {
-            var that  = this
+        Init: function (elm, type,title,options) {
+               var that  = this
               $(elm).each(function (params) {
                 $(this).empty();
                 $(this).css("text-align", 'left');
                 $(this).attr("el-name", "selectInterActive");
                 $(this).attr('component-type',"selectInterActive");
                 if (type === 'multi') {
-                    var block = that.genObserverBlockM(title,iconClass);
+                    var block = that.genObserverBlockM(title,options);
                     $(this).attr("action-type", 'multi');
                 } else {
-                    var block = that.genObserverBlockS(title,iconClass);
+                    var block = that.genObserverBlockS(title,options);
                     $(this).attr("action-type", 'single');
                 }
                 $(this).append(block);
                 var select = $(this).find('select.selectpicker-user-list');
-                that.getUserList(select);
+                that.getUserList(select,options);
                 $(this).on("sachange", function (e, callback) {
                     if (callback) {
                         callback();
@@ -123,8 +123,15 @@ var cmpList = {
             }
             return list;
         },
-        getUserList: function (select) {
-
+        getUserList: function (select,option) {
+            
+            if(typeof option === "object"&&option.hiddenUser){
+                var hiddenList  =  option.hiddenUser;  
+                  
+             }else{
+                var hiddenList  ='';
+             }
+          
             var elm = select;
             elm.html('');
             var keys = SAProjectUser.GetKeysUser();
@@ -134,15 +141,20 @@ var cmpList = {
             elm.append(div1);
             for (var i = 0; i < keys.length; i++) {
                 var id = keys[i];
-                var userImage = SAProjectUser.Users[id].userImage;
-                var userName = SAProjectUser.Users[id].userPersonName;
-                var img = (userImage) ?
-                    fileUrl(userImage) :
-                    fileUrl(new User().getDefaultUserprofileName());
-                var div = $(`<option value='${id}'
-                        data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
-                        ${userName}</option>`);
-                elm.append(div)
+                if(hiddenList.includes(id)){
+                   
+                }else{
+                    var userImage = SAProjectUser.Users[id].userImage;
+                    var userName = SAProjectUser.Users[id].userPersonName;
+                    var img = (userImage) ?
+                        fileUrl(userImage) :
+                        fileUrl(new User().getDefaultUserprofileName());
+                    var div = $(`<option value='${id}'
+                            data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
+                            ${userName}</option>`);
+                    elm.append(div)
+                }
+              
             }
             elm.selectpicker('refresh');
 
@@ -171,7 +183,11 @@ var cmpList = {
                 </div>
             </div>`
         },
-        genObserverBlockM: function (title,iconClass) {
+        genObserverBlockM: function (title,option) {
+           var  iconClass   = null
+            if(typeof  option  ==='object' ){
+                iconClass  =option.iconClass;
+            }
             return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi' >
                     <span class='add-userList-title'>${title?title:lang_task.windowAddTask.observer} :</span>
                 <span type="button" data-id="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1007,6 +1023,7 @@ $(document).on('click', '.user-addons-box-elm .dropdown-menu', function (e) {
 $(document).on("click", 'body', function () {
     $('.user-addons-box-elm > .dropdown-menu').removeClass('show');
     $(".contextMenu-dropdown-style").hide();
+    $(".showhide-col-main-info").hide();
 })
 $(document).on("click", '.showhide-col-main-info', function (e) {
     e.stopPropagation();
