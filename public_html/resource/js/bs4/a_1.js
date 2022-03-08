@@ -16719,10 +16719,11 @@ var _220304054258036310054 = {
     },
     add_child_backlog: (el, id) => {
         var data = {};
-        data.fkFromBacklogId = id;
-        data.fkToBacklogId = $(el).closest('.show-details-block').find('.selectpicker-mapping-element').val();
-        data.description = $(el).closest('.show-details-block').find('input').val();
-        data.fkBacklogFlowId = $(el).closest('tr').attr('fid');
+        data.fkFromBacklogId = _220304054258036310054.flow_details_list[id].fkToBacklogId;
+        data.fkToBacklogId = $(el).closest('div').find('select').val();
+        data.description = $(el).closest('.prosesCartToolDiv').find('.prosesCartInputDescVal').val();
+        data.fkBacklogFlowId = $(el).attr('flowId');
+        data.fkParentId = id;
         callApi('22030400033000374400', data, true, function (res) {
             $(el).closest('div').find('select').val('');
             $(el).closest('div').find('input').val('');
@@ -16736,9 +16737,7 @@ var _220304054258036310054 = {
             return;
         }
         var data = {};
-        data.fkFromBacklogId = id;
-        data.fkToBacklogId = $(el).closest('.zad').attr('id');
-        data.fkBacklogFlowId = $('#comp_id_22030405435105928068').val();
+        data.id = id;
         callApi('22030412151009877861', data, true, function (res) {
             _220304054258036310054.map_flow_details();
         })
@@ -16754,25 +16753,27 @@ var _220304054258036310054 = {
             _220304054258036310054.map_flow_details();
         })
     },
-    child_body: (item, M, backlogName, res4, flow_id, bgStatus, fkToBacklogId) => {
-       var select = _220304054258036310054.backlog_select(res4);
-        select.addClass('margin-menfiii');        
+    child_body: (item, M, backlogName, res4, flow_id, bgStatus, fkToBacklogId, flo) => {
+        var item_obj = _220304054258036310054.flow_details_list[item];
+
+        var select = _220304054258036310054.backlog_select(res4);
+        select.addClass('margin-menfiii');
         var div2 = $(`<div class="hollele_zad" style=""></div>`);
-        div2.append($(`<div class='cs-input-group prosesCartToolDiv'>
-                          <div style="margin-top: 3px;"> <input class='form-control form-control-sm mr-auto' placeholder='Description'></div>
+        var div1 = $(`<div class='cs-input-group prosesCartToolDiv'>                                                    
+                          <div style="margin-top: 3px;"> <input class='form-control form-control-sm mr-auto prosesCartInputDescVal' placeholder='Description'></div>
                            <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")'><i class="fas fa-redo"></i></i></button>
-                          <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")'><i class = "fas fa-plus-circle" > </i></button >
-                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${M}")'><i class="fas fa-trash-alt"></i></button>
+                          <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}"><i class = "fas fa-plus-circle" > </i></button >
+                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${item_obj.id}")'><i class="fas fa-trash-alt"></i></button>
                         </div>`)
-        )
-       div2.attr("parent_id", item)
-        div2.append(select)
-            .append(`<div ondblclick="callStoryCard('${fkToBacklogId}')" style="padding:10px;">${backlogName}</div>`)
+        div1.prepend(select);
+        div2.append(div1);
+        div2.attr("parent_id", item)
+        div2.append(`<div ondblclick="callStoryCard('${fkToBacklogId}')" style="padding:10px;">${backlogName}</div>`)
             .append(`<span class="backlog-status"><div style="margin-bottom:15px;" class="us-list-item us-item-status-${bgStatus}">${bgStatus}</div></span>`)
-           
-           
-       return div2;
-      
+
+
+        return div2;
+
     },
     map_show: (flow_id) => {
 
@@ -16797,8 +16798,8 @@ var _220304054258036310054 = {
 
     },
     backlog_select: (res4) => {
-          var select = $('<select data-live-search="true" class="form-control selectpicker-mapping-element">');
-          select.append('<option></option>')
+        var select = $('<select data-live-search="true" class="form-control selectpicker-mapping-element">');
+        select.append('<option></option>')
         try {
             res4.tbl[0].r.map((ob) => {
                 select.append(`<option value='${ob.id}'>${ob.backlogName}</option>`)
@@ -16898,7 +16899,7 @@ var _220304054258036310054 = {
                     // alert(JSON.stringify(item_obj))
 
 
-                    var div2 = _220304054258036310054.child_body(item, M, item_obj.toBacklogName, res4, flow_id, item_obj.toBacklogStatus, item_obj.fkToBacklogId);
+                    var div2 = _220304054258036310054.child_body(item, M, item_obj.toBacklogName, res4, flow_id, item_obj.toBacklogStatus, item_obj.fkToBacklogId, item_obj.fkBacklogFlowId);
 
                     td.append(div2);
                     if (fromTo[item]) {
@@ -16959,9 +16960,9 @@ var _220304054258036310054 = {
 
             })
             backlogBugCountSet12(bglist);
-           // _220304054258036310054.set_leaderLine();
+            // _220304054258036310054.set_leaderLine();
         })
-    },    
+    },
     create_flow: (el) => {
         //create flow 
         var data = {};
@@ -16974,7 +16975,7 @@ var _220304054258036310054 = {
 
         })
     }
-    
+
 }
 
 
@@ -24855,3 +24856,183 @@ function backlogBugCountSet12(list) {
         }
     })
 }
+
+
+var _220304054258036310054 = {
+
+    flow_backlog_map: {},
+    flow_backlog_pair: {},
+    flow_backlog_desc: {},
+    flow_details_list: {},
+    loader: () => {
+        _220304054258036310054.load_flow_group_select();
+        // _220304054258036310054.map_flow_group();
+    },
+    load_flow_group_select: () => {
+        var select = $('#comp_id_22030803450902384159');
+        select.html('<option></option>');
+        select.attr('onchange', '_220304054258036310054.map_flow_group_core(this)')
+        callApi("22030511170609167656", {}, true, function (res) {
+            res.tbl[0].r.map((o) => {
+                select.append(`<option value='${o.id}'>${o.groupName}</option>`);
+            })
+        })
+    },
+    map_flow_group_core: (el) => {
+        var group_id = $(el).val();
+        _220304054258036310054.map_flow_group(group_id);
+    },
+    map_flow_group: (flow_group_id) => {
+
+        //22030616495806702640 Parent sorgusu
+        //22030617061505242829 Techizat sorgusu
+
+        var div = $('#22030803450902333051');
+        div.html('');
+
+        // flow_group_id = '22030616495806702640';
+        callApi('22030808135801162223', {
+            fkFlowGroupId: flow_group_id
+        }, true, function (res) {
+            res.tbl[0].r.map((item) => {
+                _220304054258036310054.map_flow_details(item.id, item.flowName);
+            })
+
+        })
+    },
+    map_flow_details: (flow_id, flow_name) => {
+        var id = flow_id;
+        var div = $('#22030803450902333051');
+        // div.html('heş zad seçilməyib!!!!');
+
+        var dt = {};
+        _220304054258036310054.flow_backlog_map = dt;
+        callApi('22030406013701734834', {
+            fkBacklogFlowId: id
+        }, true, function (res) {
+            // div.html(JSON.stringify(res));
+            res.tbl[0].r.map((o) => {
+                var fromId = o.fkFromBacklogId;
+                var fromName = o.fromBacklogName;
+                var oid = o.id;
+                var toId = o.fkToBacklogId;
+                var toName = o.toBacklogName;
+                var fkParentId = o.fkParentId;
+                var desc = o.descripton;
+
+                _220304054258036310054.flow_details_list[oid] = o;
+                _220304054258036310054.flow_backlog_pair[fromId] = fromName;
+                _220304054258036310054.flow_backlog_pair[toId] = toName;
+
+                fkParentId = (fkParentId === '-1') ? id : fkParentId;
+
+                if (!dt[fkParentId]) {
+                    dt[fkParentId] = [];
+                }
+                dt[fkParentId].push(oid);
+
+            })
+            _220304054258036310054.flow_backlog_map = dt;
+            _220304054258036310054.map_show(id, flow_name);
+        })
+    },
+    map_show: (flow_id, flow_name) => {
+        var tr = $(`<div>`);
+        tr.attr('fid', flow_id)
+            .addClass("parent_id_" + flow_id)
+            .addClass("parent_div_zad_shey")
+            .attr("order_no", "")
+            .attr('parent_no', '');
+
+        tr.append(`<div style='background-color:gray;color:white'>
+                <h5>${flow_name}</h5>
+              </div>`);
+
+        var div = $('#22030803450902333051');
+        div.append(tr);
+
+        var res4 = callApi('22030400352507334738', {}, false);
+        var idc = 1;
+        _220304054258036310054.map_iteration([flow_id], tr, idc, flow_id, flow_id);
+    },
+
+    map_iteration: (parnetIds, tr, idc, parent_id, flow_id) => {
+        if (idc >= 20) {
+            return;
+        }
+
+        var st = `.parent_id_${parent_id}`;
+        var elm = $(st).first();
+        var order_no = elm.attr('order_no');
+        var fromTo = _220304054258036310054.flow_backlog_map;
+        var rcd = 1;
+        parnetIds.map((M) => {
+            if (fromTo[M]) {
+                fromTo[M].map((item) => {
+
+                    var child_id = [];
+                    child_id.push(item);
+
+                    var tr3 = $('<div>')
+                    tr3.addClass('parent_id_' + item);
+
+                    var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
+
+                    var row_number_new = (order_no) ? spc + order_no + "." + rcd :
+                        spc + rcd;
+
+                    tr3.attr('order_no', row_number_new)
+                        .attr('parent_id', st)
+                        .attr('parent_no', order_no);
+
+
+                    var item_obj = _220304054258036310054.flow_details_list[item];
+
+                    var backlog = _220304054258036310054.backlog_block(row_number_new, item_obj);
+                    tr3.append(backlog);
+
+                    elm.append(tr3);
+
+
+
+                    rcd = rcd + 1;
+                    _220304054258036310054.map_iteration(child_id, tr, idc, item, flow_id);
+
+                })
+            }
+        })
+
+    },
+    backlog_block: (row, obj) => {
+        var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
+
+        var span = $('<span>')
+            .addClass("flow-item-span-zad")
+            // .append(spc)
+            .append(`${row}.${obj.toBacklogName}`)
+            .append(" ")
+            .append(` <span class='us-item-status-${obj.toBacklogStatus}'>${obj.toBacklogStatus}<span>`)
+            .append(` <i class='fa fa-bug' style='color:red'>-${obj.toBacklogBugCount}</i>`)
+            .append(` <span class='us-item-status-new' title='Tasks with New Status'>${obj.toBacklogNewCount}<span>`)
+            .append(` <span class='us-item-status-ongoing' title='Tasks with ongoing Status'>${obj.toBacklogOngoingCount}<span>`);
+        return span;
+    },
+    child_body: (item, M, backlogName, res4, flow_id) => {
+        var select = _220304054258036310054.backlog_select(res4);
+
+        var div2 = $(`<div class="hollele_zad" 
+            style="">`);
+        div2.attr("parent_id", item)
+        div2.append(`${backlogName}`);
+        // .append(select)
+        // .append(`<input style='width:50px'>`)
+        // .append(` <button onclick='_220304054258036310054.add_child_backlog(this,"${item}","${flow_id}")'>+</button><br>
+        //                   <button onclick='_220304054258036310054.delete_child_backlog(this,"${M}")'>D</button>
+        //           <br><br>`);
+        return div2;
+    },
+
+
+}
+
+

@@ -1,4 +1,3 @@
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,7 +9,7 @@
 var guiZadList4Ever = {};
 var popupSiyahiList = {};
 var backLogIdListForSearch = "";
-var global_counter_4_us =0;
+var global_counter_4_us = 0;
 var filtUsm = {
     TableFields: {},
     SetTableFields: function (tableId, InputId) {
@@ -36,15 +35,15 @@ function check() {
         return;
     }
     var lang = $('#lang').find(":selected").val();
-    var json = { kv: {} };
+    var json = {
+        kv: {}
+    };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    } catch (err) {}
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    } catch (err) {}
     json.kv.username = username;
     json.kv.password = password;
     json.kv.domain = domain;
@@ -268,8 +267,7 @@ var CanvasDesign = {
                 var n2 = text.indexOf(";", n1);
                 st = text.substring(n1 + 2, n2);
             }
-        } catch (err) {
-        }
+        } catch (err) {}
         return st;
     }
 
@@ -2186,6 +2184,7 @@ function drag(ev) {
 
     //  console.log("drag");
 }
+
 function dropOrderSave(delmt, ev) {
 
     var dragTo = $(delmt).index();
@@ -2205,13 +2204,13 @@ function dropOrderSave(delmt, ev) {
     //    $(elOne).append(childTwo);
 
 
-    var json = { kv: {} };
+    var json = {
+        kv: {}
+    };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
-    json.kv.id = $(delmt).attr("id");
-    ;
+    } catch (err) {}
+    json.kv.id = $(delmt).attr("id");;
     json.kv.orderNo = dragTo;
     var that = this;
     var data = JSON.stringify(json);
@@ -2227,12 +2226,12 @@ function dropOrderSave(delmt, ev) {
                 SAInput.addInputTableByRes(res);
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
-            } catch (err) {
-            }
+            } catch (err) {}
 
 
 
-        }, error: function (res) {
+        },
+        error: function (res) {
 
             Toaster.showError(res);
         }
@@ -2414,11 +2413,12 @@ UserStory.prototype = {
     },
     setUserStoryAsAPIFeature: function () {
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.isApi = $('#gui_component_is_api').is(':checked') ? "1" : "0";
         var that = this;
@@ -2446,11 +2446,12 @@ UserStory.prototype = {
     },
     loadProjectList: function () {
         $('#dublicateUserStoryModal_projectlist').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.asc = "projectName";
         var that = this;
         var data = JSON.stringify(json);
@@ -2512,11 +2513,12 @@ UserStory.prototype = {
         if ($('#updateScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $('#updateScenario_userstorylistwithinputs').val();
         var that = this;
         var data = JSON.stringify(json);
@@ -2540,11 +2542,12 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -2570,11 +2573,12 @@ UserStory.prototype = {
             return;
         }
         $('#change-mgmt-gui-design-label-list').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -2601,11 +2605,12 @@ UserStory.prototype = {
             return;
         }
         $('#change-mgmt-gui-design-label-list').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.domain = global_var.current_domain;
@@ -2670,23 +2675,23 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkLabelId = $('#assignLabel4ChangeRequestModal_labels').val();
-        json.kv.startDate = ($('#change-mgmt-gui-design-start-date').val())
-            ? $('#change-mgmt-gui-design-start-date').val() : "-1";
-        json.kv.startTime = ($('#change-mgmt-gui-design-start-time').val())
-            ? $('#change-mgmt-gui-design-start-time').val() : "-1";
-        json.kv.endDate = ($('#change-mgmt-gui-design-end-date').val())
-            ? $('#change-mgmt-gui-design-end-date').val() : "-1";
-        ;
-        json.kv.endTime = ($('#change-mgmt-gui-design-end-time').val())
-            ? $('#change-mgmt-gui-design-end-time').val() : "-1";
+        json.kv.startDate = ($('#change-mgmt-gui-design-start-date').val()) ?
+            $('#change-mgmt-gui-design-start-date').val() : "-1";
+        json.kv.startTime = ($('#change-mgmt-gui-design-start-time').val()) ?
+            $('#change-mgmt-gui-design-start-time').val() : "-1";
+        json.kv.endDate = ($('#change-mgmt-gui-design-end-date').val()) ?
+            $('#change-mgmt-gui-design-end-date').val() : "-1";;
+        json.kv.endTime = ($('#change-mgmt-gui-design-end-time').val()) ?
+            $('#change-mgmt-gui-design-end-time').val() : "-1";
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -2710,11 +2715,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $(el).val();
         json.kv.domain = global_var.current_domain;
         var that = this;
@@ -2741,24 +2747,24 @@ UserStory.prototype = {
     },
     changeRequest_setAssignedLabelByDates: function () {
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        json.kv.startDate = ($('#change-mgmt-gui-design-start-date').val())
-            ? $('#change-mgmt-gui-design-start-date').val()
-            : "-1";
-        json.kv.endDate = ($('#change-mgmt-gui-design-end-date').val())
-            ? $('#change-mgmt-gui-design-end-date').val()
-            : "-1";
-        json.kv.startTime = ($('#change-mgmt-gui-design-start-time').val())
-            ? $('#change-mgmt-gui-design-start-time').val()
-            : "-1";
-        ;
-        json.kv.endTime = ($('#change-mgmt-gui-design-end-time').val())
-            ? $('#change-mgmt-gui-design-end-time').val()
-            : "-1";
+        } catch (err) {}
+        json.kv.startDate = ($('#change-mgmt-gui-design-start-date').val()) ?
+            $('#change-mgmt-gui-design-start-date').val() :
+            "-1";
+        json.kv.endDate = ($('#change-mgmt-gui-design-end-date').val()) ?
+            $('#change-mgmt-gui-design-end-date').val() :
+            "-1";
+        json.kv.startTime = ($('#change-mgmt-gui-design-start-time').val()) ?
+            $('#change-mgmt-gui-design-start-time').val() :
+            "-1";;
+        json.kv.endTime = ($('#change-mgmt-gui-design-end-time').val()) ?
+            $('#change-mgmt-gui-design-end-time').val() :
+            "-1";
         json.kv.domain = global_var.current_domain;
         var that = this;
         var data = JSON.stringify(json);
@@ -2774,19 +2780,19 @@ UserStory.prototype = {
                 $('#change-mgmt-gui-design-label-list').val('');
                 try {
                     $('#change-mgmt-gui-design-label-list').val(res.tbl[0].r[0].id);
-                } catch (e) {
-                }
+                } catch (e) {}
             }
         });
     },
     changeRequestForStartDateHeader: function (projectId, backlogId, sdate, edate, stime, etime) {
 
         var st = "";
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.fkProjectId = projectId;
         json.kv.startDate = (sdate) ? sdate : "";
@@ -2894,9 +2900,9 @@ UserStory.prototype = {
                 .append($('<td></td>')
                     .append($('<span></span>')
                         .addClass()
-                        .attr('style', (inputDeleted)
-                            ? css4newInput + ' text-decoration: line-through;'
-                            : css4newInput)
+                        .attr('style', (inputDeleted) ?
+                            css4newInput + ' text-decoration: line-through;' :
+                            css4newInput)
                         .append(obj.param1)
                         .append((obj.param3) ? " (Group by:" + obj.param3 + ")" : ""))
                     .addClass('text-left')
@@ -2912,8 +2918,7 @@ UserStory.prototype = {
                 )
                 .append($('<td></td>')
                     .addClass('text-left')
-                    .append(inputDescByList))
-                ;
+                    .append(inputDescByList));
             tbody.append(tr);
         }
         return tbody;
@@ -2974,9 +2979,9 @@ UserStory.prototype = {
                 this.changeRequestDetails_GetInputDescUpdateListByInputId(data, obj.id);
             div.append('- ')
                 .append($('<span></span>')
-                    .attr('style', (inputDescDeleted)
-                        ? this.addClassForNewRecord(obj, sdate, edate, stime, etime) + ' text-decoration: line-through;'
-                        : this.addClassForNewRecord(obj, sdate, edate, stime, etime))
+                    .attr('style', (inputDescDeleted) ?
+                        this.addClassForNewRecord(obj, sdate, edate, stime, etime) + ' text-decoration: line-through;' :
+                        this.addClassForNewRecord(obj, sdate, edate, stime, etime))
                     .append(obj.desc))
                 .append($('<span></span>')
                     .addClass('c-history-input-date')
@@ -3034,7 +3039,7 @@ UserStory.prototype = {
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<span></span>')
-                .append(obj.desc))
+                    .append(obj.desc))
                 .append($('<span></span>')
                     .addClass('c-history-input-date')
                     .append(' (')
@@ -3059,7 +3064,7 @@ UserStory.prototype = {
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<span></span>')
-                .append(obj.desc))
+                    .append(obj.desc))
                 .append($('<span></span>')
                     .addClass('c-history-input-date')
                     .append(' (')
@@ -3086,7 +3091,7 @@ UserStory.prototype = {
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<span></span>')
-                .append(obj.desc))
+                    .append(obj.desc))
                 .append($('<i></i>').append((obj.table) ? ' -- ' + obj.table : ""))
                 .append($('<span></span>')
                     .addClass('c-history-input-date')
@@ -3111,21 +3116,21 @@ UserStory.prototype = {
                 var obj = o[n];
                 div.append(
                     $('<div></div>')
-                        .addClass('col-10')
-                        .addClass('text-left')
-                        .addClass((n === 0) ? "c-input-update-last" : "c-input-update-middle")
-                        .attr('style', 'margin-left:20px;background-color:#FFFF66;border-radius:15px;')
-                        .append($('<span></span>')
-                            .addClass('c-history-input-date')
-                            .append('  ')
-                            .append(Utility.convertDate(obj.historyDate))
-                            .append('  ')
-                            .append(Utility.convertTime(obj.historyTime))
-                            .append('<br>'))
-                        .append($('<span></span>')
-                            .addClass('c-history-process-desc')
-                            .append(MapTextAreaHtml(obj.param1)))
-                        .append('<hr>')
+                    .addClass('col-10')
+                    .addClass('text-left')
+                    .addClass((n === 0) ? "c-input-update-last" : "c-input-update-middle")
+                    .attr('style', 'margin-left:20px;background-color:#FFFF66;border-radius:15px;')
+                    .append($('<span></span>')
+                        .addClass('c-history-input-date')
+                        .append('  ')
+                        .append(Utility.convertDate(obj.historyDate))
+                        .append('  ')
+                        .append(Utility.convertTime(obj.historyTime))
+                        .append('<br>'))
+                    .append($('<span></span>')
+                        .addClass('c-history-process-desc')
+                        .append(MapTextAreaHtml(obj.param1)))
+                    .append('<hr>')
                 );
             }
         } catch (err) {
@@ -3264,11 +3269,12 @@ UserStory.prototype = {
         if ($('#duplicateScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $('#duplicateScenario_userstorylistwithinputs').val();
         var that = this;
         var data = JSON.stringify(json);
@@ -3295,8 +3301,7 @@ UserStory.prototype = {
             }
             var txt = $('#updateScenario_datacombination').val() + obj[n].inputName + ": ' ',\n";
             $('#updateScenario_datacombination')
-                .val(txt)
-                ;
+                .val(txt);
         }
     },
     loadDataCombination4DublicateDetails: function (res) {
@@ -3308,8 +3313,7 @@ UserStory.prototype = {
             }
             var txt = $('#duplicateScenario_datacombination').val() + obj[n].inputName + ": ' ',\n";
             $('#duplicateScenario_datacombination')
-                .val(txt)
-                ;
+                .val(txt);
         }
     },
     loadDataCombination: function () {
@@ -3317,11 +3321,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $('#addScenario_userstorylistwithinputs').val();
         var that = this;
         var data = JSON.stringify(json);
@@ -3351,11 +3356,12 @@ UserStory.prototype = {
         }
     },
     loadSUSwithInputForScenarioModal: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -3381,11 +3387,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -3403,11 +3410,12 @@ UserStory.prototype = {
         });
     },
     loadSUSwithInputForUpdateScenarioModal: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -3557,8 +3565,7 @@ UserStory.prototype = {
             success: function (data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {
-            }
+            error: function () {}
         });
         return finalname;
     },
@@ -3612,11 +3619,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $(arg).attr('id');
         json.kv.comment = $(arg).val();
         json.kv.fkBacklogId = global_var.current_backlog_id;
@@ -3638,11 +3646,12 @@ UserStory.prototype = {
         })
     },
     loadPaymentHistory: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -3696,8 +3705,8 @@ UserStory.prototype = {
 
     },
     setFilterPreviousPaging: function () {
-        var r = parseFloat(global_var.user_story_core_filter_current_index)
-            - parseFloat($('#us_core_filter_perpage').val());
+        var r = parseFloat(global_var.user_story_core_filter_current_index) -
+            parseFloat($('#us_core_filter_perpage').val());
         r = parseFloat(r) < 0 ? '0' : r;
         global_var.user_story_core_filter_current_index = r;
         global_var.user_story_core_filter_paging_button_pressed = "1";
@@ -3831,16 +3840,15 @@ UserStory.prototype = {
             return;
         }
 
-        if ($('#addScenario_showactualresult').is(':checked')
-            && isCanvasContextExist('canvasdiv_testCase')) {
+        if ($('#addScenario_showactualresult').is(':checked') &&
+            isCanvasContextExist('canvasdiv_testCase')) {
             try {
                 this.loadPicture4TestCase();
-            } catch (err) {
-            }
+            } catch (err) {}
         }
 
-        if ($('#addScenario_showactualresult').is(':checked')
-            && $('#file_scenario').val().trim().length > 0) {
+        if ($('#addScenario_showactualresult').is(':checked') &&
+            $('#file_scenario').val().trim().length > 0) {
             this.sendFileForScenario();
         } else {
             this.addTaskScenarioBody('');
@@ -3854,11 +3862,12 @@ UserStory.prototype = {
             isActualResChecked = "1";
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.testCase = $('#addScenario_testcase').val();
         json.kv.dataCombination = $('#addScenario_datacombination').val();
         json.kv.scenarioName = $('#addScenario_scenario').val();
@@ -3912,11 +3921,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fileUrl = filename;
@@ -3949,11 +3959,12 @@ UserStory.prototype = {
             Toaster.showError('Please Add Scenario.');
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#updateScenario_id').val();
         json.kv.testCase = $('#updateScenario_testcase').val();
         json.kv.dataCombination = $('#updateScenario_datacombination').val();
@@ -3994,11 +4005,12 @@ UserStory.prototype = {
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#dublicateScenario_id').val();
         json.kv.testCase = $('#duplicateScenario_testcase').val();
         json.kv.dataCombination = $('#duplicateScenario_datacombination').val();
@@ -4025,11 +4037,12 @@ UserStory.prototype = {
         });
     },
     loadTestScenario: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -4073,11 +4086,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -4101,11 +4115,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -4138,11 +4153,12 @@ UserStory.prototype = {
         this.loadSUSwithInput4Dublication();
     },
     loadData4DublicateTestScenario: function (id) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -4189,11 +4205,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkScenarioId = $('#addTrial4Scenario_id').val();
         json.kv.actualResult = $('#addTrial4Scenario_actualresul').val();
         json.kv.trialStatus = $('#addTrial4Scenario_trialstatus').val();
@@ -4224,8 +4241,7 @@ UserStory.prototype = {
         if (isCanvasContextExist('canvasdiv_testTrial')) {
             try {
                 this.loadPicture4TestTrial();
-            } catch (err) {
-            }
+            } catch (err) {}
         }
 
         if ($('#file_trial').val().trim().length > 0) {
@@ -4239,13 +4255,13 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        json.kv.id = $('#updateTrial4Scenario_id').val();
-        ;
+        } catch (err) {}
+        json.kv.id = $('#updateTrial4Scenario_id').val();;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -4268,11 +4284,12 @@ UserStory.prototype = {
         if (!scenarioId) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkScenarioId = scenarioId;
         var that = this;
         var data = JSON.stringify(json);
@@ -4298,11 +4315,12 @@ UserStory.prototype = {
             Toaster.showError('Please Add Actual Result for Trial.');
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#updateTrial4Scenario_id').val();
         json.kv.actualResult = $('#updateTrial4Scenario_actualresul').val();
         json.kv.trialStatus = $('#updateTrial4Scenario_trialstatus').val();
@@ -4329,11 +4347,12 @@ UserStory.prototype = {
             return;
         }
         $('#updateTrial4Scenario_id').val(id)
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -4378,31 +4397,31 @@ UserStory.prototype = {
                 return;
             }
             for (var n = 0; n < obj.length; n++) {
-                var img = (res.tbl[0].r[0].userImage)
-                    ? fileUrl(res.tbl[0].r[0].userImage)
-                    : fileUrl(that.getDefaultUserprofileName());
+                var img = (res.tbl[0].r[0].userImage) ?
+                    fileUrl(res.tbl[0].r[0].userImage) :
+                    fileUrl(that.getDefaultUserprofileName());
                 var stDel = obj[n].taskStatus === 'new' ?
                     $('<a></a>')
-                        .addClass("us-edit")
-                        .attr('href', "#")
-                        .attr('onclick', "new UserStory().deleteTaskScenario('" + obj[n].id + "')")
-                        .append($('<i></i>').addClass("fa fa-trash"))
-                        .append(" Delete")
-                    : "";
+                    .addClass("us-edit")
+                    .attr('href', "#")
+                    .attr('onclick', "new UserStory().deleteTaskScenario('" + obj[n].id + "')")
+                    .append($('<i></i>').addClass("fa fa-trash"))
+                    .append(" Delete") :
+                    "";
                 var scenarioStatusLine = obj[n].updateCount > 0 ?
                     $('<span></span>')
-                        .append($('<i></i>')
-                            .addClass("fa fa-pencil")
-                            .attr("style", "color:blue"))
-                        .append(obj[n].scenarioStatus)
-                    : "";
+                    .append($('<i></i>')
+                        .addClass("fa fa-pencil")
+                        .attr("style", "color:blue"))
+                    .append(obj[n].scenarioStatus) :
+                    "";
                 var tr = $('<tr></tr>')
                     .addClass("backlog_task_list")
                     .attr('pid', obj[n].id)
                     .attr('style', 'border-top: 1.6px solid #5181B8;cursor:pointer')
                     .attr('ondblclick', 'new UserStory().toggleScenarioLines("' + obj[n].id + '")');
                 tr.append($("<td  class='align-middle' style='text-align: left'></td>")
-                    .append((n + 1)))
+                        .append((n + 1)))
                     .append($("<td></td>")
                         .addClass('align-middle')
                         .attr("style", "text-align: left")
@@ -4521,8 +4540,7 @@ UserStory.prototype = {
                                 .append($('<li></li>').append(stDel))
                             )
                         )
-                    )
-                    ;
+                    );
                 $('#tblTestScenarioList > tbody').append(tr);
                 var rs = this.fillTrialListByScenarioWithReturn(obj[n].id);
                 //                var rs = '';
@@ -4559,11 +4577,12 @@ UserStory.prototype = {
         var backlogId = $('#linkTestCaseModal_userstory').val();
         var testCaseId = $('#linkTestCaseModal_id').val();
         //        $('#sourcedUSList4Dependency_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.fkTestCaseId = testCaseId;
         var that = this;
@@ -4586,11 +4605,12 @@ UserStory.prototype = {
     loadLinkedTestCases: function (testCaseId) {
 
         //        $('#sourcedUSList4Dependency_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkTestCaseId = testCaseId;
         var that = this;
         var data = JSON.stringify(json);
@@ -4615,16 +4635,15 @@ UserStory.prototype = {
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                var del = '<a href="#" onclick="new UserStory().deleteLinkedUserStory(\''
-                    + testCaseId + '\',\''
-                    + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
+                var del = '<a href="#" onclick="new UserStory().deleteLinkedUserStory(\'' +
+                    testCaseId + '\',\'' +
+                    obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
                 st += '<tr>';
                 st += '<td>' + replaceTags(obj[n].backlogName) + '</td>';
                 st += '<td>' + del + '</td>';
                 st += '</tr>';
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         st += '<tr>';
         st += '<td></td>';
@@ -4636,11 +4655,12 @@ UserStory.prototype = {
         var backlogId = backlogId;
         var testCaseId = testCaseId;
         //        $('#sourcedUSList4Dependency_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.fkTestCaseId = testCaseId;
         var that = this;
@@ -4667,11 +4687,12 @@ UserStory.prototype = {
     loadSourcedUserStoryToTestCase: function (id) {
         $('#linkTestCaseModal_userstory').html('');
         $('#linkTestCaseModal_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -4730,11 +4751,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -4775,11 +4797,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#bindTicketToSUSModal_id').val();
         json.kv.fkSourcedId = $('#bindTicketToSUSModal_suslist').val();
         json.kv.assignee = assignee;
@@ -4811,11 +4834,12 @@ UserStory.prototype = {
         });
     },
     selectTaskTypesBySUS: function (e) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $(e).val();
         var that = this;
         var data = JSON.stringify(json);
@@ -4844,8 +4868,8 @@ UserStory.prototype = {
         }
     },
     setFilterNextPaging: function () {
-        var rc = parseFloat(global_var.user_story_core_filter_current_index)
-            + parseFloat($('#us_core_filter_perpage').val());
+        var rc = parseFloat(global_var.user_story_core_filter_current_index) +
+            parseFloat($('#us_core_filter_perpage').val());
         if (rc <= parseFloat($('#us_core_filter_paginationresult_rowcount').html())) {
             global_var.user_story_core_filter_current_index = rc;
         }
@@ -4858,11 +4882,12 @@ UserStory.prototype = {
         global_var.user_story_core_filter_paging_button_pressed = "";
     },
     genUsFilterCreatedBy: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'userName';
         var that = this;
@@ -4885,11 +4910,12 @@ UserStory.prototype = {
         });
     },
     genUsFilterAssigneLabel: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -4921,24 +4947,24 @@ UserStory.prototype = {
                     idx++;
                 }
                 st += '<td>'
-                st += ' <input type="checkbox" class="us_filter_assignedlabel_class"  id="'
-                    + obj[n].fkLabelId + '" value="' + obj[n].fkLabelId + '">' +
+                st += ' <input type="checkbox" class="us_filter_assignedlabel_class"  id="' +
+                    obj[n].fkLabelId + '" value="' + obj[n].fkLabelId + '">' +
                     replaceTags(obj[n].name) + '</input>';
                 st += '</td>'
 
             }
             st += '</table>';
             $('#us_filter_assignedlabel').html((st));
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     genUsTaskTypesManagment: function () {
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'typeName';
         var that = this;
@@ -4957,11 +4983,12 @@ UserStory.prototype = {
         });
     },
     genUsFilterTaskTypes: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'typeName';
         var that = this;
@@ -5035,8 +5062,8 @@ UserStory.prototype = {
                 st += '</tr><tr>'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="us_filter_tasktype_class chek"  id="'
-                + obj[n].id + '" value="' + obj[n].id + '">&nbsp;' +
+            st += ' <input type="checkbox" class="us_filter_tasktype_class chek"  id="' +
+                obj[n].id + '" value="' + obj[n].id + '">&nbsp;' +
                 replaceTags(obj[n].typeName) + '</input>'
             st += '</td>'
 
@@ -5060,8 +5087,8 @@ UserStory.prototype = {
                 st += '</tr><tr>'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="us_filter_createdby_class chek"  id="'
-                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '"> ' +
+            st += ' <input type="checkbox" class="us_filter_createdby_class chek"  id="' +
+                obj[n].fkUserId + '" value="' + obj[n].fkUserId + '"> ' +
                 replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
@@ -5081,8 +5108,8 @@ UserStory.prototype = {
                 st += '</tr><tr>'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="us_filter_assignee_class chek"  id="'
-                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
+            st += ' <input type="checkbox" class="us_filter_assignee_class chek"  id="' +
+                obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -5099,8 +5126,8 @@ UserStory.prototype = {
                 st += '</tr><tr>'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="us_filter_owner_class chek"  id="'
-                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
+            st += ' <input type="checkbox" class="us_filter_owner_class chek"  id="' +
+                obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -5126,11 +5153,12 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -5163,8 +5191,8 @@ UserStory.prototype = {
                 st += '</tr><tr style="line-height: 1;">'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="assignLabelModal_labelcheckbox"  id="'
-                + obj[n].id + '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:' +
+            st += ' <input type="checkbox" class="assignLabelModal_labelcheckbox"  id="' +
+                obj[n].id + '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:' +
                 obj[n].color + "\">";
             st += obj[n].isMenu === '1' ? '(Menu)-' : '';
             st += replaceTags(obj[n].name) + '</span>';
@@ -5179,11 +5207,12 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -5207,11 +5236,12 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -5243,13 +5273,13 @@ UserStory.prototype = {
             if (n % 3 === 0) {
                 st += '</tr ><tr style="line-height: 1;">'
             }
-            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
-                : "";
+            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate)) ?
+                " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)" :
+                "";
             st += '<td>'
             st += ' <input type="radio" name="sprintRadio" class="assignSprintModal_sprintcheckbox"  id="' + obj[n].id +
-                '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:'
-                + obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
+                '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:' +
+                obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
             st += '</td>'
 
         }
@@ -5270,13 +5300,13 @@ UserStory.prototype = {
                 st += '</tr ><tr style="line-height: 1;">'
             }
 
-            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
-                : "";
+            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate)) ?
+                " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)" :
+                "";
             st += '<td>'
             st += ' <input type="radio" name="assignSprintModal" class="assignSprintModal_sprintcheckbox"  id="' + obj[n].id +
-                '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:'
-                + obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
+                '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:' +
+                obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
             st += '</td>'
 
         }
@@ -5437,8 +5467,7 @@ UserStory.prototype = {
                     cr_project_desc_by_backlog[global_var.current_backlog_id] = [];
                     SACore.updateBacklogDescriptionByRes(res);
                     that.getBacklogDescDetails(res);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showGeneralError();
@@ -5481,38 +5510,37 @@ UserStory.prototype = {
 
         for (var n = 0; n < obj.length; n++) {
 
-            var shortDesc = (obj[n].shortDescForApi)
-                ? " (with description: <i>" + replaceTags(obj[n].shortDescForApi) + "<i>)"
-                : "";
+            var shortDesc = (obj[n].shortDescForApi) ?
+                " (with description: <i>" + replaceTags(obj[n].shortDescForApi) + "<i>)" :
+                "";
 
             var relApiId = obj[n].fkRelatedApiId;
             loadBacklogInputsByIdIfNotExist(relApiId);
 
-            var apiDesc = (relApiId)
-                ? " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
-                    onclick=\"new UserStory().redirectUserStoryCore('" + obj[n].fkRelatedApiId + "')\">"
-                + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>"
-                + ' <span style="border-radius: 15px; padding: 0px 8px; background-color: orange;">'
-                + GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) + '</span> '
-                + '<span style="border-radius: 15px; padding: 0px 8px; background-color: rgb(255, 255, 0);">'
-                + MapApiCallAsyncType(SACore.GetBacklogDetails(relApiId, 'apiSyncRequest'))
-                + '</span>'
-                + ' '
-                + shortDesc
-                + " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                + obj[n].id + "','" + obj[n].fkRelatedApiId + "','PR_DESC')\"><i class='fa fa-cog'></i></a>"
-                : "";
+            var apiDesc = (relApiId) ?
+                " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
+                    onclick=\"new UserStory().redirectUserStoryCore('" + obj[n].fkRelatedApiId + "')\">" +
+                replaceTags(SACore.GetBacklogname(relApiId)) + "</a>" +
+                ' <span style="border-radius: 15px; padding: 0px 8px; background-color: orange;">' +
+                GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) + '</span> ' +
+                '<span style="border-radius: 15px; padding: 0px 8px; background-color: rgb(255, 255, 0);">' +
+                MapApiCallAsyncType(SACore.GetBacklogDetails(relApiId, 'apiSyncRequest')) +
+                '</span>' +
+                ' ' +
+                shortDesc +
+                " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('" +
+                obj[n].id + "','" + obj[n].fkRelatedApiId + "','PR_DESC')\"><i class='fa fa-cog'></i></a>" :
+                "";
 
             var relScId = obj[n].fkRelatedScId;
             var scDesc = "";
             try {
-                scDesc = (relScId)
-                    ? " <b>Related Function</b>: <a style=\"color:black;\" href=\"#\" \n\
-                    onclick=\"showJSModalByID('" + relScId + "','" + cr_js_list[relScId].fnType + "')\">"
-                    + replaceTags(cr_js_list[relScId].fnDescription) + "</a><br>"
-                    : "";
-            } catch (err) {
-            }
+                scDesc = (relScId) ?
+                    " <b>Related Function</b>: <a style=\"color:black;\" href=\"#\" \n\
+                    onclick=\"showJSModalByID('" + relScId + "','" + cr_js_list[relScId].fnType + "')\">" +
+                    replaceTags(cr_js_list[relScId].fnDescription) + "</a><br>" :
+                    "";
+            } catch (err) {}
 
             var descBody = MapTextAreaHtml((obj[n].description));
             descBody = this.getBacklogDescLineDetails(descBody);
@@ -5522,7 +5550,7 @@ UserStory.prototype = {
             try {
                 isCommand = SAFN.IsCommand(obj[n].description) ? "1" : "0";
                 commandName = SAFN.GetFunctionNameLine(obj[n].description);
-            } catch (err) { }
+            } catch (err) {}
 
 
             var backlogProcessDescLineSubmenuItemVar = this.backlogProcessDescLineSubmenuItem(obj[n].id);
@@ -5598,7 +5626,7 @@ UserStory.prototype = {
 
                 }
             }
-        })/* .disableSelection(); */
+        }) /* .disableSelection(); */
 
         $("div.function-statement-container table tr").hover(function () {
             $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
@@ -5642,7 +5670,11 @@ UserStory.prototype = {
             let arrowWidth = 60;
             let $this = $(this);
             let style = window.getComputedStyle(this)
-            let { fontWeight, fontSize, fontFamily } = style
+            let {
+                fontWeight,
+                fontSize,
+                fontFamily
+            } = style
             let text = $this.find("option:selected").text();
             let $demo = $("<span>").html(text).css({
                 "font-size": fontSize,
@@ -5825,11 +5857,12 @@ UserStory.prototype = {
         if (backlogs.length === 0 || labels.length === 0) {
             return
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogs;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkLabelId = labels;
@@ -5859,11 +5892,12 @@ UserStory.prototype = {
         if (backlogs.length === 0 || labels.length === 0) {
             return
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogs;
         json.kv.fkLabelId = labels;
         var that = this;
@@ -5895,11 +5929,12 @@ UserStory.prototype = {
         if (backlogs.length === 0 || sprints.length === 0) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogs;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkSprintId = sprints;
@@ -5930,11 +5965,12 @@ UserStory.prototype = {
         if (backlogs.length === 0 || sprints.length === 0) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogs;
         json.kv.fkSprintId = sprints;
         var that = this;
@@ -6024,10 +6060,10 @@ UserStory.prototype = {
         pdf.fromHTML(
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
-            margins.top, {// y coord
-            'width': margins.width, // max width of content on PDF
-            'elementHandlers': specialElementHandlers
-        },
+            margins.top, { // y coord
+                'width': margins.width, // max width of content on PDF
+                'elementHandlers': specialElementHandlers
+            },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF 
                 //          this allow the insertion of new lines after html
@@ -6077,12 +6113,11 @@ UserStory.prototype = {
     },
     addTaskType: function () {
 
-        if ($('#addTaskType_showcomment').is(':checked')
-            && isCanvasContextExist('canvasdiv_taskType')) {
+        if ($('#addTaskType_showcomment').is(':checked') &&
+            isCanvasContextExist('canvasdiv_taskType')) {
             try {
                 this.loadPicture4TestCase();
-            } catch (err) {
-            }
+            } catch (err) {}
         }
 
         if ($('#file4AddTaskType').val().trim().length > 0) {
@@ -6098,11 +6133,12 @@ UserStory.prototype = {
         if (!id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6126,11 +6162,12 @@ UserStory.prototype = {
         if (!id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6178,11 +6215,12 @@ UserStory.prototype = {
         }
 
         $('#addTaskType_addbutton').hide();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkTaskTypeId = $('#addTaskType_tasktype').val();
         json.kv.fkAssigneeId = $('#addTaskType_assignee').val();
@@ -6259,7 +6297,7 @@ UserStory.prototype = {
     refreshCurrentBacklog: function () {
         if (global_var.current_backlog_id.length > 0 &&
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').html()) {
-            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().each(function () { });
+            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().each(function () {});
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().find('a').first().focus();
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().find('a').first().click();
         } else {
@@ -6290,8 +6328,8 @@ UserStory.prototype = {
     },
     changeStatusIconOfUserStory: function (res) {
         var st = '<div class="us-list-item   us-item-status-' +
-            replaceTags(res.kv.backlogStatus) + '">'
-            + replaceTags(res.kv.backlogStatus) + '</div>';
+            replaceTags(res.kv.backlogStatus) + '">' +
+            replaceTags(res.kv.backlogStatus) + '</div>';
         $('#container-us-body').find('.us-selected').first().find('.backlog-status').first().html(st);
     },
     changeStatusIconOfUserStoryByStoryId: function (id, status) {
@@ -6310,11 +6348,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_task_id;
         json.kv.description = $('#notifyBacklogTaskUpdate').val();
         var that = this;
@@ -6348,11 +6387,12 @@ UserStory.prototype = {
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_task_id;
         json.kv.description = $('#notifyBacklogTaskBug').val();
         var that = this;
@@ -6404,11 +6444,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#updateTaskType_id').val();
         json.kv.fkTaskTypeId = $('#updateTaskType_tasktype').val();
         json.kv.fkAssigneeId = $('#updateTaskType_assignee').val();
@@ -6449,11 +6490,12 @@ UserStory.prototype = {
         this.getBacklogTaskInfo(id);
     },
     getBacklogTaskInfo: function (id) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6501,11 +6543,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6534,11 +6577,12 @@ UserStory.prototype = {
         });
     },
     loadBacklogTask: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6565,11 +6609,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = task_id;
         json.kv.taskStatus = 'ongoing';
         var that = this;
@@ -6605,11 +6650,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.id = global_var.current_us_task_id;
         json.kv.id = $('#closeBacklogTask_spenthours').attr('pid')
         json.kv.spentHours = $('#closeBacklogTask_spenthours').val();
@@ -6673,11 +6719,12 @@ UserStory.prototype = {
 
         $(el).closest('td').find('.fa-stop-circle').first().show();
         $(el).hide();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6704,11 +6751,12 @@ UserStory.prototype = {
 
         $(el).closest('td').find('.fa-play-circle').first().show();
         $(el).hide();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -6734,11 +6782,12 @@ UserStory.prototype = {
         }
 
         var r = 0;
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fromDate = startDate;
         json.kv.toDate = currentDate;
         json.kv.fromTime = startTime;
@@ -6768,68 +6817,67 @@ UserStory.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
 
-                var imgAssigneeLink = obj[n].assigneeImageUrl.length === 0
-                    ? fileUrl(new User().getDefaultUserprofileName())
-                    : fileUrl(obj[n].assigneeImageUrl);
+                var imgAssigneeLink = obj[n].assigneeImageUrl.length === 0 ?
+                    fileUrl(new User().getDefaultUserprofileName()) :
+                    fileUrl(obj[n].assigneeImageUrl);
                 var imgAssignee = $('<img></img>')
                     .addClass('figure-img img-fluid rounded-circle')
                     .attr('style', 'max-width:25px;margin:5px;')
-                    .attr('src', imgAssigneeLink)
-                    ;
+                    .attr('src', imgAssigneeLink);
                 var stDel = obj[n].taskStatus === 'new' ?
                     $('<a></a>')
-                        .addClass("us-edit")
-                        .attr('href', "#")
-                        .attr('onclick', "new UserStory().deleteBacklogTask('" + obj[n].id + "')")
-                        .append($('<i></i>').addClass("fa fa-trash"))
-                        .append(" Delete")
-                    : "";
+                    .addClass("us-edit")
+                    .attr('href', "#")
+                    .attr('onclick', "new UserStory().deleteBacklogTask('" + obj[n].id + "')")
+                    .append($('<i></i>').addClass("fa fa-trash"))
+                    .append(" Delete") :
+                    "";
                 var isBugLine = obj[n].bugCount > 0 ?
                     $('<span></span>')
-                        .append($('<i></i>')
-                            .addClass("fa fa-bug")
-                            .attr("style", "color:red"))
-                        .append(obj[n].bugCount)
-                    : "";
+                    .append($('<i></i>')
+                        .addClass("fa fa-bug")
+                        .attr("style", "color:red"))
+                    .append(obj[n].bugCount) :
+                    "";
                 var isUpdatedLine = obj[n].updateCount > 0 ?
                     $('<span></span>')
-                        .append($('<i></i>')
-                            .addClass("fa fa-pencil")
-                            .attr("style", "color:blue"))
-                        .append(obj[n].updateCount)
-                    : "";
+                    .append($('<i></i>')
+                        .addClass("fa fa-pencil")
+                        .attr("style", "color:blue"))
+                    .append(obj[n].updateCount) :
+                    "";
                 var tr = $('<tr></tr>')
                     .addClass("backlog_task_list")
                     .attr('pid', obj[n].id)
                     .attr('style', 'cursor:pointer')
                     .attr('ondblclick', 'new UserStory().toggleCommentLines("' + obj[n].id + '")');
-                var stopBtn = obj[n].startType === 'P'
-                    ? $('<i></i>')
-                        .addClass('fa fa-stop-circle')
-                        .attr('onclick', 'new UserStory().taskStop("' + obj[n].id + '",this)')
-                        .attr('style', 'color:orange;font-size:16px;display:block')
-                    : $('<i></i>')
-                        .addClass('fa fa-stop-circle')
-                        .attr('onclick', 'new UserStory().taskStop("' + obj[n].id + '",this)')
-                        .attr('style', 'color:orange;font-size:16px;display:none');
-                var startBtn = obj[n].startType !== 'P'
-                    ? $('<i></i>')
-                        .addClass('fa fa-play-circle')
-                        .attr('onclick', 'new UserStory().taskStart("' + obj[n].id + '",this)')
-                        .attr('style', 'color:green;font-size:16px;display:block')
-                    : $('<i></i>')
-                        .addClass('fa fa-play-circle')
-                        .attr('onclick', 'new UserStory().taskStart("' + obj[n].id + '",this)')
-                        .attr('style', 'color:green;font-size:16px;display:none');
-                var diffTime = obj[n].startType === 'P'
-                    ? this.getStartTimeDiff(obj[n].startDate, res.kv.currentDate, obj[n].startTime, res.kv.currentTime)
-                    : "";
+                var stopBtn = obj[n].startType === 'P' ?
+                    $('<i></i>')
+                    .addClass('fa fa-stop-circle')
+                    .attr('onclick', 'new UserStory().taskStop("' + obj[n].id + '",this)')
+                    .attr('style', 'color:orange;font-size:16px;display:block') :
+                    $('<i></i>')
+                    .addClass('fa fa-stop-circle')
+                    .attr('onclick', 'new UserStory().taskStop("' + obj[n].id + '",this)')
+                    .attr('style', 'color:orange;font-size:16px;display:none');
+                var startBtn = obj[n].startType !== 'P' ?
+                    $('<i></i>')
+                    .addClass('fa fa-play-circle')
+                    .attr('onclick', 'new UserStory().taskStart("' + obj[n].id + '",this)')
+                    .attr('style', 'color:green;font-size:16px;display:block') :
+                    $('<i></i>')
+                    .addClass('fa fa-play-circle')
+                    .attr('onclick', 'new UserStory().taskStart("' + obj[n].id + '",this)')
+                    .attr('style', 'color:green;font-size:16px;display:none');
+                var diffTime = obj[n].startType === 'P' ?
+                    this.getStartTimeDiff(obj[n].startDate, res.kv.currentDate, obj[n].startTime, res.kv.currentTime) :
+                    "";
 
-                var taskTypeName = obj[n].jiraIssueKey.length > 0
-                    ? replaceTags(obj[n].taskTypeName) + " (" + obj[n].jiraIssueKey + ")"
-                    : replaceTags(obj[n].taskTypeName);
+                var taskTypeName = obj[n].jiraIssueKey.length > 0 ?
+                    replaceTags(obj[n].taskTypeName) + " (" + obj[n].jiraIssueKey + ")" :
+                    replaceTags(obj[n].taskTypeName);
                 tr.append($("<td  class='align-middle' style='text-align: center'></td>")
-                    .append((n + 1)))
+                        .append((n + 1)))
                     .append($("<td></td>")
                         .addClass('align-middle')
                         .attr("style", "text-align: center")
@@ -6862,11 +6910,11 @@ UserStory.prototype = {
                         .append(" ")
                         .append((diffTime) ?
                             $("<b></b>")
-                                .attr('style', 'color:green;')
-                                .append('(+')
-                                .append(diffTime)
-                                .append(")")
-                            : ""
+                            .attr('style', 'color:green;')
+                            .append('(+')
+                            .append(diffTime)
+                            .append(")") :
+                            ""
                         )
                     )
                     .append($("<td></td>")
@@ -6937,8 +6985,7 @@ UserStory.prototype = {
                                 .append($('<li></li>').append(stDel))
                             )
                         )
-                    )
-                    ;
+                    );
                 $('#tblBacklogTaskList > tbody').append(tr);
                 var rs = this.fillCommentListByTaskWithReturn(obj[n].id);
                 var div = $('<div></div>')
@@ -6948,7 +6995,7 @@ UserStory.prototype = {
                     .append(rs);
                 var tr1 = $('<tr  class="backlog_task_list"></tr>').attr('pid', obj[n].id);
                 tr1.append($("<td  class='align-middle' style='padding-left:40px; text-align: center'></td>").html('')).
-                    append($("<td class='align-middle' style='text-align: center'></td>").html(''))
+                append($("<td class='align-middle' style='text-align: center'></td>").html(''))
                     //                        append($("<td></td>")
                     //                                .addClass('align-middle')
                     //                                .attr("style", "text-align: center")
@@ -6988,11 +7035,12 @@ UserStory.prototype = {
         setGlobalActiveCanvas(global_var.canvas.taskType);
     },
     addAssigneeToTaskType: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'userName';
         var that = this;
@@ -7014,11 +7062,12 @@ UserStory.prototype = {
         });
     },
     updateAssigneeToTaskType: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'userName';
         var that = this;
@@ -7058,8 +7107,8 @@ UserStory.prototype = {
                 st += '</tr><tr>'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="addTaskType_nofity"  id="'
-                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
+            st += ' <input type="checkbox" class="addTaskType_nofity"  id="' +
+                obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -7075,8 +7124,7 @@ UserStory.prototype = {
                     .attr("value", obj[n].fkUserId)
                     .text(replaceTags(obj[n].userName)));
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     addNotifieroTaskTypeDetails: function (res) {
         $('#addTaskType_notifier').html("");
@@ -7089,22 +7137,22 @@ UserStory.prototype = {
                     st += '</tr><tr>'
                 }
                 st += '<td>'
-                st += ' <input type="checkbox" class="addTaskType_nofity"   value="'
-                    + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
+                st += ' <input type="checkbox" class="addTaskType_nofity"   value="' +
+                    obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
                 st += '</td>'
 
             }
             st += '</table>';
-        } catch (e) {
-        }
+        } catch (e) {}
         $('#addTaskType_notifier').html(st);
     },
     addTaskTypesToCombo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.typeStatus = 'A';
         json.kv.asc = "typeName";
         var that = this;
@@ -7126,11 +7174,12 @@ UserStory.prototype = {
         });
     },
     updateTaskTypesToCombo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.typeStatus = 'A';
         json.kv.asc = "typeName";
         var that = this;
@@ -7217,11 +7266,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = global_var.current_us_input_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.description = $('#us-ipo-inputdescription').val();
@@ -7265,11 +7315,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = inputId;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.description = $(el).val();
@@ -7318,11 +7369,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = inputId;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.description = $(el).val();
@@ -7366,7 +7418,9 @@ UserStory.prototype = {
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
                 $(el).focus();
 
             },
@@ -7447,8 +7501,8 @@ UserStory.prototype = {
                 .attr("data-id", obj[i].id)
                 .append(inputName)
                 .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
-id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-                    + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
+id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>' +
+                    '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
 \n\
@@ -7469,9 +7523,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 <button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addRelatedSourceModal" onclick="new UserStory().addRelationSourcedModal(this,\'send\',\'' + obj[i].id + '\')">Send/Save Data To Story Card (API)</button>\n\
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().removeSendSaveTo(this,\'' + obj[i].id + '\')">Remove Send/Save Data To Story Card (API)</button>\n\
 </div>\n\
-</div>'
-                    + '</div>'));
-            ;
+</div>' +
+                    '</div>'));;
 
 
 
@@ -7527,11 +7580,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.inputName = $('#us-ipo-inputname-output').val();
@@ -7600,11 +7654,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.tableName = "";
@@ -7645,7 +7700,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
 
                 $('#newInputId').val('');
                 $('#newOutputId').val('');
@@ -7672,11 +7729,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (global_var.current_backlog_id.length === 0) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.componentType = "sctn";
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.asc = "inputName";
@@ -7719,11 +7777,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     loadSUSList4Input: function () {
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.id = "1";
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = "backlogName";
@@ -7749,11 +7808,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_backlog_id;
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -7768,8 +7828,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 try {
                     $('#txtSUS_IPO_description').val(replaceMainTrustedTags(replaceTags(res.tbl[0].r[0].descriptionSourced)));
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 //                Toaster.showError(('somethingww'));
@@ -7796,8 +7855,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
             // sortSelectBox('us-gui-component-rel-sus-id');
             slct.selectpicker('refresh');
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     loadSection4InputDetails: function (res) {
         try {
@@ -7811,19 +7869,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                         .text(replaceTags(obj[n].inputName)));
                 }
             }
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     getOutputBySUSId: function (e) {
         if (!$(e).val()) {
             return;
         }
         //        this.updateInputBySUSId(e);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $(e).val();
         json.kv.asc = "inputName";
         var that = this;
@@ -7850,11 +7908,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv['backlogName'] = val;
         json.kv['fkProjectId'] = global_var.current_project_id;
         json.kv['isApi'] = "1";
@@ -7884,8 +7943,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#sus-api-output-id')
                     .append($("<option></option>").val('').text(''))
                     .append($("<option></option>").val('-2').text(' New'))
-                    .append($("<option disabled></option>").val('').text(''))
-                    ;
+                    .append($("<option disabled></option>").val('').text(''));
                 //                
                 $('#addRelatedSourceModal-new').val('');
                 //                
@@ -7912,8 +7970,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('#sus-api-output-id')
                 .append($("<option></option>").val('').text(''))
                 .append($("<option></option>").val('-2').text(' New'))
-                .append($("<option disabled></option>").val('').text(''))
-                ;
+                .append($("<option disabled></option>").val('').text(''));
             return;
         }
 
@@ -7931,16 +7988,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#sus-api-output-id')
             .append($("<option></option>").val('').text(''))
             .append($("<option></option>").val('-2').text(' New'))
-            .append($("<option disabled></option>").val('').text(''))
-            ;
+            .append($("<option disabled></option>").val('').text(''));
 
         var actionType = $('#us-related-api-input-actiontype').val() === 'send' ? "IN" : "OUT"
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = val;
         json.kv.inputType = actionType;
         json.kv.asc = "inputName";
@@ -7969,11 +8026,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         global_var.last_select_from_us_id = $(e).val();
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $(e).val();
         json.kv.inputType = "IN";
         json.kv.asc = "inputName";
@@ -7999,11 +8057,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = id;
         json.kv.asc = "inputName";
         var that = this;
@@ -8058,11 +8117,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.tableName = "";
@@ -8111,14 +8171,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
 
             sortSelectBox('sus-api-output-id');
-        } catch (err) {
-        }
+        } catch (err) {}
 
         $('#sus-api-output-id')
             .append($("<option></option>").val('').text(''))
             .append($("<option></option>").val('-2').text(' New'))
-            .append($("<option disabled></option>").val('').text(''))
-            ;
+            .append($("<option disabled></option>").val('').text(''));
 
     },
     getOutputBySUSIdDetails: function (res) {
@@ -8138,11 +8196,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.fkDependentBacklogId = $(e).val();
         var that = this;
@@ -8190,8 +8249,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     key = '@@' + (key.trim());
                     fn_text = fn_text.replace(key, (val.trim()));
                 }
-            } catch (err) {
-            }
+            } catch (err) {}
             res = fn_text;
         }
 
@@ -8212,11 +8270,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     key = '@@' + (key.trim());
                     fn_text = fn_text.replace(key, (val.trim()));
                 }
-            } catch (err) {
-            }
+            } catch (err) {}
             res = fn_text;
-        }
-        else if (fnline.startsWith('fn_event(')) {
+        } else if (fnline.startsWith('fn_event(')) {
             res = this.fnlineEventText(fnline);
         }
 
@@ -8321,12 +8377,18 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //            this.updateInputBySUSOutputId();
         //        }
 
-        var checkedInputIds = global_var.active_input_desc_type === 'IN'
-            ? this.getCheckedInputsNew()
-            : this.getCheckedOutputsNew();
+        var checkedInputIds = global_var.active_input_desc_type === 'IN' ?
+            this.getCheckedInputsNew() :
+            this.getCheckedOutputsNew();
         var currentInputId = "";
 
-        var json = { "kv": {}, "tbl": [{ "r": [], "tn": "inputDescTable" }] };
+        var json = {
+            "kv": {},
+            "tbl": [{
+                "r": [],
+                "tn": "inputDescTable"
+            }]
+        };
         json.kv.cookie = getToken();
         $('.indesc_check:checked').each(function () {
             var ln = "";
@@ -8340,8 +8402,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                         params += (params.length > 0) ? ' & ' : "";
                         params += paramList[i] + " = " + $('#' + paramLinkList[i]).val();
                     }
-                } catch (err) {
-                }
+                } catch (err) {}
                 ln = $(this).attr("fn") + " ? " + $(this).attr("fn_text") + " :: " + params;
                 var kv = {};
                 kv['criteriaLine'] = ln;
@@ -8389,11 +8450,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = inputId;
         json.kv.fkDependentBacklogId = $('#us-related-sus').val();
         json.kv.fkProjectId = global_var.current_project_id;
@@ -8433,7 +8495,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
                 this.updateInputOnChangeAndRefresh();
 
 
@@ -8445,8 +8509,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     deleteInputBySUSOutputId: function (fkInputId, el) {
 
-        var inputId = (fkInputId) ? fkInputId
-            : global_var.current_us_input_id;
+        var inputId = (fkInputId) ? fkInputId :
+            global_var.current_us_input_id;
 
         if (inputId.length === 0) {
             Toaster.showError("User Story Input is not selected!");
@@ -8487,11 +8551,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_backlog_id;
         json.kv.description = $(e).val();
         var that = this;
@@ -8518,11 +8583,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     insertNewInputTotal: function () {
         var iname = $('#us-ipo-inputname').val();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.tableName = $('#us-ipo-inputname-table').val();
@@ -8602,11 +8668,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     insertSuplementaryOfNewInputTotal: function (inputId, inputName) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = inputId;
         var that = this;
         var data = JSON.stringify(json);
@@ -8711,11 +8778,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         var srv = "";
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         json.kv.inputName = $(e).val();
         var that = this;
@@ -8747,11 +8815,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         var srv = "";
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         json.kv.description = $(e).val();
         var that = this;
@@ -8779,11 +8848,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_backlog_id;
         json.kv.canvasContent = $('#gui_input_css_style_canvas').val();
         var that = this;
@@ -8819,11 +8889,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.updateInputOnChangeDynamic("param4", this.getInputCSS());
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.inputContent = $('#gui_input_content').val();
         json.kv.manualStyle = $('#gui_input_css_style').val();
@@ -8867,11 +8938,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.updateInputOnChangeDynamic("param4", this.getInputCSS());
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.inputContent = $('#gui_input_content').val();
         json.kv.manualStyle = $('#gui_input_css_style').val();
@@ -8932,11 +9004,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
@@ -8974,11 +9047,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.updateInputOnChangeDynamic("fkBacklogSectionId", $(el).val());
         //        this.updateInputOnChangeAndRefresh();
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
@@ -9025,11 +9099,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -9048,8 +9123,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     $('#gui_input_css_style').val((res.tbl[0].r[0].param3));
                     $('#u_userstory_input_id').val((res.tbl[0].r[0].id));
                     that.setGUI_CSS(res.tbl[0].r[0].param4);
-                } catch (err) {
-                }
+                } catch (err) {}
                 //refresh GUI component 
                 //                that.genGUIDesign();
             },
@@ -9091,8 +9165,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     $('#gui_input_width').val(v);
                 }
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     setGUIComponentOrderNo: function (e) {
         var s = $(e).val();
@@ -9113,11 +9186,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.updateAllInputOnChange();
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.orderNo = s;
         var that = this;
@@ -9159,11 +9233,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = inputId;
         json.kv.orderNo = index;
         var that = this;
@@ -9197,11 +9272,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.checkedInputIds = this.getCheckedInputs();
         json.kv.cellNo = s;
@@ -9244,11 +9320,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.checkedInputIds = this.getCheckedInputs();
         json.kv.cellNo = s;
@@ -9293,11 +9370,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.updateInputOnChangeDynamic("action", $(e).val());
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.action = s;
         var that = this;
@@ -9346,11 +9424,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.updateInputOnChangeDynamic("section", $(e).val());
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.section = s;
         var that = this;
@@ -9387,11 +9466,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.event = s;
         var that = this;
@@ -9421,11 +9501,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_us_input_id;
         json.kv.checkedInputIds = this.getCheckedInputs();
         json.kv.componentType = s;
@@ -9532,11 +9613,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = inputId;
         var that = this;
         var data = JSON.stringify(json);
@@ -9573,11 +9655,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = global_var.current_us_input_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -9604,19 +9687,18 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             for (var n = 0; n < obj.length; n++) {
                 st += obj[n].inputName;
                 st += '(<a href="#" \n\
-                        onclick="new UserStory().redirectUserStoryCore(\''
-                    + obj[n].fkBacklogId + '\')">'
-                    + replaceTags(obj[n].backlogName) + '</a>)';
+                        onclick="new UserStory().redirectUserStoryCore(\'' +
+                    obj[n].fkBacklogId + '\')">' +
+                    replaceTags(obj[n].backlogName) + '</a>)';
                 st += (obj[n].description) ? " <i class='fa fa-question-circle' style='cursor:pointer;color:#4CAF50' \n\
                                     data-toggle='tooltip' \n\
                            title='" + replaceTags(obj[n].description) + "' \n\
-                           data-original-title='" + replaceTags(obj[n].description) + "'></i>"
-                    : "";
+                           data-original-title='" + replaceTags(obj[n].description) + "'></i>" :
+                    "";
                 st += "<br>"
 
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         if (st) {
             $('.parentRelatedOutput').show();
             $('#childRelaedOutputList').html(st);
@@ -9632,9 +9714,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
             //            if (obj.length > 0) {
             if (res.kv.dependenceBacklogName) {
-                st += '<u>' + replaceTags(res.kv.dependenceInputName)
-                    + " (" + replaceTags(res.kv.dependenceBacklogName) + '): '
-                    + "</u><br>";
+                st += '<u>' + replaceTags(res.kv.dependenceInputName) +
+                    " (" + replaceTags(res.kv.dependenceBacklogName) + '): ' +
+                    "</u><br>";
             }
             //            }
             var obj = res.tbl[ind].r;
@@ -9642,8 +9724,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 st += '- ' + replaceTags(this.fnline2Text(obj[n].description)) + "<br>";
             }
 
-        } catch (e) {
-        }
+        } catch (e) {}
         return st;
     },
     genIPOInputList: function () {
@@ -9658,11 +9739,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.inputType = "IN%IN%GUI";
         json.kv.asc = "orderNo";
@@ -9696,11 +9778,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkDestinationBacklogId = $('#us-list-4-copy-move-inputs').val();
@@ -9740,11 +9823,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkDestinationBacklogId = $('#us-list-4-copy-move-inputs').val();
@@ -9785,11 +9869,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -9821,18 +9906,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!$('#us-list-4-copy-move-inputs-new').val()) {
             return;
         }
-        var ids = global_var.active_input_desc_type === 'IN'
-            ? this.getSelectedInputsNew()
-            : this.getSelectedOutputs();
+        var ids = global_var.active_input_desc_type === 'IN' ?
+            this.getSelectedInputsNew() :
+            this.getSelectedOutputs();
         if (!ids) {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkDestinationBacklogId = $('#us-list-4-copy-move-inputs-new').val();
@@ -9867,18 +9953,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!$('#us-list-4-copy-move-inputs-new').val()) {
             return;
         }
-        var ids = global_var.active_input_desc_type === 'IN'
-            ? this.getSelectedInputsNew()
-            : this.getSelectedOutputs();
+        var ids = global_var.active_input_desc_type === 'IN' ?
+            this.getSelectedInputsNew() :
+            this.getSelectedOutputs();
         if (!ids) {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkDestinationBacklogId = $('#us-list-4-copy-move-inputs-new').val();
@@ -9920,11 +10007,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
 
@@ -9975,11 +10063,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -10013,11 +10102,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -10057,11 +10147,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = ids;
         json.kv.fkBacklogId = global_var.current_backlog_id;
 
@@ -10128,11 +10219,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
 
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.asc = 'backlogName';
@@ -10165,14 +10257,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 .css("border-radius", "5px"))
             .append("<br>")
         div.append($('<input type="radio" id="table-form-existing-name" name="table-form-existing-name">')
-            .val('__empty__'))
+                .val('__empty__'))
             .append(" NONE ")
             .append("<br>")
         for (var n = 0; n < obj.length; n++) {
             if (!(obj[n].tableName))
                 continue;
             div.append($('<input type="radio" id="table-form-existing-name" name="table-form-existing-name">')
-                .val(obj[n].tableName))
+                    .val(obj[n].tableName))
                 .append(" " + obj[n].tableName)
                 .append("<br>")
 
@@ -10193,11 +10285,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
 
         json.kv.fkInputIds = seletedInputs;
         json.kv.tableName = name;
@@ -10227,11 +10320,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -10258,11 +10352,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         global_var.active_input_desc_type = actionType;
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -10342,8 +10437,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         try {
             var obj = res.tbl[ind].r;
             for (var n = 0; n < obj.length; n++) {
-                if (obj[n].inputType !== 'IN' && obj[n].inputType !== 'GUI'
-                    && obj[n].inputType !== 'TBL' && obj[n].inputType !== 'TAB') {
+                if (obj[n].inputType !== 'IN' && obj[n].inputType !== 'GUI' &&
+                    obj[n].inputType !== 'TBL' && obj[n].inputType !== 'TAB') {
                     continue;
                 }
 
@@ -10351,40 +10446,38 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 try {
                     selectedField += cr_input_comp_attribute_kv[obj[n].id]['sa-selectedfield'];
                     selectedField = splitSelectedFieldAndGenHtml(selectedField, obj[n].id).html();
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 var tname = (obj[n].tableName) ? " (" + replaceTags(Replace2Primes(obj[n].tableName)) + ')' : "";
                 var isTableComp = obj[n].inputType === 'TBL' || obj[n].inputType === 'TAB' ? " hidden" : "";
                 var hideSection = obj[n].componentType === 'sctn' ? " hidden" : "";
 
                 idx = (obj[n].inputType === 'TAB' ||
-                    obj[n].inputType === 'TBL' || isTableComp.length > 0
-                    || hideSection.length > 0)
-                    ? idx - 1 : idx;
+                        obj[n].inputType === 'TBL' || isTableComp.length > 0 ||
+                        hideSection.length > 0) ?
+                    idx - 1 : idx;
 
-                st += '<tr class="us-ipo-input-tr new-input-row" id="ipo_tr_' + obj[n].id + '" pid="' + obj[n].id
-                    + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName))
-                    + '"' + isTableComp + hideSection + ' itable="' + replaceTags(Replace2Primes(obj[n].tableName))
-                    + '">';
+                st += '<tr class="us-ipo-input-tr new-input-row" id="ipo_tr_' + obj[n].id + '" pid="' + obj[n].id +
+                    '" iname="' + replaceTags(Replace2Primes(obj[n].inputName)) +
+                    '"' + isTableComp + hideSection + ' itable="' + replaceTags(Replace2Primes(obj[n].tableName)) +
+                    '">';
                 st += '<td>' + (idx++) + '</td>';
-                st += '<td>' + "<input type='checkbox' id='checkbox_" + obj[n].id + "' onclick='makeClassActive(\""
-                    + obj[n].id + "\")' class='us-input-list-item-check-box-class' value='" + obj[n].id + "'>" + '</td>';
-                st += '<td  ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn"   pid="'
-                    + obj[n].id + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName)) + '"'
-                    + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
-                    + replaceTags(Replace2Primes(obj[n].inputName)) + tname + '</td>';
+                st += '<td>' + "<input type='checkbox' id='checkbox_" + obj[n].id + "' onclick='makeClassActive(\"" +
+                    obj[n].id + "\")' class='us-input-list-item-check-box-class' value='" + obj[n].id + "'>" + '</td>';
+                st += '<td  ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn"   pid="' +
+                    obj[n].id + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName)) + '"' +
+                    '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">' +
+                    replaceTags(Replace2Primes(obj[n].inputName)) + tname + '</td>';
                 //                      st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
                 //                      class="us-ipo-input-table-tr"  pid="' + obj[n].id + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
                 //                      + replaceTags(Replace2Primes(obj[n].tableName)) + '</td>';
                 st += '<td ><span  class="selectedfieldlistforzad">' + selectedField + '</span></td>';
                 st += '<td ><input class="okayPitchYourPathYourWay" style="width:20px" placeholder="Add Selected Field"></td>';
-                st += '<td ><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
-                    + obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
+                st += '<td ><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \'' +
+                    obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
                 st += '</tr>';
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         st += '<tr">';
         st += '<td></td>';
         st += '<td></td>';
@@ -10400,20 +10493,20 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var st = "";
 
 
-        st += '<tr class="us-ipo-input-tr"   id="ipo_tr_' + id + '" pid="' + id
-            + '" iname="' + replaceTags(Replace2Primes(inputName))
-            + '" itable="' + replaceTags(Replace2Primes(tableName))
-            + '">';
+        st += '<tr class="us-ipo-input-tr"   id="ipo_tr_' + id + '" pid="' + id +
+            '" iname="' + replaceTags(Replace2Primes(inputName)) +
+            '" itable="' + replaceTags(Replace2Primes(tableName)) +
+            '">';
         st += '<td>' + (n + 1) + '</td>';
         st += '<td>' + "<input type='checkbox' class='us-input-list-item-check-box-class' value='" + obj[n].id + "'>" + '</td>';
-        st += '<td  ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr"   pid="'
-            + obj[n].id + '" iname="' + replaceTags(Replace2Primes(inputName)) + '">'
-            + replaceTags(Replace2Primes(inputName)) + '</td>';
+        st += '<td  ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr"   pid="' +
+            obj[n].id + '" iname="' + replaceTags(Replace2Primes(inputName)) + '">' +
+            replaceTags(Replace2Primes(inputName)) + '</td>';
         st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
-class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2Primes(tableName)) + '">'
-            + replaceTags(Replace2Primes(tableName)) + '</td>';
-        st += '<td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
-            + id + '\')"><i class="fa fa-trash" "=""></i></a></td>';
+class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2Primes(tableName)) + '">' +
+            replaceTags(Replace2Primes(tableName)) + '</td>';
+        st += '<td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \'' +
+            id + '\')"><i class="fa fa-trash" "=""></i></a></td>';
         st += '</tr>';
 
 
@@ -10459,11 +10552,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
     getResFromGenGUIDesign: function (backlogId) {
         var rs = [];
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.inputType = "IN%IN%GUI";
         json.kv.asc = "orderNo";
@@ -10492,7 +10586,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         this.setGeneralGUIDesign(st);
 
         $('.tooltip').removeClass('show');
-        $('[data-toggle="tooltip"]').tooltip({ html: true });
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
 
         dragResize();
 
@@ -10515,11 +10611,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return "";
         }
         var st = "";
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.inputType = "IN%IN%GUI";
         json.kv.asc = "orderNo";
@@ -10546,8 +10643,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     genGUIDesignHtmlById: function (backlogId, hide) {
-        if (backlogId) {
-        } else {
+        if (backlogId) {} else {
             return "";
         }
 
@@ -10557,11 +10653,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return dgui[backlogId]
         }
         var st = "";
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         //        json.kv.inputType = "IN%IN%GUI%IN%TBL%IN%TAB";
         json.kv.inputType = "";
@@ -10582,8 +10679,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 try {
                     SAInput.addInputByRes(res);
                     SAInput.addInputTableByRes(res);
-                } catch (err) {
-                }
+                } catch (err) {}
                 st = that.getGUIDesignHTML(res, hide);
             }
         });
@@ -10615,10 +10711,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var tst = lbl;
         var tcnt = cnt;
         lbl = (fromTable === true) ? '' : lbl;
-        cnt = (fromTable === true) && (ctype !== 'txa') && (ctype !== 'cmb')
-            && (ctype !== 'mcmb') && (ctype !== 'rbtn') && (ctype !== 'cbox')
-            && (ctype !== 'btn') && (ctype !== 'hlink')
-            ? "cell_" + idx : cnt;
+        cnt = (fromTable === true) && (ctype !== 'txa') && (ctype !== 'cmb') &&
+            (ctype !== 'mcmb') && (ctype !== 'rbtn') && (ctype !== 'cbox') &&
+            (ctype !== 'btn') && (ctype !== 'hlink') ?
+            "cell_" + idx : cnt;
         var st = '';
         switch (ctype) {
             case "txt":
@@ -10700,10 +10796,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         bcode = (bcode === undefined) ? "" : bcode;
 
         //        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
-        
+
         var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);
         var padeId = new UserStory().showPopupforGUIComponent(html, popupBacklogId, bcode);
-       // $("#" + padeId + " #userstory-gui-input-component-res-sus-id").html(html);
+        // $("#" + padeId + " #userstory-gui-input-component-res-sus-id").html(html);
 
         //  click on first tab
         $('.activeTabClass').each(function (e) {
@@ -10738,7 +10834,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     initOnloadActionOnGUIDesign4OnClick(tempEl);
                 }
             }
-        } catch (err) { }
+        } catch (err) {}
 
         $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
     },
@@ -10901,7 +10997,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                             initOnloadActionOnGUIDesign4OnClick(tempEl);
                         }
                     }
-                } catch (err) { }
+                } catch (err) {}
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
                 //        
             },
@@ -11003,7 +11099,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         var triggerId = $(el).closest("form")
             .find('input[id=popupTrigger]').first().attr('pid');
-        var json = { "kv": {} };
+        var json = {
+            "kv": {}
+        };
 
         $(el).closest('div.redirectClass').find('.component-class').each(function (e) {
             json.kv[$(this).attr('id')] = $(this).find('#comp_id_' + $(this).attr('id')).val();
@@ -11050,7 +11148,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var ind = $(el).closest("tr")[0].rowIndex;
         var pid = $(el).attr('pdid');
 
-        var json = { "kv": {} };
+        var json = {
+            "kv": {}
+        };
         json.kv.index = ind;
         $(el).closest('tr').find('.component-input-class').each(function (e) {
             if (pid !== $(this).attr('pdid'))
@@ -11167,8 +11267,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         if (isCanvasContextExist('canvasdiv_storyCard')) {
             try {
                 this.loadPicture4StoryCard();
-            } catch (err) {
-            }
+            } catch (err) {}
         }
 
 
@@ -11247,8 +11346,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         CanvasDesign.init();
     },
     isContentTypeRelToTableRowCount: function (arg) {
-        if (arg === 'cmb' || arg === 'mcmb' || arg === 'txa'
-            || arg === 'rbtn' || arg === 'cbox' || arg === 'btn' || arg === 'hlink') {
+        if (arg === 'cmb' || arg === 'mcmb' || arg === 'txa' ||
+            arg === 'rbtn' || arg === 'cbox' || arg === 'btn' || arg === 'hlink') {
             return false;
         } else {
             return true;
@@ -11368,32 +11467,32 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         if (params.ipoTable[tbl] === undefined) {
             params.idx = 1;
-            params.ipoTable[tbl] = obj[n].componentType !== 'hlink' ? "<th style='padding:0px;'>" + obj[n].inputName + "</th>"
-                : "<th style='padding:0px;'></th>";
+            params.ipoTable[tbl] = obj[n].componentType !== 'hlink' ? "<th style='padding:0px;'>" + obj[n].inputName + "</th>" :
+                "<th style='padding:0px;'></th>";
             comp.isFromTable = true;
             comp.tableRowId = params.idx;
             comp.withLabel = false;
             comp.hasOnClickEvent = true;
             params.ipoTableVal[tbl] = "<td style='padding:0px;'> " + this.getComponentHtmlNew(comp) + " </td>";
             params.ipoTableContent[tbl] = obj[n].inputContent;
-            params.ipoTabRowCount[tbl] = (this.isContentTypeRelToTableRowCount(obj[n].componentType))
-                ? obj[n].inputContent.split(/\r*\n/).length
-                : 1;
+            params.ipoTabRowCount[tbl] = (this.isContentTypeRelToTableRowCount(obj[n].componentType)) ?
+                obj[n].inputContent.split(/\r*\n/).length :
+                1;
             params.ipoTabColCount[tbl] = params.idx;
             params.idx++;
         } else {
-            var str = obj[n].componentType !== 'hlink' ? "<th style='padding:0px;'>" + obj[n].inputName + "</th>"
-                : "<th style='padding:0px;'></th>";
+            var str = obj[n].componentType !== 'hlink' ? "<th style='padding:0px;'>" + obj[n].inputName + "</th>" :
+                "<th style='padding:0px;'></th>";
             params.ipoTable[tbl] = params.ipoTable[tbl] + str;
             comp.isFromTable = true;
             comp.tableRowId = params.idx;
             comp.withLabel = false;
             params.ipoTableVal[tbl] += "<td style='padding:0px;'> " + this.getComponentHtmlNew(comp) + " </td>";
             params.ipoTableContent[tbl] = params.ipoTableContent[tbl] + '%IN%' + obj[n].inputContent;
-            params.ipoTabRowCount[tbl] = !(this.isContentTypeRelToTableRowCount(obj[n].componentType)) ? params.ipoTabRowCount[tbl]
-                : obj[n].inputContent.split(/\r*\n/).length > params.ipoTabRowCount[tbl]
-                    ? obj[n].inputContent.split(/\r*\n/).length
-                    : params.ipoTabRowCount[tbl];
+            params.ipoTabRowCount[tbl] = !(this.isContentTypeRelToTableRowCount(obj[n].componentType)) ? params.ipoTabRowCount[tbl] :
+                obj[n].inputContent.split(/\r*\n/).length > params.ipoTabRowCount[tbl] ?
+                obj[n].inputContent.split(/\r*\n/).length :
+                params.ipoTabRowCount[tbl];
             params.ipoTabColCount[tbl] = params.idx;
             params.idx++;
         }
@@ -11419,11 +11518,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     var inIds = "";
                     try {
                         inIds = SAInput.GetInputTableColumnsById(obj[0].fkBacklogId)
-                    } catch (err) {
-                    }
-                    var inputIds = (inIds.length > 1)
-                        ? inIds
-                        : inputIds;
+                    } catch (err) {}
+                    var inputIds = (inIds.length > 1) ?
+                        inIds :
+                        inputIds;
 
                     if (obj[n].inputType === 'OUT') {
                         continue;
@@ -11480,7 +11578,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var title = SACore.GetBacklogDetails(global_var.current_backlog_id, 'description');
         sequence.push(global_var.current_backlog_id);
         st = st.length === 0 ? this.getGUIEmptyMessage() : st;
-        return st +'<div class="title-'+global_var.current_backlog_id+'-unique d-none">'+title+'</div>';
+        return st + '<div class="title-' + global_var.current_backlog_id + '-unique d-none">' + title + '</div>';
     },
 
     getGUIDesignHTMLBody4TabPart: function (comp, params, lbl, obj, n, param1, css) {
@@ -11536,9 +11634,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 activeTabClass = "";
             }
             st += '<li class="nav-item">';
-            st += '<a class="nav-link ' + activeTabClass + p + '" data-toggle="tab" href="#tabulento'
-                + params.tabNameId[n] + '" onclick="new UserStory().showGUITabBody(\''
-                + params.tabParam[n] + '\',\'' + params.tabListId[n] + '\',\'' + params.tabNameId[n] + '\')">' + params.tab[n] + '</a>';
+            st += '<a class="nav-link ' + activeTabClass + p + '" data-toggle="tab" href="#tabulento' +
+                params.tabNameId[n] + '" onclick="new UserStory().showGUITabBody(\'' +
+                params.tabParam[n] + '\',\'' + params.tabListId[n] + '\',\'' + params.tabNameId[n] + '\')">' + params.tab[n] + '</a>';
             st += '</li>';
         }
         st += '</ul>';
@@ -11658,11 +11756,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.inputType = "OUT";
         var that = this;
@@ -11703,8 +11802,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     '\')"><i class="fa fa-trash" "=""></i></a></td>';
                 st += '</tr>';
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         st += '<tr">';
         st += '<td></td>';
         st += '<td></td>';
@@ -11728,14 +11826,13 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 st += '<tr>';
                 st += '<td>' + (n + 1) + '</td>';
                 st += '<td  ondblclick="new UserStory().toggleToEditIDescName(this)" class="us-ipo-input-name-tr" \n\
-                pid="' + obj[n].id + '" idesc="' + replaceTags((Replace2Primes(obj[n].description))) + '">'
-                    + replaceTags(this.fnline2Text(Replace2Primes(obj[n].description))) + '</td>';
+                pid="' + obj[n].id + '" idesc="' + replaceTags((Replace2Primes(obj[n].description))) + '">' +
+                    replaceTags(this.fnline2Text(Replace2Primes(obj[n].description))) + '</td>';
                 st += '<td><a href="#" onclick="new UserStory().deleteInputDescFromUSList(this, \'' + obj[n].id +
                     '\')"><i class="fa fa-trash" "=""></i></a></td>';
                 st += '</tr>';
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         st += '<tr">';
         st += '<td></td>';
         st += '<td></td>';
@@ -11744,8 +11841,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
     toggleToEditOutput: function (e) {
-        var inp = $('<input style="width:100%" onchange="new UserStory().updateOutput(this)" type="text" pid="'
-            + $(e).attr('pid') + '" value="' + ($(e).attr('idesc')) + '">');
+        var inp = $('<input style="width:100%" onchange="new UserStory().updateOutput(this)" type="text" pid="' +
+            $(e).attr('pid') + '" value="' + ($(e).attr('idesc')) + '">');
         $(e).html(inp);
         inp.focus();
     },
@@ -11763,8 +11860,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         inp.focus();
     },
     toggleToEditIDescName: function (e) {
-        var inp = $('<input style="width:100%" onchange="new UserStory().updateInputDesc(this)" type="text" pid="'
-            + $(e).attr('pid') + '" value="' + $(e).attr('idesc') + '">');
+        var inp = $('<input style="width:100%" onchange="new UserStory().updateInputDesc(this)" type="text" pid="' +
+            $(e).attr('pid') + '" value="' + $(e).attr('idesc') + '">');
         $(e).html(inp);
         inp.focus();
     },
@@ -11810,16 +11907,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('.relatedSUSOutputName').text(outInputName);
             if (depName) {
                 $('.relatedUserStory').html('(<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                    SAInput.GetCurrentDependenceId() + '\')">'
-                    + replaceTags(depName) + '</a>)');
+                    SAInput.GetCurrentDependenceId() + '\')">' +
+                    replaceTags(depName) + '</a>)');
                 $('.deleteRelatedSUSOutput').show();
             } else {
                 $('.relatedUserStory').html('');
                 $('.deleteRelatedSUSOutput').hide();
 
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     setGUIComponentValues4Select: function () {
         $('#us-related-sus').val('');
@@ -11844,11 +11940,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (inputId.length === 0) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = inputId;
         var that = this;
         var data = JSON.stringify(json);
@@ -11944,8 +12041,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             selcl.change();
 
             $('.us-gui-component-in-section').val(res.tbl[0].r[0].section);
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     loadAllSUSList: function (e) {
         if ($(e).attr('onload') === '1') {
@@ -11976,8 +12072,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             success: function (res) {
                 try {
                     // that.loadSUS4Relation4SectionDetails(res);
-                } catch (err) {
-                }
+                } catch (err) {}
                 //                queue4ProLoad.loadSUS4Relation4Section = true;
                 //                executeCoreOfManualProSelection();
 
@@ -11993,11 +12088,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //            return;
         //        }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -12026,11 +12122,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         json.kv.fkBacklogId = global_var.current_backlog_id;
 
@@ -12065,11 +12162,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -12206,8 +12304,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
         if (!$('#insertNewTicketModal_priority') ||
-            $('#insertNewTicketModal_priority :selected').val() === undefined
-            || $('#insertNewTicketModal_priority ').val() === null) {
+            $('#insertNewTicketModal_priority :selected').val() === undefined ||
+            $('#insertNewTicketModal_priority ').val() === null) {
             Toaster.showError('Please choose Priority.');
             return;
         }
@@ -12295,11 +12393,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         return finalname;
     },
     insertNewTicketMain: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv['backlogName'] = $('#insertNewTicketModal_userstory').val();
         json.kv['description'] = $('#insertNewTicketModal_comment').val();
         json.kv['fkProjectId'] = global_var.current_project_id;
@@ -12330,11 +12429,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
     insert: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv['backlogName'] = this.getStory();
         json.kv['backlogBecause'] = this.getBecause();
         json.kv['description'] = this.getDescription();
@@ -12389,8 +12489,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             if (isCanvasContextExist('canvasdiv_backlog')) {
                 try {
                     this.loadPicture4TestCase();
-                } catch (err) {
-                }
+                } catch (err) {}
             }
 
             if ($('#file4AddBacklog').val().trim().length > 0) {
@@ -12398,8 +12497,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             } else {
                 this.addTaskTypeDetails4Backlog(backlogId, '');
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
 
         //        try {
@@ -12424,11 +12522,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var comment = $('#addBacklog_comment').val();
         var commentType = $('#addBacklog_commenttype').val();
         $('#addBacklog_addbutton').hide();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkTaskTypeId = $('#addBacklog_tasktype').val();
@@ -12493,7 +12592,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     clearAndShowAll: function () {
         this.clearAll();
-       // this.load();
+        // this.load();
     },
     clearAll: function () {
         this.pureClearAll();
@@ -12535,9 +12634,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.nav-filter-main').attr("style", "color:white");
         $('#add-bkl-line').val('');
         $('#general  .badge').text('');
-        $('#general').css('display', 'none');     //  Label bildirişi
-        $('#general2').css('display', 'none');    //  Filter bildirişi
-        $('#general3').css('display', 'none');     //  Sprint bildirişi- 29.07.2020 gulbahar yazdi
+        $('#general').css('display', 'none'); //  Label bildirişi
+        $('#general2').css('display', 'none'); //  Filter bildirişi
+        $('#general3').css('display', 'none'); //  Sprint bildirişi- 29.07.2020 gulbahar yazdi
         $('.add-bkl-line').val('');
         $('.search-clear').css('display', 'none');
         $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
@@ -12696,33 +12795,34 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var spent_hours = 0.0;
         var estimation_hours = 0.0;
         for (var i = 0; i < obj.length; i++) {
-            var isSourced = obj[i].isSourced === '1'
-                ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-                : obj[i].fkSourcedId.length > 0
-                    ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(obj[i].sourcedName) + '">&nbsp;</i>'
-                    : "";
+            var isSourced = obj[i].isSourced === '1' ?
+                "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>" :
+                obj[i].fkSourcedId.length > 0 ?
+                '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(obj[i].sourcedName) + '">&nbsp;</i>' :
+                "";
             var isFromCustomer = obj[i].isFromCustomer === '1' ? ""
                 //                    ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
-                : "";
-            var countLine = obj[i].isSourced === '1' && obj[i].taskCount > 0
-                ? '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
-                + obj[i].taskCount + ')</span>'
-                : " ";
-            countLine += obj[i].isSourced === '1' && obj[i].inputCount > 0
-                ? '&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
-                + obj[i].inputCount + ')</span>'
-                : "";
-            countLine += obj[i].commentCount > 0
-                ? '&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
-                + obj[i].commentCount + ')</span>'
-                : "";
+                :
+                "";
+            var countLine = obj[i].isSourced === '1' && obj[i].taskCount > 0 ?
+                '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' +
+                obj[i].taskCount + ')</span>' :
+                " ";
+            countLine += obj[i].isSourced === '1' && obj[i].inputCount > 0 ?
+                '&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' +
+                obj[i].inputCount + ')</span>' :
+                "";
+            countLine += obj[i].commentCount > 0 ?
+                '&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' +
+                obj[i].commentCount + ')</span>' :
+                "";
             var tr = $('<tr></tr>').append($('<td></td>').html('#' + (i + 1) + ": "));
             tr.append($('<td></td>').html(countLine));
             tr.append($('<td></td>').html('<span class="us-item-status-' +
                 obj[i].backlogStatus + '">' + obj[i].backlogStatus + '</span><br>'));
             tr.append($('<td style="text-align:left;"></td>').html(isSourced + isFromCustomer +
-                '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">'
-                + "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
+                '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">' +
+                "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
             tr.append($('<td></td>').html(obj[i].createdByName));
             tr.append($('<td></td>').html(Utility.convertDate(obj[i].createdDate)));
             tr.append($('<td></td>').html(obj[i].priority));
@@ -12742,11 +12842,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             );
     },
     getJSONData4BaklogList: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.backlogName = global_var.userStoryFilter.userstory;
         json.kv.backlogStatus = global_var.userStoryFilter.backlogStatus;
@@ -12774,8 +12875,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
 
         json.kv.startLimit = global_var.user_story_core_filter_current_index;
-        json.kv.endLimit = parseFloat(global_var.user_story_core_filter_current_index)
-            + parseFloat($('#us_core_filter_perpage').val());
+        json.kv.endLimit = parseFloat(global_var.user_story_core_filter_current_index) +
+            parseFloat($('#us_core_filter_perpage').val());
         return json;
     },
     load: function () {
@@ -12788,9 +12889,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.us-checkbox-list').first().prop("checked", false);
         $('.assignSprintAndLabel').attr("style", "pointer-events:none;color:gray;");
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
-        global_var.current_backlog_id = current_backlog_id.length > 1
-            ? Utility.getParamFromUrl('current_backlog_id')
-            : "";
+        global_var.current_backlog_id = current_backlog_id.length > 1 ?
+            Utility.getParamFromUrl('current_backlog_id') :
+            "";
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         if (!global_var.current_project_id) {
             return;
@@ -12798,8 +12899,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         this.loadDetailesPure(SACore.toJSON());
 
-        if ((global_var.current_modal === 'loadLivePrototype')
-            && (global_var.ipo_gui_view === "all")) {
+        if ((global_var.current_modal === 'loadLivePrototype') &&
+            (global_var.ipo_gui_view === "all")) {
 
             this.showAllGuiDetailsNew();
         } else if (global_var.current_modal === 'loadStatistics') {
@@ -12870,11 +12971,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     loadDetailsOnProjectSelect4Stats: function () {
         showProgress();
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -13034,11 +13136,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
     },
     loadInputDetailsOnProjectSelect4Stats: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -13074,13 +13177,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 try {
                     //                    localStorage.setItem(bid, JSON.stringify(res));
                     SAInput.LoadInput4Zad(res);
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 try {
                     SACore.updateBacklogDescriptionByRes(res);
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 try {
                     SACore.updateBacklogByRes(res);
@@ -13147,8 +13248,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             success: function (res) {
                 try {
                     SAInput.LoadInputSection(res);
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 if (flag4Proload) {
                     queue4ProLoad.loadInputDetailsOnProjectSelect = true;
@@ -13177,8 +13277,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             success: function (res) {
                 try {
                     SAInput.LoadInputNew(res);
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
                 new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
@@ -13359,8 +13458,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             success: function (res) {
                 try {
                     SAInputDesc.LoadInputDescription(res);
-                } catch (err) {
-                }
+                } catch (err) {}
                 queue4ProLoad.loadInputDescDetailsOnProjectSelect = true;
                 executeCoreOfManualProSelection();
 
@@ -13384,8 +13482,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             success: function (res) {
                 try {
                     SADependency.LoadDependency(res);
-                } catch (err) {
-                }
+                } catch (err) {}
                 queue4ProLoad.loadDependencyOnProjectSelect = true;
                 executeCoreOfManualProSelection();
 
@@ -13410,8 +13507,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 try {
                     SABacklogLabel.Load(res);
                     SABacklogLabel.LoadLabelBacklogDep(res);
-                } catch (err) {
-                }
+                } catch (err) {}
                 queue4ProLoad.loadBacklogLabelOnProjectSelect = true;
                 executeCoreOfManualProSelection();
 
@@ -13476,19 +13572,20 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.assignSprintAndLabel').attr("style", "pointer-events:none;color:gray;");
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
         $('#storyCardListSelectBox option:selected').attr('sid', current_backlog_id)
-        global_var.current_backlog_id = current_backlog_id.length > 1
-            ? Utility.getParamFromUrl('current_backlog_id')
-            : "";
+        global_var.current_backlog_id = current_backlog_id.length > 1 ?
+            Utility.getParamFromUrl('current_backlog_id') :
+            "";
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         if (!global_var.current_project_id) {
             return
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.backlogName = global_var.userStoryFilter.userstory;
         json.kv.backlogStatus = global_var.userStoryFilter.backlogStatus;
@@ -13515,8 +13612,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
 
         json.kv.startLimit = global_var.user_story_core_filter_current_index;
-        json.kv.endLimit = parseFloat(global_var.user_story_core_filter_current_index)
-            + parseFloat($('#us_core_filter_perpage').val());
+        json.kv.endLimit = parseFloat(global_var.user_story_core_filter_current_index) +
+            parseFloat($('#us_core_filter_perpage').val());
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -13600,11 +13697,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var sprintName = "";
         var idx_4_sprint = 0;
         for (var i = 0; i < obj.length; i++) {
-            var isSourced = obj[i].isSourced === '1'
-                ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-                : obj[i].fkSourcedId.length > 0
-                    ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(obj[i].sourcedName) + '">&nbsp;</i>'
-                    : "";
+            var isSourced = obj[i].isSourced === '1' ?
+                "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>" :
+                obj[i].fkSourcedId.length > 0 ?
+                '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(obj[i].sourcedName) + '">&nbsp;</i>' :
+                "";
             var tr = $('<tr></tr>').append($('<td></td>').html('#' + (i + 1) + ": "));
             //            console.log('assigneeName=' + assigneeName);
             //            console.log('obj[i].assigneeName=' + obj[i].assigneeName);
@@ -13646,8 +13743,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             //            tr.append($('<td></td>').append(obj[i].assigneeName));
             //            tr.append($('<td></td>').html(obj[i].sprintName));
             tr.append($('<td></td>').attr('style', 'text-align:left').html(isSourced +
-                '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">'
-                + "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
+                '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">' +
+                "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
             tr.append($('<td></td>').html(obj[i].taskTypeName));
             tr.append($('<td></td>').html('<span class="us-item-status-' +
                 obj[i].backlogStatus + '">' + obj[i].backlogStatus + '</span><br>'));
@@ -13712,8 +13809,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setFilterPaginationRange: function () {
         var s = global_var.user_story_core_filter_current_index;
-        var e = parseFloat(global_var.user_story_core_filter_current_index)
-            + parseFloat($('#us_core_filter_perpage').val())
+        var e = parseFloat(global_var.user_story_core_filter_current_index) +
+            parseFloat($('#us_core_filter_perpage').val())
         $('#us_core_filter_paginationResult').html("(" + s + '-' + e + ')');
     },
     userstory_sort_by: function (e) {
@@ -13798,8 +13895,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     setUSListsDetailedView: function () {
         this.setUSLists(global_var.current_backlog_list);
@@ -13816,19 +13912,20 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     loadBacklogWithTask4Pivot: function () {
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
-        global_var.current_backlog_id = current_backlog_id.length > 1
-            ? Utility.getParamFromUrl('current_backlog_id')
-            : "";
+        global_var.current_backlog_id = current_backlog_id.length > 1 ?
+            Utility.getParamFromUrl('current_backlog_id') :
+            "";
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         if (!global_var.current_project_id) {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.backlogName = global_var.userStoryFilter.userstory;
         json.kv.backlogStatus = global_var.userStoryFilter.backlogStatus;
@@ -13915,16 +14012,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#view_button_pivot').click();
     },
     loadBacklogWithTaskDetails4Pivot_GetTaskList: function (obj, data) {
-        var id = global_var.sourcedmatrix_filterby === 'tasktype'
-            ? obj.fkTaskTypeId
-            : global_var.sourcedmatrix_filterby === 'assignee'
-                ? obj.fkAssigneeId
-                : "";
-        var name = global_var.sourcedmatrix_filterby === 'tasktype'
-            ? obj.taskTypeName
-            : global_var.sourcedmatrix_filterby === 'assignee'
-                ? obj.assigneeName
-                : "";
+        var id = global_var.sourcedmatrix_filterby === 'tasktype' ?
+            obj.fkTaskTypeId :
+            global_var.sourcedmatrix_filterby === 'assignee' ?
+            obj.fkAssigneeId :
+            "";
+        var name = global_var.sourcedmatrix_filterby === 'tasktype' ?
+            obj.taskTypeName :
+            global_var.sourcedmatrix_filterby === 'assignee' ?
+            obj.assigneeName :
+            "";
         if (!name) {
             return;
         }
@@ -13960,45 +14057,45 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
             }
 
-            var groupid = global_var.sourcedmatrix_filterby === 'tasktype'
-                ? obj[i].fkTaskTypeId
-                : global_var.sourcedmatrix_filterby === 'assignee'
-                    ? obj[i].fkAssigneeId
-                    : "";
-            data.task_hours_list[groupid] = (data.task_hours_list[groupid])
-                && data.task_hours_list[groupid] !== 'undefined'
-                ? ((parseFloat(data.task_hours_list[groupid], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2)
-                : (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
-            data.task_shours_list[groupid] = (data.task_shours_list[groupid])
-                && data.task_shours_list[groupid] !== 'undefined'
-                ? ((parseFloat(data.task_shours_list[groupid], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2)
-                : (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
-            data.us_hours_list[obj[i].id] = (data.us_hours_list[obj[i].id])
-                && data.us_hours_list[obj[i].id] !== 'undefined'
-                ? ((parseFloat(data.us_hours_list[obj[i].id], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2)
-                : (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
-            data.us_shours_list[obj[i].id] = (data.us_shours_list[obj[i].id])
-                && data.us_shours_list[obj[i].id] !== 'undefined'
-                ? ((parseFloat(data.us_shours_list[obj[i].id], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2)
-                : (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
+            var groupid = global_var.sourcedmatrix_filterby === 'tasktype' ?
+                obj[i].fkTaskTypeId :
+                global_var.sourcedmatrix_filterby === 'assignee' ?
+                obj[i].fkAssigneeId :
+                "";
+            data.task_hours_list[groupid] = (data.task_hours_list[groupid]) &&
+                data.task_hours_list[groupid] !== 'undefined' ?
+                ((parseFloat(data.task_hours_list[groupid], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2) :
+                (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
+            data.task_shours_list[groupid] = (data.task_shours_list[groupid]) &&
+                data.task_shours_list[groupid] !== 'undefined' ?
+                ((parseFloat(data.task_shours_list[groupid], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2) :
+                (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
+            data.us_hours_list[obj[i].id] = (data.us_hours_list[obj[i].id]) &&
+                data.us_hours_list[obj[i].id] !== 'undefined' ?
+                ((parseFloat(data.us_hours_list[obj[i].id], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2) :
+                (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
+            data.us_shours_list[obj[i].id] = (data.us_shours_list[obj[i].id]) &&
+                data.us_shours_list[obj[i].id] !== 'undefined' ?
+                ((parseFloat(data.us_shours_list[obj[i].id], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2) :
+                (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
         }
     },
     loadBacklogWithTaskDetails4Pivot_GetCombList: function (obj, data) {
-        var id = global_var.sourcedmatrix_filterby === 'tasktype'
-            ? obj.fkTaskTypeId
-            : global_var.sourcedmatrix_filterby === 'assignee'
-                ? obj.fkAssigneeId
-                : "";
+        var id = global_var.sourcedmatrix_filterby === 'tasktype' ?
+            obj.fkTaskTypeId :
+            global_var.sourcedmatrix_filterby === 'assignee' ?
+            obj.fkAssigneeId :
+            "";
         var k = obj.id + '-' + id;
         if (jQuery.inArray(k, data.comb_list) === -1) {
             var eh = (obj.estimatedHours) ? parseFloat(obj.estimatedHours, 1) : 0;
             var sh = (obj.spentHours) ? parseFloat(obj.spentHours, 1) : 0;
             var hr = eh + '/' + sh;
-            var assigneeName = global_var.sourcedmatrix_filterby === 'tasktype'
-                ? obj.assigneeName
-                : global_var.sourcedmatrix_filterby === 'assignee'
-                    ? obj.taskTypeName
-                    : "";
+            var assigneeName = global_var.sourcedmatrix_filterby === 'tasktype' ?
+                obj.assigneeName :
+                global_var.sourcedmatrix_filterby === 'assignee' ?
+                obj.taskTypeName :
+                "";
             assigneeName = (assigneeName) ? assigneeName : "";
             var v = assigneeName + ' (' + hr + ")";
             v += '<br>' + Utility.convertDate(obj.createdDate);
@@ -14129,22 +14226,22 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_' + stLm).html('');
         var startLimit = stLm;
         var endLimit = endLm;
-   
-        if(groupBy ==='backlogStatus'){
-            groupBy ='coreBacklogStatus';
-         }else{
-            bsTat = "("+bsTat+")";
-         }
-    
-       // data.backlogStatus = '(' + statusList + ')';
-        var data  = this.getUsFilterValue();
-        data[groupBy] =bsTat;
+
+        if (groupBy === 'backlogStatus') {
+            groupBy = 'coreBacklogStatus';
+        } else {
+            bsTat = "(" + bsTat + ")";
+        }
+
+        // data.backlogStatus = '(' + statusList + ')';
+        var data = this.getUsFilterValue();
+        data[groupBy] = bsTat;
         data.startLimit = startLimit;
         data.endLimit = endLimit;
         data.joinType = "left";
         var that = this;
         callApi('21122313051700845260', data, true, function (res) {
-           
+
             try {
                 //                     
                 var usIdList = res.tbl[0].r;
@@ -14154,7 +14251,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
                     var obj = usIdList[k];
-                      bgList+=obj.id+'|'
+                    bgList += obj.id + '|'
 
                     var html = new UserStory().genUSLine4KanbanView(obj);
                     $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append(html);
@@ -14176,45 +14273,42 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0;
             contentArrangableUI();
-            $('[data-toggle="popover"]').popover(
-                { html: true }
-            )
+            $('[data-toggle="popover"]').popover({
+                html: true
+            })
         })
 
 
     },
     setUSLists4KanbanView: function () {
-           global_counter_4_us = 0 ;
+        global_counter_4_us = 0;
         var div = $(".task-panel")
         div.empty();
         var groupBy = localStorage.getItem("usm_groupBy");
-           groupBy = groupBy?groupBy:"backlogStatus";
-      
+        groupBy = groupBy ? groupBy : "backlogStatus";
+
         $(".matrix-view-combo-boxs").addClass("d-none");
         $(".process-view-combo-boxs").addClass("d-none");
-       
+
         if (groupBy === 'backlogStatus') {
-                 var stl = ['draft', "new", "ongoing", 'closed'];
+            var stl = ['draft', "new", "ongoing", 'closed'];
             for (let si = 0; si < stl.length; si++) {
                 div.append(this.genUsManagementZone(stl[si], stl[si].toUpperCase()));
                 this.setUSLists4KanbanViewCore(stl[si], groupBy);
             }
-        }
-        else if (groupBy === 'manualStatus') {
+        } else if (groupBy === 'manualStatus') {
             /*  for (let si = 0; si < stl.length; si++) {
                 div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
                 this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
              } */
             this.getManualStatusList(groupBy);
-        }
-        else if (groupBy === 'assigne') {
+        } else if (groupBy === 'assigne') {
             /*  for (let si = 0; si < stl.length; si++) {
                 div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
                 this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
              } */
             this.getAssigneeList();
-        }
-        else if (groupBy === 'fkProjectId') {
+        } else if (groupBy === 'fkProjectId') {
             var stl = $("#story_mn_filter_project_id").val();
             for (let si = 0; si < stl.length; si++) {
                 var nm = $("select#story_mn_filter_project_id option[value='" + stl[si] + "']").text();
@@ -14222,52 +14316,81 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 this.setUSLists4KanbanViewCore(stl[si], groupBy);
             }
 
-        }
-        else if (groupBy === 'matrixView') { 
-               this.getMatrixList(div);       
-               $(".matrix-view-combo-boxs").removeClass("d-none");   
-        }
-        else if (groupBy === 'staticView') {
-               this.getStatisticView(div);             
-        }
-        else if (groupBy === 'processMap') {
-              
+        } else if (groupBy === 'matrixView') {
+            this.getMatrixList(div);
+            $(".matrix-view-combo-boxs").removeClass("d-none");
+        } else if (groupBy === 'staticView') {
+            this.getStatisticView(div);
+        } else if (groupBy === 'processMap') {
+
             //    $(".task-panel").scroll(function() { //.box is the class of the div
             //           _220304054258036310054.set_leaderLine();
             //     });
-                _220304054258036310054.loader(); 
-                $(".process-view-combo-boxs").removeClass("d-none");           
+            _220304054258036310054.loader();
+            $(".process-view-combo-boxs").removeClass("d-none");
+        } else if (groupBy === 'processList') {
+            div.append(`
+                        <div data-toggle = "tooltip"
+                        orderno = "2"
+                        style = ""
+                        id = "22030803450902384159"
+                        pid = "22030803450902384159"
+                        class = "draggable resize1 tooltipMan component-class component-container-dashed 
+                        col-lg-12 hover-prototype-selector active-inputs-selected"
+                        ondragover = "allowDrop(event)"
+                        ondragstart = "drag(event)"
+                        ondrop = "drop(event)"
+                        onclick = "Prototype.InputContainer.setInputByGUIComponent('22030803450902384159')"
+                        cellno = "6" >
+                            <span class = "comp-title-span" > Flow </span><br> 
+                            <select class = "form-control sa-sct-full-width component-input-class"
+                        sa-type = "select"
+                        data-actions-box = "true"
+                        data-live-search = "true"
+                        style = "cmb;"
+                        row-no = ""
+                        pdid = "22030803450902384159"
+                        id = "comp_id_22030803450902384159"
+                        sendapitype = ""
+                        onchange = "_220304054258036310054.map_flow_group_core(this)" >
+                             </select> 
+                             <div class = 'col-lg-12'
+                             id = '22030803450902333051' > </div>
+                    </div>
+                  
+                `)
+            //init event
+            _220304054258036310054.loader();
         }
 
-
     },
-    getStatisticView: function(div){
-        var label  = this.getLabelValue()
-       var prid =  getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
-        var data  = {};
-        if(label){
-            data.fkLabelId  = label;
-         }
-            data.fkProjectId = prid;
-        var that  = this;
+    getStatisticView: function (div) {
+        var label = this.getLabelValue()
+        var prid = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
+        var data = {};
+        if (label) {
+            data.fkLabelId = label;
+        }
+        data.fkProjectId = prid;
+        var that = this;
 
-        callApi('22021913172900532650', data, true, function (res) {   
+        callApi('22021913172900532650', data, true, function (res) {
             res.tbl[0].r.map((o) => {
-                var nm  = o.labelName;
-               var id  = o.id;
-               if($('.card-'+id).length<1){
-                var count  = $("#label-"+id).attr("data-count");
-                div.append(that.genStaticMatrixBlock(id,nm,count)); 
-               }
-                $("#card-body-"+id).append(
+                var nm = o.labelName;
+                var id = o.id;
+                if ($('.card-' + id).length < 1) {
+                    var count = $("#label-" + id).attr("data-count");
+                    div.append(that.genStaticMatrixBlock(id, nm, count));
+                }
+                $("#card-body-" + id).append(
                     `<li class="list-group-item">${o.typeName}<span class="badge badge-info  float-right badge-pill">${o.itemCount}</span></li>`
                 )
-            })      
-              
-          })
+            })
+
+        })
     },
-    genStaticMatrixBlock: function (id,nm,count) {
-        return  `<div class="card m-2 card-${id}" style="min-width: 18rem;">
+    genStaticMatrixBlock: function (id, nm, count) {
+        return `<div class="card m-2 card-${id}" style="min-width: 18rem;">
         <h6 class="card-header">
          ${nm}<b>(${count})</b>
         </h6>
@@ -14276,171 +14399,169 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         </ul>
       </div>`
     },
-    getMatrixList: function(div){
-  
-        var xtype  = $('#matrix-view-xtype').val();
-        var ytype  = $('#matrix-view-ytype').val();
+    getMatrixList: function (div) {
+
+        var xtype = $('#matrix-view-xtype').val();
+        var ytype = $('#matrix-view-ytype').val();
         var table = $('<table >')
-                   .addClass('table matrix-view-table cst-table-hover');
-           
+            .addClass('table matrix-view-table cst-table-hover');
+
         $(div).append(table);
         this.genMarixYType(ytype);
         this.genMarixXType(xtype);
         _22022019434402082398.add_header(table);
         _22022019434402082398.date_body(table);
-        this.getMarixListUsMNgm(xtype,table);
+        this.getMarixListUsMNgm(xtype, table);
     },
-    genMarixXType : function (xtype) {
-        var items  =  '';
-        if(xtype==='fkAssigneeId'){
+    genMarixXType: function (xtype) {
+        var items = '';
+        if (xtype === 'fkAssigneeId') {
             items = $("select#story_mn_filter_assigne_id");
-        
-            var arr  = items.val();
-            if(arr.length<1){
-                arr=[];
-                var itm = items.find("option")
-                  itm.each(function (index) {
-                       if(index<3){
-                           arr.push($(this).val())
-                       }
-                    })
-            }   
-            _22022019434402082398.column_list = {}                      
-          for (let index = 0; index < arr.length; index++) {
-                const al = arr[index];
-                 var nm =items.find('[value='+al+']').text();
-                 _22022019434402082398.column_list[al] = nm;
-           }
-        }
-        if(xtype==='fkTaskTypeId'){
-            items = $("select#story_mn_manual_status_id");
-        
-            var arr  = items.val();
-            if(arr.length<1){
-                arr=[];
-                var itm = items.find("option")
-                  itm.each(function (index) {
-                       if(index<3){
-                           arr.push($(this).val())
-                       }
-                    })
-            }   
-            _22022019434402082398.column_list = {}                      
-          for (let index = 0; index < arr.length; index++) {
-                const al = arr[index];
-                 var nm =items.find('[value='+al+']').text();
-                 _22022019434402082398.column_list[al] = nm;
-           }
-        }
-     },
-     genMarixYType : function (YType) {
-        try {
-            var item  =  ''
-            _22022019434402082398.row_list = [];
-            var difConv  = 1000*60*60*24;
-        if(YType === 'createdDate'){
-           try {
-            var item  =  $("#us_management_created_date_from");
-            var val =  item.val().split('-');
-               if(val){
-                   var createdDate1 = parseDate(val[0]);
-                   var createdDate2 =  parseDate(val[1]);
-                   _22022019434402082398.row_list.push(this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1")
-                   ); 
-                 var count  =  Math.round((createdDate2-createdDate1)/difConv);
-                      for (let t = 0; t < count; t++) {
-                         var time  =  createdDate1.getTime()+((t+1)*difConv) ;
-                             time  =  new Date(time);
-                             time  = ConvertedDateToStringDate(time);
-                         _22022019434402082398.row_list.push(time);                   
-                      }
-               }
-           } catch (error) {
-            var d  = getCurrentDate();
-               _22022019434402082398.row_list.push(d);
-           }
-            
-        }  
-        else if(YType==='createdBy'){
-            items = $("select#story_mn_filter_created_id");
-        
-            var arr  = items.val();
-            if(arr.length<1){
-                arr=[];
-                var itm = items.find("option")
-                  itm.each(function (index) {
-                       if(index<3){
-                           arr.push($(this).val())
-                       }
-                    })
-            }   
-            _22022019434402082398.column_list = {}                      
-          for (let index = 0; index < arr.length; index++) {
-                const al = arr[index];
-                 _22022019434402082398.row_list.push(al);
-           }
-        }    
-        } catch (error) {
-            
-        }
-             
 
-     },
-     getMarixListUsMNgm : function (type,table) {
-         var fromDt  = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
-         var toDt  = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
-        var data  = this.getUsFilterValueNew();   
-            data.startLimit = 0;
-            data.endLimit = 400;
-            data.fromDate = fromDt?fromDt:getCurrentDate();
-            data.toDate = toDt?toDt:getCurrentDate() ;
-        
-            var theaders = Object.keys(_22022019434402082398.column_list);
-            for (var i in theaders) {
-                var id = theaders[i];
-                data[type] = id;
-             callApi('22022019331509987206', data, true, function (res) {          
-    
-                        _22022019434402082398.add_body(res, table);
-                    
-              })
+            var arr = items.val();
+            if (arr.length < 1) {
+                arr = [];
+                var itm = items.find("option")
+                itm.each(function (index) {
+                    if (index < 3) {
+                        arr.push($(this).val())
+                    }
+                })
             }
-       
+            _22022019434402082398.column_list = {}
+            for (let index = 0; index < arr.length; index++) {
+                const al = arr[index];
+                var nm = items.find('[value=' + al + ']').text();
+                _22022019434402082398.column_list[al] = nm;
+            }
+        }
+        if (xtype === 'fkTaskTypeId') {
+            items = $("select#story_mn_manual_status_id");
 
-     },
+            var arr = items.val();
+            if (arr.length < 1) {
+                arr = [];
+                var itm = items.find("option")
+                itm.each(function (index) {
+                    if (index < 3) {
+                        arr.push($(this).val())
+                    }
+                })
+            }
+            _22022019434402082398.column_list = {}
+            for (let index = 0; index < arr.length; index++) {
+                const al = arr[index];
+                var nm = items.find('[value=' + al + ']').text();
+                _22022019434402082398.column_list[al] = nm;
+            }
+        }
+    },
+    genMarixYType: function (YType) {
+        try {
+            var item = ''
+            _22022019434402082398.row_list = [];
+            var difConv = 1000 * 60 * 60 * 24;
+            if (YType === 'createdDate') {
+                try {
+                    var item = $("#us_management_created_date_from");
+                    var val = item.val().split('-');
+                    if (val) {
+                        var createdDate1 = parseDate(val[0]);
+                        var createdDate2 = parseDate(val[1]);
+                        _22022019434402082398.row_list.push(this.getValueRangePickerForUSm($("#us_management_created_date_from"), "1"));
+                        var count = Math.round((createdDate2 - createdDate1) / difConv);
+                        for (let t = 0; t < count; t++) {
+                            var time = createdDate1.getTime() + ((t + 1) * difConv);
+                            time = new Date(time);
+                            time = ConvertedDateToStringDate(time);
+                            _22022019434402082398.row_list.push(time);
+                        }
+                    }
+                } catch (error) {
+                    var d = getCurrentDate();
+                    _22022019434402082398.row_list.push(d);
+                }
+
+            } else if (YType === 'createdBy') {
+                items = $("select#story_mn_filter_created_id");
+
+                var arr = items.val();
+                if (arr.length < 1) {
+                    arr = [];
+                    var itm = items.find("option")
+                    itm.each(function (index) {
+                        if (index < 3) {
+                            arr.push($(this).val())
+                        }
+                    })
+                }
+                _22022019434402082398.column_list = {}
+                for (let index = 0; index < arr.length; index++) {
+                    const al = arr[index];
+                    _22022019434402082398.row_list.push(al);
+                }
+            }
+        } catch (error) {
+
+        }
+
+
+    },
+    getMarixListUsMNgm: function (type, table) {
+        var fromDt = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "1");
+        var toDt = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "2");
+        var data = this.getUsFilterValueNew();
+        data.startLimit = 0;
+        data.endLimit = 400;
+        data.fromDate = fromDt ? fromDt : getCurrentDate();
+        data.toDate = toDt ? toDt : getCurrentDate();
+
+        var theaders = Object.keys(_22022019434402082398.column_list);
+        for (var i in theaders) {
+            var id = theaders[i];
+            data[type] = id;
+            callApi('22022019331509987206', data, true, function (res) {
+
+                _22022019434402082398.add_body(res, table);
+
+            })
+        }
+
+
+    },
     getSprintValue: function () {
-        var list  =''
-        var elm  =  $('.us-filter-checkbox-sprint:checked');
+        var list = ''
+        var elm = $('.us-filter-checkbox-sprint:checked');
         elm.each(function (index) {
             if ($(this).is(":checked")) {
-                  if((index+1)===elm.length){
-                    list+= "'"+$(this).val()+"'";
-                  }else{
-                    list+= "'"+$(this).val()+"'"+","; 
-                  }
-             
+                if ((index + 1) === elm.length) {
+                    list += "'" + $(this).val() + "'";
+                } else {
+                    list += "'" + $(this).val() + "'" + ",";
+                }
+
             }
         })
         return list;
     },
     getLabelValue: function () {
-        var list  =''
+        var list = ''
         var elm = $('.prManag-task-filter-checkbox-label:checked');
         elm.each(function (index) {
             if ($(this).is(":checked")) {
-                if((index+1)===elm.length){
-                    list+= $(this).val()+"|";
-                  }else{
-                    list+= $(this).val()+"|"; 
-                  }
+                if ((index + 1) === elm.length) {
+                    list += $(this).val() + "|";
+                } else {
+                    list += $(this).val() + "|";
+                }
             }
         })
         return list;
     },
-    getFktaskTypList4USMn:function (params) {
-        data = {};//createTechizatTelebProducts
+    getFktaskTypList4USMn: function (params) {
+        data = {}; //createTechizatTelebProducts
 
-    
+
         callApi('220102225238057110391', data, false, function (res) {
             var combo = $("#story_mn_manual_status_id");
             combo.empty();
@@ -14453,55 +14574,56 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     .text(o.statusName)
                     .attr('order', o.orderNo));
             }
-         var list  =   localStorage.getItem('manual_list_val');
-           try {
-                combo.val(list.split(',')); 
-           } catch (error) {
-               
-           } 
+            var list = localStorage.getItem('manual_list_val');
+            try {
+                combo.val(list.split(','));
+            } catch (error) {
+
+            }
             combo.selectpicker('refresh');
-           
+
         });
     },
     getManualStatusList: function () {
         var items = $("select#story_mn_manual_status_id");
 
         var div = $(".task-panel")
-        var arr  = items.val();  
-        var json  = this.getUsFilterValue();                     
-      for (let index = 0; index < arr.length; index++) {
-          const al = arr[index];
-             var nm =items.find('[value='+al+']').text();
-        
-          div.append(this.genUsManagementZone(al, nm));
-          this.getBacklogListByManualStatusId(json,al, '"new","ongoing"',"fkTaskTypeId",arr.length);
-       }
-       
-      
+        var arr = items.val();
+        var json = this.getUsFilterValue();
+        for (let index = 0; index < arr.length; index++) {
+            const al = arr[index];
+            var nm = items.find('[value=' + al + ']').text();
 
-    },getValueRangePickerForUSm: function (elm,lk) {
-         try {
-        var val  = elm.val();
-        val = val.split('-')
-        var dt = val[0].split('/');
-        var dt1 = val[1].split('/');
-       var  stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-       var  endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+            div.append(this.genUsManagementZone(al, nm));
+            this.getBacklogListByManualStatusId(json, al, '"new","ongoing"', "fkTaskTypeId", arr.length);
+        }
 
-       // var inns = stTime.trim() + '%BN%' + endTime.trim();
-        if(lk==="1"){
-            return stTime ;
-        }
-        if(lk==="2"){
-            return endTime;
-        }
-           
-    } catch (error) {
-        return  '';
-    }
+
+
     },
-    getUsFilterValue: function(){
-        data = {};//createTechizatTelebProducts
+    getValueRangePickerForUSm: function (elm, lk) {
+        try {
+            var val = elm.val();
+            val = val.split('-')
+            var dt = val[0].split('/');
+            var dt1 = val[1].split('/');
+            var stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+            var endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+
+            // var inns = stTime.trim() + '%BN%' + endTime.trim();
+            if (lk === "1") {
+                return stTime;
+            }
+            if (lk === "2") {
+                return endTime;
+            }
+
+        } catch (error) {
+            return '';
+        }
+    },
+    getUsFilterValue: function () {
+        data = {}; //createTechizatTelebProducts
         var priD = getProjectValueUsManageMultiByelIn($('#story_mn_filter_project_id'));
         var TaskNatue = getProjectValueUsManageMultiByelIn($("#story_mn_filter_nature_id"));
         var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
@@ -14509,26 +14631,26 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var closedBy = getProjectValueUsManageMultiByelIn($("#story_mn_filter_closed_id"));
         var taskStatus = getProjectValueUsManageMultiByelIn($("#story_mn_filter_status_id"));
         var createdBy = getProjectValueUsManageMultiByelIn($("#story_mn_filter_created_id"));
-        var createdDate1 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
-        var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
-        var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"1");
-        var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"2");
+        var createdDate1 = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "1");
+        var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "2");
+        var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"), "1");
+        var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"), "2");
         var search = $("#search-us-managmenet").val();
         data.fkProjectId = "(" + priD + ")";
-         if(closedBy||closedDate2||closedDate1){
-            taskStatus+=",'closed'";
-         }
+        if (closedBy || closedDate2 || closedDate1) {
+            taskStatus += ",'closed'";
+        }
         if (this.getSprintValue()) {
             data.fkSprintId = '(' + this.getSprintValue() + ')';
         }
         if (this.getLabelValue()) {
-            data.fkLabelId =  this.getLabelValue();
+            data.fkLabelId = this.getLabelValue();
         }
         if (TaskNatue) {
             data.taskNature = '(' + TaskNatue + ')';
         }
         if (taskStatus) {
-            data.backlogStatus = '(' + taskStatus + ')'       
+            data.backlogStatus = '(' + taskStatus + ')'
         }
         if (TaskNatue) {
             data.taskNature = '(' + TaskNatue + ')';
@@ -14537,16 +14659,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data.closedBy = '(' + closedBy + ')';
         }
         if (createdDate2) {
-            data.createdDate2 =  createdDate2 ;
+            data.createdDate2 = createdDate2;
         }
         if (createdDate1) {
-            data.createdDate1 =  createdDate1 ;
+            data.createdDate1 = createdDate1;
         }
         if (closedDate1) {
-            data.closedDate1 =  closedDate1 ;
+            data.closedDate1 = closedDate1;
         }
         if (closedDate2) {
-            data.closedDate2 = closedDate2 ;
+            data.closedDate2 = closedDate2;
         }
         if (createdBy) {
             data.createdBy = '(' + createdBy + ')';
@@ -14566,8 +14688,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data.joinType = "inner";
         return data;
     },
-    getUsFilterValueNew: function(){
-        data = {};//createTechizatTelebProducts
+    getUsFilterValueNew: function () {
+        data = {}; //createTechizatTelebProducts
         var priD = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
         var TaskNatue = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_nature_id"));
         var fkAsId = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_assigne_id"));
@@ -14575,55 +14697,55 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var closedBy = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_closed_id"));
         var taskStatus = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_status_id"));
         var createdBy = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_created_id"));
-        var createdDate1 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"1");
-        var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"),"2");
-        var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"1");
-        var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"),"2");
+        var createdDate1 = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "1");
+        var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "2");
+        var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"), "1");
+        var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"), "2");
         var search = $("#search-us-managmenet").val();
-        if(priD){
-            data.fkProjectId =  priD ;
+        if (priD) {
+            data.fkProjectId = priD;
         }
-         if(closedBy||closedDate2||closedDate1){
-            taskStatus+="|closed";
-         }
+        if (closedBy || closedDate2 || closedDate1) {
+            taskStatus += "|closed";
+        }
         if (this.getSprintValue()) {
-            data.fkSprintId =  this.getSprintValue() ;
+            data.fkSprintId = this.getSprintValue();
         }
         if (this.getLabelValue()) {
-            data.fkLabelId =  this.getLabelValue();
+            data.fkLabelId = this.getLabelValue();
         }
         if (TaskNatue) {
-            data.taskNature = TaskNatue ;
+            data.taskNature = TaskNatue;
         }
         if (taskStatus) {
-            data.backlogStatus =  taskStatus ;       
+            data.backlogStatus = taskStatus;
         }
         if (TaskNatue) {
-            data.taskNature =  TaskNatue ;
+            data.taskNature = TaskNatue;
         }
         if (closedBy) {
-            data.closedBy =  closedBy ;
+            data.closedBy = closedBy;
         }
         if (createdDate2) {
-            data.createdDate2 =  createdDate2 ;
+            data.createdDate2 = createdDate2;
         }
         if (createdDate1) {
-            data.createdDate1 =  createdDate1 ;
+            data.createdDate1 = createdDate1;
         }
         if (closedDate1) {
-            data.closedDate1 =  closedDate1 ;
+            data.closedDate1 = closedDate1;
         }
         if (closedDate2) {
-            data.closedDate2 = closedDate2 ;
+            data.closedDate2 = closedDate2;
         }
         if (createdBy) {
-            data.createdBy =  createdBy ;
+            data.createdBy = createdBy;
         }
         if (fkAsId) {
-            data.fkAssigneeId = fkAsId ;
+            data.fkAssigneeId = fkAsId;
         }
         if (fkTaskTypeId) {
-            data.fkTaskTypeId = fkTaskTypeId ;
+            data.fkTaskTypeId = fkTaskTypeId;
         }
         if (search.length > 2) {
             data.backlogName = "%%" + search + "%%";
@@ -14634,24 +14756,24 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var items = $("select#story_mn_filter_assigne_id");
 
         var div = $(".task-panel")
-        var arr  = items.val();  
-        var json  = this.getUsFilterValue();                     
-      for (let index = 0; index < arr.length; index++) {
-          const al = arr[index];
-             var nm =items.find('[value='+al+']').text();
-        
-          div.append(this.genUsManagementZone(al, nm));
-          this.getBacklogListByManualStatusId(json,al, '"new","ongoing"',"fkAssigneeId",arr.length);
-       }
-       
+        var arr = items.val();
+        var json = this.getUsFilterValue();
+        for (let index = 0; index < arr.length; index++) {
+            const al = arr[index];
+            var nm = items.find('[value=' + al + ']').text();
+
+            div.append(this.genUsManagementZone(al, nm));
+            this.getBacklogListByManualStatusId(json, al, '"new","ongoing"', "fkAssigneeId", arr.length);
+        }
+
     },
-    getBacklogListByManualStatusId: function (json,stl, statusList, type,count) {
-          var data  = json
-     
+    getBacklogListByManualStatusId: function (json, stl, statusList, type, count) {
+        var data = json
+
         $('#kanban_view_' + stl + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
-       
-       // data.backlogStatus = '(' + statusList + ')';
+
+        // data.backlogStatus = '(' + statusList + ')';
         data[type] = '(' + stl + ')';
         data.startLimit = 0;
         data.endLimit = 20;
@@ -14667,7 +14789,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 for (var k = 0; k < usIdList.length; k++) {
                     var obj = usIdList[k];
                     bgList += obj.id + '|';
-                    var html = new UserStory().genUSLine4KanbanView(obj,stl);
+                    var html = new UserStory().genUSLine4KanbanView(obj, stl);
                     $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
                     c4new++
                 }
@@ -14694,19 +14816,21 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 contentArrangableUI();
             }
             //  contentArrangableUI();
-            $('[data-toggle="popover"]').popover({ html: true });
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
 
         })
     },
     getBacklogListByManualStatusIdMore: function (st, end, stl) {
-        var data  = this.getUsFilterValue();
-        var type  = $("#story_mn_groupBy_id").val();
-         if(type==='assigne'){
-             type  = "fkAssigneeId"
-         }
-         if(type==='manualStatus'){
-             type  = "fkTaskTypeId"
-         }
+        var data = this.getUsFilterValue();
+        var type = $("#story_mn_groupBy_id").val();
+        if (type === 'assigne') {
+            type = "fkAssigneeId"
+        }
+        if (type === 'manualStatus') {
+            type = "fkTaskTypeId"
+        }
         data[type] = '(' + stl + ')';
         data.startLimit = st;
         data.endLimit = end;
@@ -14738,7 +14862,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0;
 
-            $('[data-toggle="popover"]').popover({ html: true });
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
 
         })
     },
@@ -14797,8 +14923,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = priD;
         if (UsSprint) {
             json.kv.id = UsSprint + backLogIdListForSearch;
@@ -14844,7 +14969,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
             if (lstp) {
                 json.kv.id = lstp;
-            } else { }
+            } else {}
         }
 
         if ($(".us-mngm-is-api").prop("checked")) {
@@ -14890,12 +15015,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         c4new++;
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
                 //contentArrangableUI();
-                $('[data-toggle="popover"]').popover({ html: true });
+                $('[data-toggle="popover"]').popover({
+                    html: true
+                });
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -14908,7 +15034,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     getStatisticList4Project: function (projectId, elm) {
 
-        var data = {};//createTechizatTelebProducts 
+        var data = {}; //createTechizatTelebProducts 
         /* if($(".us-mngm-is-api").prop("checked")){
             data.isApi = '.*';    
         }else{
@@ -14928,7 +15054,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 $("#" + o.backlogStatus + "-" + projectId).text(o.rowCount);
             }
 
-            $('[data-toggle="popover"]').popover({ html: true });
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
         });
 
     },
@@ -14954,7 +15082,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 const o = res[i];
                 $("#" + o.backlogStatus + "-" + mnId).text(o.rowCount);
             }
-            $('[data-toggle="popover"]').popover({ html: true });
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
         });
 
     },
@@ -14977,16 +15107,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setUSLists4KanbanViewCore: function (stl, apiFiled) {
         var rstl = stl;
-         if(apiFiled ==='backlogStatus'){
-            apiFiled ='coreBacklogStatus';
-         }else{
+        if (apiFiled === 'backlogStatus') {
+            apiFiled = 'coreBacklogStatus';
+        } else {
             rstl = "(" + stl + ")";
-         }
+        }
         $('#kanban_view_' + stl + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
-        var data  = this.getUsFilterValue();
-            
-       // data.backlogStatus = '(' + statusList + ')';
+        var data = this.getUsFilterValue();
+
+        // data.backlogStatus = '(' + statusList + ')';
         data[apiFiled] = rstl;
         data.startLimit = 0;
         data.endLimit = 20;
@@ -14994,7 +15124,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         callApi('21122313051700845260', data, true, function (res) {
             var c4new = 0
             $('#kanban_view_' + stl + '_count').text(res.kv.rowCount);
-           
+
             try {
                 var bgList = '';
                 var usIdList = res.tbl[0].r;
@@ -15027,7 +15157,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0;
             contentArrangableUI();
-            $('[data-toggle="popover"]').popover({ html: true });
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
 
         })
 
@@ -15075,12 +15207,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     } else if (obj.backlogStatus === 'ongoing') {
                         c4ongoing++;
                         $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
-                    }
-                    else if (obj.backlogStatus === 'closed') {
+                    } else if (obj.backlogStatus === 'closed') {
                         c4closed++;
                         $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
-                    }
-                    else if (obj.backlogStatus === 'closed') {
+                    } else if (obj.backlogStatus === 'closed') {
                         c4draft++;
                         $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                     }
@@ -15095,18 +15225,17 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
             if (c4new === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_new')
-                    .append($('<div class="task-content content-drag">'));
+                .append($('<div class="task-content content-drag">'));
             if (c4ongoing === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                    .append($('<div class="task-content content-drag">'));
+                .append($('<div class="task-content content-drag">'));
             if (c4closed === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_closed')
-                    .append($('<div class="task-content content-drag">'));
+                .append($('<div class="task-content content-drag">'));
             if (c4draft === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_draft')
-                    .append($('<div class="task-content content-drag">'));
-        } catch (e) {
-        }
+                .append($('<div class="task-content content-drag">'));
+        } catch (e) {}
         global_var.story_card_sprint_assign_checked = 0;
         global_var.story_card_label_assign_checked = 0;
         contentArrangableUI();
@@ -15138,12 +15267,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 } else if (obj[n].backlogStatus === 'ongoing') {
                     c4ongoing++;
                     $('.main_div_of_backlog_info_kanban_view_table_ongoing ').append(html);
-                }
-                else if (obj[n].backlogStatus === 'closed') {
+                } else if (obj[n].backlogStatus === 'closed') {
                     c4closed++;
                     $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
-                }
-                else if (obj[n].backlogStatus === 'draft') {
+                } else if (obj[n].backlogStatus === 'draft') {
                     c4draft++;
                     $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                 }
@@ -15161,8 +15288,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 .append($('<div class="task-content content-drag">'));
             $('.main_div_of_backlog_info_kanban_view_table_draft')
                 .append($('<div class="task-content content-drag">'));
-        } catch (e) {
-        }
+        } catch (e) {}
 
         contentArrangableUI();
 
@@ -15226,34 +15352,35 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     genUSLine_old: function (o) {
         var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
         var pointer_is_selected = o.id === global_var.current_backlog_id ? "us-selected" : "";
-        var isSourced = o.isSourced === '1'
-            ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-            : o.fkSourcedId.length > 0
-                ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(o.sourcedName) + '">&nbsp;</i>'
-                : "";
-        var countLine = o.isSourced === '1' && o.taskCount > 0
-            ? '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;" \n\
-        title="Number of Tasks"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>'
-            : " ";
-        countLine += o.isSourced === '1' && o.inputCount > 0
-            ? '&nbsp;  <i class="fa fa-inbox" style="font-size:10px;color:#555555;" \n\
-        title="Number of Inputs"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>'
-            : "";
-        countLine += o.commentCount > 0
-            ? '&nbsp;  <i class="fa fa-comment" style="font-size:10px;color:#555555;" \n\
-        title="Number of Comments"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>'
-            : "";
-        countLine += o.bugCount > 0
-            ? '&nbsp;  <i class="fa fa-bug" style="font-size:10px;color:#555555;" \n\
-        title="Number of Bugs"></i><span style="font-size:10px; "> (' + o.bugCount + ')</span>'
-            : "";
-        countLine += o.updateCount > 0
-            ? '&nbsp;  <i class="fa fa-edit" style="font-size:10px;color:#555555;" \n\
-        title="Number of Updates"></i><span style="font-size:10px; "> (' + o.updateCount + ')</span>'
-            : "";
+        var isSourced = o.isSourced === '1' ?
+            "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>" :
+            o.fkSourcedId.length > 0 ?
+            '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(o.sourcedName) + '">&nbsp;</i>' :
+            "";
+        var countLine = o.isSourced === '1' && o.taskCount > 0 ?
+            '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;" \n\
+        title="Number of Tasks"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>' :
+            " ";
+        countLine += o.isSourced === '1' && o.inputCount > 0 ?
+            '&nbsp;  <i class="fa fa-inbox" style="font-size:10px;color:#555555;" \n\
+        title="Number of Inputs"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>' :
+            "";
+        countLine += o.commentCount > 0 ?
+            '&nbsp;  <i class="fa fa-comment" style="font-size:10px;color:#555555;" \n\
+        title="Number of Comments"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>' :
+            "";
+        countLine += o.bugCount > 0 ?
+            '&nbsp;  <i class="fa fa-bug" style="font-size:10px;color:#555555;" \n\
+        title="Number of Bugs"></i><span style="font-size:10px; "> (' + o.bugCount + ')</span>' :
+            "";
+        countLine += o.updateCount > 0 ?
+            '&nbsp;  <i class="fa fa-edit" style="font-size:10px;color:#555555;" \n\
+        title="Number of Updates"></i><span style="font-size:10px; "> (' + o.updateCount + ')</span>' :
+            "";
         var isFromCustomer = o.isFromCustomer === '1' ? ""
             //                ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
-            : "";
+            :
+            "";
         var tr = $('<tr sid="' + o.id + '" orderNo="' + o.orderNo + '"></tr>');
         tr.append($('<td class="us-td-list"></td>')
             .append('<input class="us-checkbox-list" id="' + o.id + '" type="checkbox">'));
@@ -15284,26 +15411,26 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         td3 += ' <ul class="dropdown-menu" style="line-height: 1.6em">';
         td3 += '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" data-target="#updateBacklog" data-toggle="modal" onclick="new UserStory().select(\'' + o.id + '\')"><i class="fa fa-edit1"></i>&nbsp;<span>Edit</span></a></li>';
         td3 += '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" onclick="new UserStory().delete(\'' + o.id + '\')"><i class="fa fa-trash1"></i>&nbsp;<span>Delete</span></a></li>';
-        td3 += o.isSourced !== '1' && o.isFromCustomer !== '1'
-            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
-         data-target="#bindToSUSModal" data-toggle="modal" onclick="new UserStory().bindToSUSModal(\'' + o.id + '\')"><i class="fa fa-bandcamp1"></i>&nbsp;<span>Bind to Sourced US</span></a></li>'
-            : "";
-        td3 += o.isSourced == '1'
-            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
-        data-target="#addDependency" data-toggle="modal" onclick="new UserStory().addDependencyModal(\'' + o.id + '\')"><i class="fa fa-connectdevelop1"></i>&nbsp;<span>Add Dependency</span></a></li>'
-            : "";
-        td3 += o.isSourced == '1'
-            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
-            onclick="new UserStory().addEpicToJira(\'' + o.id + '\')"><i class="fa fa-external-link1"></i>&nbsp;<span>Add Epic to JIRA</span></a></li>'
-            : "";
-        td3 += o.isFromCustomer === '1'
-            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
-         data-target="#notifyTicketAsBugModal" data-toggle="modal" onclick="new UserStory().notifyTicketAsBugModal(\'' + o.id + '\')"><i class="fa fa-bug1"></i>&nbsp;<span>Notify as Bug</span></a></li>'
-            : "";
-        td3 += o.isFromCustomer === '1'
-            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
-         data-target="#bindTicketToSUSModal" data-toggle="modal" onclick="new UserStory().bindTicketToSUSModal(\'' + o.id + '\')"><i class="fa fa-bandcamp1"></i>&nbsp;<span>Bind Ticket to SUS</span></a></li>'
-            : "";
+        td3 += o.isSourced !== '1' && o.isFromCustomer !== '1' ?
+            '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
+         data-target="#bindToSUSModal" data-toggle="modal" onclick="new UserStory().bindToSUSModal(\'' + o.id + '\')"><i class="fa fa-bandcamp1"></i>&nbsp;<span>Bind to Sourced US</span></a></li>' :
+            "";
+        td3 += o.isSourced == '1' ?
+            '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
+        data-target="#addDependency" data-toggle="modal" onclick="new UserStory().addDependencyModal(\'' + o.id + '\')"><i class="fa fa-connectdevelop1"></i>&nbsp;<span>Add Dependency</span></a></li>' :
+            "";
+        td3 += o.isSourced == '1' ?
+            '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
+            onclick="new UserStory().addEpicToJira(\'' + o.id + '\')"><i class="fa fa-external-link1"></i>&nbsp;<span>Add Epic to JIRA</span></a></li>' :
+            "";
+        td3 += o.isFromCustomer === '1' ?
+            '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
+         data-target="#notifyTicketAsBugModal" data-toggle="modal" onclick="new UserStory().notifyTicketAsBugModal(\'' + o.id + '\')"><i class="fa fa-bug1"></i>&nbsp;<span>Notify as Bug</span></a></li>' :
+            "";
+        td3 += o.isFromCustomer === '1' ?
+            '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
+         data-target="#bindTicketToSUSModal" data-toggle="modal" onclick="new UserStory().bindTicketToSUSModal(\'' + o.id + '\')"><i class="fa fa-bandcamp1"></i>&nbsp;<span>Bind Ticket to SUS</span></a></li>' :
+            "";
         td3 += ' </ul>';
         td3 += ' </div>';
         tr.append($('<td class="us-td-list"></td>').html(td3));
@@ -15329,11 +15456,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .attr("sid", global_var.story_card_label_assign_id))
             .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
 
-        var rs = global_var.story_card_sprint_assign_checked === 1
-            ? div.html()
-            : global_var.story_card_label_assign_checked === 1
-                ? divLabel.html()
-                : '<input class="us-checkbox-list us-checkbox" id="' + o.id + '" type="checkbox">';
+        var rs = global_var.story_card_sprint_assign_checked === 1 ?
+            div.html() :
+            global_var.story_card_label_assign_checked === 1 ?
+            divLabel.html() :
+            '<input class="us-checkbox-list us-checkbox" id="' + o.id + '" type="checkbox">';
 
 
 
@@ -15405,11 +15532,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv['backlogName'] = val;
         json.kv['fkProjectId'] = global_var.current_project_id;
         var that = this;
@@ -15489,11 +15617,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         var that = this;
         var data = JSON.stringify(json);
@@ -15510,7 +15639,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
 
-    genUSLine4KanbanView: function (o,zoneID) {
+    genUSLine4KanbanView: function (o, zoneID) {
 
 
 
@@ -15519,9 +15648,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var userImage = SAProjectUser.GetUserDetails(o.fkOwnerId, "userImage");
             var userName = SAProjectUser.GetUserDetails(o.fkOwnerId, "userName");
 
-            var img = (userImage)
-                ? fileUrl(userImage)
-                : fileUrl(new User().getDefaultUserprofileName());
+            var img = (userImage) ?
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
             assigneeImg.append($('<img>')
                 //                        .css("width","24px")
                 //                        .css('height','24px')
@@ -15540,9 +15669,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var userName = SAProjectUser.GetUserDetails(o.createdBy, "userPersonName");
 
 
-            var img = (userImage)
-                ? fileUrl(userImage)
-                : fileUrl(new User().getDefaultUserprofileName());
+            var img = (userImage) ?
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
             createdByImg.append($('<img>')
                 //                        .css("width","24px")
                 //                        .css('height','24px')
@@ -15561,9 +15690,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var userName = SAProjectUser.GetUserDetails(o.updatedBy, "userPersonName");
 
 
-            var img = (userImage)
-                ? fileUrl(userImage)
-                : fileUrl(new User().getDefaultUserprofileName());
+            var img = (userImage) ?
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
             updatedByImg.append($('<img>')
                 //                        .css("width","24px")
                 //                        .css('height','24px')
@@ -15597,25 +15726,25 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .attr("sid", global_var.story_card_label_assign_id))
             .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
 
-        var rs = global_var.story_card_sprint_assign_checked === 1
-            ? div.html()
-            : global_var.story_card_label_assign_checked === 1
-                ? divLabel.html() : "#";
+        var rs = global_var.story_card_sprint_assign_checked === 1 ?
+            div.html() :
+            global_var.story_card_label_assign_checked === 1 ?
+            divLabel.html() : "#";
 
         var s = $('<div >')
             .attr('bid', o.id)
             .attr('pidd', o.fkProjectId)
-            .attr('zone-id',zoneID)
+            .attr('zone-id', zoneID)
             .addClass('task-content content-drag')
             .append($('<div class="task-content-header">')
                 .append($('<div class="ContentText">')
                     .attr('bno', o.backlogNo)
                     .attr('pid', o.id)
-                 
+
                     .append($("<input type='checkbox'>")
                         .addClass("assign-label-story-card-item-new")
                         .attr("pid", o.id))
-                    
+
                     .append(' ' + o.orderNo)
                     .append($('<span class="headerContentText">')
                         .attr('href', '#')
@@ -15681,10 +15810,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append("&nbsp;&nbsp;")
                     .append(assigneeImg))
                 .append($('<span class="bugCountId' + o.id + ' " id="bugCountId' + o.id + '">'))
-                
+
                 .append($("<button>")
-                    .addClass("baclog-large-modal-ididit-refresh btn btn-sm btn-light")  
-                    .attr('data-bid',o.id)
+                    .addClass("baclog-large-modal-ididit-refresh btn btn-sm btn-light")
+                    .attr('data-bid', o.id)
                     .append('<i class="fas fa-sync text-success"></i>')
                 )
 
@@ -15703,7 +15832,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("data-status", 'baclog-large-modal-next-id')
                     .append('<i class="fas fa-expand" aria-hidden="true"></i>')
                 )
-                
+
                 .append($("<button>")
                     .addClass("baclog-large-modal-history btn btn-sm btn-light")
                     .attr("data-status", o.id)
@@ -15711,15 +15840,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 )
                 .append($("<div>").addClass("stat-div-task-content")
                     .append($('<table>').addClass("stat-table-us")
-                              .attr("id","tbl-"+o.id)
+                        .attr("id", "tbl-" + o.id)
                         .append($("<thead>")
                             .append($("<tr class=total>"))
                             .append($("<tr class='bug'>"))
                         )
                         .append($("<tbody class='d-none'>")))
-                        .append($("<ul>"))
-                       
-                        .css("display", 'none'))
+                    .append($("<ul>"))
+
+                    .css("display", 'none'))
                 //                        .append($('<i  class="fa fa-info-circle">')
                 //                                .data('toggle', 'modal')
                 //                                .data('target', '#backlogTaskInfoModal')
@@ -15741,11 +15870,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         $('#backlogTaskInfoModal_result').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = backlogId;
         var that = this;
         var data = JSON.stringify(json);
@@ -15769,9 +15899,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var obj = res.tbl[0].r;
         var div = $('<div></div>').append($('<div></div>').addClass("row"));
         for (var i = 0; i < obj.length; i++) {
-            var imgAssigneeLink = obj[i].assigneeImageUrl.length === 0
-                ? fileUrl(new User().getDefaultUserprofileName())
-                : fileUrl(obj[i].assigneeImageUrl);
+            var imgAssigneeLink = obj[i].assigneeImageUrl.length === 0 ?
+                fileUrl(new User().getDefaultUserprofileName()) :
+                fileUrl(obj[i].assigneeImageUrl);
             var span = $('<span></span>')
                 .append($('<img></img>')
                     .attr('src', imgAssigneeLink)
@@ -15850,55 +15980,55 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
 
-          /*   if (global_var.current_modal === 'loadStoryCard' && isApi !=="1") {
-                var pid = SACore.Backlogs[backlogId].fkProjectId
-                if (pid === global_var.current_project_id) {
-                    $("#storyCardListSelectBox4StoryCard").val(backlogId)
-                    $("#storyCardListSelectBox4StoryCard").change();
-                } else {
-                    global_var.current_backlog_id = backlogId;
-                    Utility.addParamToUrl('current_backlog_id', backlogId);
-                    $('select.projectList_liveprototype_storycard').val(pid);
-                    $('select.projectList_liveprototype_storycard').change();
-                }
-                return;
-            }
-            if (global_var.current_modal === 'loadDev' && isApi ==="1") {
-                var pid = SACore.Backlogs[backlogId].fkProjectId
-                if (pid === global_var.current_project_id) {
-                    $("#storyCardListSelectBox4StoryCard").val(backlogId)
-                    $("#storyCardListSelectBox4StoryCard").change();
-                } else {
-                    global_var.current_backlog_id = backlogId;
-                    Utility.addParamToUrl('current_backlog_id', backlogId);
-                    $('select.projectList_liveprototype_storycard').val(pid);
-                    $('select.projectList_liveprototype_storycard').change();
-                }
-                return;
-            } */
+            /*   if (global_var.current_modal === 'loadStoryCard' && isApi !=="1") {
+                  var pid = SACore.Backlogs[backlogId].fkProjectId
+                  if (pid === global_var.current_project_id) {
+                      $("#storyCardListSelectBox4StoryCard").val(backlogId)
+                      $("#storyCardListSelectBox4StoryCard").change();
+                  } else {
+                      global_var.current_backlog_id = backlogId;
+                      Utility.addParamToUrl('current_backlog_id', backlogId);
+                      $('select.projectList_liveprototype_storycard').val(pid);
+                      $('select.projectList_liveprototype_storycard').change();
+                  }
+                  return;
+              }
+              if (global_var.current_modal === 'loadDev' && isApi ==="1") {
+                  var pid = SACore.Backlogs[backlogId].fkProjectId
+                  if (pid === global_var.current_project_id) {
+                      $("#storyCardListSelectBox4StoryCard").val(backlogId)
+                      $("#storyCardListSelectBox4StoryCard").change();
+                  } else {
+                      global_var.current_backlog_id = backlogId;
+                      Utility.addParamToUrl('current_backlog_id', backlogId);
+                      $('select.projectList_liveprototype_storycard').val(pid);
+                      $('select.projectList_liveprototype_storycard').change();
+                  }
+                  return;
+              } */
 
             if (global_var.current_modal === 'loadLivePrototype') {
-                if(isApi==="1"){
+                if (isApi === "1") {
                     callStoryCard(backlogId);
                     return
                 }
                 $('#storyCardListSelectBox').val(backlogId);
                 $('#storyCardListSelectBox').change();
-                    
-                } else{
-                    callStoryCard(backlogId);
-            
-                }             
-           
 
-           /*  $('#container-us-body').find('tr[sid=' + backlogId + ']')
-                .first().find('a').first().focus().click(); */
+            } else {
+                callStoryCard(backlogId);
+
+            }
+
+
+            /*  $('#container-us-body').find('tr[sid=' + backlogId + ']')
+                 .first().find('a').first().focus().click(); */
         } catch (err) {
             console.log(err)
         }
 
 
-       /*  try {
+        /*  try {
             //            event.preventDefault();
 
             if (backlogId.length === 0) {
@@ -15941,11 +16071,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#notifyTicketAsBug_id').val();
         json.kv.fkSourcedId = $('#notifyTicketAsBug_suslist').val();
         json.kv.fkBacklogTaskId = $('#notifyTicketAsBug_tasktypes').val();
@@ -15979,11 +16110,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16016,11 +16148,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#bindToSUSModal_id').val();
         json.kv.fkSourcedId = $('#bindToSUSModal_suslist').val();
         var that = this;
@@ -16051,11 +16184,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     notifyTicketAsBugModal: function (id) {
         $('#notifyTicketAsBug_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16085,11 +16219,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#notifyTicketAsBug_suslist').first().change();
     },
     addDependency: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = $('#sourcedUSList4Dependency_id').val();
         json.kv.fkParentBacklogId = $('#sourcedUSList4Dependency').val();
@@ -16116,11 +16251,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     loadBacklogDependency: function (id) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = id;
         json.kv.asc = "parentBacklogName";
@@ -16147,15 +16283,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                var del = '<a href="#" onclick="new UserStory().deleteDependency(\'' + obj[n].fkBacklogId + '\',\''
-                    + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
+                var del = '<a href="#" onclick="new UserStory().deleteDependency(\'' + obj[n].fkBacklogId + '\',\'' +
+                    obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
                 st += '<tr>';
                 st += '<td>' + replaceTags(obj[n].parentBacklogName) + '</td>';
                 st += '<td>' + del + '</td>';
                 st += '</tr>';
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         st += '<tr>';
         st += '<td></td>';
@@ -16164,11 +16299,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#sourcedUSList4DependencyList > tbody').html(st);
     },
     deleteDependency: function (backlogId, id) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16195,11 +16331,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     loadDependencyModalInfo: function (id) {
         $('#sourcedUSList4Dependency').html('');
         $('#sourcedUSList4Dependency_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -16222,11 +16359,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     bindTicketToSUSModal: function (id) {
         $('#bindTicketToSUSModal_id').val(id);
         this.bindTicketToSUSModalAssignee();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16290,8 +16428,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("value", obj[n].id)
                     .text(obj[n].backlogName + "  #" + obj[n].orderNo));
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         select.selectpicker('refresh');
     },
     //    bindTicketToSUSModal: function (id) {
@@ -16317,11 +16454,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     //        });
     //    },
     bindTicketToSUSModalAssignee: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'userName';
         var that = this;
@@ -16351,8 +16489,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 st += '</tr><tr>'
             }
             st += '<td>'
-            st += ' <input type="checkbox" class="us_ticket_bind_assignee"  id="'
-                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
+            st += ' <input type="checkbox" class="us_ticket_bind_assignee"  id="' +
+                obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -16371,11 +16509,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     bindToSUSModal: function (id) {
         $('#bindToSUSModal_id').val(id);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16601,11 +16740,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     getStoryInfoDetail4BacklogList: function (id, e) {
 
         var st = "";
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16624,11 +16764,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return st;
     },
     getStoryInfoDetail: function (id) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16771,11 +16912,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16789,8 +16931,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (res) {
                 try {
                     that.assignLabel4UpdateBacklogModalDetails(res, id, checkedListRes);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -16827,11 +16968,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16845,8 +16987,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (res) {
                 try {
                     that.assignSprint4UpdateBacklogRadioButtonModalDetails(res, id, checkedListRes);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -16867,9 +17008,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 st += '</tr><tr>'
             }
 
-            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
-                : "";
+            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate)) ?
+                " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)" :
+                "";
             st += '<td>'
             st += ' <input type="radio" name="sprintRadioUpdate" class="assignSprintModal_sprintcheckbox"  id="' + obj[n].id + '"';
             st += ' value="' + obj[n].id + '"';
@@ -16887,11 +17028,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -16905,8 +17047,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (res) {
                 try {
                     that.assignSprint4UpdateBacklogModalDetails(res, id, checkedListRes);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -16939,11 +17080,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#' + vid).html(st);
     },
     updateInfo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = this.getId();
         json.kv.fkBacklogId = this.getId();
         json.kv.fkProjectId = global_var.current_project_id;
@@ -17571,8 +17713,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {
-            }
+            error: function () {}
         });
         return finalname;
     },
@@ -17623,8 +17764,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {
-            }
+            error: function () {}
         });
         return finalname;
     },
@@ -17707,11 +17847,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     addCommentInput: function (fileName) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.comment = $('#backlogComment').val();
         json.kv.fileName = fileName;
         json.kv.fkBacklogId = global_var.current_backlog_id;
@@ -17743,11 +17884,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkScenarioId = scenarioId;
         var that = this;
         var data = JSON.stringify(json);
@@ -17774,11 +17916,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkScenarioId = scenarioId;
         var that = this;
         var data = JSON.stringify(json);
@@ -17806,11 +17949,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkTaskId = taskId;
         var that = this;
         var data = JSON.stringify(json);
@@ -17836,14 +17980,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        global_var.current_task_id_4_comment = (taskId)
-            ? taskId
-            : global_var.current_task_id_4_comment;
-        var json = { kv: {} };
+        global_var.current_task_id_4_comment = (taskId) ?
+            taskId :
+            global_var.current_task_id_4_comment;
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkTaskId = global_var.current_task_id_4_comment;
         var that = this;
         var data = JSON.stringify(json);
@@ -17866,11 +18011,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     fillCommentList: function () {
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -17899,8 +18045,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (isCanvasContextExist('canvasdiv_comment')) {
             try {
                 this.loadPicture4Comment();
-            } catch (err) {
-            }
+            } catch (err) {}
         }
 
         this.addController4CommentTask();
@@ -17938,11 +18083,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .addClass("mangodbtrial")
                 .addClass(obj[i].isNotifiedAsBug === '1' ? "task-child-notified" : "")
                 .addClass(obj[i].trialStatus === 'nok' ? "task-child-trial-bug" : "")
-                //                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
-                ;
-            var img = obj[i].createdByAvatar.length === 0
-                ? fileUrl(new User().getDefaultUserprofileName())
-                : fileUrl(obj[i].createdByAvatar);
+            //                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
+            ;
+            var img = obj[i].createdByAvatar.length === 0 ?
+                fileUrl(new User().getDefaultUserprofileName()) :
+                fileUrl(obj[i].createdByAvatar);
             var div1 = $('<div></div>')
                 .addClass("col-1 comment-line")
 
@@ -17965,42 +18110,41 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .append(obj[i].trialStatus === 'ok' ? ' OK ' : "<b style='color:red'> Not OK</b> ")
                         .append(" &nbsp;&nbsp;&nbsp;&nbsp;")
                         .append("      ")
-                        .append(obj[i].isNotifiedAsBug !== '1'
-                            ? $('<i></i>')
-                                .addClass('fa fa-edit')
-                                .attr("data-toggle", "modal")
-                                .attr("title", "Update Trial")
-                                .attr("data-target", "#updateTrial4ScenarioModal")
-                                .attr("style", "cursor:pointer")
-                                .attr("onclick", "new UserStory().editTrial4ScenarioModel('" + obj[i].id + "')")
-                            : "")
+                        .append(obj[i].isNotifiedAsBug !== '1' ?
+                            $('<i></i>')
+                            .addClass('fa fa-edit')
+                            .attr("data-toggle", "modal")
+                            .attr("title", "Update Trial")
+                            .attr("data-target", "#updateTrial4ScenarioModal")
+                            .attr("style", "cursor:pointer")
+                            .attr("onclick", "new UserStory().editTrial4ScenarioModel('" + obj[i].id + "')") :
+                            "")
                         .append(" &nbsp;&nbsp;")
-                        .append(obj[i].isNotifiedAsBug !== '1'
-                            ? $('<i></i>')
-                                .addClass('fa fa-trash')
-                                .attr("title", "Delete Trial")
-                                .attr("style", "cursor:pointer")
-                                .attr("onclick", "new UserStory().deleteTrial4ScenarioModel('" + obj[i].id + "')")
-                            : $('<span></span>')
-                                .append("N")
-                                .attr("data-toggle", "modal")
-                                .attr("data-target", "#notifedInfoModal")
-                                .attr("style", "color:blue;cursor:pointer")
-                                .attr("onclick", "new UserStory().showNotifiedInfo('" + obj[i].id + "')")
-                                .attr("title", "Already Notified")
+                        .append(obj[i].isNotifiedAsBug !== '1' ?
+                            $('<i></i>')
+                            .addClass('fa fa-trash')
+                            .attr("title", "Delete Trial")
+                            .attr("style", "cursor:pointer")
+                            .attr("onclick", "new UserStory().deleteTrial4ScenarioModel('" + obj[i].id + "')") :
+                            $('<span></span>')
+                            .append("N")
+                            .attr("data-toggle", "modal")
+                            .attr("data-target", "#notifedInfoModal")
+                            .attr("style", "color:blue;cursor:pointer")
+                            .attr("onclick", "new UserStory().showNotifiedInfo('" + obj[i].id + "')")
+                            .attr("title", "Already Notified")
                         )
                         .append(" &nbsp;&nbsp;")
-                        .append(obj[i].isNotifiedAsBug !== '1' && obj[i].trialStatus === 'nok'
-                            ?
+                        .append(obj[i].isNotifiedAsBug !== '1' && obj[i].trialStatus === 'nok' ?
                             $('<i></i>')
-                                .attr("href", "#")
-                                .addClass('fa fa-bug')
-                                .attr("data-toggle", "modal")
-                                .attr("data-target", "#notifyTrialAsBugModal")
-                                .attr("title", "Nofify as Bug")
-                                .attr("style", "cursor:pointer")
-                                .attr("onclick", "new UserStory().notifyTrialAsBugModal('" + obj[i].id + "')")
-                            : "")
+                            .attr("href", "#")
+                            .addClass('fa fa-bug')
+                            .attr("data-toggle", "modal")
+                            .attr("data-target", "#notifyTrialAsBugModal")
+                            .attr("title", "Nofify as Bug")
+                            .attr("style", "cursor:pointer")
+                            .attr("onclick", "new UserStory().notifyTrialAsBugModal('" + obj[i].id + "')") :
+                            "")
                     )
                 )
                 .append("</br>")
@@ -18026,11 +18170,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = trialId;
         var that = this;
         var data = JSON.stringify(json);
@@ -18053,11 +18198,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     loadUSList4Dublication: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.isSourced = "1";
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = "backlogName";
@@ -18079,11 +18225,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     loadSUSwithInput4Dublication: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'backlogName';
         var that = this;
@@ -18140,11 +18287,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var currentProjectId = global_var.current_project_id;
         var destProjectId = $('#dublicateUserStoryModal_projectlist').val();
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = id;
         json.kv.currentProjectId = global_var.current_project_id;
         json.kv.destProjectId = destProjectId;
@@ -18199,11 +18347,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         $('#notifyTrialAsBugModal_result').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $(arg).val();
         var that = this;
         var data = JSON.stringify(json);
@@ -18227,11 +18376,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         $('#notifyAsChangeRequestModal_result').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = $(arg).val();
         var that = this;
         var data = JSON.stringify(json);
@@ -18290,11 +18440,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     notifyTrialAsBugModal4Task: function (trialId) {
         $('#notifyTrialAsBugModal_result').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.fkTrialId = trialId;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -18316,11 +18467,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     notifyLabelAsChangeRequestModal4Task: function () {
         $('#notifyLabelAsChangeRequestModal_result').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.fkTrialId = trialId;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -18372,11 +18524,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkLabelId = $("#change-mgmt-gui-design-label-list").val();
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkAssigneeId = ids;
@@ -18418,11 +18571,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     notifyAsChangeRequestModal4Task: function () {
         $('#notifyAsChangeRequestModal_result').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.fkTrialId = trialId;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -18443,11 +18597,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     notifyTrialAsBugModal4SUS: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -18467,11 +18622,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     notifyAsChangeRequestModal4SUS: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -18567,11 +18723,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkTrialId = $('#notifyHistoryAsChangeRequestModal_id').val();
         json.kv.fkBacklogId = $('#notifyHistoryAsChangeRequestModal_suslist').val();
         json.kv.fkTaskId = ids;
@@ -18606,11 +18763,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkTrialId = $('#notifyTrialAsBugModal_id').val();
         json.kv.fkBacklogId = $('#notifyTrialAsBugModal_suslist').val();
         json.kv.fkTaskId = ids;
@@ -18645,11 +18803,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkHistoryId = $('#notifyAsChangeRequestModal_id').val();
         json.kv.fkBacklogId = $('#notifyAsChangeRequestModal_suslist').val();
         json.kv.fkTaskId = ids;
@@ -18680,11 +18839,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -18721,11 +18881,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#commentSpentHoursModal_id').val();
         json.kv.spentHours = $('#commentSpentHoursModal_spenthours').val();
         var that = this;
@@ -18761,11 +18922,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#commentEstimatedHoursModal_id').val();
         json.kv.estimatedHours = $('#commentEstimatedHoursModal_estimatedhours').val();
         var that = this;
@@ -18792,27 +18954,27 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
             for (var i = 0; i < obj.length; i++) {
 
-                var stopBtn = obj[i].startType === 'P'
-                    ? $('<i></i>')
-                        .addClass('fa fa-stop-circle')
-                        .attr('onclick', 'new UserStory().taskStop("' + obj[i].id + '",this)')
-                        .attr('style', 'color:orange;font-size:16px;display:block')
-                    : $('<i></i>')
-                        .addClass('fa fa-stop-circle')
-                        .attr('onclick', 'new UserStory().taskStop("' + obj[i].id + '",this)')
-                        .attr('style', 'color:orange;font-size:16px;display:none');
-                var startBtn = obj[i].startType !== 'P'
-                    ? $('<i></i>')
-                        .addClass('fa fa-play-circle')
-                        .attr('onclick', 'new UserStory().taskStart("' + obj[i].id + '",this)')
-                        .attr('style', 'color:green;font-size:16px;display:block')
-                    : $('<i></i>')
-                        .addClass('fa fa-play-circle')
-                        .attr('onclick', 'new UserStory().taskStart("' + obj[i].id + '",this)')
-                        .attr('style', 'color:green;font-size:16px;display:none');
-                var diffTime = obj[i].startType === 'P'
-                    ? this.getStartTimeDiff(obj[i].startDate, res.kv.currentDate, obj[i].startTime, res.kv.currentTime)
-                    : "";
+                var stopBtn = obj[i].startType === 'P' ?
+                    $('<i></i>')
+                    .addClass('fa fa-stop-circle')
+                    .attr('onclick', 'new UserStory().taskStop("' + obj[i].id + '",this)')
+                    .attr('style', 'color:orange;font-size:16px;display:block') :
+                    $('<i></i>')
+                    .addClass('fa fa-stop-circle')
+                    .attr('onclick', 'new UserStory().taskStop("' + obj[i].id + '",this)')
+                    .attr('style', 'color:orange;font-size:16px;display:none');
+                var startBtn = obj[i].startType !== 'P' ?
+                    $('<i></i>')
+                    .addClass('fa fa-play-circle')
+                    .attr('onclick', 'new UserStory().taskStart("' + obj[i].id + '",this)')
+                    .attr('style', 'color:green;font-size:16px;display:block') :
+                    $('<i></i>')
+                    .addClass('fa fa-play-circle')
+                    .attr('onclick', 'new UserStory().taskStart("' + obj[i].id + '",this)')
+                    .attr('style', 'color:green;font-size:16px;display:none');
+                var diffTime = obj[i].startType === 'P' ?
+                    this.getStartTimeDiff(obj[i].startDate, res.kv.currentDate, obj[i].startTime, res.kv.currentTime) :
+                    "";
                 var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol");
                 var div_by_row = $('<div></div>')
                     .addClass("row")
@@ -18820,9 +18982,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .addClass(obj[i].isSubtask === '1' ? "task-child-subtask" : "")
                     .addClass(obj[i].isBug === '1' ? "task-child-bug" : "")
                     .addClass(obj[i].isRequest === '1' ? "task-child-request" : "");
-                var img = obj[i].avatarUrl.length === 0
-                    ? fileUrl(new User().getDefaultUserprofileName())
-                    : fileUrl(obj[i].avatarUrl);
+                var img = obj[i].avatarUrl.length === 0 ?
+                    fileUrl(new User().getDefaultUserprofileName()) :
+                    fileUrl(obj[i].avatarUrl);
                 var div1 = $('<div></div>')
                     .addClass("col-1 comment-line")
 
@@ -18852,46 +19014,46 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append($("<span></span>")
                         .attr("style", "align-right")
                         .append(" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ")
-                        .append(!obj[i].isNotifiedBug
-                            ? $('<i></i>')
-                                .addClass('fa fa-tasks')
-                                .attr("a", "b")
-                                .attr("title", "Is Sub Task?")
-                                .attr("style", obj[i].isSubtask === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
-                                .attr("onclick", "new UserStory().toogleCommentAsSubtask(this,'" + obj[i].id + "')")
-                            : "")
+                        .append(!obj[i].isNotifiedBug ?
+                            $('<i></i>')
+                            .addClass('fa fa-tasks')
+                            .attr("a", "b")
+                            .attr("title", "Is Sub Task?")
+                            .attr("style", obj[i].isSubtask === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
+                            .attr("onclick", "new UserStory().toogleCommentAsSubtask(this,'" + obj[i].id + "')") :
+                            "")
                         .append(" &nbsp;&nbsp;  ")
                         .append($('<i></i>')
                             .addClass('fa fa-bug')
                             .attr("a", "b")
                             .attr("title", "Is Bug?")
                             .attr("style", obj[i].isBug === '1' ? "cursor:pointer;color:red" : "cursor:pointer;color:gray")
-                            .attr("onclick", !obj[i].isNotifiedBug
-                                ? "new UserStory().toogleCommentAsBug(this,'" + obj[i].id + "')"
-                                : "")
+                            .attr("onclick", !obj[i].isNotifiedBug ?
+                                "new UserStory().toogleCommentAsBug(this,'" + obj[i].id + "')" :
+                                "")
                         )
                         .append(" &nbsp;&nbsp; ")
-                        .append(!obj[i].isNotifiedBug
-                            ? $('<i></i>')
-                                .addClass('fa fa-pencil')
-                                .attr("a", "b")
-                                .attr("title", "Is Change Request?")
-                                .attr("style", obj[i].isRequest === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
-                                .attr("onclick", "new UserStory().toogleCommentAsRequest(this,'" + obj[i].id + "')")
-                            : "")
-                        .append(obj[i].isNotifiedBug && obj[i].commentType !== 'N'
-                            ? $('<a></a>')
-                                .attr("href", "#")
-                                .attr("title", "Close Bug")
-                                .attr("onclick", "new UserStory().closeBug4TestTrial(this,'" + obj[i].id + "')")
-                                .append("Close Bug")
-                            : "")
-                        .append(obj[i].commentType === 'N'
-                            ? $('<a></a>')
-                                .attr("href", "#")
-                                .attr("title", "Bug Already Closed")
-                                .append("Bug Already Closed")
-                            : "")
+                        .append(!obj[i].isNotifiedBug ?
+                            $('<i></i>')
+                            .addClass('fa fa-pencil')
+                            .attr("a", "b")
+                            .attr("title", "Is Change Request?")
+                            .attr("style", obj[i].isRequest === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
+                            .attr("onclick", "new UserStory().toogleCommentAsRequest(this,'" + obj[i].id + "')") :
+                            "")
+                        .append(obj[i].isNotifiedBug && obj[i].commentType !== 'N' ?
+                            $('<a></a>')
+                            .attr("href", "#")
+                            .attr("title", "Close Bug")
+                            .attr("onclick", "new UserStory().closeBug4TestTrial(this,'" + obj[i].id + "')")
+                            .append("Close Bug") :
+                            "")
+                        .append(obj[i].commentType === 'N' ?
+                            $('<a></a>')
+                            .attr("href", "#")
+                            .attr("title", "Bug Already Closed")
+                            .append("Bug Already Closed") :
+                            "")
                     )
                     .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
                     .append($('<span></span>')
@@ -18953,8 +19115,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var tid = (taskId) ? taskId : global_var.current_task_id_4_comment
             $('#div_' + tid).html(div.html());
             return div.html();
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     closeBug4TestTrial: function (arg, commentId) {
         if (!commentId) {
@@ -18965,11 +19126,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkCommentId = commentId;
         var that = this;
         var data = JSON.stringify(json);
@@ -18983,8 +19145,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (res) {
                 try {
                     that.loadBacklogTask();
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 //                Toaster.showError("error");
@@ -18996,11 +19157,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -19020,8 +19182,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         $(obj).attr("style", "cursor:pointer;color:gray");
                         $(obj).closest('.mangodb').removeClass("task-child-subtask")
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 //                Toaster.showError("error");
@@ -19033,11 +19194,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -19058,8 +19220,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         $(obj).attr("style", "cursor:pointer;color:gray");
                         $(obj).closest('.mangodb').removeClass("task-child-bug")
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 //                Toaster.showError("error");
@@ -19071,11 +19232,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -19096,8 +19258,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         $(obj).attr("style", "cursor:pointer;color:gray");
                         $(obj).closest('.mangodb').removeClass("task-child-request")
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 //                Toaster.showError("error");
@@ -19111,16 +19272,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         for (var i = 0; i < obj.length; i++) {
             var ctype = obj[i].commentType === 'B' ? '<i class="fa fa-bug" style="color:red"></i>' :
                 obj[i].commentType === 'U' ? '<i class="fa fa-pencil" style="color:blue"></i>' : '';
-            var img = obj[i].avatarUrl.length === 0
-                ? fileUrl(new User().getDefaultUserprofileName())
-                : fileUrl(obj[i].avatarUrl);
+            var img = obj[i].avatarUrl.length === 0 ?
+                fileUrl(new User().getDefaultUserprofileName()) :
+                fileUrl(obj[i].avatarUrl);
             var div1 = $('<div></div>').addClass("col-1 comment-line")
                 .append("<img class=\"figure-img img-fluid rounded-circle\"   src=\"" + img + "\" alt=\"" + obj[i].username + "\"> ");
             var div2 = $('<div></div>').addClass("col-11")
                 .append("<b>" + obj[i].username + " </b><span>" +
                     Utility.convertDate(obj[i].commentDate) + ", " +
-                    Utility.convertTime(obj[i].commentTime) + "</span>" + "  " + ctype + " </br> "
-                    + this.replaceTags(obj[i].comment));
+                    Utility.convertTime(obj[i].commentTime) + "</span>" + "  " + ctype + " </br> " +
+                    this.replaceTags(obj[i].comment));
             var div2_1 = this.generateCommentFileLine(obj[i].fileName, obj[i].id);
             //            var div3 = $('<div></div>').addClass("col-12").append("<hr>");
             div.append(div1).append(div2).append(div2_1);
@@ -19171,10 +19332,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 }
                 div12lik.append(' <b> ' + add3Dots2Filename(st[i]) + '</b><br>');
                 div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", fileUrl(st[i]))
-                    .append('Download')
-                    //                        .append($('<i></i>').addClass('fa fa-download'))
-                    .append('  '))
+                        .attr("href", fileUrl(st[i]))
+                        .append('Download')
+                        //                        .append($('<i></i>').addClass('fa fa-download'))
+                        .append('  '))
                     .append($('<i></i>')
                         .addClass('lbl-action')
                         .append(' Delete ')
@@ -19188,8 +19349,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div_col;
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     deleteTrialFile: function (obj, fname, id) {
 
@@ -19201,11 +19361,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.filename = fname;
         json.kv.id = id;
         var that = this;
@@ -19262,13 +19423,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append($('<a target="_blank">')
                         .attr("href", fileUrl(st[i]))
                         .append('<i class="fa fa-download" aria-hidden="true"></i>')
-                        )
-                        .append($('<span></span>')
-                            .addClass('lbl-action')
-                            .append('<i class="fa fa-trash-o" aria-hidden="true"></i>')
-                            .attr('onclick', 'new UserStory().deleteTaskCommentFile(this,"' + st[i] + '")')
-                        )
-                    );
+                    )
+                    .append($('<span></span>')
+                        .addClass('lbl-action')
+                        .append('<i class="fa fa-trash-o" aria-hidden="true"></i>')
+                        .attr('onclick', 'new UserStory().deleteTaskCommentFile(this,"' + st[i] + '")')
+                    )
+                );
                 div2.append(div12lik);
                 div.append(div2);
             }
@@ -19276,8 +19437,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div_col;
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     generateCommentFileLine4ViewImage: function (id, name, cell) {
         try {
@@ -19306,8 +19466,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div.html();
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     generateCommentFileLine4View: function (id, name, cell) {
         try {
@@ -19343,16 +19502,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .attr("href", fileUrl(name))
                 .append('Download')
                 //                        .append($('<i></i>').addClass('fa fa-download'))
-                .append('  '))
-                ;
+                .append('  '));
             div2.append(div12lik);
             div.append(div2);
 
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div.html();
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     generateCommentFileLine4StoryCard: function (id, name, cell) {
 
@@ -19416,11 +19573,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
                 div12lik.append(
                     $('<a target="_blank"></a>')
-                        .attr("href", pdfFileURL(name))
-                        .append($('<img></img>')
-                            .attr('src', fileUrlPrivate('pdf-logo.png'))
-                            .addClass('comment_img')
-                            .attr('alt', name)));
+                    .attr("href", pdfFileURL(name))
+                    .append($('<img></img>')
+                        .attr('src', fileUrlPrivate('pdf-logo.png'))
+                        .addClass('comment_img')
+                        .attr('alt', name)));
             }
             div12lik.append('<span class="unpin-img-title"> ' + add3Dots2Filename(name) + '</span>');
 
@@ -19438,20 +19595,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append('  ')
                     .attr('onclick', 'new UserStory().deleteBacklogFile(this,"' + id + '")')
                 )
-                .append(global_var.image_formats.includes(fileFormat) && !isPinned
-                    ? $('<i></i>')
-                        .addClass('lbl-action')
-                        .append($('<i class="fa fa-thumb-tack pinned-img-off" aria-hidden="true"></i>'))
-                        .append('  ')
-                        .attr('onclick', 'new UserStory().pinImageToStoryCard(this,"' + id + '","' + name + '")')
-                    : "")
-                .append(global_var.image_formats.includes(fileFormat)
-                    ? $('<i></i>')
-                        .addClass('lbl-action')
-                        .append($('<i class="fas fa-plus pinned-img-off" aria-hidden="true"></i>'))
-                        .append('  ')
-                        .attr('onclick', 'new UserStory().addInputToImage(this,"' + id + '","' + name + '")')
-                    : "")
+                .append(global_var.image_formats.includes(fileFormat) && !isPinned ?
+                    $('<i></i>')
+                    .addClass('lbl-action')
+                    .append($('<i class="fa fa-thumb-tack pinned-img-off" aria-hidden="true"></i>'))
+                    .append('  ')
+                    .attr('onclick', 'new UserStory().pinImageToStoryCard(this,"' + id + '","' + name + '")') :
+                    "")
+                .append(global_var.image_formats.includes(fileFormat) ?
+                    $('<i></i>')
+                    .addClass('lbl-action')
+                    .append($('<i class="fas fa-plus pinned-img-off" aria-hidden="true"></i>'))
+                    .append('  ')
+                    .attr('onclick', 'new UserStory().addInputToImage(this,"' + id + '","' + name + '")') :
+                    "")
             );
             div2.append(div12lik);
             div.append(div2);
@@ -19459,8 +19616,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div.html();
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     deleteTaskCommentFile: function (obj, fname) {
 
@@ -19472,11 +19628,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.filename = fname;
         var that = this;
         var data = JSON.stringify(json);
@@ -19505,11 +19662,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = fname;
         var that = this;
         var data = JSON.stringify(json);
@@ -19540,11 +19698,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = fname;
         var that = this;
         var data = JSON.stringify(json);
@@ -19566,42 +19725,43 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
 
-    addInputToImage: function (elm,bid,img) {
-     
+    addInputToImage: function (elm, bid, img) {
+
         var inputs = $("#generalview_input_list .description-left");
-    var item = $("select#addPinImageInput");
-    item.empty();
-    item.append($("<option>").text('').val(''));
-    inputs.each(function () {
-        var idOption = $(this).closest("tr").attr("inid");
-        var elm = $(this).clone();
-        elm.find(".dropdown").first().remove();
-        var text = $(elm).text();
-        
+        var item = $("select#addPinImageInput");
+        item.empty();
+        item.append($("<option>").text('').val(''));
+        inputs.each(function () {
+            var idOption = $(this).closest("tr").attr("inid");
+            var elm = $(this).clone();
+            elm.find(".dropdown").first().remove();
+            var text = $(elm).text();
 
-        item.append($("<option>").text(text).val(idOption));
-    })
-    item.each(function () {
-        var oldVal =  $(this).attr('sa-data-value');
-           $(this).val(oldVal);
 
-           $(this).selectpicker('refresh');
-    })
-   
-    $("select#addPinImageInput").selectpicker();
-    $("#InputAddImagePinModal").attr('fname',img);
-    $("#InputAddImagePinModal").modal('show');
+            item.append($("<option>").text(text).val(idOption));
+        })
+        item.each(function () {
+            var oldVal = $(this).attr('sa-data-value');
+            $(this).val(oldVal);
+
+            $(this).selectpicker('refresh');
+        })
+
+        $("select#addPinImageInput").selectpicker();
+        $("#InputAddImagePinModal").attr('fname', img);
+        $("#InputAddImagePinModal").modal('show');
     },
     pinImageToStoryCard: function (obj, fid, fname) {
         if (!fname) {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = fid;
         var that = this;
         var data = JSON.stringify(json);
@@ -19658,11 +19818,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.asc = 'orderNo';
         var that = this;
@@ -19685,11 +19846,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.asc = 'orderNo';
         var that = this;
@@ -19713,11 +19875,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.asc = 'orderNo';
         json.kv.domain = global_var.current_domain;
@@ -19761,7 +19924,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', res.kv.backlogId);
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
             } else {
                 $('.gv-gui-design-api_4share').hide();
             }
@@ -19789,8 +19954,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $("#storycard_filelist_4_share")
                     .append(this.generateCommentFileLine4StoryCard(
                         resId[i].trim(), resName[i].trim(), "col-4"));
-            } catch (e) {
-            }
+            } catch (e) {}
         }
     },
     setUserStoryInforOnGeneralView4Details4Select: function (res) {
@@ -19818,7 +19982,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#general-view-task-gui').html(st);
         $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
         $('#general-view-task-gui').attr('bcode', makeId(15));
-        $('[data-toggle="tooltip"]').tooltip({ html: true });
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
 
 
 
@@ -19851,7 +20017,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#general-view-task-gui').html(st);
         $('#general-view-task-gui').attr('bid', res.kv.backlogId);
         $('#general-view-task-gui').attr('bcode', makeId(15));
-        $('[data-toggle="tooltip"]').tooltip({ html: true });
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
 
         //  click on first tab
         //        $('.activeTabClass').each(function (e) {
@@ -19875,11 +20043,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#change-mgmt-gui-design-start-time').html($('<option></option>'));
         if (type === 'end')
             $('#change-mgmt-gui-design-end-time').html($('<option></option>'));
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.date = $(el).val();
         json.kv.domain = global_var.current_domain;
@@ -19910,17 +20079,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             for (var i = 0; i < times.length; i++) {
                 if (type === 'start')
                     $('#change-mgmt-gui-design-start-time')
-                        .append($('<option></option>')
-                            .val(times[i])
-                            .text(Utility.convertTime(times[i])));
+                    .append($('<option></option>')
+                        .val(times[i])
+                        .text(Utility.convertTime(times[i])));
                 if (type === 'end')
                     $('#change-mgmt-gui-design-end-time')
-                        .append($('<option></option>')
-                            .val(times[i])
-                            .text(Utility.convertTime(times[i])));
+                    .append($('<option></option>')
+                        .val(times[i])
+                        .text(Utility.convertTime(times[i])));
             }
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     setHistoryDatesOnStoryCardLoad: function (res) {
         try {
@@ -19941,19 +20109,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .val(dates[i])
                         .text(Utility.convertDate(dates[i])));
             }
-        } catch (err) {
-        }
+        } catch (err) {}
     },
     getUserStoryInfoById: function (id) {
         if (!(id)) {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -19989,9 +20157,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 continue;
             }
 
-            var inputName = obj[i].inputType === 'OUT'
-                ? obj[i].inputName + " (Output)"
-                : obj[i].inputName;
+            var inputName = obj[i].inputType === 'OUT' ?
+                obj[i].inputName + " (Output)" :
+                obj[i].inputName;
             var tr = $('<tr></tr>').append($('<td></td>').html((idx++)));
             tr.append($('<td></td>').html(inputName));
             tr.append($('<td></td>').html(obj[i].tableName));
@@ -20026,8 +20194,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('.gv-gui-design-api').show();
                 $('.gv-gui-design-api_4share').show();
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     setUserStoryInforOnGeneralViewDetails: function (res) {
         var obj = res.tbl[0].r[0];
@@ -20147,7 +20314,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         if (global_var.current_modal !== 'loadDev') {
             $('#user-story-type').val(storyCardType);
-            }
+        }
         $('#user-story-type').selectpicker('refresh');
         if (global_var.current_modal === 'loadDev') {
             storyCardTypeChangeEvent('api');
@@ -20299,9 +20466,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += ' <a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                backlodIds[i] + '\')">' + " #"
-                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #" +
+                SACore.GetBacklogOrderNo(backlodIds[i]) + " " +
+                replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += "<br>";
         }
         return st;
@@ -20314,9 +20481,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += ' <a href="#" onclick="new UserStory().shareGeneralViewDirect(\'' + global_var.current_project_id + '\',\'' +
-                backlodIds[i] + '\')">' + " #"
-                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #" +
+                SACore.GetBacklogOrderNo(backlodIds[i]) + " " +
+                replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += ", ";
         }
         return st;
@@ -20327,9 +20494,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += ' <a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                backlodIds[i] + '\')">' + " #"
-                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #" +
+                SACore.GetBacklogOrderNo(backlodIds[i]) + " " +
+                replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += " <br>";
         }
         return st;
@@ -20342,9 +20509,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += '<a href="#" onclick="new UserStory().shareGeneralViewDirect(\'' + global_var.current_project_id + '\',\'' +
-                backlodIds[i] + '\')">' + " #"
-                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #" +
+                SACore.GetBacklogOrderNo(backlodIds[i]) + " " +
+                replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += ", ";
         }
         return st;
@@ -20355,8 +20522,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var orderNos = [];
         try {
             orderNos = orderNo.split('\\|');
-        } catch (rr) {
-        }
+        } catch (rr) {}
 
         var st = "";
         for (var i = 0; i < name.length; i++) {
@@ -20412,11 +20578,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.addAssigneeToTaskType4Backlog();
     },
     addAssigneeToTaskType4Backlog: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'userName';
         var that = this;
@@ -20445,15 +20612,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("value", obj[n].fkUserId)
                     .text(replaceTags(obj[n].userName)));
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     },
     addTaskTypesToCombo4Backlog: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.typeStatus = 'A';
         json.kv.asc = "typeName";
         var that = this;
@@ -20504,7 +20671,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     toggleSubmenu: function (e, menuName) {
         //        showProgress();
         $('.tooltip').removeClass('show');
-        $('[data-toggle="tooltip"]').tooltip({ html: true });
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
         $('.sub-menu').removeClass("us-sm-active");
         var sm = '#us-submenu-' + menuName;
         $(sm).addClass('us-sm-active');
@@ -20544,15 +20713,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     toggleSubmenuStoryCard: function () {
         try {
             this.setUserStoryInforOnGeneralView4Select();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         this.setUserStoryInforOnGeneralView4HistoryDateAndLabel();
         this.loadStoryCardFileList();
         try {
             this.getBacklogDesc();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         this.getBacklogTaskStats();
     },
@@ -20569,8 +20736,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
                 $("#storycard_filelist")
                     .append(this.generateCommentFileLine4StoryCard(resId[i].trim(), res[i].trim(), "cs-img-col"));
-            } catch (e) {
-            }
+            } catch (e) {}
         }
     },
     getGUIDesignHTML4StoryCard: function () {
@@ -20597,11 +20763,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     getGeneralViewLine: function () {
         var el = $('#shareGeneralView');
-        return 'bview.html?'
-            + 'pid=' + el.attr('pid')
-            + '&bid=' + el.attr('bid')
-            + '&d=' + el.attr('d')
-            + '&lid=' + el.attr('lid');
+        return 'bview.html?' +
+            'pid=' + el.attr('pid') +
+            '&bid=' + el.attr('bid') +
+            '&d=' + el.attr('d') +
+            '&lid=' + el.attr('lid');
     },
     getGeneralViewLine4Share: function () {
         var json = initJSON();
@@ -20638,10 +20804,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return this.getGeneralViewLine() + "&h=1";
     },
     getGeneralViewLineDirect: function (pid, bid) {
-        return 'bview.html?pid=' + pid
-            + '&bid=' + bid
-            + '&d=' + global_var.current_domain
-            + '&lid=' + '';
+        return 'bview.html?pid=' + pid +
+            '&bid=' + bid +
+            '&d=' + global_var.current_domain +
+            '&lid=' + '';
     },
     shareGeneralView: function (el) {
         window.open(this.getGeneralViewLine());
@@ -20779,7 +20945,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var backgroundImage = GetTagLine(canvasCSS, "##background-image");
 
 
-            var jsonT = { "tbl": [] };
+            var jsonT = {
+                "tbl": []
+            };
             var childGui = this.getGUIDesignHTMLBody(obj, 0);
 
             var div = $('<div></div>')
@@ -20841,7 +21009,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             //                    canvasCSS = canvasCSS.replace(backgroundImage,"");
 
 
-            var jsonT = { "tbl": [] };
+            var jsonT = {
+                "tbl": []
+            };
             //            jsonT.tbl.push(JSON.parse(obj[i].inputList));
             var childGui = this.getGUIDesignHTMLBody(jsonT, 0);
 
@@ -20934,11 +21104,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#SUS_IPO_GUI_Design').html('');
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -21061,11 +21232,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -21086,11 +21258,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         json.kv.domain = global_var.current_domain;
@@ -21136,11 +21309,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = id;
         json.kv.priority = $('#assignPriorityToUserStoryModal_priority').val();
         var that = this;
@@ -21165,11 +21339,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.asc = 'orderNo';
         json.kv.inputType = 'IN%IN%OUT';
@@ -21337,8 +21512,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         td.append('<br>');
                         td.append(innerTable);
                     }
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 var tr = $('<tr></tr>');
 
@@ -21353,12 +21527,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
             trcount++;
 
-            var inputName = obj[i].inputType === 'OUT'
-                ? obj[i].inputName + " / Output"
-                : obj[i].inputName;
+            var inputName = obj[i].inputType === 'OUT' ?
+                obj[i].inputName + " / Output" :
+                obj[i].inputName;
 
-            inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
-                : "";
+            inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")" :
+                "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
             var tr = $('<tr></tr>').append($('<td></td>').html(innerRowId));
@@ -21375,8 +21549,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var descSourced = "";
         try {
             descSourced = SACore.GetCurrentBaklogDescriptionSourced1(obj[0].fkBacklogId);
-        } catch (e) {
-        }
+        } catch (e) {}
 
         table.append(this.getTableFooter4InputTable(descSourced, true));
         table.append(tbody);
@@ -21431,14 +21604,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
                 try {
                     if (obj[i].inputTable.length > 0) {
-                        var jsonT = { "tbl": [] };
+                        var jsonT = {
+                            "tbl": []
+                        };
                         jsonT.tbl.push(JSON.parse(obj[i].inputTable));
                         var innerTable = this.getInputTable4StoryCard(jsonT, 0, iteration, innerRowId4Section, obj[i].id);
                         td.append('<br>');
                         td.append(innerTable);
                     }
-                } catch (err) {
-                }
+                } catch (err) {}
 
                 var tr = $('<tr></tr>');
 
@@ -21453,12 +21627,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
             trcount++;
 
-            var inputName = obj[i].inputType === 'OUT'
-                ? obj[i].inputName + " / Output"
-                : obj[i].inputName;
+            var inputName = obj[i].inputType === 'OUT' ?
+                obj[i].inputName + " / Output" :
+                obj[i].inputName;
 
-            inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
-                : "";
+            inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")" :
+                "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
             var tr = $('<tr></tr>').append($('<td></td>').html(innerRowId));
@@ -21547,8 +21721,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         var usList = [];
                         try {
                             usList = SAInput.Tabs[obj[i].fkRelatedCompId].fkRelatedBacklogId.split(',');
-                        } catch (err) {
-                        }
+                        } catch (err) {}
 
                         for (var k in usList) {
 
@@ -21591,9 +21764,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
 
             if (ct === 'sctn' || ct === 'tab') {
-                var partName = ct === 'sctn' && obj[i].param1.length > 0
-                    ? replaceTags(SACore.GetBacklogname(obj[i].param1))
-                    : replaceTags(obj[i].inputName);
+                var partName = ct === 'sctn' && obj[i].param1.length > 0 ?
+                    replaceTags(SACore.GetBacklogname(obj[i].param1)) :
+                    replaceTags(obj[i].inputName);
 
                 var td = $('<td></td>')
                     .attr('style', "text-align:left;")
@@ -21611,8 +21784,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         td.append('<br>');
                         td.append(innerTable);
                     }
-                } catch (err) {
-                }
+                } catch (err) {}
                 idxM++;
                 var tr = $('<tr></tr>');
 
@@ -21630,26 +21802,26 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             //            }
 
             trcount++;
-            var imgBlock  =  $("<span class='float-left pin-image-div'>")
-                               
-            var imgMini  =  obj[i].fileUrl?
-                            $('<span>') 
-                                .attr('data-toggle', "modal")
-                                .attr('data-target', "#commentFileImageViewer")
-                                .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + obj[i].fileUrl+ '")')
-                                .append($("<img>")
-                                           .width("40px")
-                                           .height("40px")
-                                           .attr("src",fileUrl(obj[i].fileUrl))):"";
-            var deleteBl =obj[i].fileUrl?
-                     $("<span>")
-                         .addClass('delete-icon')
-                         .attr('onclick', 'deleteRelationPinInput(this,"' +  obj[i].id+ '")')
-                         .html('<i class="fa fa-trash-o" aria-hidden="true"></i>'):"";
+            var imgBlock = $("<span class='float-left pin-image-div'>")
+
+            var imgMini = obj[i].fileUrl ?
+                $('<span>')
+                .attr('data-toggle', "modal")
+                .attr('data-target', "#commentFileImageViewer")
+                .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + obj[i].fileUrl + '")')
+                .append($("<img>")
+                    .width("40px")
+                    .height("40px")
+                    .attr("src", fileUrl(obj[i].fileUrl))) : "";
+            var deleteBl = obj[i].fileUrl ?
+                $("<span>")
+                .addClass('delete-icon')
+                .attr('onclick', 'deleteRelationPinInput(this,"' + obj[i].id + '")')
+                .html('<i class="fa fa-trash-o" aria-hidden="true"></i>') : "";
             var inputName = obj[i].inputName;
-               
-            inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
-                : "";
+
+            inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")" :
+                "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
             var tr = $('<tr></tr>')
@@ -21663,15 +21835,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .val(obj[i].id)));
 
             tr.append($('<td></td>')
-                   .attr('data-object-id',obj[i].id)
+                .attr('data-object-id', obj[i].id)
                 .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
                 .attr("iname", replaceTags(Replace2Primes(inputName)))
                 .attr('class', 'description-left')
                 .append(imgBlock.append(imgMini).append(deleteBl))
                 .append($('<span>').text(inputName))
                 .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
-id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-                    + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
+id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>' +
+                    '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
 <button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addExistingRelationModal" onclick="new UserStory().inputExistModal(this,\'' + obj[i].id + '\')">Exist</button>\n\
@@ -21693,9 +21865,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 <button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addRelatedSourceModal" onclick="new UserStory().addRelationSourcedModal(this,\'send\',\'' + obj[i].id + '\')">Send/Save Data To API</button>\n\
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().removeSendSaveTo(this,\'' + obj[i].id + '\')">Remove Send/Save Data To</button>\n\
 </div>\n\
-</div>'
-                    + '</div>'));
-            ;
+</div>' +
+                    '</div>'));;
 
 
             //            tr.append($('<td></td>').html(obj[i].tableName));
@@ -21767,11 +21938,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     loadDatabaseList2Combo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
 
         var that = this;
         var data = JSON.stringify(json);
@@ -21798,11 +21970,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.dbid = db;
         json.kv.tableId = table;
         json.kv.fieldName = field;
@@ -21833,11 +22006,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.dbid = db;
         json.kv.tableName = table;
         var that = this;
@@ -21867,11 +22041,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.dbName = val;
         var that = this;
         var data = JSON.stringify(json);
@@ -21953,11 +22128,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.tableId = tableId;
         var that = this;
         var data = JSON.stringify(json);
@@ -21986,8 +22162,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append($('<option>').val(obj[i].id)
                         .append(obj[i].fieldName))
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         sortSelectBox('selectFromDbModal-fieldid');
 
@@ -22002,11 +22177,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.dbId = dbid;
         var that = this;
         var data = JSON.stringify(json);
@@ -22029,11 +22205,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.dbId = dbid;
         var that = this;
         var data = JSON.stringify(json);
@@ -22062,8 +22239,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append($('<option>').val(obj[i].id)
                         .append(obj[i].tableName))
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         sortSelectBox('selectFromDbModal-tableid');
 
@@ -22093,11 +22269,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -22129,7 +22306,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
             }
         });
     },
@@ -22143,11 +22322,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -22182,7 +22362,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
             }
         });
     },
@@ -22196,11 +22378,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -22232,7 +22415,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
             }
         });
     },
@@ -22246,11 +22431,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -22285,7 +22471,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
 
 
 
@@ -22359,8 +22547,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 }
                 var backlogId = keys[i];
                 var backlogName = SACore.GetBacklogname(backlogId);
-                backlogName += SACore.GetBacklogDetails(keys[i], "isApi") === '1'
-                    ? ' (is API)' : "";
+                backlogName += SACore.GetBacklogDetails(keys[i], "isApi") === '1' ?
+                    ' (is API)' : "";
 
                 var op = $("<option>")
                     .val(backlogId)
@@ -22391,8 +22579,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#sendDataToModal-us-related-apis').append($("<option>").val('').append(('')));
         var keys = SACore.GetBacklogKeys();
         for (var i in keys) {
-            var isAPi = (SACore.GetBacklogDetails(keys[i], "isApi") === '1')
-                ? " (is API)" : "";
+            var isAPi = (SACore.GetBacklogDetails(keys[i], "isApi") === '1') ?
+                " (is API)" : "";
 
             //            if (SACore.GetBacklogDetails(keys[i], "isApi") !== '1') {
             //                continue;
@@ -22424,8 +22612,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             .css('border', 'none')
             .attr('class', 'focus-hover')
             .attr("onchange", "new UserStory().username_update(this,'" + inputId + "')")
-            .val($(el).html())
-            ;
+            .val($(el).html());
         $(el).html(inp);
         inp.focus();
     },
@@ -22438,8 +22625,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             .attr("onchange", "new UserStory().updateInputCompNew(this,'" + inputId + "')")
             .attr("onfocusout", "prosesDescriptionFocusout(this,'" + inputId + "')")
             .attr('class', 'focus-hover')
-            .val($(el).attr('iname'))
-            ;
+            .val($(el).attr('iname'));
         $(el).html(inp);
         inp.focus();
     },
@@ -22453,11 +22639,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         $(el).closest('p').attr("ondblclick", "new UserStory().username_editable(this,event)");
         $(el).closest('p').html(val);
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_backlog_id;
         json.kv.backlogName = val;
         var that = this;
@@ -22494,11 +22681,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = inputId;
 
         json.kv.inputName = $(el).val();
@@ -22537,7 +22725,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
 
                 //  refreshLiveProtytypeView();
             },
@@ -22634,7 +22824,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({ html: true });
+                $('[data-toggle="tooltip"]').tooltip({
+                    html: true
+                });
 
                 // refreshLiveProtytypeView();
             },
@@ -22669,29 +22861,29 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         try {
 
             if (selectFromDBField) {
-                st += " <b>Select from Database</b>: " + selectFromDBField
-                    + " (" +
-                    selectFromDBTable + " <i>from</i> " + selectFromDBDatabase
-                    + ")";
+                st += " <b>Select from Database</b>: " + selectFromDBField +
+                    " (" +
+                    selectFromDBTable + " <i>from</i> " + selectFromDBDatabase +
+                    ")";
 
             }
             if (sendToDBField) {
                 st += (selectFromDBField) ? '<br>' : "";
-                st += " <b>Send to Database Relation</b>: " + sendToDBField
-                    + " (" +
-                    sendToDBTable + " <i>from</i> " + sendToDBDatabase
-                    + ")";
+                st += " <b>Send to Database Relation</b>: " + sendToDBField +
+                    " (" +
+                    sendToDBTable + " <i>from</i> " + sendToDBDatabase +
+                    ")";
 
             }
             if (selectFromInput) {
                 st += (selectFromDBField || sendToDBField) ? '<br>' : "";
-                st += " <b>Select from API</b>: " + selectFromInput
-                    + " (" +
-                    "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('"
-                    + object.selectFromBacklogId + "')\">" + selectFromBacklog + "</a>"
-                    + ")";
-                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                    + object.id + "','" + object.selectFromBacklogId + "','IN_DESC_FROM')\"><i class='fa fa-cog'></i></a>";
+                st += " <b>Select from API</b>: " + selectFromInput +
+                    " (" +
+                    "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" +
+                    object.selectFromBacklogId + "')\">" + selectFromBacklog + "</a>" +
+                    ")";
+                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('" +
+                    object.id + "','" + object.selectFromBacklogId + "','IN_DESC_FROM')\"><i class='fa fa-cog'></i></a>";
 
 
             }
@@ -22704,12 +22896,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                             <option value='onfocus' ${object.actionType === 'onfocus' ? "selected" : ""}>On Focusout</option>
                         </select>`
 
-                st += " <b>Send/Save data to Story Card (API)</b>: " + sendToInput
-                    + " (" +
-                    "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" + object.sendToBacklogId + "')\">" + sendToBacklog + "</a>"
-                    + ")";
-                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                    + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a> ";
+                st += " <b>Send/Save data to Story Card (API)</b>: " + sendToInput +
+                    " (" +
+                    "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" + object.sendToBacklogId + "')\">" + sendToBacklog + "</a>" +
+                    ")";
+                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('" +
+                    object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a> ";
                 st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelationModal('" + object.sendToBacklogId + "',this)\"><i class='fas fa-exchange-alt'></i></a> ";
 
             }
@@ -22739,8 +22931,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
 
             st += stln;
-        } catch (e) {
-        }
+        } catch (e) {}
         return st;
     },
 
@@ -22749,40 +22940,42 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var colored = '<a class="colored-a d-flex" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
         var closeColor = "</a>"
         try {
-            colored = color.length > 0
-                ? colored
-                : '<a class="colored-a d-flex" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
+            colored = color.length > 0 ?
+                colored :
+                '<a class="colored-a d-flex" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
 
-        } catch (err) {
-        }
+        } catch (err) {}
 
-        return (desc1) ? stln + '<div data-id="' + descId + '" order="' + orderNo + '" class="drag-item align-items-center d-flex span-button-div">'
-            + "<input class='multiple-desc-inp' data-id=" + descId + " type='checkbox'>"
-            + `<div  class="btn btn-sm iconDrag"><i class=" fas fa-expand-arrows-alt"></i></div>`
-            + '<span class="span_hover desc-item-input" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text4Idesc(desc1))) + '\' '
+        return (desc1) ? stln + '<div data-id="' + descId + '" order="' + orderNo + '" class="drag-item align-items-center d-flex span-button-div">' +
+            "<input class='multiple-desc-inp' data-id=" + descId + " type='checkbox'>" +
+            `<div  class="btn btn-sm iconDrag"><i class=" fas fa-expand-arrows-alt"></i></div>` +
+            '<span class="span_hover desc-item-input" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text4Idesc(desc1))) + '\' '
 
-            + ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">'
-            + '- &nbsp; ' + colored
-            + this.fnline2Text(desc1)
-            + closeColor
-            + "</span>"
-            + '<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-            + '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">'
-            + ' <button class="dropdown-item" onclick="editInputDescription(this)">Edit</button>'
-            + ' <button class="dropdown-item" onclick="addInputDescToTaskNew(this,\'' + descId + '\',\'' + inputId + '\')">Add to Task</button>'
-            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#f19a91\')">Oranged</button>'
-            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#33E8FF\')">Blued</button>'
-            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#8ad6a3\')">Greened</button>'
-            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'\')">Whited</button>'
-            + ' <button class="dropdown-item" onclick="new UserStory().deleteInputDescriptionNew(this,\'' + descId + '\')">Delete</button>'
+            +
+            ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">' +
+            '- &nbsp; ' + colored +
+            this.fnline2Text(desc1) +
+            closeColor +
+            "</span>" +
+            '<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>' +
+            '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">' +
+            ' <button class="dropdown-item" onclick="editInputDescription(this)">Edit</button>' +
+            ' <button class="dropdown-item" onclick="addInputDescToTaskNew(this,\'' + descId + '\',\'' + inputId + '\')">Add to Task</button>' +
+            ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#f19a91\')">Oranged</button>' +
+            ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#33E8FF\')">Blued</button>' +
+            ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#8ad6a3\')">Greened</button>' +
+            ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'\')">Whited</button>' +
+            ' <button class="dropdown-item" onclick="new UserStory().deleteInputDescriptionNew(this,\'' + descId + '\')">Delete</button>'
 
-            + '</div>'
+            +
+            '</div>'
 
 
 
-            + '</div>'
-            + '</div>'
-            : stln;
+            +
+            '</div>' +
+            '</div>' :
+            stln;
 
 
     },
@@ -22795,8 +22988,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             var inp = $('<input type="text">')
                 .css("width", "90%")
                 .attr("onchange", "new UserStory().updateInputDescCompNew(this,'" + descId + "')")
-                .val($(el).attr('idesc'))
-                ;
+                .val($(el).attr('idesc'));
             $(el).html(inp);
             inp.focus();
         }
@@ -22813,11 +23005,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         json.kv.description = $(el).val();
         var that = this;
@@ -22861,11 +23054,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = inputDescId;
         var that = this;
         var data = JSON.stringify(json);
@@ -22939,8 +23133,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
 
             st += stln;
-        } catch (e) {
-        }
+        } catch (e) {}
         return st;
     },
     setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc: function (obj) {
@@ -22972,8 +23165,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
 
             st += stln;
-        } catch (e) {
-        }
+        } catch (e) {}
         return st;
     },
     setUserStoryInputsInfoOnGeneralViewDetails: function (res) {
@@ -22981,9 +23173,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        console.log(JSON.stringify(res))
         var obj = res.tbl[0].r;
         for (var i = 0; i < obj.length; i++) {
-            var inputName = obj[i].inputType === 'OUT'
-                ? obj[i].inputName + " (Output)"
-                : obj[i].inputName;
+            var inputName = obj[i].inputType === 'OUT' ?
+                obj[i].inputName + " (Output)" :
+                obj[i].inputName;
             var tr = $('<tr></tr>').append($('<td></td>').html((i + 1)));
             tr.append($('<td></td>').html(inputName));
             tr.append($('<td></td>').html(obj[i].tableName));
@@ -22997,11 +23189,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!id) {
             return st;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkInputId = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -23043,11 +23236,12 @@ function Notification(msg) {
 Notification.prototype = {
     getNotificationList: function () {
         $('#nav_history_overal_count').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -23073,8 +23267,8 @@ Notification.prototype = {
         for (var n = 0; n < obj.length; n++) {
             o = obj[n];
             var td1 = '<a href="#" onclick="new Notification().redirectToDetails(\'' +
-                o.fkProjectId + "','" + o.fkBacklogId + '\')">' + replaceTags(o.backlogName)
-                + '<br>' + replaceTags(o.projectName) + "</a>"
+                o.fkProjectId + "','" + o.fkBacklogId + '\')">' + replaceTags(o.backlogName) +
+                '<br>' + replaceTags(o.projectName) + "</a>"
             td1 += o.isReviewed === '1' ? "" : " <span style='color:red;font-size:11px'><b>(new)</b></span>";
             var tr = $('<tr></tr>')
                 .append($('<td style="padding:4px;"></td>').html(td1))
@@ -23094,31 +23288,31 @@ Notification.prototype = {
     },
     genHistoryLine: function (o) {
         var filen = (o.historyTellerImage) ? o.historyTellerImage : new User().getDefaultUserprofileName();
-        var st = "<img style=\"padding:5px;float:left;width:34px;heigh:34px;\" class=\"figure-img img-fluid rounded-circle\"   src=\""
-            + fileUrl(filen) + "\" alt=\"" + replaceTags(o.historyTellerName) + "\">";
-        st += "<b style=\"color:red!important;font-size:14px;\">" + "  " + history_type[o.historyType] + "</b> by <i><b>"
-            + o.historyTellerName + " </b><span>" + Utility.convertDate(o.historyDate) + ", " + Utility.convertTime(o.historyTime)
-            + "</span></i>, </br> " + replaceTags(o.historyBody);
+        var st = "<img style=\"padding:5px;float:left;width:34px;heigh:34px;\" class=\"figure-img img-fluid rounded-circle\"   src=\"" +
+            fileUrl(filen) + "\" alt=\"" + replaceTags(o.historyTellerName) + "\">";
+        st += "<b style=\"color:red!important;font-size:14px;\">" + "  " + history_type[o.historyType] + "</b> by <i><b>" +
+            o.historyTellerName + " </b><span>" + Utility.convertDate(o.historyDate) + ", " + Utility.convertTime(o.historyTime) +
+            "</span></i>, </br> " + replaceTags(o.historyBody);
         return st;
     },
     genUSLine: function (o) {
-        var isSourced = o.isSourced === '1'
-            ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-            : o.fkSourcedId.length > 0
-                ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + o.sourcedName + '">&nbsp;</i>'
-                : "";
-        var countLine = o.isSourced === '1' && o.taskCount > 0
-            ? '&nbsp;&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>'
-            : " ";
-        countLine += o.isSourced === '1' && o.inputCount > 0
-            ? '&nbsp;&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>'
-            : "";
-        countLine += o.commentCount > 0
-            ? '&nbsp;&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>'
-            : "";
-        var isFromCustomer = o.isFromCustomer === '1'
-            ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
-            : "";
+        var isSourced = o.isSourced === '1' ?
+            "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>" :
+            o.fkSourcedId.length > 0 ?
+            '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + o.sourcedName + '">&nbsp;</i>' :
+            "";
+        var countLine = o.isSourced === '1' && o.taskCount > 0 ?
+            '&nbsp;&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>' :
+            " ";
+        countLine += o.isSourced === '1' && o.inputCount > 0 ?
+            '&nbsp;&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>' :
+            "";
+        countLine += o.commentCount > 0 ?
+            '&nbsp;&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>' :
+            "";
+        var isFromCustomer = o.isFromCustomer === '1' ?
+            "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>" :
+            "";
         var td2 = '<span class="isSourced">';
         td2 += isSourced;
         td2 += '</span>';
@@ -23168,11 +23362,12 @@ Notification.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -23313,11 +23508,12 @@ Label.prototype = {
         if (checked === 1) {
             ismenu = 1;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = projectId;
         json.kv.name = this.getName();
         json.kv.color = this.getColor();
@@ -23344,21 +23540,22 @@ Label.prototype = {
         });
     },
     insert: function () {
-      /*   if (!global_var.current_project_id) {
-            Toaster.showError("Please choose project first!");
-            return;
-        } */
+        /*   if (!global_var.current_project_id) {
+              Toaster.showError("Please choose project first!");
+              return;
+          } */
         var ismenu = '0';
         var id = 'insertLabelUseAsMenu';
         var checked = $("input[id=" + id + "]:checked").length;
         if (checked === 1) {
             ismenu = 1;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.name = this.getName();
         json.kv.color = this.getColor();
@@ -23392,11 +23589,12 @@ Label.prototype = {
             ismenu = 1;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = this.getId();
         json.kv.name = this.getName();
         json.kv.color = this.getColor();
@@ -23467,11 +23665,12 @@ Label.prototype = {
             $(this).html("");
         });
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = getBugFilterProjectList4Sprint();
         var that = this;
         var data = JSON.stringify(json);
@@ -23486,8 +23685,7 @@ Label.prototype = {
                 taskManagement.taskLabelList = res
                 try {
                     that.setLabelListTable4Body(res);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -23499,14 +23697,15 @@ Label.prototype = {
         $('.tasklabellist').each(function () {
             $(this).html("");
         })
-      /*   if (!global_var.current_project_id) {
-            return;
-        } */
-        var json = { kv: {} };
+        /*   if (!global_var.current_project_id) {
+              return;
+          } */
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -23523,8 +23722,7 @@ Label.prototype = {
                 try {
                     that.setLabelListTable(res);
                     SABacklogLabel.Load(res);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -23629,15 +23827,15 @@ Label.prototype = {
                 .append(`<span style='color:${cl === '#000000' ? "#fff" : cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
                 .append($('<input type="checkbox" id="label-' + obj[n].id + '" class="d-none label-assign-link-class us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                     .attr('taskIds', obj[n].labelTaskIds)
-                    .attr("data-count",obj[n].backlogCount)
+                    .attr("data-count", obj[n].backlogCount)
                     .prop("checked", isFiltered))
                 .append($('<span class="">')
                     .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
                     .append(replaceTags(obj[n].name) + " (" + obj[n].backlogCount + ")")));
 
             tr.append($('<span class="cs-button-group">')
-              
-                .append( `<div class="dropdown last-icon  " >
+
+                .append(`<div class="dropdown last-icon  " >
                 <a class=" " href="#" role="button" id='label-table' data-toggle="dropdown" aria-expanded="true">
                       <i class="fas fa-ellipsis-h" style='color:#fff'></i>
                 </a>
@@ -23655,16 +23853,16 @@ Label.prototype = {
                 </div>
               </div>`)
                 .append($('<span class=" last-icon story-card-label-assign prManag-task-label-assign ">')
-                         .css("padding", "0px 6px")
-                         .html('<i class="fas fa-plus"></i>')
-                         .attr('id', obj[n].id))
+                    .css("padding", "0px 6px")
+                    .html('<i class="fas fa-plus"></i>')
+                    .attr('id', obj[n].id))
                 .append($('<span class=" last-icon story-card-label-unassigne prManag-task-label-assign ">')
-                         .css("padding", "0px 6px")
-                         .html('<i class="fas fa-minus"></i>')
-                         .attr('id', obj[n].id))
-                
+                    .css("padding", "0px 6px")
+                    .html('<i class="fas fa-minus"></i>')
+                    .attr('id', obj[n].id))
+
             )
-             
+
 
 
 
@@ -23906,11 +24104,12 @@ Sprint.prototype = {
         }
     },
     insert4Task: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
 
         var projectId = "";
         if (global_var.current_modal === 'loadTaskManagement') {
@@ -23972,11 +24171,12 @@ Sprint.prototype = {
         });
     },
     updateInfo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = this.getId();
         json.kv.sprintName = this.getName();
         json.kv.sprintColor = this.getColor();
@@ -24024,7 +24224,7 @@ Sprint.prototype = {
         this.addController4Insert();
         this.insert();
         this.load();
-        
+
     },
     add4Task: function () {
         this.addController4Insert4Task();
@@ -24060,8 +24260,7 @@ Sprint.prototype = {
                 //                console.log(JSON.stringify(res));
                 try {
                     that.setSprintListTable(res);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -24084,11 +24283,12 @@ Sprint.prototype = {
         //        if (!global_var.current_project_id) {
         //            return;
         //        }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = getBugFilterProjectList4Sprint();
         var that = this;
         var data = JSON.stringify(json);
@@ -24106,8 +24306,7 @@ Sprint.prototype = {
                 try {
                     var tbl = that.getSprintListTableBody4Task(res, true, checkedLines);
                     $('#sprintlist4Task').html(tbl);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -24206,25 +24405,25 @@ Sprint.prototype = {
 
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (checkedLines.includes(obj[n].id)) ? true : false;
-            var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1')
-                ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
-                : "";
-                var cl = obj[n].sprintColor;
-                var tr = $('<li class="">');
-                tr.append($('<label class="">')
-                    .attr('id', obj[n].id)
-                    .attr('for', 'label-' + obj[n].id)
-                    .append(`<span style='color:${cl === '#000000' ? "#fff" : cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
-                    .append($('<input type="checkbox" id="label-' + obj[n].id + '" class="d-none bug-task-filter-checkbox-sprint" value="' + obj[n].id + '">')
-                        .attr('taskIds', obj[n].sprintTaskIds)
-                        .prop("checked", isFiltered))
-                    .append($('<span class="">')
-                        .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
-                        .append(replaceTags(obj[n].sprintName) + " (" + obj[n].backlogCount + ")")));
-    
-                tr.append($('<span class="cs-button-group">')
-                  
-                    .append( `<div class="dropdown last-icon  " >
+            var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1') ?
+                ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>" :
+                "";
+            var cl = obj[n].sprintColor;
+            var tr = $('<li class="">');
+            tr.append($('<label class="">')
+                .attr('id', obj[n].id)
+                .attr('for', 'label-' + obj[n].id)
+                .append(`<span style='color:${cl === '#000000' ? "#fff" : cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
+                .append($('<input type="checkbox" id="label-' + obj[n].id + '" class="d-none bug-task-filter-checkbox-sprint" value="' + obj[n].id + '">')
+                    .attr('taskIds', obj[n].sprintTaskIds)
+                    .prop("checked", isFiltered))
+                .append($('<span class="">')
+                    .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
+                    .append(replaceTags(obj[n].sprintName) + " (" + obj[n].backlogCount + ")")));
+
+            tr.append($('<span class="cs-button-group">')
+
+                .append(`<div class="dropdown last-icon  " >
                     <a class=" " href="#" role="button" id='label-table' data-toggle="dropdown" aria-expanded="true">
                           <i class="fas fa-ellipsis-h" style='color:#fff'></i>
                     </a>
@@ -24241,16 +24440,16 @@ Sprint.prototype = {
                       </a>
                     </div>
                   </div>`)
-                    .append($('<span class=" last-icon story-card-label-assign prManag-task-label-assign ">')
-                             .css("padding", "0px 6px")
-                             .html('<i class="fas fa-plus"></i>')
-                             .attr('id', obj[n].id))
-                    .append($('<span class=" last-icon story-card-label-unassigne prManag-task-label-assign ">')
-                             .css("padding", "0px 6px")
-                             .html('<i class="fas fa-minus"></i>')
-                             .attr('id', obj[n].id))
-                    
-                )
+                .append($('<span class=" last-icon story-card-label-assign prManag-task-label-assign ">')
+                    .css("padding", "0px 6px")
+                    .html('<i class="fas fa-plus"></i>')
+                    .attr('id', obj[n].id))
+                .append($('<span class=" last-icon story-card-label-unassigne prManag-task-label-assign ">')
+                    .css("padding", "0px 6px")
+                    .html('<i class="fas fa-minus"></i>')
+                    .attr('id', obj[n].id))
+
+            )
             tbl.append(tr);
         }
         return tbl;
@@ -24265,19 +24464,18 @@ Sprint.prototype = {
         tbl.append(tr1);
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (global_var.userStoryFilter.sprint.includes(obj[n].id)) ? true : false;
-            var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1')
-                ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
-                : "";
+            var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1') ?
+                ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>" :
+                "";
 
             var tr = $('<tr class="lbl-list-tr"></tr>');
-            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                ? " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")"
-                : "";
+            var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate)) ?
+                " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")" :
+                "";
             tr.append($('<td class="lbl-list-td"></td>')
                 .append($('<input type="checkbox" class="us-filter-checkbox-sprint" value="' + obj[n].id + '">')
                     .prop("checked", isFiltered))
-                .attr('id', obj[n].id))
-                ;
+                .attr('id', obj[n].id));
             tr.append($('<td class="lbl-list-td"></td>')
                 .append(replaceTags(obj[n].sprintName))
                 .append(d)
@@ -24349,11 +24547,12 @@ Project.prototype = {
         }
         var purpose = ""; //this.getPurposeList();
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.projectName = $('#txtProjectName').val();
         json.kv.projectCode = $('#txtProjectCode').val();
         json.kv.description = $('#txtProjectDescription').val();
@@ -24413,11 +24612,12 @@ Project.prototype = {
         this.loadProject(st);
     },
     loadProject: function (pname) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.projectName = pname;
         var that = this;
         var data = JSON.stringify(json);
@@ -24458,11 +24658,12 @@ Project.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -24487,8 +24688,7 @@ Project.prototype = {
                     $('#overal_us_count_sourced').html(o.sourcedCount);
                     $('#overal_us_count_bound').html(o.boundCount);
                     $('#overal_us_count_initial').html(o.initialCount);
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -24497,11 +24697,12 @@ Project.prototype = {
     },
     loadMainProjectList4Manual: function () {
         showProgress3();
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.asc = "projectName";
         var that = this;
         var data = JSON.stringify(json);
@@ -24532,11 +24733,12 @@ Project.prototype = {
         });
     },
     loadMainProjectList: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.asc = "projectName";
         var that = this;
         var data = JSON.stringify(json);
@@ -24604,8 +24806,8 @@ Project.prototype = {
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                st += '<tr class="pro-tr"  pid="' + obj[n].id + '" pdesc="'
-                    + replaceTags(obj[n].description) + '" pname="' + replaceTags(obj[n].projectName) + '">';
+                st += '<tr class="pro-tr"  pid="' + obj[n].id + '" pdesc="' +
+                    replaceTags(obj[n].description) + '" pname="' + replaceTags(obj[n].projectName) + '">';
                 st += '<td>' + (n + 1) + '</td>';
                 st += '<td>' + replaceTags(obj[n].projectName) + '</td>';
                 st += '<td>' + replaceTags(obj[n].projectCode) + '</td>';
@@ -24615,8 +24817,7 @@ Project.prototype = {
                 st += '<td>' + '<a href="#" id="btnDeleteProject" onclick="new Project().deleteProject(\'' + obj[n].id + '\')"><i class="fa fa-trash" aria-hidden="true"></i></a>' + '</td>';
                 st += '</tr>';
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         st += '<tr">';
         st += '<td></td>';
         st += '<td></td>';
@@ -24635,11 +24836,12 @@ Project.prototype = {
         this.insertAfterEvent();
     },
     showProjectDetailsMain: function (e) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $(e).attr("pid");
         var that = this;
         var data = JSON.stringify(json);
@@ -24667,11 +24869,12 @@ Project.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = pid;
         var that = this;
         var data = JSON.stringify(json);
@@ -24699,16 +24902,15 @@ Project.prototype = {
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                var del = global_var.current_user_type === 'A' || global_var.current_user_type === 'M'
-                    ? '<a href="#" onclick="new Project().deleteUser(this,\'' + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>'
-                    : "";
+                var del = global_var.current_user_type === 'A' || global_var.current_user_type === 'M' ?
+                    '<a href="#" onclick="new Project().deleteUser(this,\'' + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>' :
+                    "";
                 st += '<tr>';
                 st += '<td>' + replaceTags(obj[n].userName) + '</td>';
                 st += '<td>' + del + '</td>';
                 st += '</tr>';
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         st += '<tr>';
         st += '<td></td>';
@@ -24762,11 +24964,12 @@ Project.prototype = {
         if (!projectId) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = projectId;
         var that = this;
         var data = JSON.stringify(json);
@@ -24830,9 +25033,9 @@ Project.prototype = {
             $('#us-submenu-ipo').show();
             $('#smb-details-ipo').show()
         } else {
-            global_var.current_us_submenu = global_var.current_us_submenu === 'ipo'
-                ? ""
-                : global_var.current_us_submenu;
+            global_var.current_us_submenu = global_var.current_us_submenu === 'ipo' ?
+                "" :
+                global_var.current_us_submenu;
             $('#us-submenu-ipo').hide();
             $('#smb-details-ipo').hide();
         }
@@ -24843,9 +25046,9 @@ Project.prototype = {
             $('#us-submenu-tasks').show();
             $('#smb-details-tasks').show()
         } else {
-            global_var.current_us_submenu = global_var.current_us_submenu === 'tasks'
-                ? ""
-                : global_var.current_us_submenu;
+            global_var.current_us_submenu = global_var.current_us_submenu === 'tasks' ?
+                "" :
+                global_var.current_us_submenu;
             $('#us-submenu-tasks').hide();
             $('#smb-details-tasks').hide();
         }
@@ -24856,9 +25059,9 @@ Project.prototype = {
             $('#us-submenu-generalview').show();
             //            $('#smb-details-generalview').show()
         } else {
-            global_var.current_us_submenu = global_var.current_us_submenu === 'generalview'
-                ? ""
-                : global_var.current_us_submenu;
+            global_var.current_us_submenu = global_var.current_us_submenu === 'generalview' ?
+                "" :
+                global_var.current_us_submenu;
             $('#us-submenu-generalview').hide();
             $('#smb-details-generalview').hide();
         }
@@ -24869,9 +25072,9 @@ Project.prototype = {
             $('#us-submenu-testscenario').show();
             $('#smb-details-testscenario').show()
         } else {
-            global_var.current_us_submenu = global_var.current_us_submenu === 'testscenario'
-                ? ""
-                : global_var.current_us_submenu;
+            global_var.current_us_submenu = global_var.current_us_submenu === 'testscenario' ?
+                "" :
+                global_var.current_us_submenu;
             $('#us-submenu-testscenario').hide();
             $('#smb-details-testscenario').hide();
         }
@@ -24882,16 +25085,16 @@ Project.prototype = {
             $('#us-submenu-history').show();
             $('#smb-details-history').show()
         } else {
-            global_var.current_us_submenu = global_var.current_us_submenu === 'history'
-                ? ""
-                : global_var.current_us_submenu;
+            global_var.current_us_submenu = global_var.current_us_submenu === 'history' ?
+                "" :
+                global_var.current_us_submenu;
             $('#us-submenu-history').hide();
             $('#smb-details-history').hide();
         }
 
-        firstActiveTab = global_var.current_us_submenu === ''
-            ? firstActiveTab
-            : global_var.current_us_submenu;
+        firstActiveTab = global_var.current_us_submenu === '' ?
+            firstActiveTab :
+            global_var.current_us_submenu;
         //        console.log('firstActiveTab=' + firstActiveTab)
         new UserStory().toggleSubmenu($('#us-submenu-' + firstActiveTab), firstActiveTab);
     },
@@ -24913,11 +25116,12 @@ Project.prototype = {
 
         var purpose = ""; //this.getPurposeList();
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#txtProjectId').val();
         json.kv.projectName = $('#txtProjectName').val();
         json.kv.projectCode = $('#txtProjectCode').val();
@@ -24942,11 +25146,12 @@ Project.prototype = {
         });
     },
     loadUserList4Combo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.id = $('#txtProjectId').val();
         //        json.kv.projectName = $('#txtProjectName').val();
         //        json.kv.description = $('#txtProjectDescription').val();
@@ -24974,11 +25179,11 @@ Project.prototype = {
         for (var n = 0; n < obj.length; n++) {
             if (!obj[n].userPersonName)
                 continue;
-            var t = obj[n].liUserPermissionCode === 'A'
-                ? '<b style="color:red">-(A)</b>'
-                : obj[n].liUserPermissionCode === 'M'
-                    ? '<b style="color:blue">-(M)</b>'
-                    : "";
+            var t = obj[n].liUserPermissionCode === 'A' ?
+                '<b style="color:red">-(A)</b>' :
+                obj[n].liUserPermissionCode === 'M' ?
+                '<b style="color:blue">-(M)</b>' :
+                "";
             $('#sbxUserList').append($('<option id="' + obj[n].id + '" ></option>')
                 .html(replaceTags(obj[n].userPersonName) + " " + t));
         }
@@ -24993,11 +25198,12 @@ Project.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = $('#txtProjectId').val();
         json.kv.fkUserId = $('#sbxUserList option:selected').attr("id");
         var that = this;
@@ -25035,11 +25241,12 @@ Project.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -25066,11 +25273,12 @@ Project.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = projectId;
         var that = this;
         var data = JSON.stringify(json);
@@ -25091,11 +25299,12 @@ Project.prototype = {
     },
     isUserExistInPermission: function () {
         var f = false;
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = $('#txtProjectId').val();
         json.kv.fkUserId = $('#sbxUserList option:selected').attr("id");
         var that = this;
@@ -25112,8 +25321,7 @@ Project.prototype = {
                     if (res.tbl[0].r.length > 0) {
                         f = true;
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -25182,11 +25390,12 @@ User.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.domain = $('#domainName').val().trim();
         json.kv.username = $('#username').val().trim();
         var data = JSON.stringify(json);
@@ -25282,11 +25491,12 @@ User.prototype = {
             $('#msgUsernameValid').hide();
             return f;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.value = username;
         json.kv.type = "username";
         var data = JSON.stringify(json);
@@ -25317,11 +25527,12 @@ User.prototype = {
             Toaster.showError("User is not selected")
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var data = JSON.stringify(json);
         $.ajax({
@@ -25346,11 +25557,12 @@ User.prototype = {
         if (username === 'undefined' || !username) {
             return f;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#txtUserIdInInsertNewUser').val();
         json.kv.username = username;
         var data = JSON.stringify(json);
@@ -25367,8 +25579,7 @@ User.prototype = {
                     } else {
                         f = true;
                     }
-                } catch (e) {
-                }
+                } catch (e) {}
 
             },
             error: function () {
@@ -25400,11 +25611,12 @@ User.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.currentPassword = $('#changePassword_oldpwd').val();
         json.kv.newPassword = $('#changePassword_newpwd').val();
         json.kv.confirmNewPassword = $('#changePassword_newpwdconfirm').val();
@@ -25430,11 +25642,12 @@ User.prototype = {
         });
     },
     loadPersonalUser: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var data = JSON.stringify(json);
         $.ajax({
             url: urlGl + "api/post/srv/serviceCrGetAccountInfo",
@@ -25443,9 +25656,9 @@ User.prototype = {
             async: false,
             contentType: 'text/html',
             success: function (res) {
-                var img = (res.tbl[0].r[0].userImage)
-                    ? fileUrl(res.tbl[0].r[0].userImage)
-                    : fileUrl(that.getDefaultUserprofileName());
+                var img = (res.tbl[0].r[0].userImage) ?
+                    fileUrl(res.tbl[0].r[0].userImage) :
+                    fileUrl(that.getDefaultUserprofileName());
                 $('#userprofile_main_userimg').attr("src", img);
                 $('#myAccountModal_imgUserProjectInsert').attr("src", img);
                 $('#myAccountModal_txtUsername').val((res.tbl[0].r[0].username));
@@ -25461,11 +25674,12 @@ User.prototype = {
         });
     },
     loadPersonalUserOnInit: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var data = JSON.stringify(json);
         that = this;
         $.ajax({
@@ -25476,9 +25690,9 @@ User.prototype = {
             contentType: 'text/html',
             success: function (res) {
 
-                var img = (res.tbl[0].r[0].userImage)
-                    ? fileUrl(res.tbl[0].r[0].userImage)
-                    : fileUrl(that.getDefaultUserprofileName());
+                var img = (res.tbl[0].r[0].userImage) ?
+                    fileUrl(res.tbl[0].r[0].userImage) :
+                    fileUrl(that.getDefaultUserprofileName());
                 $('#userprofile_main_userimg').attr("src", img);
                 $('#userprofile_main_id').html(replaceTags(res.tbl[0].r[0].userPersonName));
                 $('#userprofile_main_id').attr('usrId', res.tbl[0].r[0].id);
@@ -25554,11 +25768,12 @@ User.prototype = {
         if (username === 'undefined' || !username) {
             return f;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.username = username;
         var data = JSON.stringify(json);
         $.ajax({
@@ -25591,11 +25806,12 @@ User.prototype = {
         if (password === 'undefined' || !password) {
             return f;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.value = password;
         json.kv.type = "password";
         var data = JSON.stringify(json);
@@ -25630,11 +25846,12 @@ User.prototype = {
         if (email1 === 'undefined' || !email1) {
             return f;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.value = email1;
         json.kv.type = "email";
         var data = JSON.stringify(json);
@@ -25659,11 +25876,12 @@ User.prototype = {
         return f;
     },
     insertAPI: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.userPersonName = $('#txtUserFulname').val();
         json.kv.email1 = $('#txtUserEmail').val();
         json.kv.liUserPermissionCode = $('#cbUserType').val();
@@ -25722,11 +25940,12 @@ User.prototype = {
         }
     },
     updateMyInfoDetails: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.userPersonName = $('#myAccountModal_txtUserFulname').val();
         json.kv.email1 = $('#myAccountModal_txtUserEmail').val();
         json.kv.userImage = $('#myAccountModal_userProfilePhoto4Insert').attr('fname');
@@ -25834,12 +26053,10 @@ User.prototype = {
             success: function (data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {
-            }
+            error: function () {}
         });
         return finalname;
-    }
-    ,
+    },
     afterInsertEvent: function (res) {
         $('#txtUserIdInInsertNewUser').val(res.kv.id);
         $('.newUserInsert').hide();
@@ -25847,8 +26064,7 @@ User.prototype = {
         $('#userProfilePhoto4Insert').val("");
         $('#txtUsernamePasswd').val('');
         $('#txtUsernamePasswdCheckbox').prop("checked", false).change();
-    }
-    ,
+    },
     beforeInsertEvent: function () {
         $('#txtUserIdInInsertNewUser').val("");
         $('#userProfilePhoto4Insert').prop("src", fileUrl(this.getDefaultUserprofileName()));
@@ -25863,8 +26079,7 @@ User.prototype = {
         $('#tblUserInvolvedUser > tbody').html("<tr><td></td><td></td></tr>")
         $('.newUserInsert').show();
         $('.newUserInsertAfter').hide();
-    }
-    ,
+    },
     passwordChecked: function () {
         var checked = $("input[id=txtUsernamePasswdCheckbox]:checked").length;
         if (checked == 0) {
@@ -25873,13 +26088,11 @@ User.prototype = {
             $('#txtUsernamePasswd').removeAttr("disabled");
         }
         $('#txtUsernamePasswd').val("");
-    }
-    ,
+    },
     addNewUserUnchechedEvent: function () {
         $('.newUserInsert').hide();
         $('.newUserInsertAfter').show();
-    }
-    ,
+    },
     addNewUserToList: function (res) {
         if (!res.kv.id) {
             Toaster.showError("User is not inserted!");
@@ -25893,8 +26106,7 @@ User.prototype = {
         st += '</tr>';
         $(st).insertBefore('#tblUserList > tbody > tr:first');
         $('.user-tr').first().click();
-    }
-    ,
+    },
     showAllUsersAfterInsert: function (UserName, res) {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -25905,20 +26117,19 @@ User.prototype = {
         }
 
 
-    }
-    ,
+    },
     searchUser: function (e) {
         $('#tblUserList > tbody').html('');
         var st = '%%' + $(e).val() + '%%';
         this.loadUser(st);
-    }
-    ,
+    },
     loadUser: function (pname) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.userPersonName = pname;
         json.kv.asc = "userPersonName";
         var that = this;
@@ -25942,11 +26153,11 @@ User.prototype = {
         });
     },
     getUserTypeTag: function (t) {
-        return t === 'A'
-            ? '<b style="color:red">-(A)</b>'
-            : t === 'M'
-                ? '<b style="color:blue">-(M)</b>'
-                : "";
+        return t === 'A' ?
+            '<b style="color:red">-(A)</b>' :
+            t === 'M' ?
+            '<b style="color:blue">-(M)</b>' :
+            "";
     },
     clearFilterLine: function () {
         $('#newUserNameSearch').val('');
@@ -25958,9 +26169,9 @@ User.prototype = {
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                var img = (obj[n].userImage)
-                    ? fileUrl(obj[n].userImage)
-                    : fileUrl(that.getDefaultUserprofileName());
+                var img = (obj[n].userImage) ?
+                    fileUrl(obj[n].userImage) :
+                    fileUrl(that.getDefaultUserprofileName());
 
                 var status = obj[n].userStatus === 'A' ? ", <b>Active</b>" : ", <b>Passive</b>";
                 var t = this.getUserTypeTag(obj[n].liUserPermissionCode);
@@ -25973,8 +26184,7 @@ User.prototype = {
 
                 st += '</tr>';
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         st += '<tr">';
         st += '<td></td>';
         st += '<td></td>';
@@ -25983,20 +26193,19 @@ User.prototype = {
         st += '<td></td>';
         st += '</tr>';
         return st;
-    }
-    ,
+    },
     showUserDetails: function (e) {
         var pid = $(e).attr("pid");
         this.showUserDetailsMain(e);
         this.selectUserPermission(pid);
-    }
-    ,
+    },
     showUserDetailsMain: function (e) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $(e).attr("pid");
         json.kv.asc = "userPersonName";
         var that = this;
@@ -26038,11 +26247,12 @@ User.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkUserId = pid;
         var that = this;
         var data = JSON.stringify(json);
@@ -26063,8 +26273,7 @@ User.prototype = {
                 Toaster.showError(('somethingww'));
             }
         });
-    }
-    ,
+    },
     setUserPermissionList: function (res) {
         var st = "";
         try {
@@ -26077,8 +26286,7 @@ User.prototype = {
                 st += '</a></td>';
                 st += '</tr>';
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         st += '<tr>';
         st += '<td></td>';
@@ -26113,11 +26321,12 @@ User.prototype = {
         this.uploadUserProfile4Update();
     },
     updateMainDetail: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#txtUserIdInInsertNewUser').val()
         json.kv.userPersonName = $('#txtUserFulname').val();
         json.kv.email1 = $('#txtUserEmail').val();
@@ -26152,11 +26361,12 @@ User.prototype = {
         });
     },
     loadProjectList4Combo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -26173,8 +26383,7 @@ User.prototype = {
                 Toaster.showError(('somethingww'));
             }
         });
-    }
-    ,
+    },
     addUserList4Combo: function (res) {
         $('#sbxProjectListByUser').html("");
         var obj = res.tbl[0].r;
@@ -26185,8 +26394,7 @@ User.prototype = {
             $('#sbxProjectListByUser').append($('<option id="' + obj[n].id + '" ></option>')
                 .html(replaceTags(obj[n].projectName)));
         }
-    }
-    ,
+    },
     addProjectToUser: function () {
 
         if ($('#txtUserIdInInsertNewUser').val().length == 0) {
@@ -26200,11 +26408,12 @@ User.prototype = {
 
 
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkUserId = $('#txtUserIdInInsertNewUser').val();
         json.kv.fkProjectId = $('#sbxProjectListByUser option:selected').attr("id");
         var that = this;
@@ -26223,20 +26432,18 @@ User.prototype = {
                 Toaster.showError(('somethingww'));
             }
         });
-    }
-    ,
+    },
     setProjectToUserListTable: function () {
         var st = '';
         st += '<tr>';
         st += '<td>' + $('#sbxProjectListByUser').val() + '</td>';
-        st += '<td><a href="#" onclick="new User().deleteProjectFromPermissionList(this,\''
-            + $('#sbxProjectListByUser option:selected').attr("id") + '\')">';
+        st += '<td><a href="#" onclick="new User().deleteProjectFromPermissionList(this,\'' +
+            $('#sbxProjectListByUser option:selected').attr("id") + '\')">';
         st += '<i class="fa fa-trash" "></i>';
         st += '</a></td>';
         st += '</tr>';
         $(st).insertBefore('#tblUserInvolvedUser > tbody > tr:first');
-    }
-    ,
+    },
     deleteUser: function (e, id) {
         if (!confirm("Are you sure?")) {
             return;
@@ -26245,11 +26452,12 @@ User.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -26267,8 +26475,7 @@ User.prototype = {
                 Toaster.showError(('somethingww'));
             }
         });
-    }
-    ,
+    },
     removeUser: function (id) {
         if (!id) {
             return;
@@ -26278,11 +26485,12 @@ User.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -26305,8 +26513,7 @@ User.prototype = {
                 Toaster.showError(('somethingww'));
             }
         });
-    }
-    ,
+    },
     deleteProjectFromPermissionList: function (e, id) {
         if (!confirm("Are you sure?")) {
             return;
@@ -26315,11 +26522,12 @@ User.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -26340,11 +26548,12 @@ User.prototype = {
     },
     isUserExistInPermission: function () {
         var f = false;
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkUserId = $('#txtUserIdInInsertNewUser').val();
         json.kv.fkProjectId = $('#sbxProjectListByUser option:selected').attr("id");
         var that = this;
@@ -26370,8 +26579,7 @@ User.prototype = {
             }
         });
         return f;
-    }
-    ,
+    },
     toggleFields: function () {
         this.beforeInsertEvent();
     },
@@ -26407,11 +26615,12 @@ TaskType.prototype = {
             Toaster.showError("Please enter  Type Status");
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.typeName = $('#txtTaskTypeName').val();
         json.kv.typeStatus = $('#txtTaskTypeStatus').val();
         json.kv.description = $('#txtTaskTypeDescription').val();
@@ -26478,11 +26687,12 @@ TaskType.prototype = {
         this.loadTaskType("%%%%");
     },
     loadTaskType: function (pname) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.typeName = pname;
         var that = this;
         var data = JSON.stringify(json);
@@ -26509,8 +26719,8 @@ TaskType.prototype = {
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                st += '<tr class="tasktype-tr"  pid="' + obj[n].id + '" pdesc="'
-                    + obj[n].description + '" pname="' + obj[n].typeName + '">';
+                st += '<tr class="tasktype-tr"  pid="' + obj[n].id + '" pdesc="' +
+                    obj[n].description + '" pname="' + obj[n].typeName + '">';
                 st += '<td>' + (n + 1) + '</td>';
                 st += '<td class="text-center">' + obj[n].projectName + '</td>';
                 st += '<td>' + obj[n].orderNo + '</td>';
@@ -26524,8 +26734,7 @@ TaskType.prototype = {
                 st += '</tr>';
 
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         st += '<tr">';
         st += '<td></td>';
         st += '<td></td>';
@@ -26547,11 +26756,12 @@ TaskType.prototype = {
         this.insertAfterEvent();
     },
     showTaskTypeDetailsMain: function (e) {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $(e).attr("pid");
         var that = this;
         var data = JSON.stringify(json);
@@ -26570,7 +26780,7 @@ TaskType.prototype = {
                 $('#txtTaskTypeStatus').val(res.tbl[0].r[0].typeStatus);
                 $('#txtTaskTypeDescription').val(res.tbl[0].r[0].description);
                 $('#taskTypeModal_fkAssigneeId').val(res.tbl[0].r[0].fkAssigneeId);
-                
+
                 $('#txtTaskTypeProject').val(res.tbl[0].r[0].fkProjectId);
                 $('#txtTaskTypeOrderNo').val(res.tbl[0].r[0].orderNo);
 
@@ -26594,11 +26804,12 @@ TaskType.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#txtTaskTypeId').val();
         json.kv.typeName = $('#txtTaskTypeName').val();
         json.kv.typeStatus = $('#txtTaskTypeStatus').val();
@@ -26607,7 +26818,7 @@ TaskType.prototype = {
         json.kv.afterDoneRelationId = getMultiSelectpickerValueById('taskTypeModal_afterDoneRelation');
         json.kv.autRelationId = getMultiSelectpickerValueById('taskTypeModal_aut_relation');
         json.kv.fkProjectId = $('#txtTaskTypeProject').val();
-        json.kv.orderNo=$('#txtTaskTypeOrderNo').val();
+        json.kv.orderNo = $('#txtTaskTypeOrderNo').val();
 
         var that = this;
         var data = JSON.stringify(json);
@@ -26628,11 +26839,12 @@ TaskType.prototype = {
         });
     },
     loadUserList4Combo: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         //        json.kv.id = $('#txtTaskTypeId').val();
         //        json.kv.TaskTypeName = $('#txtTaskTypeName').val();
         //        json.kv.description = $('#txtTaskTypeDescription').val();
@@ -26668,11 +26880,12 @@ TaskType.prototype = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.id = $('#txtTaskTypeId').val();
         var that = this;
         var data = JSON.stringify(json);
@@ -26693,11 +26906,12 @@ TaskType.prototype = {
     },
     isUserExistInPermission: function () {
         var f = false;
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkTaskTypeId = $('#txtTaskTypeId').val();
         json.kv.fkUserId = $('#sbxUserList option:selected').attr("id");
         var that = this;
@@ -26738,9 +26952,9 @@ TaskType.prototype = {
                 var select = $('#txtTaskTypeProject');
                 select.html('<option></option>');
                 var obj = res.tbl[0].r;
-                obj.map((list)=>select.append(`<option value='${list.id}' ${(list.id===projectId)?"selected":""}>
+                obj.map((list) => select.append(`<option value='${list.id}' ${(list.id===projectId)?"selected":""}>
                 ${list.projectName}</option>`))
-                 
+
             })
     },
 
@@ -26841,20 +27055,20 @@ var BacklogHistory = {
     },
     setFilterPaginationRange: function () {
         var s = global_var.user_story_history_filter_current_index;
-        var e = parseFloat(global_var.user_story_history_filter_current_index)
-            + parseFloat($('#us_history_filter_history_perpage').val())
+        var e = parseFloat(global_var.user_story_history_filter_current_index) +
+            parseFloat($('#us_history_filter_history_perpage').val())
         $('#usfilter_paginationResult').html("(" + s + '-' + e + ')');
     },
     setFilterPreviousPaging: function (e) {
-        var r = parseFloat(global_var.user_story_history_filter_current_index)
-            - parseFloat($('#us_history_filter_history_perpage').val());
+        var r = parseFloat(global_var.user_story_history_filter_current_index) -
+            parseFloat($('#us_history_filter_history_perpage').val());
         r = parseFloat(r) < 0 ? '0' : r;
         global_var.user_story_history_filter_current_index = r;
         BacklogHistory.load();
     },
     setFilterNextPaging: function (e) {
-        var rc = parseFloat(global_var.user_story_history_filter_current_index)
-            + parseFloat($('#us_history_filter_history_perpage').val());
+        var rc = parseFloat(global_var.user_story_history_filter_current_index) +
+            parseFloat($('#us_history_filter_history_perpage').val());
         if (rc <= parseFloat($('#usfilter_paginationresult_rowcount').html())) {
             global_var.user_story_history_filter_current_index = rc;
         }
@@ -26892,11 +27106,12 @@ var BacklogHistory = {
         BacklogHistory.load();
     },
     loadFilterHistoryTeller: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = 'userName';
         var that = this;
@@ -26920,10 +27135,9 @@ var BacklogHistory = {
                             c = global_var.backlog_history_type_count.kv[obj[n].fkUserId];
                             s = parseFloat(s) + parseFloat(c);
                         }
-                    } catch (e) {
-                    }
+                    } catch (e) {}
                     $("#us_history_filter_users").
-                        append($('<option></option>').val(obj[n].fkUserId).html(obj[n].userName + " (" + c + ")"));
+                    append($('<option></option>').val(obj[n].fkUserId).html(obj[n].userName + " (" + c + ")"));
                 }
 
                 $("#us_history_filter_users").find('option').first().html(
@@ -26949,8 +27163,7 @@ var BacklogHistory = {
                     c = global_var.backlog_history_type_count.kv[keys[n]];
                     s = parseFloat(s) + parseFloat(c);
                 }
-            } catch (e) {
-            }
+            } catch (e) {}
             $("#us_history_filter_history_type").append($('<option></option>').val(keys[n]).html(history_type[keys[n]] + " (" + c + ")"));
         }
 
@@ -26962,11 +27175,12 @@ var BacklogHistory = {
         if (!id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkBacklogId = id;
         var data = JSON.stringify(json);
         $.ajax({
@@ -26990,11 +27204,12 @@ var BacklogHistory = {
             return;
         }
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var ls = global_var.user_story_history_filter.split(';');
         for (var i = 0; i < ls.length; i++) {
             var k = ls[i].split('=')[0];
@@ -27006,12 +27221,11 @@ var BacklogHistory = {
             var k1 = global_var.user_story_history_filter_date.split('=')[0];
             var v1 = global_var.user_story_history_filter_date.split('=')[1];
             json.kv[k1] = v1;
-        } catch (e) {
-        }
+        } catch (e) {}
 
         json.kv.startLimit = global_var.user_story_history_filter_current_index;
-        json.kv.endLimit = parseFloat(global_var.user_story_history_filter_current_index)
-            + parseFloat($('#us_history_filter_history_perpage').val());
+        json.kv.endLimit = parseFloat(global_var.user_story_history_filter_current_index) +
+            parseFloat($('#us_history_filter_history_perpage').val());
         json.kv.fkBacklogId = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -27028,8 +27242,7 @@ var BacklogHistory = {
                     BacklogHistory.loadDetails(res);
                     var ind = getIndexOfTable(res, "Response");
                     rc = res.tbl[ind].rowCount;
-                } catch (e) {
-                }
+                } catch (e) {}
                 $('#usfilter_paginationresult_rowcount').html(rc);
             },
             error: function () {
@@ -27046,12 +27259,12 @@ var BacklogHistory = {
             var body = MapTextAreaHtml(replaceMainTrustedTags(obj[i].historyBody));
             var filen = (obj[i].historyTellerImage) ? obj[i].historyTellerImage : new User().getDefaultUserprofileName();
             var div1 = $('<div></div>').addClass("col-1 comment-line")
-                .append("<img class=\"figure-img img-fluid rounded-circle\" style=\"max-width:28px\"  src=\""
-                    + fileUrl(filen) + "\" alt=\"" + obj[i].historyTellerName + "\"> ");
+                .append("<img class=\"figure-img img-fluid rounded-circle\" style=\"max-width:28px\"  src=\"" +
+                    fileUrl(filen) + "\" alt=\"" + obj[i].historyTellerName + "\"> ");
             var div2 = $('<div></div>')
                 .addClass("col-11")
-                .append("<b style=\"color:red!important;font-size:14px;\">" + "  "
-                    + history_type[obj[i].historyType] + "</b> by <i><b>" +
+                .append("<b style=\"color:red!important;font-size:14px;\">" + "  " +
+                    history_type[obj[i].historyType] + "</b> by <i><b>" +
                     obj[i].historyTellerName + " </b><span>" +
                     Utility.convertDate(obj[i].historyDate) + ", " + Utility.convertTime(obj[i].historyTime) + "</span></i>"
                 )
@@ -27141,11 +27354,12 @@ var Analytics = {
                 return;
             }
             Analytics.Main.clearOutcomes();
-            var json = { kv: {} };
+            var json = {
+                kv: {}
+            };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {
-            }
+            } catch (err) {}
             json.kv.asc = "userName";
             json.kv.futurePeriod = $('#analytic-main-filter-future-period').val();
             json.kv.lastPeriod = $('#analytic-main-filter-last-period').val();
@@ -27204,11 +27418,11 @@ var Analytics = {
                 //intervallar uzre tarixlerin gruplasdirilmasi
                 var tarix = o.fromDate + "_" + o.toDate;
                 global_var.analytic_filter.pivot_sprint[tarix] =
-                    (global_var.analytic_filter.pivot_sprint[tarix])
-                        ? !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName))
-                            ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
-                            : global_var.analytic_filter.pivot_sprint[tarix]
-                        : o.sprintName;
+                    (global_var.analytic_filter.pivot_sprint[tarix]) ?
+                    !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName)) ?
+                    global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName :
+                    global_var.analytic_filter.pivot_sprint[tarix] :
+                    o.sprintName;
                 // group by lar uzre melumatlarin qruplasdirilmasi       
                 var gr = (o.fkProjectId) ? o.fkProjectId : "";
                 gr += (o.fkAssigneeId) ? "_" + o.fkAssigneeId : "";
@@ -27253,11 +27467,11 @@ var Analytics = {
                 //intervallar uzre tarixlerin gruplasdirilmasi
                 var tarix = o.fromDate + "_" + o.toDate;
                 global_var.analytic_filter.pivot_sprint[tarix] =
-                    (global_var.analytic_filter.pivot_sprint[tarix])
-                        ? !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName))
-                            ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
-                            : global_var.analytic_filter.pivot_sprint[tarix]
-                        : o.sprintName;
+                    (global_var.analytic_filter.pivot_sprint[tarix]) ?
+                    !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName)) ?
+                    global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName :
+                    global_var.analytic_filter.pivot_sprint[tarix] :
+                    o.sprintName;
                 // group by lar uzre melumatlarin qruplasdirilmasi       
                 var gr = (o.fkProjectId) ? o.fkProjectId : "";
                 gr += (o.fkAssigneeId) ? "_" + o.fkAssigneeId : "";
@@ -27299,11 +27513,11 @@ var Analytics = {
                 //intervallar uzre tarixlerin gruplasdirilmasi
                 var tarix = o.fromDate + "_" + o.toDate;
                 global_var.analytic_filter.pivot_sprint[tarix] =
-                    (global_var.analytic_filter.pivot_sprint[tarix])
-                        ? !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName))
-                            ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
-                            : global_var.analytic_filter.pivot_sprint[tarix]
-                        : o.sprintName;
+                    (global_var.analytic_filter.pivot_sprint[tarix]) ?
+                    !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName)) ?
+                    global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName :
+                    global_var.analytic_filter.pivot_sprint[tarix] :
+                    o.sprintName;
                 // group by lar uzre melumatlarin qruplasdirilmasi       
                 var gr = (o.fkProjectId) ? o.fkProjectId : "";
                 gr += (o.fkAssigneeId) ? "_" + o.fkAssigneeId : "";
@@ -27358,8 +27572,7 @@ var Analytics = {
                         try {
                             v = global_var.analytic_filter.pivot_cell[tarix][global_var.analytic_filter.pivot_group[i]];
                             v = (!(v) || v === 'undefined') ? 0 : v;
-                        } catch (ee) {
-                        }
+                        } catch (ee) {}
 
                         val.push(v);
                     }
@@ -27424,8 +27637,7 @@ var Analytics = {
                         try {
                             v = global_var.analytic_filter.pivot_cell[tarix][global_var.analytic_filter.pivot_group[i]];
                             v = (!(v) || v === 'undefined') ? 0 : v;
-                        } catch (ee) {
-                        }
+                        } catch (ee) {}
 
                         val.push(v);
                     }
@@ -27490,9 +27702,9 @@ var Analytics = {
                         .append(Utility.convertDate(o.fromDate))
                         .append(' - ')
                         .append(Utility.convertDate(o.toDate))
-                        .append((global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate])
-                            ? "<br><i>" + global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate] + "</i>"
-                            : "")
+                        .append((global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate]) ?
+                            "<br><i>" + global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate] + "</i>" :
+                            "")
                     );
                 }
                 tbody.append(tr);
@@ -27508,8 +27720,7 @@ var Analytics = {
                         try {
                             v = (global_var.analytic_filter.pivot_cell[k][grid]) ?
                                 global_var.analytic_filter.pivot_cell[k][grid] : "";
-                        } catch (err) {
-                        }
+                        } catch (err) {}
                         tr1.append($('<td></td>')
                             .append(v)
                         );
@@ -27542,18 +27753,18 @@ var Analytics = {
                     var tr = $('<tr></tr>')
                         .append($('<td></td>').append(Utility.convertDate(o.fromDate) + "-" + Utility.convertDate(o.toDate)))
                         .append($('<td></td>').append(o.sprintName))
-                        .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
-                            ? $('<td></td>').append(global_var.analytic_filter.project_list[o.fkProjectId]) : "")
+                        .append($('#analytics_filter_checkbox_groupby_project').is(":checked") ?
+                            $('<td></td>').append(global_var.analytic_filter.project_list[o.fkProjectId]) : "")
                         //                       .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
                         //                                ? $('<td></td>').append(o.fkProjectId) : "")
-                        .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked")
-                            ? $('<td></td>').append(global_var.analytic_filter.assignee_list[o.fkAssigneeId]) : "")
-                        .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked")
-                            ? $('<td></td>').append(global_var.analytic_filter.task_type_list[o.fkTaskTypeId]) : "")
+                        .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked") ?
+                            $('<td></td>').append(global_var.analytic_filter.assignee_list[o.fkAssigneeId]) : "")
+                        .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked") ?
+                            $('<td></td>').append(global_var.analytic_filter.task_type_list[o.fkTaskTypeId]) : "")
                         //                        .append($('#analytics_filter_checkbox_groupby_label').is(":checked")
                         //                                ?$('<td></td>').append(global_var.analytic_filter.label_list[o.fkTaskLabelId]): "")
-                        .append($('#analytics_filter_checkbox_groupby_priority').is(":checked")
-                            ? $('<td></td>').append(o.priority) : "")
+                        .append($('#analytics_filter_checkbox_groupby_priority').is(":checked") ?
+                            $('<td></td>').append(o.priority) : "")
                         .append($('<td></td>').append(o.newUserstoryCount))
                         //                        .append($('<td></td>').append(o.bugCount))
                         //                        .append($('<td></td>').append(o.requestCount))
@@ -27578,16 +27789,16 @@ var Analytics = {
             var tr = $('<tr></tr>')
                 .append($('<th></th>').append("Interval"))
                 .append($('<th></th>').append("Sprint(s)"))
-                .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
-                    ? $('<th></th>').append("Project") : "")
-                .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked")
-                    ? $('<th></th>').append("Assignee") : "")
-                .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked")
-                    ? $('<th></th>').append("Task Type") : "")
+                .append($('#analytics_filter_checkbox_groupby_project').is(":checked") ?
+                    $('<th></th>').append("Project") : "")
+                .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked") ?
+                    $('<th></th>').append("Assignee") : "")
+                .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked") ?
+                    $('<th></th>').append("Task Type") : "")
                 //                    .append($('#analytics_filter_checkbox_groupby_label').is(":checked")
                 //                                ?$('<th></th>').append("Label"):"")
-                .append($('#analytics_filter_checkbox_groupby_priority').is(":checked")
-                    ? $('<th></th>').append("Priority") : "")
+                .append($('#analytics_filter_checkbox_groupby_priority').is(":checked") ?
+                    $('<th></th>').append("Priority") : "")
                 .append($('<th></th>').append('User Story Count'))
                 //                    .append($('<th></th>').append('Bug Count'))
                 //                    .append($('<th></th>').append('Request Count'))
@@ -27602,11 +27813,12 @@ var Analytics = {
         },
         getAssigneeByProject: function (e) {
             $('#analytics_main_list_of_assignee >tbody').html('');
-            var json = { kv: {} };
+            var json = {
+                kv: {}
+            };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {
-            }
+            } catch (err) {}
             json.kv.asc = "userName";
             json.kv.fkProjectId = Analytics.getCheckedProjects();
             var that = this;
@@ -27638,11 +27850,12 @@ var Analytics = {
         },
         getLabelByProject: function (e) {
             $('#analytics_main_list_of_labels >tbody').html('');
-            var json = { kv: {} };
+            var json = {
+                kv: {}
+            };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {
-            }
+            } catch (err) {}
             json.kv.asc = "name";
             json.kv.fkProjectId = Analytics.getCheckedProjects();
             var that = this;
@@ -27674,11 +27887,12 @@ var Analytics = {
         },
         getSprintByProject: function (e) {
             $('#analytics_main_list_of_sprints >tbody').html('');
-            var json = { kv: {} };
+            var json = {
+                kv: {}
+            };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {
-            }
+            } catch (err) {}
             json.kv.asc = "sprintName";
             json.kv.fkProjectId = Analytics.getCheckedProjects();
             var that = this;
@@ -27710,11 +27924,12 @@ var Analytics = {
         },
         getTaskTypeByProject: function (e) {
             $('#analytics_main_list_of_tasktypes >tbody').html('');
-            var json = { kv: {} };
+            var json = {
+                kv: {}
+            };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {
-            }
+            } catch (err) {}
             json.kv.asc = "typeName";
             json.kv.fkProjectId = Analytics.getCheckedProjects();
             var that = this;
@@ -27745,11 +27960,12 @@ var Analytics = {
             });
         },
         loadProjects: function () {
-            var json = { kv: {} };
+            var json = {
+                kv: {}
+            };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {
-            }
+            } catch (err) {}
             json.kv.asc = "projectName";
             var that = this;
             var data = JSON.stringify(json);
@@ -27823,11 +28039,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
 
     },
     loadProjects4SpentHours: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.asc = "projectName";
         var that = this;
         var data = JSON.stringify(json);
@@ -27856,11 +28073,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
     },
     generalCountByProject: function () {
         $('#analytics-details-general-project-list >tbody').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -27910,11 +28128,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
     },
     projectTaskCount: function () {
         $('#analytics-details-project-task-list >tbody').html('');
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.project = 'projectTaskCount';
         var that = this;
         var data = JSON.stringify(json);
@@ -27928,8 +28147,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             success: function (res) {
                 try {
                     Analytics.projectTaskCountDetails(res);
-                } catch (err) {
-                }
+                } catch (err) {}
             },
             error: function () {
                 //                Toaster.showError(('somethingww'));
@@ -27965,11 +28183,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         }
     },
     loadProjects: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.asc = "projectName";
         var that = this;
         var data = JSON.stringify(json);
@@ -28002,11 +28221,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         }
     },
     loadUserStory: function () {
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = $('#projectList4Analytics').val();
         json.kv.isSourced = "1";
         json.kv.asc = "backlogName";
@@ -28057,11 +28277,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         var historyDate = (dateFrom && dateTo) ? dateFrom + "%IN%" + dateTo : "";
         var orderBy = $('#analytics_spenthours_sort_by_list').val();
         var asc = global_var.analytics_current_sort;
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.projectId = projectId;
         json.kv.teller = teller;
         json.kv.historyDate = historyDate;
@@ -28279,11 +28500,12 @@ var ProjectPreview = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.isMenu = "1"
         var that = this;
@@ -28420,11 +28642,12 @@ var ProjectPreview = {
         if (!labelId) {
             return;
         }
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkLabelId = labelId;
         var that = this;
         var div = [];
@@ -28447,11 +28670,12 @@ var ProjectPreview = {
     },
     getAllBacklogListbyLabel: function () {
 
-        var json = { kv: {} };
+        var json = {
+            kv: {}
+        };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        } catch (err) {}
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var div = [];
@@ -28625,8 +28849,7 @@ var ProjectPreview = {
                     );
                 }
                 div.append(tbl)
-            } catch (err) {
-            }
+            } catch (err) {}
 
         }
     },
@@ -28665,8 +28888,7 @@ var ProjectPreview = {
                 div.append($('<h6>').append('Input Table'));
                 div.append(table);
             }
-        } catch (err) {
-        }
+        } catch (err) {}
         return div;
     },
 
@@ -28679,8 +28901,7 @@ var ProjectPreview = {
         for (var i = 0; i < res.length; i++) {
             try {
                 div.append(new UserStory().generateCommentFileLine4View(resId[i].trim(), res[i].trim(), "col-4"));
-            } catch (e) {
-            }
+            } catch (e) {}
         }
         var div1 = $('<div class="col-12 guiviewmain">');
 
@@ -28699,8 +28920,7 @@ var ProjectPreview = {
         for (var i = 0; i < res.length; i++) {
             try {
                 div.append(new UserStory().generateCommentFileLine4ViewImage(resId[i].trim(), res[i].trim(), "col-12"));
-            } catch (e) {
-            }
+            } catch (e) {}
         }
 
         var div1 = $('<div class="col-12 guiviewmain">');
@@ -28727,8 +28947,8 @@ var ProjectPreview = {
 
 
         var innerHTML = new UserStory().genGUIDesignHtmlById(backlogId);
-        innerHTML = (innerHTML) ? innerHTML
-            : '<div style="padding:30px;text-align:center">' +
+        innerHTML = (innerHTML) ? innerHTML :
+            '<div style="padding:30px;text-align:center">' +
             '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
             '<h5> No User Story have been selected or created on this project</h5>' +
             '<p>All Pages related to the User Story on this project will appear here</p>' +
@@ -28763,8 +28983,7 @@ function getParamFromFnline(fnline, fn, param) {
                     return res;
                 }
             }
-        } catch (err) {
-        }
+        } catch (err) {}
     } catch (err1) {
 
     }
@@ -28835,11 +29054,12 @@ function deletePDescAll(ids) {
     }
 
 
-    var json = { kv: {} };
+    var json = {
+        kv: {}
+    };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    } catch (err) {}
     json.kv.id = ids;
     json.kv.fkBacklogId = global_var.current_backlog_id;
     var that = this;
@@ -28867,11 +29087,12 @@ function setColoredToPDescAll(ids, color) {
         return;
     }
 
-    var json = { kv: {} };
+    var json = {
+        kv: {}
+    };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    } catch (err) {}
     json.kv.id = ids;
     json.kv.color = color;
     var that = this;
@@ -28898,11 +29119,12 @@ function setColoredToInputDesc(el, ids, color) {
         return;
     }
 
-    var json = { kv: {} };
+    var json = {
+        kv: {}
+    };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    } catch (err) {}
     json.kv.id = ids;
     json.kv.color = color;
     var that = this;

@@ -8,6 +8,7 @@ and open the template in the editor.
     Author     : anar.rustamov
 */
 .prosesCartToolDiv{
+    
     display: flex;
     text-align: center;
     justify-content: space-around;
@@ -34,7 +35,7 @@ and open the template in the editor.
 .margin-menfiii{
         height: 30px;
         width: 85%;
-        margin-top: -15px;
+        margin-top: 3px; 
 }
 
 .div_table_zad_shey {
