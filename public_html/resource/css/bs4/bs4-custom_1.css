@@ -7,24 +7,42 @@ and open the template in the editor.
     Created on : Apr 19, 2019, 5:05:25 PM
     Author     : anar.rustamov
 */
-.prosesCartToolDiv{
-    
+.prosesCartToolDiv{    
     display: flex;
     text-align: center;
     justify-content: space-around;
-    position: relative;
-    top: -20px;
+    position: absolute;
+    width:400px;
+    top: -25px;
     padding: 5px;
+    display: none;
     visibility: hidden;
-    background-color: #dcdce6;
-    transition: 0.3s;
+    background-color: #8d90ce;
+    transition: 0.1s;
+    left: 50%;
+    transform: translate(-50%, 0);
     border-radius: 10px;
+    z-index: 5000;
+ 
 }
+.processlistInputt{
+     height: 35px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background-color: #525596;  
+    border: none;
+}
+.processlistInputt::placeholder{
+    color: white;
+}
+
 .hollele_zad:hover .prosesCartToolDiv{
     visibility: visible;
+    z-index: 50;
 }
 
 .hollele_zad {
+    position: relative;
     margin: 10px;    
     margin-top: 20px;
     max-width: 300px;
@@ -33,9 +51,8 @@ and open the template in the editor.
 
 }
 .margin-menfiii{
-        height: 30px;
-        width: 85%;
-        margin-top: 3px; 
+        height: 20px;
+        width: 85%;         
 }
 
 .div_table_zad_shey {

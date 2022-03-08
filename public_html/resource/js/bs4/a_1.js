@@ -16738,16 +16738,18 @@ var _220304054258036310054 = {
         }
         var data = {};
         data.id = id;
+        if(confirm('are you sure')){
         callApi('22030412151009877861', data, true, function (res) {
             _220304054258036310054.map_flow_details();
         })
+            }
     },
     update_child_refresh: (el, id) => {
-        var dat = $(el).closest('div .show-details-block').find('.selectpicker-mapping-element').val();;
+        var dat = $(el).closest('div .hollele_zad').find('select').val();
         var data = {};
         data.fkFromBacklogId = id;
-        data.fkOldToBacklogId = $(el).closest('div .zad').attr('id');
-        data.fkNewTToBacklogId = dat;
+        data.fkOldToBacklogId = _220304054258036310054.flow_details_list[id].fkToBacklogId;
+        data.fkNewToBacklogId = dat;
         data.fkBacklogFlowId = $('#comp_id_22030405435105928068').val();
         callApi('22030510404506604436', data, true, function () {
             _220304054258036310054.map_flow_details();
@@ -16760,16 +16762,16 @@ var _220304054258036310054 = {
         select.addClass('margin-menfiii');
         var div2 = $(`<div class="hollele_zad" style=""></div>`);
         var div1 = $(`<div class='cs-input-group prosesCartToolDiv'>                                                    
-                          <div style="margin-top: 3px;"> <input class='form-control form-control-sm mr-auto prosesCartInputDescVal' placeholder='Description'></div>
-                           <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")'><i class="fas fa-redo"></i></i></button>
-                          <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}"><i class = "fas fa-plus-circle" > </i></button >
-                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${item_obj.id}")'><i class="fas fa-trash-alt"></i></button>
+                          <div style="height: 35px;padding-right: 5px;"> <input class='processlistInputt form-control form-control-sm mr-auto prosesCartInputDescVal' placeholder='Description'></div>
+                           <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}"><i class = "fas fa-plus-circle" > </i></button >
+                           <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")' style='margin-left:3px;'><i class="fas fa-redo"></i></i></button>
+                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${item_obj.id}")' style='margin-left:3px;'><i class="fas fa-trash-alt"></i></button>
                         </div>`)
-        div1.prepend(select);
-        div2.append(div1);
         div2.attr("parent_id", item)
         div2.append(`<div ondblclick="callStoryCard('${fkToBacklogId}')" style="padding:10px;">${backlogName}</div>`)
             .append(`<span class="backlog-status"><div style="margin-bottom:15px;" class="us-list-item us-item-status-${bgStatus}">${bgStatus}</div></span>`)
+        div1.prepend(select);
+       div2.append(div1);       
 
 
         return div2;
@@ -16804,7 +16806,7 @@ var _220304054258036310054 = {
             res4.tbl[0].r.map((ob) => {
                 select.append(`<option value='${ob.id}'>${ob.backlogName}</option>`)
             })
-            select.selectpicker('refresh');
+          
         } catch (err) {}
         return select;
     },
@@ -16908,7 +16910,7 @@ var _220304054258036310054 = {
 
                     // console.log('html=' + td.html())
                     tr2.append(td);
-
+                    $('.hollele_zad').find('select').selectpicker('refresh')
                     _220304054258036310054.map_iteration(child_id, res4, tr, idc, item);
                     // }
 
@@ -25021,8 +25023,7 @@ var _220304054258036310054_ = {
     child_body: (item, M, backlogName, res4, flow_id) => {
         var select = _220304054258036310054_.backlog_select(res4);
 
-        var div2 = $(`<div class="hollele_zad" 
-            style="">`);
+        var div2 = $(`<div class="hollele_zad" style="">`);
         div2.attr("parent_id", item)
         div2.append(`${backlogName}`);
         // .append(select)
