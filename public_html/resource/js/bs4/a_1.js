@@ -16721,7 +16721,7 @@ var _220304054258036310054 = {
         var data = {};
         data.fkFromBacklogId = _220304054258036310054.flow_details_list[id].fkToBacklogId;
         data.fkToBacklogId = $(el).closest('div').find('select').val();
-        data.description = $(el).closest('.prosesCartToolDiv').find('.prosesCartInputDescVal').val();
+        data.description = $(el).closest('.prosesCartToolDiv').find('.prosesDivChild_textarea').val();
         data.fkBacklogFlowId = $(el).attr('flowId');
         data.fkParentId = id;
         callApi('22030400033000374400', data, true, function (res) {
@@ -16732,10 +16732,7 @@ var _220304054258036310054 = {
 
         })
     },
-    delete_child_backlog: (el, id) => {
-        if (!confirm('Are you sure')) {
-            return;
-        }
+    delete_child_backlog: (el, id) => {       
         var data = {};
         data.id = id;
         if(confirm('are you sure')){
@@ -16760,21 +16757,31 @@ var _220304054258036310054 = {
 
         var select = _220304054258036310054.backlog_select(res4);
         select.addClass('margin-menfiii');
-        var div2 = $(`<div class="hollele_zad" style=""></div>`);
-        var div1 = $(`<div class='cs-input-group prosesCartToolDiv'>                                                    
-                          <div style="height: 35px;padding-right: 5px;"> <input class='processlistInputt form-control form-control-sm mr-auto prosesCartInputDescVal' placeholder='Description'></div>
-                           <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}"><i class = "fas fa-plus-circle" > </i></button >
+       
+        var div = $(`<div ondblclick="callStoryCard('${fkToBacklogId}')" class="hollele_zad" style=""></div>`);
+        var div1 = $(`<div style="" class='prosesCartToolDiv'></div>`);
+        var div11 = $(`<div class='cs-input-group prosesCartToolDivChild_1'>                                              
+                          
+                           <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}" style='margin-left:3px;'><i class = "fas fa-plus-circle" > </i></button >
                            <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")' style='margin-left:3px;'><i class="fas fa-redo"></i></i></button>
                           <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${item_obj.id}")' style='margin-left:3px;'><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-sm" onclick='processMapCcartTascList("${fkToBacklogId}")' style='margin-left:3px;'><i class="fas fa-expand" aria-hidden="true"></i></button>                        
+                        
                         </div>`)
-        div2.attr("parent_id", item)
-        div2.append(`<div ondblclick="callStoryCard('${fkToBacklogId}')" style="padding:10px;">${backlogName}</div>`)
+        var div12 = $(`
+          <div style="height: 35px;padding-right: 5px;"> <textarea class='processlistInputt form-control form-control-sm mr-auto prosesDivChild_textarea' placeholder='Description' style='margin-left: 10px;'></textarea></div>
+          `)
+         div11.prepend(select);
+        div1.append(div11);
+        div1.append(div12);
+       div.append(div1); 
+        div.attr("parent_id", item)
+        div.append(`<div style="padding:10px;">${backlogName}</div>`)
             .append(`<span class="backlog-status"><div style="margin-bottom:15px;" class="us-list-item us-item-status-${bgStatus}">${bgStatus}</div></span>`)
-        div1.prepend(select);
-       div2.append(div1);       
+             
 
 
-        return div2;
+        return div;
 
     },
     map_show: (flow_id) => {
@@ -16980,6 +16987,28 @@ var _220304054258036310054 = {
 
 }
 
+function processMapCcartTascList(id) {
+     $("#body-large-modal-in-us4backlog").html("");
+    var data = {};
+    data.fkBacklogId = id;
+    callApi('22030413030503436111', data, true, function (res) {
+            var o = res.tbl[0].r[0];
+            var html = new UserStory().genUSLine4KanbanView(o);
+              html = $(html);
+              html.css("width", '100%')
+              html.find('.baclog-large-modal-next').hide();
+              html.find('.baclog-large-modal-next').hide();
+              $("#task-ongoing-large-modal4backlog").modal('show');
+              $("#body-large-modal-in-us4backlog").append(html);
+              $("#body-large-modal-in-us4backlog .stat-div-task-content table.stat-table-us tbody").removeClass('d-none');
+              $("#body-large-modal-in-us4backlog .stat-div-task-content > ul").addClass('d-none');
+              $("#body-large-modal-in-us4backlog .user-story-prototype-change1").prop("checked", true).change();
+
+              $('[data-toggle="popover"]').popover();
+
+        
+    })
+}
 
 $(document).on("change", '#comp_id_22030405435105928068', function () {
     _220304054258036310054.map_flow_details();
@@ -17127,62 +17156,64 @@ function getBugList4UserStory(bgId, tbody, list) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            coreBugList = res;
-            setKV4CoreBugList();
-            SATask.updateTaskByRes(res);
-            var ela = res.tbl[0].r
-            $(tbody).html('')
-            $(list).html('')
-            $(tbody).append($("<tr>").addClass('theader-table')
-                .append('<td><b>Task Id</b></td>')
-                .append('<td><b><input type="checkbox" class="all-bug-list-check"></b></td>')
-                .append('<td class="trigger-status-filter"><b>Status</b></td>')
-                .append('<td><b>Description</b></td>')
-                .append($("<td>").append("<b>Task Nature</b>"))
-                .append('<td><b>Task Type</b></td>')
-                .append('<td><b>Created</b></td>')
-                .append('<td><b>Assignee</b></td>')
-                .append('<td><b>Closed By</b></td>')
-                .append('<td><b>Date</b></td>')
-                .append('<td><b>Closed Date</b></td>')
-            )
+            try {
+                 var ela = res.tbl[0].r
+                 coreBugList = res;
+                 setKV4CoreBugList();
+                 SATask.updateTaskByRes(res);
 
-            for (let i = 0; i < ela.length; i++) {
-                var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
-                coreBugKV[ela[i].id] = ela[i];
-                var closedDate = ela[i].closeStatusDate;
-                if (closedDate) {
-                    closedDate = Utility.convertDate(ela[i].closeStatusDate) + "/" + Utility.convertTime(ela[i].closeStatusTime)
-                }
-                var tr = $("<tr>")
-                    .attr("data-assignee", ela[i].fkAssigneeId)
-                    .attr("data-nature", ela[i].taskNature)
-                    .attr("data-taskType", ela[i].fkTaskTypeId)
-                    .addClass('task-tr-list')
-                    .attr('data-tr-status', ela[i].taskStatus)
-                    .attr('id', ela[i].id)
-                    .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
-                    .append('<td class="task-id-td"><input data-pid="' + ela[i].fkBacklogId + '" class="checkbox-issue-task" type="checkbox"></td>')
-                    .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
-                    .append($("<td>")
-                        .attr("title", ela[i].taskName)
-                        .css("max-width", '400px')
-                        .css("overflow", 'hidden')
-                        .append($("<a>")
-                            .attr('href', '#')
-                            .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + ela[i].fkProjectId + "','" + ela[i].id + "')")
-                            .text(ela[i].taskName)))
-                    .append($("<td>").append(taskNature))
-                    .append('<td>' + ela[i].taskTypeName + '</td>')
-                    .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
-                    .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
-                    .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
-                    .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
-                    .append('<td class="task-time-td">' + closedDate + '</td>')
+                 $(tbody).html('')
+                 $(list).html('')
+                 $(tbody).append($("<tr>").addClass('theader-table')
+                     .append('<td><b>Task Id</b></td>')
+                     .append('<td><b><input type="checkbox" class="all-bug-list-check"></b></td>')
+                     .append('<td class="trigger-status-filter"><b>Status</b></td>')
+                     .append('<td><b>Description</b></td>')
+                     .append($("<td>").append("<b>Task Nature</b>"))
+                     .append('<td><b>Task Type</b></td>')
+                     .append('<td><b>Created</b></td>')
+                     .append('<td><b>Assignee</b></td>')
+                     .append('<td><b>Closed By</b></td>')
+                     .append('<td><b>Date</b></td>')
+                     .append('<td><b>Closed Date</b></td>')
+                 )
 
-                $(tbody).append(tr)
-                if (list) {
-                    var newtr = `
+                 for (let i = 0; i < ela.length; i++) {
+                     var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                     coreBugKV[ela[i].id] = ela[i];
+                     var closedDate = ela[i].closeStatusDate;
+                     if (closedDate) {
+                         closedDate = Utility.convertDate(ela[i].closeStatusDate) + "/" + Utility.convertTime(ela[i].closeStatusTime)
+                     }
+                     var tr = $("<tr>")
+                         .attr("data-assignee", ela[i].fkAssigneeId)
+                         .attr("data-nature", ela[i].taskNature)
+                         .attr("data-taskType", ela[i].fkTaskTypeId)
+                         .addClass('task-tr-list')
+                         .attr('data-tr-status', ela[i].taskStatus)
+                         .attr('id', ela[i].id)
+                         .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
+                         .append('<td class="task-id-td"><input data-pid="' + ela[i].fkBacklogId + '" class="checkbox-issue-task" type="checkbox"></td>')
+                         .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
+                         .append($("<td>")
+                             .attr("title", ela[i].taskName)
+                             .css("max-width", '400px')
+                             .css("overflow", 'hidden')
+                             .append($("<a>")
+                                 .attr('href', '#')
+                                 .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + ela[i].fkProjectId + "','" + ela[i].id + "')")
+                                 .text(ela[i].taskName)))
+                         .append($("<td>").append(taskNature))
+                         .append('<td>' + ela[i].taskTypeName + '</td>')
+                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
+                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
+                         .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
+                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
+                         .append('<td class="task-time-td">' + closedDate + '</td>')
+
+                     $(tbody).append(tr)
+                     if (list) {
+                         var newtr = `
                      <div class="d-flex text-center">
                      <span>
                      <div class="p-1"><b>Id</b></div>
@@ -17206,24 +17237,30 @@ function getBugList4UserStory(bgId, tbody, list) {
                     
                      `
 
-                    var content = ''
-                    $(list).append(`<li class="task-tr-list" data-tasktype="${ela[i].fkTaskTypeId}"  data-nature="${ela[i].taskNature}" data-tr-status="${ela[i].taskStatus}" data-assignee="${ela[i].createBy}"  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}'>${ela[i].taskNature==='bug'?'<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>':""}
+                         var content = ''
+                         $(list).append(`<li class="task-tr-list" data-tasktype="${ela[i].fkTaskTypeId}"  data-nature="${ela[i].taskNature}" data-tr-status="${ela[i].taskStatus}" data-assignee="${ela[i].createBy}"  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}'>${ela[i].taskNature==='bug'?'<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>':""}
                               <a href='#' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${ela[i].fkProjectId}','${ela[i].id}')">${ela[i].taskName}</a></li>`)
-                }
-            }
+                     }
+                 }
 
-            $('[data-toggle="popover"]').popover({
-                "html": true
-            });
-            $(tbody).find('.trigger-status-filter').click();
-            $(tbody).closest("table").find('.us-item-status-new').click();
-            $(tbody).closest("table").find('.us-item-status-ongoing').click();
-            var asID = $("#story_mn_filter_assigne_id").val();
-            var ntId = $("#story_mn_filter_nature_id").val();
+                 $('[data-toggle="popover"]').popover({
+                     "html": true
+                 });
+                 $(tbody).find('.trigger-status-filter').click();
+                 $(tbody).closest("table").find('.us-item-status-new').click();
+                 $(tbody).closest("table").find('.us-item-status-ongoing').click();
+                 var asID = $("#story_mn_filter_assigne_id").val();
+                var ntId = $("#story_mn_filter_nature_id").val();
+                $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
+                
+            } catch (error) {
+                $(tbody).empty();
+                tbody.append(`<td class='bg-danger text-light'><div>Task yoxdur</div></td>`);
+            }
+            
             /* if(asID.length>0||ntId.length>0){
              $(tbody).closest("table").find('.btn-show-hide-table-row').click();
             } */
-            $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
         },
         error: function () {
             Toaster.showError(('somethingww'));

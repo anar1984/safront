@@ -4499,7 +4499,7 @@ function getValueScheduleWeekDay(elmId) {
        var block  =  $("#"+elmId).find('input[type="checkbox"]');
           block.each(function (params) {
               if($(this).closest('label').hasClass("active")){
-                  list += $(this).val() + '%IN%'
+                  list = $(this).val()
               }
           })
        return list ;
