@@ -24858,29 +24858,30 @@ function backlogBugCountSet12(list) {
 }
 
 
-var _220304054258036310054 = {
+var _220304054258036310054_ = {
 
     flow_backlog_map: {},
     flow_backlog_pair: {},
     flow_backlog_desc: {},
     flow_details_list: {},
     loader: () => {
-        _220304054258036310054.load_flow_group_select();
-        // _220304054258036310054.map_flow_group();
+        _220304054258036310054_.load_flow_group_select();
+        // _220304054258036310054_.map_flow_group();
     },
     load_flow_group_select: () => {
         var select = $('#comp_id_22030803450902384159');
         select.html('<option></option>');
-        select.attr('onchange', '_220304054258036310054.map_flow_group_core(this)')
+        select.attr('onchange', '_220304054258036310054_.map_flow_group_core(this)')
         callApi("22030511170609167656", {}, true, function (res) {
             res.tbl[0].r.map((o) => {
                 select.append(`<option value='${o.id}'>${o.groupName}</option>`);
             })
+            select.selectpicker('refresh');
         })
     },
     map_flow_group_core: (el) => {
         var group_id = $(el).val();
-        _220304054258036310054.map_flow_group(group_id);
+        _220304054258036310054_.map_flow_group(group_id);
     },
     map_flow_group: (flow_group_id) => {
 
@@ -24895,7 +24896,7 @@ var _220304054258036310054 = {
             fkFlowGroupId: flow_group_id
         }, true, function (res) {
             res.tbl[0].r.map((item) => {
-                _220304054258036310054.map_flow_details(item.id, item.flowName);
+                _220304054258036310054_.map_flow_details(item.id, item.flowName);
             })
 
         })
@@ -24906,7 +24907,7 @@ var _220304054258036310054 = {
         // div.html('heş zad seçilməyib!!!!');
 
         var dt = {};
-        _220304054258036310054.flow_backlog_map = dt;
+        _220304054258036310054_.flow_backlog_map = dt;
         callApi('22030406013701734834', {
             fkBacklogFlowId: id
         }, true, function (res) {
@@ -24920,9 +24921,9 @@ var _220304054258036310054 = {
                 var fkParentId = o.fkParentId;
                 var desc = o.descripton;
 
-                _220304054258036310054.flow_details_list[oid] = o;
-                _220304054258036310054.flow_backlog_pair[fromId] = fromName;
-                _220304054258036310054.flow_backlog_pair[toId] = toName;
+                _220304054258036310054_.flow_details_list[oid] = o;
+                _220304054258036310054_.flow_backlog_pair[fromId] = fromName;
+                _220304054258036310054_.flow_backlog_pair[toId] = toName;
 
                 fkParentId = (fkParentId === '-1') ? id : fkParentId;
 
@@ -24932,8 +24933,8 @@ var _220304054258036310054 = {
                 dt[fkParentId].push(oid);
 
             })
-            _220304054258036310054.flow_backlog_map = dt;
-            _220304054258036310054.map_show(id, flow_name);
+            _220304054258036310054_.flow_backlog_map = dt;
+            _220304054258036310054_.map_show(id, flow_name);
         })
     },
     map_show: (flow_id, flow_name) => {
@@ -24953,7 +24954,7 @@ var _220304054258036310054 = {
 
         var res4 = callApi('22030400352507334738', {}, false);
         var idc = 1;
-        _220304054258036310054.map_iteration([flow_id], tr, idc, flow_id, flow_id);
+        _220304054258036310054_.map_iteration([flow_id], tr, idc, flow_id, flow_id);
     },
 
     map_iteration: (parnetIds, tr, idc, parent_id, flow_id) => {
@@ -24964,7 +24965,7 @@ var _220304054258036310054 = {
         var st = `.parent_id_${parent_id}`;
         var elm = $(st).first();
         var order_no = elm.attr('order_no');
-        var fromTo = _220304054258036310054.flow_backlog_map;
+        var fromTo = _220304054258036310054_.flow_backlog_map;
         var rcd = 1;
         parnetIds.map((M) => {
             if (fromTo[M]) {
@@ -24986,9 +24987,9 @@ var _220304054258036310054 = {
                         .attr('parent_no', order_no);
 
 
-                    var item_obj = _220304054258036310054.flow_details_list[item];
+                    var item_obj = _220304054258036310054_.flow_details_list[item];
 
-                    var backlog = _220304054258036310054.backlog_block(row_number_new, item_obj);
+                    var backlog = _220304054258036310054_.backlog_block(row_number_new, item_obj);
                     tr3.append(backlog);
 
                     elm.append(tr3);
@@ -24996,7 +24997,7 @@ var _220304054258036310054 = {
 
 
                     rcd = rcd + 1;
-                    _220304054258036310054.map_iteration(child_id, tr, idc, item, flow_id);
+                    _220304054258036310054_.map_iteration(child_id, tr, idc, item, flow_id);
 
                 })
             }
@@ -25018,7 +25019,7 @@ var _220304054258036310054 = {
         return span;
     },
     child_body: (item, M, backlogName, res4, flow_id) => {
-        var select = _220304054258036310054.backlog_select(res4);
+        var select = _220304054258036310054_.backlog_select(res4);
 
         var div2 = $(`<div class="hollele_zad" 
             style="">`);
@@ -25026,13 +25027,14 @@ var _220304054258036310054 = {
         div2.append(`${backlogName}`);
         // .append(select)
         // .append(`<input style='width:50px'>`)
-        // .append(` <button onclick='_220304054258036310054.add_child_backlog(this,"${item}","${flow_id}")'>+</button><br>
-        //                   <button onclick='_220304054258036310054.delete_child_backlog(this,"${M}")'>D</button>
+        // .append(` <button onclick='_220304054258036310054_.add_child_backlog(this,"${item}","${flow_id}")'>+</button><br>
+        //                   <button onclick='_220304054258036310054_.delete_child_backlog(this,"${M}")'>D</button>
         //           <br><br>`);
         return div2;
     },
 
 
 }
+
 
 

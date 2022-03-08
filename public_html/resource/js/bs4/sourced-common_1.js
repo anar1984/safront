@@ -14332,7 +14332,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             div.append(`
                         <div data-toggle = "tooltip"
                         orderno = "2"
-                        style = ""
+                        style = "height: max-content;min-height: 100vh;background: #f8f8ff;"
                         id = "22030803450902384159"
                         pid = "22030803450902384159"
                         class = "draggable resize1 tooltipMan component-class component-container-dashed 
@@ -14343,11 +14343,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         onclick = "Prototype.InputContainer.setInputByGUIComponent('22030803450902384159')"
                         cellno = "6" >
                             <span class = "comp-title-span" > Flow </span><br> 
-                            <select class = "form-control sa-sct-full-width component-input-class"
+                            <select class = "form-control sa-sct-full-width component-input-class usmg-selectpicker"
                         sa-type = "select"
                         data-actions-box = "true"
                         data-live-search = "true"
-                        style = "cmb;"
+                        style = "width: 30%;"
                         row-no = ""
                         pdid = "22030803450902384159"
                         id = "comp_id_22030803450902384159"
@@ -14360,7 +14360,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                   
                 `)
             //init event
-            _220304054258036310054.loader();
+            _220304054258036310054_.loader();
         }
 
     },
