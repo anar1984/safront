@@ -14,8 +14,7 @@ and open the template in the editor.
     position: absolute;
     width:400px;
     top: -25px;
-    padding: 5px;
-    display: none;
+    padding: 5px;   
     visibility: hidden;
     background-color: #8d90ce;
     transition: 0.1s;
