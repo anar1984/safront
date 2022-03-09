@@ -14343,6 +14343,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         onclick = "Prototype.InputContainer.setInputByGUIComponent('22030803450902384159')"
                         cellno = "6" >
                             <span class = "comp-title-span" > Flow </span><br> 
+                            <div style='width: 30%;'>
                             <select class = "form-control sa-sct-full-width component-input-class usmg-selectpicker"
                         sa-type = "select"
                         data-actions-box = "true"
@@ -14354,6 +14355,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         sendapitype = ""
                         onchange = "_220304054258036310054.map_flow_group_core(this)" >
                              </select> 
+                             </div>
                              <div class = 'col-lg-12'
                              id = '22030803450902333051' > </div>
                     </div>

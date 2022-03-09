@@ -5055,7 +5055,7 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
     
     updateTask4ShortChangeDetails(val, "fkAssigneeId");
-   // updateUserTaskChangeMesulShexs(val);
+    updateUserTaskChangeMesulShexs(val);
     ///  forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
 });
 

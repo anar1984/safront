@@ -24976,7 +24976,7 @@ var _220304054258036310054_ = {
             _220304054258036310054_.map_show(id, flow_name);
         })
     },
-    map_show: (flow_id, flow_name) => {
+    map_show: (flow_id, flow_name,toId) => {
         var tr = $(`<div>`);
         tr.attr('fid', flow_id)
             .addClass("parent_id_" + flow_id)
@@ -25048,9 +25048,10 @@ var _220304054258036310054_ = {
 
         var span = $('<span>')
             .addClass("flow-item-span-zad")
+            
             // .append(spc)
             .append(`${row}.${obj.toBacklogName}`)
-            .append(" ")
+            .attr('onclick', `processMapCcartTascList("${obj.fkToBacklogId}")`)
             .append(` <span class='us-item-status-${obj.toBacklogStatus}'>${obj.toBacklogStatus}<span>`)
             .append(` <i class='fa fa-bug' style='color:red'>-${obj.toBacklogBugCount}</i>`)
             .append(` <span class='us-item-status-new' title='Tasks with New Status'>${obj.toBacklogNewCount}<span>`)
