@@ -437,16 +437,24 @@ var Utility = {
         var st = "";
         var sep = (seperator) ? seperator : global_var.time_eliminator;
         try {
-            st = d.substring(0, 2) + sep + d.substring(2, 4) + sep + d.substring(4, 6);
+            st = d.substring(0, 2) + sep + d.substring(2, 4) 
         } catch (e) {
         }
         return st;
     },
-    convertDTpicker: function (d, seperator) {
+    convertDTpicker: function (d, seperator,type) {
         var st = "";
         var sep = (seperator) ? seperator : global_var.data_eliminator;
         try {
-            st = d.substring(0, 4) + sep + d.substring(4, 6) + sep + d.substring(6, 8)
+            if(type&&type==='mm/dd/yy'){
+                st = d.substring(4, 6) + sep +  d.substring(6, 8) + sep +d.substring(0, 4) 
+
+            }
+            else{
+                st = d.substring(0, 4) + sep + d.substring(4, 6) + sep + d.substring(6, 8)
+
+            }
+
         } catch (e) {
         }
         return st;

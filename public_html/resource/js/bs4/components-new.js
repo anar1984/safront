@@ -279,9 +279,6 @@ var cmpList = {
                       <input class="endLimitNew" value="49" type="text">
                       <select name=""  class="count-row-select-global"></select>
                   </div>
-                  <div data-toggle="tooltip" orderno="34" id="21041210270502835999" pid="21041210270502835999" class="tooltipMan component-class d-flex justify-content-end p-0 col-lg-9 col-5" onclick="">
-                      <div class="component-input-class" row-no="" pdid="21041210270502835999" id="comp_id_21041210270502835999"></div>
-                  </div>
                   <div class="float-right d-flex">
                       <div class="dropdown">
                           <button class="btn  pagination_btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" row-count='${rowCount}' aria-expanded="false">1-50/${rowCount}</button>
