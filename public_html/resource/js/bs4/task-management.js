@@ -100,9 +100,17 @@ const taskManagement = {
                          <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="pt-1">
-                        <div id="cerateTask-priority-btn" class="priority-btn">
-                             <i class="cs-svg-icon flame"></i>
-                        </div>
+                        <select id="priority-add-Task-story-card" class="issue_selectpicker">
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                </select>
                     </div>
                 </div>
             </div>`
@@ -668,7 +676,7 @@ const taskManagement = {
             data.fkAssigneeId = $('.assigne-div-add-issue').getVal();
             data.fkTaskTypeId = $("#bug_task_type_id_add").val();
             data.taskNature = $("#bug_task_nature_id_add").val();
-            data.taskPriority = $("#cerateTask-priority-btn").hasClass("active")?"9":"1";
+            data.taskPriority = $("#priority-add-Task-story-card").val();
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
             data.startDate = toDate('taskDeadlineStartDade');
@@ -979,9 +987,17 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="p-0" style="margin-top: 3px;">
-                        <div  id="updateTask-priority-btn"  class="priority-btn"><!-- if active ( class name -- active ) -->
-                             <i class="cs-svg-icon flame"></i>
-                        </div>
+                       <select id="priority-update-Task-story-card" class="update-selectpicker">
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                </select>
                     </div>
                 </div>
             </div>`
@@ -1709,11 +1725,13 @@ const taskManagement = {
                 }
             
                 //set backlog infos
-                if (coreBugKV[taskId].taskPriority === '9') {
-                    $("#updateTask-priority-btn").addClass("active");
-                } else {
-                    $("#updateTask-priority-btn").removeClass("active");
-                }
+            $('#priority-update-Task-story-card').val(coreBugKV[taskId].taskPriority);
+            $('#priority-update-Task-story-card').selectpicker('refresh');
+                // if (coreBugKV[taskId].taskPriority === '9') {
+                //     $("#updateTask-priority-btn").addClass("active");
+                // } else {
+                //     $("#updateTask-priority-btn").removeClass("active");
+                // }
                 $('#addComment4Task_comment').autoHeight();
                 if (coreBugKV[taskId].backlogName) {
                     $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
@@ -4411,9 +4429,16 @@ const taskManagement = {
             $(elm).selectpicker('refresh');
         })
     },
-     load_task_type_view_to: (elm) => {
-
-         callApi('22022617324009239044', {}, true, function (res) {
+    load_task_type_view_to: (elm) => {  
+        var task ={}
+     callService('serviceTmGetTaskTypeList', {}, true, function (res) {         
+         var typeList = res.tbl[0].r;
+           for (let k = 0; k < typeList.length; k++) {
+               const l = typeList[k];
+               task[l.id] = l;
+           }
+          
+         callApi('22030712433401636493', {}, true, function (res) {
              $(elm).empty();
              try {
                  var d = res.tbl[0].r;
@@ -4421,14 +4446,19 @@ const taskManagement = {
                      var o = d[i];
                      $(elm).append($('<option>')
                          .val(o.fkTaskTypeId)
-                         .text(o.typeName)
-                     )
+                         .text(task[o.fkTaskTypeId].typeName)
+                     );
                  }
+
              } catch (error) {
 
              }
              $(elm).selectpicker('refresh');
          })
+         
+            });
+
+         
      },
     getUserListWithImageSelectbox: function (projectId, type) {
         var json = initJSON();
@@ -5053,7 +5083,7 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 });
 // updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
-    
+    var val = $(this).getVal();
     updateTask4ShortChangeDetails(val, "fkAssigneeId");
     updateUserTaskChangeMesulShexs(val);
     ///  forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
@@ -5064,7 +5094,7 @@ function updateUserTaskChangeMesulShexs(dat) {
     data.fkTaskId = global_var.current_issue_id;
     data.fkAssigneeId = dat;
    try {
-       callApi('22030711362203045618', data, true, function (res) {
+       callApi('22030712380109772046', data, true, function (res) {
            Toaster.showMessage('Məsul şəxs müvəffəqiyyətlə dəyişdirildi');
        })
    }

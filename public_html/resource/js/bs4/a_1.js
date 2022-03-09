@@ -16716,12 +16716,13 @@ var _220304054258036310054 = {
             _220304054258036310054.flow_backlog_map = dt;
             _220304054258036310054.map_show(id);
         })
+        
     },
     add_child_backlog: (el, id) => {
         var data = {};
         data.fkFromBacklogId = _220304054258036310054.flow_details_list[id].fkToBacklogId;
-        data.fkToBacklogId = $(el).closest('div').find('select').val();
-        data.description = $(el).closest('.prosesCartToolDiv').find('.prosesDivChild_textarea').val();
+        data.fkToBacklogId = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt').val();
+        data.description = $(el).closest('.hollele_zad').find('.prosesDivChild_textarea').val();
         data.fkBacklogFlowId = $(el).attr('flowId');
         data.fkParentId = id;
         callApi('22030400033000374400', data, true, function (res) {
@@ -16742,13 +16743,12 @@ var _220304054258036310054 = {
             }
     },
     update_child_refresh: (el, id) => {
-        var dat = $(el).closest('div .hollele_zad').find('select').val();
+        var dat = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt').val();
         var data = {};
-        data.fkFromBacklogId = id;
-        data.fkOldToBacklogId = _220304054258036310054.flow_details_list[id].fkToBacklogId;
+        data.id = id;
         data.fkNewToBacklogId = dat;
-        data.fkBacklogFlowId = $('#comp_id_22030405435105928068').val();
-        callApi('22030510404506604436', data, true, function () {
+        data.dwscription = $(el).closest('.hollele_zad').find('.prosesDivChild_textarea').val();;
+        callApi('22030510404506604436', data, true, function (res) {
             _220304054258036310054.map_flow_details();
         })
     },
@@ -16756,31 +16756,47 @@ var _220304054258036310054 = {
         var item_obj = _220304054258036310054.flow_details_list[item];
 
         var select = _220304054258036310054.backlog_select(res4);
-        select.addClass('margin-menfiii');
-       
-        var div = $(`<div ondblclick="callStoryCard('${fkToBacklogId}')" class="hollele_zad" style=""></div>`);
-        var div1 = $(`<div style="" class='prosesCartToolDiv'></div>`);
-        var div11 = $(`<div class='cs-input-group prosesCartToolDivChild_1'>                                              
+        select.addClass('margin-menfiii');      
+    
+        var div = $(`<div parent_id=${item} class="hollele_zad" style="">
+        
+          <div class='cs-input-group prosesCartToolDivChild_MAxSize'>
+          <button class="btn btn-sm prosessMApingDivTogglee prosesCartToolDivChild_MAxSize_button" onclick='prosessMApingDivTogglee(this)' style='margin:5px;'><i class="fas fa-bars"></i></button>
+          <button class="btn btn-sm prosesCartToolDivChild_MAxSize_button" onclick='processMapCcartTascList("${fkToBacklogId}")' style='margin:5px 0px;'><i class="fas fa-expand" aria-hidden="true"></i></button>
+          </div>
+          <div ondblclick="callStoryCard('${fkToBacklogId}')" style="padding:10px;">
+          ${backlogName}
+           <span class="backlog-status"><div style="margin-bottom:15px;" class="us-list-item us-item-status-${bgStatus}">${bgStatus}</div></span>
+          </div>
+         
+          
+                          <div class='prosesCartToolDivChild_1 displayNone'>
+
+                          <div>
+                          <div class='selectSpanTit'><span class = "comp-title-span"> Project </span></div>
+                          <select onchange='prosessMApingstoryCArdBYproject(this)' data-live-search="true" class="form-control usmg-selectpicker selectPicker_mappingProject"></select>
+                          </div>
+
+                           <div>
+                          <div class='selectSpanTit'><span class = "comp-title-span"> Story Card </span></div>
+                          <select data-live-search="true" class="form-control usmg-selectpicker selectPicker_mappingStoryCardt"></select>
+                          </div>
                           
-                           <button class = 'btn btn-sm' onclick = '_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}" style='margin-left:3px;'><i class = "fas fa-plus-circle" > </i></button >
-                           <button class='btn btn-sm ' onclick='_220304054258036310054.update_child_refresh(this,"${M}")' style='margin-left:3px;'><i class="fas fa-redo"></i></i></button>
-                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${item_obj.id}")' style='margin-left:3px;'><i class="fas fa-trash-alt"></i></button>
-                          <button class="btn btn-sm" onclick='processMapCcartTascList("${fkToBacklogId}")' style='margin-left:3px;'><i class="fas fa-expand" aria-hidden="true"></i></button>                        
-                        
-                        </div>`)
-        var div12 = $(`
-          <div style="height: 35px;padding-right: 5px;"> <textarea class='processlistInputt form-control form-control-sm mr-auto prosesDivChild_textarea' placeholder='Description' style='margin-left: 10px;'></textarea></div>
-          `)
-         div11.prepend(select);
-        div1.append(div11);
-        div1.append(div12);
-       div.append(div1); 
-        div.attr("parent_id", item)
-        div.append(`<div style="padding:10px;">${backlogName}</div>`)
-            .append(`<span class="backlog-status"><div style="margin-bottom:15px;" class="us-list-item us-item-status-${bgStatus}">${bgStatus}</div></span>`)
-             
+                          <div style="">
+                          <textarea class='processlistInputt form-control form-control-sm mr-auto prosesDivChild_textarea' placeholder='Description'></textarea>
+                          </div>
+
+                         <div class='cs-input-group processlistBtnGroupp'>
+                           <button class='btn btn-sm' onclick ='_220304054258036310054.add_child_backlog(this,"${item}")' flowId="${flo}"><i class="fas fa-plus-circle"> </i></button>
+                           <button class='btn btn-sm' onclick='_220304054258036310054.update_child_refresh(this,"${item_obj.id}")' style='margin:0px 5px'><i class="fas fa-redo"></i></i></button>
+                          <button class='btn btn-sm' onclick='_220304054258036310054.delete_child_backlog(this,"${item_obj.id}")' style="margin-right: -10px;"><i class="fas fa-trash-alt"></i></button>                          
+                          </div>
+                          </div>
 
 
+                       
+        </div>`);     
+               
         return div;
 
     },
@@ -16792,7 +16808,7 @@ var _220304054258036310054 = {
         tr.attr('fid', flow_id)
         tr.addClass("parent_id_-1");
         table.append(tr);
-
+       
         var div = $(".task-panel");
         div.html(table);
 
@@ -16800,7 +16816,7 @@ var _220304054258036310054 = {
 
         var idc = 1;
         _220304054258036310054.map_iteration(['-1'], res4, tr, idc, "-1", flow_id);
-
+          loadProjectList2SelectboxByClassNochange('selectPicker_mappingProject');
         // alert(JSON.stringify(child_id));
         $('select.selectpicker-mapping-element').selectpicker('refresh');
 
@@ -16924,7 +16940,7 @@ var _220304054258036310054 = {
                 })
             }
         })
-
+        
         // alert(JSON.stringify(child_id));
 
     },
@@ -16984,8 +17000,27 @@ var _220304054258036310054 = {
 
         })
     }
+}
+function prosessMApingDivTogglee(el) {   
+    $(el).find('i').toggleClass('fa-times fa-bars')
+    var dd = $(el).closest('.hollele_zad').find('.prosesCartToolDivChild_1');
+    dd.toggleClass('displayNone zz-indexx')
+}
+function prosessMApingstoryCArdBYproject(el) {
+    var data = {};
+    data.fkProjectId = $(el).val();
+    var select = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt');    
+    callApi('22030400352507334738',data, true, function (res) {         
+         // select.attr('multiple','multiple');
+         select.html('');
+         res.tbl[0].r.map((o) => {
+             select.append(`<option value='${o.id}'>${o.backlogName}</option>`)
+         })
+         select.selectpicker('refresh')
+     })
 
 }
+
 
 function processMapCcartTascList(id) {
      $("#body-large-modal-in-us4backlog").html("");
@@ -17057,8 +17092,10 @@ $(document).on("click", '#comp_id_220304000825030110739', function () {
     _220304054258036310054.create_flow(this);
 })
 $(document).on("change", '#Flov_GRoup_comp_id_22030405435105928068', function () {
+     $('.task-panel').empty();
     var el = $('#Flov_GRoup_comp_id_22030405435105928068').val();
     _220304054258036310054.load_flow_select(el);
+   
 })
 
 function getProjectValueUsManageMultiByel(el) {
@@ -17143,8 +17180,13 @@ function getBugList4UserStory(bgId, tbody, list) {
     json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
-    // json.kv.considerAll = '1';
-    json.kv.fkAssigneeId = fkAsId;
+    // 
+    var assignee = $('#story_mn_groupBy_id').val();
+    if (assignee == 'assignee') {
+       json.kv.fkAssigneeId = fkAsId;
+    } else {
+       json.kv.considerAll = '1';
+    }
     var prd = getProjectValueUsManageMulti();
     var that = this;
     var data = JSON.stringify(json);
@@ -19619,27 +19661,31 @@ function loadMainProjectList4Class() {
 function loadProjectList2SelectboxByClassNochange(className) {
 
     var cmd = $('select.' + className);
-    cmd.html('');
-    var f = true;
-    var pid = SACore.GetProjectKeys();
-    for (var n = 0; n < pid.length; n++) {
-        var pname = SACore.GetProjectName(pid[n]);
-        var o = $('<option></option')
-            .attr('value', pid[n])
-            .text(pname);
-        if (f) {
-            o.attr("selected", true);
-            f = false;
-        }
+         cmd.each(function name(params) {
+                 $(this).html('');
+                 var f = true;
+                 var pid = SACore.GetProjectKeys();
+                 for (var n = 0; n < pid.length; n++) {
+                     var pname = SACore.GetProjectName(pid[n]);
+                     var o = $('<option></option')
+                         .attr('value', pid[n])
+                         .text(pname);
+                     if (f) {
+                         o.attr("selected", true);
+                         f = false;
+                     }
 
-        if (pid[n] === global_var.current_project_id) {
-            o.attr("selected", true);
-        }
-        cmd.append(o);
-    }
+                     if (pid[n] === global_var.current_project_id) {
+                         o.attr("selected", true);
+                     }
+                     $(this).append(o);
+             }
+                 sortSelectBoxByElement($(this));
+         })
+
 
     //    cmd.val(global_var.current_project_id);
-    sortSelectBoxByElement(cmd);
+
     cmd.selectpicker('refresh');
 }
 
@@ -25047,8 +25093,7 @@ var _220304054258036310054_ = {
         var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
 
         var span = $('<span>')
-            .addClass("flow-item-span-zad")
-            
+            .addClass("flow-item-span-zad")            
             // .append(spc)
             .append(`${row}.${obj.toBacklogName}`)
             .attr('onclick', `processMapCcartTascList("${obj.fkToBacklogId}")`)

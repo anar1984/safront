@@ -8,45 +8,76 @@ and open the template in the editor.
     Author     : anar.rustamov
 */
 .prosesCartToolDiv {
-    position: absolute;
-    height: auto;
-    width: 400px;
-    top: -40px;
-    visibility: hidden;
     /* background-color: #8d90ce; */
     transition: 0.1s;
-    left: 50%;
-    transform: translate(-50%, 0);
+    /* left: 50%;
+    transform: translate(-50%, 0); */
     border-radius: 10px;
     z-index: 5000;
 
 }
+.selectSpanTit{
+    display: flex;
+    justify-content: start;
+}
 
 .prosesCartToolDivChild_1 {
+    width: auto;
+    padding: 10px;
+    position: absolute;    
+    top: 45px;
+    background-color:#dcdce6;
+    display: flex;
+    flex-direction: column;
+     border-radius: 10px;
+     box-shadow: 5px 5px 18px #999cdd;
+     margin-left: 50%;
+     transform: 50% 0%;
+
+
+}
+.zz-indexx{
+    z-index: 500;
+}
+.prosesDivChild_textarea {   
+        width: 100%;
+        margin: 10px 0px;
+}
+.displayNone{
+    display: none;
+}
+.prosesCartToolDivChild_MAxSize {
+    background: #dcdce6 !important;
+    border-radius: 10px;
+    position: absolute;  
+    width: 40px;
+    top: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: end;
+    visibility: hidden;
+}
+.prosesCartToolDivChild_MAxSize_button{
+        background: #ceceda !important;
+        border: none !important;
+        color: black !important;
+}
+.prosesCartToolDivChild_MAxSize_button:hover{
+    box-shadow: 5px 5px 18px #999cdd;
+}
+.processlistBtnGroupp {
+    width: 96%;
+    margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: end;
 }
 
-.prosesDivChild_textarea {
-      width: 96%;
-      margin: 5px;
-}
 
-.processlistInputt {
-    height: 30px;
-    background-color: #525596;
-    border: none;
-}
-
-.processlistInputt::placeholder {
-    color: white;
-}
-
-.hollele_zad:hover .prosesCartToolDiv {
+.hollele_zad:hover .prosesCartToolDivChild_MAxSize {
     visibility: visible;
     z-index: 50;
-}
+} 
 
 .hollele_zad {
     position: relative;
