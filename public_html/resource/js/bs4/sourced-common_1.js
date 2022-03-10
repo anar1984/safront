@@ -14637,6 +14637,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var createdDate2 = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "2");
         var closedDate1 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"), "1");
         var closedDate2 = this.getValueRangePickerForUSm($("#us_management_closed_date_from"), "2");
+        var flowGroup = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_Flow_ID_12'));
+        var flowName = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_Flow_NameID_12'));
+
         var search = $("#search-us-managmenet").val();
         data.fkProjectId = "(" + priD + ")";
         if (closedBy || closedDate2 || closedDate1) {

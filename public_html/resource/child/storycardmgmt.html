@@ -207,9 +207,9 @@
             </div>
             <div class="usm-more-filter-bg d-flex justify-content-center">
                 <!-- <div class="col-border"></div> -->
-
-                <div class="mt-2">
-                    <div class="cs-input-group input-group input-datatime-group">
+                 <!-- close date -->
+                <div class="mt-1">
+                    <div class="cs-input-group input-group input-datatime-group" style="margin-top: 5px;">
                         <span class="comp-title-span w-100">Closed Date</span>
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
@@ -219,9 +219,9 @@
                             id="us_management_closed_date_from" type="text">
                     </div>
                 </div>
-
-                <div class="mt-2">
-                    <div class="cs-input-group input-group input-datatime-group">
+                <!-- create date -->
+                <div class="mt-">
+                    <div class="cs-input-group input-group input-datatime-group" style="margin-top: 9px;">
                         <span class="comp-title-span w-100">Created Date</span>
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
@@ -231,6 +231,30 @@
                             id="us_management_created_date_from" type="text">
                     </div>
                 </div>
+                <!-- Flow Group -->
+                <div class="mt-2">
+                    <div class="cs-input-group">
+                        <span class="comp-title-span">Flow Group</span>
+                        <select
+                            class="form-control usmg-selectpicker cs-svg-icon upToDateSelectEmpty" multiple
+                            id="story_mn_filter_Flow_ID_12" data-live-search="true" data-actions-box="true"
+                            onchange="filterOnChnageUSM()" title="Flow Group" style="text-overflow: ellipsis">
+                        </select>
+                    </div>
+                </div>
+                 <!-- Flow name -->
+                <div class="mt-2">
+                    <div class="cs-input-group">
+                        <span class="comp-title-span">Flow name</span>
+                        <select
+                            class="form-control usmg-selectpicker cs-svg-icon upToDateSelectEmpty" multiple
+                            id="story_mn_filter_Flow_NameID_12" data-actions-box="true" data-live-search="true"
+                            onchange="filterOnChnageUSM()" title="Flow name" style="text-overflow: ellipsis">
+                        </select>
+                    </div>
+                </div>
+
+                <!-- task nature -->
                 <div class="mt-2">
                     <div class="cs-input-group">
                         <span class="comp-title-span">Task Nature</span>
@@ -243,6 +267,7 @@
                         </select>
                     </div>
                 </div>
+                <!-- created by -->
                 <div class="mt-2">
                     <div class="cs-input-group">
                         <span class="comp-title-span">Created By</span>

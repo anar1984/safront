@@ -13906,6 +13906,7 @@ function loadStoryCardByProject4TaskMgmt(e) {
     getProjectUsersForElById(global_var.current_project_id, $("#story_mn_filter_assigne_id_mng"))
     getProjectUsersForElById(global_var.current_project_id, $("#story_mn_filter_created_id"))
     getTaskList4TaskMgmt();
+    
     //    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
@@ -15259,6 +15260,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         taskManagement.load_task_type_view_to(taskTyp);
         add_newStoryCArd_label_SetSelect();
         getUsers();
+        loadFlowGroupSelectInFilter1();
 
 
         //  new UserStory().getFktaskTypList4USMn();
@@ -15490,6 +15492,38 @@ $(document).on('click', '.loadBusinessService', function (evt) {
         spiltterCodeFn();
     });
 });
+//filter flow group change
+$(document).on('change', '#story_mn_filter_Flow_ID_12', function () {
+    filterLoadFlowNAmeByFolowGrooup();
+})
+
+// filter flowName by flow group
+function filterLoadFlowNAmeByFolowGrooup(el) {
+    var dat = $('#story_mn_filter_Flow_ID_12').val().toString();
+     var data = {};
+     data.fkFlowGroupId = dat;
+     var select = $('#story_mn_filter_Flow_NameID_12');
+     select.empty();
+     select.selectpicker('refresh');
+     select.html('<option></option>');
+     callApi("22030405453401501463", data, true, function (res) {
+         res.tbl[0].r.map((o) => {
+             select.append(`<option value='${o.id}'>${o.flowName}</option>`);
+         })
+         select.selectpicker('refresh')
+     })
+}
+// filter folow name load
+function loadFlowGroupSelectInFilter1(){
+    var select = $('#story_mn_filter_Flow_ID_12');
+    select.html('<option></option>');
+    callApi("22030511170609167656", {}, true, function (res) {
+        res.tbl[0].r.map((o) => {
+            select.append(`<option value='${o.id}'>${o.groupName}</option>`);
+        })
+        select.selectpicker('refresh')
+    })
+}
 
 function clearManualProjectFromParam() {
     global_var.fkManualProjectId = "";
@@ -17184,7 +17218,8 @@ function getBugList4UserStory(bgId, tbody, list) {
     json.kv.searchLimit = 200;
     // 
     var assignee = $('#story_mn_groupBy_id').val();
-    if (assignee == 'assignee') {
+    console.log(assignee);
+    if (assignee == 'assigne') {
         json.kv.fkAssigneeId = fkAsId;
     } else {
         json.kv.considerAll = '1';
