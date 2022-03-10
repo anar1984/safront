@@ -1,15 +1,13 @@
-
-
 const taskManagement = {
-    "taskLabelList":{},
-    "taskSprintList":{},
+    "taskLabelList": {},
+    "taskSprintList": {},
     Init: function (elm) {
         var elm = $(elm);
         elm.html(this.genBlockMain());
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
-        genTimePickerById("issue_management_closed_date_from",'down');
+        genTimePickerById("issue_management_closed_date_from", 'down');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genLabelBlock());
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genSprintBlock());
         var dwlmt = $('#bug_filter_tasktype')
@@ -24,13 +22,13 @@ const taskManagement = {
                 $('body').find("#issue-managment-add-task").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-                cmpList.userBlock.Init($('.assigne-div-add-issue'),'single');
-                cmpList.userBlock.Init($('.observer-div-add-issue'),'multi');
+                cmpList.userBlock.Init($('.assigne-div-add-issue'), 'single');
+                cmpList.userBlock.Init($('.observer-div-add-issue'), 'multi');
                 taskManagement.updateTask.getSprintTask($('#add_task_sprint'));
                 taskManagement.updateTask.getLabelTask($('#run_task_categories'));
                 taskManagement.updateTask.getLabelTask($('#run_task_categories'));
-                setTimeout(() => {    
-                $("#taskNameInputNew2").focus();
+                setTimeout(() => {
+                    $("#taskNameInputNew2").focus();
                 }, 1000);
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
@@ -100,9 +98,17 @@ const taskManagement = {
                          <span class='pt-0' style="color: #ffffff66;font-size: 12px;margin-top: -3px;margin-bottom: 6px;display: block;">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="pt-1">
-                        <div id="cerateTask-priority-btn" class="priority-btn">
-                             <i class="cs-svg-icon flame"></i>
-                        </div>
+                        <select id="priority-add-Task-story-card" class="issue_selectpicker">
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                </select>
                     </div>
                 </div>
             </div>`
@@ -499,7 +505,7 @@ const taskManagement = {
                </div>`
                 },
                 genObserverBlock: function () {
-                    return'';
+                    return '';
                     return `<div class="tab-pane fade task-check-list-created cs-box-background" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
                  <div class="cs-input-group mb-3 ml-2">
                      <div class="input-group-addon">${lang_task.windowAddTask.observerName}</div>
@@ -592,7 +598,7 @@ const taskManagement = {
             this.getValueCreateModalScreen();
 
         },
-        insertNewTaskApi: function (dataCore,itmlist) {
+        insertNewTaskApi: function (dataCore, itmlist) {
             var json = initJSON();
             var dataPure = $.extend(json.kv, dataCore);
             json.kv = dataPure;
@@ -608,25 +614,25 @@ const taskManagement = {
                 async: true,
                 success: function (res) {
                     AJAXCallFeedback(res);
-                //    that.insertEventByTaskId(res.kv.id);
+                    //    that.insertEventByTaskId(res.kv.id);
                     that.insertObserverTask(res.kv.id);
-                    that.insertCheckListComulativ(res.kv.id,itmlist);
-                   
-                   // taskManagement.insertTask.insertBacklogTaskDetail(res.kv.id);
-                     
+                    that.insertCheckListComulativ(res.kv.id, itmlist);
+
+                    // taskManagement.insertTask.insertBacklogTaskDetail(res.kv.id);
+
                     getBugList();
                     Toaster.showMessage(lang_task.windowAddTask.addTaskMessageSucc);
                     if ($("#after_insert_modal").prop("checked")) {
                         $("#issue-managment-add-task").modal("hide");
 
                     }
-                   $("#addIssueButtonId").removeAttr("disabled");
-                   updateSpirntTaskById($('#add_task_sprint').val(),res.kv.id);
-                   updateLabelTaskById($('#run_task_categories').val(),res.kv.id);
-                   var prt  = $("#parent-task-id-input").val()
-                   if(prt.length>0){
-                    getChildTasks();
-                   }
+                    $("#addIssueButtonId").removeAttr("disabled");
+                    updateSpirntTaskById($('#add_task_sprint').val(), res.kv.id);
+                    updateLabelTaskById($('#run_task_categories').val(), res.kv.id);
+                    var prt = $("#parent-task-id-input").val()
+                    if (prt.length > 0) {
+                        getChildTasks();
+                    }
                 },
                 error: function () {
                     Toaster.showError((lang_task.windowAddTask.addTaskMessageErr));
@@ -648,7 +654,7 @@ const taskManagement = {
             var data = {};
 
             data.comment = $('#addComment4Task_comment_new').val();
-            var files = $('#addComment4Task_addnewfile').attr('fname') +"|";
+            var files = $('#addComment4Task_addnewfile').attr('fname') + "|";
 
             $('#canvasdiv_taskCreate .canvas-sub-class').each(function (e) {
                 files += $(this).attr('fname') + "|";
@@ -668,7 +674,7 @@ const taskManagement = {
             data.fkAssigneeId = $('.assigne-div-add-issue').getVal();
             data.fkTaskTypeId = $("#bug_task_type_id_add").val();
             data.taskNature = $("#bug_task_nature_id_add").val();
-            data.taskPriority = $("#cerateTask-priority-btn").hasClass("active")?"9":"1";
+            data.taskPriority = $("#priority-add-Task-story-card").val();
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
             data.startDate = toDate('taskDeadlineStartDade');
@@ -679,10 +685,10 @@ const taskManagement = {
             data.fkParentTaskId = $("#parent-task-id-input").val();
             // data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
             // data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
-           // schedulle 
-            
+            // schedulle 
+
             // data.description = $("#bug_filter_project_id_add").val();
-       
+
             //$(this).attr("disabled",'disabled');
             var itmList = ''
             var items = $("#issue-managment-add-task .task-check-list-box ul>li");
@@ -691,7 +697,7 @@ const taskManagement = {
                 itmList += $(o).find('textarea').val() + '|';
             }
             reset_task_data();
-            this.insertNewTaskApi(data,itmList);
+            this.insertNewTaskApi(data, itmList);
         },
         insertEventByTaskId: function (id) {
 
@@ -743,12 +749,12 @@ const taskManagement = {
 
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
-                    if((i+1)===tbl.length){
-                        userList += o ;
-                    }else{
+                    if ((i + 1) === tbl.length) {
+                        userList += o;
+                    } else {
                         userList += o + ",";
                     }
-                  
+
                 }
                 if (!userList) {
                     return
@@ -760,12 +766,12 @@ const taskManagement = {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
                 });
             } catch (error) {
-               // console.log('task Observer ++++' + error);
+                // console.log('task Observer ++++' + error);
             }
 
 
         },
-        insertObserverTaskByVal: function (taskId,val) {
+        insertObserverTaskByVal: function (taskId, val) {
             try {
                 if (!val) {
                     return
@@ -775,12 +781,12 @@ const taskManagement = {
 
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
-                    if((i+1)===tbl.length){
-                        userList += o ;
-                    }else{
+                    if ((i + 1) === tbl.length) {
+                        userList += o;
+                    } else {
                         userList += o + ",";
                     }
-                  
+
                 }
                 if (!userList) {
                     return
@@ -792,7 +798,7 @@ const taskManagement = {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
                 });
             } catch (error) {
-               // console.log('task Observer ++++' + error);
+                // console.log('task Observer ++++' + error);
             }
 
 
@@ -801,21 +807,22 @@ const taskManagement = {
         insertBacklogTaskDetail: function (taskId) {
             try {
 
-        
-                var json = {kv: {}};
+
+                var json = {
+                    kv: {}
+                };
                 try {
                     json.kv.cookie = getToken();
-                } catch (err) {
-                }
+                } catch (err) {}
                 json.kv.fkTaskId = taskId;
                 // json.kv.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
                 // json.kv.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
-                if($('#runTaskAvtivateSchedule').prop("checked")){
+                if ($('#runTaskAvtivateSchedule').prop("checked")) {
                     json.kv.intensive = $("#run_task_intensive_select").val();
                     var repettt = $("#run_task_repeat_select").val();
-                    json.kv.repeatInterval = repettt ? repettt:'0';
-                    json.kv.scheduleStatus =  $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
-                 
+                    json.kv.repeatInterval = repettt ? repettt : '0';
+                    json.kv.scheduleStatus = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+
                     json.kv.weekdays = getValueScheduleWeekDay('run_task_weekday_select');
                     json.kv.remindMeParam = $("#run_task_reminder_select").val();
                     json.kv.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
@@ -824,32 +831,32 @@ const taskManagement = {
                     json.kv.startDate = toDate("taskDeadlineStartDade");
                     json.kv.endDate = toDate("taskDeadlineEndDade");
                     json.kv.startTime = toTime("taskDeadlineStartTime");
-                    
-                 }
-                    var that = this;
-                    var data = JSON.stringify(json);
-                    $.ajax({
-                        url: urlGl + "api/post/srv/serviceRsCreateBacklogTaskDetail",
-                        type: "POST",
-                        data: data,
-                        contentType: "application/json",
-                        crossDomain: true,
-                        async: true,
-                        success: function (res) {
 
-                        },
-                        error: function () {
-                            Toaster.showError(('somethingww'));
-                        }
-                    });
+                }
+                var that = this;
+                var data = JSON.stringify(json);
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceRsCreateBacklogTaskDetail",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
             } catch (error) {
-                
+
             }
 
 
         },
-        insertCheckListComulativ: function (taskId,itmList) {
-            
+        insertCheckListComulativ: function (taskId, itmList) {
+
 
             this.insertCheckListComulativCore(itmList, taskId);
 
@@ -868,9 +875,9 @@ const taskManagement = {
             });
         },
         loadAssigneesByProjectDetails: function (res) {
-                       return
-           var elm  =  $('select.user_filter_element_selectpicker');
-                elm.empty();
+            return
+            var elm = $('select.user_filter_element_selectpicker');
+            elm.empty();
             try {
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
@@ -894,9 +901,9 @@ const taskManagement = {
                 $('body').find("#taskMgmtModal").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-              
+
                 $("#taskMgmtModal select.update-selectpicker").selectpicker("refresh");
-              return
+                return
 
             },
             genModalSelfBlock: function () {
@@ -979,14 +986,22 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="p-0" style="margin-top: 3px;">
-                        <div  id="updateTask-priority-btn"  class="priority-btn"><!-- if active ( class name -- active ) -->
-                             <i class="cs-svg-icon flame"></i>
-                        </div>
+                       <select id="priority-update-Task-story-card" class="update-selectpicker">
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                </select>
                     </div>
                 </div>
             </div>`
             },
-            genNextBlockPopUp:function (params) {
+            genNextBlockPopUp: function (params) {
                 return `<div class="cs-next-element-box d-none" id='nextBlockItemPopUp' style="position:fixed;">
                 <div class="cs-next-element-box-in">
                    <div class="cs-next-element-box-bg">
@@ -997,7 +1012,8 @@ const taskManagement = {
                               <option selected='true' value="ididit">${getOperName("ididit")}</option>
                               <option value="ForwardTaskTo">${getOperName("ForwardTaskTo")}</option>
                               <option value="rejectTask">${getOperName("rejectTask")}</option>
-                              <option value="canceledTask">${getOperName("cancel")}</option>                              
+                              <option value="canceledTask">${getOperName("cancel")}</option> 
+                              <option value="declareBug">Declare Bug</option>                               
                             </select>
                           </div>
                         </div>
@@ -1158,7 +1174,7 @@ const taskManagement = {
                 </div>
             </div> `
             },
-           
+
             genTabBlock: {
                 Init: function () {
                     var div = `
@@ -1666,108 +1682,109 @@ const taskManagement = {
                 },
             }
         },
-        callTaskCard4BugTask: function (el, projectId, taskId) {            
+        callTaskCard4BugTask: function (el, projectId, taskId) {
             taskManagement.updateTask.genBlockModal.Init();
-            updateEkrantaskTypeBYuserId();
-             loadBugTaskDeadlineScripts(); 
-               $("#taskMgmtModal").modal("show");
-               $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
-               let headerText = $(el).html();
-               var headerTit  = $(".card-UserStory-header-text")
-                   headerTit.html(headerText);
-               $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
-                $("#task-info-modal-status").selectpicker('refresh');
-                $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
-                $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
-                $('#taskDetailDeadlineStartDade').val(Utility.convertDTpicker(coreBugKV[taskId].startDate,'-'));
-                $('#taskDetailDeadlineStartTime').val(Utility.convertTMpicker(coreBugKV[taskId].startTime,'-'));
-                $('#taskDetailDeadlineEndTime').val(Utility.convertTMpicker(coreBugKV[taskId].endTime,'-'));
-                $('#taskDetailDeadlineEndDade').val(Utility.convertDTpicker(coreBugKV[taskId].endDate,'-'));
-                if (coreBugKV[taskId].isMeet === '1') {
-                    changeMeetAndTask($("#toplanti-d-btn"),'1');
-                    $(".card-UserStory-header-text-code").html("Toplantı-"+coreBugKV[taskId].orderNoSeq+"");
-                } else {
-                    changeMeetAndTask($("#tapshiriq-btn"),'0');
-                    $(".card-UserStory-header-text-code").html("Tapşırıq-"+coreBugKV[taskId].orderNoSeq+"");
+
+            loadBugTaskDeadlineScripts();
+            $("#taskMgmtModal").modal("show");
+            $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
+            let headerText = $(el).html();
+            var headerTit = $(".card-UserStory-header-text")
+            headerTit.html(headerText);
+            $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
+            $("#task-info-modal-status").selectpicker('refresh');
+            $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
+            $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
+            $('#taskDetailDeadlineStartDade').val(Utility.convertDTpicker(coreBugKV[taskId].startDate, '-'));
+            $('#taskDetailDeadlineStartTime').val(Utility.convertTMpicker(coreBugKV[taskId].startTime, '-'));
+            $('#taskDetailDeadlineEndTime').val(Utility.convertTMpicker(coreBugKV[taskId].endTime, '-'));
+            $('#taskDetailDeadlineEndDade').val(Utility.convertDTpicker(coreBugKV[taskId].endDate, '-'));
+            if (coreBugKV[taskId].isMeet === '1') {
+                changeMeetAndTask($("#toplanti-d-btn"), '1');
+                $(".card-UserStory-header-text-code").html("Toplantı-" + coreBugKV[taskId].orderNoSeq + "");
+            } else {
+                changeMeetAndTask($("#tapshiriq-btn"), '0');
+                $(".card-UserStory-header-text-code").html("Tapşırıq-" + coreBugKV[taskId].orderNoSeq + "");
+            }
+            if (coreBugKV[taskId].taskStatus === 'new' || coreBugKV[taskId].taskStatus === 'waiting') {
+                if (coreBugKV[taskId].fkAssigneeId === global_var.current_ticker_id) {
+                    $.saConfirm({
+                        "title": lang_task.windowUpdateTask.start,
+                        "confirmButton": lang_task.windowUpdateTask.yes,
+                        "cancelButton": lang_task.windowUpdateTask.no,
+                        "parent": '#taskMgmtModal .modal-content',
+                        cancelAction: function (params) {},
+                        confirmAction: function (params) {
+                            updateTask4ShortChangeDetails('ongoing', "taskStatus");
+                        },
+                        closeAction: function (params) {}
+                    })
                 }
-                if (coreBugKV[taskId].taskStatus === 'new'||coreBugKV[taskId].taskStatus === 'waiting') {
-                    if(coreBugKV[taskId].fkAssigneeId===global_var.current_ticker_id){
-                        $.saConfirm({
-                            "title":lang_task.windowUpdateTask.start,
-                            "confirmButton":lang_task.windowUpdateTask.yes,
-                            "cancelButton":lang_task.windowUpdateTask.no,
-                            "parent":'#taskMgmtModal .modal-content',
-                            cancelAction: function (params) {
-                            },
-                            confirmAction: function (params) {
-                              updateTask4ShortChangeDetails('ongoing', "taskStatus");
-                            },
-                            closeAction:function (params) {
-                            }
-                        })
-                       }
+            }
+
+            //set backlog infos
+            $('#priority-update-Task-story-card').val(coreBugKV[taskId].taskPriority);
+            $('#priority-update-Task-story-card').selectpicker('refresh');
+            // if (coreBugKV[taskId].taskPriority === '9') {
+            //     $("#updateTask-priority-btn").addClass("active");
+            // } else {
+            //     $("#updateTask-priority-btn").removeClass("active");
+            // }
+            $('#addComment4Task_comment').autoHeight();
+            if (coreBugKV[taskId].backlogName) {
+                $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
+                    .attr('pid', coreBugKV[taskId].fkBacklogId)
+                    .html(coreBugKV[taskId].backlogName);
+            }
+            cmpList.userBlock.Init($('.assigne-div-update-issue'), 'single');
+            cmpList.userBlock.Init($('.observer-div-update-issue'), 'multi');
+
+
+
+            setTimeout(() => {
+                if (headerTit.textWidth() > headerTit.width()) {
+                    headerTit.attr('data-placement', 'top')
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr("data-content", headerText);
                 }
-            
-                //set backlog infos
-                if (coreBugKV[taskId].taskPriority === '9') {
-                    $("#updateTask-priority-btn").addClass("active");
-                } else {
-                    $("#updateTask-priority-btn").removeClass("active");
+
+                if (!taskId) {
+                    return;
                 }
-                $('#addComment4Task_comment').autoHeight();
-                if (coreBugKV[taskId].backlogName) {
-                    $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
-                        .attr('pid', coreBugKV[taskId].fkBacklogId)
-                        .html(coreBugKV[taskId].backlogName);
+                global_var.active_canvas = 'comment';
+                global_var.current_issue_id = taskId;
+                Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
+                /*   global_var.current_issue_is_hide = "0";
+                  Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
+
+                //Task card-da Story Card-linke basanda istifade edilir.
+
+                if (projectId !== global_var.current_project_id) {
+                    global_var.current_project_id = projectId;
+                    new UserStory().refreshBacklog4Bug(true);
                 }
-                cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
-                cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
-               
-         
+                $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+                updateEkrantaskTypeBYuserId(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+                this.getLabelTask($('#run_task_detail_detail_categories'));
+                this.getSprintTask($('#run_task_detail_detail_sprint'));
+                this.getTaskSpirntList(taskId)
+                this.getTaskLabelList(taskId)
 
-         setTimeout(() => {
-            if(headerTit.textWidth()>headerTit.width()){
-                headerTit.attr('data-placement', 'top')
-                .attr('data-trigger', 'hover')
-                .attr('data-toggle', 'popover')
-                .attr("data-content",headerText);
-             }
-          
-        if (!taskId) {
-            return;
-        }
-        global_var.active_canvas = 'comment';
-        global_var.current_issue_id = taskId;
-        Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
-        /*   global_var.current_issue_is_hide = "0";
-          Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
+                getProjectUsers();
 
-        //Task card-da Story Card-linke basanda istifade edilir.
+                loadTaskInfoToContainer(taskId, projectId);
+                taskManagement.updateTask.genCommentListOfTask();
+                taskManagement.updateTask.updateBacklogTaskDetail(taskId);
 
-        if (projectId !== global_var.current_project_id) {
-            global_var.current_project_id = projectId;
-            new UserStory().refreshBacklog4Bug(true);
-        }
-        $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
-        this.getLabelTask($('#run_task_detail_detail_categories'));
-        this.getSprintTask($('#run_task_detail_detail_sprint'));
-        this.getTaskSpirntList(taskId)
-        this.getTaskLabelList(taskId)
+                this.getCheckListComulativ(taskId);
+                this.getTaskObserverList(taskId);
 
-        getProjectUsers();    
-        
-        loadTaskInfoToContainer(taskId, projectId);
-        taskManagement.updateTask.genCommentListOfTask();
-        taskManagement.updateTask.updateBacklogTaskDetail(taskId);
-        
-        this.getCheckListComulativ(taskId);
-        this.getTaskObserverList(taskId);
+                this.getTaskEvent(taskId);
+                getChildTasks();
+                getParentTask();
+            }, 700);
 
-        this.getTaskEvent(taskId);
-        getChildTasks();
-        getParentTask();
-         }, 700);            
-            
         },
         updateEventByTaskId: function (id) {
 
@@ -1820,10 +1837,10 @@ const taskManagement = {
                     "fkTaskId": taskId,
                     "fkUserId": val
                 }, true, function () {
-                   // that.getTaskObserverList(taskId);
+                    // that.getTaskObserverList(taskId);
                 });
             } catch (error) {
-                console.log('task Observer ++++' + error);
+              //  console.log('task Observer ++++' + error);
             }
 
 
@@ -1832,35 +1849,35 @@ const taskManagement = {
             try {
 
                 var data = {};
-                data.fkTaskId = taskId;               
+                data.fkTaskId = taskId;
                 callService('serviceRsGetBacklogTaskListByTaskId', data, true, function (res) {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
                     AJAXCallFeedback(res);
-                    console.log(res);
+                   // console.log(res);
                     try {
-                        const  o  = res.tbl[0].r[0];
+                        const o = res.tbl[0].r[0];
                         console.log(o);
-                        $("#runTaskStartDate_activateschedule").prop("checked",o.scheduleStatus==='1'?true:false);
+                        $("#runTaskStartDate_activateschedule").prop("checked", o.scheduleStatus === '1' ? true : false);
                         changeModeSchedule4Update(o.intensive);
-                        $("#sendnotification_detail").prop("checked",o.sendNotification==='1'?true:false);
+                        $("#sendnotification_detail").prop("checked", o.sendNotification === '1' ? true : false);
                         $("#runTaskStartDate_activateschedule").change();
                         $("#run_task_intensive_select_detail").val(o.intensive)
-                                                              .selectpicker("refresh");
+                            .selectpicker("refresh");
                         $("#run_task_repeat_select_detail").val(o.repeatInterval);
                         $("#run_task_reminder_select_detail").val(o.remindMeParam)
-                                                             .selectpicker("refresh");
+                            .selectpicker("refresh");
                         $("#sdofm_day_of_Month_select_detail").val(o.actionDayOfMonth)
-                                                             .selectpicker("refresh");
-                        setValueScheduleWeekDay("run_task_weekday_yearly_select_detail",o.weekdays);
-                        setValueScheduleWeekDay("run_task_day_yearly_select_detail",o.monthlyAction);
-                        
+                            .selectpicker("refresh");
+                        setValueScheduleWeekDay("run_task_weekday_yearly_select_detail", o.weekdays);
+                        setValueScheduleWeekDay("run_task_day_yearly_select_detail", o.monthlyAction);
+
                     } catch (error) {
                         console.log(error);
                     }
-                   
+
                 });
             } catch (error) {
-                
+
             }
 
 
@@ -1945,8 +1962,8 @@ const taskManagement = {
                     var area = (`<textarea rows='1' oid='${o.id}' class='form-control updateTaskcheckListItemName'>${o.itemName}</textarea>`);
                     var linkT = (`<a href='#' class='text-light' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'','${o.fkRelatedTaskId}')">${o.itemName}</a>`)
                     var tr = $("<li >")
-                               .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
-                               .attr("data-checked",o.isChecked)
+                        .addClass((o.isChecked === '1') ? 'on-checked d-none' : 'd-flex')
+                        .attr("data-checked", o.isChecked)
                         .append($('<div class="item-checkbox">')
                             .append($('<label class="checkmarkcontainer">')
                                 .append($('<input>')
@@ -1999,7 +2016,7 @@ const taskManagement = {
         },
 
         getTaskkObserverListDetaisl: function (res) {
-        /*     var userList = {};
+            /*     var userList = {};
             try {
                 var idx = getIndexOfTable(res, "userList");
                 var objUser = res.tbl[idx].r;
@@ -2009,34 +2026,34 @@ const taskManagement = {
                 }
             } catch (err) {}
  */
-/* 
-            var div = $('.task-observer-list');
-            div.html('')
+            /* 
+                        var div = $('.task-observer-list');
+                        div.html('')
 
-            var table = $('<table>')
-                .addClass('table table-hover project-table-list defaultTable sar-table');
-            table.append($('<thead>')
-                .append($("<tr>")
-                    .append($("<th>")
-                        .css("width", "1%")
-                        .text("#"))
-                    .append($('<th>')
-                        .text("Observer"))
-                )
-            )
- */
+                        var table = $('<table>')
+                            .addClass('table table-hover project-table-list defaultTable sar-table');
+                        table.append($('<thead>')
+                            .append($("<tr>")
+                                .append($("<th>")
+                                    .css("width", "1%")
+                                    .text("#"))
+                                .append($('<th>')
+                                    .text("Observer"))
+                            )
+                        )
+             */
             try {
                 var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
                 var objUser = res.tbl[idy].r;
-                var ts  =  []
+                var ts = []
                 for (var k in objUser) {
                     var o2 = objUser[k];
                     ts.push(o2.fkUserId);
                 }
-            
-              
+
+
                 $(".observer-div-update-issue").getVal(ts);
-               // div.html(table);
+                // div.html(table);
             } catch (error) {
 
             }
@@ -2085,7 +2102,7 @@ const taskManagement = {
 
 
                     var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol1")
-                       
+
                     var div_by_row = $('<div></div>')
                         .addClass("row")
                         .addClass("mangodb");
@@ -2106,26 +2123,26 @@ const taskManagement = {
 
                             .append(div1)
                             .append($('<div>').addClass('ml-auto')
-                            .append($("<span>").append(obj[i].username)
-                            .addClass('comment-content-header-name')
-                            .append($("<span>")
-                                .addClass('comment-content-header-history')
-                                .append(Utility.convertDate(obj[i].commentDate))
-                                .append(", ")
-                                .append(Utility.convertTime(obj[i].commentTime))
-                                .append(" ")
-                            )
-                            .append('&nbsp;&nbsp;&nbsp;')
+                                .append($("<span>").append(obj[i].username)
+                                    .addClass('comment-content-header-name')
+                                    .append($("<span>")
+                                        .addClass('comment-content-header-history')
+                                        .append(Utility.convertDate(obj[i].commentDate))
+                                        .append(", ")
+                                        .append(Utility.convertTime(obj[i].commentTime))
+                                        .append(" ")
+                                    )
+                                    .append('&nbsp;&nbsp;&nbsp;')
 
-                                //                            .append($('<a href="#" style="font-size:11px;">')
-                                //                                    .addClass('comment-content-header-name')
-                                //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
-                                //                                    .append("Delete"))
-                            )
+                                    //                            .append($('<a href="#" style="font-size:11px;">')
+                                    //                                    .addClass('comment-content-header-name')
+                                    //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
+                                    //                                    .append("Delete"))
+                                )
 
                             )
-                            
-                            
+
+
                         )
                         .append($("<span class='comment-main-span'>")
                             .css('padding-bottom', "5px")
@@ -2136,7 +2153,7 @@ const taskManagement = {
                     var div2_1 = new UserStory().generateCommentFileLine(obj[i].fileName);
                     var div3 = $('<div></div>').addClass("col-12").append("");
                     div2.append(div2_1)
-                        
+
                     //                    .append($('<a href="#" style="font-size:11px;">')
                     //                            .attr('onclick', " convertCommentHtml2TextArea(this,'" + obj[i].id + "')")
                     //                            .append("Edit"))
@@ -2163,79 +2180,83 @@ const taskManagement = {
 
         },
         getLabelTask: function (elm) {
-           
+
             elm.empty();
             try {
-                var  list  = taskManagement.taskLabelList.tbl[0].r;
-           
-            for (let i = 0; i < list.length; i++) {
-                const o = list[i];
-                elm.append($("<option>")
-                                .val(o.id)
-                               .text(o.name))
-            }
-            } catch (error) {
-                
-            }
-            
-            elm.selectpicker("refresh");
-        },
-        getSprintTask: function (elm) {
-        
-            elm.empty();
-             try {
-                var  list  = taskManagement.taskSprintList.tbl[0].r;
+                var list = taskManagement.taskLabelList.tbl[0].r;
 
                 for (let i = 0; i < list.length; i++) {
                     const o = list[i];
                     elm.append($("<option>")
-                                    .val(o.id)
-                                   .text(o.sprintName))
+                        .val(o.id)
+                        .text(o.name))
                 }
-             } catch (error) {
-                 
-             }
-             
-             elm.selectpicker("refresh");
+            } catch (error) {
+
+            }
+
+            elm.selectpicker("refresh");
+        },
+        getSprintTask: function (elm) {
+
+            elm.empty();
+            try {
+                var list = taskManagement.taskSprintList.tbl[0].r;
+
+                for (let i = 0; i < list.length; i++) {
+                    const o = list[i];
+                    elm.append($("<option>")
+                        .val(o.id)
+                        .text(o.sprintName))
+                }
+            } catch (error) {
+
+            }
+
+            elm.selectpicker("refresh");
         },
         getTaskSpirntList: function (taskId) {
 
-            callApi('22012918213902436118',{fkBacklogTaskId:taskId},true,function (res) {
+            callApi('22012918213902436118', {
+                fkBacklogTaskId: taskId
+            }, true, function (res) {
                 try {
-                    var  list  = res.tbl[0].r;
-                    var tb  = []
-                   for (let i = 0; i < list.length; i++) {
-                       const o = list[i];
-                       tb.push(o.fkSprintId);
-                   }
-                   $("#run_task_detail_detail_sprint").val(tb);
-                   $("#run_task_detail_detail_sprint").selectpicker("refresh");
+                    var list = res.tbl[0].r;
+                    var tb = []
+                    for (let i = 0; i < list.length; i++) {
+                        const o = list[i];
+                        tb.push(o.fkSprintId);
+                    }
+                    $("#run_task_detail_detail_sprint").val(tb);
+                    $("#run_task_detail_detail_sprint").selectpicker("refresh");
                 } catch (error) {
-                    
+
                 }
-                  
-           }) 
+
+            })
         },
         getTaskLabelList: function (taskId) {
 
-            callApi('22012918304302492366',{fkBacklogTaskId:taskId},true,function (res) {
+            callApi('22012918304302492366', {
+                fkBacklogTaskId: taskId
+            }, true, function (res) {
                 try {
-                    var  list  = res.tbl[0].r;
-                    var tb  = []
-                   for (let i = 0; i < list.length; i++) {
-                       const o = list[i];
-                       tb.push(o.fkLabelId)
-                   }
-               
-                   
-                   $("#run_task_detail_detail_categories").val(tb);
-                   $("#run_task_detail_detail_categories").selectpicker("refresh");
-                   
+                    var list = res.tbl[0].r;
+                    var tb = []
+                    for (let i = 0; i < list.length; i++) {
+                        const o = list[i];
+                        tb.push(o.fkLabelId)
+                    }
+
+
+                    $("#run_task_detail_detail_categories").val(tb);
+                    $("#run_task_detail_detail_categories").selectpicker("refresh");
+
                 } catch (error) {
-                    
+
                 }
-            
-           }) 
+
+            })
         },
         getTaskEvent: function (taskId) {
             $('.task-events-updated').attr("data-taskid", '');
@@ -2299,26 +2320,26 @@ const taskManagement = {
         loadAssigneesByProjectDetails: function (res) {
             $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
             return
-           /*  var el = $('#bug_filter_detail_assignee_id_update')
-            el.html('');
-            try {
+            /*  var el = $('#bug_filter_detail_assignee_id_update')
+             el.html('');
+             try {
 
 
-                var obj = res.tbl[0].r;
-                for (var i in obj) {
-                    var o = obj[i];
-                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
+                 var obj = res.tbl[0].r;
+                 for (var i in obj) {
+                     var o = obj[i];
+                     var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
 
-                    el.append(opt4);
+                     el.append(opt4);
 
-                }
-                console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);
-                el.selectpicker("destroy");
-                el.val(coreBugKV[global_var.current_issue_id].fkAssigneeId);
-                el.selectpicker("refresh");
-            } catch (error) {
-                el.hide();
-            } */
+                 }
+                 console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+                 el.selectpicker("destroy");
+                 el.val(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+                 el.selectpicker("refresh");
+             } catch (error) {
+                 el.hide();
+             } */
 
 
 
@@ -2345,11 +2366,13 @@ const taskManagement = {
                 } else if (view === 'table') {
 
                     div.append(this.genTableView.genTableBlock());
-                    setInterval(function(){ startTimeCurrent("issue-list-datetime") }, 5000);
-                   
+                    setInterval(function () {
+                        startTimeCurrent("issue-list-datetime")
+                    }, 5000);
+
                 }
-                genTimePickerById("issue-list-datetime",'up');
-                
+                genTimePickerById("issue-list-datetime", 'up');
+
                 $('#task-list-opt-hid').selectpicker('refresh');
 
             },
@@ -2419,8 +2442,8 @@ const taskManagement = {
                 </div>`
             },
             genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
-        
-                const  lt  = localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"A"
+
+                const lt = localStorage.getItem("issue_mode_active") ? localStorage.getItem("issue_mode_active") : "A"
                 return `
                <div class="info-box mr-2">
                <div class="info-item-elements  static-class deadline-class"  data-status="meSend" data-filed='isPrivate' data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
@@ -2458,7 +2481,7 @@ const taskManagement = {
             ${this.genOperationBlock(lt,newt,ongoing,waiting,closed,rejected,yonledrlb,canceled,btb)}
            `
             },
-            genOperationBlock: function (lt,news,ongoing,waiting,closed,rejected,yonlendirilib,canceled,tamamlanib) {
+            genOperationBlock: function (lt, news, ongoing, waiting, closed, rejected, yonlendirilib, canceled, tamamlanib) {
                 return `<div class="info-box info-box-mob">
                 <span class="title">Status</span>
                 <div class="info-box-in">
@@ -2771,8 +2794,8 @@ const taskManagement = {
                     
                 </div>`
             },
-            genLabelBlock:function (param) {  
-                return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
+            genLabelBlock: function (param) {
+                return `    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
                                         <div class="category-case-box text-left">
                                             <span class="first-icon"><i class="cs-svg-icon box"></i></span> Qutu <span class="last-icon">8</span>
                                         </div>
@@ -2895,8 +2918,8 @@ const taskManagement = {
                                     </div>
             `
             },
-            genSprintBlock:function (param) {  
-                return`<div class="bugSprint-elements category-elements">
+            genSprintBlock: function (param) {
+                return `<div class="bugSprint-elements category-elements">
                 <div class="category-item-boxes text-left">
                     <div class="category-show-hide d-flex">
                         <div class="category" style="cursor: pointer;">  
@@ -3036,7 +3059,7 @@ const taskManagement = {
                 </div>
             </div>`
             },
-            genNotificationItemBlock: function (id, taskId, title, deadline, body,time,msg,img,taskStatus,fktaskId) {
+            genNotificationItemBlock: function (id, taskId, title, deadline, body, time, msg, img, taskStatus, fktaskId) {
                 return `  <div class="notification-elements" id='${id}'>
               <div class="d-flex p-2 notify-top-section">
                   <div class="mr-auto">
@@ -3081,9 +3104,9 @@ const taskManagement = {
               </div>
           </div>`
             },
-            getNotificationRowCount:function () {
-                var json  = initJSON();
-                   json.kv.fkAssigneeId =  global_var.current_ticker_id;
+            getNotificationRowCount: function () {
+                var json = initJSON();
+                json.kv.fkAssigneeId = global_var.current_ticker_id;
                 var data = JSON.stringify(json);
                 var that = this;
                 $.ajax({
@@ -3095,18 +3118,18 @@ const taskManagement = {
                     async: true,
                     success: function (res) {
                         $(".notification-btn .info").text(res.kv.rowCount);
-                           
-                       // $(".notification-btn .info").text(res.kv.rowCount);
+
+                        // $(".notification-btn .info").text(res.kv.rowCount);
                     },
                     error: function () {
                         Toaster.showError(('somethingww'));
                     }
                 });
-              
+
             },
-            getNotificationList:function () {
-                var json  = initJSON();
-                   json.kv.fkAssigneeId =  global_var.current_ticker_id;
+            getNotificationList: function () {
+                var json = initJSON();
+                json.kv.fkAssigneeId = global_var.current_ticker_id;
                 var data = JSON.stringify(json);
                 var that = this;
                 $.ajax({
@@ -3117,92 +3140,89 @@ const taskManagement = {
                     crossDomain: true,
                     async: true,
                     success: function (res) {
-                        var list  = res.tbl[0].r;
-                           var elm  = $("#notification-block-id");
-                                elm.empty();
-                            for (let i = 0; i < list.length; i++) {
-                                const o = list[i];
-                                var endTime = new Date( Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
-                                var html = that.genTypeNotMessaje(
-                                    o.id,
-                                    o.fkTaskId,
-                                    o.fkProjectId,
-                                    o.historyTellerId,
-                                    o.newValue,
-                                    o.oldValue,
-                                    o.historyDate,
-                                    o.historyTime,
-                                    o.noteType,
-                                    o.orderNoSeq,
-                                    endTime,
-                                    o.taskStatus,
-                                    o.isMeet,
-                                    o.fkTaskId
-                                )
-                                elm.append(html);
-                            }
+                        var list = res.tbl[0].r;
+                        var elm = $("#notification-block-id");
+                        elm.empty();
+                        for (let i = 0; i < list.length; i++) {
+                            const o = list[i];
+                            var endTime = new Date(Utility.convertDTpicker(o.endDate) + ' ' + Utility.convertTMpicker(o.endTime));
+                            var html = that.genTypeNotMessaje(
+                                o.id,
+                                o.fkTaskId,
+                                o.fkProjectId,
+                                o.historyTellerId,
+                                o.newValue,
+                                o.oldValue,
+                                o.historyDate,
+                                o.historyTime,
+                                o.noteType,
+                                o.orderNoSeq,
+                                endTime,
+                                o.taskStatus,
+                                o.isMeet,
+                                o.fkTaskId
+                            )
+                            elm.append(html);
+                        }
                     },
                     error: function () {
                         Toaster.showError(('somethingww'));
                     }
                 });
-              
+
             },
-            genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet,fktaskId) {
-                if(!notType){
+            genTypeNotMessaje: function (noetId, taskId, projectId, tellerId, newValue, oldValue, dateL, timeL, notType, orderNoSeq, endTime, taskStatus, isMeet, fktaskId) {
+                if (!notType) {
                     return
                 }
                 try {
 
-                    var title  = (isMeet==='1')?"Meet":"Task"
+                    var title = (isMeet === '1') ? "Meet" : "Task"
                     try {
                         var projectCode = SACore.GetProjectCore(projectId).projectCode;
                         projectCode = projectCode.toUpperCase();
-                      
-                       var taskId = (orderNoSeq)
-                       ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+
+                        var taskId = (orderNoSeq) ?
+                            (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
                     } catch (error) {
                         console.log(error);
-                     var  taskId ="no-id";
+                        var taskId = "no-id";
                     }
-                   
-                     var  img  =''
-                         var body =''                
-                      if(notType==='new'){
-                          body = "New Task Added ("+newValue+")"
-                      }
-                      else if (notType==='status'){
-                        body = "Status Changed From ("+oldValue+") To ("+newValue+")"
-                      }
-                      else if (notType==='assignee'){
-                        body = "Task Assigne ("+oldValue+") changed ("+newValue+")"
-                      }
-                      else if (notType==='comment'){
-                        body = "New Comment Added ("+newValue+")"
-                      }
-   
-                            var msg = ""
-                             var img  = SAProjectUser.Users[tellerId].userImage;
-                               img  =  fileUrl(img)
-                             var deadLine = getTimeDifference(endTime, new Date());
-                             var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
-                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus,fktaskId);
-                    
+
+                    var img = ''
+                    var body = ''
+                    if (notType === 'new') {
+                        body = "New Task Added (" + newValue + ")"
+                    } else if (notType === 'status') {
+                        body = "Status Changed From (" + oldValue + ") To (" + newValue + ")"
+                    } else if (notType === 'assignee') {
+                        body = "Task Assigne (" + oldValue + ") changed (" + newValue + ")"
+                    } else if (notType === 'comment') {
+                        body = "New Comment Added (" + newValue + ")"
+                    }
+
+                    var msg = ""
+                    var img = SAProjectUser.Users[tellerId].userImage;
+                    img = fileUrl(img)
+                    var deadLine = getTimeDifference(endTime, new Date());
+                    var time = Utility.convertDate(dateL) + " " + Utility.convertTime(timeL)
+                    return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body, time, msg, img, taskStatus, fktaskId);
+
                 } catch (error) {
-                   console.log(error)
+                    console.log(error)
                     return ''
                 }
-                
+
             },
             getstatisticListLoadAfter: function () {
                 try {
                     var json = initJSON();
                     json.kv.fkProjectId = bug_filter.project_id;
-                    json.kv.fkAssigneeId = ($(".me-send-task-list-btn").hasClass('active'))?me:bug_filter.assignee_id;
+                    json.kv.fkAssigneeId = ($(".me-send-task-list-btn").hasClass('active')) ? me : bug_filter.assignee_id;
                     json.kv.closedBy = bug_filter.closed_by;
-                    json.kv.createdBy = ($(".my-send-task-list-btn").hasClass('active'))?me:bug_filter.created_by;
+                    json.kv.createdBy = ($(".my-send-task-list-btn").hasClass('active')) ? me : bug_filter.created_by;
                     json.kv.fkBacklogId = bug_filter.backlog_id;
-                  
+
                     json.kv.priority = bug_filter.priority;
                     json.kv.taskNature = bug_filter.nature;
                     json.kv.searchText = bug_filter.search_text;
@@ -3219,15 +3239,15 @@ const taskManagement = {
                     json.kv.createdTime = bug_filter.createdTime;
                     json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
                     var ty = localStorage.getItem("issue_mode_active");
-                        ty = ty?ty:"A"; 
-                       if(ty==='A'){
-                         json.kv.taskStatus = "'new','ongoing','waiting'";
-                       }else if(ty==='P'){
-                          json.kv.taskStatus = "'rejected','UAT','closed','canceled'";
-                     
-                       }else if(ty==='H'){
+                    ty = ty ? ty : "A";
+                    if (ty === 'A') {
+                        json.kv.taskStatus = "'new','ongoing','waiting'";
+                    } else if (ty === 'P') {
+                        json.kv.taskStatus = "'rejected','UAT','closed','canceled'";
+
+                    } else if (ty === 'H') {
                         json.kv.taskStatus = ''
-                       }
+                    }
                     var that = this
                     var data = JSON.stringify(json);
                     $.ajax({
@@ -3238,25 +3258,26 @@ const taskManagement = {
                         crossDomain: true,
                         async: true,
                         success: function (res) {
-                           
+
                             const o = res.tbl[0].r[0];
-                            var elm  = $("#issue-list-statistic-block .static-class")
-                               elm.each( function () {
-                                   var fld  = $(this).attr("data-status");
-                                       $(this).find("span").text(o[fld]);
-                               })
-                             $('[data-toggle="popover"]').popover({
-                                 html: true
-                             });
+                            var elm = $("#issue-list-statistic-block .static-class")
+                            elm.each(function () {
+                                var fld = $(this).attr("data-status");
+                                $(this).find("span").text(o[fld]);
+                            })
+                            $('[data-toggle="popover"]').popover({
+                                html: true
+                            });
                         },
                         error: function () {
                             Toaster.showError(('somethingww'));
                         }
-                    });/* 
-                    callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
-                      
-                        //getInfoBoxResponsive();
-                    }); */
+                    });
+                    /* 
+                                        callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
+                                          
+                                            //getInfoBoxResponsive();
+                                        }); */
 
                 } catch (error) {
                     console.log(error);
@@ -3267,16 +3288,16 @@ const taskManagement = {
             getstatisticList: function () {
                 try {
                     var that = this
-                   /*  callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
-                        const o = res.tbl[0].r[0];
-                        $('[data-toggle="popover"]').popover({
-                            html: true
-                        });
-                        //getInfoBoxResponsive();
-                    }); */
+                    /*  callService('serviceTmgetTaskListStatusCount', {}, true, function (res) {
+                         const o = res.tbl[0].r[0];
+                         $('[data-toggle="popover"]').popover({
+                             html: true
+                         });
+                         //getInfoBoxResponsive();
+                     }); */
                     $("#issue-list-statistic-block")
-                    .html(that.genHeaderContent(/* o.meSend, o.myTask, o.expired, o.todays, o.notTodays, o.noDeadline, o.new, o.ongoing, o.waiting, o.yonlendirilib, o.canceled, o.rejected, o.closed, o.tamamlanib */))
-               
+                        .html(that.genHeaderContent( /* o.meSend, o.myTask, o.expired, o.todays, o.notTodays, o.noDeadline, o.new, o.ongoing, o.waiting, o.yonlendirilib, o.canceled, o.rejected, o.closed, o.tamamlanib */ ))
+
 
                 } catch (error) {}
 
@@ -3298,7 +3319,7 @@ const taskManagement = {
                    </div></div>`
                 },
                 genZonaBlock: function (nameh, id) {
-              return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
+                    return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
             <div class="flex-fill bd-highlight">
                
             </div>
@@ -3326,7 +3347,7 @@ const taskManagement = {
             </div>
             </div>`
                 },
-                genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
+                genKanbanContentBlock: function (id, taskid, isMeet, deadline, body, stats, ceratedDate, createdImg, createdName, assigneImage, assignName) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg d-flex" id="${id}" pid="">
                         <div class="elm-left p-2 bg-status-${stats}">
                             <div class="cs-task-card-avatar-boxes mb-auto">
@@ -3396,7 +3417,7 @@ const taskManagement = {
                         </div>
                     </div>`
                 },
-                getKanbanBodyBlock: function (res, typeRow, st,pageNo) {
+                getKanbanBodyBlock: function (res, typeRow, st, pageNo) {
                     $(".count-cs-" + st).text(res.kv.tableCount);
                     var sumEstHours = 0,
                         sumSpentHours = 0,
@@ -3415,7 +3436,7 @@ const taskManagement = {
                             sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
                             sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
                             var startTime = new Date();
-                            var endTime =new Date( Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
+                            var endTime = new Date(Utility.convertDTpicker(o.endDate) + ' ' + Utility.convertTMpicker(o.endTime));
 
                             var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
                             row += " " /* + rs + rsLabelFilter; */
@@ -3441,14 +3462,14 @@ const taskManagement = {
                                     task_id,
                                     o.isMeet,
                                     getTimeDifference(endTime, startTime),
-                                     taskName, 
-                                     o.taskStatus, 
-                                     Utility.convertDate(o.createdDate)+" "+Utility.convertDate(o.createdTime),
-                                     createdByImg,
-                                     o.createByName,
-                                     img,
-                                     o.userName,
-                                    
+                                    taskName,
+                                    o.taskStatus,
+                                    Utility.convertDate(o.createdDate) + " " + Utility.convertDate(o.createdTime),
+                                    createdByImg,
+                                    o.createByName,
+                                    img,
+                                    o.userName,
+
                                 )
                             )
 
@@ -3481,23 +3502,23 @@ const taskManagement = {
                     global_var.bug_task_label_assign_name = '';
                     global_var.bug_task_label_assign_id = '';
                 },
-                
+
                 generAteBlockKanbanByGroupBy: function (elm, data) {
                     var goupBy = $('#inputGroupSelect01').val();
-                    var items='';
+                    var items = '';
                     var type = "";
-                    if (goupBy === "3"||goupBy === "0") {
+                    if (goupBy === "3" || goupBy === "0") {
                         items = $("select#bug_filter_status");
                         type = "taskStatus";
                         $(elm).empty();
-                        var arr  = items.val();                       
-                      for (let index = 0; index < arr.length; index++) {
-                          const al = arr[index];
-                             var nm =items.find('[value='+al+']').text();
-                          $(elm).append(this.genZonaBlock(nm, al));
-                          this.getTaskList4Kanban(data, type, al);
-                       }
-                       return
+                        var arr = items.val();
+                        for (let index = 0; index < arr.length; index++) {
+                            const al = arr[index];
+                            var nm = items.find('[value=' + al + ']').text();
+                            $(elm).append(this.genZonaBlock(nm, al));
+                            this.getTaskList4Kanban(data, type, al);
+                        }
+                        return
                     }
                     if (goupBy === "7") {
                         items = $("select#bug_filter_nature option");
@@ -3507,90 +3528,90 @@ const taskManagement = {
                         items = $("select#bug_filter_backlog_id");
                         type = "fkBacklogId";
                         $(elm).empty();
-                        var arr  = items.val();                        
-                      for (let index = 0; index < arr.length; index++) {
-                          const al = arr[index];
-                             var nm =items.find('[value='+al+']').text();
-                          $(elm).append(this.genZonaBlock(nm, al));
-                          this.getTaskList4Kanban(data, type, al);
-                       }
+                        var arr = items.val();
+                        for (let index = 0; index < arr.length; index++) {
+                            const al = arr[index];
+                            var nm = items.find('[value=' + al + ']').text();
+                            $(elm).append(this.genZonaBlock(nm, al));
+                            this.getTaskList4Kanban(data, type, al);
+                        }
 
-                       return
+                        return
                     }
                     if (goupBy === "10") {
                         items = $("select#bug_filter_project_id");
                         type = "fkProjectId";
                         $(elm).empty();
-                        var arr  = items.val();                        
-                      for (let index = 0; index < arr.length; index++) {
-                          const al = arr[index];
-                             var nm =items.find('[value='+al+']').text();
-                          $(elm).append(this.genZonaBlock(nm, al));
-                          this.getTaskList4Kanban(data, type, al);
-                       }
+                        var arr = items.val();
+                        for (let index = 0; index < arr.length; index++) {
+                            const al = arr[index];
+                            var nm = items.find('[value=' + al + ']').text();
+                            $(elm).append(this.genZonaBlock(nm, al));
+                            this.getTaskList4Kanban(data, type, al);
+                        }
 
-                       return
+                        return
                     }
                     if (goupBy === "12") {
                         items = $("select#bug_filter_assignee_id");
                         type = "fkAssigneeId";
                         $(elm).empty();
-                        var arr  = items.val();
-                        if(arr.length<1){
-                            arr=[]
+                        var arr = items.val();
+                        if (arr.length < 1) {
+                            arr = []
                             var itm = items.find("option")
-                              itm.each(function (index) {
-                                   if(index<3){
-                                       arr.push($(this).val())
-                                   }
-                                })
-                        }                         
-                      for (let index = 0; index < arr.length; index++) {
-                          const al = arr[index];
-                             var nm =items.find('[value='+al+']').text();
-                          $(elm).append(this.genZonaBlock(nm, al));
-                          this.getTaskList4Kanban(data, type, al);
-                       }
+                            itm.each(function (index) {
+                                if (index < 3) {
+                                    arr.push($(this).val())
+                                }
+                            })
+                        }
+                        for (let index = 0; index < arr.length; index++) {
+                            const al = arr[index];
+                            var nm = items.find('[value=' + al + ']').text();
+                            $(elm).append(this.genZonaBlock(nm, al));
+                            this.getTaskList4Kanban(data, type, al);
+                        }
 
-                       return
+                        return
                     }
                     if (goupBy === "13") {
                         items = $("select#bug_filter_created_by");
                         type = "createdBy";
                         $(elm).empty();
-                        var arr  = items.val(); 
-                             if(arr.length<1){
-                                 arr=[]
-                                 var itm = items.find("option")
-                                   itm.each(function (index) {
-                                        if(index<3){
-                                            arr.push($(this).val())
-                                        }
-                                       })
-                                       
-                             }                       
-                      for (let index = 0; index < arr.length; index++) {
-                          const al = arr[index];
-                             var nm =items.find('[value='+al+']').text();
-                          $(elm).append(this.genZonaBlock(nm, al));
-                          this.getTaskList4Kanban(data, type, al);
-                       }
+                        var arr = items.val();
+                        if (arr.length < 1) {
+                            arr = []
+                            var itm = items.find("option")
+                            itm.each(function (index) {
+                                if (index < 3) {
+                                    arr.push($(this).val())
+                                }
+                            })
 
-                       return
+                        }
+                        for (let index = 0; index < arr.length; index++) {
+                            const al = arr[index];
+                            var nm = items.find('[value=' + al + ']').text();
+                            $(elm).append(this.genZonaBlock(nm, al));
+                            this.getTaskList4Kanban(data, type, al);
+                        }
+
+                        return
                     }
                     if (goupBy === "8") {
                         items = $("select#bug_filter_tasktype");
                         type = "fkTaskTypeId"
                         $(elm).empty();
-                        var arr  = items.val();                        
-                      for (let index = 0; index < arr.length; index++) {
-                          const al = arr[index];
-                             var nm =items.find('[value='+al+']').text();
-                          $(elm).append(this.genZonaBlock(nm, al));
-                          this.getTaskList4Kanban(data, type, al);
-                       }
+                        var arr = items.val();
+                        for (let index = 0; index < arr.length; index++) {
+                            const al = arr[index];
+                            var nm = items.find('[value=' + al + ']').text();
+                            $(elm).append(this.genZonaBlock(nm, al));
+                            this.getTaskList4Kanban(data, type, al);
+                        }
 
-                       return
+                        return
                     }
                     /*  if(goupBy===0){
                           items  = $("select#bug_filter_status>option");  
@@ -3624,14 +3645,14 @@ const taskManagement = {
                             coreBugList = res;
                             setKV4CoreBugList();
                             that.getKanbanBodyBlock(res, type, st, '1');
-                          
+
                         },
                         error: function () {
                             Toaster.showError(('somethingww'));
                         }
                     });
                 },
-                getTaskList4KanbanMore: function (type, st,pageNo) {
+                getTaskList4KanbanMore: function (type, st, pageNo) {
                     var json = initJSON();
                     json.kv.fkProjectId = bug_filter.project_id;
                     json.kv.fkAssigneeId = bug_filter.assignee_id;
@@ -3668,8 +3689,8 @@ const taskManagement = {
                             AJAXCallFeedback(res);
                             coreBugList = res;
                             setKV4CoreBugList();
-                            that.getKanbanBodyBlock(res, type, st,pageNo );
-                            
+                            that.getKanbanBodyBlock(res, type, st, pageNo);
+
 
                         },
                         error: function () {
@@ -3747,7 +3768,7 @@ const taskManagement = {
                  </div>
                      `
                 },
-                genShowHideBlock4ch:function (params) {
+                genShowHideBlock4ch: function (params) {
                     return ` <div class="showhide-col-main-issue showhide-col-main-info" style="display: none">
                     <div class="showhide-col-main-info-in-issue showhide-col-main-info-in">
                         <ul>
@@ -3830,59 +3851,59 @@ const taskManagement = {
                         sumExecCount = 0,
                         sumEstBudget = 0,
                         sumSpentBudget = 0;
-                        try {
-                            var obj = res.tbl[0].r;
-                            for (var i = 0; i < obj.length; i++) {
-                                var o = obj[i];
-                                sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
-                                sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
-                                sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
-                                sumExecCount = increaseValue(sumExecCount, o.executedCounter);
-                                sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
-                                sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
-                                
-        
-                                var t = this.genTaskTableForm(o,i);
-                                tbody.append(t);
-                                
-                               
-                            }
-                            setTimeout(() => {
-                                var a  = $(".bug-list-column-task-name");
-                                a.each(function (params) {
-                                   var textWidth  = $(this).textWidth();
-                                   var width   =  $(this).width();
+                    try {
+                        var obj = res.tbl[0].r;
+                        for (var i = 0; i < obj.length; i++) {
+                            var o = obj[i];
+                            sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                            sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                            sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                            sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                            sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                            sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
 
-                                   if(textWidth<width){
 
-                                      $(this).removeAttr('data-toggle');
-                                    
-                                   } else{
-                                       console.log(textWidth,width);
-                                   }
-                                })
+                            var t = this.genTaskTableForm(o, i);
+                            tbody.append(t);
+
+
+                        }
+                        setTimeout(() => {
+                            var a = $(".bug-list-column-task-name");
+                            a.each(function (params) {
+                                var textWidth = $(this).textWidth();
+                                var width = $(this).width();
+
+                                if (textWidth < width) {
+
+                                    $(this).removeAttr('data-toggle');
+
+                                } else {
+                                    console.log(textWidth, width);
+                                }
+                            })
                             $('[data-toggle="popover"]').popover({
                                 html: true
                             });
-                            }, 200);
-                           
-                            // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-                            //         sumEstBudget, sumSpentBudget);
-        
-                            global_var.bug_task_sprint_assign_checked = '';
-                            global_var.bug_task_sprint_assign_name = '';
-                            global_var.bug_task_sprint_assign_id = '';
-        
-        
-                            global_var.bug_task_label_assign_checked = '';
-                            global_var.bug_task_label_assign_name = '';
-                            global_var.bug_task_label_assign_id = '';
-                        } catch (error) {
-                            
-                        }
-                   
+                        }, 200);
+
+                        // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                        //         sumEstBudget, sumSpentBudget);
+
+                        global_var.bug_task_sprint_assign_checked = '';
+                        global_var.bug_task_sprint_assign_name = '';
+                        global_var.bug_task_sprint_assign_id = '';
+
+
+                        global_var.bug_task_label_assign_checked = '';
+                        global_var.bug_task_label_assign_name = '';
+                        global_var.bug_task_label_assign_id = '';
+                    } catch (error) {
+
+                    }
+
                 },
-                genContextMenu : function () {
+                genContextMenu: function () {
                     return `<div id="contextMenu" class="dropdown contextMenu-dropdown-style position-fixed" style="z-index:555;display: none;">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                         <li class="dropdown-item" href="#" onclick="nextModalpopUpShow(this,'ididit')" >
@@ -3908,7 +3929,7 @@ const taskManagement = {
                         </li>
                     </ul>
                 </div>`
-                   
+
                 },
                 getTaskList4Table: function (json) {
                     var that = this;
@@ -3936,283 +3957,283 @@ const taskManagement = {
                         }
                     });
                 },
-                genTaskTableFormMini: function (o,i) {
+                genTaskTableFormMini: function (o, i) {
                     var startTime = new Date();
-                        var endTime = new Date(Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
+                    var endTime = new Date(Utility.convertDTpicker(o.endDate) + ' ' + Utility.convertTMpicker(o.endTime));
 
-                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
-                        row += " " /* + rs + rsLabelFilter; */
+                    var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                    row += " " /* + rs + rsLabelFilter; */
 
-                        var userImage = o.userImage;
-                        var img = (userImage) ?
-                            fileUrl(userImage) :
-                            fileUrl(new User().getDefaultUserprofileName());
+                    var userImage = o.userImage;
+                    var img = (userImage) ?
+                        fileUrl(userImage) :
+                        fileUrl(new User().getDefaultUserprofileName());
 
-                        var createByImage = o.createByImage;
-                        var createdByImg = (createByImage) ?
-                            fileUrl(createByImage) :
-                            " ";
+                    var createByImage = o.createByImage;
+                    var createdByImg = (createByImage) ?
+                        fileUrl(createByImage) :
+                        " ";
 
-                        var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
-                        var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
-                        var task_id = getTaskCode(o.id);
+                    var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
+                    var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                    var task_id = getTaskCode(o.id);
 
-                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
-                  const t= $('<tr>')
-                            .attr("id", o.id)
-                            .attr("projectId", o.fkProjectId)
-                            .attr("stIdr", o.fkBacklogId)
-                            .append($('<td>').attr("style", "width:25px;")
-                                .append(row)
-                            )
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-task-id').append(task_id))
-                            .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
-                                .addClass('bug-list-column-task-deadline')
-                                .append(getTimeDifference(endTime, startTime))
-                            )
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-task-status cs-input-group')
-                                .css("text-align", 'left')
-                                .css("padding-left", '3px')
-                                .css("overflow", 'initial')
+                    var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
+                    const t = $('<tr>')
+                        .attr("id", o.id)
+                        .attr("projectId", o.fkProjectId)
+                        .attr("stIdr", o.fkBacklogId)
+                        .append($('<td>').attr("style", "width:25px;")
+                            .append(row)
+                        )
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-task-id').append(task_id))
+                        .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
+                            .addClass('bug-list-column-task-deadline')
+                            .append(getTimeDifference(endTime, startTime))
+                        )
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-task-status cs-input-group')
+                            .css("text-align", 'left')
+                            .css("padding-left", '3px')
+                            .css("overflow", 'initial')
+                            .append($("<div>")
                                 .append($("<div>")
-                                    .append($("<div>")
-                                        .addClass('position-relative us-item-status-' + o.taskStatus)
-                                        .append($('<span>')
-                                            .append(getStatusName(o.taskStatus)))
-                                        .append((o.taskPriority === '9') ? prtDiv : ""))
-                                ))
-                           
-                           .append($('<td>')
-                                .addClass('bug-list-column')
-                                .attr("data-placement","top")
-                                .attr("data-toggle","popover")
-                                .attr("data-trigger","hover")
-                                .attr("data-content",taskName)
-                                .addClass('bug-list-column-task-name')
-                                .css("max-width", '240px')
-                                .append(taskName, ' ')
-                               
-                            )
-                           
-                                                        
-                            .append($('<td>')
-                                .css('white-space', 'nowrap').css("text-align", 'center')
-                                .addClass('bug-list-column')
-                                .addClass('bug-list-column-assignee')
-                                .append(genUserTrblock(o.userName, img,"Assigne",o.fkAssigneeId)))
-                            .append($('<td>').addClass('bug-list-column')
-                                .css('white-space', 'nowrap').css("text-align", 'center')
-                                .addClass('bug-list-column-created-by ')
-                                .append(genUserTrblock(o.createByName, createdByImg,"Created by",o.createdBy)))
-                            .append($('<td>').addClass('bug-list-column')
-                                .css('white-space', 'nowrap').css("text-align", 'center')
-                                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
-                          
-                           
+                                    .addClass('position-relative us-item-status-' + o.taskStatus)
+                                    .append($('<span>')
+                                        .append(getStatusName(o.taskStatus)))
+                                    .append((o.taskPriority === '9') ? prtDiv : ""))
+                            ))
+
+                        .append($('<td>')
+                            .addClass('bug-list-column')
+                            .attr("data-placement", "top")
+                            .attr("data-toggle", "popover")
+                            .attr("data-trigger", "hover")
+                            .attr("data-content", taskName)
+                            .addClass('bug-list-column-task-name')
+                            .css("max-width", '240px')
+                            .append(taskName, ' ')
+
+                        )
+
+
+                        .append($('<td>')
+                            .css('white-space', 'nowrap').css("text-align", 'center')
+                            .addClass('bug-list-column')
+                            .addClass('bug-list-column-assignee')
+                            .append(genUserTrblock(o.userName, img, "Assigne", o.fkAssigneeId)))
+                        .append($('<td>').addClass('bug-list-column')
+                            .css('white-space', 'nowrap').css("text-align", 'center')
+                            .addClass('bug-list-column-created-by ')
+                            .append(genUserTrblock(o.createByName, createdByImg, "Created by", o.createdBy)))
+                        .append($('<td>').addClass('bug-list-column')
+                            .css('white-space', 'nowrap').css("text-align", 'center')
+                            .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+
+
 
                     return t
                 },
-                genTaskTableForm: function (o,i) {
+                genTaskTableForm: function (o, i) {
                     var startTime = new Date();
-                        var endTime = new Date( Utility.convertDTpicker(o.endDate) + ' ' +  Utility.convertTMpicker(o.endTime));
-                           
-                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
-                        row += " " /* + rs + rsLabelFilter; */
+                    var endTime = new Date(Utility.convertDTpicker(o.endDate) + ' ' + Utility.convertTMpicker(o.endTime));
 
-                        var userImage = o.userImage;
-                        var img = (userImage) ?
-                            fileUrl(userImage) :
-                            fileUrl(new User().getDefaultUserprofileName());
+                    var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                    row += " " /* + rs + rsLabelFilter; */
 
-                        var createByImage = o.createByImage;
-                        var createdByImg = (createByImage) ?
-                            fileUrl(createByImage) :
-                            " ";
+                    var userImage = o.userImage;
+                    var img = (userImage) ?
+                        fileUrl(userImage) :
+                        fileUrl(new User().getDefaultUserprofileName());
 
-                        var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
-                        var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
-                        var task_id = getTaskCode(o.id);
+                    var createByImage = o.createByImage;
+                    var createdByImg = (createByImage) ?
+                        fileUrl(createByImage) :
+                        " ";
 
-                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
-                  const t=   $('<tr>')
-                            .attr("id", o.id)
-                            .attr("projectId", o.fkProjectId)
-                            .attr("stIdr", o.fkBacklogId)
-                            .addClass('bug-tr')
-                            .append($('<td>').attr("style", "width:25px;")
-                                .append(row)
-                            )
-                            .append($('<td>').attr("style", "width:30px;")
-                                .addClass('bug-list-checkbox')
-                                .append('<input class="checkbox-issue-task" type="checkbox">')
-                            )
-                            
-                            .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
-                                .addClass('bug-list-column-task-deadline')
-                                .append(getTimeDifference(endTime, startTime))
-                            )
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-task-status cs-input-group')
-                                .css("text-align", 'left')
-                                .css("padding-left", '3px')
-                                .css("overflow", 'initial')
-                                .attr("gid",o.taskStatus)
+                    var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
+                    var taskName = '<a class="task-list-name issue_' + o.id + '" href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                    var task_id = getTaskCode(o.id);
+
+                    var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
+                    const t = $('<tr>')
+                        .attr("id", o.id)
+                        .attr("projectId", o.fkProjectId)
+                        .attr("stIdr", o.fkBacklogId)
+                        .addClass('bug-tr')
+                        .append($('<td>').attr("style", "width:25px;")
+                            .append(row)
+                        )
+                        .append($('<td>').attr("style", "width:30px;")
+                            .addClass('bug-list-checkbox')
+                            .append('<input class="checkbox-issue-task" type="checkbox">')
+                        )
+
+                        .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
+                            .addClass('bug-list-column-task-deadline')
+                            .append(getTimeDifference(endTime, startTime))
+                        )
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-task-status cs-input-group')
+                            .css("text-align", 'left')
+                            .css("padding-left", '3px')
+                            .css("overflow", 'initial')
+                            .attr("gid", o.taskStatus)
+                            .append($("<div>")
                                 .append($("<div>")
-                                    .append($("<div>")
-                                        .addClass('position-relative us-item-status-' + o.taskStatus)
-                                        .append($('<span>')
-                                            .append(getStatusName(o.taskStatus)))
-                                        .append((o.taskPriority === '9') ? prtDiv : ""))
-                                ))
-                           .append($('<td>').addClass('bug-list-column').attr("style", "width:100px;")
-                                .addClass('bug-list-column-task-id').append(task_id))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-ismeet cs-input-group')
-                                 .append(o.isMeet==='1'?'<i class="cs-svg-icon users-dark"></i>':'<i class="cs-svg-icon tapshiriq-dark"></i>')
-                                 .append(o.isMeet==='1'?"Toplantı":"Tapşırıq")
-                                  )
-                           .append($('<td>')
-                                .addClass('bug-list-column')
-                                .attr("data-placement","top")
-                                .attr("data-toggle","popover")
-                                .attr("data-trigger","hover")
-                                .attr("data-content",replaceTags(fnline2Text(o.taskName)))
-                                .addClass('bug-list-column-task-name')
-                                .css("max-width", '240px')
-                                .append((o.fkParentTaskId) ? "<i class='fa fa-level-up bug-list-column-task-name-icon'>" : "")
-                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
-                                .append(taskName, ' ')
-                                .append("<input type='text' class=' task-name-issue select-box-issue'>")
-                                
-                                // .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
-                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
-                            )
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-task-nature')
-                                .append($("<div>")
-                                    .addClass("dropdown ")
-                                    .append($("<div>")
-                                        .attr("id", "bug-taskNature-dropdown")
-                                        .append(o.taskNature == 'bug' ? '<i class="fas fa-bug" style="color: red;"></i>' : "")
-                                        .append(o.taskNature == 'change' ? '<i class="fas fa-edit" style="color: #FF7F50;"></i>' : "")
-                                        .append(o.taskNature == 'new' ? '<i class="fas fa-file-alt"></i>' : "")
-        
-                                    )))
-                            .append($('<td>').addClass('bug-list-column')
-                                .attr("data-placement","top")
-                                .attr("data-toggle","popover")
-                                .attr("data-trigger","hover")
-                                .attr("data-content",o.taskTypeName)
-                                .addClass('bug-list-column-tasktype')
-                                .append($("<div>")
-                                    .addClass(" ")
-                                    .append($("<div>")
-                                        .attr("id", "bug-taskNature-dropdown")
-                                        .append(o.taskTypeName)
-                                    )))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-story-card')
-                                .attr("data-placement","top")
-                                .attr("data-toggle","popover")
-                                .attr("data-trigger","hover")
-                                .attr("data-content",backlogName)
-                                .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
-                                .append($('<div>').addClass('set-filter-box')
-                                    .append($('<i class="fa fa-filter">')
-                                        .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
-                                        .css("display", "none")
-                                        .addClass("hpYuyept"))
+                                    .addClass('position-relative us-item-status-' + o.taskStatus)
+                                    .append($('<span>')
+                                        .append(getStatusName(o.taskStatus)))
+                                    .append((o.taskPriority === '9') ? prtDiv : ""))
+                            ))
+                        .append($('<td>').addClass('bug-list-column').attr("style", "width:100px;")
+                            .addClass('bug-list-column-task-id').append(task_id))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-ismeet cs-input-group')
+                            .append(o.isMeet === '1' ? '<i class="cs-svg-icon users-dark"></i>' : '<i class="cs-svg-icon tapshiriq-dark"></i>')
+                            .append(o.isMeet === '1' ? "Toplantı" : "Tapşırıq")
+                        )
+                        .append($('<td>')
+                            .addClass('bug-list-column')
+                            .attr("data-placement", "top")
+                            .attr("data-toggle", "popover")
+                            .attr("data-trigger", "hover")
+                            .attr("data-content", replaceTags(fnline2Text(o.taskName)))
+                            .addClass('bug-list-column-task-name')
+                            .css("max-width", '240px')
+                            .append((o.fkParentTaskId) ? "<i class='fa fa-level-up bug-list-column-task-name-icon'>" : "")
+                            .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
+                            .append(taskName, ' ')
+                            .append("<input type='text' class=' task-name-issue select-box-issue'>")
 
-                                )
-                                .mouseover(function () {
-                                    $(this).find(".hpYuyept").show();
-                                    $(this).find(".hpYuyept1").show();
-                                })
-                                .mouseleave(function () {
-                                    $(this).find(".hpYuyept").hide();
-                                    $(this).find(".hpYuyept1").hide();
-                                })
-                            )
-                            .append($('<td>').addClass('bug-list-column')
-                                .attr("data-placement","top")
-                                .attr("data-toggle","popover")
-                                .attr("data-trigger","hover")
-                                .attr("data-content",replaceTags(o.projectName))
-                                .attr("style", "max-width:200px;")
-                                .addClass('bug-list-column-project')
-                                .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
+                            // .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
+                            .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
+                        )
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-task-nature')
+                            .append($("<div>")
+                                .addClass("dropdown ")
+                                .append($("<div>")
+                                    .attr("id", "bug-taskNature-dropdown")
+                                    .append(o.taskNature == 'bug' ? '<i class="fas fa-bug" style="color: red;"></i>' : "")
+                                    .append(o.taskNature == 'change' ? '<i class="fas fa-edit" style="color: #FF7F50;"></i>' : "")
+                                    .append(o.taskNature == 'new' ? '<i class="fas fa-file-alt"></i>' : "")
+
+                                )))
+                        .append($('<td>').addClass('bug-list-column')
+                            .attr("data-placement", "top")
+                            .attr("data-toggle", "popover")
+                            .attr("data-trigger", "hover")
+                            .attr("data-content", o.taskTypeName)
+                            .addClass('bug-list-column-tasktype')
+                            .append($("<div>")
+                                .addClass(" ")
+                                .append($("<div>")
+                                    .attr("id", "bug-taskNature-dropdown")
+                                    .append(o.taskTypeName)
+                                )))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-story-card')
+                            .attr("data-placement", "top")
+                            .attr("data-toggle", "popover")
+                            .attr("data-trigger", "hover")
+                            .attr("data-content", backlogName)
+                            .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
+                            .append($('<div>').addClass('set-filter-box')
                                 .append($('<i class="fa fa-filter">')
-                                    .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
                                     .css("display", "none")
                                     .addClass("hpYuyept"))
-                                .mouseover(function () {
-                                    $(this).find(".hpYuyept").show();
-                                })
-                                .mouseleave(function () {
-                                    $(this).find(".hpYuyept").hide();
-                                }))
-                            .append($('<td>')
-                                .css('white-space', 'nowrap').css("text-align", 'center')
-                                .addClass('bug-list-column')
-                                .addClass('bug-list-column-assignee')
-                                .attr("gid",o.fkAssigneeId)
-                                .append(genUserTrblock(o.userName, img,"Assigne",o.fkAssigneeId))
-                                .append($('<i class="fa fa-filter">')
-                                    .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
-                                    .css("display", "none")
-                                    .addClass("hpYuyept"))
-                                .mouseover(function () {
-                                    $(this).find(".hpYuyept").show();
-                                })
-                                .mouseleave(function () {
-                                    $(this).find(".hpYuyept").hide();
-                                }))
-                            .append($('<td>').addClass('bug-list-column')
-                                .css('white-space', 'nowrap').css("text-align", 'center')
-                                .addClass('bug-list-column-created-by ')
-                                .attr("gid",o.createdBy)
-                                .append(genUserTrblock(o.createByName, createdByImg,"Created by",o.createdBy))
-                                .append($('<i class="fa fa-filter">')
-                                    .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
-                                    .css("display", "none")
-                                    .addClass("hpYuyept"))
-                                .mouseover(function () {
-                                    $(this).find(".hpYuyept").show();
-                                })
-                                .mouseleave(function () {
-                                    $(this).find(".hpYuyept").hide();
-                                })
+
                             )
-                            .append($('<td>').addClass('bug-list-column')
-                                  .attr("gid",o.createdDate)
-                                .css('white-space', 'nowrap').css("text-align", 'center')
-                                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-close-date')
-                                .append((o.closeStatusDate) ?
-                                    "<span class='get-data-group'>" + Utility.convertDate(o.closeStatusDate) + " : " + Utility.convertTime(o.closeStatusTime) + "</span>" :
-                                    ""))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-closed-by')
-                                .append("<span class='get-data-group'>" + o.closedByName + "</span>"))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-last-update').append("<span class='get-data-group'>" + (o.lastUpdatedDate) ? Utility.convertDate(o.lastUpdatedDate) : "" + "</span>"))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-estimated-hours').append((o.estimatedHours !== '0') ? o.estimatedHours : ""))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-spent-hours').append((o.spentHours !== '0') ? o.spentHours : ""))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-estimated-counter').append((o.estimatedCounter !== '0') ? o.estimatedCounter : ""))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-executed-counter').append((o.executedCounter !== '0') ? o.executedCounter : ""))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-estimated-budget').append((o.estimatedBudget !== '0') ? o.estimatedBudget : ""))
-                            .append($('<td>').addClass('bug-list-column')
-                                .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
+                            .mouseover(function () {
+                                $(this).find(".hpYuyept").show();
+                                $(this).find(".hpYuyept1").show();
+                            })
+                            .mouseleave(function () {
+                                $(this).find(".hpYuyept").hide();
+                                $(this).find(".hpYuyept1").hide();
+                            })
+                        )
+                        .append($('<td>').addClass('bug-list-column')
+                            .attr("data-placement", "top")
+                            .attr("data-toggle", "popover")
+                            .attr("data-trigger", "hover")
+                            .attr("data-content", replaceTags(o.projectName))
+                            .attr("style", "max-width:200px;")
+                            .addClass('bug-list-column-project')
+                            .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
+                            .append($('<i class="fa fa-filter">')
+                                .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                .css("display", "none")
+                                .addClass("hpYuyept"))
+                            .mouseover(function () {
+                                $(this).find(".hpYuyept").show();
+                            })
+                            .mouseleave(function () {
+                                $(this).find(".hpYuyept").hide();
+                            }))
+                        .append($('<td>')
+                            .css('white-space', 'nowrap').css("text-align", 'center')
+                            .addClass('bug-list-column')
+                            .addClass('bug-list-column-assignee')
+                            .attr("gid", o.fkAssigneeId)
+                            .append(genUserTrblock(o.userName, img, "Assigne", o.fkAssigneeId))
+                            .append($('<i class="fa fa-filter">')
+                                .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
+                                .css("display", "none")
+                                .addClass("hpYuyept"))
+                            .mouseover(function () {
+                                $(this).find(".hpYuyept").show();
+                            })
+                            .mouseleave(function () {
+                                $(this).find(".hpYuyept").hide();
+                            }))
+                        .append($('<td>').addClass('bug-list-column')
+                            .css('white-space', 'nowrap').css("text-align", 'center')
+                            .addClass('bug-list-column-created-by ')
+                            .attr("gid", o.createdBy)
+                            .append(genUserTrblock(o.createByName, createdByImg, "Created by", o.createdBy))
+                            .append($('<i class="fa fa-filter">')
+                                .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                .css("display", "none")
+                                .addClass("hpYuyept"))
+                            .mouseover(function () {
+                                $(this).find(".hpYuyept").show();
+                            })
+                            .mouseleave(function () {
+                                $(this).find(".hpYuyept").hide();
+                            })
+                        )
+                        .append($('<td>').addClass('bug-list-column')
+                            .attr("gid", o.createdDate)
+                            .css('white-space', 'nowrap').css("text-align", 'center')
+                            .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-close-date')
+                            .append((o.closeStatusDate) ?
+                                "<span class='get-data-group'>" + Utility.convertDate(o.closeStatusDate) + " : " + Utility.convertTime(o.closeStatusTime) + "</span>" :
+                                ""))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-closed-by')
+                            .append("<span class='get-data-group'>" + o.closedByName + "</span>"))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-last-update').append("<span class='get-data-group'>" + (o.lastUpdatedDate) ? Utility.convertDate(o.lastUpdatedDate) : "" + "</span>"))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-estimated-hours').append((o.estimatedHours !== '0') ? o.estimatedHours : ""))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-spent-hours').append((o.spentHours !== '0') ? o.spentHours : ""))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-estimated-counter').append((o.estimatedCounter !== '0') ? o.estimatedCounter : ""))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-executed-counter').append((o.executedCounter !== '0') ? o.executedCounter : ""))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-estimated-budget').append((o.estimatedBudget !== '0') ? o.estimatedBudget : ""))
+                        .append($('<td>').addClass('bug-list-column')
+                            .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
 
                     return t
                 }
@@ -4371,7 +4392,7 @@ const taskManagement = {
             crossDomain: true,
             async: true,
             success: function (res) {
-                 $(elm).empty();
+                $(elm).empty();
                 var dt = res.tbl[0].r;
                 for (let index = 0; index < dt.length; index++) {
 
@@ -4394,42 +4415,54 @@ const taskManagement = {
     },
     load_task_type_forward_to: (elm) => {
 
-        callApi('220226155516021210809',{}, true, function (res) {
+        callApi('220226155516021210809', {}, true, function (res) {
             $(elm).empty();
             try {
-                  var d = res.tbl[0].r;
-                  for (var i = 0; i < d.length; i++) {
-                      var o = d[i];
-                      $(elm).append($('<option>')
-                          .val(o.fkTaskTypeId)
-                          .text(o.typeName)
-                      )
-                  }                
+                var d = res.tbl[0].r;
+                for (var i = 0; i < d.length; i++) {
+                    var o = d[i];
+                    $(elm).append($('<option>')
+                        .val(o.fkTaskTypeId)
+                        .text(o.typeName)
+                    )
+                }
             } catch (error) {
-                
+
             }
             $(elm).selectpicker('refresh');
         })
     },
-     load_task_type_view_to: (elm) => {
+    load_task_type_view_to: (elm) => {
+        var task = {}
+        callService('serviceTmGetTaskTypeList', {}, true, function (res) {
+            var typeList = res.tbl[0].r;
+            for (let k = 0; k < typeList.length; k++) {
+                const l = typeList[k];
+                task[l.id] = l;
+            }
 
-         callApi('22022617324009239044', {}, true, function (res) {
-             $(elm).empty();
-             try {
-                 var d = res.tbl[0].r;
-                 for (var i = 0; i < d.length; i++) {
-                     var o = d[i];
-                     $(elm).append($('<option>')
-                         .val(o.fkTaskTypeId)
-                         .text(o.typeName)
-                     )
-                 }
-             } catch (error) {
+            callApi('22030712433401636493', {}, true, function (res) {
+                $(elm).empty();
+                try {
+                    var d = res.tbl[0].r;
+                    for (var i = 0; i < d.length; i++) {
+                        var o = d[i];
+                        $(elm).append($('<option>')
+                            .val(o.fkTaskTypeId)
+                            .text(task[o.fkTaskTypeId].typeName)
+                        );
+                    }
 
-             }
-             $(elm).selectpicker('refresh');
-         })
-     },
+                } catch (error) {
+
+                }
+                $(elm).selectpicker('refresh');
+            })
+
+        });
+
+
+    },
     getUserListWithImageSelectbox: function (projectId, type) {
         var json = initJSON();
         json.kv.fkProjectId = projectId ? projectId : global_var.current_project_id;
@@ -4457,9 +4490,9 @@ const taskManagement = {
             }
         });
     },
-    genModal:{
-           changeStoryCardModal: function(){
-               return   `    <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
+    genModal: {
+        changeStoryCardModal: function () {
+            return `    <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
                style="z-index:50000;" aria-hidden="true">
                <div class="modal-dialog modal-lg" role="document">
                    <div class="modal-content">
@@ -4490,62 +4523,69 @@ const taskManagement = {
                </div>
            </div>
        `
-           }
-          
+        }
+
     }
 }
+
 function getValueScheduleWeekDay(elmId) {
-       var list =''; 
-       var block  =  $("#"+elmId).find('input[type="checkbox"]');
-          block.each(function (params) {
-              if($(this).closest('label').hasClass("active")){
-                  list = $(this).val()
-              }
-          })
-       return list ;
+    var list = '';
+    var block = $("#" + elmId).find('input[type="checkbox"]');
+    block.each(function (params) {
+        if ($(this).closest('label').hasClass("active")) {
+            list = $(this).val()
+        }
+    })
+    return list;
 }
+
 function getValueScheduleWeekAction(elmId) {
-       var list =''; 
-       var block  =  $("#"+elmId).find('input[type="checkbox"]');
-          block.each(function () {
-              if ($(this).closest('label').hasClass("active")) {
-                  list = $(this).val();
-              }
-          })
-       return list ;
+    var list = '';
+    var block = $("#" + elmId).find('input[type="checkbox"]');
+    block.each(function () {
+        if ($(this).closest('label').hasClass("active")) {
+            list = $(this).val();
+        }
+    })
+    return list;
 }
-function setValueScheduleWeekDay(elmId,val) {
+
+function setValueScheduleWeekDay(elmId, val) {
     try {
-        var val =val.split('%IN%'); 
+        var val = val.split('%IN%');
         for (let i = 0; i < val.length; i++) {
             const o = val[i];
-            $("#"+elmId).find('input[value="'+o+'"]').prop("checked",true);
-        }   
+            $("#" + elmId).find('input[value="' + o + '"]').prop("checked", true);
+        }
     } catch (error) {
-        
+
     }
-      
-         
+
+
 }
+
 function setValueScheduleWeekAction(elmId) {
-       var list =''; 
-       var block  =  $("#"+elmId).find('input[type="checkbox"]');
-          block.each(function () {
-              if($(this).prop("checked")){
-                  list += $(this).val() + '%IN%'
-              }
-          })
-       return list ;
+    var list = '';
+    var block = $("#" + elmId).find('input[type="checkbox"]');
+    block.each(function () {
+        if ($(this).prop("checked")) {
+            list += $(this).val() + '%IN%'
+        }
+    })
+    return list;
 }
+
 function getStatusName(id) {
-       
-    var nm  = lang_task.taskStatus[id.trim()];
+
+    var nm = lang_task.taskStatus[id.trim()];
     return nm
 }
+
 function getOperName(id) {
-    var nm  = lang_task.windowUpdateTask[id.trim()];
+    var nm = lang_task.windowUpdateTask[id.trim()];
     return nm
 }
+
 function startTimeCurrent(id) {
     var today = new Date();
     var hr = today.getHours();
@@ -4555,28 +4595,31 @@ function startTimeCurrent(id) {
     hr = checkTime(hr);
     min = checkTime(min);
     sec = checkTime(sec);
-    var dt  = hr + ":" + min ;
-    
-    
+    var dt = hr + ":" + min;
+
+
     var curDay = today.getDate();
-    var curMonth = today.getMonth()+1;
+    var curMonth = today.getMonth() + 1;
     var curYear = today.getFullYear();
-    var date = checkTime(curDay)+"."+checkTime(curMonth)+"."+checkTime(curYear);
-    $("#"+id).attr("placeholder",date+" "+dt)
+    var date = checkTime(curDay) + "." + checkTime(curMonth) + "." + checkTime(curYear);
+    $("#" + id).attr("placeholder", date + " " + dt)
 }
+
 function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
     }
     return i;
 }
+
 function notChwk() {
-    if(global_screen_name==='ch'){
-         return null;
-    }else{
-        return  true
+    if (global_screen_name === 'ch') {
+        return null;
+    } else {
+        return true
     }
 }
+
 function getTaskCode(taskId) {
     try {
         var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
@@ -4584,13 +4627,13 @@ function getTaskCode(taskId) {
         var projectCode = SACore.GetProjectCore(projectId).projectCode;
         projectCode = projectCode.toUpperCase();
 
-        var taskId = (orderSeq)
-                ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderSeq : orderSeq : "";
+        var taskId = (orderSeq) ?
+            (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderSeq : orderSeq : "";
         taskId = "<b>" + taskId + "</b>";
         return taskId;
     } catch (err) {
         var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
-        taskId = "<b>" + "PRVT-"+orderSeq + "</b>";
+        taskId = "<b>" + "PRVT-" + orderSeq + "</b>";
         return taskId;
     }
 }
@@ -4598,7 +4641,7 @@ function getTaskCode(taskId) {
 // task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 var getTimeDifference = function (from, to) {
-     
+
 
     var difMs = (from - to);
     var colorClass
@@ -4654,16 +4697,16 @@ $(document).on("change", '#updateCheckList', function (e) {
 
 $(document).on("change", '#run_task_weekday_select_detail input', function (e) {
 
-        var val  = getValueScheduleWeekDay("run_task_weekday_select_detail");
-        updateTask4ShortChangePureDetail(val, "weekdays", global_var.current_issue_id);
-    
+    var val = getValueScheduleWeekDay("run_task_weekday_select_detail");
+    updateTask4ShortChangePureDetail(val, "weekdays", global_var.current_issue_id);
+
 
 })
 $(document).on("change", '#run_task_day_yearly_select_detail input', function (e) {
 
-        var val  = getValueScheduleWeekAction("run_task_day_yearly_select_detail");
-        updateTask4ShortChangePureDetail(val, "monthlyAction", global_var.current_issue_id);
-    
+    var val = getValueScheduleWeekAction("run_task_day_yearly_select_detail");
+    updateTask4ShortChangePureDetail(val, "monthlyAction", global_var.current_issue_id);
+
 
 })
 
@@ -4676,7 +4719,7 @@ $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
     if (ty === 'A') {
         value = ["new", 'ongoing', 'waiting']
     } else if (ty === 'P') {
-        value = ["rejected",notChwk()?'UAT':"", 'closed', 'canceled']
+        value = ["rejected", notChwk() ? 'UAT' : "", 'closed', 'canceled']
     }
     sel.val(value);
     sel.selectpicker("refresh");
@@ -4703,7 +4746,7 @@ $(document).on("change", '#newAddCheckList', function (e) {
 })
 
 $(document).on('click', '.taskCheckListItemDeletecreate', function (event) {
-     $(this).closest('li').remove();
+    $(this).closest('li').remove();
 })
 $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.insertTask.genBlockModal.Init()
@@ -4716,7 +4759,7 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+    //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -4733,7 +4776,7 @@ $(document).on('click', '#addModalBugIssueTaskMng', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+    //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -4754,7 +4797,7 @@ $(document).on('click', '#addProjectBugIssueTaskMng', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+    //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -4778,10 +4821,12 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     reset_task_data();
     global_var.active_canvas = 'taskCreate';
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
-    var dwlmt = $('#bug_task_type_id_add')
-    taskManagement.add_loadTaskType_bug_list(dwlmt);
-  //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
+    // var dwlmt = $('#bug_task_type_id_add')
+    // taskManagement.add_loadTaskType_bug_list(dwlmt);
+    //  taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#issue-managment-add-task").modal("show");
+    var useId = "";
+    createEkrantaskTypeByUSerID(useId);
 
 })
 
@@ -4852,7 +4897,7 @@ $(document).on("click", '#addIssueButtonId', function (e) {
     $('#issue-managment-add-task .after-add-task').css("opacity", "1");
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show(); */
- 
+
     taskManagement.insertTask.insertNewTask();
 
 
@@ -4882,10 +4927,10 @@ $(document).on("keyup", "#taskNameInputNew2", function (event) {
 $(document).on("click", '#multi-edit-menu-btn', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_multi');
     var dwlmt = $('#bug_task_type_id_multi');
-    $("#update_multi_bug_change_btn").attr("data-pid",$(this).attr("pid"));
-    if(global_var.current_modal==='loadStoryCardMgmt'||global_var.current_modal==='loadStoryCard'){
+    $("#update_multi_bug_change_btn").attr("data-pid", $(this).attr("pid"));
+    if (global_var.current_modal === 'loadStoryCardMgmt' || global_var.current_modal === 'loadStoryCard') {
         $("select.bug-mgmt-filter-select").selectpicker("refresh");
-     
+
         loadUsersAs4ComboByElm($('#bug_filter_assignee_id_multi'))
     }
     taskManagement.add_loadTaskType_bug_list(dwlmt);
@@ -5004,85 +5049,94 @@ $(document).on("click", '#toplanti-btn', function () {
     // $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
     // $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
 
-    $("#newAddCheckList").attr("placeholder",'Gündəm');
-    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
+    $("#newAddCheckList").attr("placeholder", 'Gündəm');
+    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.participant + ":");
 });
 $(document).on("click", '#tapshiriq-btn', function () {
     $(this).addClass('active');
     //$(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
     // $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-    
-    $("#newAddCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
-    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
+
+    $("#newAddCheckList").attr("placeholder", lang_task.windowUpdateTask.description);
+    $(".observer-div-add-issue .add-userList-title").text(lang_task.windowAddTask.observer + ":");
 });
 
 // updated start
 $(document).on("click", '#toplanti-d-btn', function () {
-   
+
     updateTask4ShortChangeDetails('1', "isMeet");
-    changeMeetAndTask(this,'1');
+    changeMeetAndTask(this, '1');
 });
-function changeMeetAndTask(elm,value){
-    if(value==='1'){
+
+function changeMeetAndTask(elm, value) {
+    if (value === '1') {
         $(elm).addClass('active');
         $(elm).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
         $(elm).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
         $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-    
+
         $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
         $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text(lang_task.windowUpdateTask.decisions);
-        $("#updateCheckList").attr("placeholder",'Gündəm');
-        $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.participant+":");
-    }else {
+        $("#updateCheckList").attr("placeholder", 'Gündəm');
+        $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.participant + ":");
+    } else {
         $(elm).addClass('active');
-   
+
         $(elm).closest('.modal-body').find('.toplanti-btn').removeClass('active');
-    
+
         $(elm).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
         $(elm).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
-    
+
         $(elm).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
         $(elm).closest('.modal-body').find('.loadUserForSubtask span').text('').text(lang_task.windowUpdateTask.subtask);
-        $("#updateCheckList").attr("placeholder",lang_task.windowUpdateTask.description);
-        $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.observer+":");
+        $("#updateCheckList").attr("placeholder", lang_task.windowUpdateTask.description);
+        $(".observer-div-update-issue .add-userList-title").text(lang_task.windowAddTask.observer + ":");
     }
 }
 $(document).on("click", '#tapshiriq-d-btn', function () {
     updateTask4ShortChangeDetails('0', "isMeet");
-    changeMeetAndTask(this,'0');
+    changeMeetAndTask(this, '0');
 });
 // updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
-    
-    updateTask4ShortChangeDetails(val, "fkAssigneeId");
-    updateUserTaskChangeMesulShexs(val);
+    var vala = $(this).val();
+    updateTask4ShortChangeDetails(vala, "fkAssigneeId");
+    updateEkrantaskTypeBYuserId(vala);
     ///  forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
+    updateTaskTypeChangeMesulShexs(vala);
 });
 
-function updateUserTaskChangeMesulShexs(dat) {
+// create mesul change
+$(document).on("change", '.assigne-div-add-issue select.user-list-selectbox-single', function () {
+    var useId = $(this).val();
+    createEkrantaskTypeByUSerID(useId);
+});
+
+function updateTaskTypeChangeMesulShexs(dat) {
     data = {};
     data.fkTaskId = global_var.current_issue_id;
     data.fkAssigneeId = dat;
-   try {
-       callApi('22030711362203045618', data, true, function (res) {
-           Toaster.showMessage('Məsul şəxs müvəffəqiyyətlə dəyişdirildi');
-       })
-   }
-   catch (error) {
-      $('#taskMgmtModal').modal('hide');
-   }
-    
+    try {
+        callApi('22030712380109772046', data, true, function (res) {
+            Toaster.showMessage('Məsul şəxs müvəffəqiyyətlə dəyişdirildi');
+        })
+    } catch (error) {
+        $('#taskMgmtModal').modal('hide');
+    }
+
 }
 
 $(document).on("change", '.observer-div-update-issue select.user-list-selectbox-multiple', function () {
-      var val  = $(this).closest('.observer-div-update-issue').find('.user-list-avatar-multiple li:last-child').attr("id");
-      console.log(val);
-      var taskid = Utility.getParamFromUrl('current_issue_id');
-      taskManagement.updateTask.updateObserverTask(taskid, val);
+    var val = $(this).closest('.observer-div-update-issue').find('.user-list-avatar-multiple li:last-child').attr("id");
+    console.log(val);
+    var taskid = Utility.getParamFromUrl('current_issue_id');
+    taskManagement.updateTask.updateObserverTask(taskid, val);
 });
-$(document).on("delete-interactive", '.observer-div-update-issue', function (e,id) {
- 
-    callApi('22012614383006986455', {id: id});
+$(document).on("delete-interactive", '.observer-div-update-issue', function (e, id) {
+
+    callApi('22012614383006986455', {
+        id: id
+    });
 
 });
 
@@ -5115,11 +5169,11 @@ $(document).on('click', '#issue-list-statistic-block .info-item-elements.status-
     getBugList();
 })
 $(document).on('click', '.more-button-forIssue', function () {
-     var type  = $(this).attr('data-type');
-     var pageNo  = $(this).attr('start-limit');
-     var st  = $(this).attr('data-status');
-     taskManagement.readTask.genBlockTask.genKanbanView.getTaskList4KanbanMore(type, st,pageNo)
-    
+    var type = $(this).attr('data-type');
+    var pageNo = $(this).attr('start-limit');
+    var st = $(this).attr('data-status');
+    taskManagement.readTask.genBlockTask.genKanbanView.getTaskList4KanbanMore(type, st, pageNo)
+
 })
 
 // task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -5139,37 +5193,37 @@ if (self.CavalryLogger) {
 
 $(document).on("click", '.setting-elemen-box .notification-btn', function () {
     $('#main-sidebar-div>div').hide();
-    $('#main-sidebar-div .notifcation-block').show();  
-    taskManagement.readTask.genBlockTask.getNotificationList();  
+    $('#main-sidebar-div .notifcation-block').show();
+    taskManagement.readTask.genBlockTask.getNotificationList();
 });
-$(document).on("click",'.cs-task-item-in-box',function (params) {
+$(document).on("click", '.cs-task-item-in-box', function (params) {
     global_var.current_issue_id = $(this).attr('id');
-    Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
+    Utility.addParamToUrl("current_issue_id", $(this).attr('id'))
 })
-$(document).on("click",'.filter-task-list-btn',function (e) {
+$(document).on("click", '.filter-task-list-btn', function (e) {
     $(this).closest('.info-box').find(".filter-task-list-btn").removeClass("active");
     $(this).toggleClass("active");
     getBugList();
 })
-$(document).on("click",'.cs-next-large-modal-btn',function (e) {
-//    $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
+$(document).on("click", '.cs-next-large-modal-btn', function (e) {
+    //    $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
 
-   $(this).closest(".cs-task-col").toggleClass("large-modal-expand");
- if($(this).closest(".cs-task-col").hasClass('large-modal-expand')){
-     $('.cs-task-panel-column').stop().animate({
-         scrollLeft:$(this).closest(".cs-task-panel-column").scrollLeft() + $(this).closest(".cs-task-col").position().left-15
-     }, 200);
- }
+    $(this).closest(".cs-task-col").toggleClass("large-modal-expand");
+    if ($(this).closest(".cs-task-col").hasClass('large-modal-expand')) {
+        $('.cs-task-panel-column').stop().animate({
+            scrollLeft: $(this).closest(".cs-task-panel-column").scrollLeft() + $(this).closest(".cs-task-col").position().left - 15
+        }, 200);
+    }
 })
 
 $(document).on("click", '.info-box.info-box-mob>.title', function () {
     $(this).closest('.info-box.info-box-mob').toggleClass('active');
 });
 
-$(document).on("change",'.bugListNavMenu.bugList-elements',function (e) {
-   // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
+$(document).on("change", '.bugListNavMenu.bugList-elements', function (e) {
+    // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
 });
-$(document).on("click",'.task-clear-filter-btn',function (e) {
+$(document).on("click", '.task-clear-filter-btn', function (e) {
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter-multi").val('');
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
     $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
@@ -5177,9 +5231,9 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('#issue-list-datetime').val('');
     $('#issue_management_closed_date_from').val('');
     $('#inputGroupSelect01').val('0')
-                            .selectpicker('refresh');
+        .selectpicker('refresh');
     $('#bug_filter_sortby').val('0')
-                           .selectpicker('refresh');
+        .selectpicker('refresh');
     $('#bug_filter_search_text').val('');
     $('#global-search-input').val('');
     getBugList();
@@ -5187,7 +5241,7 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
 
 function loadBugTaskDeadlineScripts() {
     $("select.issue_selectpicker").selectpicker('refresh');
-  
+
     setProjectListByID('run_task_project_name');
     $('#run_task_project_name').change();
     $("#runTaskStartDate").daterangepicker({
@@ -5200,7 +5254,7 @@ function loadBugTaskDeadlineScripts() {
     });
     $('#runTaskTime').datetimepicker({
         format: 'HH:mm'
-                // sideBySide: true
+        // sideBySide: true
     });
     $('#runTaskExecutiveDate').daterangepicker({
         format: 'YYYY/MM/DD',
@@ -5213,7 +5267,7 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
     $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
     // $('#issue-managment-add-task .after-add-task').hide();
-   
+
     $('#issue-managment-add-task .task-step-2').hide();
 
     // TASK DETAILS ON
@@ -5247,44 +5301,44 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
 
     // Task Deadline 
-       
-        $("input.taskDeadlineTime").datetimepicker({
-            format: 'HH:mm',
-            // inline: true
-        });
-        $("input.taskDeadlineDate").datetimepicker({
-            format: 'YYYY-MM-DD'
-            // singleDatePicker: true
-        });
-    
-        $("#taskDetailDeadlineStartDade").datetimepicker({
-            format: 'YYYY-MM-DD',
-            // inline: true
-        }).on('dp.change', function(event) {
-            var val  =  toDate($(this).attr("id"));
-            updateTask4ShortChangeDetails(val, 'startDate');
-        });
-        $("#taskDetailDeadlineStartTime").datetimepicker({
-            format: 'HH:mm',
-            // inline: true
-        }).on('dp.change', function(event) {
-            var val  =  toTime($(this).attr("id"));
-            updateTask4ShortChangeDetails(val, 'startTime');
-        });
-        $("#taskDetailDeadlineEndDade").datetimepicker({
-            format: 'YYYY-MM-DD',
-        }).on('dp.change', function(event) {
-            var val  =  toDate($(this).attr("id"));
-            updateTask4ShortChangeDetails(val, 'endDate');
-        });
-        $("#taskDetailDeadlineEndTime").datetimepicker({
-             format: 'HH:mm',
-            // singleDatePicker: true
-        }).on('dp.change', function(event) {
-     
-            var val  =  toTime($(this).attr("id"));
-            updateTask4ShortChangeDetails(val, 'endTime');
-        });
+
+    $("input.taskDeadlineTime").datetimepicker({
+        format: 'HH:mm',
+        // inline: true
+    });
+    $("input.taskDeadlineDate").datetimepicker({
+        format: 'YYYY-MM-DD'
+        // singleDatePicker: true
+    });
+
+    $("#taskDetailDeadlineStartDade").datetimepicker({
+        format: 'YYYY-MM-DD',
+        // inline: true
+    }).on('dp.change', function (event) {
+        var val = toDate($(this).attr("id"));
+        updateTask4ShortChangeDetails(val, 'startDate');
+    });
+    $("#taskDetailDeadlineStartTime").datetimepicker({
+        format: 'HH:mm',
+        // inline: true
+    }).on('dp.change', function (event) {
+        var val = toTime($(this).attr("id"));
+        updateTask4ShortChangeDetails(val, 'startTime');
+    });
+    $("#taskDetailDeadlineEndDade").datetimepicker({
+        format: 'YYYY-MM-DD',
+    }).on('dp.change', function (event) {
+        var val = toDate($(this).attr("id"));
+        updateTask4ShortChangeDetails(val, 'endDate');
+    });
+    $("#taskDetailDeadlineEndTime").datetimepicker({
+        format: 'HH:mm',
+        // singleDatePicker: true
+    }).on('dp.change', function (event) {
+
+        var val = toTime($(this).attr("id"));
+        updateTask4ShortChangeDetails(val, 'endTime');
+    });
 
 }
 
@@ -5341,7 +5395,7 @@ function getParentTask() {
 
                     var taskName = add3Dots2String(parentTaskName, 50);
 
-                    var tr = taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(res.kv,0) 
+                    var tr = taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(res.kv, 0)
                     body.append(tr)
 
                 }
@@ -5372,12 +5426,12 @@ function getChildTasks() {
 
             try {
                 var obj = res.tbl[0].r;
-                
+
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
 
                     //set parent task info
-                    
+
 
                     var fkProjectId4 = o.fkProjectId;
                     try {
@@ -5388,7 +5442,7 @@ function getChildTasks() {
 
                     }
                     tbody.each(function () {
-                        $(this).append(taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(o,n) )
+                        $(this).append(taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(o, n))
 
                     })
 
@@ -5431,13 +5485,12 @@ function changeParentTaskModal() {
                     } catch (error) {
                         var projectCode = "PRVT"
                     }
-              
+
                     var nameFull = o.taskName + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
                     select.append($('<option>').val(o.id).text(nameFull))
                 }
                 sortSelectBoxByElement(select);
-            } catch (err) {
-            }
+            } catch (err) {}
         }
     });
 }
@@ -5475,9 +5528,9 @@ function createChildTask() {
 }
 $(document).click(function () {
     $("#contextMenu").hide();
-  })
+})
 $(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
-   
+
     $(this).closest('tbody').find("tr").removeClass("active")
     $(this).addClass("active");
     global_var.current_issue_id = $(this).attr("id")
@@ -5489,7 +5542,7 @@ $(document).on("contextmenu", "#bugListTable tbody tr", function (e) {
     return false;
 });
 $(document).on("contextmenu", ".cs-task-panel-column-issue .cs-task-item-in-box", function (e) {
-   
+
     global_var.current_issue_id = $(this).attr("id")
     $("#contextMenu").css({
         display: "block",
@@ -5505,163 +5558,173 @@ $(document).on('change', ".saTypeFilePicherUploadFileTask", function (e) {
     }
 })
 $(document).on('change', "#bug_filter_columns", function (e) {
-      localStorage.setItem("bug_list_colum",$(this).val());
+    localStorage.setItem("bug_list_colum", $(this).val());
     toggleColumns();
 })
 $(document).on('change', "#run_task_detail_detail_categories", function (e) {
-    updateLabelTaskById($(this).val(),global_var.current_issue_id)
+    updateLabelTaskById($(this).val(), global_var.current_issue_id)
 })
 $(document).on('change', "#run_task_detail_detail_sprint", function (e) {
- 
-        updateSpirntTaskById($(this).val(),global_var.current_issue_id);
-    
+
+    updateSpirntTaskById($(this).val(), global_var.current_issue_id);
+
 })
 $(document).on('change', "#nextElementListSelect", function (e) {
-        var value  = $(this).val();
-        $("#nextBlockItemPopUp .forward-assignee-list").addClass("d-none");
-        $("#nextBlockItemPopUp .add-observer-list").addClass("d-none");
-       if(value==='ForwardTaskTo'){
-        $("#nextBlockItemPopUp .forward-assignee-list").removeClass("d-none"); 
-       }
-       if(value==='observer'){
-        $("#nextBlockItemPopUp .add-observer-list").removeClass("d-none"); 
-       }
+    var value = $(this).val();
+    $("#nextBlockItemPopUp .forward-assignee-list").addClass("d-none");
+    $("#nextBlockItemPopUp .add-observer-list").addClass("d-none");
+    if (value === 'ForwardTaskTo') {
+        $("#nextBlockItemPopUp .forward-assignee-list").removeClass("d-none");
+    }
+    if (value === 'observer') {
+        $("#nextBlockItemPopUp .add-observer-list").removeClass("d-none");
+    }
 })
 $(document).on('click', "#nextBlockItemPopUp .cs-nextsave-btn", function (e) {
-    var select  = $(this).closest('#nextBlockItemPopUp').find("#nextElementListSelect");
-     var value  = select.val();
-     var type  = select.attr('action-type');
-     if(!type){
-         if(value==='ididit'){
+    var select = $(this).closest('#nextBlockItemPopUp').find("#nextElementListSelect");
+    var value = select.val();
+    var type = select.attr('action-type');
+    if (!type) {
+        if (value === 'ididit') {
             iDidItAction()
-          }
-          else if (value==='ForwardTaskTo'){
+        } else if (value === 'ForwardTaskTo') {
             forwardTaskToAction();
-          } 
-          else if (value==='rejectTask'){
+        } else if (value === 'rejectTask') {
             rejectTaskAction();
-          } 
-          else if (value==='canceledTask'){
+        } else if (value === 'canceledTask') {
             cancelTaskAction();
-          } 
-          else if (value==='observer'){
+        } else if (value === 'observer') {
             addObserverTask();
-          } 
-     }else{
+        }
+        else if (value === 'declareBug') {
+            addDeclareBugTask();
+        }
+    } else {
 
-            var check = $("#bugListTable .bug-tr .checkbox-issue-task");
-            
-            for (var indx = 0; indx < check.length; indx++) {
-                if ($(check[indx]).prop('checked')) {
-                    var taskId = $(check[indx]).parents("tr").attr("id");
-                    if(value==='ididit'){
-                        iDidItAction(taskId)
-                      }
-                      else if (value==='ForwardTaskTo'){
-                        forwardTaskToAction(taskId);
-                      } 
-                      else if (value==='rejectTask'){
-                        rejectTaskAction(taskId);
-                      } 
-                      else if (value==='canceledTask'){
-                        cancelTaskAction(taskId);
-                      } 
-                      else if (value==='observer'){
-                        addObserverTask(taskId);
-                      } 
+        var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+
+        for (var indx = 0; indx < check.length; indx++) {
+            if ($(check[indx]).prop('checked')) {
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                if (value === 'ididit') {
+                    iDidItAction(taskId)
+                } else if (value === 'ForwardTaskTo') {
+                    forwardTaskToAction(taskId);
+                } else if (value === 'rejectTask') {
+                    rejectTaskAction(taskId);
+                } else if (value === 'canceledTask') {
+                    cancelTaskAction(taskId);
+                } else if (value === 'observer') {
+                    addObserverTask(taskId);
+                }
+                else if (value === 'declareBug') {
+                    addDeclareBugTask(taskId);
                 }
             }
-         
-     }
-    
-      $('#nextBlockItemPopUp textarea#note').val('');
-      $(this).closest('.cs-next-element-box').toggle('fast');
-})
+        }
 
-function nextModalpopUpShow(elm,value,multi) {
+    }
+
+    $('#nextBlockItemPopUp textarea#note').val('');
+    $(this).closest('.cs-next-element-box').toggle('fast');
+});
+
+function addDeclareBugTask(taskid) {
+    console.log('salaslasl')
+    taskId = taskid ? taskid : global_var.current_issue_id;
+    data = {};
+    data.fkTaskId = taskId;
+    callApi('22030712274509818976', data, true, function (res) {
+        
+    })
+}
+
+function nextModalpopUpShow(elm, value, multi) {
     $("#nextBlockItemPopUp").remove();
-    var block  = taskManagement.updateTask.genBlockModal.genNextBlockPopUp();
- 
+    var block = taskManagement.updateTask.genBlockModal.genNextBlockPopUp();
+
     $("body").append(block);
-    cmpList.userBlock.Init($('#nextBlockItemPopUp .forward-assignee-list'),'single');
-    cmpList.userBlock.Init($('#nextBlockItemPopUp .add-observer-list'),'multi');
-     var k =   $("#nextBlockItemPopUp")
+    cmpList.userBlock.Init($('#nextBlockItemPopUp .forward-assignee-list'), 'single');
+    cmpList.userBlock.Init($('#nextBlockItemPopUp .add-observer-list'), 'multi');
+    var k = $("#nextBlockItemPopUp")
     var top = $(elm).offset().top;
-    var left = $(elm).offset().left; 
-    var w  = 160;
-    var h  = 250;
-      k.css({
-          "top": (w>top)?top+w:top,
-          "left":(h>left)?left+h:left,
-          "z-index":"5000000"
-      }) 
-      if(multi==='multi'){
-        $("#nextElementListSelect").attr("action-type",'multi') 
+    var left = $(elm).offset().left;
+    var w = 160;
+    var h = 250;
+    k.css({
+        "top": (w > top) ? top + w : top,
+        "left": (h > left) ? left + h : left,
+        "z-index": "5000000"
+    })
+    if (multi === 'multi') {
+        $("#nextElementListSelect").attr("action-type", 'multi')
     }
     if (value) {
-          $("#nextElementListSelect").val(value);
+        $("#nextElementListSelect").val(value);
     }
-      $("#nextElementListSelect").selectpicker("refresh");
-      $("#nextElementListSelect").change();
+    $("#nextElementListSelect").selectpicker("refresh");
+    $("#nextElementListSelect").change();
 
-      $("#nextBlockItemPopUp").removeClass('d-none');
- }
+    $("#nextBlockItemPopUp").removeClass('d-none');
+}
 
 function forwardTaskToAction(taskid) {
-     taskid  = taskid?taskid:global_var.current_issue_id;
-     var assigneId  = $('div.forward-assignee-list').getVal();
+    taskid = taskid ? taskid : global_var.current_issue_id;
+    var assigneId = $('div.forward-assignee-list').getVal();
 
-    var comel  = $('#nextBlockItemPopUp textarea#note');
-     if(assigneId){
-        forwardTaskApi(taskid,assigneId,comel.val());
-     }
-   
+    var comel = $('#nextBlockItemPopUp textarea#note');
+    if (assigneId) {
+        forwardTaskApi(taskid, assigneId, comel.val());
+    }
+
 }
-function forwardTaskApi(taskId,assigneId,comments) {
-      var data  = {};
-          data.fkAssigneeId  = assigneId;
-          data.fkTaskId  = taskId;
-          data.comment  =comments;
-      callService("serviceTmForwardTask4RelatedTask",data,true,function (params) {
+
+function forwardTaskApi(taskId, assigneId, comments) {
+    var data = {};
+    data.fkAssigneeId = assigneId;
+    data.fkTaskId = taskId;
+    data.comment = comments;
+    callApi("22030114205500975855", data, true, function (params) {
         getBugList();
         $('#nextBlockItemPopUp').remove();
-      })
+    })
 }
+
 function addObserverTask(taskid) {
-     taskid  = taskid?taskid:global_var.current_issue_id;
-     var val  = $('#nextBlockItemPopUp div.add-observer-list').getVal();
-     taskManagement.insertTask.insertObserverTaskByVal(taskid,val);
-    var comel  = $('#nextBlockItemPopUp textarea#note');
+    taskid = taskid ? taskid : global_var.current_issue_id;
+    var val = $('#nextBlockItemPopUp div.add-observer-list').getVal();
+    taskManagement.insertTask.insertObserverTaskByVal(taskid, val);
+    var comel = $('#nextBlockItemPopUp textarea#note');
     if (comel.val().trim()) {
-        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+        new UserStory().addCommentInput4TaskDetails(comel.val(), "", "", "", "", taskid);
     }
-  //  getBugList();
+    //  getBugList();
 }
 
 function rejectTaskAction(taskid) {
-    taskid  = taskid?taskid:global_var.current_issue_id;
-    var comel  = $('#nextBlockItemPopUp textarea#note');
-    updateTask4ShortChangePureWithSync('rejected', 'taskStatus',taskid, comel.val(), 'true');
- 
+    taskid = taskid ? taskid : global_var.current_issue_id;
+    var comel = $('#nextBlockItemPopUp textarea#note');
+    updateTask4ShortChangePureWithSync('rejected', 'taskStatus', taskid, comel.val(), 'true');
+
     if (comel.val().trim()) {
-        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+        new UserStory().addCommentInput4TaskDetails(comel.val(), "", "", "", "", taskid);
     }
     getBugList();
 }
 
 function cancelTaskAction(taskid) {
-    taskid  = taskid?taskid:global_var.current_issue_id;
-    var comel  = $('#nextBlockItemPopUp textarea#note');
+    taskid = taskid ? taskid : global_var.current_issue_id;
+    var comel = $('#nextBlockItemPopUp textarea#note');
     updateTask4ShortChangePureWithSync('canceled', 'taskStatus', taskid, comel.val(), 'true');
- 
+
     if (comel.val().trim()) {
-        new UserStory().addCommentInput4TaskDetails(comel.val(),"","","","",taskid);
+        new UserStory().addCommentInput4TaskDetails(comel.val(), "", "", "", "", taskid);
     }
     getBugList();
 }
 
 function iDidItAction(taskid) {
-    taskid  = taskid?taskid:global_var.current_issue_id;
+    taskid = taskid ? taskid : global_var.current_issue_id;
     var json = initJSON();
 
     json.kv.fkTaskId = taskid;
@@ -5685,38 +5748,40 @@ function iDidItAction(taskid) {
 }
 
 
-function updateSpirntTaskById(list,taskid) {
-       var ls  ='';
-       if(list.length <1){
+function updateSpirntTaskById(list, taskid) {
+    var ls = '';
+    if (list.length < 1) {
         return
-     }
-       for (let index = 0; index < list.length; index++) {
-           const o = list[index];
-             ls+= o +","
-       }
-       var data  =  {};
-          data.fkSprintId =  ls;
-          data.fkTaskId = taskid;
-       callApi('22012917513008573817',data,true,function (res) {
-              
-   }) 
+    }
+    for (let index = 0; index < list.length; index++) {
+        const o = list[index];
+        ls += o + ","
+    }
+    var data = {};
+    data.fkSprintId = ls;
+    data.fkTaskId = taskid;
+    callApi('22012917513008573817', data, true, function (res) {
+
+    })
 }
-function updateLabelTaskById(list,taskid) {
-       var ls  =''
-       if(list.length <1){
-           return
-       }
-       for (let index = 0; index < list.length; index++) {
-           const o = list[index];
-             ls+= o +","
-       }
-       var data  =  {};
-          data.fkLabelId =  ls;
-          data.fkTaskId = taskid;
-       callApi('22012918335802271686',data,true,function (res) {
-              
-   }) 
+
+function updateLabelTaskById(list, taskid) {
+    var ls = ''
+    if (list.length < 1) {
+        return
+    }
+    for (let index = 0; index < list.length; index++) {
+        const o = list[index];
+        ls += o + ","
+    }
+    var data = {};
+    data.fkLabelId = ls;
+    data.fkTaskId = taskid;
+    callApi('22012918335802271686', data, true, function (res) {
+
+    })
 }
+
 function uploadFile4IpoTAsk(id) {
     var r = "";
     var that = this;
@@ -5726,7 +5791,7 @@ function uploadFile4IpoTAsk(id) {
     var trc = 0;
 
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
-  
+
     $('#' + id).attr('fname', '');
 
     for (var i = 0, f; f = files[i]; i++) {
@@ -5755,9 +5820,9 @@ function uploadFile4IpoTAsk(id) {
     }
 }
 //update task type
-function updateEkrantaskTypeBYuserId() {
+function updateEkrantaskTypeBYuserId(userid) {
     var data = {};
-    data.fkUserId = global_var.current_ticker_id;
+    data.fkUserId = userid ? userid : global_var.current_ticker_id;
     var select = $('#task-info-modal-tasktype');
     select.empty();
     select.selectpicker('refresh');
@@ -5776,10 +5841,35 @@ function updateEkrantaskTypeBYuserId() {
 
         })
     } catch (error) {
-        
+
     }
-    
-    
+
+}
+
+function createEkrantaskTypeByUSerID(useId) {
+    var data = {};
+    data.fkUserId = useId ? useId : global_var.current_ticker_id;
+    var select = $('#bug_task_type_id_add');
+    select.empty();
+    select.selectpicker('refresh');
+    try {
+        callApi('22011212074208795118', data, true, function (res) {
+
+            var sel = res.tbl[0].r;
+            for (let i = 0; i < sel.length; i++) {
+                const o = sel[i];
+                select.append($('<option>')
+                    .val(o.id)
+                    .text(o.taskTypeName)
+                )
+            }
+            select.selectpicker('refresh');
+
+        })
+    } catch (error) {
+
+    }
+
 }
 
 $(document).on('click', ".cs-next-element-box .remove-next-btn", function (e) {
@@ -5788,35 +5878,35 @@ $(document).on('click', ".cs-next-element-box .remove-next-btn", function (e) {
 
 $(document).on("click", '#pills-tab .nav-link', function (e) {
     if ($(this).hasClass('d-task-tab2')) {
-      $('.d-schedule-dcbtn').show();  
-    }else{
-       $('.d-schedule-dcbtn').hide();     
+        $('.d-schedule-dcbtn').show();
+    } else {
+        $('.d-schedule-dcbtn').hide();
     }
     if ($(this).hasClass('task-tab2')) {
-      $('.schedule-dcbtn').show();  
-    }else{
-       $('.schedule-dcbtn').hide();
+        $('.schedule-dcbtn').show();
+    } else {
+        $('.schedule-dcbtn').hide();
     }
-}); 
+});
 $(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-show", function (e) {
-      
-    var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
-     list.each(function (params) {
-         $(this).addClass("d-flex");
-         $(this).removeClass("d-none");
-     })
-     $(this).addClass("active");
-     $(".task-check-list-box .task-check-list-show-hide .scm-hide").removeClass("active");
+
+    var list = $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
+    list.each(function (params) {
+        $(this).addClass("d-flex");
+        $(this).removeClass("d-none");
+    })
+    $(this).addClass("active");
+    $(".task-check-list-box .task-check-list-show-hide .scm-hide").removeClass("active");
 });
 $(document).on("click", ".task-check-list-box .task-check-list-show-hide .scm-hide", function (e) {
- 
-    var list  =  $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
-     list.each(function (params) {
-         $(this).addClass("d-none");
-         $(this).removeClass("d-flex");
-     })
-     $(this).addClass("active");
-     $(".task-check-list-box .task-check-list-show-hide .scm-show").removeClass("active");
+
+    var list = $(this).closest('.task-check-list-box').find("ul > li[data-checked='1']");
+    list.each(function (params) {
+        $(this).addClass("d-none");
+        $(this).removeClass("d-flex");
+    })
+    $(this).addClass("active");
+    $(".task-check-list-box .task-check-list-show-hide .scm-show").removeClass("active");
 });
 
 $(document).on('click', ".usm-more-filter-btn", function (e) {
@@ -5831,8 +5921,8 @@ $(document).on("dblclick", ".card-UserStory-header-text", function () {
     let Namestory = $(this).text();
     $(this).parent().find(".card-UserStory-header-input").val(Namestory);
     $(this).parent().find(".card-UserStory-header-input").autoHeight();
-     
-}) 
+
+})
 
 $(document).on("click", "#AcceptText", function (e) {
     let InputText = $(this).parent().find(".card-UserStory-header-input").val()
@@ -5850,11 +5940,15 @@ $(document).on("click", "#DeleteText", function (e) {
 })
 
 $(document).on("click", ".new-label-btn", function (e) {
-    $(this).closest('.category-item-boxes').find('.category-create-input').animate({height: "toggle"}, 350).toggleClass('show');
+    $(this).closest('.category-item-boxes').find('.category-create-input').animate({
+        height: "toggle"
+    }, 350).toggleClass('show');
     $(this).find('i').toggleClass('fa-plus fa-minus');
 })
 $(document).on("click", ".color-main-btn", function (e) {
-    $(this).closest('.category-create-input').find('.color-skin-items').animate({height: "toggle"}, 350).toggleClass('show');
+    $(this).closest('.category-create-input').find('.color-skin-items').animate({
+        height: "toggle"
+    }, 350).toggleClass('show');
 })
 $(document).on("click", ".cs-open-btn-share", function (e) {
     $(this).closest('.cs-task-item-in-box').find('.cs-task-card-bottom').toggleClass('show');
@@ -5863,20 +5957,21 @@ $(document).on("click", ".cs-open-btn-more", function (e) {
     $(this).closest('.cs-task-item-in-box').find('.cs-task-card-desc').toggleClass('show');
 })
 $(document).on("change", "#run_task_weekday_select input", function (e) {
-        
+
     if ($('#run_task_intensive_select').val() === 'monthly') {
         $('#run_task_weekday_select label').removeClass('active');
     }
-    $(this).closest('label').toggleClass('active');  
-       
-})
-
-$(document).on("change", "#run_task_day_yearly_select input", function (e) {    
-        $('#run_task_day_yearly_select label').removeClass('active');
-   
-       $(this).closest('label').toggleClass('active');
+    $(this).closest('label').toggleClass('active');
 
 })
+
+$(document).on("change", "#run_task_day_yearly_select input", function (e) {
+    $('#run_task_day_yearly_select label').removeClass('active');
+
+    $(this).closest('label').toggleClass('active');
+
+})
+
 function changeUserStoryOfTaskModal() {
     $("body").append(taskManagement.genModal.changeStoryCardModal())
     $('#change-user-story-task-modal').modal('show');
