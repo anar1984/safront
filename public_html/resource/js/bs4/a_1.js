@@ -16716,7 +16716,7 @@ var _220304054258036310054 = {
             _220304054258036310054.flow_backlog_map = dt;
             _220304054258036310054.map_show(id);
         })
-        
+
     },
     add_child_backlog: (el, id) => {
         var data = {};
@@ -16733,14 +16733,14 @@ var _220304054258036310054 = {
 
         })
     },
-    delete_child_backlog: (el, id) => {       
+    delete_child_backlog: (el, id) => {
         var data = {};
         data.id = id;
-        if(confirm('are you sure')){
-        callApi('22030412151009877861', data, true, function (res) {
-            _220304054258036310054.map_flow_details();
-        })
-            }
+        if (confirm('are you sure')) {
+            callApi('22030412151009877861', data, true, function (res) {
+                _220304054258036310054.map_flow_details();
+            })
+        }
     },
     update_child_refresh: (el, id) => {
         var dat = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt').val();
@@ -16756,8 +16756,8 @@ var _220304054258036310054 = {
         var item_obj = _220304054258036310054.flow_details_list[item];
 
         var select = _220304054258036310054.backlog_select(res4);
-        select.addClass('margin-menfiii');      
-    
+        select.addClass('margin-menfiii');
+
         var div = $(`<div parent_id=${item} class="hollele_zad" style="">
         
           <div class='cs-input-group prosesCartToolDivChild_MAxSize'>
@@ -16795,8 +16795,8 @@ var _220304054258036310054 = {
 
 
                        
-        </div>`);     
-               
+        </div>`);
+
         return div;
 
     },
@@ -16808,7 +16808,7 @@ var _220304054258036310054 = {
         tr.attr('fid', flow_id)
         tr.addClass("parent_id_-1");
         table.append(tr);
-       
+
         var div = $(".task-panel");
         div.html(table);
 
@@ -16816,7 +16816,7 @@ var _220304054258036310054 = {
 
         var idc = 1;
         _220304054258036310054.map_iteration(['-1'], res4, tr, idc, "-1", flow_id);
-          loadProjectList2SelectboxByClassNochange('selectPicker_mappingProject');
+        loadProjectList2SelectboxByClassNochange('selectPicker_mappingProject');
         // alert(JSON.stringify(child_id));
         $('select.selectpicker-mapping-element').selectpicker('refresh');
 
@@ -16829,7 +16829,7 @@ var _220304054258036310054 = {
             res4.tbl[0].r.map((ob) => {
                 select.append(`<option value='${ob.id}'>${ob.backlogName}</option>`)
             })
-          
+
         } catch (err) {}
         return select;
     },
@@ -16940,7 +16940,7 @@ var _220304054258036310054 = {
                 })
             }
         })
-        
+
         // alert(JSON.stringify(child_id));
 
     },
@@ -17001,47 +17001,49 @@ var _220304054258036310054 = {
         })
     }
 }
-function prosessMApingDivTogglee(el) {   
+
+function prosessMApingDivTogglee(el) {
     $(el).find('i').toggleClass('fa-times fa-bars')
     var dd = $(el).closest('.hollele_zad').find('.prosesCartToolDivChild_1');
     dd.toggleClass('displayNone zz-indexx')
 }
+
 function prosessMApingstoryCArdBYproject(el) {
     var data = {};
     data.fkProjectId = $(el).val();
-    var select = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt');    
-    callApi('22030400352507334738',data, true, function (res) {         
-         // select.attr('multiple','multiple');
-         select.html('');
-         res.tbl[0].r.map((o) => {
-             select.append(`<option value='${o.id}'>${o.backlogName}</option>`)
-         })
-         select.selectpicker('refresh')
-     })
+    var select = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt');
+    callApi('22030400352507334738', data, true, function (res) {
+        // select.attr('multiple','multiple');
+        select.html('');
+        res.tbl[0].r.map((o) => {
+            select.append(`<option value='${o.id}'>${o.backlogName}</option>`)
+        })
+        select.selectpicker('refresh')
+    })
 
 }
 
 
 function processMapCcartTascList(id) {
-     $("#body-large-modal-in-us4backlog").html("");
+    $("#body-large-modal-in-us4backlog").html("");
     var data = {};
     data.fkBacklogId = id;
     callApi('22030413030503436111', data, true, function (res) {
-            var o = res.tbl[0].r[0];
-            var html = new UserStory().genUSLine4KanbanView(o);
-              html = $(html);
-              html.css("width", '100%')
-              html.find('.baclog-large-modal-next').hide();
-              html.find('.baclog-large-modal-next').hide();
-              $("#task-ongoing-large-modal4backlog").modal('show');
-              $("#body-large-modal-in-us4backlog").append(html);
-              $("#body-large-modal-in-us4backlog .stat-div-task-content table.stat-table-us tbody").removeClass('d-none');
-              $("#body-large-modal-in-us4backlog .stat-div-task-content > ul").addClass('d-none');
-              $("#body-large-modal-in-us4backlog .user-story-prototype-change1").prop("checked", true).change();
+        var o = res.tbl[0].r[0];
+        var html = new UserStory().genUSLine4KanbanView(o);
+        html = $(html);
+        html.css("width", '100%')
+        html.find('.baclog-large-modal-next').hide();
+        html.find('.baclog-large-modal-next').hide();
+        $("#task-ongoing-large-modal4backlog").modal('show');
+        $("#body-large-modal-in-us4backlog").append(html);
+        $("#body-large-modal-in-us4backlog .stat-div-task-content table.stat-table-us tbody").removeClass('d-none');
+        $("#body-large-modal-in-us4backlog .stat-div-task-content > ul").addClass('d-none');
+        $("#body-large-modal-in-us4backlog .user-story-prototype-change1").prop("checked", true).change();
 
-              $('[data-toggle="popover"]').popover();
+        $('[data-toggle="popover"]').popover();
 
-        
+
     })
 }
 
@@ -17092,10 +17094,10 @@ $(document).on("click", '#comp_id_220304000825030110739', function () {
     _220304054258036310054.create_flow(this);
 })
 $(document).on("change", '#Flov_GRoup_comp_id_22030405435105928068', function () {
-     $('.task-panel').empty();
+    $('.task-panel').empty();
     var el = $('#Flov_GRoup_comp_id_22030405435105928068').val();
     _220304054258036310054.load_flow_select(el);
-   
+
 })
 
 function getProjectValueUsManageMultiByel(el) {
@@ -17183,9 +17185,9 @@ function getBugList4UserStory(bgId, tbody, list) {
     // 
     var assignee = $('#story_mn_groupBy_id').val();
     if (assignee == 'assignee') {
-       json.kv.fkAssigneeId = fkAsId;
+        json.kv.fkAssigneeId = fkAsId;
     } else {
-       json.kv.considerAll = '1';
+        json.kv.considerAll = '1';
     }
     var prd = getProjectValueUsManageMulti();
     var that = this;
@@ -17199,63 +17201,63 @@ function getBugList4UserStory(bgId, tbody, list) {
         async: false,
         success: function (res) {
             try {
-                 var ela = res.tbl[0].r
-                 coreBugList = res;
-                 setKV4CoreBugList();
-                 SATask.updateTaskByRes(res);
+                var ela = res.tbl[0].r
+                coreBugList = res;
+                setKV4CoreBugList();
+                SATask.updateTaskByRes(res);
 
-                 $(tbody).html('')
-                 $(list).html('')
-                 $(tbody).append($("<tr>").addClass('theader-table')
-                     .append('<td><b>Task Id</b></td>')
-                     .append('<td><b><input type="checkbox" class="all-bug-list-check"></b></td>')
-                     .append('<td class="trigger-status-filter"><b>Status</b></td>')
-                     .append('<td><b>Description</b></td>')
-                     .append($("<td>").append("<b>Task Nature</b>"))
-                     .append('<td><b>Task Type</b></td>')
-                     .append('<td><b>Created</b></td>')
-                     .append('<td><b>Assignee</b></td>')
-                     .append('<td><b>Closed By</b></td>')
-                     .append('<td><b>Date</b></td>')
-                     .append('<td><b>Closed Date</b></td>')
-                 )
+                $(tbody).html('')
+                $(list).html('')
+                $(tbody).append($("<tr>").addClass('theader-table')
+                    .append('<td><b>Task Id</b></td>')
+                    .append('<td><b><input type="checkbox" class="all-bug-list-check"></b></td>')
+                    .append('<td class="trigger-status-filter"><b>Status</b></td>')
+                    .append('<td><b>Description</b></td>')
+                    .append($("<td>").append("<b>Task Nature</b>"))
+                    .append('<td><b>Task Type</b></td>')
+                    .append('<td><b>Created</b></td>')
+                    .append('<td><b>Assignee</b></td>')
+                    .append('<td><b>Closed By</b></td>')
+                    .append('<td><b>Date</b></td>')
+                    .append('<td><b>Closed Date</b></td>')
+                )
 
-                 for (let i = 0; i < ela.length; i++) {
-                     var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
-                     coreBugKV[ela[i].id] = ela[i];
-                     var closedDate = ela[i].closeStatusDate;
-                     if (closedDate) {
-                         closedDate = Utility.convertDate(ela[i].closeStatusDate) + "/" + Utility.convertTime(ela[i].closeStatusTime)
-                     }
-                     var tr = $("<tr>")
-                         .attr("data-assignee", ela[i].fkAssigneeId)
-                         .attr("data-nature", ela[i].taskNature)
-                         .attr("data-taskType", ela[i].fkTaskTypeId)
-                         .addClass('task-tr-list')
-                         .attr('data-tr-status', ela[i].taskStatus)
-                         .attr('id', ela[i].id)
-                         .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
-                         .append('<td class="task-id-td"><input data-pid="' + ela[i].fkBacklogId + '" class="checkbox-issue-task" type="checkbox"></td>')
-                         .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
-                         .append($("<td>")
-                             .attr("title", ela[i].taskName)
-                             .css("max-width", '400px')
-                             .css("overflow", 'hidden')
-                             .append($("<a>")
-                                 .attr('href', '#')
-                                 .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + ela[i].fkProjectId + "','" + ela[i].id + "')")
-                                 .text(ela[i].taskName)))
-                         .append($("<td>").append(taskNature))
-                         .append('<td>' + ela[i].taskTypeName + '</td>')
-                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
-                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
-                         .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
-                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
-                         .append('<td class="task-time-td">' + closedDate + '</td>')
+                for (let i = 0; i < ela.length; i++) {
+                    var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                    coreBugKV[ela[i].id] = ela[i];
+                    var closedDate = ela[i].closeStatusDate;
+                    if (closedDate) {
+                        closedDate = Utility.convertDate(ela[i].closeStatusDate) + "/" + Utility.convertTime(ela[i].closeStatusTime)
+                    }
+                    var tr = $("<tr>")
+                        .attr("data-assignee", ela[i].fkAssigneeId)
+                        .attr("data-nature", ela[i].taskNature)
+                        .attr("data-taskType", ela[i].fkTaskTypeId)
+                        .addClass('task-tr-list')
+                        .attr('data-tr-status', ela[i].taskStatus)
+                        .attr('id', ela[i].id)
+                        .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
+                        .append('<td class="task-id-td"><input data-pid="' + ela[i].fkBacklogId + '" class="checkbox-issue-task" type="checkbox"></td>')
+                        .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
+                        .append($("<td>")
+                            .attr("title", ela[i].taskName)
+                            .css("max-width", '400px')
+                            .css("overflow", 'hidden')
+                            .append($("<a>")
+                                .attr('href', '#')
+                                .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + ela[i].fkProjectId + "','" + ela[i].id + "')")
+                                .text(ela[i].taskName)))
+                        .append($("<td>").append(taskNature))
+                        .append('<td>' + ela[i].taskTypeName + '</td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
+                        .append('<td class="task-story-select-img">' + ela[i].closedByName + '</td>')
+                        .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
+                        .append('<td class="task-time-td">' + closedDate + '</td>')
 
-                     $(tbody).append(tr)
-                     if (list) {
-                         var newtr = `
+                    $(tbody).append(tr)
+                    if (list) {
+                        var newtr = `
                      <div class="d-flex text-center">
                      <span>
                      <div class="p-1"><b>Id</b></div>
@@ -17279,27 +17281,27 @@ function getBugList4UserStory(bgId, tbody, list) {
                     
                      `
 
-                         var content = ''
-                         $(list).append(`<li class="task-tr-list" data-tasktype="${ela[i].fkTaskTypeId}"  data-nature="${ela[i].taskNature}" data-tr-status="${ela[i].taskStatus}" data-assignee="${ela[i].createBy}"  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}'>${ela[i].taskNature==='bug'?'<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>':""}
+                        var content = ''
+                        $(list).append(`<li class="task-tr-list" data-tasktype="${ela[i].fkTaskTypeId}"  data-nature="${ela[i].taskNature}" data-tr-status="${ela[i].taskStatus}" data-assignee="${ela[i].createBy}"  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}'>${ela[i].taskNature==='bug'?'<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>':""}
                               <a href='#' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${ela[i].fkProjectId}','${ela[i].id}')">${ela[i].taskName}</a></li>`)
-                     }
-                 }
+                    }
+                }
 
-                 $('[data-toggle="popover"]').popover({
-                     "html": true
-                 });
-                 $(tbody).find('.trigger-status-filter').click();
-                 $(tbody).closest("table").find('.us-item-status-new').click();
-                 $(tbody).closest("table").find('.us-item-status-ongoing').click();
-                 var asID = $("#story_mn_filter_assigne_id").val();
+                $('[data-toggle="popover"]').popover({
+                    "html": true
+                });
+                $(tbody).find('.trigger-status-filter').click();
+                $(tbody).closest("table").find('.us-item-status-new').click();
+                $(tbody).closest("table").find('.us-item-status-ongoing').click();
+                var asID = $("#story_mn_filter_assigne_id").val();
                 var ntId = $("#story_mn_filter_nature_id").val();
                 $('.baclog-large-modal-ididit-refresh').find('i').removeClass('fa-spin');
-                
+
             } catch (error) {
                 $(tbody).empty();
                 tbody.append(`<td class='bg-danger text-light'><div>Task yoxdur</div></td>`);
             }
-            
+
             /* if(asID.length>0||ntId.length>0){
              $(tbody).closest("table").find('.btn-show-hide-table-row').click();
             } */
@@ -19661,27 +19663,27 @@ function loadMainProjectList4Class() {
 function loadProjectList2SelectboxByClassNochange(className) {
 
     var cmd = $('select.' + className);
-         cmd.each(function name(params) {
-                 $(this).html('');
-                 var f = true;
-                 var pid = SACore.GetProjectKeys();
-                 for (var n = 0; n < pid.length; n++) {
-                     var pname = SACore.GetProjectName(pid[n]);
-                     var o = $('<option></option')
-                         .attr('value', pid[n])
-                         .text(pname);
-                     if (f) {
-                         o.attr("selected", true);
-                         f = false;
-                     }
+    cmd.each(function name(params) {
+        $(this).html('');
+        var f = true;
+        var pid = SACore.GetProjectKeys();
+        for (var n = 0; n < pid.length; n++) {
+            var pname = SACore.GetProjectName(pid[n]);
+            var o = $('<option></option')
+                .attr('value', pid[n])
+                .text(pname);
+            if (f) {
+                o.attr("selected", true);
+                f = false;
+            }
 
-                     if (pid[n] === global_var.current_project_id) {
-                         o.attr("selected", true);
-                     }
-                     $(this).append(o);
-             }
-                 sortSelectBoxByElement($(this));
-         })
+            if (pid[n] === global_var.current_project_id) {
+                o.attr("selected", true);
+            }
+            $(this).append(o);
+        }
+        sortSelectBoxByElement($(this));
+    })
 
 
     //    cmd.val(global_var.current_project_id);
@@ -24997,7 +24999,15 @@ var _220304054258036310054_ = {
             fkBacklogFlowId: id
         }, true, function (res) {
             // div.html(JSON.stringify(res));
+            var flow_item_count = 0;
+            console.log('=========================================================')
+            console.log(flow_name)
+
+            console.log('=========================================================')
+
             res.tbl[0].r.map((o) => {
+                flow_item_count++;
+                console.log(o.toBacklogName)
                 var fromId = o.fkFromBacklogId;
                 var fromName = o.fromBacklogName;
                 var oid = o.id;
@@ -25019,10 +25029,10 @@ var _220304054258036310054_ = {
 
             })
             _220304054258036310054_.flow_backlog_map = dt;
-            _220304054258036310054_.map_show(id, flow_name);
+            _220304054258036310054_.map_show(id, flow_name, flow_item_count);
         })
     },
-    map_show: (flow_id, flow_name,toId) => {
+    map_show: (flow_id, flow_name, flow_item_count) => {
         var tr = $(`<div>`);
         tr.attr('fid', flow_id)
             .addClass("parent_id_" + flow_id)
@@ -25031,7 +25041,7 @@ var _220304054258036310054_ = {
             .attr('parent_no', '');
 
         tr.append(`<div style='background-color:gray;color:white'>
-                <h5>${flow_name}</h5>
+                <h5>${flow_name}  ${(flow_item_count)? flow_item_count :''}</h5>
               </div>`);
 
         var div = $('#22030803450902333051');
@@ -25092,15 +25102,15 @@ var _220304054258036310054_ = {
     backlog_block: (row, obj) => {
         var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
 
-        var span = $('<span>')
-            .addClass("flow-item-span-zad")            
+        var span = $('<span style="cursor: pointer;">')
+            .addClass("flow-item-span-zad")
             // .append(spc)
             .append(`${row}.${obj.toBacklogName}`)
             .attr('onclick', `processMapCcartTascList("${obj.fkToBacklogId}")`)
-            .append(` <span class='us-item-status-${obj.toBacklogStatus}'>${obj.toBacklogStatus}<span>`)
-            .append(` <i class='fa fa-bug' style='color:red'>-${obj.toBacklogBugCount}</i>`)
-            .append(` <span class='us-item-status-new' title='Tasks with New Status'>${obj.toBacklogNewCount}<span>`)
-            .append(` <span class='us-item-status-ongoing' title='Tasks with ongoing Status'>${obj.toBacklogOngoingCount}<span>`);
+            .append(`<span class='us-item-status-${obj.toBacklogStatus}'>${obj.toBacklogStatus}<span>`)
+            .append((obj.toBacklogBugCount > 0) ? `<i class='fa fa-bug' style='color:red'>-${obj.toBacklogBugCount}</i>` : '')
+            .append((obj.toBacklogNewCount > 0) ? `<span class='us-item-status-new' title='Tasks with New Status'>${obj.toBacklogNewCount}<span>` : '')
+            .append((obj.toBacklogOngoingCount > 0) ? `<span class='us-item-status-ongoing' title='Tasks with ongoing Status'>${obj.toBacklogOngoingCount}<span>` : '');
         return span;
     },
     child_body: (item, M, backlogName, res4, flow_id) => {
@@ -25119,6 +25129,3 @@ var _220304054258036310054_ = {
 
 
 }
-
-
-
