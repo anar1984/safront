@@ -774,10 +774,10 @@ $(function () {
         if ($(this).prop("checked")) {
 
             $(this).parents("table").find("tbody tr").find("#comp_id_" + id).prop("checked", true);
-            $(this).parents("table").find("tbody tr").find("#comp_id_" + id).change();
+            $(this).parents("table").find("tbody tr").first().find("#comp_id_" + id).change();
         } else {
             $(this).parents("table").find("tbody tr").find("#comp_id_" + id).prop("checked", false);
-            $(this).parents("table").find("tbody tr").find("#comp_id_" + id).change();
+            $(this).parents("table").find("tbody tr").first().find("#comp_id_" + id).change();
         }
 
     });

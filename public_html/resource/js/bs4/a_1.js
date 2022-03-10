@@ -3928,7 +3928,7 @@ function importSendNameApi(filNm) {
 }
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
-    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    var pbDiv = $('#' + id).closest('.component-container-dashed').find('#progress_bar_new');
     if ($("#" + id).attr("multiple")) {
 
     } else {

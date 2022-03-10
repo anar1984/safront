@@ -160,13 +160,15 @@ var cmpList = {
 
         },
         genObserverBlockS: function (title,iconClass) {
+            var  iconClass   = null
+            if(typeof  option  ==='object' ){
+                iconClass  =option.iconClass;
+            }
             return `<div class="user-addons-box-elm single-addons dropup" action-type='single' >
-                ${title?title:"Məsul şəxs"}:
-                <span type="button" data-id="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" class="dropdown-toggle user-dropdonw-btn" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 
-                <i class="user-interactive-icon ${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>      
+                <span class='add-userList-title'>${title?title:"Məsul şəxs"} :</span>
+                <span type="button" data-icon="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" class="dropdown-toggle user-dropdonw-btn" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
+                  <i class="user-interactive-icon ${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>      
                 </span>
-                
                 <div class="dropdown-menu">
                     <div class="user-addons-box p-2 cs-box-background">
                     <div class="user-avatar-list mb-1 ">
@@ -190,7 +192,7 @@ var cmpList = {
             }
             return `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi' >
                     <span class='add-userList-title'>${title?title:lang_task.windowAddTask.observer} :</span>
-                <span type="button" data-id="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span type="button" data-icon="${iconClass?iconClass:'cs-svg-icon user-addons-icon'}" onclick='cmpList.userBlock.clickfocusElementSeacrh(this)' class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="user-interactive-icon ${iconClass?iconClass:'cs-svg-icon user-addons-icon'}"></i>
                 </span>
                 <span class="count_avatar_users"></span>
