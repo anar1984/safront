@@ -15499,18 +15499,29 @@ $(document).on('change', '#story_mn_filter_Flow_ID_12', function () {
 
 // filter flowName by flow group
 function filterLoadFlowNAmeByFolowGrooup(el) {
-    var dat = $('#story_mn_filter_Flow_ID_12').val().toString();
-     var data = {};
-     data.fkFlowGroupId = dat;
+    var dat = $('#story_mn_filter_Flow_ID_12').val();
+    var flowId = ''
+
+    for (let y = 0; y < dat.length; y++) {
+        flowId += dat[y] + '%IN%';
+    }
+        
+    var data = {};
+     data.fkFlowGroupId = flowId ? flowId:'-1';
      var select = $('#story_mn_filter_Flow_NameID_12');
      select.empty();
      select.selectpicker('refresh');
      select.html('<option></option>');
-     callApi("22030405453401501463", data, true, function (res) {
-         res.tbl[0].r.map((o) => {
-             select.append(`<option value='${o.id}'>${o.flowName}</option>`);
-         })
-         select.selectpicker('refresh')
+             callApi("22030405453401501463", data, true, function (res) {
+         try {
+               res.tbl[0].r.map((o) => {
+                   select.append(`<option value='${o.id}'>${o.flowName}</option>`);
+               })
+               select.selectpicker('refresh')
+         } catch (error) {
+             
+         }
+       
      })
 }
 // filter folow name load
@@ -17058,13 +17069,13 @@ function prosessMApingstoryCArdBYproject(el) {
 }
 
 
-function processMapCcartTascList(id) {
-    $("#body-large-modal-in-us4backlog").html("");
+function processMapCcartTascList(id) {    
     var data = {};
     data.fkBacklogId = id;
     callApi('22030413030503436111', data, true, function (res) {
         var o = res.tbl[0].r[0];
         var html = new UserStory().genUSLine4KanbanView(o);
+        $("#body-large-modal-in-us4backlog").html("");
         html = $(html);
         html.css("width", '100%')
         html.find('.baclog-large-modal-next').hide();
@@ -17130,7 +17141,7 @@ $(document).on("click", '#comp_id_220304000825030110739', function () {
 $(document).on("change", '#Flov_GRoup_comp_id_22030405435105928068', function () {
     $('.task-panel').empty();
     var el = $('#Flov_GRoup_comp_id_22030405435105928068').val();
-    _220304054258036310054.load_flow_select(el);
+    _220304054258036310054.load_flow_select(el?el:'-1');
 
 })
 
@@ -19651,7 +19662,7 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {
+        success: function (res) {      
             SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res);
             if (global_var.current_modal === 'loadStoryCardMgmt') {
@@ -25034,15 +25045,10 @@ var _220304054258036310054_ = {
             fkBacklogFlowId: id
         }, true, function (res) {
             // div.html(JSON.stringify(res));
-            var flow_item_count = 0;
-            console.log('=========================================================')
-            console.log(flow_name)
-
-            console.log('=========================================================')
-
+            var flow_item_count = 0;           
+            
             res.tbl[0].r.map((o) => {
                 flow_item_count++;
-                console.log(o.toBacklogName)
                 var fromId = o.fkFromBacklogId;
                 var fromName = o.fromBacklogName;
                 var oid = o.id;

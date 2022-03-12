@@ -14690,6 +14690,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if ($('.us-mngm-is-label').prop('checked')) {
             data.notHaveLabel = "1";
         }
+        if (flowGroup) {
+            data.fkFlowGroupId = flowGroup;
+        }
+         if (flowName) {
+             data.fkFlowId = flowName;
+         }
         data.joinType = "inner";
         return data;
     },
