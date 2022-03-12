@@ -3928,7 +3928,7 @@ function importSendNameApi(filNm) {
 }
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
-    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    var pbDiv = $('#' + id).closest('.component-container-dashed').find('#progress_bar_new');
     if ($("#" + id).attr("multiple")) {
 
     } else {
@@ -3971,7 +3971,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                 pbDiv.addClass("d-flex flex-nowrap");
                 pbDiv.append(`<div class="cs-img-col" id='pro_element_${idx}'>
                 <div class="file_upload_div cs_new_file_upload">
-                <img src="resource/img/loader.gif" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer"  alt="">
+                <img src="resource/img/blockloader.gif" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer"  alt="">
                 <span class="cs-img-title"></span>
                 <div class="see-detail-img"><a target="_blank"  href="">
                 <i class="fa fa-download" aria-hidden="true"></i>
