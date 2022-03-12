@@ -5098,10 +5098,10 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 // updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
     var vala = $(this).val();
-    updateTask4ShortChangeDetails(vala, "fkAssigneeId");
+   // updateTask4ShortChangeDetails(vala, "fkAssigneeId");
     updateEkrantaskTypeBYuserId(vala);
     ///  forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
-    //updateTaskTypeChangeMesulShexs(vala);
+    updateTaskTypeChangeMesulShexs(vala);
 });
 
 // create mesul change
