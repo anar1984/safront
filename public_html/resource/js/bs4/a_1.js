@@ -13827,10 +13827,9 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         });
         Prototype.Init();
         /// editorGenerateJSCSS();
+      
 
-
-
-
+        livPrototipeSortable();
 
     });
 
@@ -13838,6 +13837,32 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
 
 });
+
+// live ekran sortable
+function livPrototipeSortable() {
+    var arr = [];
+    $("#SUS_IPO_GUI_Design").sortable({
+        update: function (event, ui) {           
+            var elements = $(ui.item).parent('div').find('.component-container-dashed');
+            elements.each(function (index, el) {
+                // console.log(el)
+                let idu = $(el).attr('id');
+                arr[index] = {
+                    id: idu,
+                    orderNo: index + 1
+                }
+            });          
+            var data = {
+                inputOrder:arr
+            };           
+            //data.inputOrder = arr;
+            callApi('22031412084805382531', data, true, function (res) {
+                //Toaster.showMessage('Müvəffəqiyyətlə dəyişdirildi');               
+                
+            })     
+        }
+    });
+}
 
 function insertJSmanualBybacklogId(body) {
     var elm = $("#SUS_IPO_GUI_Design")

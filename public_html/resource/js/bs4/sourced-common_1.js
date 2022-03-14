@@ -9217,7 +9217,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         });
         this.updateInputOnChangeAndRefresh();
-    },
+    },    
     setGUIComponentOrderNoByDrugDrop: function (inputId, index) {
 
         if (!index) {
