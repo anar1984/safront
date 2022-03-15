@@ -769,24 +769,25 @@ function add3Dots2Filename(fname) {
     return st;
 }
 function genFileBlockMulti4Table(names, cell) {
-    try {
-         names  = names.split("|");
-
-    } catch (error) {
-        
-    }
-    var list  = ''
- /*   for (let i = 0; i < names.length; i++) {
-       const o = names[i]; */
-       /* if(o.length > 0){ */
-        list+= generateFileLine4Table(names[0], cell);
-     /*   } */
-  /*  } */
-        if(names.length>1){
-            list +=  "<span class='badge badge-info ml-1' >+" + (names.length - 1)+"</span>";
+        try {
+            names  = names.split("|");
+        } catch (error) {}
+        var list  = '<span id="progress_bar_new">'
+        for (let i = 0; i < names.length; i++) {
+            const o = names[i];
+            if(o.length > 0){
+                if(i>0){
+                    list+= generateFileLine4Table(names[0], cell,'d-none');
+                }else{
+                    list+= generateFileLine4Table(names[0], cell,'');
+                }
+            }
         }
-     
-   return list
+        if(names.length>1){
+            list +=  "<span onclick='imageViewerNew(this)' class='badge badge-info ml-1' >+" + (names.length - 1)+"</span>";
+        }
+        list+='</span>';
+    return list;
 }
  function setFilePickerValue(element,value,empty){
     $(element).attr("fname",value);
@@ -800,11 +801,8 @@ function genFileBlockMulti4Table(names, cell) {
    var block  =  container.find('#progress_bar_new');
       if(empty!='noEmpty'){
         block.html(''); 
-      }
-     
+      }   
    var list  = '';
-   
-
   for (let i = 0; i < value.length; i++) {
       const o = value[i];
       if(o.length>0){
@@ -825,25 +823,23 @@ function setFilePickerValueCore(element,value,empty){
            
           if(attr==='list'){
               block.removeClass("d-flex flex-nowrap");
-             block.append(
-                $('<div>')
-               
-                .addClass("file-item")
-                .attr('id', 'pro_zad_span' + idx)
-                .append($("<span class='file-name-attach'>")
-                             .text(add3Dots2Filename(value))
-                             .attr('data-toggle', "modal")
-                             .attr('data-target', "#commentFileImageViewer")
-                             .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + value + '")'))
-                .append($('<i class="fa fa-times">')
-                            .attr('pid', idx)
-                            .attr('onclick', 'removeFilenameFromZad(this,\'' + value + '\')')))
+             block.append($('<div>')
+                        .addClass("file-item")
+                        .attr('id', 'pro_zad_span' + idx)
+                        .append($("<span class='file-name-attach'>")
+                                    .text(add3Dots2Filename(value))
+                                    .attr('onclick', 'imageViewerNew(this,"' + value + '")'))
+                                    .addClass('full-screen-image-btn')
+                                    .attr('data-url',finalname)
+                        .append($('<i class="fa fa-times">')
+                                    .attr('pid', idx)
+                                    .attr('onclick', 'removeFilenameFromZad(this,\'' + value + '\')')))
           }
           else if(attr==='block'){
               block.addClass("d-flex flex-nowrap");
               block.append(`<div class="cs-img-col" id='pro_zad_span${idx}'>
               <div class="file_upload_div cs_new_file_upload">
-              <img src="${fileUrl(value)}" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer" onclick="new UserStory().setCommentFileImageViewerUrl(${value})" alt="${value}">
+              <img src="${fileUrl(value)}" class="comment_img full-screen-image-btn" data-url='${value}'  onclick="imageViewerNew(this,'${value}')" alt="${value}">
               <span class="cs-img-title">${add3Dots2Filename(value)}</span>
               <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
               <i class="fa fa-download" aria-hidden="true"></i>
@@ -857,7 +853,7 @@ function setFilePickerValueCore(element,value,empty){
       
        
 }
-function generateFileLine4Table(name, cell) {
+function generateFileLine4Table(name, cell,hideClass) {
 
     try {
 
@@ -874,7 +870,7 @@ function generateFileLine4Table(name, cell) {
         var fileUrlVar = fileUrl(name);
 
       
-        var div2 = $('<div></div>').addClass("d-inline-block");
+        var div2 = $('<div></div>').addClass(hideClass?hideClass:"d-inline-block");
         var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
         div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b>');
          if (global_var.video_formats.includes(fileFormat)) {
@@ -888,9 +884,9 @@ function generateFileLine4Table(name, cell) {
         }
         else if (global_var.image_formats.includes(fileFormat)) {
             div12lik.find("b")
-                          .attr('data-toggle', "modal")
-                          .attr('data-target', "#commentFileImageViewer")
-                          .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                          .attr('onclick', 'imageViewerNew(this,"' + name + '")')
+                          .addClass('full-screen-image-btn')
+                          .attr('data-url',name)
         }
       
 

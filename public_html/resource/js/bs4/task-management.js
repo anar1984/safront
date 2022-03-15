@@ -1683,6 +1683,11 @@ const taskManagement = {
             }
         },
         callTaskCard4BugTask: function (el, projectId, taskId) {
+            try {
+                coreBugKV[taskId].fkAssigneeId;
+             } catch (error) {
+              this.getTaskListByIdSync(taskId);
+             }
             taskManagement.updateTask.genBlockModal.Init();
 
             loadBugTaskDeadlineScripts();
@@ -1786,6 +1791,19 @@ const taskManagement = {
             }, 700);
 
         },
+        getTaskListByIdSync: function (taskId) {
+            var data  =  {};
+                data.id  = ""+taskId+"";
+          callApi('22030916301706274914',data,false,function (res) {
+              try {
+                  var  list  = res.tbl[0].r[0];
+                  coreBugKV[taskId] =  list
+              } catch (error) {
+                  
+              }
+                
+         }) 
+      },
         updateEventByTaskId: function (id) {
 
             var json = initJSON();

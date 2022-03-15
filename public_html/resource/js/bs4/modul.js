@@ -91,6 +91,11 @@ function nav_list_menu_story_card() {
      }
   
 }
+function imageViewerNew(elm,arg) {
+    $('#commentFileImageViewer').modal('show');
+  $('#commentFileImageViewerUrl').attr("src", fileUrl(arg));
+  
+}
 $(document).on("click", '#task-list-statistic-4backlog .status-class',function (e) {
   $(this).toggleClass('active');
   var items  = $("#task-list-statistic-4backlog .status-class.active");

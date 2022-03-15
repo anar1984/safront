@@ -2880,9 +2880,9 @@ function generateFileLine(name, cell) {
             div12lik.append($('<img></img>')
                 .attr('src', fileUrl(name))
                 .addClass('comment_img')
-                .attr('data-toggle', "modal")
-                .attr('data-target', "#commentFileImageViewer")
-                .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                .attr('onclick', 'imageViewerNew(this,"' + name + '")')
+                .attr('data-url',name)
+                .addClass('full-screen-image-btn')
                 .attr('alt', name));
             //                    
         } else if (global_var.video_formats.includes(fileFormat)) {
@@ -3994,9 +3994,9 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
             if (attr === 'list') {
                 $('#pro_zad_' + idx).remove();
                 $('#pro_zad_span' + idx + ' .file-name-attach')
-                    .attr('data-toggle', "modal")
-                    .attr('data-target', "#commentFileImageViewer")
-                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
+                    .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
+                    .addClass('full-screen-image-btn')
+                    .attr('data-url',finalname)
                 $('#pro_zad_span' + idx)
                     .append($('<i class="fa fa-times">')
                         .attr('pid', idx)
@@ -4005,9 +4005,9 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                 $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
                 $('#pro_element_' + idx).find('.comment_img')
                     .attr("src", fileUrl(finalname))
-                    .attr('data-toggle', "modal")
-                    .attr('data-target', "#commentFileImageViewer")
-                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + finalname + '")')
+                    .attr('data-url',finalname)
+                    .addClass('full-screen-image-btn')
+                    .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
                 $('#pro_element_' + idx).find('.see-detail-img a').attr("href", fileUrl(finalname));
 
                 $('#pro_zad_' + idx)
@@ -22781,9 +22781,9 @@ var StoryCard = {
                 div12lik.append($('<img></img>')
                     .attr('src', fileUrl(name))
                     .addClass('comment_img')
-                    .attr('data-toggle', "modal")
-                    .attr('data-target', "#commentFileImageViewer")
-                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                    .attr('data-url',name)
+                    .attr('onclick', 'imageViewerNew(this,"' + name + '")')
+                    .addClass('full-screen-image-btn')
                     .attr('alt', name));
                 //                    
             } else if (global_var.video_formats.includes(fileFormat)) {

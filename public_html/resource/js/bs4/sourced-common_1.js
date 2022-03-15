@@ -19321,9 +19321,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     div12lik.append($('<img></img>')
                         .attr('src', fileUrl(st[i]))
                         .addClass('comment_img')
-                        .attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFileImageViewer")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + st[i] + '")')
+                        .attr('onclick', 'imageViewerNew(this,"' + st[i] + '")')
                         .attr('alt', st[i]));
                     //                    
                 } else if (fileFormat === 'pdf') {
@@ -19409,9 +19407,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     div12lik.append($('<img></img>')
                         .attr('src', fileUrl(st[i]))
                         .addClass('comment_img')
-                        .attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFileImageViewer")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + st[i] + '")')
+                        .attr('onclick', )
                         .attr('alt', st[i]));
                     //                    
                 } else if (fileFormat === 'pdf') {
