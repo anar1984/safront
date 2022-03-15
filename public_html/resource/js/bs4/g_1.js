@@ -768,7 +768,7 @@ $(function () {
         //   $(".filter-table-row-select").selectpicker()
     });
     $(document).on('click', '.all-check-button-allTable', function (event) {
-
+       
         var id = $(this).parent().attr("id");
 
         if ($(this).prop("checked")) {
@@ -781,6 +781,18 @@ $(function () {
         }
 
     });
+    $(document).on('click', '.all-check-button-forward_story', function (event) {        
+        var inp = $(this).closest('table').find('[type="checkbox"]');
+        if ($(this).prop("checked")) {
+
+            $(inp).prop("checked", true);
+            
+        } else {
+            $(inp).prop("checked", false);            
+        }
+
+    });
+
     $(document).on('click', '.component-input-class[type="checkbox"]', function (event) {
 
         var id = $(this).attr("pdid");

@@ -269,7 +269,6 @@ const taskManagement = {
                      ${this.genTabHeader()}
                      <div class="tab-content" id="myTabContent">
                      ${/* notChwk()? */this.genDetailsBlock()/* :"" */}
-                     ${this.genScheduleBlockInsertNew()}
                      ${this.genObserverBlock()}
                      ${this.genEventBlock()}
                      </div>
@@ -298,9 +297,9 @@ const taskManagement = {
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                                 </li>
-                                <li class="nav-item after-add-task" role="presentation">
+                                <!--<li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link task-tab2" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
-                                </li>
+                                </li>-->
                             
                             <!-- <li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
@@ -952,7 +951,7 @@ const taskManagement = {
                                 <div class="assigne-div-update-issue" style="display:inline-block; margin-right:15px"></div>                                
                             </div>
                             <div class="d-table" style="padding: 3px 0px;">
-                            <button type="button" id="" onclick="nextModalpopUpShow(this)" class="cs-next-popup-btn btn btn-primary">---</button>
+                            <button type="button" id="" onclick="nextModalpopUpShow(this,'','','#taskMgmtModal .modal-body')" class="cs-next-popup-btn btn btn-primary">---</button>
                             </div>
                         </div>
 
@@ -1182,7 +1181,6 @@ const taskManagement = {
                      <div class="tab-content" id="pills-tabContent" >
                      ${this.genCommentBlock()}
                      ${this.genDetailsBlock()}
-                     ${this.genScheduleBlock()}
                      ${this.genObserverBlock()}
                      ${this.genSubtaskBlock()}
                      ${this.genEventBlock()}
@@ -1213,9 +1211,9 @@ const taskManagement = {
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>${lang_task.windowUpdateTask.comment}</span></a>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                               <!-- <li class="nav-item" role="presentation">
                                     <a class="nav-link d-task-tab2" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
-                                </li>                               
+                                </li>-->                              
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                                 </li>
@@ -4845,7 +4843,7 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     $("#issue-managment-add-task").modal("show");
     var useId = "";
     createEkrantaskTypeByUSerID(useId);
-
+    
 })
 
 function getCurrentModalId4UsTask() {
@@ -5118,7 +5116,7 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 // updated finally
 $(document).on("change", '.assigne-div-update-issue select.user-list-selectbox-single', function () {
     var vala = $(this).val();
-    updateTask4ShortChangeDetails(vala, "fkAssigneeId");
+   // updateTask4ShortChangeDetails(vala, "fkAssigneeId");
     updateEkrantaskTypeBYuserId(vala);
     ///  forwardTaskApi(global_var.current_issue_id,val,assigneId,"")
     updateTaskTypeChangeMesulShexs(vala);
@@ -5133,15 +5131,12 @@ $(document).on("change", '.assigne-div-add-issue select.user-list-selectbox-sing
 function updateTaskTypeChangeMesulShexs(dat) {
     data = {};
     data.fkTaskId = global_var.current_issue_id;
-    data.fkAssigneeId = dat;
-    try {
-        callApi('22030712380109772046', data, true, function (res) {
+    data.fkAssigneeId = dat;  
+        callApi('22030711362203045618', data, true, function (res) {
             Toaster.showMessage('Məsul şəxs müvəffəqiyyətlə dəyişdirildi');
+            getSTatsUserManagmentTableKanban($('.baclog-large-modal-ididit-refresh'));
         })
-    } catch (error) {
-        $('#taskMgmtModal').modal('hide');
-    }
-
+       // $('#taskMgmtModal').modal('hide');  
 }
 
 $(document).on("change", '.observer-div-update-issue select.user-list-selectbox-multiple', function () {
@@ -5657,11 +5652,11 @@ function addDeclareBugTask(taskid) {
     })
 }
 
-function nextModalpopUpShow(elm, value, multi) {
+function nextModalpopUpShow(elm, value, multi,container) {
     $("#nextBlockItemPopUp").remove();
     var block = taskManagement.updateTask.genBlockModal.genNextBlockPopUp();
 
-    $("body").append(block);
+    $(container ? container: "body").append(block);
     cmpList.userBlock.Init($('#nextBlockItemPopUp .forward-assignee-list'), 'single');
     cmpList.userBlock.Init($('#nextBlockItemPopUp .add-observer-list'), 'multi');
     var k = $("#nextBlockItemPopUp")

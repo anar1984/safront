@@ -599,6 +599,25 @@ $(document).on('click', '.live-prototype-show-story-card-hard-refresh', function
     $('.live-prototype-show-story-card-refresh').click();
 })
 
+// $(document).on('click', '.line_icon_getCanvasfromStory', function () {
+//     console.log('salam') 
+    
+//     var element = $('#SUS_IPO_GUI_Design');
+//     console.log(element);
+    
+//      html2canvas(element, {
+//          onrendered: function (canvas) {
+//              getCanvas = canvas.toDataURL("image/jpg");
+//              $('#SUS_IPO_GUI_Design').empty();
+//              $('#SUS_IPO_GUI_Design').append(canvas);
+
+//          }
+
+//      });
+   
+// })
+
+
 $(document).on('change', '.okayPitchYourPathYourWay', function (ev) {
 
     var attrVal = $(this).val();
