@@ -17377,7 +17377,7 @@ function getBugList4UserStory(bgId, tbody, list) {
             /* if(asID.length>0||ntId.length>0){
              $(tbody).closest("table").find('.btn-show-hide-table-row').click();
             } */
-            $('.hide-all-table').trigger('click');
+            $('#body-large-modal-in-us4backlog').find('.hide-all-table').trigger('click');
         },       
         error: function () {
             Toaster.showError(('somethingww'));

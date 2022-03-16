@@ -124,7 +124,8 @@ const taskManagement = {
             </div>`
             },
             genFileAddBlock: function () {
-                return `<div class="cs-input-group">
+                return `
+            <div class="cs-input-group">
                               
                 <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_taskCreate"
                      style="width:100%;padding:0px;margin:0px;">
@@ -153,55 +154,10 @@ const taskManagement = {
             </div>`
             },
             genTaskDeadLineBlockTime: function () {
-                return `<div class="mr-auto pl-0 pr-0 pb-2">
+                return `
+            <div class="mr-auto pl-0 pr-0 pb-2 col-xl-12">
                 <div class="row">
-                    <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6  mt-3 cs-p-rem">
-                            <div class="cs-input-group p-0">
-                            <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
-                                <div class='cs-date-time d-flex'>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                            </span>
-                                            <input type='text' id="taskDeadlineStartDade" class="form-control taskDeadlineDate" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                            </span>
-                                            <input type='text' id="taskDeadlineStartTime" class="form-control taskDeadlineTime" style="width:50px;" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
-                          <div class="cs-input-group p-0">
-                            <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
-                                <div class='cs-date-time d-flex'>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                                </span>
-                                                <input type='text' id="taskDeadlineEndDade" class="form-control taskDeadlineDate" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                                </span>
-                                                <input type='text' id="taskDeadlineEndTime" class="form-control taskDeadlineTime" style="width:50px;" />
-                                        </div>
-                                    </div>
-                                </div>
-                          </div>
-                        </div>
+                    <div class="col-xl-12" style="display:contents">                      
                        
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
@@ -221,7 +177,7 @@ const taskManagement = {
                         </div>
                    </div>
                 </div>
-        </div>`
+            </div>`
             },
             genTaskDeadLineBlockTask: function () {
                 return `  <div class="p-2 mt-2 ml-4">
@@ -315,6 +271,7 @@ const taskManagement = {
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                     <div class='row'>
+                    
                         <div class="col-lg-6  mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
@@ -349,7 +306,56 @@ const taskManagement = {
                             </div>
                         </div>
                     </div>
-                    <hr>
+                <hr>
+                   <div class="d-flex">
+                     <div class="col-lg-6  mt-3 cs-p-rem" style="margin-right: 8px;">
+                        <div class="cs-input-group p-0">
+                            <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                            </span>
+                                            <input type='text' id="taskDeadlineStartDade" class="form-control taskDeadlineDate" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            </span>
+                                            <input type='text' id="taskDeadlineStartTime" class="form-control taskDeadlineTime" style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-3 cs-p-rem">
+                          <div class="cs-input-group p-0">
+                            <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                            </span>
+                                                <input type='text' id="taskDeadlineEndDade" class="form-control taskDeadlineDate" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDeadlineEndTime" class="form-control taskDeadlineTime" style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                   </div>
+                <hr>
                     <div class="row">
                             <div class="col-4 estimateHours">
                                 <div class="cs-input-group">
@@ -1077,56 +1083,10 @@ const taskManagement = {
             </div>`
             },
             genTaskDeadLineBlockTime: function () {
-                return `<div class="mr-auto pl-0 pr-0 pb-2">
+                return `
+            <div class="mr-auto pl-0 pr-0 pb-2 col-xl-12">
                 <div class="row">
-                    <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 mt-3 cs-p-rem">
-                            <div class="cs-input-group p-0">
-                                <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
-                                <div class='cs-date-time d-flex'>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                            </span>
-                                            <input autocomplete="off" type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                            </span>
-                                            <input autocomplete="off" type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mt-3 cs-p-rem">
-                           <div class="cs-input-group p-0">
-                                <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
-                                <div class='cs-date-time d-flex'>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                                </span>
-                                                <input autocomplete="off" type='text' id="taskDetailDeadlineEndDade" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex">
-                                            <span class="input-group-icon">
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                                </span>
-                                                <input autocomplete="off" type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
-                                        </div>
-                                    </div>
-                                </div>
-                           </div>
-                        </div>
-                        
+                    <div class="col-xl-12" style="display:contents">                        
                         <div class="col-lg-6 mt-3 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
@@ -1145,7 +1105,7 @@ const taskManagement = {
                         </div>
                    </div>
                 </div>
-        </div>`
+            </div>`
             },
             genTaskDeadLineBlockTask: function () {
                 return `       <div class="p-2 mt-2 ml-4">
@@ -1293,13 +1253,60 @@ const taskManagement = {
                                         </select>
                                     </div>
                                 </div>            
-                            </div>
-
-                           
+                            </div>                          
                          
                         </div>
                         <hr>
-                      
+                         <div class='d-flex'>
+                         <div class="col-lg-6 mt-3 cs-p-rem">
+                            <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                            </span>
+                                            <input autocomplete="off" type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            </span>
+                                            <input autocomplete="off" type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-3 cs-p-rem">
+                           <div class="cs-input-group p-0">
+                                <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input autocomplete="off" type='text' id="taskDetailDeadlineEndDade" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input autocomplete="off" type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                        </div>
+                        <hr>
+                     
                         <div class="row">
                             <div class="col-4 estimateHours">
                                 <div class="cs-input-group">
