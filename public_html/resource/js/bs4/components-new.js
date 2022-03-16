@@ -700,10 +700,13 @@ var cmpList = {
             $("[data-toggle-id='"+tableId+"']").toggleClass("d-none");
         },
         clickExpandTable: function (elm,tableId) {
+            $(elm).closest('.modal').addClass('large-table-modal');
             $("[data-toggle-id='"+tableId+"']").closest('.component-container-dashed').addClass("modal-table-large-mod");
             $(".toggle-table-close-"+tableId).removeClass('d-none');
         },
         clickCloseExpandTable: function (elm,tableId) {
+            
+            $(elm).closest('.modal').removeClass('large-table-modal');
             $("[data-toggle-id='"+tableId+"']").closest('.component-container-dashed').removeClass("modal-table-large-mod");
             $(elm).addClass('d-none');
         }
