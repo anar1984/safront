@@ -17253,13 +17253,14 @@ function getBugList4UserStory(bgId, tbody, list) {
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
     // 
-    var assignee = $('#story_mn_groupBy_id').val();
-    console.log(assignee);
-    if (assignee == 'assigne') {
-        json.kv.fkAssigneeId = fkAsId;
-    } else {
-        json.kv.considerAll = '1';
-    }
+    // var assignee = $('#story_mn_groupBy_id').val();
+    // console.log(assignee);
+    // if (assignee == 'assigne') {
+    //     json.kv.fkAssigneeId = fkAsId;
+    // } else {
+        
+    // }
+    json.kv.considerAll = '1';
     var prd = getProjectValueUsManageMulti();
     var that = this;
     var data = JSON.stringify(json);
@@ -17376,7 +17377,8 @@ function getBugList4UserStory(bgId, tbody, list) {
             /* if(asID.length>0||ntId.length>0){
              $(tbody).closest("table").find('.btn-show-hide-table-row').click();
             } */
-        },
+            $('.hide-all-table').trigger('click');
+        },       
         error: function () {
             Toaster.showError(('somethingww'));
         }
