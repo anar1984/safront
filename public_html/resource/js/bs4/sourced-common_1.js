@@ -19311,7 +19311,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     //        return arg;
     //    },
     generateTrialFileLine: function (o, id) {
-        try {
+      //  try {
             var st = o.split('|');
             var div = $('<div></div>').addClass("row");
             for (var i = 0; i < st.length; i++) {
@@ -19358,7 +19358,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div_col;
-        } catch (err) {}
+       // } catch (err) {}
     },
     deleteTrialFile: function (obj, fname, id) {
 
@@ -19413,7 +19413,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     div12lik.append($('<img></img>')
                         .attr('src', fileUrl(st[i]))
                         .addClass('comment_img')
-                        .attr('onclick', )
+                        .attr('onclick', 'imageViewerNew(this,"' + st[i] + '")')
                         .attr('alt', st[i]));
                     //                    
                 } else if (fileFormat === 'pdf') {
