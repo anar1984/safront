@@ -19225,28 +19225,30 @@ function multipleClosedTask(list, dragelm) {
     data.fkTaskId = list;
 
     callService('serviceTmcloseMultipleBacklogTasks', data, true, function (res) {
-        /// getDefautUserByTaskTypeId(dragelm);
-        var bgId = $(dragelm).attr("bid");
+         getDefautUserByTaskTypeId(list,dragelm);
+       /*  var bgId = $(dragelm).attr("bid");
         var pid = $(dragelm).attr("pidd");
         var typid = $('#tasktype-list-select4move').val();
-        insertAutoTaskOnDrag(bgId, typid, pid, list);
+        insertAutoTaskOnDrag(bgId, typid, pid, list); */
     })
 }
 
-function getDefautUserByTaskTypeId(dragelm) {
-    var tasTypeId = $('#zona-list-select4move').val();
+function getDefautUserByTaskTypeId(list,dragelm) {
+    var tasTypeId = $('#tasktype-list-select4move').val();
     var bgId = $(dragelm).attr("bid");
     var pid = $(dragelm).attr("pidd");
 
-    insertAutoTaskOnDrag(bgId, asId, pid);
-    /*  callApi('22011222234409531876',data,true,function (res) {
+    var data = {};
+    data.id = tasTypeId;
+    console.log(data);
+    callApi('22011222234409531876',data,true,function (res) {
           var asId = res.kv.fkAssigneeId;
-     
+          insertAutoTaskOnDrag(bgId, asId, pid, list, tasTypeId);
            
-     })  */
+     })  
 }
 
-function insertAutoTaskOnDrag(bgId, typid, prid, list) {
+function insertAutoTaskOnDrag(bgId, asid, prid, list, tasTypeId) {
     var txt = $('[pid="' + bgId + '"].ContentText span.headerContentText').text() + " (send to " + $('#tasktype-list-select4move option:selected').text() + ")";
     var json = {
         kv: {}
@@ -19257,7 +19259,8 @@ function insertAutoTaskOnDrag(bgId, typid, prid, list) {
     json.kv.fkBacklogId = bgId;
     json.kv.taskName = txt;
     json.kv.fkProjectId = prid;
-    json.kv.fkTaskTypeId = typid;
+    json.kv.fkAssigneeId = asid;
+    json.kv.fkTaskTypeId = tasTypeId;
     var that = this;
     var data = JSON.stringify(json);
     $("#multipleClosedTask").modal("hide");
