@@ -283,7 +283,7 @@ var cmpList = {
                       <select name=""  class="count-row-select-global"></select>
                   </div>
                   <div class="float-right task-list-pagination_btns d-flex">
-                    <select class="custom-select-table-for d-none" id="table-selected-row-details-${tbid}">
+                    <select class="custom-select-table-for d-none" id="table-selected-row-details-${tbid}" style=" height: 25px; background: #03396c; color: #fff; border-radius: 50px; padding: 0px 10px; margin-right: 8px; ">
                         <option class="count"> </option>
                         <option class="sum"></option>
                         <option class="avarage"> </option>
