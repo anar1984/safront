@@ -257,6 +257,7 @@ var cmpList = {
                 $("#paginiton_id_"+attr).remove();
                 var tbid = makeId(10);
                 $(elm).attr("data-pag-id", tbid);
+                $(elm).addClass("selectableTable");
                 $(elm).attr('component-type',"table-paginiton");
          
                 $(elm).parent().after(this.genBlock(rowCount, tbid));
@@ -281,7 +282,22 @@ var cmpList = {
                       <input class="endLimitNew" value="49" type="text">
                       <select name=""  class="count-row-select-global"></select>
                   </div>
-                  <div class="float-right d-flex">
+                  <div class="float-right task-list-pagination_btns d-flex">
+                    <select class="custom-select-table-for d-none" id="table-selected-row-details-${tbid}">
+                        <option class="count"> </option>
+                        <option class="sum"></option>
+                        <option class="avarage"> </option>
+                        <option class="min"></option>
+                        <option class="max"></option>      
+                    </select>
+                  <!--  <a class="btn circle btn-primary mt-0  tbl-export-import-btn"><i class='cs-svg-icon cs-svg-icon-import'></i></a> -->
+                    <div class="dropdown">
+                        <a class="btn circle btn-primary mt-0 tbl-export-import-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='cs-svg-icon cs-svg-icon-export'></i></a>
+                        <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
+                            <button data-st='all' onclick='cmpList.tablePagintion.export(this,"${tbid}")' class="dropdown-item" type="button">Hamısı</button>
+                            <button data-st='choose' onclick='cmpList.tablePagintion.export(this,"${tbid}")' class="dropdown-item" type="button">Seçilmiş</button>
+                        </div>
+                    </div>
                       <div class="dropdown">
                           <button class="btn  pagination_btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" row-count='${rowCount}' aria-expanded="false">1-50/${rowCount}</button>
                           <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
@@ -379,6 +395,39 @@ var cmpList = {
                 $("[data-pag-id='" + tbl + "']").trigger("change-page", [stm, etm]);
             }
         },
+        export:function (elm,tbid) {
+            var table  =  $('table[data-pag-id="'+tbid+'"]').clone();
+            var type  =  $(elm).attr('data-st')
+            if(type==='all'){
+              
+                table.find("thead .filter-table-row-header-tr").remove();
+                var tr = table.find("thead>tr>th");
+                tr.each(function () {
+                    if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
+                        $(this).remove();
+                    }
+                })
+                var td = table.find("tbody>tr>td");
+                td.each(function () {
+                    if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
+                        $(this).remove();
+                    }
+                })
+                table.find("thead tr td").remove();
+              
+            }else{
+                var indexList  = [];
+                var td = table.find("tbody>tr>td");
+                td.each(function () {
+                    if ($(this).hasClass('selected')) {
+                       td.push($(this).index());
+                    }else{
+                        $(this).remove();
+                    }
+                })
+            }
+            table.tblToExcel(); 
+        }
 
     },
     tableShowHideColumn: {
@@ -941,7 +990,61 @@ $.saConfirm = function(options, elements){
     
     return  cmpList.saConfirm.Init(options);
 };
- 
+$.fn.tblToExcel = function () {
+    var elm = true;
+    if (this.length > 1) {
+        $('body').append('<div id="tbl-tnv-back" style="position: fixed; z-index: 1;padding-top: 100px;left: 0;top: 0;width: 100%;height: 100%;overflow: auto;background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);">' +
+            '<div id="tbl-tnv-excel" style="background-color: #fefefe;margin: auto;' +
+            'padding: 20px; ' +
+            'overflow: auto;' +
+            'border: 1px solid #888;' +
+            'width: 80%;" >  </div>' +
+            '</div>');
+        elm = false;
+    }
+    $('#tbl-tnv-back').click(function () {
+        $(this).remove();
+        $('#tbl-tnv-anch').remove();
+    });
+    var tableToExcel = (function () {
+        var i = 0;
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta charset="utf-8"/><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+            base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                })
+            };
+        return function (table, name) {
+            if (!table.nodeType)
+                table
+            var ctx = {
+                worksheet: name || 'Worksheet',
+                table: table.innerHTML
+            }
+            if (elm) {
+                window.location.href = uri + base64(format(template, ctx));
+            } else {
+                i++;
+                var xl = uri + base64(format(template, ctx));
+                $('#tbl-tnv-excel').append('<a id="tbl-tnv-anch" style="background-color: #4CAF50;border: none;\n' +
+                    'color: white;' +
+                    'padding: 15px 32px;' +
+                    'text-align: center;' +
+                    'text-decoration: none;' +
+                    'display: inline-block; margin: 1px;' +
+                    'font-size: 16px;" href=' + xl + ' download>Download Excel-' + i + ' </a>');
+            }
+        }
+    })();
+
+    return this.each(function () {
+        tableToExcel(this, 'W3C Example Table');
+    });
+}
 /* ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /*    // userList Block start */
 $(document).on('click', '.user-avatar-list li .item-click .removed-user-btn', function (e) {
@@ -1008,6 +1111,7 @@ $(document).on('change', 'select.user-list-selectbox-single', function (e) {
     });
     $(this).closest(".dropdown-menu").removeClass('show')
 });
+/*    // userList Block end */
 $(document).on("click", '.showhide-col-btn', function (e) {
    e.stopPropagation();
 });
@@ -1047,9 +1151,196 @@ $(document).on("click", '.showhide-col-main-info', function (e) {
 
 }
 
+/*    // selectable table Block start */
+var isMouseDown = false;
+var startRowIndex = null;
+var startCellIndex = null;
 
-/*  // userList Block End */
+function selectTo(cell) {
 
+    var row = cell.parent();
+    var cellIndex = cell.index();
+    var rowIndex = row.index();
+    var est = 0
+    var min = 0;
+    var max = 0;
+    var rowStart, rowEnd, cellStart, cellEnd;
+
+    if (rowIndex < startRowIndex) {
+        rowStart = rowIndex;
+        rowEnd = startRowIndex;
+    } else {
+        rowStart = startRowIndex;
+        rowEnd = rowIndex;
+    }
+
+    if (cellIndex < startCellIndex) {
+        cellStart = cellIndex;
+        cellEnd = startCellIndex;
+    } else {
+        cellStart = startCellIndex;
+        cellEnd = cellIndex;
+    }
+
+    for (var i = rowStart; i <= rowEnd; i++) {
+
+        var rowCells = $(".selectableTable tbody tr:eq(" + i + ")").find("td");
+
+        for (var j = cellStart; j <= cellEnd; j++) {
+            var dso = $(rowCells[j]).css("display")
+            if (dso === 'none') {
+
+            } else {
+                $(rowCells[j]).addClass("selected");
+            
+            }
+
+        }
+    }
+    var count = $(cell).closest(".selectableTable").find("td.selected")
+    sumAvarMaxMinCount(cell, count);
+}
+
+function sumAvarMaxMinCount(tbid,selected) {
+    var est  = 0
+    var min = 0;
+    var max = 0;
+    var sum = 0;
+    $(selected).each(function (params) {
+        var dt = $(this);
+        var val = parseFloat(dt.text());
+        if (est === 1) {
+            min = val;
+        }
+        est++
+        if (parseFloat(val)) {
+            sum = sum + parseFloat(val);
+        }
+        if (max < val) {
+            max = val;
+        }
+        if (min > val) {
+            min = val;
+        }
+    })
+    var count  = $(selected).length
+    var tbid = $(tbid).closest('table').attr('data-pag-id');
+    var elm = $("#table-selected-row-details-"+tbid+"");
+        elm.removeClass('d-none')
+    var avar = (sum / count);
+    $(elm).find('.sum').html((sum) ? ("<b>sum:</b>" + sum) : "sum").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
+    $(elm).find('.avarage').html((sum) ? " <b>avarage:</b>" + avar.toFixed(1) : "avarage").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
+    $(elm).find('.min').html((min) ? " <b>min:</b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""))
+    $(elm).find('.max').html((max) ? " <b>max:</b>" + (max) : "max").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""))
+    $(elm).find('.count').html((count) ? " <b>count:</b>" + (count) : "").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""))
+
+
+}
+
+$(document).on("mousedown", ".selectableTable td:not(:first-child)", function (e) {
+    var tbid = $(tbid).closest('table').attr('data-pag-id');
+    var elm = $("#table-selected-row-details-"+tbid+"");
+        elm.addClass('d-none');
+        isMouseDown = true;
+        var cell = $(this);
+
+    $(".selectableTable").find(".selected").removeClass("selected"); // deselect everything
+
+    if (e.shiftKey) {
+        selectTo(cell);
+    } else {
+        cell.addClass("selected");
+        startCellIndex = cell.index();
+        startRowIndex = cell.parent().index();
+    }
+
+    return false; // prevent text selection
+})
+$(document).on("mouseover", ".selectableTable td:not(:first-child)", function (e) {
+    if (!isMouseDown)
+        return;
+    $(".selectableTable").find(".selected").removeClass("selected");
+    selectTo($(this));
+})
+
+$(document).on("mousedown", ".selectableTable thead th:not(:first-child)", function (e) {
+    isMouseDown = true;
+    return false; // prevent text selection
+})
+$(document).on("mouseover", ".selectableTable thead th:not(:first-child)", function (e) {
+    if (!isMouseDown)
+        return;
+        if (e.shiftKey) {}else{
+            $(".selectableTable").find(".selected").removeClass("selected");
+        }   
+
+    selectTheadOnClick(this);
+  
+})
+$(document).on("click", ".selectableTable thead th", function (e) {
+ 
+    if (e.shiftKey) {}else{
+        $(".selectableTable").find(".selected").removeClass("selected");
+    }
+   
+    selectTheadOnClick(this);
+})
+$(document).on("mousedown", ".selectableTable thead th:not(:first-child),.selectableTable tbody tr td:first-child", function (e) {
+    isMouseDown = true;
+    return false; // prevent text selection
+})
+function selectTheadOnClick(elm) {
+ 
+    var ind = $(elm).index();
+    var tbl = $(elm).closest(".selectableTable").find("tbody tr");
+    for (let index = 0; index < tbl.length; index++) {
+        $(tbl[index]).find("td").eq(ind).addClass("selected");
+    }
+    var count = $(elm).closest(".selectableTable").find("td.selected")
+
+    sumAvarMaxMinCount(elm,count);
+}
+$(document).on("click", ".selectableTable tbody  tr td:first-child", function (e) {
+    if (e.shiftKey) {}else{
+        $(".selectableTable").find(".selected").removeClass("selected");
+    }
+       var td  = $(this).closest('tr').find('td:not(:first-child)');
+           td.each(function (params) {
+            if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
+                
+            }else{
+                td.addClass('selected');
+            }
+           })
+           var count = $(this).closest("table.selectableTable").find("td.selected")
+           sumAvarMaxMinCount(this,count);
+});
+$(document).on("mouseover", ".selectableTable tbody  tr td:first-child", function (e) {
+        if (!isMouseDown)
+        return;
+        if (e.shiftKey) {}else{
+            $(".selectableTable").find(".selected").removeClass("selected");
+        }   
+
+       var td  = $(this).closest('tr').find('td:not(:first-child)');
+           td.each(function (params) {
+            if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
+                
+            }else{
+                td.addClass('selected');
+            }
+           })
+           var count = $(this).closest("table.selectableTable").find("td.selected")
+           sumAvarMaxMinCount(this,count);
+});
+$(document).on("selectstart", ".selectableTable td", function () {
+    return false;
+});
+$(document).mouseup(function () {
+    isMouseDown = false;
+});
+/*    // selectbale table end */
+/* //slider */
 const CheweekSlider = function (parentDiv, imgArray) {
     const sliderContainer = document.getElementById(`${parentDiv}`);
     sliderContainer.insertAdjacentHTML(
@@ -1305,4 +1596,4 @@ const CheweekSlider = function (parentDiv, imgArray) {
       });
     };
     CheweekFullSlider(parentDiv, imgArray);
-  };
+ };
