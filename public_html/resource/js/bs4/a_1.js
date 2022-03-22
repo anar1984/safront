@@ -2332,7 +2332,7 @@ function generateFileLine(name, cell) {
                 .attr('src', fileUrl(name))
                 .addClass('comment_img')
                 .attr('onclick', 'imageViewerNew(this,"' + name + '")')
-                .attr('data-url',name)
+                .attr('data-url', name)
                 .addClass('full-screen-image-btn')
                 .attr('alt', name));
             //                    
@@ -3447,7 +3447,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                 $('#pro_zad_span' + idx + ' .file-name-attach')
                     .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
                     .addClass('full-screen-image-btn')
-                    .attr('data-url',finalname)
+                    .attr('data-url', finalname)
                 $('#pro_zad_span' + idx)
                     .append($('<i class="fa fa-times">')
                         .attr('pid', idx)
@@ -3456,7 +3456,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                 $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
                 $('#pro_element_' + idx).find('.comment_img')
                     .attr("src", fileUrl(finalname))
-                    .attr('data-url',finalname)
+                    .attr('data-url', finalname)
                     .addClass('full-screen-image-btn')
                     .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
                 $('#pro_element_' + idx).find('.see-detail-img a').attr("href", fileUrl(finalname));
@@ -13278,7 +13278,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         });
         Prototype.Init();
         /// editorGenerateJSCSS();
-      
+
 
         livPrototipeSortable();
 
@@ -13293,7 +13293,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 function livPrototipeSortable() {
     var arr = [];
     $("#SUS_IPO_GUI_Design").sortable({
-        update: function (event, ui) {           
+        update: function (event, ui) {
             var elements = $(ui.item).parent('div').find('.component-container-dashed');
             elements.each(function (index, el) {
                 // console.log(el)
@@ -13302,15 +13302,15 @@ function livPrototipeSortable() {
                     id: idu,
                     orderNo: index + 1
                 }
-            });          
+            });
             var data = {
-                inputOrder:arr
-            };           
+                inputOrder: arr
+            };
             //data.inputOrder = arr;
             callApi('22031412084805382531', data, true, function (res) {
                 //Toaster.showMessage('Müvəffəqiyyətlə dəyişdirildi');               
-                
-            })     
+
+            })
         }
     });
 }
@@ -13382,7 +13382,7 @@ function loadStoryCardByProject4TaskMgmt(e) {
     getProjectUsersForElById(global_var.current_project_id, $("#story_mn_filter_assigne_id_mng"))
     getProjectUsersForElById(global_var.current_project_id, $("#story_mn_filter_created_id"))
     getTaskList4TaskMgmt();
-    
+
     //    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
@@ -14981,27 +14981,27 @@ function filterLoadFlowNAmeByFolowGrooup(el) {
     for (let y = 0; y < dat.length; y++) {
         flowId += dat[y] + '%IN%';
     }
-        
+
     var data = {};
-     data.fkFlowGroupId = flowId ? flowId:'-1';
-     var select = $('#story_mn_filter_Flow_NameID_12');
-     select.empty();
-     select.selectpicker('refresh');
-     select.html('<option></option>');
-             callApi("22030405453401501463", data, true, function (res) {
-         try {
-               res.tbl[0].r.map((o) => {
-                   select.append(`<option value='${o.id}'>${o.flowName}</option>`);
-               })
-               select.selectpicker('refresh')
-         } catch (error) {
-             
-         }
-       
-     })
+    data.fkFlowGroupId = flowId ? flowId : '-1';
+    var select = $('#story_mn_filter_Flow_NameID_12');
+    select.empty();
+    select.selectpicker('refresh');
+    select.html('<option></option>');
+    callApi("22030405453401501463", data, true, function (res) {
+        try {
+            res.tbl[0].r.map((o) => {
+                select.append(`<option value='${o.id}'>${o.flowName}</option>`);
+            })
+            select.selectpicker('refresh')
+        } catch (error) {
+
+        }
+
+    })
 }
 // filter folow name load
-function loadFlowGroupSelectInFilter1(){
+function loadFlowGroupSelectInFilter1() {
     var select = $('#story_mn_filter_Flow_ID_12');
     select.html('<option></option>');
     callApi("22030511170609167656", {}, true, function (res) {
@@ -16545,7 +16545,7 @@ function prosessMApingstoryCArdBYproject(el) {
 }
 
 
-function processMapCcartTascList(id) {    
+function processMapCcartTascList(id) {
     var data = {};
     data.fkBacklogId = id;
     callApi('22030413030503436111', data, true, function (res) {
@@ -16617,7 +16617,7 @@ $(document).on("click", '#comp_id_220304000825030110739', function () {
 $(document).on("change", '#Flov_GRoup_comp_id_22030405435105928068', function () {
     $('.task-panel').empty();
     var el = $('#Flov_GRoup_comp_id_22030405435105928068').val();
-    _220304054258036310054.load_flow_select(el?el:'-1');
+    _220304054258036310054.load_flow_select(el ? el : '-1');
 
 })
 
@@ -16709,7 +16709,7 @@ function getBugList4UserStory(bgId, tbody, list) {
     // if (assignee == 'assigne') {
     //     json.kv.fkAssigneeId = fkAsId;
     // } else {
-        
+
     // }
     json.kv.considerAll = '1';
     var prd = getProjectValueUsManageMulti();
@@ -16829,7 +16829,7 @@ function getBugList4UserStory(bgId, tbody, list) {
              $(tbody).closest("table").find('.btn-show-hide-table-row').click();
             } */
             $('#body-large-modal-in-us4backlog').find('.hide-all-table').trigger('click');
-        },       
+        },
         error: function () {
             Toaster.showError(('somethingww'));
         }
@@ -18676,15 +18676,15 @@ function multipleClosedTask(list, dragelm) {
     data.fkTaskId = list;
 
     callService('serviceTmcloseMultipleBacklogTasks', data, true, function (res) {
-         getDefautUserByTaskTypeId(list,dragelm);
-       /*  var bgId = $(dragelm).attr("bid");
-        var pid = $(dragelm).attr("pidd");
-        var typid = $('#tasktype-list-select4move').val();
-        insertAutoTaskOnDrag(bgId, typid, pid, list); */
+        getDefautUserByTaskTypeId(list, dragelm);
+        /*  var bgId = $(dragelm).attr("bid");
+         var pid = $(dragelm).attr("pidd");
+         var typid = $('#tasktype-list-select4move').val();
+         insertAutoTaskOnDrag(bgId, typid, pid, list); */
     })
 }
 
-function getDefautUserByTaskTypeId(list,dragelm) {
+function getDefautUserByTaskTypeId(list, dragelm) {
     var tasTypeId = $('#tasktype-list-select4move').val();
     var bgId = $(dragelm).attr("bid");
     var pid = $(dragelm).attr("pidd");
@@ -18692,11 +18692,11 @@ function getDefautUserByTaskTypeId(list,dragelm) {
     var data = {};
     data.id = tasTypeId;
     console.log(data);
-    callApi('22011222234409531876',data,true,function (res) {
-          var asId = res.kv.fkAssigneeId;
-          insertAutoTaskOnDrag(bgId, asId, pid, list, tasTypeId);
-           
-     })  
+    callApi('22011222234409531876', data, true, function (res) {
+        var asId = res.kv.fkAssigneeId;
+        insertAutoTaskOnDrag(bgId, asId, pid, list, tasTypeId);
+
+    })
 }
 
 function insertAutoTaskOnDrag(bgId, asid, prid, list, tasTypeId) {
@@ -19143,7 +19143,7 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {      
+        success: function (res) {
             SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res);
             if (global_var.current_modal === 'loadStoryCardMgmt') {
@@ -22273,7 +22273,7 @@ var StoryCard = {
                 div12lik.append($('<img></img>')
                     .attr('src', fileUrl(name))
                     .addClass('comment_img')
-                    .attr('data-url',name)
+                    .attr('data-url', name)
                     .attr('onclick', 'imageViewerNew(this,"' + name + '")')
                     .addClass('full-screen-image-btn')
                     .attr('alt', name));
@@ -24490,32 +24490,52 @@ var _220304054258036310054_ = {
             res.tbl[0].r.map((o) => {
                 select.append(`<option value='${o.id}'>${o.groupName}</option>`);
             })
+            select.attr('multiple', 'multiple')
             select.selectpicker('refresh');
         })
     },
     map_flow_group_core: (el) => {
-        var group_id = $(el).val();
-        _220304054258036310054_.map_flow_group(group_id);
+
+        var group_list = $(el).val();
+
+        var div = $('#22030803450902333051');
+        div.html('');
+
+        group_list.map((o) => {
+            if (o) {
+                _220304054258036310054_.map_flow_group(o);
+            }
+        })
+
+
     },
     map_flow_group: (flow_group_id) => {
 
         //22030616495806702640 Parent sorgusu
         //22030617061505242829 Techizat sorgusu
 
+        var select = $('#comp_id_22030803450902384159');
+        var flow_group_name = select.find(`option[value="${flow_group_id}"]`).first().text();
+
+        var tr = $(`<div>`);
         var div = $('#22030803450902333051');
-        div.html('');
+
+        var div_group = $('<div>');
+        div_group.append($('<span>').append(`<h1>${flow_group_name}</h1>`))
+        div_group.append(tr);
+        div.append(div_group);
 
         // flow_group_id = '22030616495806702640';
         callApi('22030808135801162223', {
             fkFlowGroupId: flow_group_id
         }, true, function (res) {
             res.tbl[0].r.map((item) => {
-                _220304054258036310054_.map_flow_details(item.id, item.flowName);
+                _220304054258036310054_.map_flow_details(item.id, item.flowName, flow_group_name, tr);
             })
 
         })
     },
-    map_flow_details: (flow_id, flow_name) => {
+    map_flow_details: (flow_id, flow_name, flow_group_name, tr) => {
         var id = flow_id;
         var div = $('#22030803450902333051');
         // div.html('heş zad seçilməyib!!!!');
@@ -24526,8 +24546,8 @@ var _220304054258036310054_ = {
             fkBacklogFlowId: id
         }, true, function (res) {
             // div.html(JSON.stringify(res));
-            var flow_item_count = 0;           
-            
+            var flow_item_count = 0;
+
             res.tbl[0].r.map((o) => {
                 flow_item_count++;
                 var fromId = o.fkFromBacklogId;
@@ -24551,23 +24571,32 @@ var _220304054258036310054_ = {
 
             })
             _220304054258036310054_.flow_backlog_map = dt;
-            _220304054258036310054_.map_show(id, flow_name, flow_item_count);
+            _220304054258036310054_.map_show(id, flow_name, flow_item_count, flow_group_name, tr);
         })
     },
-    map_show: (flow_id, flow_name, flow_item_count) => {
-        var tr = $(`<div>`);
+    map_show: (flow_id, flow_name, flow_item_count, flow_group_name, tr) => {
+
         tr.attr('fid', flow_id)
             .addClass("parent_id_" + flow_id)
             .addClass("parent_div_zad_shey")
             .attr("order_no", "")
             .attr('parent_no', '');
 
-        tr.append(`<div style='background-color:gray;color:white'>
-                <h5>${flow_name}  ${(flow_item_count)? flow_item_count :''}</h5>
+        tr.append(`<div style='background-color:gray;color:white d-flex' id='${flow_id}' name="${flow_name}">
+       
+                       <h5 style="display: inline-block;">${flow_name}  ${(flow_item_count) ? flow_item_count : ''}</h5>               
+                
+                        <button id="" class="btn btn-sm _bussinesFollowuUpdateedit21list ml-2">
+                            <i class = "fas fa-edit color-light" style='color: #F7F7F7;'> </i>
+                        </button>                                     
+                                                                      
+                        <button style=""  id="" class="btn btn-sm _bussinesFollowuSilmek1list">
+                            <i class="fas fa-trash-alt color-light" style='color: #F7F7F7;'></i>
+                        </button>
+                                    
               </div>`);
 
-        var div = $('#22030803450902333051');
-        div.append(tr);
+
 
         var res4 = callApi('22030400352507334738', {}, false);
         var idc = 1;
@@ -24627,7 +24656,7 @@ var _220304054258036310054_ = {
         var span = $('<span style="cursor: pointer;">')
             .addClass("flow-item-span-zad")
             // .append(spc)
-            .append(`${row}.${obj.toBacklogName}`)
+             .append(`${row}.${obj.toBacklogName}`)
             .attr('onclick', `processMapCcartTascList("${obj.fkToBacklogId}")`)
             .append(`<span class='us-item-status-${obj.toBacklogStatus}'>${obj.toBacklogStatus}<span>`)
             .append((obj.toBacklogBugCount > 0) ? `<i class='fa fa-bug' style='color:red'>-${obj.toBacklogBugCount}</i>` : '')
@@ -24651,3 +24680,40 @@ var _220304054258036310054_ = {
 
 
 }
+
+// flow list
+$(document).on("click", '#comp_id_2203040544260546631list', function () {
+    var form_id = showForm('22030400071402369492');
+    $('#comp_id_22030400103203868372').click();
+})
+// flow list update
+$(document).on("click", '._bussinesFollowuUpdateedit21list', function () {  
+    var listVal = $(this).parent('div').attr('name');
+    var listValID = $(this).parent('div').attr('id');
+    console.log(listValID);
+    callApi('22030400004501333040', { id: listValID }, true, function (res) {
+        console.log(res);
+        var folowVal = res.kv.fkFlowGroupId;
+        var form_id = showForm('22030400071402369492');
+        $('#comp_id_22030400103203868372').click();
+        $('.createBAcligFlowForSilmekUPdatede12').hide();
+        $('#22030517054901113840').show();
+        $('#comp_id_22030511403403431952').attr('sa-data-value', folowVal);
+        $('#comp_id_22030511403403431952').val(folowVal);
+        $('#comp_id_22030511403403431952').selectpicker('refresh');
+        $('#comp_id_22030400072902367021').val(listVal);
+        $('#comp_id_22030518473400099595').val(listValID);
+    })    
+
+})
+// flow list delete
+$(document).on("click", '._bussinesFollowuSilmek1list', function () {
+    var data = {};
+    data.id = $(this).parent('div').attr('id');
+    if (confirm('Are You sure')) {
+        callApi('22030500134008555797', data, true, function () {
+            $('#comp_id_22030803450902384159').change();
+        })
+    }
+
+})

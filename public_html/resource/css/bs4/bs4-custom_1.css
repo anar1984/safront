@@ -55,7 +55,7 @@ and open the template in the editor.
     right: 0px;
     display: flex;
     justify-content: end;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 .prosesCartToolDivChild_MAxSize_button{
         background: #ceceda !important;

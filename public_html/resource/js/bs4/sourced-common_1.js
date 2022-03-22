@@ -14344,6 +14344,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         cellno = "6" >
                             <span class = "comp-title-span" > Flow </span><br> 
                             <div style='width: 30%;'>
+                          
+                            <div class='d-flex'>
                             <select class = "form-control sa-sct-full-width component-input-class usmg-selectpicker"
                         sa-type = "select"
                         data-actions-box = "true"
@@ -14355,9 +14357,31 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         sendapitype = ""
                         onchange = "_220304054258036310054.map_flow_group_core(this)" >
                              </select> 
+                             
+                                <div class="col-3 d-flex  p-0">
+                                     <div class="cs-input-group">
+                        <button style=""  id="comp_id_2203040544260546631list" class="btn btn-sm">
+                            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                                    </div>                               
+                    
+                                    </div>
+
+                         </div>
+
+
+
+
+
+
+
+
                              </div>
                              <div class = 'col-lg-12'
-                             id = '22030803450902333051' > </div>
+                             id = '22030803450902333051' >
+                             
+                             
+                             </div>
                     </div>
                   
                 `)
