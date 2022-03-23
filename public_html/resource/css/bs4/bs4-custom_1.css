@@ -10,13 +10,22 @@ and open the template in the editor.
 .btnMEnuAcanselectUcun{
     position: relative;
 }
+.btnforTitleList{
+        background: #595959;
+        height: 30px;
+        color: #f7f7f7;
+        margin-left: 15px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 .btnMEnuAcan{
         background: none;
-        border: none;
+        border: none; 
+        font-size: 19px;  
+        width: 25px;    
 }
 .flowListColumnn{
-    background-color:gray;
-    color:white;
+    background-color:#595959;
+    color:#f7f7f7;
     display:flex;
     align-items: center;
     
@@ -28,14 +37,14 @@ and open the template in the editor.
     position: absolute;
     top: 30px;
     background-color: #808080;
-     box-shadow: 5px 5px 18px #808080;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;
     flex-direction: column;
     border-radius: 10px;    
     margin-left: 50%;
     transform: 50% 0%;
 }
-/*  */
+/* //////////////////////////// */
 .prosesCartToolDiv {
     /* background-color: #8d90ce; */
     transition: 0.1s;

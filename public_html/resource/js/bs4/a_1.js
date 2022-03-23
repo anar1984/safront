@@ -25070,7 +25070,13 @@ var _220304054258036310054_ = {
         var div = $('#22030803450902333051');
 
         var div_group = $('<div>');
-        div_group.append($('<span>').append(`<h1>${flow_group_name}</h1>`))
+        div_group.append($('<span class="d-flex align-items-center">')
+            .append(`<h1>${flow_group_name}</h1>`)
+            .append(` <button id="addNewflowListFromStoryy" class="btn btn-sm btnforTitleList">
+                            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                        `)
+        )
         div_group.append(tr);
         div.append(div_group);
 
@@ -25124,15 +25130,14 @@ var _220304054258036310054_ = {
     },
     add_child_backlog: (el, id) => {
         var data = {};
-        data.fkFromBacklogId = _220304054258036310054_.flow_details_list[id].fkToBacklogId;
+        data.fkFromBacklogId ='-1';
         data.fkToBacklogId = $(el).closest('.prosesCartToolDivChild_12').find('.selectPicker_mappingStoryCardt').val();
         data.description = $(el).closest('.prosesCartToolDivChild_12').find('.prosesDivChild_textarea').val();
         data.fkBacklogFlowId = $(el).attr('flowId');
         data.fkParentId = id;
         callApi('22030400033000374400', data, true, function (res) {
-            Toaster.showMessage('Successfulli əlavə edildi.');
-            _220304054258036310054_.map_flow_details();
-
+            var el = $('#comp_id_22030803450902384159')
+            _220304054258036310054_.map_flow_group_core(el);
         })
     },
     delete_child_backlog: (el, id) => {
@@ -25140,7 +25145,8 @@ var _220304054258036310054_ = {
         data.id = id;
         if (confirm('are you sure')) {
             callApi('22030412151009877861', data, true, function (res) {
-                _220304054258036310054.map_flow_details();
+               var el = $('#comp_id_22030803450902384159')
+               _220304054258036310054_.map_flow_group_core(el);
             })
         }
     },
@@ -25149,9 +25155,10 @@ var _220304054258036310054_ = {
         var data = {};
         data.id = id;
         data.fkNewToBacklogId = dat;
-        data.dwscription = $(el).closest('.hollele_zad').find('.prosesDivChild_textarea').val();;
+        data.dwscription = $(el).closest('.prosesCartToolDivChild_12').find('.prosesDivChild_textarea').val();;
         callApi('22030510404506604436', data, true, function (res) {
-            _220304054258036310054.map_flow_details();
+            var el = $('#comp_id_22030803450902384159')
+            _220304054258036310054_.map_flow_group_core(el);
         })
     },
     map_show: (flow_id, flow_name, flow_item_count, flow_group_name, tr) => {
@@ -25162,19 +25169,19 @@ var _220304054258036310054_ = {
             .attr('parent_no', '');
         var a;
         tr.append(`<div class='flowListColumnn' style='' id='${flow_id}' name="${flow_name}">
-                    
-                       <h5 style="display: inline-block;">${flow_name}  ${(flow_item_count) ? flow_item_count : ''}</h5>               
-                
+                       
+                       <h5 style="margin-bottom:1px;" class='ml-1'>${flow_name}  ${(flow_item_count) ? flow_item_count : ''}</h5>               
+                       
                         <button id="" class="btn btn-sm _bussinesFollowuUpdateedit21list ml-2">
                             <i class = "fas fa-edit color-light" style='color: #F7F7F7;'> </i>
-                        </button>                                     
+                        </button>                                  
                                                                       
                         <button style=""  id="" class="btn btn-sm _bussinesFollowuSilmek1list">
                             <i class="fas fa-trash-alt color-light" style='color: #F7F7F7;'></i>
                         </button>                       
                                                 <div class="btnMEnuAcanselectUcun">
                                                     <button class="btnMEnuAcan" type="">
-                                                        <i class="fa fa-plus text-light"></i>
+                                                        <i class="fal fa-ellipsis-v text-light"></i>
                                                     </button>
                                                     <div class='prosesCartToolDivChild_12 displayNone'>
 
@@ -25224,7 +25231,6 @@ var _220304054258036310054_ = {
 
                     var child_id = [];
                     child_id.push(item);
-
                     var tr3 = $('<div>')
                     tr3.addClass('parent_id_' + item);
 
@@ -25237,16 +25243,12 @@ var _220304054258036310054_ = {
                         .attr('parent_id', st)
                         .attr('parent_no', order_no);
 
-
                     var item_obj = _220304054258036310054_.flow_details_list[item];
 
                     var backlog = _220304054258036310054_.backlog_block(row_number_new, item_obj);
                     tr3.append(backlog);
 
                     elm.append(tr3);
-
-
-
                     rcd = rcd + 1;
                     _220304054258036310054_.map_iteration(child_id, tr, idc, item, flow_id);
 
@@ -25257,7 +25259,6 @@ var _220304054258036310054_ = {
     },
     backlog_block: (row, obj) => {
         var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
-
         var span = $('<span style="cursor: pointer;">')
             .addClass("flow-item-span-zad")
             // .append(spc)
@@ -25304,6 +25305,12 @@ function prosessListingstoryCArdBYproject(el) {
 
 // flow list
 $(document).on("click", '#comp_id_2203040544260546631list', function () {
+    var form_id = showForm('220305111813060410352');
+    $('#comp_id_22030511382805053008').click();
+})
+
+// flow after h1
+$(document).on("click", '#addNewflowListFromStoryy', function () {
     var form_id = showForm('22030400071402369492');
     $('#comp_id_22030400103203868372').click();
 })
@@ -25341,7 +25348,7 @@ $(document).on("click", '._bussinesFollowuSilmek1list', function () {
 
 })
 //
-$(document).on('click', '.btnMEnuAcan', function () {
+$(document).on('click', '.btnMEnuAcan', function () {   
     $(this).next().toggleClass('displayNone');
-    $(this).find('i').toggleClass('fa-times fa-plus');
+    $(this).find('i').toggleClass('fa-ellipsis fa-times');
 })
