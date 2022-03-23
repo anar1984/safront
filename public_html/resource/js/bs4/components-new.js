@@ -261,6 +261,7 @@ var cmpList = {
                 $(elm).attr('component-type',"table-paginiton");
          
                 $(elm).parent().after(this.genBlock(rowCount, tbid));
+                $('#paginiton_id_'+tbid).find('.custom-select-table-for').selectpicker('refresh')
                 var select = $('#paginiton_id_'+tbid).find("select.count-row-select-global");
                 select.empty();
                 var page = Math.ceil(rowCount / 50);
@@ -276,20 +277,23 @@ var cmpList = {
               <div class="mr-auto task-list-datetime">
                   
               </div>
-              <div class="task-list-pagination" table-id='${tbid}'>
+              <div class="task-list-pagination "  table-id='${tbid}'>
                   <div style="display: none;">
                       <input class="startLimitNew" value="0" type="text">
                       <input class="endLimitNew" value="49" type="text">
                       <select name=""  class="count-row-select-global"></select>
                   </div>
                   <div class="float-right task-list-pagination_btns d-flex">
-                    <select class="custom-select-table-for d-none" id="table-selected-row-details-${tbid}">
-                        <option class="count"> </option>
-                        <option class="sum"></option>
-                        <option class="avarage"> </option>
-                        <option class="min"></option>
-                        <option class="max"></option>      
-                    </select>
+                  <div class="task-list-hid cs-input-group m-0 mr-2">
+                        <select class="custom-select-table-for d-none" title='hesab' id="table-selected-row-details-${tbid}">
+                                <option selected='selected' class="count"> </option>
+                                <option class="sum"></option>
+                                <option class="avarage"> </option>
+                                <option class="min"></option>
+                                <option class="max"></option>      
+                        </select>
+                </div>
+                   
                   <!--  <a class="btn circle btn-primary mt-0  tbl-export-import-btn"><i class='cs-svg-icon cs-svg-icon-import'></i></a> -->
                     <div class="dropdown">
                         <a class="btn circle btn-primary mt-0 tbl-export-import-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='cs-svg-icon cs-svg-icon-export'></i></a>
@@ -420,7 +424,7 @@ var cmpList = {
                 var td = table.find("tbody>tr>td");
                 td.each(function () {
                     if ($(this).hasClass('selected')) {
-                       td.push($(this).index());
+                        indexList.push($(this).index());
                     }else{
                         $(this).remove();
                     }
@@ -1208,39 +1212,42 @@ function sumAvarMaxMinCount(tbid,selected) {
     var sum = 0;
     $(selected).each(function (params) {
         var dt = $(this);
-        var val = parseFloat(dt.text());
+        var val = dt.text();
+          val  =  val.replace('%','')
+          val = new Number(val)
+          console.log(val);
         if (est === 1) {
             min = val;
         }
         est++
+
         if (parseFloat(val)) {
             sum = sum + parseFloat(val);
         }
-        if (max < val) {
+        if (max < parseFloat(val)) {
             max = val;
         }
-        if (min > val) {
+        if (min > parseFloat(val)) {
             min = val;
         }
     })
     var count  = $(selected).length
     var tbid = $(tbid).closest('table').attr('data-pag-id');
     var elm = $("#table-selected-row-details-"+tbid+"");
-        elm.removeClass('d-none')
+        elm.removeClass('d-none');
+        elm.parent().removeClass('d-none');
     var avar = (sum / count);
-    $(elm).find('.sum').html((sum) ? ("<b>sum:</b>" + sum) : "sum").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
-    $(elm).find('.avarage').html((sum) ? " <b>avarage:</b>" + avar.toFixed(1) : "avarage").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
-    $(elm).find('.min').html((min) ? " <b>min:</b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""))
-    $(elm).find('.max').html((max) ? " <b>max:</b>" + (max) : "max").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""))
-    $(elm).find('.count').html((count) ? " <b>count:</b>" + (count) : "").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""))
-
-
+    $(elm).find('.sum').html((sum) ? ("<b>cəm: </b>" + sum) : "cəm").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
+    $(elm).find('.avarage').html((sum) ? " <b>ortalama: </b>" + avar.toFixed(1) : "ortalama").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
+    $(elm).find('.min').html((min) ? " <b>min: </b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""))
+    $(elm).find('.max').html((max) ? " <b>maks: </b>" + (max) : "maks").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""))
+    $(elm).find('.count').html((count) ? " <b>say: </b>" + (count) : "say").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""))
+    elm.selectpicker('refresh')
+     
 }
 
 $(document).on("mousedown", ".selectableTable td:not(:first-child)", function (e) {
     var tbid = $(tbid).closest('table').attr('data-pag-id');
-    var elm = $("#table-selected-row-details-"+tbid+"");
-        elm.addClass('d-none');
         isMouseDown = true;
         var cell = $(this);
 
