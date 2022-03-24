@@ -96,6 +96,52 @@ function imageViewerNew(elm,arg) {
   $('#commentFileImageViewerUrl').attr("src", fileUrl(arg));
   
 }
+
+
+function AJAXCallFeedback(res) {
+
+  var msgError = "";
+  var err = res.err;
+  if ((err.length) && err.length > 0) {
+      //there are/is errors
+      for (var i in err) {
+          if (err[i].code === 'general') {
+              Toaster.showError(err[i].val);
+
+          } else if (err[i].code === 'notPermission') {
+              Toaster.showError(lang_task.message.notPermission);
+
+          } else {
+              var f = false;
+              $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
+                  var fieldList = $(this).attr('sa-selectedfield').split(',');
+                  if (fieldList.includes(err[i].code)) {
+                      var id = makeId(10);
+
+
+                      f = true;
+                      $(this).closest('div').find('.apd-form-error-msg').remove();
+                      $(this).after('<p class=\'apd-form-error-msg\' id="' + id + '">' + err[i].val + '</p>');
+
+
+                      setTimeout(function () {
+                          $('#' + id).remove();
+                      }, 3000);
+
+
+                  }
+              })
+
+              //eyni code-lu component vardir;
+              if (!f) {
+                  Toaster.showError(err[i].val);
+                  msgError = err[i].val;
+              }
+          }
+      }
+      throw 'There is/are error(s), message:' + msgError;
+  }
+}
 $(document).on("click", '#task-list-statistic-4backlog .status-class',function (e) {
   $(this).toggleClass('active');
   var items  = $("#task-list-statistic-4backlog .status-class.active");

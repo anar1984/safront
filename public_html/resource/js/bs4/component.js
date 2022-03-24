@@ -2475,6 +2475,7 @@ var Component = {
 
                         div4Modal = $('<i class="fas fa-chevron-down">');
                         div4.css("height", hg);
+                        div4.attr("data-height", hg);
                         div4.addClass("closed-modal");
                     }
                 } catch (err) {

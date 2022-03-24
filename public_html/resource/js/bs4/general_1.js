@@ -830,7 +830,7 @@ function setFilePickerValueCore(element,value,empty){
                                     .text(add3Dots2Filename(value))
                                     .attr('onclick', 'imageViewerNew(this,"' + value + '")'))
                                     .addClass('full-screen-image-btn')
-                                    .attr('data-url',finalname)
+                                    .attr('data-url',value)
                         .append($('<i class="fa fa-times">')
                                     .attr('pid', idx)
                                     .attr('onclick', 'removeFilenameFromZad(this,\'' + value + '\')')))

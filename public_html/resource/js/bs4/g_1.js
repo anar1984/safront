@@ -238,32 +238,23 @@ $(function () {
         var elm = $(this).closest('.component-class');
         var cntnt = elm.find('.component-section-row').first();
         cntnt.toggleClass('closed-modal');
-
-
-        elm.parent().attr("sa-section-toggle-height");
+      var hgt =  cntnt.attr("data-height");
         if (cntnt.hasClass('closed-modal')) {
 
             var hg = '0px';
-            var ids = elm.attr('id');
             try {
-                if (cr_input_comp_attribute_kv[ids]['sa-section-toggle-height']) {
-                    hg = cr_input_comp_attribute_kv[ids]['sa-section-toggle-height'];
+                if (hgt) {
+                    hg =hgt;
                 }
-
             } catch (err) {
             }
             cntnt.css("height", hg);
         } else {
             cntnt.removeAttr("style");
-
         }
 
         $(this).find("i").toggleClass("fa-chevron-down");
         $(this).find("i").toggleClass("fa-chevron-up");
-
-
-
-
 
     });
     $(document).on("click", '.table-title-show .open-modal-hide-modal-btn', function (e) {
