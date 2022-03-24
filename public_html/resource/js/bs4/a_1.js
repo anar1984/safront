@@ -710,6 +710,7 @@ $(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", 
 
 
 })
+
 function tableShowHideRowSetItem(tableId) {
 
 
@@ -24580,12 +24581,13 @@ var _220304054258036310054_ = {
         })
     },
     add_child_backlog: (el, id) => {
+        var from = $(el).attr('fromID');
         var data = {};
-        data.fkFromBacklogId ='-1';
+        data.fkFromBacklogId = from ? from : '-1';
         data.fkToBacklogId = $(el).closest('.prosesCartToolDivChild_12').find('.selectPicker_mappingStoryCardt').val();
         data.description = $(el).closest('.prosesCartToolDivChild_12').find('.prosesDivChild_textarea').val();
         data.fkBacklogFlowId = $(el).attr('flowId');
-        data.fkParentId = id;
+        data.fkParentId = id ? id : '-1';
         callApi('22030400033000374400', data, true, function (res) {
             var el = $('#comp_id_22030803450902384159')
             _220304054258036310054_.map_flow_group_core(el);
@@ -24596,13 +24598,13 @@ var _220304054258036310054_ = {
         data.id = id;
         if (confirm('are you sure')) {
             callApi('22030412151009877861', data, true, function (res) {
-               var el = $('#comp_id_22030803450902384159')
-               _220304054258036310054_.map_flow_group_core(el);
+                var el = $('#comp_id_22030803450902384159')
+                _220304054258036310054_.map_flow_group_core(el);
             })
         }
     },
     update_child_refresh: (el, id) => {
-        var dat = $(el).closest('.hollele_zad').find('.selectPicker_mappingStoryCardt').val();
+        var dat = $(el).closest('.btnMEnuAcanselectUcun').find('.selectPicker_mappingStoryCardt').val();
         var data = {};
         data.id = id;
         data.fkNewToBacklogId = dat;
@@ -24613,6 +24615,7 @@ var _220304054258036310054_ = {
         })
     },
     map_show: (flow_id, flow_name, flow_item_count, flow_group_name, tr) => {
+        var a = '';
         tr.attr('fid', flow_id)
             .addClass("parent_id_" + flow_id)
             .addClass("parent_div_zad_shey")
@@ -24623,16 +24626,28 @@ var _220304054258036310054_ = {
                        
                        <h5 style="margin-bottom:1px;" class='ml-1'>${flow_name}  ${(flow_item_count) ? flow_item_count : ''}</h5>               
                        
-                        <button id="" class="btn btn-sm _bussinesFollowuUpdateedit21list ml-2">
-                            <i class = "fas fa-edit color-light" style='color: #F7F7F7;'> </i>
-                        </button>                                  
+                         
+                        
+                    <div class="dropdown show ml-2 mr-2">                        
+                          <button class = "btnMEnuAcanDropDow"  id="dropdownMenuLink" data-toggle="dropdown">
+                          <i class="fal fa-ellipsis-v"></i>
+                          </button>                       
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <button  class="btn btn-sm _bussinesFollowuUpdateedit21list ml-2 d-block">
+                            <i class="fas fa-edit" style="color: #595959;"> </i>
+                            Update
+                          </button>                                  
                                                                       
-                        <button style=""  id="" class="btn btn-sm _bussinesFollowuSilmek1list">
-                            <i class="fas fa-trash-alt color-light" style='color: #F7F7F7;'></i>
-                        </button>                       
+                          <button class = "btn btn-sm _bussinesFollowuSilmek1list ml-2 d-block" >
+                          <i class="fas fa-trash-alt mr-1" style="color: #595959;"></i>
+                            Sil
+                          </button> 
+                        </div>
+                     </div>                      
                                                 <div class="btnMEnuAcanselectUcun">
                                                     <button class="btnMEnuAcan" type="">
-                                                        <i class="fal fa-ellipsis-v text-light"></i>
+                                                        <i class="fas fa-plus text-light"></i>
                                                     </button>
                                                     <div class='prosesCartToolDivChild_12 displayNone'>
 
@@ -24651,7 +24666,7 @@ var _220304054258036310054_ = {
                                                        </div>
 
                                                       <div class='cs-input-group processlistBtnGroupp'>
-                                                       <button class='btn btn-sm' onclick ='_220304054258036310054_.add_child_backlog(this,"${-1}")' flowId="${flow_id}"><i class="fas fa-plus-circle"> </i></button>
+                                                       <button class='btn btn-sm' onclick ='_220304054258036310054_.add_child_backlog(this,${a})' flowId="${flow_id}" fromID=""><i class="fas fa-plus-circle"> </i></button>
                                                        <button class='btn btn-sm' onclick='_220304054258036310054_.update_child_refresh(this,"${flow_id}")' style='margin:0px 5px'><i class="fas fa-redo"></i></i></button>
                                                        <button class='btn btn-sm' onclick='_220304054258036310054_.delete_child_backlog(this,"${flow_id}")' style="margin-right: -10px;"><i class="fas fa-trash-alt"></i></button>                          
                                                        </div>
@@ -24660,11 +24675,11 @@ var _220304054258036310054_ = {
                                     
               </div>`);
 
-
         loadProjectList2SelectboxByClassNochange('selectPicker_mappingProject');
         var res4 = callApi('22030400352507334738', {}, false);
         var idc = 1;
         _220304054258036310054_.map_iteration([flow_id], tr, idc, flow_id, flow_id);
+        _220304054258036310054_.hide_element_zad();
     },
     map_iteration: (parnetIds, tr, idc, parent_id, flow_id) => {
         if (idc >= 20) {
@@ -24683,9 +24698,12 @@ var _220304054258036310054_ = {
                     var child_id = [];
                     child_id.push(item);
                     var tr3 = $('<div>')
+                    tr3.addClass("parent-div-zad-olma");
                     tr3.addClass('parent_id_' + item);
 
-                    var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                    var spc = ` <div class="flowListSpdivTemp">
+                                    <div class="mapListBorder"></div><i class="fal fa-long-arrow-right"></i>
+                                </div>`;
 
                     var row_number_new = (order_no) ? spc + order_no + "." + rcd :
                         spc + rcd;
@@ -24695,11 +24713,12 @@ var _220304054258036310054_ = {
                         .attr('parent_no', order_no);
 
                     var item_obj = _220304054258036310054_.flow_details_list[item];
-
+                    
                     var backlog = _220304054258036310054_.backlog_block(row_number_new, item_obj);
                     tr3.append(backlog);
 
                     elm.append(tr3);
+                    loadProjectList2SelectboxByClassNochange('selectPicker_mappingProject12');
                     rcd = rcd + 1;
                     _220304054258036310054_.map_iteration(child_id, tr, idc, item, flow_id);
 
@@ -24708,17 +24727,57 @@ var _220304054258036310054_ = {
         })
 
     },
+    hide_element_zad: () => {
+        // $('.flowListSpanAna').find('.flowListSpdivTemp').last().addClass("flowListSpdivZad");
+        // $('.flowListSpdivTemp').hide();
+        // $('.flowListSpdivZad').show();
+
+    },
     backlog_block: (row, obj) => {
+
+        
+        var menu = (`  
+                   <div class="btnMEnuAcanselectUcun d-inline-block">
+                         <button class="btnMEnuAcan" type="">
+                             <i class="fas fa-plus" style="color:#595959;"></i>
+                         </button>
+                         <div class='prosesCartToolDivChild_12 displayNone'>
+                            <div>
+                            <div class='selectSpanTit'><span class = "comp-title-span"> Project </span></div>
+                            <select onchange='prosessListingstoryCArdBYproject(this)' data-live-search="true" class="form-control usmg-selectpicker selectPicker_mappingProject12 selectPicker_mappingStoryCardt"></select>
+                            </div>
+
+                             <div>
+                           <div class='selectSpanTit'><span class = "comp-title-span"> Story Card </span></div>
+                           <select data-live-search="true" class="form-control usmg-selectpicker selectPicker_ListStoryCardt"></select>
+                           </div>
+                          
+                           <div style="">
+                           <textarea class='processlistInputt form-control form-control-sm mr-auto prosesDivChild_textarea' placeholder='Description'></textarea>
+                           </div>
+
+                          <div class='cs-input-group processlistBtnGroupp'>
+                           <button class='btn btn-sm' onclick ='_220304054258036310054_.add_child_backlog(this,"${obj.fkParentId}")' flowId="${obj.fkBacklogFlowId}" fromID="${obj.fkFromBacklogId}"><i class="fas fa-plus-circle"> </i></button>
+                           <button class='btn btn-sm' onclick='_220304054258036310054_.update_child_refresh(this,"${obj.id}")' style='margin:0px 5px'><i class="fas fa-redo"></i></i></button>
+                           <button class='btn btn-sm' onclick='_220304054258036310054_.delete_child_backlog(this,"${obj.id}")' style="margin-right: -10px;"><i class="fas fa-trash-alt"></i></button>                          
+                           </div>
+                         </div>
+                 </div>
+        
+                  `);
+
+
         var spc = '&nbsp;&nbsp;&nbsp;&nbsp;';
-        var span = $('<span style="cursor: pointer;">')
+        var span = $('<span class="flowListSpanAna">')
             .addClass("flow-item-span-zad")
             // .append(spc)
             .append(`${row}.${obj.toBacklogName}`)
-            .attr('onclick', `processMapCcartTascList("${obj.fkToBacklogId}")`)
+            // .attr('onclick', `processMapCcartTascList("${obj.fkToBacklogId}")`)
             .append(`<span class='us-item-status-${obj.toBacklogStatus}'>${obj.toBacklogStatus}<span>`)
             .append((obj.toBacklogBugCount > 0) ? `<i class='fa fa-bug' style='color:red'>-${obj.toBacklogBugCount}</i>` : '')
             .append((obj.toBacklogNewCount > 0) ? `<span class='us-item-status-new' title='Tasks with New Status'>${obj.toBacklogNewCount}<span>` : '')
             .append((obj.toBacklogOngoingCount > 0) ? `<span class='us-item-status-ongoing' title='Tasks with ongoing Status'>${obj.toBacklogOngoingCount}<span>` : '');
+        span.append(menu);
         return span;
     },
     child_body: (item, M, backlogName, res4, flow_id) => {
@@ -24767,9 +24826,9 @@ $(document).on("click", '#addNewflowListFromStoryy', function () {
 })
 // flow list update
 $(document).on("click", '._bussinesFollowuUpdateedit21list', function () {
-    var listVal = $(this).parent('div').attr('name');
-    var listValID = $(this).parent('div').attr('id');
-    console.log(listValID);
+    var listVal = $(this).closest('.flowListColumnn').attr('name');
+    var listValID = $(this).closest('.flowListColumnn').attr('id');
+   
     callApi('22030400004501333040', {
         id: listValID
     }, true, function (res) {
@@ -24790,7 +24849,7 @@ $(document).on("click", '._bussinesFollowuUpdateedit21list', function () {
 // flow list delete
 $(document).on("click", '._bussinesFollowuSilmek1list', function () {
     var data = {};
-    data.id = $(this).parent('div').attr('id');
+    data.id = $(this).closest('.flowListColumnn').attr('id');
     if (confirm('Are You sure')) {
         callApi('22030500134008555797', data, true, function () {
             $('#comp_id_22030803450902384159').change();
@@ -24799,7 +24858,7 @@ $(document).on("click", '._bussinesFollowuSilmek1list', function () {
 
 })
 //
-$(document).on('click', '.btnMEnuAcan', function () {   
+$(document).on('click', '.btnMEnuAcan', function () {
     $(this).next().toggleClass('displayNone');
     $(this).find('i').toggleClass('fa-ellipsis fa-times');
 })

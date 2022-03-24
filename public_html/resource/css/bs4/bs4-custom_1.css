@@ -7,43 +7,99 @@ and open the template in the editor.
     Created on : Apr 19, 2019, 5:05:25 PM
     Author     : anar.rustamov
 */
-.btnMEnuAcanselectUcun{
+.flowListSpdiv {
+    display: inline-block;
     position: relative;
+    margin-right: 3px;
+    color: #595959;
 }
-.btnforTitleList{
-        background: #595959;
-        height: 30px;
-        color: #f7f7f7;
-        margin-left: 15px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+.flowListSpdivTemp {
+    display: inline-block;
+    position: relative;
+    margin-right: 3px;
+    color: #595959;
 }
-.btnMEnuAcan{
-        background: none;
-        border: none; 
-        font-size: 19px;  
-        width: 25px;    
+
+.flowListSpanAna {
+    cursor: pointer;
 }
-.flowListColumnn{
-    background-color:#595959;
-    color:#f7f7f7;
-    display:flex;
+
+.flowListSpanAna:hover .btnMEnuAcan {
+    visibility: visible;
+}
+
+.flowListColumnn:hover .btnMEnuAcan,.flowListColumnn:hover .btnMEnuAcanDropDow {
+    visibility: visible;
+}
+
+.mapListBorder {
+    display: inline-block;
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    top: -5px;
+    border-left: 1px solid #595959;    
+}
+
+.btnMEnuAcanselectUcun {
+    position: relative;    
+}
+
+.btnforTitleList {
+    background: #595959;
+    height: 30px;
+    color: #f7f7f7;
+    margin-left: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.btnMEnuAcan {
+    visibility: hidden;
+    background: none;
+    border: none;
+    font-size: 19px;
+    width: 30px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+.btnMEnuAcanDropDow {
+    visibility: hidden;
+       font-size: 19px;
+       color: white;
+       background: none;
+       border: none;
+       box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+       width: 25px;
+}
+.btnMEnuAcanDropDow:hover{
+    background: none !important;
+    color: white !important;
+}
+
+.flowListColumnn {
+    background-color: #595959;
+    color: #f7f7f7;
+    display: flex;
     align-items: center;
-    
+
 }
+
 .prosesCartToolDivChild_12 {
     z-index: 12;
+    min-width: 250px;
     width: auto;
     padding: 10px;
     position: absolute;
     top: 30px;
     background-color: #808080;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;
     flex-direction: column;
-    border-radius: 10px;    
+    border-radius: 10px;
     margin-left: 50%;
     transform: 50% 0%;
 }
+
 /* //////////////////////////// */
 .prosesCartToolDiv {
     /* background-color: #8d90ce; */
@@ -54,7 +110,8 @@ and open the template in the editor.
     z-index: 5000;
 
 }
-.selectSpanTit{
+
+.selectSpanTit {
     display: flex;
     justify-content: start;
 }
@@ -62,30 +119,34 @@ and open the template in the editor.
 .prosesCartToolDivChild_1 {
     width: auto;
     padding: 10px;
-    position: absolute;    
+    position: absolute;
     top: 45px;
-    background-color:#dcdce6;
+    background-color: #dcdce6;
     display: flex;
     flex-direction: column;
-     border-radius: 10px;
-     box-shadow: 5px 5px 18px #999cdd;
-     margin-left: 50%;
-     transform: 50% 0%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 18px #999cdd;
+    margin-left: 50%;
+    transform: 50% 0%;
 }
-.zz-indexx{
+
+.zz-indexx {
     z-index: 500;
 }
-.prosesDivChild_textarea {   
-        width: 100%;
-        margin: 10px 0px;
+
+.prosesDivChild_textarea {
+    width: 100%;
+    margin: 10px 0px;
 }
-.displayNone{
+
+.displayNone {
     display: none;
 }
+
 .prosesCartToolDivChild_MAxSize {
     background: #dcdce6 !important;
     border-radius: 10px;
-    position: absolute;  
+    position: absolute;
     width: 40px;
     top: 0px;
     right: 0px;
@@ -93,14 +154,17 @@ and open the template in the editor.
     justify-content: end;
     /* visibility: hidden; */
 }
-.prosesCartToolDivChild_MAxSize_button{
-        background: #ceceda !important;
-        border: none !important;
-        color: black !important;
+
+.prosesCartToolDivChild_MAxSize_button {
+    background: #ceceda !important;
+    border: none !important;
+    color: black !important;
 }
-.prosesCartToolDivChild_MAxSize_button:hover{
+
+.prosesCartToolDivChild_MAxSize_button:hover {
     box-shadow: 5px 5px 18px #999cdd;
 }
+
 .processlistBtnGroupp {
     width: 96%;
     margin: auto;
@@ -113,7 +177,7 @@ and open the template in the editor.
 .hollele_zad:hover .prosesCartToolDivChild_MAxSize {
     visibility: visible;
     z-index: 50;
-} 
+}
 
 .hollele_zad {
     position: relative;
