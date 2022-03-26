@@ -12,7 +12,7 @@ var backLogIdListForSearch = "";
 var global_counter_4_us = 0;
 var filtUsm = {
     TableFields: {},
-    SetTableFields: function (tableId, InputId) {
+    SetTableFields: function(tableId, InputId) {
         if (tableId in this.TableFields) {
             if (!this.TableFields[tableId].includes(InputId))
                 this.TableFields[tableId] = this.TableFields[tableId] + ',' + InputId;
@@ -57,11 +57,11 @@ function check() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        success: function () {
+        success: function() {
             //                        progresBarStop();
             //            document.location = "app1.zoomOut";
         },
-        error: function (res, status) {
+        error: function(res, status) {
             //                        progresBarStop();
             showAlert();
         }
@@ -74,7 +74,7 @@ var UsLabel = '';
 
 var CanvasDesign = {
     "ComponentCSSId": "gui_input_css_style_canvas",
-    init: function () {
+    init: function() {
         CanvasDesign.General.BackgroundColor();
         CanvasDesign.General.BackgroundImage();
         CanvasDesign.General.Width();
@@ -82,13 +82,13 @@ var CanvasDesign = {
         CanvasDesign.DeleteEmptyLines();
         new UserStory().setGUICanvasContent();
     },
-    read: function () {
+    read: function() {
         CanvasDesign.General.ToBackgroundColor();
         CanvasDesign.General.ToBackgroundImage();
         CanvasDesign.General.ToWidth();
         CanvasDesign.General.ToHeight();
     },
-    DeleteEmptyLines: function () {
+    DeleteEmptyLines: function() {
         var c = $('#' + CanvasDesign.ComponentCSSId).val();
         var st = "";
         var r = c.split(/\r*\n/);
@@ -101,7 +101,7 @@ var CanvasDesign = {
         $('#' + CanvasDesign.ComponentCSSId).val(st);
     },
     "General": {
-        ToBackgroundColor: function () {
+        ToBackgroundColor: function() {
             var tag = "##background-color"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var st = CanvasDesign.GetTagLine(c, tag);
@@ -121,7 +121,7 @@ var CanvasDesign = {
                 $('#gui_prop_cnvs_backgroundcolor').val('');
             }
         },
-        BackgroundColor: function () {
+        BackgroundColor: function() {
             var tag = "##background-color"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cnvs_backgroundcolor').val();
@@ -139,7 +139,7 @@ var CanvasDesign = {
                 $('#' + CanvasDesign.ComponentCSSId).val(st);
             }
         },
-        ToBackgroundImage: function () {
+        ToBackgroundImage: function() {
             var tag = "##background-image"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var st = CanvasDesign.GetTagLine(c, tag);
@@ -159,7 +159,7 @@ var CanvasDesign = {
                 $('#gui_prop_cnvs_backgroundimage').attr('fname', '');
             }
         },
-        BackgroundImage: function () {
+        BackgroundImage: function() {
             var tag = "##background-image"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cnvs_backgroundimage').attr('fname');
@@ -177,7 +177,7 @@ var CanvasDesign = {
                 $('#' + CanvasDesign.ComponentCSSId).val(st);
             }
         },
-        ToWidth: function () {
+        ToWidth: function() {
             var tag = "##max-width"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var st = CanvasDesign.GetTagLine(c, tag);
@@ -193,7 +193,7 @@ var CanvasDesign = {
                 $('#gui_prop_cnvs_generalwidth').val('');
             }
         },
-        Width: function () {
+        Width: function() {
             var tag = "##max-width"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cnvs_generalwidth').val();
@@ -207,7 +207,7 @@ var CanvasDesign = {
             }
 
         },
-        ToHeight: function () {
+        ToHeight: function() {
             var tag = "##height"
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var st = CanvasDesign.GetTagLine(c, tag);
@@ -223,7 +223,7 @@ var CanvasDesign = {
                 $('#gui_prop_cnvs_generalheight').val('');
             }
         },
-        Height: function () {
+        Height: function() {
             var tag = "##height";
             var c = $('#' + CanvasDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cnvs_generalheight').val();
@@ -239,7 +239,7 @@ var CanvasDesign = {
         }
 
     },
-    DeleteTag: function (text, tag) {
+    DeleteTag: function(text, tag) {
         if (text.includes(tag)) {
 
             var n1 = text.indexOf(tag);
@@ -249,7 +249,7 @@ var CanvasDesign = {
         }
         return text;
     },
-    UpdateTag: function (text, tag, val) {
+    UpdateTag: function(text, tag, val) {
         if (text.includes(tag)) {
 
             var n1 = text.indexOf(tag);
@@ -259,7 +259,7 @@ var CanvasDesign = {
         }
         return text;
     },
-    GetTagLine: function (text, tag) {
+    GetTagLine: function(text, tag) {
         var st = '';
         try {
             if (text.includes(tag)) {
@@ -276,7 +276,7 @@ var CanvasDesign = {
 
 var ComponentDesign = {
     "ComponentCSSId": "gui_input_css_style",
-    init: function () {
+    init: function() {
         ComponentDesign.General.BackgroundColor();
         ComponentDesign.General.Width();
         ComponentDesign.General.Height();
@@ -299,7 +299,7 @@ var ComponentDesign = {
         ComponentDesign.DeleteEmptyLines();
         new UserStory().setGUIComponentContent();
     },
-    read: function () {
+    read: function() {
         ComponentDesign.General.ToBackgroundColor();
         ComponentDesign.General.ToWidth();
         ComponentDesign.General.ToHeight();
@@ -326,7 +326,7 @@ var ComponentDesign = {
         ComponentDesign.Margin.ToRight();
         ComponentDesign.Shadow.ToAll();
     },
-    DeleteEmptyLines: function () {
+    DeleteEmptyLines: function() {
         var c = $('#' + ComponentDesign.ComponentCSSId).val();
         var st = "";
         var r = c.split(/\r*\n/);
@@ -339,7 +339,7 @@ var ComponentDesign = {
         $('#' + ComponentDesign.ComponentCSSId).val(st);
     },
     "General": {
-        ToBackgroundColor: function () {
+        ToBackgroundColor: function() {
             var tag = "##background-color"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -359,7 +359,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_backgroundcolor').val('');
             }
         },
-        BackgroundColor: function () {
+        BackgroundColor: function() {
             var tag = "##background-color"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_backgroundcolor').val();
@@ -377,7 +377,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(st);
             }
         },
-        ToWidth: function () {
+        ToWidth: function() {
             var tag = "##width"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -393,7 +393,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_generalwidth').val('');
             }
         },
-        Width: function () {
+        Width: function() {
             var tag = "##width"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_generalwidth').val();
@@ -407,7 +407,7 @@ var ComponentDesign = {
             }
 
         },
-        ToHeight: function () {
+        ToHeight: function() {
             var tag = "##height"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -423,7 +423,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_generalheight').val('');
             }
         },
-        Height: function () {
+        Height: function() {
             var tag = "##height";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_generalheight').val();
@@ -437,7 +437,7 @@ var ComponentDesign = {
             }
 
         },
-        ToOpacity: function () {
+        ToOpacity: function() {
             var tag = "##opacity"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -453,7 +453,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_opacity').val('');
             }
         },
-        Opacity: function () {
+        Opacity: function() {
             var tag = "##opacity";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_opacity').val();
@@ -466,7 +466,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToHorizontal: function () {
+        ToHorizontal: function() {
             var tag = "##text-align"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -484,7 +484,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_horizontalposition').val('');
             }
         },
-        Horizontal: function () {
+        Horizontal: function() {
             var tag = "##text-align";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_horizontalposition').val();
@@ -500,7 +500,7 @@ var ComponentDesign = {
         },
     },
     "Font": {
-        ToFontColor: function () {
+        ToFontColor: function() {
             var tag = "##color"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -520,7 +520,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_fontcolor').val('');
             }
         },
-        FontColor: function () {
+        FontColor: function() {
             var tag = "##color"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_fontcolor').val();
@@ -538,7 +538,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(st);
             }
         },
-        ToFontFamily: function () {
+        ToFontFamily: function() {
             var tag = "##font-family"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -554,7 +554,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_font').val('');
             }
         },
-        FontFamily: function () {
+        FontFamily: function() {
             var tag = "##font-family"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_font').val();
@@ -568,7 +568,7 @@ var ComponentDesign = {
             }
 
         },
-        ToFontSize: function () {
+        ToFontSize: function() {
             var tag = "##font-size"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -584,7 +584,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_fontsize').val('');
             }
         },
-        FontSize: function () {
+        FontSize: function() {
             var tag = "##font-size";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_fontsize').val();
@@ -598,7 +598,7 @@ var ComponentDesign = {
             }
 
         },
-        ToBold: function () {
+        ToBold: function() {
             var tag = "##font-weight"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -616,7 +616,7 @@ var ComponentDesign = {
                 $('#cb_gui_prop_in_fontstylebold').prop('checked', false);
             }
         },
-        Bold: function () {
+        Bold: function() {
             var tag = "##font-weight";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#cb_gui_prop_in_fontstylebold').is(':checked') ? 'bold' : '';
@@ -635,7 +635,7 @@ var ComponentDesign = {
             }
 
         },
-        ToItalic: function () {
+        ToItalic: function() {
             var tag = "##font-style"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -652,7 +652,7 @@ var ComponentDesign = {
                 $('#cb_gui_prop_in_fontstyleitalic').prop('checked', false);
             }
         },
-        Italic: function () {
+        Italic: function() {
             var tag = "##font-style";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#cb_gui_prop_in_fontstyleitalic').is(':checked') ? 'italic' : '';
@@ -673,7 +673,7 @@ var ComponentDesign = {
         },
     },
     "Border": {
-        ToBorderColor: function () {
+        ToBorderColor: function() {
             var tag = "##border-color"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -693,7 +693,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_bordercolor').val('');
             }
         },
-        BorderColor: function () {
+        BorderColor: function() {
             var tag = "##border-color"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_bordercolor').val();
@@ -711,7 +711,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(st);
             }
         },
-        ToWidth: function () {
+        ToWidth: function() {
             var tag = "##border-width"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -727,7 +727,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_borderwidth').val('');
             }
         },
-        Width: function () {
+        Width: function() {
             var tag = "##border-width"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_borderwidth').val();
@@ -741,7 +741,7 @@ var ComponentDesign = {
             }
 
         },
-        ToRadius: function () {
+        ToRadius: function() {
             var tag = "##border-radius"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -757,7 +757,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_borderradius').val('');
             }
         },
-        Radius: function () {
+        Radius: function() {
             var tag = "##border-radius"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_borderradius').val();
@@ -771,7 +771,7 @@ var ComponentDesign = {
             }
 
         },
-        ToBorderStyle: function () {
+        ToBorderStyle: function() {
             var tag = "##border-style"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -787,7 +787,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_borderstyle').val('');
             }
         },
-        BorderStyle: function () {
+        BorderStyle: function() {
             var tag = "##border-style";
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v = $('#gui_prop_in_borderstyle').val();
@@ -804,7 +804,7 @@ var ComponentDesign = {
     },
 
     "Padding": {
-        ToTop: function () {
+        ToTop: function() {
             var tag = "##padding-top"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -820,13 +820,13 @@ var ComponentDesign = {
                 $('#gui_prop_in_paddingtop').val('');
             }
         },
-        All: function () {
+        All: function() {
             ComponentDesign.Padding.Top();
             ComponentDesign.Padding.Bottom();
             ComponentDesign.Padding.Left();
             ComponentDesign.Padding.Right();
         },
-        Top: function () {
+        Top: function() {
             var tag = "##padding-top"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -841,7 +841,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToBottom: function () {
+        ToBottom: function() {
             var tag = "##padding-bottom"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -857,7 +857,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_paddingbottom').val('');
             }
         },
-        Bottom: function () {
+        Bottom: function() {
             var tag = "##padding-bottom"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -872,7 +872,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToLeft: function () {
+        ToLeft: function() {
             var tag = "##padding-left"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -888,7 +888,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_paddingleft').val('');
             }
         },
-        Left: function () {
+        Left: function() {
             var tag = "##padding-left"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -903,7 +903,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToRight: function () {
+        ToRight: function() {
             var tag = "##padding-right"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -919,7 +919,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_paddingright').val('');
             }
         },
-        Right: function () {
+        Right: function() {
             var tag = "##padding-right"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -936,7 +936,7 @@ var ComponentDesign = {
         },
     },
     "Margin": {
-        ToTop: function () {
+        ToTop: function() {
             var tag = "##margin-top"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -952,13 +952,13 @@ var ComponentDesign = {
                 $('#gui_prop_in_margintop').val('');
             }
         },
-        All: function () {
+        All: function() {
             ComponentDesign.Margin.Top();
             ComponentDesign.Margin.Bottom();
             ComponentDesign.Margin.Left();
             ComponentDesign.Margin.Right();
         },
-        Top: function () {
+        Top: function() {
             var tag = "##margin-top"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -973,7 +973,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToBottom: function () {
+        ToBottom: function() {
             var tag = "##margin-bottom"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -989,7 +989,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_marginbottom').val('');
             }
         },
-        Bottom: function () {
+        Bottom: function() {
             var tag = "##margin-bottom"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1004,7 +1004,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToLeft: function () {
+        ToLeft: function() {
             var tag = "##margin-left"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -1020,7 +1020,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_marginleft').val('');
             }
         },
-        Left: function () {
+        Left: function() {
             var tag = "##margin-left"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1035,7 +1035,7 @@ var ComponentDesign = {
                 $('#' + ComponentDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToRight: function () {
+        ToRight: function() {
             var tag = "##margin-right"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -1051,7 +1051,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_marginright').val('');
             }
         },
-        Right: function () {
+        Right: function() {
             var tag = "##margin-right"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1068,7 +1068,7 @@ var ComponentDesign = {
         },
     },
     "Shadow": {
-        ToAll: function () {
+        ToAll: function() {
             var tag = "##box-shadow"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var st = ComponentDesign.GetTagLine(c, tag);
@@ -1090,7 +1090,7 @@ var ComponentDesign = {
                 $('#gui_prop_in_shadowcolor').val('');
             }
         },
-        All: function () {
+        All: function() {
             var tag = "##box-shadow"
             var c = $('#' + ComponentDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1114,7 +1114,7 @@ var ComponentDesign = {
 
         },
     },
-    DeleteTag: function (text, tag) {
+    DeleteTag: function(text, tag) {
         if (text.includes(tag)) {
 
             var n1 = text.indexOf(tag);
@@ -1124,7 +1124,7 @@ var ComponentDesign = {
         }
         return text;
     },
-    UpdateTag: function (text, tag, val) {
+    UpdateTag: function(text, tag, val) {
         if (text.includes(tag)) {
 
             var n1 = text.indexOf(tag);
@@ -1134,7 +1134,7 @@ var ComponentDesign = {
         }
         return text;
     },
-    GetTagLine: function (text, tag) {
+    GetTagLine: function(text, tag) {
         var st = '';
         if (text.includes(tag)) {
             var n1 = text.indexOf(tag);
@@ -1148,7 +1148,7 @@ var ComponentDesign = {
 
 var ContainerDesign = {
     "ComponentCSSId": "gui_input_css_style_container",
-    init: function () {
+    init: function() {
         ContainerDesign.General.BackgroundColor();
         ContainerDesign.General.Width();
         ContainerDesign.General.Height();
@@ -1175,7 +1175,7 @@ var ContainerDesign = {
         ContainerDesign.DeleteEmptyLines();
         new UserStory().setGUIComponentContent();
     },
-    read: function () {
+    read: function() {
         ContainerDesign.General.ToBackgroundColor();
         ContainerDesign.General.ToWidth();
         ContainerDesign.General.ToHeight();
@@ -1206,7 +1206,7 @@ var ContainerDesign = {
         ContainerDesign.Margin.ToRight();
         ContainerDesign.Shadow.ToAll();
     },
-    DeleteEmptyLines: function () {
+    DeleteEmptyLines: function() {
         var c = $('#' + ContainerDesign.ComponentCSSId).val();
         var st = "";
         var r = c.split(/\r*\n/);
@@ -1219,7 +1219,7 @@ var ContainerDesign = {
         $('#' + ContainerDesign.ComponentCSSId).val(st);
     },
     "General": {
-        ToBackgroundColor: function () {
+        ToBackgroundColor: function() {
             var tag = "##background-color"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1239,7 +1239,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_backgroundcolor').val('');
             }
         },
-        BackgroundColor: function () {
+        BackgroundColor: function() {
             var tag = "##background-color"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_backgroundcolor').val();
@@ -1257,7 +1257,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(st);
             }
         },
-        ToWidth: function () {
+        ToWidth: function() {
             var tag = "##max-width"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1274,7 +1274,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_generalwidth').val('');
             }
         },
-        Width: function () {
+        Width: function() {
             var tag = "##max-width"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_generalwidth').val();
@@ -1288,7 +1288,7 @@ var ContainerDesign = {
             }
 
         },
-        ToHeight: function () {
+        ToHeight: function() {
             var tag = "##height"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1304,7 +1304,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_generalheight').val('');
             }
         },
-        Height: function () {
+        Height: function() {
             var tag = "##height";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_generalheight').val();
@@ -1318,7 +1318,7 @@ var ContainerDesign = {
             }
 
         },
-        ToOpacity: function () {
+        ToOpacity: function() {
             var tag = "##opacity"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1334,7 +1334,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_opacity').val('');
             }
         },
-        Opacity: function () {
+        Opacity: function() {
             var tag = "##opacity";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_opacity').val();
@@ -1347,7 +1347,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToHorizontal: function () {
+        ToHorizontal: function() {
             var tag = "##text-align"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1363,7 +1363,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_horizontalposition').val('');
             }
         },
-        Horizontal: function () {
+        Horizontal: function() {
             var tag = "##text-align";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_horizontalposition').val();
@@ -1379,7 +1379,7 @@ var ContainerDesign = {
         },
     },
     "Font": {
-        ToFontColor: function () {
+        ToFontColor: function() {
             var tag = "##color"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1399,7 +1399,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_fontcolor').val('');
             }
         },
-        FontColor: function () {
+        FontColor: function() {
             var tag = "##color"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_fontcolor').val();
@@ -1417,7 +1417,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(st);
             }
         },
-        ToFontFamily: function () {
+        ToFontFamily: function() {
             var tag = "##font-family"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1433,7 +1433,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_font').val('');
             }
         },
-        FontFamily: function () {
+        FontFamily: function() {
             var tag = "##font-family"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_font').val();
@@ -1447,7 +1447,7 @@ var ContainerDesign = {
             }
 
         },
-        ToFontSize: function () {
+        ToFontSize: function() {
             var tag = "##font-size"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1463,7 +1463,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_fontsize').val('');
             }
         },
-        FontSize: function () {
+        FontSize: function() {
             var tag = "##font-size";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_fontsize').val();
@@ -1477,7 +1477,7 @@ var ContainerDesign = {
             }
 
         },
-        ToBold: function () {
+        ToBold: function() {
             var tag = "##font-weight"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1492,7 +1492,7 @@ var ContainerDesign = {
                 $('#cb_gui_prop_cn_fontstylebold').prop('checked', false);
             }
         },
-        Bold: function () {
+        Bold: function() {
             var tag = "##font-weight";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#cb_gui_prop_cn_fontstylebold').is(':checked') ? 'bold' : '';
@@ -1511,7 +1511,7 @@ var ContainerDesign = {
             }
 
         },
-        ToItalic: function () {
+        ToItalic: function() {
             var tag = "##font-style"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1526,7 +1526,7 @@ var ContainerDesign = {
                 $('#cb_gui_prop_cn_fontstyleitalic').prop('checked', false);
             }
         },
-        Italic: function () {
+        Italic: function() {
             var tag = "##font-style";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#cb_gui_prop_cn_fontstyleitalic').is(':checked') ? 'italic' : '';
@@ -1547,7 +1547,7 @@ var ContainerDesign = {
         },
     },
     "Position": {
-        ToType: function () {
+        ToType: function() {
             var tag = "##position"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1563,7 +1563,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_positiontype').val('');
             }
         },
-        Type: function () {
+        Type: function() {
             var tag = "##position";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_positiontype').val();
@@ -1576,7 +1576,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToZindex: function () {
+        ToZindex: function() {
             var tag = "##z-index"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1592,7 +1592,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_zindex').val('');
             }
         },
-        Zindex: function () {
+        Zindex: function() {
             var tag = "##z-index"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_zindex').val();
@@ -1606,7 +1606,7 @@ var ContainerDesign = {
             }
 
         },
-        ToTop: function () {
+        ToTop: function() {
             //            if ($('#lp-draggable-mode').is(":checked")) {
             //                return;
             //            }
@@ -1625,7 +1625,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_positiontop').val('');
             }
         },
-        Top: function () {
+        Top: function() {
             var tag = "##top"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_positiontop').val();
@@ -1640,7 +1640,7 @@ var ContainerDesign = {
 
 
         },
-        ToLeft: function () {
+        ToLeft: function() {
             //            if ($('#lp-draggable-mode').is(":checked")) {
             //                return;
             //            }
@@ -1659,7 +1659,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_positionleft').val('');
             }
         },
-        Left: function () {
+        Left: function() {
             var tag = "##left"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_positionleft').val();
@@ -1674,7 +1674,7 @@ var ContainerDesign = {
         }
     },
     "Border": {
-        ToBorderColor: function () {
+        ToBorderColor: function() {
             var tag = "##border-color"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1694,7 +1694,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_bordercolor').val('');
             }
         },
-        BorderColor: function () {
+        BorderColor: function() {
             var tag = "##border-color"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_bordercolor').val();
@@ -1712,7 +1712,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(st);
             }
         },
-        ToWidth: function () {
+        ToWidth: function() {
             var tag = "##border-width"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1728,7 +1728,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_borderwidth').val('');
             }
         },
-        Width: function () {
+        Width: function() {
             var tag = "##border-width"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_borderwidth').val();
@@ -1742,7 +1742,7 @@ var ContainerDesign = {
             }
 
         },
-        ToRadius: function () {
+        ToRadius: function() {
             var tag = "##border-radius"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1758,7 +1758,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_borderradius').val('');
             }
         },
-        Radius: function () {
+        Radius: function() {
 
             var tag = "##border-radius"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
@@ -1773,7 +1773,7 @@ var ContainerDesign = {
             }
 
         },
-        ToBorderStyle: function () {
+        ToBorderStyle: function() {
             var tag = "##border-style"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1789,7 +1789,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_borderstyle').val('');
             }
         },
-        BorderStyle: function () {
+        BorderStyle: function() {
             var tag = "##border-style";
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v = $('#gui_prop_cn_borderstyle').val();
@@ -1805,7 +1805,7 @@ var ContainerDesign = {
         },
     },
     "Padding": {
-        ToTop: function () {
+        ToTop: function() {
             var tag = "##padding-top"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1821,13 +1821,13 @@ var ContainerDesign = {
                 $('#gui_prop_cn_paddingtop').val('');
             }
         },
-        All: function () {
+        All: function() {
             ContainerDesign.Padding.Top();
             ContainerDesign.Padding.Bottom();
             ContainerDesign.Padding.Left();
             ContainerDesign.Padding.Right();
         },
-        Top: function () {
+        Top: function() {
             var tag = "##padding-top"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1842,7 +1842,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToBottom: function () {
+        ToBottom: function() {
             var tag = "##padding-bottom"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1858,7 +1858,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_paddingbottom').val('');
             }
         },
-        Bottom: function () {
+        Bottom: function() {
             var tag = "##padding-bottom"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1873,7 +1873,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToLeft: function () {
+        ToLeft: function() {
             var tag = "##padding-left"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1889,7 +1889,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_paddingleft').val('');
             }
         },
-        Left: function () {
+        Left: function() {
             var tag = "##padding-left"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1904,7 +1904,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToRight: function () {
+        ToRight: function() {
             var tag = "##padding-right"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1920,7 +1920,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_paddingright').val('');
             }
         },
-        Right: function () {
+        Right: function() {
             var tag = "##padding-right"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1938,7 +1938,7 @@ var ContainerDesign = {
     },
 
     "Margin": {
-        ToTop: function () {
+        ToTop: function() {
             var tag = "##margin-top"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1954,13 +1954,13 @@ var ContainerDesign = {
                 $('#gui_prop_cn_margintop').val('');
             }
         },
-        All: function () {
+        All: function() {
             ContainerDesign.Margin.Top();
             ContainerDesign.Margin.Bottom();
             ContainerDesign.Margin.Left();
             ContainerDesign.Margin.Right();
         },
-        Top: function () {
+        Top: function() {
             var tag = "##margin-top"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -1975,7 +1975,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToBottom: function () {
+        ToBottom: function() {
             var tag = "##margin-bottom"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1991,7 +1991,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_marginbottom').val('');
             }
         },
-        Bottom: function () {
+        Bottom: function() {
             var tag = "##margin-bottom"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -2006,7 +2006,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToLeft: function () {
+        ToLeft: function() {
             var tag = "##margin-left"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -2022,7 +2022,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_marginleft').val('');
             }
         },
-        Left: function () {
+        Left: function() {
             var tag = "##margin-left"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -2037,7 +2037,7 @@ var ContainerDesign = {
                 $('#' + ContainerDesign.ComponentCSSId).val(t + '\n' + c);
             }
         },
-        ToRight: function () {
+        ToRight: function() {
             var tag = "##margin-right"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -2053,7 +2053,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_marginright').val('');
             }
         },
-        Right: function () {
+        Right: function() {
             var tag = "##margin-right"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -2071,7 +2071,7 @@ var ContainerDesign = {
     },
 
     "Shadow": {
-        ToAll: function () {
+        ToAll: function() {
             var tag = "##box-shadow"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -2093,7 +2093,7 @@ var ContainerDesign = {
                 $('#gui_prop_cn_shadowcolor').val('');
             }
         },
-        All: function () {
+        All: function() {
             var tag = "##box-shadow"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var v1 = "";
@@ -2117,7 +2117,7 @@ var ContainerDesign = {
 
         },
     },
-    DeleteTag: function (text, tag) {
+    DeleteTag: function(text, tag) {
         if (text.includes(tag)) {
 
             var n1 = text.indexOf(tag);
@@ -2127,7 +2127,7 @@ var ContainerDesign = {
         }
         return text;
     },
-    UpdateTag: function (text, tag, val) {
+    UpdateTag: function(text, tag, val) {
         if (text.includes(tag)) {
 
             var n1 = text.indexOf(tag);
@@ -2137,7 +2137,7 @@ var ContainerDesign = {
         }
         return text;
     },
-    GetTagLine: function (text, tag) {
+    GetTagLine: function(text, tag) {
         var st = '';
         if (text.includes(tag)) {
             var n1 = text.indexOf(tag);
@@ -2221,7 +2221,7 @@ function dropOrderSave(delmt, ev) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {
+        success: function(res) {
             try {
                 SAInput.addInputTableByRes(res);
                 SAInput.updateInputByRes(res);
@@ -2231,7 +2231,7 @@ function dropOrderSave(delmt, ev) {
 
 
         },
-        error: function (res) {
+        error: function(res) {
 
             Toaster.showError(res);
         }
@@ -2258,78 +2258,78 @@ function UserStory() {
 
 
 UserStory.prototype = {
-    setStory: function (s) {
+    setStory: function(s) {
         this.story = s;
     },
-    setBacause: function (s) {
+    setBacause: function(s) {
         this.because = s;
     },
-    setDescription: function (s) {
+    setDescription: function(s) {
         this.description = s;
     },
-    setFkProjectId: function (s) {
+    setFkProjectId: function(s) {
         this.fkProjectId = s;
     },
-    setPriority: function (s) {
+    setPriority: function(s) {
         this.priority = s;
     },
-    setData: function () {
+    setData: function() {
         this.setStory($('#backlogName').val());
         this.setBacause($('#backlogBecause').val());
         this.setDescription($('#description').val());
         this.setPriority($('#priority').val());
         this.setFkProjectId("");
     },
-    setId: function (arg) {
+    setId: function(arg) {
         this.id = arg;
     },
-    getStory: function () {
+    getStory: function() {
         return this.story;
     },
-    getPriority: function () {
+    getPriority: function() {
         return this.priority;
     },
-    getBecause: function () {
+    getBecause: function() {
         return this.because;
     },
-    getDescription: function () {
+    getDescription: function() {
         return this.description;
     },
-    getFkProjectId: function () {
+    getFkProjectId: function() {
         return this.fkProjectId;
     },
-    getId: function () {
+    getId: function() {
         return this.id;
     },
-    getNotifierList: function () {
+    getNotifierList: function() {
         var st = "";
-        $('.addTaskType_nofity').each(function () {
+        $('.addTaskType_nofity').each(function() {
             if ($(this).prop("checked")) {
                 st += $(this).val() + "|";
             }
         });
         return st;
     },
-    showComponentCustomCss: function () {
+    showComponentCustomCss: function() {
         $('#gui_design_component_custom_style').show();
         $('#gui_design_component_custom_style_dd').hide();
         ComponentDesign.read();
         ContainerDesign.read();
     },
-    showComponentCustomCssDD: function () {
+    showComponentCustomCssDD: function() {
         $('#gui_design_component_custom_style').hide();
         $('#gui_design_component_custom_style_dd').show();
     },
-    showContainerCustomCss: function () {
+    showContainerCustomCss: function() {
         $('#gui_design_container_custom_style').show();
         $('#gui_design_container_custom_style_dd').hide();
         ContainerDesign.read();
     },
 
-    createProjectDocument: function () {
+    createProjectDocument: function() {
         var div = $("<div>");
 
-        $('.us-checkbox-list').each(function (e) {
+        $('.us-checkbox-list').each(function(e) {
             if ($(this).is(':checked')) {
                 if ($(this).attr('id') !== 'undefined' || $(this).attr('id')) {
                     var backlogId = $(this).attr('id');
@@ -2345,20 +2345,20 @@ UserStory.prototype = {
         });
         $('#texnikitapshiriq_body').append(div);
     },
-    showContainerCustomCssDD: function () {
+    showContainerCustomCssDD: function() {
         $('#gui_design_container_custom_style').hide();
         $('#gui_design_container_custom_style_dd').show();
     },
-    showCanvasCss: function () {
+    showCanvasCss: function() {
         $('#gui_design_canvas_style').show();
         $('#gui_design_canvas_style_dd').hide();
         CanvasDesign.read();
     },
-    showCanvasCssDD: function () {
+    showCanvasCssDD: function() {
         $('#gui_design_canvas_style').hide();
         $('#gui_design_canvas_style_dd').show();
     },
-    convertCommentHtml2TextArea: function (arg) {
+    convertCommentHtml2TextArea: function(arg) {
         $(arg).html($('<textarea></textarea>')
             .attr('id', $(arg).attr('id'))
             .attr('onchange', 'new UserStory().saveCommentUpdate(this)')
@@ -2366,14 +2366,14 @@ UserStory.prototype = {
             .attr("rows", "5")
             .html(($(arg).attr('pval'))));
     },
-    convertCommentHtml2TextAreaNoChange: function (arg) {
+    convertCommentHtml2TextAreaNoChange: function(arg) {
         $(arg).html($('<textarea></textarea>')
             .attr('id', $(arg).attr('id'))
             .attr("style", "width:100%;background-color:#ebecf0;")
             .attr("rows", "5")
             .html(($(arg).attr('pval'))));
     },
-    convertTextArea2Html: function (arg) {
+    convertTextArea2Html: function(arg) {
         if (!$(arg).val()) {
             return;
         }
@@ -2381,7 +2381,7 @@ UserStory.prototype = {
         $(arg).closest('span').first().attr('pval', replaceTags($(arg).val()));
         $(arg).closest('span').first().html(st);
     },
-    convertTextArea2HtmlAsText: function (arg) {
+    convertTextArea2HtmlAsText: function(arg) {
         if (!$(arg).text()) {
             return;
         }
@@ -2389,11 +2389,11 @@ UserStory.prototype = {
         $(arg).closest('span').first().attr('pval', replaceTags($(arg).text()));
         $(arg).closest('span').first().html(st);
     },
-    guiComponentIsApi: function () {
+    guiComponentIsApi: function() {
         this.guiComponentIsApiDetails();
         this.setUserStoryAsAPIFeature();
     },
-    guiComponentIsApiDetails: function () {
+    guiComponentIsApiDetails: function() {
         return;
         if ($('#gui_component_is_api').is(':checked')) {
             $('.gui-design-is-api').hide();
@@ -2411,7 +2411,7 @@ UserStory.prototype = {
             $('.gui-design-is-api').show();
         }
     },
-    setUserStoryAsAPIFeature: function () {
+    setUserStoryAsAPIFeature: function() {
 
         var json = {
             kv: {}
@@ -2430,12 +2430,12 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
             }
         });
     },
-    guiComponentShowProperties: function () {
+    guiComponentShowProperties: function() {
         if ($('#gui_component_show_properties').is(':checked')) {
             $('#gui-desigin-component-view-main-div-id').show(500);
             $('#guid-desigin-main-div-id').removeClass('col-12').addClass('col-9');
@@ -2444,7 +2444,7 @@ UserStory.prototype = {
             $('#guid-desigin-main-div-id').removeClass('col-9').addClass('col-12');
         }
     },
-    loadProjectList: function () {
+    loadProjectList: function() {
         $('#dublicateUserStoryModal_projectlist').html('');
         var json = {
             kv: {}
@@ -2462,35 +2462,35 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.generateTableBody4MainProject(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addScenarioModal: function () {
+    addScenarioModal: function() {
         emptyCanvasDiv();
         hideAllCanvas();
         setGlobalActiveCanvas(global_var.canvas.testCase);
         this.loadSUSwithInputForScenarioModal();
     },
-    toggleGUIComponentImageUpload: function () {
+    toggleGUIComponentImageUpload: function() {
         if (gui_component.componentPerm.image.includes($('#us-gui-component-id').val())) {
             $('#addComponentImageUpload').show();
         } else {
             $('#addComponentImageUpload').hide();
         }
     },
-    toggleGUIComponentIconUpload: function () {
+    toggleGUIComponentIconUpload: function() {
         if (gui_component.componentPerm.icon.includes($('#us-gui-component-id').val())) {
             $('#addComponentIconUpload').show();
         } else {
             $('#addComponentIconUpload').hide();
         }
     },
-    toggleGUIComponentSelectBox: function () {
+    toggleGUIComponentSelectBox: function() {
 
         if (gui_component.defaultCSS.SelectBox.includes($('#us-gui-component-id').val())) {
             $('#addComponentSelectBox').show();
@@ -2499,7 +2499,7 @@ UserStory.prototype = {
             $('#addComponentSelectBox').hide();
         }
     },
-    toggleGUIComponentActionCombo: function () {
+    toggleGUIComponentActionCombo: function() {
         if (gui_component.componentPerm.action.includes($('#us-gui-component-id').val())) {
             //            $('#us-gui-component-action').val('').change();
             $('.us-gui-component-action-div').hide();
@@ -2509,7 +2509,7 @@ UserStory.prototype = {
             //            $('#us-gui-component-action').change();
         }
     },
-    loadDataCombination4Update: function () {
+    loadDataCombination4Update: function() {
         if ($('#updateScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
@@ -2529,15 +2529,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadDataCombination4UpdateDetails(res);
             },
-            error: function () {
+            error: function() {
 
             }
         });
     },
-    changeRequest_loadLabel4ChangeRequest: function () {
+    changeRequest_loadLabel4ChangeRequest: function() {
         $('#assignLabel4ChangeRequestModal_labels').html("");
         if (!global_var.current_project_id) {
             return;
@@ -2558,13 +2558,13 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#assignLabel4ChangeRequestModal').modal('show');
                 that.changeRequest_loadLabelsDetails(res);
             }
         });
     },
-    loadAssignedLabel: function (currentId) {
+    loadAssignedLabel: function(currentId) {
 
         if (!global_var.current_project_id) {
             return;
@@ -2590,13 +2590,13 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.loadAssignedLabelDetails(res);
             }
         });
     },
-    loadAssignedLabel4Share: function (currentId) {
+    loadAssignedLabel4Share: function(currentId) {
 
         if (!global_var.current_project_id) {
             return;
@@ -2623,13 +2623,13 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.loadAssignedLabelDetails(res);
             }
         });
     },
-    loadAssignedLabelDetails: function (res) {
+    loadAssignedLabelDetails: function(res) {
         try {
             var obj = res.tbl[0].r;
             $('#change-mgmt-gui-design-label-list').html('');
@@ -2646,10 +2646,10 @@ UserStory.prototype = {
 
         }
     },
-    setDateByAssignedLabel: function (el) {
+    setDateByAssignedLabel: function(el) {
 
     },
-    changeRequest_loadLabelsDetails: function (res) {
+    changeRequest_loadLabelsDetails: function(res) {
         var obj = res.tbl[0].r;
         $('#assignLabel4ChangeRequestModal_labels').html('');
         $('#assignLabel4ChangeRequestModal_labels').append($('<option></option>'));
@@ -2663,7 +2663,7 @@ UserStory.prototype = {
 
 
     },
-    changeRequest_notifyLabelAsTask: function () {
+    changeRequest_notifyLabelAsTask: function() {
         if (!$("#change-mgmt-gui-design-label-list").val()) {
             Toaster.showError("Please Select Assigned Label!");
             return;
@@ -2671,7 +2671,7 @@ UserStory.prototype = {
         $('#notifyLabelAsChangeRequestModal').modal('show');
         this.notifyLabelAsChangeRequestModal4Task();
     },
-    assignLabel4ChangeRequest: function () {
+    assignLabel4ChangeRequest: function() {
         if (!global_var.current_project_id) {
             return;
         }
@@ -2701,14 +2701,14 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#assignLabel4ChangeRequestModal').modal('hide');
                 that.loadAssignedLabel();
                 that.changeRequest_setAssignedLabelByDates();
             }
         });
     },
-    changeRequest_setDatesByAssignedLabel: function (el) {
+    changeRequest_setDatesByAssignedLabel: function(el) {
         this.setBViewLabel($(el).val());
 
         if (!$(el).val()) {
@@ -2732,7 +2732,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#change-mgmt-gui-design-start-date').val(res.tbl[0].r[0].startDate);
                 $('#change-mgmt-gui-design-start-date').change();
                 $('#change-mgmt-gui-design-start-time').val(res.tbl[0].r[0].startTime);
@@ -2745,7 +2745,7 @@ UserStory.prototype = {
             }
         });
     },
-    changeRequest_setAssignedLabelByDates: function () {
+    changeRequest_setAssignedLabelByDates: function() {
 
         var json = {
             kv: {}
@@ -2775,7 +2775,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 $('#change-mgmt-gui-design-label-list').val('');
                 try {
@@ -2784,7 +2784,7 @@ UserStory.prototype = {
             }
         });
     },
-    changeRequestForStartDateHeader: function (projectId, backlogId, sdate, edate, stime, etime) {
+    changeRequestForStartDateHeader: function(projectId, backlogId, sdate, edate, stime, etime) {
 
         var st = "";
         var json = {
@@ -2809,7 +2809,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 var data = {
                     "inputDescNewList": {},
                     "inputUpdateList": {},
@@ -2835,7 +2835,7 @@ UserStory.prototype = {
         });
         return st;
     },
-    changeRequestForStartDate: function (el, type) {
+    changeRequestForStartDate: function(el, type) {
         if (!(global_var.current_backlog_id)) {
             return;
         }
@@ -2860,7 +2860,7 @@ UserStory.prototype = {
         this.changeRequest_hideDates();
 
     },
-    changeRequestDetails: function (res, data, sdate, edate, stime, etime) {
+    changeRequestDetails: function(res, data, sdate, edate, stime, etime) {
 
         var table = $('<table></table>')
             .addClass('table')
@@ -2877,7 +2877,7 @@ UserStory.prototype = {
         table.append(tbody);
         return table;
     },
-    changeRequestBody: function (res, data, sdate, edate, stime, etime) {
+    changeRequestBody: function(res, data, sdate, edate, stime, etime) {
         var tbody = $('<tbody></tbody>');
         var id4Input = getIndexOfTable(res, "inputNewTable");
         var o = res.tbl[id4Input].r;
@@ -2923,7 +2923,7 @@ UserStory.prototype = {
         }
         return tbody;
     },
-    addClassForNewRecord: function (obj, sdate, edate, stime, etime) {
+    addClassForNewRecord: function(obj, sdate, edate, stime, etime) {
         //        try {
         startDate = (sdate) ? sdate : "";
         endDate = (edate) ? edate : "";
@@ -2962,7 +2962,7 @@ UserStory.prototype = {
         //        }
 
     },
-    changeRequestDetails_GetInputDescNewListByInputId: function (data, inputId, sdate, edate, stime, etime) {
+    changeRequestDetails_GetInputDescNewListByInputId: function(data, inputId, sdate, edate, stime, etime) {
         if (!data.inputDescNewList[inputId]) {
             return '';
         }
@@ -2996,7 +2996,7 @@ UserStory.prototype = {
         }
         return div;
     },
-    changeRequestDetails_GetInputUpdateListByInputId: function (data, inputId) {
+    changeRequestDetails_GetInputUpdateListByInputId: function(data, inputId) {
 
 
         if (!data.inputUpdateList[inputId]) {
@@ -3026,7 +3026,7 @@ UserStory.prototype = {
         }
         return div;
     },
-    changeRequestDetails_GetInputDescDeleteListByInputId: function (data, inputId) {
+    changeRequestDetails_GetInputDescDeleteListByInputId: function(data, inputId) {
         if (!data.inputDescDeleteList[inputId]) {
             return '';
         }
@@ -3051,7 +3051,7 @@ UserStory.prototype = {
         }
         return div;
     },
-    changeRequestDetails_GetInputDescUpdateListByInputId: function (data, inputId) {
+    changeRequestDetails_GetInputDescUpdateListByInputId: function(data, inputId) {
         if (!data.inputDescUpdateList[inputId]) {
             return '';
         }
@@ -3076,7 +3076,7 @@ UserStory.prototype = {
         }
         return div;
     },
-    changeRequestDetails_GetInputDeleteListByInputId: function (data, inputId) {
+    changeRequestDetails_GetInputDeleteListByInputId: function(data, inputId) {
 
 
         if (!data.inputDeleteList[inputId]) {
@@ -3104,7 +3104,7 @@ UserStory.prototype = {
         }
         return div;
     },
-    changeRequestDetails_GetProcessDescList: function (res) {
+    changeRequestDetails_GetProcessDescList: function(res) {
         if (!res.tbl) {
             return;
         }
@@ -3138,7 +3138,7 @@ UserStory.prototype = {
         }
         return div.html();
     },
-    changeRequestDetails_4InputDescNewList: function (res, data) {
+    changeRequestDetails_4InputDescNewList: function(res, data) {
         if (!res.tbl) {
             return;
         }
@@ -3165,7 +3165,7 @@ UserStory.prototype = {
 
         }
     },
-    changeRequestDetails_4InputUpdateList: function (res, data) {
+    changeRequestDetails_4InputUpdateList: function(res, data) {
         if (!res.tbl) {
             return;
         }
@@ -3191,7 +3191,7 @@ UserStory.prototype = {
 
         }
     },
-    changeRequestDetails_4InputDeleteList: function (res, data) {
+    changeRequestDetails_4InputDeleteList: function(res, data) {
         if (!res.tbl) {
             return;
         }
@@ -3217,7 +3217,7 @@ UserStory.prototype = {
 
         }
     },
-    changeRequestDetails_4InputDescDeleteList: function (res, data) {
+    changeRequestDetails_4InputDescDeleteList: function(res, data) {
         if (!res.tbl) {
             return;
         }
@@ -3241,7 +3241,7 @@ UserStory.prototype = {
 
         }
     },
-    changeRequestDetails_4InputDescUpdateList: function (res, data) {
+    changeRequestDetails_4InputDescUpdateList: function(res, data) {
         if (!res.tbl) {
             return;
         }
@@ -3265,7 +3265,7 @@ UserStory.prototype = {
 
         }
     },
-    loadDataCombination4Dublicate: function () {
+    loadDataCombination4Dublicate: function() {
         if ($('#duplicateScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
@@ -3285,15 +3285,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadDataCombination4DublicateDetails(res);
             },
-            error: function () {
+            error: function() {
 
             }
         });
     },
-    loadDataCombination4UpdateDetails: function (res) {
+    loadDataCombination4UpdateDetails: function(res) {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             if (obj[n].inputType === 'GUI' && obj[n].componentType !== 'btn') {
@@ -3304,7 +3304,7 @@ UserStory.prototype = {
                 .val(txt);
         }
     },
-    loadDataCombination4DublicateDetails: function (res) {
+    loadDataCombination4DublicateDetails: function(res) {
 
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -3316,7 +3316,7 @@ UserStory.prototype = {
                 .val(txt);
         }
     },
-    loadDataCombination: function () {
+    loadDataCombination: function() {
         if ($('#addScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
@@ -3337,15 +3337,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadDataCombinationDetails(res);
             },
-            error: function () {
+            error: function() {
 
             }
         });
     },
-    loadDataCombinationDetails: function (res) {
+    loadDataCombinationDetails: function(res) {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             if (obj[n].inputType === 'GUI' && obj[n].componentType !== 'btn') {
@@ -3355,7 +3355,7 @@ UserStory.prototype = {
             $('#addScenario_datacombination').val(txt);
         }
     },
-    loadSUSwithInputForScenarioModal: function () {
+    loadSUSwithInputForScenarioModal: function() {
         var json = {
             kv: {}
         };
@@ -3373,16 +3373,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadSUSwithInputForScenarioModalDetails(res);
                 $('#addScenario_userstorylistwithinputs').change();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    syncWithJira: function (el) {
+    syncWithJira: function(el) {
         if (!(global_var.current_project_id)) {
             return;
         }
@@ -3404,12 +3404,12 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogTask();
             }
         });
     },
-    loadSUSwithInputForUpdateScenarioModal: function () {
+    loadSUSwithInputForUpdateScenarioModal: function() {
         var json = {
             kv: {}
         };
@@ -3427,12 +3427,12 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadSUSwithInputForUpdateScenarioModalDetails(res);
             }
         });
     },
-    loadSUSwithInputForScenarioModalDetails: function (res) {
+    loadSUSwithInputForScenarioModalDetails: function(res) {
         $('#addScenario_userstorylistwithinputs').html("");
         var obj = res.tbl[0].r;
         $('#addScenario_userstorylistwithinputs').append($("<option></option>"));
@@ -3446,7 +3446,7 @@ UserStory.prototype = {
             $('#addScenario_userstorylistwithinputs').append(o);
         }
     },
-    loadSUSwithInputForUpdateScenarioModalDetails: function (res) {
+    loadSUSwithInputForUpdateScenarioModalDetails: function(res) {
         $('#updateScenario_userstorylistwithinputs').html("");
         var obj = res.tbl[0].r;
         $('#updateScenario_userstorylistwithinputs').append($("<option></option>"));
@@ -3456,12 +3456,12 @@ UserStory.prototype = {
                 .text(obj[n].backlogName));
         }
     },
-    loadPicture4TestCase: function () {
+    loadPicture4TestCase: function() {
         //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
-        $('.canvas-image-class').each(function (e) {
+        $('.canvas-image-class').each(function(e) {
             //            $('.preloader').fadeIn(400, function () {
             //                console.log('ok')
             //            });
@@ -3478,12 +3478,12 @@ UserStory.prototype = {
         //            console.log('done')
         //        });
     },
-    loadPicture4TestTrial: function () {
+    loadPicture4TestTrial: function() {
         //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
-        $('.canvas-image-class').each(function (e) {
+        $('.canvas-image-class').each(function(e) {
             //            $('.preloader').fadeIn(400, function () {
             //                console.log('ok')
             //            });
@@ -3500,12 +3500,12 @@ UserStory.prototype = {
         //            console.log('done')
         //        });
     },
-    loadPicture4Comment: function () {
+    loadPicture4Comment: function() {
         //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
-        $('#taskMgmtModal .canvas-image-class').each(function (e) {
+        $('#taskMgmtModal .canvas-image-class').each(function(e) {
             //            $('.preloader').fadeIn(400, function () {
             //                console.log('ok')
             //            });
@@ -3522,12 +3522,12 @@ UserStory.prototype = {
         //            console.log('done')
         //        });
     },
-    loadPicture4StoryCard: function () {
+    loadPicture4StoryCard: function() {
         //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
-        $('.canvas-image-class').each(function (e) {
+        $('.canvas-image-class').each(function(e) {
             //            $('.preloader').fadeIn(400, function () {
             //                console.log('ok')
             //            });
@@ -3544,7 +3544,7 @@ UserStory.prototype = {
         //            console.log('done')
         //        });
     },
-    uploadFile4NewTicket11: function (fileext, file_base_64, file_name) {
+    uploadFile4NewTicket11: function(fileext, file_base_64, file_name) {
 
         var d = new Object();
         d.file_base_64 = file_base_64;
@@ -3562,26 +3562,26 @@ UserStory.prototype = {
             data: dat,
             contentType: "application/json",
             async: false,
-            success: function (data) {
+            success: function(data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {}
+            error: function() {}
         });
         return finalname;
     },
-    maximizeProjectView: function () {
+    maximizeProjectView: function() {
         $('#projectpreview_sidebar_id').hide();
         $('#main_body_nav_id').hide();
         $('#project_view_maximize').hide();
         $('#project_view_restore').show();
     },
-    restoreProjectView: function () {
+    restoreProjectView: function() {
         $('#projectpreview_sidebar_id').show();
         $('#main_body_nav_id').show();
         $('#project_view_maximize').show();
         $('#project_view_restore').hide();
     },
-    generateTableBody4MainProject: function (res) {
+    generateTableBody4MainProject: function(res) {
         var obj = res.tbl[0].r;
         var urlVal = global_var.current_project_id;
         for (var n = 0; n < obj.length; n++) {
@@ -3594,7 +3594,7 @@ UserStory.prototype = {
             $('#dublicateUserStoryModal_projectlist').append(o);
         }
     },
-    hideUserStoryPanel: function () {
+    hideUserStoryPanel: function() {
         $('#core_div_col_1st').hide('1000');
         $('.toggleUSPanel').show('1000');
         $('#main_div_of_backlog_info').removeClass('col-9').addClass('col-12');
@@ -3603,7 +3603,7 @@ UserStory.prototype = {
         $('#main_div_of_backlog_info_kanban_view').removeClass('col-9').addClass('col-12');
         $('#submenu-userstory-heading').removeClass('col-5').addClass('col-4');
     },
-    showUserStoryPanelMain: function () {
+    showUserStoryPanelMain: function() {
 
         //        $('#core_div_col_1st').attr("style", "display: yes;");
         $('#core_div_col_1st').show('1000');
@@ -3614,7 +3614,7 @@ UserStory.prototype = {
         $('#main_div_of_backlog_info_kanban_view').removeClass('col-12').addClass('col-9');
         $('#submenu-userstory-heading').removeClass('col-4').addClass('col-5');
     },
-    saveCommentUpdate: function (arg) {
+    saveCommentUpdate: function(arg) {
         if (!$(arg).val()) {
             return;
         }
@@ -3637,15 +3637,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.convertTextArea2Html(arg);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         })
     },
-    loadPaymentHistory: function () {
+    loadPaymentHistory: function() {
         var json = {
             kv: {}
         };
@@ -3661,26 +3661,26 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#getPaymentHistory_licensedUsers').html(res.kv.licensedUsers);
                 $('#getPaymentHistory_overalUsers').html(res.kv.overalUsers);
                 $('#getPaymentHistory_activeUsers').html(res.kv.activeUsers);
                 $('#getPaymentHistory_passiveUsers').html(res.kv.passiveUsers);
                 that.loadPaymentHistoryDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError(('somethingww')); 
             }
         });
     },
-    getEmptyMessage4PaymentHistory: function () {
+    getEmptyMessage4PaymentHistory: function() {
         var innerHTML = '<tr><td colspan="5" style="padding:30px;text-align:center">' +
             '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
             '<h5> No Payment have been done on this Domain</h5>' +
             '</td></tr>';
         return innerHTML;
     },
-    loadPaymentHistoryDetails: function (res) {
+    loadPaymentHistoryDetails: function(res) {
 
         $('#getPaymentHistory_paymentlist > tbody').html('');
         try {
@@ -3704,7 +3704,7 @@ UserStory.prototype = {
         }
 
     },
-    setFilterPreviousPaging: function () {
+    setFilterPreviousPaging: function() {
         var r = parseFloat(global_var.user_story_core_filter_current_index) -
             parseFloat($('#us_core_filter_perpage').val());
         r = parseFloat(r) < 0 ? '0' : r;
@@ -3717,11 +3717,11 @@ UserStory.prototype = {
         }
         global_var.user_story_core_filter_paging_button_pressed = "";
     },
-    setFilterPaging: function (e) {
+    setFilterPaging: function(e) {
         global_var.user_story_core_filter_current_index = '0';
         this.load();
     },
-    toogleTaskComment: function () {
+    toogleTaskComment: function() {
         if ($('#userstory_task_comment_toogle').is(':checked')) {
             $('.task-child-comment').show();
         } else {
@@ -3729,35 +3729,35 @@ UserStory.prototype = {
         }
 
     },
-    toogleScenarioName: function () {
+    toogleScenarioName: function() {
         if ($('#userstory_scenario_name_toogle').is(':checked')) {
             $('.test-case-scenario').show();
         } else {
             $('.test-case-scenario').hide();
         }
     },
-    toogleScenarioData: function () {
+    toogleScenarioData: function() {
         if ($('#userstory_scenario_data_toogle').is(':checked')) {
             $('.test-case-data').show();
         } else {
             $('.test-case-data').hide();
         }
     },
-    toogleScenarioExpectedResult: function () {
+    toogleScenarioExpectedResult: function() {
         if ($('#userstory_scenario_expectedresult_toogle').is(':checked')) {
             $('.test-case-expectedresult').show();
         } else {
             $('.test-case-expectedresult').hide();
         }
     },
-    toogleScenarioTrial: function () {
+    toogleScenarioTrial: function() {
         if ($('#userstory_scenario_trial_toogle').is(':checked')) {
             $('.scenario-trial-comment').show();
         } else {
             $('.scenario-trial-comment').hide();
         }
     },
-    toogleTaskSubtask: function (arg) {
+    toogleTaskSubtask: function(arg) {
         $('#userstory_task_comment_toogle').prop('checked', true);
         $('.task-child-comment').show();
         $('.mangodb').hide();
@@ -3765,7 +3765,7 @@ UserStory.prototype = {
         $('.task-comment-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    toogleTaskBug: function (arg) {
+    toogleTaskBug: function(arg) {
         $('#userstory_task_comment_toogle').prop('checked', true);
         $('.task-child-comment').show();
         $('.mangodb').hide();
@@ -3773,7 +3773,7 @@ UserStory.prototype = {
         $('.task-comment-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    showBugs4Scenario: function (arg) {
+    showBugs4Scenario: function(arg) {
         $('#userstory_scenario_trial_toogle').prop('checked', true);
         $('.scenario-trial-comment').show();
         $('.mangodbtrial').hide();
@@ -3781,7 +3781,7 @@ UserStory.prototype = {
         $('.task-trial-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    showNotified4Scenario: function (arg) {
+    showNotified4Scenario: function(arg) {
         $('#userstory_scenario_trial_toogle').prop('checked', true);
         $('.scenario-trial-comment').show();
         $('.mangodbtrial').hide();
@@ -3789,7 +3789,7 @@ UserStory.prototype = {
         $('.task-trial-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    toogleTaskRequest: function (arg) {
+    toogleTaskRequest: function(arg) {
         $('#userstory_task_comment_toogle').prop('checked', true);
         $('.task-child-comment').show();
         $('.mangodb').hide();
@@ -3797,14 +3797,14 @@ UserStory.prototype = {
         $('.task-comment-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    toogleTaskAll: function (arg) {
+    toogleTaskAll: function(arg) {
         $('#userstory_task_comment_toogle').prop('checked', true);
         $('.task-child-comment').show();
         $('.mangodb').show();
         $('.task-comment-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    showAll4Scenario: function (arg) {
+    showAll4Scenario: function(arg) {
         //        $('#userstory_task_comment_toogle').prop('checked', true);
         //        $('.task-child-comment').show();
         //        $('.mangodb').show();
@@ -3817,20 +3817,20 @@ UserStory.prototype = {
         $('.task-trial-show-hide').removeAttr("style");
         $(arg).attr("style", "color:red");
     },
-    getTicketAssignee: function () {
+    getTicketAssignee: function() {
         var st = "";
-        $('#bindTicketToSUSModal').find('.us_ticket_bind_assignee').each(function (e) {
+        $('#bindTicketToSUSModal').find('.us_ticket_bind_assignee').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).attr('id') + "|";
             }
         });
         return st;
     },
-    addTaskScenarioCtrl: function () {
+    addTaskScenarioCtrl: function() {
 
 
     },
-    addTaskScenario: function () {
+    addTaskScenario: function() {
         if ($('#addScenario_testcase').val().length === 0) {
             Toaster.showError('Please Add Test Case.');
             return;
@@ -3855,7 +3855,7 @@ UserStory.prototype = {
         }
 
     },
-    addTaskScenarioBody: function (filename) {
+    addTaskScenarioBody: function(filename) {
 
         var isActualResChecked = "0";
         if ($('#addScenario_showactualresult').is(':checked')) {
@@ -3887,7 +3887,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
 
 
@@ -3908,13 +3908,13 @@ UserStory.prototype = {
                 $('#file_scenario').val('');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
 
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addFileToStoryCard: function (filename) {
+    addFileToStoryCard: function(filename) {
 
 
         if (!filename) {
@@ -3939,18 +3939,18 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 that.refreshCurrentBacklog();
                 that.toggleSubmenu($('#us-submenu-generalview'), "generalview");
                 emptyCanvasDiv();
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
-    updateTaskScenario: function () {
+    updateTaskScenario: function() {
         if (!$('#updateScenario_testcase').val().trim()) {
             Toaster.showError('Please Add Test Case.');
             return;
@@ -3981,16 +3981,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 closeModal('updateScenario');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    duplicateTaskScenario: function () {
+    duplicateTaskScenario: function() {
         if (!$('#duplicateScenario_userstorylistgeneral').val()) {
             Toaster.showError('Please Choose User Story.');
             return;
@@ -4027,16 +4027,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 closeModal('duplicateTestCaseModal');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadTestScenario: function () {
+    loadTestScenario: function() {
         var json = {
             kv: {}
         };
@@ -4054,7 +4054,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
                 $('#addScenario_testcase').val('');
                 $('#addScenario_testcase').val('');
@@ -4065,20 +4065,20 @@ UserStory.prototype = {
                 that.loadTestScenarioDetails(res);
                 that.tooggleScenarioColums();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    tooggleScenarioColums: function () {
+    tooggleScenarioColums: function() {
         this.toogleScenarioName();
         this.toogleScenarioData();
         this.toogleScenarioExpectedResult();
     },
-    toggleScenarioLines: function (id) {
+    toggleScenarioLines: function(id) {
         $('#div_' + id).toggle();
     },
-    deleteTestScenario: function (id) {
+    deleteTestScenario: function(id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -4102,15 +4102,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    showTestScenarioModal: function (id) {
+    showTestScenarioModal: function(id) {
         if (!id) {
             return;
         }
@@ -4131,7 +4131,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadSUSwithInputForUpdateScenarioModal();
                 $('#updateScenario_testcase').val(res.tbl[0].r[0].testCase);
                 $('#updateScenario_scenario').val(res.tbl[0].r[0].scenarioName);
@@ -4139,12 +4139,12 @@ UserStory.prototype = {
                 $('#updateScenario_expectedresult').val(res.tbl[0].r[0].expectedResult);
                 $('#updateScenario_id').val(res.tbl[0].r[0].id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    dublicateTestCaseModal: function (id) {
+    dublicateTestCaseModal: function(id) {
         if (!id) {
             return;
         }
@@ -4152,7 +4152,7 @@ UserStory.prototype = {
         this.loadUSList4Dublication();
         this.loadSUSwithInput4Dublication();
     },
-    loadData4DublicateTestScenario: function (id) {
+    loadData4DublicateTestScenario: function(id) {
         var json = {
             kv: {}
         };
@@ -4169,7 +4169,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadSUSwithInputForUpdateScenarioModal();
                 $('#duplicateScenario_testcase').val(res.tbl[0].r[0].testCase);
                 $('#duplicateScenario_scenario').val(res.tbl[0].r[0].scenarioName);
@@ -4177,28 +4177,28 @@ UserStory.prototype = {
                 $('#duplicateScenario_expectedresult').val(res.tbl[0].r[0].expectedResult);
                 $('#duplicateScenario_id').val(res.tbl[0].r[0].id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addTrial4ScenarioModal: function (arg, id) {
+    addTrial4ScenarioModal: function(arg, id) {
         global_var.current_scenario_id_4_trial = id;
         $('#addTrial4Scenario_id').val(id);
         setGlobalActiveCanvas(global_var.canvas.testTrial);
     },
-    addTrial4ScenarioModal: function (arg, id) {
+    addTrial4ScenarioModal: function(arg, id) {
         global_var.current_scenario_id_4_trial = id;
         $('#addTrial4Scenario_id').val(id);
         setGlobalActiveCanvas(global_var.canvas.testTrial);
     },
-    addTrial4ScenarioControl: function () {
+    addTrial4ScenarioControl: function() {
         if (!$('#addTrial4Scenario_actualresul').val().trim()) {
             Toaster.showError('Please Add Actual Result for Trial.');
             return;
         }
     },
-    addTrial4ScenarioBody: function (filename) {
+    addTrial4ScenarioBody: function(filename) {
         var isOK = this.hasNotOKTrial($('#addTrial4Scenario_id').val());
         if (isOK === '1' && $('#addTrial4Scenario_trialstatus').val() === 'nok') {
             Toaster.showError('There are Not OK Trial for this Test Scenario. First close them and then add new trial');
@@ -4224,19 +4224,19 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 closeModal('addTrial4ScenarioModal');
                 $('#addTrial4Scenario_id').val("");
                 $('#addTrial4Scenario_actualresul').val('');
                 $('#file_trial').val('');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addTrial4Scenario: function () {
+    addTrial4Scenario: function() {
         this.addTrial4ScenarioControl();
         if (isCanvasContextExist('canvasdiv_testTrial')) {
             try {
@@ -4250,7 +4250,7 @@ UserStory.prototype = {
             this.addTrial4ScenarioBody('');
         }
     },
-    deleteTrial: function (id) {
+    deleteTrial: function(id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -4271,16 +4271,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 closeModal('updateTrial4ScenarioModal');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    hasNotOKTrial: function (scenarioId) {
+    hasNotOKTrial: function(scenarioId) {
         if (!scenarioId) {
             return;
         }
@@ -4301,16 +4301,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 r = res.kv.result;
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         return r;
     },
-    updateTrial4Scenario: function () {
+    updateTrial4Scenario: function() {
         if (!$('#updateTrial4Scenario_actualresul').val().trim()) {
             Toaster.showError('Please Add Actual Result for Trial.');
             return;
@@ -4333,16 +4333,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 closeModal('updateTrial4ScenarioModal');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    editTrial4ScenarioModel: function (id) {
+    editTrial4ScenarioModel: function(id) {
         if (!id) {
             return;
         }
@@ -4363,13 +4363,13 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 closeModal('updateTrial4ScenarioModal');
                 $('#updateTrial4Scenario_actualresul').val(res.tbl[0].r[0].actualResult);
                 $('#updateTrial4Scenario_trialstatus').val(res.tbl[0].r[0].trialStatus);
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
@@ -4378,7 +4378,7 @@ UserStory.prototype = {
     //
     //    },
 
-    getTestScenarioDetailsEmptyMessage: function () {
+    getTestScenarioDetailsEmptyMessage: function() {
         var innerHTML = '<tr><td colspan="12" style="padding:30px;text-align:center">' +
             '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
             '<h5> No Test Cases have been selected or created on this User Story</h5>' +
@@ -4387,7 +4387,7 @@ UserStory.prototype = {
             '</td></tr>';
         return innerHTML;
     },
-    loadTestScenarioDetails: function (res) {
+    loadTestScenarioDetails: function(res) {
         $('#tblTestScenarioList > tbody').html("");
         $('.task-trial-show-hide').removeAttr("style");
         try {
@@ -4488,59 +4488,59 @@ UserStory.prototype = {
                             .attr("onclick", "new UserStory().addTrial4ScenarioModal(this,\'" + obj[n].id + "\')")
                             .append($('<i></i>').addClass('fa fa-plus'))))
 
-                    .append($("<td></td>")
-                        .addClass('align-middle')
-                        .attr("style", "text-align: center")
-                        .html($('<div></div>')
-                            .addClass('dropdown')
-                            .append($("<button></button")
-                                .addClass('"btn btn-primary dropdown-toggle us-prop-btn')
-                                .attr('type', 'button')
-                                .attr('data-toggle', 'dropdown')
-                                .append($('<span></span>').addClass("caret"))
-                            )
-                            .append($('<u></u>')
-                                .addClass("dropdown-menu")
-                                .attr("style", "line-height: 1.6em;text-decoration: none !important;")
-                                .append($('<li></li>')
-                                    .append($('<a></a>')
-                                        .attr('href', "#")
-                                        .addClass("us-edit")
-                                        .attr("data-toggle", "modal")
-                                        .attr("data-target", "#updateScenario")
-                                        .attr("onclick", "new UserStory().showTestScenarioModal(\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-edit'))
-                                        .append(" Edit")))
-                                .append($('<li></li>')
-                                    .append($('<a></a>')
-                                        .attr('href', "#")
-                                        .addClass("us-edit")
-                                        .attr("data-toggle", "modal")
-                                        .attr("data-target", "#duplicateTestCaseModal")
-                                        .attr("onclick", "new UserStory().dublicateTestCaseModal(\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-clone'))
-                                        .append(" Dublicate")))
-                                .append($('<li></li>')
-                                    .append($('<a></a>')
-                                        .attr('href', "#")
-                                        .addClass("us-edit")
-                                        .attr("data-toggle", "modal")
-                                        .attr("data-target", "#linkTestCaseModal")
-                                        .attr("onclick", "new UserStory().linkTestCaseModal(\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-share-square-o'))
-                                        .append(" Link")))
-                                .append($('<li></li>')
-                                    .append($('<a></a>')
-                                        .attr('href', "#")
-                                        .addClass("us-edit")
-                                        .attr("onclick", "new UserStory().deleteTestScenario(\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-trash'))
-                                        .append(" Delete")))
-
-                                .append($('<li></li>').append(stDel))
-                            )
+                .append($("<td></td>")
+                    .addClass('align-middle')
+                    .attr("style", "text-align: center")
+                    .html($('<div></div>')
+                        .addClass('dropdown')
+                        .append($("<button></button")
+                            .addClass('"btn btn-primary dropdown-toggle us-prop-btn')
+                            .attr('type', 'button')
+                            .attr('data-toggle', 'dropdown')
+                            .append($('<span></span>').addClass("caret"))
                         )
-                    );
+                        .append($('<u></u>')
+                            .addClass("dropdown-menu")
+                            .attr("style", "line-height: 1.6em;text-decoration: none !important;")
+                            .append($('<li></li>')
+                                .append($('<a></a>')
+                                    .attr('href', "#")
+                                    .addClass("us-edit")
+                                    .attr("data-toggle", "modal")
+                                    .attr("data-target", "#updateScenario")
+                                    .attr("onclick", "new UserStory().showTestScenarioModal(\'" + obj[n].id + "\')")
+                                    .append($('<i></i>').addClass('fa fa-edit'))
+                                    .append(" Edit")))
+                            .append($('<li></li>')
+                                .append($('<a></a>')
+                                    .attr('href', "#")
+                                    .addClass("us-edit")
+                                    .attr("data-toggle", "modal")
+                                    .attr("data-target", "#duplicateTestCaseModal")
+                                    .attr("onclick", "new UserStory().dublicateTestCaseModal(\'" + obj[n].id + "\')")
+                                    .append($('<i></i>').addClass('fa fa-clone'))
+                                    .append(" Dublicate")))
+                            .append($('<li></li>')
+                                .append($('<a></a>')
+                                    .attr('href', "#")
+                                    .addClass("us-edit")
+                                    .attr("data-toggle", "modal")
+                                    .attr("data-target", "#linkTestCaseModal")
+                                    .attr("onclick", "new UserStory().linkTestCaseModal(\'" + obj[n].id + "\')")
+                                    .append($('<i></i>').addClass('fa fa-share-square-o'))
+                                    .append(" Link")))
+                            .append($('<li></li>')
+                                .append($('<a></a>')
+                                    .attr('href', "#")
+                                    .addClass("us-edit")
+                                    .attr("onclick", "new UserStory().deleteTestScenario(\'" + obj[n].id + "\')")
+                                    .append($('<i></i>').addClass('fa fa-trash'))
+                                    .append(" Delete")))
+
+                            .append($('<li></li>').append(stDel))
+                        )
+                    )
+                );
                 $('#tblTestScenarioList > tbody').append(tr);
                 var rs = this.fillTrialListByScenarioWithReturn(obj[n].id);
                 //                var rs = '';
@@ -4551,7 +4551,7 @@ UserStory.prototype = {
                     .append(rs);
                 var tr1 = $('<tr  class="backlog_task_list"></tr>').attr('pid', obj[n].id);
                 tr1
-                    //                        .append($("<td  class='align-middle' style='padding-left:40px; text-align: center'></td>").html(''))
+                //                        .append($("<td  class='align-middle' style='padding-left:40px; text-align: center'></td>").html(''))
                     .append($("<td class='align-middle' style='text-align: center'></td>").html(''))
                     //                        append($("<td></td>")
                     //                                .addClass('align-middle')
@@ -4573,7 +4573,7 @@ UserStory.prototype = {
             $('#tblTestScenarioList > tbody').html(this.getTestScenarioDetailsEmptyMessage());
         }
     },
-    linkTestCase: function () {
+    linkTestCase: function() {
         var backlogId = $('#linkTestCaseModal_userstory').val();
         var testCaseId = $('#linkTestCaseModal_id').val();
         //        $('#sourcedUSList4Dependency_id').val(id);
@@ -4594,15 +4594,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadLinkedTestCases(testCaseId);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadLinkedTestCases: function (testCaseId) {
+    loadLinkedTestCases: function(testCaseId) {
 
         //        $('#sourcedUSList4Dependency_id').val(id);
         var json = {
@@ -4621,15 +4621,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadLinkedTestCasesDetails(res, testCaseId);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadLinkedTestCasesDetails: function (res, testCaseId) {
+    loadLinkedTestCasesDetails: function(res, testCaseId) {
         $('#linkTestCaseModal_linkedlist > tbody').html("");
         var st = "";
         try {
@@ -4651,7 +4651,7 @@ UserStory.prototype = {
         st += '</tr>'
         $('#linkTestCaseModal_linkedlist > tbody').html(st);
     },
-    deleteLinkedUserStory: function (testCaseId, backlogId) {
+    deleteLinkedUserStory: function(testCaseId, backlogId) {
         var backlogId = backlogId;
         var testCaseId = testCaseId;
         //        $('#sourcedUSList4Dependency_id').val(id);
@@ -4672,19 +4672,19 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadLinkedTestCases(testCaseId);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    linkTestCaseModal: function (id) {
+    linkTestCaseModal: function(id) {
         this.loadSourcedUserStoryToTestCase(id);
         this.loadLinkedTestCases(id);
     },
-    loadSourcedUserStoryToTestCase: function (id) {
+    loadSourcedUserStoryToTestCase: function(id) {
         $('#linkTestCaseModal_userstory').html('');
         $('#linkTestCaseModal_id').val(id);
         var json = {
@@ -4704,15 +4704,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.linkTestCaseModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    linkTestCaseModalDetails: function (res) {
+    linkTestCaseModalDetails: function(res) {
         $('#linkTestCaseModal_userstory').html("");
         var obj = res.tbl[0].r;
         $('#linkTestCaseModal_userstory').append($("<option></option>").attr("value", ''));
@@ -4746,7 +4746,7 @@ UserStory.prototype = {
     //        });
     //    },
 
-    viewTestCaseInfoModal: function (id) {
+    viewTestCaseInfoModal: function(id) {
         if (!id) {
             return;
         }
@@ -4767,26 +4767,26 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#viewScenario_testcase').val(res.tbl[0].r[0].testCase);
                 $('#viewScenario_scenario').val(res.tbl[0].r[0].scenarioName);
                 $('#viewScenario_datacombination').val(res.tbl[0].r[0].dataCombination);
                 $('#viewScenario_expectedresult').val(res.tbl[0].r[0].expectedResult);
                 $('#viewScenario_id').val(res.tbl[0].r[0].id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    toggleActualResult: function () {
+    toggleActualResult: function() {
         if ($('#addScenario_showactualresult').is(':checked')) {
             $('.test-actual-result-toggle').show();
         } else {
             $('.test-actual-result-toggle').hide();
         }
     },
-    bindTicketToSUS: function () {
+    bindTicketToSUS: function() {
         if (!$('#bindTicketToSUSModal_id').val()) {
             return;
         }
@@ -4815,7 +4815,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.changeStatusIconOfUserStoryByStoryId($('#bindTicketToSUSModal_id').val(), res.kv.backlogStatus);
                 that.clickOnThe1stUserStory();
                 $('#bindTicketToSUSModal').modal('hide');
@@ -4828,12 +4828,12 @@ UserStory.prototype = {
                 }
                 that.load();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    selectTaskTypesBySUS: function (e) {
+    selectTaskTypesBySUS: function(e) {
         var json = {
             kv: {}
         };
@@ -4850,15 +4850,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.selectTaskTypesBySUSDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    selectTaskTypesBySUSDetails: function (res) {
+    selectTaskTypesBySUSDetails: function(res) {
         $('#notifyTicketAsBug_tasktypes').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -4867,7 +4867,7 @@ UserStory.prototype = {
                 .html(replaceTags(obj[n].taskTypeName) + " (" + replaceTags(obj[n].assigneeName) + ")"));
         }
     },
-    setFilterNextPaging: function () {
+    setFilterNextPaging: function() {
         var rc = parseFloat(global_var.user_story_core_filter_current_index) +
             parseFloat($('#us_core_filter_perpage').val());
         if (rc <= parseFloat($('#us_core_filter_paginationresult_rowcount').html())) {
@@ -4881,7 +4881,7 @@ UserStory.prototype = {
         }
         global_var.user_story_core_filter_paging_button_pressed = "";
     },
-    genUsFilterCreatedBy: function () {
+    genUsFilterCreatedBy: function() {
         var json = {
             kv: {}
         };
@@ -4899,17 +4899,17 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.genUsFilterCreatedByDetails(res);
                 that.genUsFilterAssigneeByTaskDetails(res);
                 that.genUsFilterUserStoryOwnerDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    genUsFilterAssigneLabel: function () {
+    genUsFilterAssigneLabel: function() {
         var json = {
             kv: {}
         };
@@ -4926,12 +4926,12 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.genUsFilterAssigneLabelDetailes(res);
             }
         });
     },
-    genUsFilterAssigneLabelDetailes: function (res) {
+    genUsFilterAssigneLabelDetailes: function(res) {
         try {
             $('#us_filter_assignedlabel').html("");
             var obj = res.tbl[0].r;
@@ -4957,7 +4957,7 @@ UserStory.prototype = {
             $('#us_filter_assignedlabel').html((st));
         } catch (e) {}
     },
-    genUsTaskTypesManagment: function () {
+    genUsTaskTypesManagment: function() {
 
         var json = {
             kv: {}
@@ -4976,13 +4976,13 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.generateUsTaskTypesBlock(res);
 
             }
         });
     },
-    genUsFilterTaskTypes: function () {
+    genUsFilterTaskTypes: function() {
         var json = {
             kv: {}
         };
@@ -5000,13 +5000,13 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.genUsFilterTaskTypesDetails(res);
 
             }
         });
     },
-    generateUsTaskTypesBlock: function (res) {
+    generateUsTaskTypesBlock: function(res) {
         $('#taskTypeManagmentHeader').html("");
         $('#taskTypeManagmentBody').html("");
         var tsk = ``
@@ -5048,7 +5048,7 @@ UserStory.prototype = {
 
 
     },
-    genUsFilterTaskTypesDetails: function (res) {
+    genUsFilterTaskTypesDetails: function(res) {
         $('#us_filter_tasktypes').html("");
         $('#task-info-modal-tasktype').html("");
         $('#task-info-modal-tasktype')
@@ -5075,8 +5075,8 @@ UserStory.prototype = {
         $('#us_filter_tasktypes').html((st));
 
     },
-    genUsFilterCreatedByDetails: function (res) {
-        $('.core-filter-createdby').each(function () {
+    genUsFilterCreatedByDetails: function(res) {
+        $('.core-filter-createdby').each(function() {
             $(this).html("");
         });
         var obj = res.tbl[0].r;
@@ -5094,11 +5094,11 @@ UserStory.prototype = {
 
         }
         st += '</table>';
-        $('.core-filter-createdby').each(function () {
+        $('.core-filter-createdby').each(function() {
             $(this).html(st);
         });
     },
-    genUsFilterAssigneeByTaskDetails: function (res) {
+    genUsFilterAssigneeByTaskDetails: function(res) {
         $('#us_filter_assigneebytask').html("");
         var obj = res.tbl[0].r;
         var st = "";
@@ -5116,7 +5116,7 @@ UserStory.prototype = {
         st += '</table>';
         $('#us_filter_assigneebytask').html((st));
     },
-    genUsFilterUserStoryOwnerDetails: function (res) {
+    genUsFilterUserStoryOwnerDetails: function(res) {
         $('#us_filter_userstoryowner').html("");
         var obj = res.tbl[0].r;
         var st = "";
@@ -5134,21 +5134,21 @@ UserStory.prototype = {
         st += '</table>';
         $('#us_filter_userstoryowner').html((st));
     },
-    getNotifierList4Update: function () {
+    getNotifierList4Update: function() {
         var st = "";
-        $('.updateTaskType_nofity').each(function () {
+        $('.updateTaskType_nofity').each(function() {
             if ($(this).prop("checked")) {
                 st += replaceTags($(this).val()) + "|";
             }
         });
         return st;
     },
-    filterByUserStoryName: function (e) {
+    filterByUserStoryName: function(e) {
         global_var.userStoryFilter.userstory = $(e).val();
         //        Utility.addParamToUrl('userStoryFilter.userstory ', global_var.userStoryFilter.userstory);
         this.load();
     },
-    assignLabelModal: function (id) {
+    assignLabelModal: function(id) {
         $('#' + id).html("");
         if (!global_var.current_project_id) {
             return;
@@ -5169,15 +5169,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.assignLabelModalDetails(res, id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    assignLabelModalDetails: function (res, id) {
+    assignLabelModalDetails: function(res, id) {
         var vid = ''
         if (id) {
             vid = id;
@@ -5202,7 +5202,7 @@ UserStory.prototype = {
         st += '</table>';
         $('#' + vid).html((st));
     },
-    assignSprintModal: function (id) {
+    assignSprintModal: function(id) {
         $('#' + id).html("");
         if (!global_var.current_project_id) {
             return;
@@ -5223,15 +5223,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.assignSprintModalDetails(res, id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    assignSprintModalRadioButton: function (id) {
+    assignSprintModalRadioButton: function(id) {
         $('#' + id).html("");
         if (!global_var.current_project_id) {
             return;
@@ -5252,15 +5252,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.assignSprintModalDetailsRadioButton(res, id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    assignSprintModalDetailsRadioButton: function (res, id) {
+    assignSprintModalDetailsRadioButton: function(res, id) {
         var vid = 'assignSprintModal_sprintlist'
         if (id) {
             vid = id;
@@ -5286,7 +5286,7 @@ UserStory.prototype = {
         st += '</table>';
         $('#' + vid).html((st));
     },
-    assignSprintModalDetails: function (res, id) {
+    assignSprintModalDetails: function(res, id) {
         var vid = 'assignSprintModal_sprintlist'
         if (id) {
             vid = id;
@@ -5313,18 +5313,18 @@ UserStory.prototype = {
         st += '</table>';
         $('#' + vid).html((st));
     },
-    getBacklogList4AssignLabeltoUserStory: function () {
+    getBacklogList4AssignLabeltoUserStory: function() {
         var st = "";
-        $('.us-checkbox-list').each(function (e) {
+        $('.us-checkbox-list').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).attr('id') + "|";
             }
         });
         return st;
     },
-    getBacklogList4AssignLabeltoUserStory: function () {
+    getBacklogList4AssignLabeltoUserStory: function() {
         var st = "";
-        $('.us-checkbox-list').each(function (e) {
+        $('.us-checkbox-list').each(function(e) {
             if ($(this).is(':checked')) {
                 if ($(this).attr('id') !== 'undefined' || $(this).attr('id')) {
                     st += $(this).attr('id') + "|";
@@ -5334,16 +5334,16 @@ UserStory.prototype = {
         });
         return st;
     },
-    getLabelList4AssignLabeltoUserStoryByDiv: function (divId) {
+    getLabelList4AssignLabeltoUserStoryByDiv: function(divId) {
         var st = "";
-        $('#' + divId).find('.assignLabelModal_labelcheckbox').each(function (e) {
+        $('#' + divId).find('.assignLabelModal_labelcheckbox').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).attr('id') + "|";
             }
         });
         return st;
     },
-    showIPOInputDescription: function () {
+    showIPOInputDescription: function() {
         global_var.current_ipo_view = "desc";
         $('.ipo-2-hisse-input-des').show();
         $('.ipo-2-hisse-user-interface').hide();
@@ -5351,22 +5351,22 @@ UserStory.prototype = {
         this.setRelatedSUS();
         this.setGUIComponentValues();
     },
-    showIPOUserInterface: function () {
+    showIPOUserInterface: function() {
         $('.ipo-2-hisse-input-des').hide();
         $('.ipo-2-hisse-user-interface').show();
         global_var.current_ipo_view = "gui";
     },
-    clickCurrentIPOInputTable: function () {
+    clickCurrentIPOInputTable: function() {
         $('#ipo_tr_' + global_var.current_us_input_id).click();
     },
-    setCurrentIPOView: function (arg) {
+    setCurrentIPOView: function(arg) {
 
         global_var.current_ipo_view = arg;
         if (arg === 'desc') {
             this.clickCurrentIPOInputTable();
         }
     },
-    manageIPOTablenameLeftSize: function (arg) {
+    manageIPOTablenameLeftSize: function(arg) {
         $('.ipo-1-hisse')
             .removeClass('col-1')
             .removeClass('col-2')
@@ -5377,19 +5377,19 @@ UserStory.prototype = {
             .addClass('col-' + arg)
 
     },
-    getSprintList4AssignSprinttoUserStory: function () {
+    getSprintList4AssignSprinttoUserStory: function() {
         var st = "";
-        $('.assignSprintModal_sprintcheckbox').each(function (e) {
+        $('.assignSprintModal_sprintcheckbox').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).attr('id') + "|";
             }
         });
         return st;
     },
-    getSprintList4AssignSprinttoUserStoryByDiv: function (divId) {
+    getSprintList4AssignSprinttoUserStoryByDiv: function(divId) {
         var st = "";
         //        $('#' + divId).find('.assignSprintModal_sprintcheckbox').first()
-        $('#' + divId).find('.assignSprintModal_sprintcheckbox').each(function (e) {
+        $('#' + divId).find('.assignSprintModal_sprintcheckbox').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).attr('id');
                 return st;
@@ -5397,7 +5397,7 @@ UserStory.prototype = {
         });
         return st;
     },
-    insertNewBacklogDesc: function () {
+    insertNewBacklogDesc: function() {
         if (!$('#backlogDescriptionText').val()) {
             return;
         }
@@ -5407,7 +5407,7 @@ UserStory.prototype = {
         $('#backlogDescriptionText').focus();
     },
 
-    insertNewBacklogDescMiddle: function (el, relatedId) {
+    insertNewBacklogDescMiddle: function(el, relatedId) {
         if (!$(el).val()) {
             return;
         }
@@ -5415,7 +5415,7 @@ UserStory.prototype = {
         this.insertNewBacklogDescDetails($(el).val(), relatedId);
     },
 
-    insertNewBacklogDescDetails: function (desc, relatedId) {
+    insertNewBacklogDescDetails: function(desc, relatedId) {
         var json = initJSON();
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkProjectId = global_var.current_project_id;
@@ -5430,7 +5430,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
                 AJAXCallFeedback(res);
                 that.getBacklogDesc();
@@ -5441,7 +5441,7 @@ UserStory.prototype = {
                 // refreshLiveProtytypeView();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
@@ -5449,7 +5449,7 @@ UserStory.prototype = {
 
 
 
-    getBacklogDesc: function () {
+    getBacklogDesc: function() {
         $('#generalview_backlog_proc_desc_list').html('');
         var json = initJSON();
         json.kv.fkBacklogId = global_var.current_backlog_id;
@@ -5462,20 +5462,20 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     cr_project_desc_by_backlog[global_var.current_backlog_id] = [];
                     SACore.updateBacklogDescriptionByRes(res);
                     that.getBacklogDescDetails(res);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    getBacklogDescLineDetails_4API: function (descLine) {
+    getBacklogDescLineDetails_4API: function(descLine) {
 
         var backlogId = SAFN.GetCommandArgument(descLine);
         loadBacklogInputsByIdIfNotExist(backlogId);
@@ -5497,11 +5497,11 @@ UserStory.prototype = {
         return descBody;
 
     },
-    getBacklogDescLineDetails: function (descLine) {
+    getBacklogDescLineDetails: function(descLine) {
         descLine = SAFN.InitConvention(descLine);
         return descLine;
     },
-    getBacklogDescDetails: function (res) {
+    getBacklogDescDetails: function(res) {
 
         var table = $('#description_table_body_id');
         table.html('');
@@ -5559,7 +5559,7 @@ UserStory.prototype = {
 
             //            if (isCommand!=='1'){
             td34.attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
-            //            }
+                //            }
 
 
             var tr = $("<tr>")
@@ -5614,7 +5614,7 @@ UserStory.prototype = {
         $(table).sortable({
             connectWith: "tbody",
             handle: ".cs-move-tr",
-            update: function (e, ui) {
+            update: function(e, ui) {
                 var itm = ui.item;
                 if ($(itm).hasClass("esas-table-tr-for-zad")) {
                     if ($(itm).closest("tbody").attr('id') === 'description_table_body_id') {
@@ -5628,22 +5628,22 @@ UserStory.prototype = {
             }
         }) /* .disableSelection(); */
 
-        $("div.function-statement-container table tr").hover(function () {
+        $("div.function-statement-container table tr").hover(function() {
             $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
         });
         resetAllEditStoryCard();
-        $('div.function-statement-container').each(function (i) {
+        $('div.function-statement-container').each(function(i) {
             $(this).attr('in_pid', +(i + 1));
         });
 
-        $('.cs-sum-inbox input.function-statement-input-common').each(function (i) {
-            $.fn.textWidth = function (text, font) {
+        $('.cs-sum-inbox input.function-statement-input-common').each(function(i) {
+            $.fn.textWidth = function(text, font) {
                 if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
                 $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
                 return $.fn.textWidth.ZadFakeEl.width();
             };
 
-            $(this).on('input', function () {
+            $(this).on('input', function() {
                 var inputWidth = $(this).textWidth();
                 $(this).css({
                     width: inputWidth + 15
@@ -5666,7 +5666,7 @@ UserStory.prototype = {
         $('.get-callfn-select-box ').selectpicker();
         $(".select-api-box").selectpicker();
 
-        $('.cs-sum-inbox .bootstrap-select').each(function () {
+        $('.cs-sum-inbox .bootstrap-select').each(function() {
             let arrowWidth = 60;
             let $this = $(this);
             let style = window.getComputedStyle(this)
@@ -5696,7 +5696,7 @@ UserStory.prototype = {
         return table;
     },
 
-    backlogProcessDescLineSubmenuItem: function (id) {
+    backlogProcessDescLineSubmenuItem: function(id) {
         var div = $('<div class="btn-group" style="display: inline-block;">')
             .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
@@ -5750,7 +5750,7 @@ UserStory.prototype = {
         return div;
     },
 
-    deleteBacklogDesc: function (el, id) {
+    deleteBacklogDesc: function(el, id) {
 
 
         if (!id) {
@@ -5773,7 +5773,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 that.getBacklogDesc();
                 //                loadCurrentBacklogProdDetailsSyncrone();
@@ -5783,13 +5783,13 @@ UserStory.prototype = {
                     reloadBacklogListOnStoryCard();
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    updateBacklogDesc: function (el, id) {
+    updateBacklogDesc: function(el, id) {
         if ($(el).val().length === 0) {
             Toaster.showError("Value is empty!");
             return;
@@ -5802,7 +5802,7 @@ UserStory.prototype = {
         $(el).closest('td').html(MapTextAreaHtml(replaceTags($(el).val())));
 
     },
-    updateBacklogDescDetailsZad: function (desc, id) {
+    updateBacklogDescDetailsZad: function(desc, id) {
 
         var json = initJSON();
         json.kv.id = id;
@@ -5817,26 +5817,26 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 that.getBacklogDesc();
                 loadCurrentBacklogProdDetails();
                 loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    toogleBacklogDescEdit: function (e, id) {
+    toogleBacklogDescEdit: function(e, id) {
         $(".descriptiontable tr").removeClass("activetr");
         var inp = $('<textarea type="text" class="form-control newinp1" style="border:white;" >')
             .css("width", "100%")
             .attr("onfocusout", "new UserStory().updateBacklogDesc(this,'" + id + "')")
             .attr("id", "id_" + id)
 
-            .val($(e).attr('idesc'))
+        .val($(e).attr('idesc'))
 
         $(e).html(inp);
         $(e).parent("tr").addClass("activetr");
@@ -5851,7 +5851,7 @@ UserStory.prototype = {
 
     },
 
-    assignLabeltoUserStory: function () {
+    assignLabeltoUserStory: function() {
         var backlogs = this.getBacklogList4AssignLabeltoUserStory();
         var labels = this.getLabelList4AssignLabeltoUserStoryByDiv('assignLabelModal_labellist');
         if (backlogs.length === 0 || labels.length === 0) {
@@ -5875,18 +5875,18 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 $('#assignLabelModal').modal('hide');
                 that.refreshCurrentBacklog();
                 new Label().load()
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteLabelFromUserStory: function () {
+    deleteLabelFromUserStory: function() {
         var backlogs = this.getBacklogList4AssignLabeltoUserStory();
         var labels = this.getLabelList4AssignLabeltoUserStoryByDiv('assignLabelModal_labellist');
         if (backlogs.length === 0 || labels.length === 0) {
@@ -5909,21 +5909,21 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 $('#assignLabelModal').modal('hide');
                 that.refreshCurrentBacklog();
                 new Label().load()
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    clickOnThe1stUserStory: function () {
+    clickOnThe1stUserStory: function() {
         $('#container-us-body').find('.us-selected').first().find('a').first().click();
     },
-    assignSprinttoUserStory: function () {
+    assignSprinttoUserStory: function() {
         var backlogs = this.getBacklogList4AssignLabeltoUserStory();
         var sprints = this.getSprintList4AssignSprinttoUserStoryByDiv('assignSprintModal_sprintlist');
         if (backlogs.length === 0 || sprints.length === 0) {
@@ -5948,18 +5948,18 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 $('#assignSprintModal').modal('hide');
                 that.refreshCurrentBacklog();
                 new Sprint().load()
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteSprintFromUserStory: function () {
+    deleteSprintFromUserStory: function() {
         var backlogs = this.getBacklogList4AssignLabeltoUserStory();
         var sprints = this.getSprintList4AssignSprinttoUserStoryByDiv('assignSprintModal_sprintlist');
         if (backlogs.length === 0 || sprints.length === 0) {
@@ -5982,28 +5982,28 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 $('#assignSprintModal').modal('hide');
                 that.refreshCurrentBacklog();
                 new Sprint().load()
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    checkAllTaskTypeNotifiers: function () {
-        $('.addTaskType_nofity').each(function () {
+    checkAllTaskTypeNotifiers: function() {
+        $('.addTaskType_nofity').each(function() {
             $(this).prop('checked', true);
         });
     },
-    uncheckAllTaskTypeNotifiers: function () {
-        $('.addTaskType_nofity').each(function () {
+    uncheckAllTaskTypeNotifiers: function() {
+        $('.addTaskType_nofity').each(function() {
             $(this).prop('checked', false);
         });
     },
-    printGeneralView: function () {
+    printGeneralView: function() {
 
 
 
@@ -6021,7 +6021,7 @@ UserStory.prototype = {
         mywindow.document.write('<style type="text/css">.test { color:red; } </style></head><body>');
         mywindow.document.write($("#smb-details-generalview").html());
         mywindow.document.write('</body></html>');
-        window.setTimeout(function () {
+        window.setTimeout(function() {
             // do whatever you want to do    
             mywindow.print();
         }, 600);
@@ -6032,7 +6032,7 @@ UserStory.prototype = {
         //        mywindow.close();
 
     },
-    toPDF: function () {
+    toPDF: function() {
         var pdf = new jsPDF('p', 'mm', 'a4');
         // source can be HTML-formatted string, or a reference
         // to an actual DOM element from which the text will be scraped.
@@ -6043,7 +6043,7 @@ UserStory.prototype = {
         // (class, of compound) at this time.
         specialElementHandlers = {
             // element with id of "bypass" - jQuery style selector
-            '#bypassme': function (element, renderer) {
+            '#bypassme': function(element, renderer) {
                 // true = "handled elsewhere, bypass text extraction"
                 return true
             }
@@ -6064,14 +6064,14 @@ UserStory.prototype = {
                 'width': margins.width, // max width of content on PDF
                 'elementHandlers': specialElementHandlers
             },
-            function (dispose) {
+            function(dispose) {
                 // dispose: object with X, Y of the last line add to the PDF 
                 //          this allow the insertion of new lines after html
                 pdf.save('Test.pdf');
             }, margins
         );
     },
-    toDOC: function () {
+    toDOC: function() {
 
 
         var st = ('<html><head><title></title>');
@@ -6111,7 +6111,7 @@ UserStory.prototype = {
         //        link.setAttribute('href', 'data:' + 'text/doc' + ';charset=utf-8,' + encodeURIComponent(elHtml));
         //        link.click();
     },
-    addTaskType: function () {
+    addTaskType: function() {
 
         if ($('#addTaskType_showcomment').is(':checked') &&
             isCanvasContextExist('canvasdiv_taskType')) {
@@ -6129,7 +6129,7 @@ UserStory.prototype = {
 
 
     },
-    setStatusOngoing4Comment: function (id) {
+    setStatusOngoing4Comment: function(id) {
         if (!id) {
             return;
         }
@@ -6149,7 +6149,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#comment_status_' + id).html('ongoing');
                 $('#comment_status_' + id).removeAttr("class")
                     .addClass('us-item-status-ongoing');
@@ -6158,7 +6158,7 @@ UserStory.prototype = {
             }
         });
     },
-    setStatusNew4Comment: function (id) {
+    setStatusNew4Comment: function(id) {
         if (!id) {
             return;
         }
@@ -6178,7 +6178,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#comment_status_' + id).html('new');
                 $('#comment_status_' + id).removeAttr("class")
                     .addClass('us-item-status-new');
@@ -6187,7 +6187,7 @@ UserStory.prototype = {
             }
         });
     },
-    addTaskTypeDetails: function (filename) {
+    addTaskTypeDetails: function(filename) {
         if ($('#addTaskType_tasktype').val().length === 0) {
             Toaster.showError("Task Type is not selected!");
             return;
@@ -6242,7 +6242,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
                 that.addSourcedIconToUserStory(res);
                 that.loadBacklogTask(res);
@@ -6260,12 +6260,12 @@ UserStory.prototype = {
                 }
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    toggleInsertNewTaskTypeComment: function () {
+    toggleInsertNewTaskTypeComment: function() {
         var id = 'addTaskType_showcomment';
         var checked = $("input[id=" + id + "]:checked").length;
         if (checked === 1) {
@@ -6274,14 +6274,14 @@ UserStory.prototype = {
             $('.addtasktype_toggle').hide();
         }
     },
-    addSourcedIconToUserStory: function (res) {
+    addSourcedIconToUserStory: function(res) {
         var st = '';
         if (res.kv.isSourced === "true") {
             //            st = ' <i class="fa fa-cube" style="color: darkred;">&nbsp;</i>';
         }
         $('#container-us-body').find('.us-selected').first().find('span').first().html((st));
     },
-    addBindedIconToUserStoryById: function (id, isSourced, changeIt) {
+    addBindedIconToUserStoryById: function(id, isSourced, changeIt) {
         var st = '';
         if (isSourced === '1') {
             return;
@@ -6291,20 +6291,20 @@ UserStory.prototype = {
 
         $('#container-us-body').find('tr[sid=' + id + ']').first().find('.isSourced').first().html(st);
     },
-    refreshCurrentBacklogById: function (id) {
+    refreshCurrentBacklogById: function(id) {
         $('#container-us-body').find('tr[sid=' + id + ']').first().find('a').first().click();
     },
-    refreshCurrentBacklog: function () {
+    refreshCurrentBacklog: function() {
         if (global_var.current_backlog_id.length > 0 &&
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').html()) {
-            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().each(function () {});
+            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().each(function() {});
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().find('a').first().focus();
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().find('a').first().click();
         } else {
             this.clickFirstUserStory();
         }
     },
-    toggleDetailedFilter: function (e) {
+    toggleDetailedFilter: function(e) {
         //        if ($(e).is(":checked")) {
         //            $('#us_detailed_filter_div').show();
         if ($('.drop-filter-menu').hasClass('show')) {
@@ -6326,23 +6326,23 @@ UserStory.prototype = {
         //            }
         //        }
     },
-    changeStatusIconOfUserStory: function (res) {
+    changeStatusIconOfUserStory: function(res) {
         var st = '<div class="us-list-item   us-item-status-' +
             replaceTags(res.kv.backlogStatus) + '">' +
             replaceTags(res.kv.backlogStatus) + '</div>';
         $('#container-us-body').find('.us-selected').first().find('.backlog-status').first().html(st);
     },
-    changeStatusIconOfUserStoryByStoryId: function (id, status) {
+    changeStatusIconOfUserStoryByStoryId: function(id, status) {
         var st = '<div class="us-list-item   us-item-status-' + replaceTags(status) + '">' + replaceTags(status) + '</div>';
         $('#container-us-body').find('tr[sid=' + id + ']').first().find('.backlog-status').first().html(st);
     },
-    showNofityBugModal: function (e) {
+    showNofityBugModal: function(e) {
         $('#notifyBacklogTaskBug').val('');
     },
-    showNofityBugModal: function (e) {
+    showNofityBugModal: function(e) {
         $('#notifyBacklogTaskUpdate').val('');
     },
-    notifyUpdate4BacklogTask: function () {
+    notifyUpdate4BacklogTask: function() {
         if ($('#notifyBacklogTaskUpdate').val().trim().length === 0) {
             Toaster.showError("Please enter description of the Update!");
             return;
@@ -6365,7 +6365,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogTask(res);
                 $('#notifyUpdateModal').modal('hide');
                 $('#smb-details-tasks').find('input[id=' + global_var.current_us_task_id + ']').prop("checked", "true");
@@ -6374,12 +6374,12 @@ UserStory.prototype = {
                 that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
                 new Project().getProjectStatList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    notifyBug4BacklogTask: function () {
+    notifyBug4BacklogTask: function() {
 
         if ($('#notifyBacklogTaskBug').val().trim().length === 0) {
             Toaster.showError("Please enter description of the Bug!");
@@ -6404,7 +6404,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogTask(res);
                 $('#notifyBugModal').modal('hide');
                 $('#smb-details-tasks').find('input[id=' + global_var.current_us_task_id + ']').prop("checked", "true");
@@ -6413,12 +6413,12 @@ UserStory.prototype = {
                 that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
                 new Project().getProjectStatList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateTaskType: function () {
+    updateTaskType: function() {
         if ($('#updateTaskType_id').val().length === 0) {
             Toaster.showError("Task is not selected!");
             return;
@@ -6468,7 +6468,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
                 $('#updateTaskTypeModal').modal('hide');
                 $('#smb-details-tasks').find('input[id=' + $('#updateTaskType_id').val() + ']').prop("checked", "true");
@@ -6479,17 +6479,17 @@ UserStory.prototype = {
                 new Project().getProjectStatList();
                 that.loadBacklogTask(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    showUpdateBacklogTaskModal: function (id) {
+    showUpdateBacklogTaskModal: function(id) {
         this.updateAssigneeToTaskType();
         this.updateTaskTypesToCombo();
         this.getBacklogTaskInfo(id);
     },
-    getBacklogTaskInfo: function (id) {
+    getBacklogTaskInfo: function(id) {
         var json = {
             kv: {}
         };
@@ -6506,15 +6506,15 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getBacklogTaskInfoDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         })
     },
-    getBacklogTaskInfoDetails: function (res) {
+    getBacklogTaskInfoDetails: function(res) {
         $('#updateTaskType_id').val(replaceTags(res.tbl[0].r[0].id));
         $('#updateTaskType_assignee').val(replaceTags(res.tbl[0].r[0].fkAssigneeId));
         $('#updateTaskType_tasktype').val(replaceTags(res.tbl[0].r[0].fkTaskTypeId));
@@ -6525,17 +6525,17 @@ UserStory.prototype = {
         $('#updateTaskType_status').val(replaceTags(res.tbl[0].r[0].taskStatus));
         //        this.getBacklogTaskInfoDetails4Notifier(res);
     },
-    getBacklogTaskInfoDetails4Notifier: function (res) {
+    getBacklogTaskInfoDetails4Notifier: function(res) {
         var obj = res.tbl[0].r[0].fkNotifierId.split('%IN%');
         //        console.log('notifier='+obj);
         for (var n = 0; n < obj.length; n++) {
-            $('#updateTaskTypeModal').find('input[id=' + obj[n] + ']').each(function () {
+            $('#updateTaskTypeModal').find('input[id=' + obj[n] + ']').each(function() {
                 //                console.log('val='+$(this).val());
                 $(this).prop('checked', true);
             });
         }
     },
-    deleteBacklogTask: function (id) {
+    deleteBacklogTask: function(id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -6559,7 +6559,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SATask.deleteTask(id);
                 SATask.RemoveFromOrderNo(id);
                 $('.task-card-UserStory-edit-exit').click();
@@ -6571,12 +6571,12 @@ UserStory.prototype = {
                 //                that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
                 //                new Project().getProjectStatList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadBacklogTask: function () {
+    loadBacklogTask: function() {
         var json = {
             kv: {}
         };
@@ -6593,18 +6593,18 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogTaskDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    toggleBacklogTaskListItem: function (e) {
+    toggleBacklogTaskListItem: function(e) {
 
     },
-    setUSTaskAsOngoing: function (task_id) {
+    setUSTaskAsOngoing: function(task_id) {
         if (!task_id) {
             return;
         }
@@ -6626,7 +6626,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogTask();
                 $('#smb-details-tasks').find('input[id=' + global_var.current_us_task_id + ']').prop("checked", "true");
                 that.backlogTaskListItemCheck($('#smb-details-tasks').find('input[id=' + global_var.current_us_task_id + ']').first());
@@ -6634,17 +6634,17 @@ UserStory.prototype = {
                 that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
                 new Project().getProjectStatList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    showCloseBacklogTaskModal: function (id) {
+    showCloseBacklogTaskModal: function(id) {
         $('#closeBacklogTask_spenthours').attr('pid', id);
         Utility.focus('closeBacklogTask_spenthours');
         //        $('#').focus();
     },
-    closeBacklogTask: function (e) {
+    closeBacklogTask: function(e) {
         if (!$('#closeBacklogTask_spenthours').val()) {
             Toaster.showError("Please enter Spent Hour(s)!");
             return;
@@ -6668,7 +6668,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#closeBacklogTaskModal').modal('hide')
                 that.refreshCurrentBacklog();
                 $('#smb-details-tasks').find('input[id=' + global_var.current_us_task_id + ']').prop("checked", "true");
@@ -6677,12 +6677,12 @@ UserStory.prototype = {
                 that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
                 new Project().getProjectStatList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    backlogTaskListItemCheck: function (e) {
+    backlogTaskListItemCheck: function(e) {
         //       '<input class="backlogTaskListItemChecked" onclick="new UserStory().backlogTaskListItemCheck(this)" type="checkbox" id="' + obj[n].id + '">')).
         //               var checked = $("input[id=" + id + "]:checked").length;
         if ($(e).is(":checked")) {
@@ -6703,16 +6703,16 @@ UserStory.prototype = {
             }
         } else {
             $('.us-task-enable').attr("style", "pointer-events:none;color:gray;")
-            //            global_var.current_us_task_id = '';
-            //            Utility.addParamToUrl('current_us_task_id', global_var.current_us_task_id);
+                //            global_var.current_us_task_id = '';
+                //            Utility.addParamToUrl('current_us_task_id', global_var.current_us_task_id);
         }
 
 
     },
-    backlogTaskListItemCheckEventTrue: function () {
+    backlogTaskListItemCheckEventTrue: function() {
 
     },
-    taskStart: function (id, el) {
+    taskStart: function(id, el) {
         if (!id) {
             return;
         }
@@ -6735,16 +6735,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                that.loadBacklogTask();
                 that.refreshCurrentBacklog();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError(('somethingww'));
             }
         });
     },
-    taskStop: function (id, el) {
+    taskStop: function(id, el) {
         if (!id) {
             return;
         }
@@ -6767,16 +6767,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                that.loadBacklogTask();
                 that.refreshCurrentBacklog();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError(('somethingww'));
             }
         });
     },
-    getStartTimeDiff: function (startDate, currentDate, startTime, currentTime) {
+    getStartTimeDiff: function(startDate, currentDate, startTime, currentTime) {
         if (!startDate || !currentDate || !startTime || !currentTime) {
             return;
         }
@@ -6801,16 +6801,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 r = res.kv.diff;
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError(('somethingww'));
             }
         });
         return r;
     },
-    loadBacklogTaskDetails: function (res) {
+    loadBacklogTaskDetails: function(res) {
         //        console.log('json->'+JSON.stringify(res));
         $('#tblBacklogTaskList > tbody').html("");
         try {
@@ -6932,7 +6932,7 @@ UserStory.prototype = {
                         .attr("style", "text-align: center")
                         .html(replaceTags(obj[n].dependentTaskType1Name) + "<br>" + replaceTags(obj[n].dependentTaskType2Name)))
 
-                    .append($("<td></td>")
+                .append($("<td></td>")
                         .addClass('align-middle')
                         .attr("style", "text-align: center;font-size:19px;")
                         .html($('<a></a>')
@@ -7016,7 +7016,7 @@ UserStory.prototype = {
             this.setEmplyTaskListMessage();
         }
     },
-    setEmplyTaskListMessage: function () {
+    setEmplyTaskListMessage: function() {
         $('#tblBacklogTaskList > tbody').html('');
         var innerHTML = '<tr><td colspan="12" style="padding:30px;text-align:center">' +
             '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
@@ -7026,15 +7026,15 @@ UserStory.prototype = {
             '</td></tr>';
         $('#tblBacklogTaskList > tbody').html(innerHTML);
     },
-    toggleCommentLines: function (id) {
+    toggleCommentLines: function(id) {
         $('#div_' + id).toggle();
     },
-    addTaskTypeModal: function () {
+    addTaskTypeModal: function() {
         this.addTaskTypesToCombo();
         this.addAssigneeToTaskType();
         setGlobalActiveCanvas(global_var.canvas.taskType);
     },
-    addAssigneeToTaskType: function () {
+    addAssigneeToTaskType: function() {
         var json = {
             kv: {}
         };
@@ -7052,16 +7052,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.addAssigneeToTaskTypeDetails(res);
                 that.addNotifieroTaskTypeDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateAssigneeToTaskType: function () {
+    updateAssigneeToTaskType: function() {
         var json = {
             kv: {}
         };
@@ -7079,16 +7079,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.updateAssigneeToTaskTypeDetails(res);
                 that.updateNotifieroTaskTypeDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateAssigneeToTaskTypeDetails: function (res) {
+    updateAssigneeToTaskTypeDetails: function(res) {
         $('#updateTaskType_assignee').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -7097,7 +7097,7 @@ UserStory.prototype = {
                 .text(obj[n].userName));
         }
     },
-    updateNotifieroTaskTypeDetails: function (res) {
+    updateNotifieroTaskTypeDetails: function(res) {
         $('#updateTaskType_notifier').html("");
         var obj = res.tbl[0].r;
         var st = "";
@@ -7115,7 +7115,7 @@ UserStory.prototype = {
         st += '</table>';
         $('#updateTaskType_notifier').html((st));
     },
-    addAssigneeToTaskTypeDetails: function (res) {
+    addAssigneeToTaskTypeDetails: function(res) {
         $('#addTaskType_assignee').html("");
         try {
             var obj = res.tbl[0].r;
@@ -7126,7 +7126,7 @@ UserStory.prototype = {
             }
         } catch (e) {}
     },
-    addNotifieroTaskTypeDetails: function (res) {
+    addNotifieroTaskTypeDetails: function(res) {
         $('#addTaskType_notifier').html("");
         var st = "";
         try {
@@ -7146,7 +7146,7 @@ UserStory.prototype = {
         } catch (e) {}
         $('#addTaskType_notifier').html(st);
     },
-    addTaskTypesToCombo: function () {
+    addTaskTypesToCombo: function() {
         var json = {
             kv: {}
         };
@@ -7164,16 +7164,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.addTaskTypesToComboDetails(res);
                 that.addTaskTypes1_2ToComboDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateTaskTypesToCombo: function () {
+    updateTaskTypesToCombo: function() {
         var json = {
             kv: {}
         };
@@ -7191,16 +7191,16 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.addTaskTypesToComboDetails4Update(res);
                 that.addTaskTypes1_2ToComboDetails4Update(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addTaskTypes1_2ToComboDetails: function (res) {
+    addTaskTypes1_2ToComboDetails: function(res) {
         $('#addTaskType_tasktype1').html("");
         $('#addTaskType_tasktype2').html("");
         $('#addTaskType_tasktype1').append($("<option></option>").attr("value", '').text(''));
@@ -7215,7 +7215,7 @@ UserStory.prototype = {
                 .text(replaceTags(obj[n].typeName)));
         }
     },
-    addTaskTypes1_2ToComboDetails4Update: function (res) {
+    addTaskTypes1_2ToComboDetails4Update: function(res) {
         $('#updateTaskType_tasktype1').html("");
         $('#updateTaskType_tasktype2').html("");
         $('#updateTaskType_tasktype1').append($("<option></option>").attr("value", '').text(''));
@@ -7230,7 +7230,7 @@ UserStory.prototype = {
                 .text(replaceTags(obj[n].typeName)));
         }
     },
-    addTaskTypesToComboDetails: function (res) {
+    addTaskTypesToComboDetails: function(res) {
         $('#addTaskType_tasktype').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -7239,7 +7239,7 @@ UserStory.prototype = {
                 .text(replaceTags(obj[n].typeName)));
         }
     },
-    addTaskTypesToComboDetails4Update: function (res) {
+    addTaskTypesToComboDetails4Update: function(res) {
         $('#updateTaskType_tasktype').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -7248,14 +7248,14 @@ UserStory.prototype = {
                 .text(replaceTags(obj[n].typeName)));
         }
     },
-    check4Inputs: function () {
+    check4Inputs: function() {
         var f = true;
         if (this.getStory().trim().length == 0) {
             new Notification("Story is not entered!").showInComponent('backlogName');
             throw "Story is not entered!";
         }
     },
-    insertNewInputDescription: function () {
+    insertNewInputDescription: function() {
         if (global_var.current_us_input_id.length === 0) {
             Toaster.showError("User Story Input is not selected!");
             return;
@@ -7284,7 +7284,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SAInputDesc.addInputDescriptionByRes(res);
 
@@ -7294,17 +7294,17 @@ UserStory.prototype = {
                 $('#us-ipo-inputdescription').val('');
                 $('#us-ipo-inputdescription').focus();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    insertNewInputDescriptionNew: function (el, inputId) {
+    insertNewInputDescriptionNew: function(el, inputId) {
         this.insertNewInputDescriptionNewDetailsNew(el, inputId);
     },
 
-    insertNewInputDescriptionNewDetailsNew: function (el, inputId) {
+    insertNewInputDescriptionNewDetailsNew: function(el, inputId) {
         if (inputId.length === 0) {
             Toaster.showError("User Story Input is not selected!");
             return;
@@ -7333,7 +7333,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
 
                 var id = res.kv.id;
@@ -7351,14 +7351,14 @@ UserStory.prototype = {
 
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
 
     },
 
-    insertNewInputDescriptionNewDetails: function (el, inputId) {
+    insertNewInputDescriptionNewDetails: function(el, inputId) {
         if (inputId.length === 0) {
             Toaster.showError("User Story Input is not selected!");
             return;
@@ -7387,7 +7387,7 @@ UserStory.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SAInputDesc.addInputDescriptionByRes(res);
 
@@ -7424,14 +7424,14 @@ UserStory.prototype = {
                 $(el).focus();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         $(el).focus();
     },
 
-    setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew: function (res) {
+    setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew: function(res) {
         //        res = replaceJSON(res);
         $('#generalview_input_list').html('');
         //        try {
@@ -7448,7 +7448,7 @@ UserStory.prototype = {
          this.getEventListApi();
         $(".description-style-background").sortable({
             handle: ".iconDrag",
-            update: function (event, ui) {
+            update: function(event, ui) {
                 dragDesctInputChangeOrder(ui.item)
             }
 
@@ -7493,7 +7493,7 @@ UserStory.prototype = {
             // .addClass('table-hover')
             .addClass('spilted')
 
-            .attr('border', '1')
+        .attr('border', '1')
             .attr('style', 'border:1px solid #cccccc ;margin: 0 auto;');
 
 
@@ -7568,7 +7568,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             );
 
 
-            $("#iid" + obj[i].id).keyup(function (event) {
+            $("#iid" + obj[i].id).keyup(function(event) {
                 if (event.keyCode === 13) {
                     new UserStory().insertNewInputDescriptionNew(this, obj[i].id);
                 }
@@ -7588,10 +7588,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         return div;
     },
 
-    refreshCurrentInput: function () {
+    refreshCurrentInput: function() {
         $('#ipo_tr_' + global_var.current_us_input_id).click();
     },
-    insertNewOutput: function () {
+    insertNewOutput: function() {
         if (global_var.current_backlog_id.length === 0) {
             Toaster.showError("User Story is not selected!");
             return;
@@ -7621,7 +7621,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.addInputByRes(res);
                 SACore.addBacklogByRes(res);
 
@@ -7634,12 +7634,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#us-ipo-inputname-output').val("");
                 $('#us-ipo-inputname-output').focus();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    insertNewInput: function () {
+    insertNewInput: function() {
         if (global_var.current_backlog_id.length === 0) {
             Toaster.showError("User Story is not selected!");
             return;
@@ -7654,7 +7654,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         //        this.genGUIDesign();
         dragResize()
     },
-    insertNewInputNew: function (el, action) {
+    insertNewInputNew: function(el, action) {
         action = (action) ? action : "IN"
 
         this.insertNewInputNewBody(el, action);
@@ -7663,7 +7663,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    insertNewInputNewBody: function (el, action) {
+    insertNewInputNewBody: function(el, action) {
         var inputName = $(el).val();
         if (global_var.current_backlog_id.length === 0) {
             Toaster.showError("User Story is not selected!");
@@ -7697,7 +7697,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
 
                 SAInput.addInputByRes(res);
@@ -7731,7 +7731,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 // refreshLiveProtytypeView();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('Input/Output  isn\'t inserted successfully! ')
             }
         });
@@ -7742,12 +7742,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         dragResize();
     },
 
-    setStoryCardOutput: function (res) {
+    setStoryCardOutput: function(res) {
         $('#generalview_output_list').html('');
         $('#generalview_output_list').html(this.getStoryCardOutputList(res));
     },
 
-    loadSection4Input: function () {
+    loadSection4Input: function() {
         if (global_var.current_backlog_id.length === 0) {
             return;
         }
@@ -7769,12 +7769,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadSection4InputDetails(res);
             }
         });
     },
-    toggleRelatedUS4UnputComponent: function () {
+    toggleRelatedUS4UnputComponent: function() {
         var action = $('.us-gui-component-action').val();
         if (gui_component.actions.actionList4RelatedSUSList.includes(action)) {
             $('.us-gui-component-rel-sus-div').show();
@@ -7782,7 +7782,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('.us-gui-component-rel-sus-div').hide();
         }
     },
-    toggleSection4UnputComponent: function () {
+    toggleSection4UnputComponent: function() {
         var action = $('.us-gui-component-action').val();
         if (gui_component.actions.actionList4InSection.includes(action)) {
             $('.us-gui-component-in-section-div').show();
@@ -7790,14 +7790,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('.us-gui-component-in-section-div').hide();
         }
     },
-    toggleSectionAndRelUS: function () {
+    toggleSectionAndRelUS: function() {
         this.toggleSection4UnputComponent();
         this.toggleRelatedUS4UnputComponent();
         this.togglecomponentEventDetailsCore();
 
     },
 
-    loadSUSList4Input: function () {
+    loadSUSList4Input: function() {
 
         var json = {
             kv: {}
@@ -7817,13 +7817,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadSUSList4InputDetails(res);
             }
         });
     },
 
-    loadSUSDescription: function () {
+    loadSUSDescription: function() {
         $('#txtSUS_IPO_description').val('');
         if (global_var.current_backlog_id.length === 0) {
             Toaster.showError("User Story is not selected!");
@@ -7847,12 +7847,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     $('#txtSUS_IPO_description').val(replaceMainTrustedTags(replaceTags(res.tbl[0].r[0].descriptionSourced)));
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError(('somethingww'));
             }
         });
@@ -7860,7 +7860,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     loadSUSList4InputDetails4Select() {
 
     },
-    loadSUSList4InputDetails: function (res) {
+    loadSUSList4InputDetails: function(res) {
         return
         try {
 
@@ -7879,7 +7879,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             slct.selectpicker('refresh');
         } catch (err) {}
     },
-    loadSection4InputDetails: function (res) {
+    loadSection4InputDetails: function(res) {
         try {
             $('.us-gui-component-in-section').html("");
             var obj = res.tbl[0].r;
@@ -7893,7 +7893,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         } catch (err) {}
     },
-    getOutputBySUSId: function (e) {
+    getOutputBySUSId: function(e) {
         if (!$(e).val()) {
             return;
         }
@@ -7915,16 +7915,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getOutputBySUSIdDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    addNewStoryCard: function () {
+    addNewStoryCard: function() {
         var val = $('#addRelatedSourceModal-new').val();
         if (!val) {
             return;
@@ -7948,7 +7948,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.addBacklogByRes(res);
                 SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
 
@@ -7970,13 +7970,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#addRelatedSourceModal-new').val('');
                 //                
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    getOutputByAPI: function (e) {
+    getOutputByAPI: function(e) {
 
 
         if (!$(e).val()) {
@@ -8005,7 +8005,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.loadAPIOutput4SelectNewDemo($(e).val());
     },
 
-    loadAPIOutput4SelectNewDemo: function (val) {
+    loadAPIOutput4SelectNewDemo: function(val) {
         $('#sus-api-output-id').html("");
         $('#sus-api-output-id')
             .append($("<option></option>").val('').text(''))
@@ -8032,16 +8032,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getOutputByAPIDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    getOutputByAPI4Send: function (e) {
+    getOutputByAPI4Send: function(e) {
         if (!$(e).val()) {
             return;
         }
@@ -8066,16 +8066,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getOutputByAPI4SendDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    getOutputBySUSIdWithoutUpdate: function (id) {
+    getOutputBySUSIdWithoutUpdate: function(id) {
         if (!id) {
             return;
         }
@@ -8096,16 +8096,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getOutputBySUSIdDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    getOutputByAPI4SendDetails: function (res) {
+    getOutputByAPI4SendDetails: function(res) {
         $('#sendDataToModal-sus-api-output-id').html("");
         var obj = res.tbl[0].r;
         $('#sendDataToModal-sus-api-output-id');
@@ -8116,7 +8116,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    changeAPI4Send: function (el) {
+    changeAPI4Send: function(el) {
         $('.create-new-output-sc-4-select').hide();
         if ($(el).val() === '-2') {
             $('.create-new-output-sc-4-select').show();
@@ -8124,7 +8124,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    addNewApiOutput: function (el) {
+    addNewApiOutput: function(el) {
         var action = $('#us-related-api-input-actiontype').val() === 'send' ? "IN" : "OUT";
         var inputName = $('#addRelatedSourceModal-new-output').val();
         var backlogId = $('#us-related-apis').val();
@@ -8160,7 +8160,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.addInputByRes(res);
                 //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
@@ -8172,14 +8172,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('Input/Output  isn\'t inserted successfully! ')
             }
         });
 
 
     },
-    getOutputByAPIDetails: function (res) {
+    getOutputByAPIDetails: function(res) {
         try {
             $('#sus-api-output-id').html("");
 
@@ -8201,7 +8201,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             .append($("<option disabled></option>").val('').text(''));
 
     },
-    getOutputBySUSIdDetails: function (res) {
+    getOutputBySUSIdDetails: function(res) {
         $('#sus-output-id').html("");
         var obj = res.tbl[0].r;
         $('#sus-output-id');
@@ -8212,7 +8212,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    updateInputBySUSId: function (e) {
+    updateInputBySUSId: function(e) {
         if (global_var.current_us_input_id.length === 0) {
             Toaster.showError("User Story Input is not selected!");
             return;
@@ -8235,28 +8235,28 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                closeModal('addRelatedSUSOutputModal');
                 //do something here
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    inputDescClearAll: function () {
+    inputDescClearAll: function() {
         $('.indesc_general').val('');
         $('#indesc_checkall').prop("checked", true);
         $('#indesc_checkall').click();
     },
-    inputDescCheckAll: function () {
+    inputDescCheckAll: function() {
         if ($('#indesc_checkall').is(":checked")) {
             $('.indesc_check').prop("checked", true).change();
         } else {
             $('.indesc_check').prop("checked", false).change();
         }
     },
-    fnline2Text4Idesc: function (fnline) {
+    fnline2Text4Idesc: function(fnline) {
         var res = fnline;
 
         if (fnline.startsWith('fn_(')) {
@@ -8277,7 +8277,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         return res;
     },
-    fnline2Text: function (fnline) {
+    fnline2Text: function(fnline) {
         var res = fnline;
 
         if (fnline.startsWith('fn_(')) {
@@ -8300,7 +8300,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         return res;
     },
-    fnlineEventText: function (fnline) {
+    fnlineEventText: function(fnline) {
         var res = fnline;
         var sp = $("<div>")
         if (fnline.startsWith('fn_event(')) {
@@ -8350,38 +8350,38 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         return res;
     },
-    getCheckedInputsNew: function () {
+    getCheckedInputsNew: function() {
         var checkedInputIds = "";
-        $('.us-input-list-item-check-box-class-new').each(function (e) {
+        $('.us-input-list-item-check-box-class-new').each(function(e) {
             checkedInputIds += (checkedInputIds.length > 0) ? "," : "";
             checkedInputIds += $(this).is(':checked') ? $(this).val() : "";
         });
         return checkedInputIds;
     },
-    getCheckedOutputsNew: function () {
+    getCheckedOutputsNew: function() {
         var checkedInputIds = "";
-        $('.us-output-list-item-check-box-class-new').each(function (e) {
+        $('.us-output-list-item-check-box-class-new').each(function(e) {
             checkedInputIds += (checkedInputIds.length > 0) ? "," : "";
             checkedInputIds += $(this).is(':checked') ? $(this).val() : "";
         });
         return checkedInputIds;
     },
-    getCheckedInputs: function () {
+    getCheckedInputs: function() {
         var checkedInputIds = "";
-        $('.us-input-list-item-check-box-class').each(function (e) {
+        $('.us-input-list-item-check-box-class').each(function(e) {
             checkedInputIds += (checkedInputIds.length > 0) ? "," : "";
             checkedInputIds += $(this).is(':checked') ? $(this).val() : "";
         });
         return checkedInputIds;
     },
-    getCheckedInputList: function () {
+    getCheckedInputList: function() {
         var checkedInputIds = [];
-        $('.us-input-list-item-check-box-class').each(function (e) {
+        $('.us-input-list-item-check-box-class').each(function(e) {
             $(this).is(':checked') ? checkedInputIds.push($(this).val()) : "";
         });
         return checkedInputIds;
     },
-    addExistingRelation: function () {
+    addExistingRelation: function() {
         var inputId = $('#us-related-input-id').val();
         inputId = (inputId) ? inputId : global_var.current_us_input_id;
         if ($('#sus-output-id').val()) {
@@ -8389,7 +8389,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    addInputDescCriterias: function () {
+    addInputDescCriterias: function() {
         if (!global_var.active_input_desc_type) {
             return;
         }
@@ -8412,7 +8412,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }]
         };
         json.kv.cookie = getToken();
-        $('.indesc_check:checked').each(function () {
+        $('.indesc_check:checked').each(function() {
             var ln = "";
 
             if ($(this).attr("fn") && $(this).attr("fn") !== 'undefined') {
@@ -8446,7 +8446,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 loadBacklogProductionDetailsById_inputDesc(res);
                 loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
@@ -8466,7 +8466,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    updateInputBySUSOutputId: function (inputId) {
+    updateInputBySUSOutputId: function(inputId) {
         if (inputId.length === 0) {
             Toaster.showError("User Story Input is not selected!");
             return;
@@ -8491,7 +8491,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
 
@@ -8524,12 +8524,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteInputBySUSOutputId: function (fkInputId, el) {
+    deleteInputBySUSOutputId: function(fkInputId, el) {
 
         var inputId = (fkInputId) ? fkInputId :
             global_var.current_us_input_id;
@@ -8551,7 +8551,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 loadCurrentBacklogProdDetails();
                 loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
@@ -8562,12 +8562,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('.relatedUserStory').html("");
                 $(el).closest('span').remove();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateSUSDesc: function (e) {
+    updateSUSDesc: function(e) {
         if (global_var.current_backlog_id.length === 0) {
             Toaster.showError("User Story is not selected!");
             return;
@@ -8590,20 +8590,20 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 //do something here
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    insertNewInputTotalBody: function (json) {
+    insertNewInputTotalBody: function(json) {
 
     },
 
-    insertNewInputTotal: function () {
+    insertNewInputTotal: function() {
         var iname = $('#us-ipo-inputname').val();
         var json = {
             kv: {}
@@ -8628,7 +8628,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.addInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
@@ -8657,7 +8657,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 global_var.input_insert_component = "";
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError("Input '" + iname + '" isn\'t inserted successfully! ')
             }
         });
@@ -8667,19 +8667,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#us-ipo-inputname').focus();
     },
 
-    generateGUIGeneral: function () {
+    generateGUIGeneral: function() {
         //generate GUI
         var st = this.getGUIDesignHTMLPure(SAInput.toJSON());
         this.setGUIDesigns(st);
         dragResize();
     },
 
-    setGUIDesigns: function (designHTML) {
+    setGUIDesigns: function(designHTML) {
         $('#SUS_IPO_GUI_Design').html(designHTML);
         this.setGeneralGUIDesign(designHTML);
     },
 
-    setGeneralGUIDesign: function (designHTML) {
+    setGeneralGUIDesign: function(designHTML) {
         $('#gui_all_' + global_var.current_backlog_id).find('.redirectClass').html(designHTML);
         var hdiv = $('#gui_all_' + global_var.current_backlog_id).find('.redirectClass').height();
         $('#gui_all_' + global_var.current_backlog_id).height(hdiv + 50);
@@ -8689,7 +8689,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    insertSuplementaryOfNewInputTotal: function (inputId, inputName) {
+    insertSuplementaryOfNewInputTotal: function(inputId, inputName) {
         var json = {
             kv: {}
         };
@@ -8706,24 +8706,24 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.hasError === '1') {
                     Toaster.showError("Input '" + inputName + '" isn\'t inserted successfully! ');
                     return;
                 }
                 that.addSourcedIconToUserStory(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError("Input '" + inputName + '" isn\'t inserted successfully! ')
             }
         });
 
 
     },
-    clearIPOTablename: function () {
+    clearIPOTablename: function() {
         $('#us-ipo-inputname-table').val('');
     },
-    updateInputByAttr: function (e, type) {
+    updateInputByAttr: function(e, type) {
         var id = $(e).attr('pid');
         if (!id) {
             return;
@@ -8746,7 +8746,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         this.updateInput(json, srv, e, type, id);
     },
-    updateInput: function (json, srv, e, type, id) {
+    updateInput: function(json, srv, e, type, id) {
 
         var that = this;
         var data = JSON.stringify(json);
@@ -8757,7 +8757,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.addInputByRes(res);
                 loadCurrentBacklogProdDetails();
 
@@ -8783,12 +8783,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#us-ipo-input-id').val('');
                 //                $('#us-ipo-inputname').focus();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateOutput: function (e) {
+    updateOutput: function(e) {
         var id = $(e).attr('pid');
         if (id.trim().length == 0) {
             return;
@@ -8817,7 +8817,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 $(e).closest('td').attr('idesc', $(e).val());
                 $(e).closest('td').html($(e).val());
@@ -8825,7 +8825,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         });
     },
-    updateInputDesc: function (e) {
+    updateInputDesc: function(e) {
         var id = $(e).attr('pid');
         if (id.trim().length == 0) {
             return;
@@ -8854,17 +8854,17 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 SAInputDesc.updateInputDescriptionByRes(res);
                 that.genIPOInputDescList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setGUICanvasContent: function () {
+    setGUICanvasContent: function() {
 
         if (global_var.current_backlog_id.length === 0) {
             return;
@@ -8887,18 +8887,18 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 loadCurrentBacklogProdDetails();
 
                 that.setGuiMainWindowsParam1($('#gui_input_css_style_canvas').val());
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setGUIComponentContentSingle: function () {
+    setGUIComponentContentSingle: function() {
 
         if (global_var.current_us_input_id.length === 0) {
             return;
@@ -8931,7 +8931,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 // $('#userstory-gui-input-component-type-content').modal('hide');
                 that.genGUIDesign();
@@ -8939,7 +8939,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetails();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
                     After refresh it effect will be disappear.');
             }
@@ -8947,7 +8947,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         this.updateInputOnChange();
     },
-    setGUIComponentContent: function () {
+    setGUIComponentContent: function() {
 
         if (global_var.current_us_input_id.length === 0) {
             return;
@@ -8980,7 +8980,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 $('#userstory-gui-input-component-type-content').modal('hide');
                 //                that.genGUIDesign();
@@ -8988,7 +8988,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetails();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
                     After refresh this effect will be disappear.');
             }
@@ -8996,7 +8996,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         this.updateInputOnChangeAndRefresh();
     },
-    getInputCSS: function () {
+    getInputCSS: function() {
 
         var st = "";
         st += "font-size:" + $('#gui_input_font_size').val() + "px;";
@@ -9012,7 +9012,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
         return st;
     },
-    setGUIComponentRelSUS: function (el) {
+    setGUIComponentRelSUS: function(el) {
         if (global_var.current_us_input_id.length === 0) {
             return;
         }
@@ -9045,7 +9045,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 that.genGUIDesign();
@@ -9058,7 +9058,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         this.updateInputOnChangeAndRefresh();
     },
-    setGUIComponentRelSUSInSection: function (el) {
+    setGUIComponentRelSUSInSection: function(el) {
         if (global_var.current_us_input_id.length === 0) {
             return;
         }
@@ -9088,7 +9088,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 that.loadSection4InputDetails(res);
@@ -9097,7 +9097,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         });
     },
-    manageIPOAndSetting: function (arg) {
+    manageIPOAndSetting: function(arg) {
         if (arg === 'component') {
             $('#gui_design_component_custom_style').show();
             $('#gui_design_container_custom_style').hide();
@@ -9108,7 +9108,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('#gui_design_container_custom_style').show();
         }
     },
-    setGUIComponentContentModal: function (e) {
+    setGUIComponentContentModal: function(e) {
 
         $('.input-css-opt').attr('style', 'cursor: pointer;font-size:15px;color:blue;display:block;');
         //        $('.input-css-opt').show();
@@ -9137,7 +9137,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 try {
                     $('#gui_input_content').val((res.tbl[0].r[0].inputContent));
@@ -9149,12 +9149,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 //refresh GUI component 
                 //                that.genGUIDesign();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setGUI_CSS: function (arg) {
+    setGUI_CSS: function(arg) {
         try {
             $('#gui_input_font_size').val("12");
             $('#gui_input_width').val("100");
@@ -9189,7 +9189,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         } catch (e) {}
     },
-    setGUIComponentOrderNo: function (e) {
+    setGUIComponentOrderNo: function(e) {
         var s = $(e).val();
         if (!s) {
             return;
@@ -9225,7 +9225,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 loadCurrentBacklogProdDetails();
@@ -9233,14 +9233,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 that.genGUIDesign();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
                     After refresh it effect will be disappear.');
             }
         });
         this.updateInputOnChangeAndRefresh();
-    },    
-    setGUIComponentOrderNoByDrugDrop: function (inputId, index) {
+    },
+    setGUIComponentOrderNoByDrugDrop: function(inputId, index) {
 
         if (!index) {
             return;
@@ -9272,16 +9272,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //refresh GUI component 
                 that.genGUIDesign();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setGUIComponentCellNoNoRefresh: function (e) {
+    setGUIComponentCellNoNoRefresh: function(e) {
         var s = $(e).val();
         if (!s) {
             return;
@@ -9312,14 +9312,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 loadCurrentBacklogProdDetailsSyncrone();
 
                 //refresh GUI component 
                 //                that.genGUIDesign();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
                     After refresh it effect will be disappear.');
             }
@@ -9329,7 +9329,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.updateInputOnChange();
 
     },
-    setGUIComponentCellNo: function (e) {
+    setGUIComponentCellNo: function(e) {
         var s = $(e).val();
         if (!s) {
             return;
@@ -9360,14 +9360,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 loadCurrentBacklogProdDetailsSyncrone();
 
                 //refresh GUI component 
                 //                that.genGUIDesign();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
                     After refresh it effect will be disappear.');
             }
@@ -9376,7 +9376,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.updateInputOnChangeDynamic("cellNo", $('#us-gui-component-cell-no').val());
         this.updateInputOnChangeAndRefresh();
     },
-    setGUIComponentAction: function (e) {
+    setGUIComponentAction: function(e) {
         this.toggleSectionAndRelUS();
         var s = $(e).val();
 
@@ -9409,7 +9409,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 //refresh GUI component 
@@ -9421,11 +9421,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.updateInputOnChange();
     },
 
-    toggleComponentEventDetails: function () {
+    toggleComponentEventDetails: function() {
         this.togglecomponentEventDetailsCore();
         this.toggleSectionAndRelUS();
     },
-    togglecomponentEventDetailsCore: function () {
+    togglecomponentEventDetailsCore: function() {
         if ($('#gui_component_event_details').is(':checked')) {
             $('.event_details').show();
         } else {
@@ -9433,7 +9433,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    setGUIComponentSection: function (e) {
+    setGUIComponentSection: function(e) {
         var s = $(e).val();
         if (!s) {
             return;
@@ -9463,7 +9463,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
@@ -9478,7 +9478,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
     },
-    setGUIComponentEvent: function (e) {
+    setGUIComponentEvent: function(e) {
         var s = $(e).val();
         if (!s) {
             return;
@@ -9505,13 +9505,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //refresh GUI component 
                 that.genGUIDesign();
             }
         });
     },
-    setGUIComponent: function (e) {
+    setGUIComponent: function(e) {
         var s = $(e).val();
         if (!s) {
             return;
@@ -9542,12 +9542,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 loadCurrentBacklogProdDetails();
 
             },
-            error: function (res) {
+            error: function(res) {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
                     After refresh it effect will be disappear.');
             }
@@ -9557,7 +9557,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.updateInputOnChangeAndRefresh();
         this.toggleGUIComponentSelection();
     },
-    updateInputOnChange: function () {
+    updateInputOnChange: function() {
         var id = global_var.current_us_input_id;
         if (!id) {
             return;
@@ -9576,7 +9576,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInput(id, "param4", this.getInputCSS());
     },
 
-    updateInputOnChangeDynamic: function (key, value) {
+    updateInputOnChangeDynamic: function(key, value) {
 
         var checkedList = this.getCheckedInputList();
 
@@ -9587,7 +9587,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInputList(checkedList, key, value);
 
     },
-    updateAllInputOnChange: function () {
+    updateAllInputOnChange: function() {
 
         var checkedList = this.getCheckedInputList();
 
@@ -9608,18 +9608,18 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInputList(checkedList, "param4", this.getInputCSS());
 
     },
-    updateInputOnChangeAndRefresh: function () {
+    updateInputOnChangeAndRefresh: function() {
         this.updateInputOnChange();
         this.genGUIDesign();
 
     },
-    toggleGUIComponentSelection: function () {
+    toggleGUIComponentSelection: function() {
         this.toggleGUIComponentImageUpload();
         this.toggleGUIComponentIconUpload();
         this.toggleGUIComponentSelectBox();
         this.toggleGUIComponentActionCombo();
     },
-    genIPOInputDescList4Select: function () {
+    genIPOInputDescList4Select: function() {
         $('#tblInputDescriptionList > tbody').html('');
         var inputId = global_var.current_us_input_id;
         if (inputId.length === 0) {
@@ -9628,7 +9628,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var res = SAInputDesc.toCurrentDescJSON();
         this.genIPOInputDescListDetails(res);
     },
-    genIPOInputDescList: function () {
+    genIPOInputDescList: function() {
         $('#tblInputDescriptionList > tbody').html('');
         var inputId = global_var.current_us_input_id;
         if (inputId.length === 0) {
@@ -9651,15 +9651,15 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.genIPOInputDescListDetails(res);
             }
         });
     },
-    genIPOInputDescListMain: function () {
+    genIPOInputDescListMain: function() {
 
     },
-    genIPOInputDescListDetails: function (res) {
+    genIPOInputDescListDetails: function(res) {
         var st = this.getHtmlGenIPOInputDescList(res);
         $('#tblInputDescriptionList > tbody').html(st);
         this.setRelatedSUS(res);
@@ -9667,7 +9667,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    getResultOfgenerateHtmlParentDependenceInputListTable: function () {
+    getResultOfgenerateHtmlParentDependenceInputListTable: function() {
         var rs = "";
 
 
@@ -9693,14 +9693,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 rs = res;
             }
         });
 
         return rs;
     },
-    generateHtmlParentDependenceInputListTable: function () {
+    generateHtmlParentDependenceInputListTable: function() {
         var res = this.getResultOfgenerateHtmlParentDependenceInputListTable();
         var st = "";
         try {
@@ -9728,7 +9728,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('.parentRelatedOutput').hide();
         }
     },
-    generateHtmlDependenceInputListTable: function (res) {
+    generateHtmlDependenceInputListTable: function(res) {
 
         var ind = getIndexOfTable(res, 'dependenceInputListTable');
         var st = "";
@@ -9749,7 +9749,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         } catch (e) {}
         return st;
     },
-    genIPOInputList: function () {
+    genIPOInputList: function() {
         $('#tblIPOList > tbody').html('');
         $('#tblInputDescriptionList > tbody').html('');
         $('.inputdesc').attr("style", " pointer-events: none;opacity: 0.4;display:none;");
@@ -9779,19 +9779,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
                 var st = that.getHtmlGenIPOInputList(res);
                 $('#tblIPOList > tbody').html(st);
                 highlightTheSameSelectedFieldsInInputList();
                 $('.us-ipo-input-tr').first().click();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    copyInputs: function () {
+    copyInputs: function() {
         if (!$('#us-list-4-copy-move-inputs').val()) {
             return;
         }
@@ -9818,10 +9818,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SAInput.updateInputByRes(res);
 
@@ -9831,12 +9831,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadBacklogProductionCoreDetailssById($('#us-list-4-copy-move-inputs').val(), true)
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    moveInputs: function () {
+    moveInputs: function() {
         if (!$('#us-list-4-copy-move-inputs').val()) {
             return;
         }
@@ -9864,10 +9864,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SAInput.updateInputByRes(res);
 
@@ -9877,12 +9877,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadBacklogProductionCoreDetailssById($('#us-list-4-copy-move-inputs').val(), true);
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteInputs: function () {
+    deleteInputs: function() {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -9909,22 +9909,22 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function (msg) {
+            beforeSend: function(msg) {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 closeModal('copyMoveInputsModal');
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
-    copyInputsNew: function () {
+    copyInputsNew: function() {
         if (!$('#us-list-4-copy-move-inputs-new').val()) {
             return;
         }
@@ -9953,10 +9953,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SAInput.updateInputByRes(res);
 
@@ -9966,12 +9966,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 hideProgress();
                 closeModal('copyMoveInputsModalNew');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    moveInputsNew: function () {
+    moveInputsNew: function() {
         if (!$('#us-list-4-copy-move-inputs-new').val()) {
             return;
         }
@@ -10001,10 +10001,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SAInput.updateInputByRes(res);
 
@@ -10013,12 +10013,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 hideProgress();
                 closeModal('copyMoveInputsModalNew');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteInputsNew: function () {
+    deleteInputsNew: function() {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -10049,7 +10049,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: true,
 
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
 
                 loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
@@ -10067,19 +10067,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 that.refreshCurrentBacklog();
                 hideProgress();
 
-                $('.us-input-list-item-check-box-class-new').each(function (e) {
+                $('.us-input-list-item-check-box-class-new').each(function(e) {
                     if ($(this).is(':checked')) {
                         $(this).closest('tr').remove();
                     }
                 });
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    setAsOutput: function () {
+    setAsOutput: function() {
         var ids = this.getSelectedInputsNew();
         if (!ids) {
             return;
@@ -10102,23 +10102,23 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function (msg) {
+            beforeSend: function(msg) {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SAInput.updateInputByRes(res);
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    setAsInput: function () {
+    setAsInput: function() {
         var ids = this.getSelectedOutputs();
         if (!ids) {
             return;
@@ -10142,23 +10142,23 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function (msg) {
+            beforeSend: function(msg) {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SAInput.updateInputByRes(res);
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    deleteStoryCardOutputs: function () {
+    deleteStoryCardOutputs: function() {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -10188,10 +10188,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function (msg) {
+            beforeSend: function(msg) {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
@@ -10204,39 +10204,39 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     reloadBacklogListOnStoryCard();
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
-    getSelectedInputs: function () {
+    getSelectedInputs: function() {
         var st = "";
-        $('#inp_popUp .us-input-list-item-check-box-class').each(function (e) {
+        $('#inp_popUp .us-input-list-item-check-box-class').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).val() + "|";
             }
         });
         return st;
     },
-    getSelectedOutputs: function () {
+    getSelectedOutputs: function() {
         var st = "";
-        $('.us-output-list-item-check-box-class-new').each(function (e) {
+        $('.us-output-list-item-check-box-class-new').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).val() + "|";
             }
         });
         return st;
     },
-    getSelectedInputsNew: function () {
+    getSelectedInputsNew: function() {
         var st = "";
-        $('.us-input-list-item-check-box-class-new').each(function (e) {
+        $('.us-input-list-item-check-box-class-new').each(function(e) {
             if ($(this).is(':checked')) {
                 st += $(this).val() + "|";
             }
         });
         return st;
     },
-    createTableFormModal: function () {
+    createTableFormModal: function() {
         if (!global_var.current_project_id) {
             return;
         }
@@ -10259,16 +10259,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.createTableFormDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    createTableFormDetails: function (res) {
+    createTableFormDetails: function(res) {
         $('#table-list-4-inputs').html("");
         var obj = res.tbl[0].r;
         var div = $("<div>");
@@ -10293,7 +10293,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
         $('#table-list-4-inputs').append(div);
     },
-    createTableForm: function () {
+    createTableForm: function() {
         var name = $('#table-form-new-line').val();
         name = (name) ? name : $('#table-form-existing-name').val();
         if (!(name)) {
@@ -10325,19 +10325,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 that.getBacklogDetailedInputInfoById_core(SAInput.toJSON());
                 that.genGUIDesign();
                 $('#createTableForm').modal('hide');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    copyMoveInputsModal: function () {
+    copyMoveInputsModal: function() {
         if (!global_var.current_project_id) {
             return;
         }
@@ -10359,15 +10359,15 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.copyMoveInputsModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    copyMoveInputsModalNew: function (actionType) {
+    copyMoveInputsModalNew: function(actionType) {
         if (!global_var.current_project_id) {
             return;
         }
@@ -10391,16 +10391,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.copyMoveInputsModalDetailsNew(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    copyMoveInputsModalDetails: function (res) {
+    copyMoveInputsModalDetails: function(res) {
         $('#us-list-4-copy-move-inputs').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -10413,7 +10413,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    copyMoveInputsModalDetailsNew: function (res) {
+    copyMoveInputsModalDetailsNew: function(res) {
         $('#us-list-4-copy-move-inputs-new').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -10426,7 +10426,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    toggleAllInputNew: function (e) {
+    toggleAllInputNew: function(e) {
         if ($('#us_input_list_check_all_new').is(':checked')) {
             $('.us-input-list-item-check-box-class-new').prop("checked", true);
         } else {
@@ -10434,7 +10434,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    toggleAllOutputNew: function (e) {
+    toggleAllOutputNew: function(e) {
         if ($('#us_output_list_check_all_new').is(':checked')) {
             $('.us-output-list-item-check-box-class-new').prop("checked", true);
         } else {
@@ -10442,7 +10442,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    toggleAllInput: function (e) {
+    toggleAllInput: function(e) {
         var chk = $("#inp_popUp").find('.us-input-list-item-check-box-class');
         if ($('#us_input_list_check_all').is(':checked')) {
             chk.prop("checked", true);
@@ -10451,7 +10451,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    getHtmlGenIPOInputList: function (res) {
+    getHtmlGenIPOInputList: function(res) {
         var ind = getIndexOfTable(res, 'inputListTable');
         ind = (ind === undefined || ind.length === 0 || ind === -1) ? 0 : ind;
         var st = "";
@@ -10509,7 +10509,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         return st;
     },
 
-    getIPOInputListLine: function (id, inputName, tableName) {
+    getIPOInputListLine: function(id, inputName, tableName) {
 
 
         var st = "";
@@ -10541,7 +10541,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</tr>';
         return st;
     },
-    showStoryCardModal: function (backlogId) {
+    showStoryCardModal: function(backlogId) {
         $('#storyCardModal').modal('show');
         global_var.current_backlog_id = backlogId;
         this.toggleSubmenuStoryCard();
@@ -10552,7 +10552,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
 
     },
-    genGUIDesign: function (guiId, bId) {
+    genGUIDesign: function(guiId, bId) {
         var backlogId = (bId) ? bId : global_var.current_backlog_id;
         if (backlogId.length === 0) {
             return;
@@ -10572,7 +10572,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         clickCurrentInput();
 
     },
-    getResFromGenGUIDesign: function (backlogId) {
+    getResFromGenGUIDesign: function(backlogId) {
         var rs = [];
         var json = {
             kv: {}
@@ -10592,13 +10592,13 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 rs = res;
             }
         });
         return rs;
     },
-    genGUIDesignDetails2: function (res, gui) {
+    genGUIDesignDetails2: function(res, gui) {
         $('#SUS_GUI_header').text(SAInput.GetCurrentBacklogname);
         $('#userstory-gui-input-component-res-sus-label').text(SAInput.GetCurrentBacklogname);
         $('#generalview_SUS_GUI_header').text(SAInput.GetCurrentBacklogname);
@@ -10615,7 +10615,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         dragResize();
 
     },
-    setGUIDesignHtmlByIdAsync4Select: function (backlogId, hide, divId) {
+    setGUIDesignHtmlByIdAsync4Select: function(backlogId, hide, divId) {
         if (backlogId.length === 0) {
             return "";
         }
@@ -10628,7 +10628,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
 
     },
-    setGUIDesignHtmlByIdAsync: function (backlogId, hide, divId) {
+    setGUIDesignHtmlByIdAsync: function(backlogId, hide, divId) {
         if (backlogId.length === 0) {
             return "";
         }
@@ -10653,7 +10653,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 st = that.getGUIDesignHTML(res, hide);
                 $('#' + divId).html(st);
                 $('#' + divId).closest('div.redirectClass4CSS')
@@ -10664,7 +10664,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
 
-    genGUIDesignHtmlById: function (backlogId, hide) {
+    genGUIDesignHtmlById: function(backlogId, hide) {
         if (backlogId) {} else {
             return "";
         }
@@ -10697,7 +10697,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.addInputByRes(res);
                     SAInput.addInputTableByRes(res);
@@ -10707,7 +10707,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         });
         return st;
     },
-    setInputByGUIComponent: function (id) {
+    setInputByGUIComponent: function(id) {
 
         $('.active-inputs-selected').removeClass('active-inputs-selected');
 
@@ -10716,7 +10716,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         $('#' + id).addClass("active-inputs-selected"); //uygun  komponenting qiraqlarini border line etmek
 
-        $('.us-input-list-item-check-box-class').each(function () {
+        $('.us-input-list-item-check-box-class').each(function() {
             if ($(this).is(':checked')) {
                 var id1 = $(this).attr('pid');
                 $('#' + id1).addClass('active-inputs-selected');
@@ -10726,7 +10726,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         new UserStory().showIPOInputDetails(id);
     },
 
-    getComponentHtml: function (ctype, lbl, cnt, cellNo, param1, fromTable, css, idx, containercss) {
+    getComponentHtml: function(ctype, lbl, cnt, cellNo, param1, fromTable, css, idx, containercss) {
         cnt = replaceTags(cnt);
         css = replaceTags(css);
         lbl = replaceTags(lbl);
@@ -10811,7 +10811,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
 
-    setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
+    setGUIComponentButtonGUIModal: function(popupBacklogId, el) {
 
         closeModal('userstory-gui-input-component-res-sus-analytic');
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
@@ -10824,7 +10824,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         // $("#" + padeId + " #userstory-gui-input-component-res-sus-id").html(html);
 
         //  click on first tab
-        $('.activeTabClass').each(function (e) {
+        $('.activeTabClass').each(function(e) {
             $(this).click();
         });
 
@@ -10840,7 +10840,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         SourcedDispatcher.Exec(carrier);
 
     },
-    _ExecuteModalActionEvent: function (carrier) {
+    _ExecuteModalActionEvent: function(carrier) {
         var padeId = carrier.get('padeId');
         var el = carrier.getElement();
 
@@ -10861,7 +10861,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
     },
 
-    setGUIComponentButtonGUIModalOld30: function (popupBacklogId, el) {
+    setGUIComponentButtonGUIModalOld30: function(popupBacklogId, el) {
         var carrier = new Carrier();
         carrier.setBacklogId(popupBacklogId);
         carrier.setElement(el);
@@ -10883,7 +10883,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
 
-    getPopupHtmlBodyById4ProjectView: function (backlogId) {
+    getPopupHtmlBodyById4ProjectView: function(backlogId) {
         if (!backlogId) {
             return '';
         }
@@ -10912,7 +10912,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return html;
     },
 
-    showPopupforGUIComponent: function (html, popupBacklogId, bcode) {
+    showPopupforGUIComponent: function(html, popupBacklogId, bcode) {
         var padeId;
         //        if (popupSiyahiList[popupBacklogId]){
         //            padeId =  popupSiyahiList[popupBacklogId];  
@@ -10928,7 +10928,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
 
-    _SetGUIComponentButtonGUIModal: function (carrier) {
+    _SetGUIComponentButtonGUIModal: function(carrier) {
 
         var popupBacklogId = carrier.getBacklogId();
         var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);
@@ -10942,14 +10942,14 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var padeId = new UserStory().showPopupforGUIComponent(html, popupBacklogId, bcode);
 
         //  click on first tab
-        $('.activeTabClass').each(function (e) {
+        $('.activeTabClass').each(function(e) {
             $(this).click();
         });
 
         //call selectbox api
         //        new UserStory().callEmptyFunctionWithAjax(el, padeId);
     },
-    setGUIComponentButtonGUIModal_old: function (popupBacklogId, el) {
+    setGUIComponentButtonGUIModal_old: function(popupBacklogId, el) {
         if (!ifBacklogInputs4LoaderExistById(popupBacklogId)) {
             var carrier = new Carrier();
             carrier.setBacklogId(popupBacklogId);
@@ -10981,7 +10981,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         bcode = (bcode === undefined) ? "" : bcode;
         var padeId = generatePopupModalNew(html, canvasCSS, bcode, popupBacklogId);
         //  click on first tab
-        $('.activeTabClass').each(function (e) {
+        $('.activeTabClass').each(function(e) {
             $(this).click();
         });
 
@@ -10992,7 +10992,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         //call selectbox api
         this.callEmptyFunctionWithAjax(el, padeId);
     },
-    callEmptyFunctionWithAjax: function (el, padeId) {
+    callEmptyFunctionWithAjax: function(el, padeId) {
         $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
 
         var json = initJSON();
@@ -11006,7 +11006,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
                     loadSelectBoxesAfterGUIDesign(tempEl1);
@@ -11023,7 +11023,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
                 //        
             },
-            error: function (res) {
+            error: function(res) {
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
                 alert('error var')
 
@@ -11031,7 +11031,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         });
     },
 
-    callTriggerApiAfterGUIDesign: function (el, padeId) {
+    callTriggerApiAfterGUIDesign: function(el, padeId) {
         var apiId = $(el).attr("onclick_trigger_id");
         loadBacklogInputsByIdIfNotExist(apiId);
 
@@ -11057,7 +11057,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
     },
 
-    setGUIComponentRedirectGUIModal: function (el, backlogId, e) {
+    setGUIComponentRedirectGUIModal: function(el, backlogId, e) {
         e.stopPropagation();
         closeModal('userstory-gui-input-component-res-sus-analytic');
 
@@ -11078,7 +11078,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
     },
 
-    setGUIComponentFillGUIModal: function (el, id, sectionId) {
+    setGUIComponentFillGUIModal: function(el, id, sectionId) {
         closeModal('userstory-gui-input-component-res-sus-analytic');
         loadBacklogInputsByIdIfNotExist(id);
         // loadBacklogInputsByIdIfNotExist(sectionId);
@@ -11108,7 +11108,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         //        $('[data-toggle="tooltip"]').tooltip({html: true});
     },
 
-    setGUIComponentSaveGUIModal: function (el, e) {
+    setGUIComponentSaveGUIModal: function(el, e) {
         e.stopPropagation();
 
         if ($(el).attr("onclick_trigger_id")) {
@@ -11125,7 +11125,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             "kv": {}
         };
 
-        $(el).closest('div.redirectClass').find('.component-class').each(function (e) {
+        $(el).closest('div.redirectClass').find('.component-class').each(function(e) {
             json.kv[$(this).attr('id')] = $(this).find('#comp_id_' + $(this).attr('id')).val();
         });
         json.kv.domain = global_var.current_domain;
@@ -11138,7 +11138,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.addInputByRes(res);
                 } catch (err) {
@@ -11165,7 +11165,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         });
     },
 
-    setGUIComponentDeleteGUIModal: function (el) {
+    setGUIComponentDeleteGUIModal: function(el) {
 
         var ind = $(el).closest("tr")[0].rowIndex;
         var pid = $(el).attr('pdid');
@@ -11174,7 +11174,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             "kv": {}
         };
         json.kv.index = ind;
-        $(el).closest('tr').find('.component-input-class').each(function (e) {
+        $(el).closest('tr').find('.component-input-class').each(function(e) {
             if (pid !== $(this).attr('pdid'))
                 json.kv[$(this).attr('pdid')] = "1";
         });
@@ -11188,35 +11188,35 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.addInputByRes(res);
                 $(el).closest('tr').remove();
             }
         });
     },
 
-    setGUIContainerStyle: function () {
+    setGUIContainerStyle: function() {
         ContainerDesign.init();
         loadCurrentBacklogProdDetails();
         dragResize()
     },
-    setGUIComponentStyle: function () {
+    setGUIComponentStyle: function() {
         ComponentDesign.init();
         loadCurrentBacklogProdDetails();
         dragResize();
     },
-    setGUICanvasStyle: function () {
+    setGUICanvasStyle: function() {
         CanvasDesign.init();
         loadCurrentBacklogProdDetails();
         dragResize()
     },
-    setGUICanvasUploadImage: function () {
+    setGUICanvasUploadImage: function() {
         $('#uploadBackgroundImage4CanvasModal').modal("show");
     },
-    setGUIComponentUploadImage: function () {
+    setGUIComponentUploadImage: function() {
         $('#uploadComponentImageModal').modal("show");
     },
-    setStoryCardUploadImage: function () {
+    setStoryCardUploadImage: function() {
         setGlobalActiveCanvas(global_var.canvas.storyCard);
         $('#setStoryCardUploadImageModal').modal("show");
         $('#setStoryCardUploadImageModal_file').val("");
@@ -11225,7 +11225,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
     },
 
-    setGUIComponentUploadIcon: function () {
+    setGUIComponentUploadIcon: function() {
         $('#uploadComponentIconModal').modal("show");
 
         var st = "";
@@ -11247,25 +11247,25 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         $('#uploadComponentIconModal_iconlist').html(st);
 
     },
-    checkInputDescItem: function (el) {
+    checkInputDescItem: function(el) {
 
         if ($(el).is(":checked")) {
             console.log('is checked')
-            $('.indesc_general[parent_id=' + $(el).attr('id') + ']').each(function (e) {
+            $('.indesc_general[parent_id=' + $(el).attr('id') + ']').each(function(e) {
                 $(this).removeAttr('disabled');
                 $(this).removeAttr('readonly');
             })
         } else {
             console.log('is not checked')
 
-            $('.indesc_general[parent_id=' + $(el).attr('id') + ']').each(function (e) {
+            $('.indesc_general[parent_id=' + $(el).attr('id') + ']').each(function(e) {
                 $(this).attr('disabled', true);
                 $(this).attr('readonly', true);
             })
         }
 
     },
-    uploadBackgroundImage4Canvas: function () {
+    uploadBackgroundImage4Canvas: function() {
         if ($('#uploadBackgroundImage4Canvas_file').val().trim().length > 0) {
             this.sendFileForCanvasBackground();
         } else {
@@ -11274,18 +11274,18 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         $('#uploadBackgroundImage4CanvasModal').modal('hide');
     },
-    uploadComponentIcon: function (faitem) {
+    uploadComponentIcon: function(faitem) {
         $('#gui_input_content').val(faitem);
         $('#gui_input_content').change();
         $('#uploadComponentIconModal').modal('hide');
     },
-    uploadComponentImage: function () {
+    uploadComponentImage: function() {
         if ($('#uploadComponentImageModal_file').val().trim().length > 0) {
             this.sendFileForComponentImage();
         }
         $('#uploadComponentImageModal').modal('hide');
     },
-    uploadStoryCardImage: function () {
+    uploadStoryCardImage: function() {
         if (isCanvasContextExist('canvasdiv_storyCard')) {
             try {
                 this.loadPicture4StoryCard();
@@ -11308,7 +11308,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         $('#setStoryCardUploadImageModal').modal('hide');
     },
-    setGUIComponentStyleEnable_old: function () {
+    setGUIComponentStyleEnable_old: function() {
         if ($('#gui_input_background_color_cbox').is(":checked")) {
             $('#gui_input_background_color').removeAttr("disabled");
         } else {
@@ -11327,7 +11327,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             $('#gui_input_border_color').prop("disabled", true);
         }
     },
-    setGUIComponentStyleEnable: function (el) {
+    setGUIComponentStyleEnable: function(el) {
         var id = $(el).attr('id');
         id = id.length > 2 ? id.substring(3, id.length) : id;
         if ($(el).is(":checked")) {
@@ -11340,7 +11340,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         ComponentDesign.init();
     },
-    setGUIContainerStyleEnable: function (el) {
+    setGUIContainerStyleEnable: function(el) {
         var id = $(el).attr('id');
         id = id.length > 2 ? id.substring(3, id.length) : id;
         if ($(el).is(":checked")) {
@@ -11354,7 +11354,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         ContainerDesign.init();
         dragResize()
     },
-    setGUICanvasStyleEnable: function (el) {
+    setGUICanvasStyleEnable: function(el) {
         var id = $(el).attr('id');
         id = id.length > 2 ? id.substring(3, id.length) : id;
         if ($(el).is(":checked")) {
@@ -11367,7 +11367,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         CanvasDesign.init();
     },
-    isContentTypeRelToTableRowCount: function (arg) {
+    isContentTypeRelToTableRowCount: function(arg) {
         if (arg === 'cmb' || arg === 'mcmb' || arg === 'txa' ||
             arg === 'rbtn' || arg === 'cbox' || arg === 'btn' || arg === 'hlink') {
             return false;
@@ -11375,7 +11375,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return true;
         }
     },
-    fillComponentInfo4GetGUIDesign: function (comp, obj, n) {
+    fillComponentInfo4GetGUIDesign: function(comp, obj, n) {
 
         comp.fkInputTableId = replaceTags(obj[n].fkRelatedCompId);
         comp.id = replaceTags(obj[n].id);
@@ -11413,21 +11413,21 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         }
     },
-    showMessageOfLoop: function (sequence) {
+    showMessageOfLoop: function(sequence) {
         var st = "There is a loop in the following User Stories: \n";
         for (var i = 0; i < sequence.length; i++) {
             st += SACore.GetBacklogname(sequence[i]) + '\n' + "";
         }
         return st;
     },
-    hasSequence: function (sequence, id) {
+    hasSequence: function(sequence, id) {
         if (sequence.includes(id)) {
             var msg = this.showMessageOfLoop(sequence);
             Toaster.showError(msg);
             throw msg;
         }
     },
-    getParams4GUI: function () {
+    getParams4GUI: function() {
         var params = {
             "tab": [],
             "tabNameId": [],
@@ -11447,7 +11447,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         return params;
     },
-    getTabLine4GUI: function (params, comp, obj, index) {
+    getTabLine4GUI: function(params, comp, obj, index) {
         var n = index;
         var st = '';
         params.tabOrderNo = obj[n].orderNo;
@@ -11465,7 +11465,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += t;
         return st;
     },
-    getTableLine4GUI: function (params, comp, obj, index) {
+    getTableLine4GUI: function(params, comp, obj, index) {
 
         var n = index;
         var tbl = obj[n].tableName;
@@ -11521,7 +11521,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
 
-    getGUIDesignHTMLBody: function (res, rowId, sequence) {
+    getGUIDesignHTMLBody: function(res, rowId, sequence) {
         console.log(res);
         if (sequence === 'undefined' || !sequence) {
             sequence = [];
@@ -11603,7 +11603,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st + '<div class="title-' + global_var.current_backlog_id + '-unique d-none">' + title + '</div>';
     },
 
-    getGUIDesignHTMLBody4TabPart: function (comp, params, lbl, obj, n, param1, css) {
+    getGUIDesignHTMLBody4TabPart: function(comp, params, lbl, obj, n, param1, css) {
         var st = "";
         params.tab.push(lbl);
         params.tabListId.push(obj[n].id);
@@ -11616,7 +11616,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
 
-    getGUIEmptyMessage: function () {
+    getGUIEmptyMessage: function() {
         return '<div class="col-12 empty-message-block" style="padding:30px;text-align:center">' +
             '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
             '<h5> No Inputs have been entered on this User Story</h5>' +
@@ -11624,19 +11624,19 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             '<p>Please Enter Inputs</p>' +
             '</div>'
     },
-    getGUIDesignHTMLPure: function (res) {
+    getGUIDesignHTMLPure: function(res) {
         //        var ind = getIndexOfTable(res, 'inputListTable');
         var ind = 0;
         return this.getGUIDesignHTMLBody(res, ind);
     },
-    getGUIDesignHTMLPure4Share: function (res) {
+    getGUIDesignHTMLPure4Share: function(res) {
         var ind = getIndexOfTable(res, 'inputListTable');
         return this.getGUIDesignHTMLBody(res, ind);
     },
-    getGUIDesignHTML: function (res) {
+    getGUIDesignHTML: function(res) {
         return this.getGUIDesignHTMLBody(res, 0);
     },
-    genGUITabHtmlDesign: function (comp, params) {
+    genGUITabHtmlDesign: function(comp, params) {
         if (params.tab.length === 0) {
             return "";
         }
@@ -11646,7 +11646,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</div>';
         return st;
     },
-    genGUITabHtmlDesignHeader: function (params) {
+    genGUITabHtmlDesignHeader: function(params) {
         var st = '<br><ul class="nav nav-tabs" role="tablist">';
         var p = "active";
         var activeTabClass = " activeTabClass ";
@@ -11664,7 +11664,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</ul>';
         return st;
     },
-    genGUITabHtmlDesignBody: function (tab, tabParam, tabCSS) {
+    genGUITabHtmlDesignBody: function(tab, tabParam, tabCSS) {
         if (tab.length === 0) {
             return "";
         }
@@ -11687,7 +11687,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</div>';
         return st;
     },
-    showGUITabBody: function (backlogId, inputId, id) {
+    showGUITabBody: function(backlogId, inputId, id) {
         if (!id) {
             return;
         }
@@ -11699,7 +11699,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         //        $('#' + id).html('');
         //        $('#' + id).append(innerHTML);
     },
-    genGUITabHtmlDesignBodyTemplateFull: function (params, comp) {
+    genGUITabHtmlDesignBodyTemplateFull: function(params, comp) {
         if (params.tabNameId.length === 0) {
             return "";
         }
@@ -11731,7 +11731,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</div>';
         return st;
     },
-    genGUITabHtmlDesignBodyTemplate: function (id, active) {
+    genGUITabHtmlDesignBodyTemplate: function(id, active) {
 
         var st = '<div class="tab-content">';
         st += '<div id="tabulento' + id + '" class="container tab-pane ' + active + '"><br>'
@@ -11741,7 +11741,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</div>';
         return st;
     },
-    genGUIDesignTable: function (comp, params) {
+    genGUIDesignTable: function(comp, params) {
         var st = "";
         var keys = Object.keys(params.ipoTable);
         for (var n = 0; n < keys.length; n++) {
@@ -11771,7 +11771,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         return st;
     },
-    genIPOOutputList: function () {
+    genIPOOutputList: function() {
         $('#tblIPOOutputList > tbody').html('');
         var backlogId = global_var.current_backlog_id;
         if (backlogId.length === 0) {
@@ -11795,17 +11795,17 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 var st = that.getHtmlGenIPOOutputList(res);
                 $('#tblIPOOutputList > tbody').html(st);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    getHtmlGenIPOOutputList: function (res) {
+    getHtmlGenIPOOutputList: function(res) {
         //        var ind = getIndexOfTable(res, 'inputOutputList');
         var ind = 0;
         var st = "";
@@ -11832,7 +11832,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</tr>';
         return st;
     },
-    getHtmlGenIPOInputDescList: function (res) {
+    getHtmlGenIPOInputDescList: function(res) {
         var st = "";
         try {
             var obj = res.tbl[0].r;
@@ -11862,42 +11862,42 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         st += '</tr>';
         return st;
     },
-    toggleToEditOutput: function (e) {
+    toggleToEditOutput: function(e) {
         var inp = $('<input style="width:100%" onchange="new UserStory().updateOutput(this)" type="text" pid="' +
             $(e).attr('pid') + '" value="' + ($(e).attr('idesc')) + '">');
         $(e).html(inp);
         inp.focus();
     },
-    toggleToEditIName: function (e) {
+    toggleToEditIName: function(e) {
         var inp = $('<input style="width:100%" onchange="new UserStory().updateInputByAttr(this,\'name\')" \n\
 type="text" pid="' + $(e).attr('pid') + '" value="' + ($(e).attr('iname')) + '">');
         $(e).html(inp);
         inp.focus();
     },
-    toggleToEditITable: function (e) {
+    toggleToEditITable: function(e) {
         var inp = $('<input style="width:100%" \n\
 onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' +
             $(e).attr('pid') + '" value="' + ($(e).attr('itable')) + '">');
         $(e).html(inp);
         inp.focus();
     },
-    toggleToEditIDescName: function (e) {
+    toggleToEditIDescName: function(e) {
         var inp = $('<input style="width:100%" onchange="new UserStory().updateInputDesc(this)" type="text" pid="' +
             $(e).attr('pid') + '" value="' + $(e).attr('idesc') + '">');
         $(e).html(inp);
         inp.focus();
     },
-    _SetGUIComponentValues4SelectThread: function () {
+    _SetGUIComponentValues4SelectThread: function() {
         var carrier = new Carrier();
         carrier.I_am_Requirer();
         carrier.setExecwarder("new UserStory()._SetGUIComponentValues4SelectThreadRequirer");
         SourcedDispatcher.Exec(carrier);
     },
-    _SetGUIComponentValues4SelectThreadRequirer: function (carrier) {
+    _SetGUIComponentValues4SelectThreadRequirer: function(carrier) {
         new UserStory().setGUIComponentValues4Select()
     },
 
-    showIPOInputDetails: function (id) {
+    showIPOInputDetails: function(id) {
         global_var.current_us_input_id = id;
         Utility.addParamToUrl('current_us_input_id', global_var.current_us_input_id);
         $('.inputdesc').attr('style', ' pointer-events: block;opacity: 1;')
@@ -11921,7 +11921,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    setRelatedSUS: function (obj) {
+    setRelatedSUS: function(obj) {
         try {
             //            $('#relatedSUSOutputName').text(obj.dependenceInputName);
             var depName = SAInput.GetCurrentDependenceBacklogName();
@@ -11939,7 +11939,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         } catch (e) {}
     },
-    setGUIComponentValues4Select: function () {
+    setGUIComponentValues4Select: function() {
         $('#us-related-sus').val('');
         $('#sus-output-id').val('');
         $('#us-gui-component-id').val('');
@@ -11953,7 +11953,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         this.setGUIComponentValuesDetails(res);
 
     },
-    setGUIComponentValues: function () {
+    setGUIComponentValues: function() {
         $('#us-related-sus').val('');
         $('#sus-output-id').val('');
         $('#us-gui-component-id').val('');
@@ -11978,12 +11978,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.setGUIComponentValuesDetails(res);
             }
         });
     },
-    setGUIComponentValuesDetails: function (res) {
+    setGUIComponentValuesDetails: function(res) {
         try {
             //                console.log($('gui_input_content').val() + '---------------------')
             $('#gui_input_content').val((res.tbl[0].r[0].inputContent));
@@ -12065,7 +12065,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('.us-gui-component-in-section').val(res.tbl[0].r[0].section);
         } catch (err) {}
     },
-    loadAllSUSList: function (e) {
+    loadAllSUSList: function(e) {
         if ($(e).attr('onload') === '1') {
             var val = $(e).val();
             $(e).removeClass('onload');
@@ -12073,7 +12073,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $(e).val(val);
         }
     },
-    loadSUS4Relation4Section: function () {
+    loadSUS4Relation4Section: function() {
         //        if (global_var.related_SUS_status !== 'A') {
         //            return;
         //        }
@@ -12091,7 +12091,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: global_var.projectToggleWithSync,
-            success: function (res) {
+            success: function(res) {
                 try {
                     // that.loadSUS4Relation4SectionDetails(res);
                 } catch (err) {}
@@ -12099,13 +12099,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 //                executeCoreOfManualProSelection();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    loadSUS4Relation: function () {
+    loadSUS4Relation: function() {
         //        if (global_var.related_SUS_status !== 'A') {
         //            return;
         //        }
@@ -12127,16 +12127,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                global_var.related_SUS_status = 'C';
                 that.loadSUS4RelationDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteOutputFromList: function (e, id) {
+    deleteOutputFromList: function(e, id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -12162,7 +12162,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.deleteInput(id);
                 SACore.updateBacklogByRes(res);
 
@@ -12171,12 +12171,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 var st = that.getHtmlGenIPOOutputList(res);
                 $('#tblIPOOutputList > tbody').html(st);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteInputDescFromUSList: function (e, id) {
+    deleteInputDescFromUSList: function(e, id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -12200,25 +12200,25 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 SAInputDesc.deleteInputDescription(id);
                 SAInput.updateInputByRes(res);
 
                 that.genIPOInputDescList();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteCurrentInputFromUSList: function (e) {
+    deleteCurrentInputFromUSList: function(e) {
         $('#exampleModal').modal('hide');
         this.deleteInputFromUSList(e, global_var.current_us_input_id);
 
 
     },
-    deleteInputFromUSList: function (e, id) {
+    deleteInputFromUSList: function(e, id) {
 
         if (!confirm("Are you sure?")) {
             return;
@@ -12240,7 +12240,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.addInputTableByRes(res);
                 } catch (err) {
@@ -12272,24 +12272,24 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 //                $('#SUS_IPO_GUI_Design').html(st);
                 //                new UserStory().setGeneralGUIDesign(st);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    add: function () {
+    add: function() {
         this.setData();
         this.check4Inputs();
         this.insert();
     },
-    clearField: function () {
-        $('.addUS').each(function (e) {
+    clearField: function() {
+        $('.addUS').each(function(e) {
             $(this).val('');
             $(this).next('p').remove();
         });
         $('#canvasdiv_backlog').html('');
     },
-    backlogToggleInAddTaskType: function () {
+    backlogToggleInAddTaskType: function() {
 
         if (($('#addBacklog_assignee').val()) && ($('#addBacklog_assignee').val())) {
             $('.backlog-toggle').removeAttr('disabled');
@@ -12301,7 +12301,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             clearGlobalActiveCanvas();
         }
     },
-    isCloseAfterInsertChecked: function () {
+    isCloseAfterInsertChecked: function() {
         var id = 'closeAfterInsert';
         var checked = $("input[id=" + id + "]:checked").length;
         if (checked === 0) {
@@ -12310,17 +12310,17 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return true;
         }
     },
-    closeModal: function () {
+    closeModal: function() {
         if (this.isCloseAfterInsertChecked()) {
             $('#insertNewBacklog').modal('hide');
         } else {
             $('#backlogName').focus();
         }
     },
-    insertNewTicketModal: function () {
+    insertNewTicketModal: function() {
 
     },
-    insertNewTicket: function () {
+    insertNewTicket: function() {
         if ($('#insertNewTicketModal_userstory').val().trim().length === 0) {
             Toaster.showError('Please enter Story.');
             return;
@@ -12338,12 +12338,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             this.insertNewTicketMain();
         }
     },
-    sendFileForNewTicket: function () {
+    sendFileForNewTicket: function() {
         if ($('#insertNewTicketModal_file').val().trim().length > 0) {
             this.upload4NewTicket('insertNewTicketModal_file');
         }
     },
-    upload4NewTicket: function (id) {
+    upload4NewTicket: function(id) {
         var that = this;
         var files = document.getElementById(id).files;
         var file_count = files.length;
@@ -12360,7 +12360,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -12382,7 +12382,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         }
     },
-    uploadFile4NewTicket: function (fileext, file_base_64, file_name) {
+    uploadFile4NewTicket: function(fileext, file_base_64, file_name) {
         //        console.log(file_base_64)
 
         var d = new Object();
@@ -12401,20 +12401,20 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data: data,
             contentType: "application/json",
             async: false,
-            beforeSend: function (msg) {
+            beforeSend: function(msg) {
                 showProgress();
             },
-            success: function (data) {
+            success: function(data) {
                 finalname = data.kv.uploaded_file_name;
                 hideProgress();
             },
-            error: function () {
+            error: function() {
 
             }
         });
         return finalname;
     },
-    insertNewTicketMain: function () {
+    insertNewTicketMain: function() {
         var json = {
             kv: {}
         };
@@ -12435,7 +12435,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#insertNewTicketModal').modal('hide');
                 $('#insertNewTicketModal_userstory').val('');
                 $('#insertNewTicketModal_comment').val('');
@@ -12445,12 +12445,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 $('#insertNewTicketModal_list').html('');
                 that.load();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    insert: function () {
+    insert: function() {
         var json = {
             kv: {}
         };
@@ -12474,7 +12474,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.addBacklogByRes(res);
                 global_var.current_backlog_id = res.kv.id;
                 Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
@@ -12487,13 +12487,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 $('#backlogName').focus();
                 //                that.refreshCurrentBacklogById(res.kv.id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    insertBacklog_AddTaskType: function (backlogId) {
+    insertBacklog_AddTaskType: function(backlogId) {
         try {
             if (backlogId.length === 0) {
                 return;
@@ -12527,7 +12527,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //        } catch (err) {
         //        }
     },
-    addTaskTypeDetails4Backlog: function (backlogId, filename) {
+    addTaskTypeDetails4Backlog: function(backlogId, filename) {
         if (backlogId.length === 0) {
             return;
         }
@@ -12571,7 +12571,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#addBacklog_comment').val('');
                 $('#addBacklog_filelist').html('');
                 $('#file4AddBacklog').val('');
@@ -12579,7 +12579,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             },
         });
     },
-    setFilterDate: function () {
+    setFilterDate: function() {
         global_var.userStoryFilter.createdDate = '';
         //        Utility.addParamToUrl('userStoryFilter.createdDate', global_var.userStoryFilter.createdDate);
         var fromDate = '';
@@ -12612,15 +12612,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         this.load();
     },
-    clearAndShowAll: function () {
+    clearAndShowAll: function() {
         this.clearAll();
         // this.load();
     },
-    clearAll: function () {
+    clearAll: function() {
         this.pureClearAll();
         this.load();
     },
-    pureClearAll: function () {
+    pureClearAll: function() {
         global_var.current_nav_view = 'all';
         //        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
         global_var.userStoryFilter.userstory = "";
@@ -12663,26 +12663,26 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.search-clear').css('display', 'none');
         $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
     },
-    showSourcedUserStories: function (e) {
+    showSourcedUserStories: function(e) {
         this.clearTopFilter('sourced');
         global_var.userStoryFilter.isSourced = '1';
         this.setTopFilterIcon(e);
         this.load();
     },
-    userStoriesAssignedToMe: function (e) {
+    userStoriesAssignedToMe: function(e) {
         this.clearTopFilter('mine');
         global_var.userStoryFilter.userStoriesAssignedToMe = '1';
         this.setTopFilterIcon(e);
         this.load();
     },
-    showBindedUserStories: function (e) {
+    showBindedUserStories: function(e) {
 
         this.clearTopFilter('bound');
         global_var.userStoryFilter.isBounded = '1';
         this.setTopFilterIcon(e);
         this.load();
     },
-    showInitialUserStories: function (e) {
+    showInitialUserStories: function(e) {
 
         this.clearTopFilter('initial');
         global_var.userStoryFilter.isInitial = '1';
@@ -12690,13 +12690,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         this.load();
     },
-    showListOfAPIs: function (e) {
+    showListOfAPIs: function(e) {
         this.clearTopFilter("api");
         global_var.userStoryFilter.isAPI = '1';
         this.setTopFilterIcon(e);
         this.load();
     },
-    clearTopFilter: function (viewStatus) {
+    clearTopFilter: function(viewStatus) {
         global_var.current_nav_view = viewStatus;
         //        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
         global_var.userStoryFilter.isSourced = '';
@@ -12707,11 +12707,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         global_var.userStoryFilter.isAPI = '';
 
     },
-    setTopFilterIcon: function (el) {
+    setTopFilterIcon: function(el) {
         $('.nav-filter-main').attr("style", "color:white");
         $(el).attr("style", "color:darkred");
     },
-    showTickets: function (e) {
+    showTickets: function(e) {
         global_var.current_nav_view = 'ticket';
         //        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
         global_var.userStoryFilter.isSourced = '';
@@ -12722,7 +12722,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $(e).attr("style", "color:darkred");
         this.load();
     },
-    setDetailedView: function (e) {
+    setDetailedView: function(e) {
         global_var.current_view = "detailed";
         Utility.addParamToUrl('current_view', global_var.current_view);
         $('.core-view').show();
@@ -12737,13 +12737,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.nav-view-filter-main').attr("style", "color:white");
         $(e).attr("style", "color:yellow");
     },
-    setKanbanView: function (e) {
+    setKanbanView: function(e) {
         global_var.current_view = "kanban";
         this.setUSLists4KanbanViewDirect();
         $('.nav-view-filter-main').attr("style", "color:white");
         $(e).attr("style", "color:yellow");
     },
-    setPivotView: function (e) {
+    setPivotView: function(e) {
         global_var.current_view = "pivot";
         Utility.addParamToUrl('current_view', global_var.current_view);
         $('.core-view').hide();
@@ -12756,7 +12756,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.nav-view-filter-main').attr("style", "color:white");
         $(e).attr("style", "color:yellow");
     },
-    setListView: function (e) {
+    setListView: function(e) {
         $('.nav-view-filter-main').attr("style", "color:white");
         $(e).attr("style", "color:yellow");
         global_var.current_view = "list";
@@ -12785,7 +12785,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    manageViewColWidth: function () {
+    manageViewColWidth: function() {
         //        if (global_var.current_view === 'detailed') {
         //            $('#core_div_col_1st').removeClass('col-3').removeClass('col-3').addClass('col-3');
         //            $('#main_div_of_backlog_info_detailed_view').removeClass('col-9').removeClass('col-9').addClass('col-9');
@@ -12797,7 +12797,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //            $('#main_div_of_backlog_info_list_view').removeClass('col-8').removeClass('col-9').addClass('col-9');
         //        }
     },
-    setUSLists4ListViewDirect: function () {
+    setUSLists4ListViewDirect: function() {
         global_var.current_list_view_table_item = 'userstory';
         $('#list_view_table_list').show();
         $('#list_view_table_list_4_assignee').hide();
@@ -12863,7 +12863,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     .append(Number((spent_hours).toFixed(2)))))
             );
     },
-    getJSONData4BaklogList: function () {
+    getJSONData4BaklogList: function() {
         var json = {
             kv: {}
         };
@@ -12901,7 +12901,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             parseFloat($('#us_core_filter_perpage').val());
         return json;
     },
-    load: function () {
+    load: function() {
 
         if (!ifQueue4ProLoadDone()) {
             return;
@@ -12953,7 +12953,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
 
-    refreshBacklog4Stats: function () {
+    refreshBacklog4Stats: function() {
         this.loadDetailsOnProjectSelect4Stats();
         this.loadInputDetailsOnProjectSelect4Stats();
         this.loadInputDescDetailsOnProjectSelect();
@@ -12962,7 +12962,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         this.loadBacklogLabelOnProjectSelect();
         getTaskList();
     },
-    refreshBacklog4Bug: function (withSync) {
+    refreshBacklog4Bug: function(withSync) {
         var withSynchCore = (withSync) ? withSync : false;
         global_var.projectToggleWithSync = withSynchCore;
         this.loadDetailsOnProjectSelect4Stats();
@@ -12973,7 +12973,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         this.loadBacklogLabelOnProjectSelect();
         global_var.projectToggleWithSync = true;
     },
-    refreshBacklog: function () {
+    refreshBacklog: function() {
 
         //View All Gui-nin yeniden doldurulmasi buradan trigger edilir;
         $('#gui_component_main_view_all').html('');
@@ -12990,7 +12990,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    loadDetailsOnProjectSelect4Stats: function () {
+    loadDetailsOnProjectSelect4Stats: function() {
         showProgress();
 
         var json = {
@@ -13009,20 +13009,20 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: global_var.projectToggleWithSync,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 SACore.LoadBacklog(res);
 
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 hideProgress();
             }
         });
     },
-    loadDetailsOnProjectSelect4Ipo: function () {
+    loadDetailsOnProjectSelect4Ipo: function() {
         showProgress();
 
         var json = initJSON();
@@ -13036,10 +13036,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 try {
                     SACore.LoadBacklog(res);
                 } catch (err) {
@@ -13052,12 +13052,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 hideProgress();
             }
         });
     },
-    loadDetailsOnProjectSelect4ZadNew: function () {
+    loadDetailsOnProjectSelect4ZadNew: function() {
         showProgress();
 
         var json = initJSON();
@@ -13071,10 +13071,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 try {
                     SACore.LoadBacklog(res);
                 } catch (err) {
@@ -13086,12 +13086,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 hideProgress();
             }
         });
     },
-    loadDetailsOnProjectSelect: function () {
+    loadDetailsOnProjectSelect: function() {
         showProgress();
 
         var json = initJSON();
@@ -13105,10 +13105,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
+            beforeSend: function() {
                 showProgress();
             },
-            success: function (res) {
+            success: function(res) {
                 try {
                     SACore.LoadBacklog(res);
                 } catch (err) {
@@ -13120,12 +13120,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 hideProgress();
             }
         });
     },
-    addProjectToMenu: function (res) {
+    addProjectToMenu: function(res) {
         var obj = res.tbl[0].r;
         for (var i in obj) {
             var o = obj[i];
@@ -13157,7 +13157,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         }
     },
-    loadInputDetailsOnProjectSelect4Stats: function () {
+    loadInputDetailsOnProjectSelect4Stats: function() {
         var json = {
             kv: {}
         };
@@ -13174,12 +13174,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: global_var.projectToggleWithSync,
-            success: function (res) {
+            success: function(res) {
                 SAInput.LoadInput(res);
             }
         });
     },
-    loadInputDetailsOnProjectSelectNew4SAInput: function (bid) {
+    loadInputDetailsOnProjectSelectNew4SAInput: function(bid) {
         var bid = (bid) ? bid : global_var.current_backlog_id;
 
         var json = initJSON();
@@ -13195,7 +13195,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     //                    localStorage.setItem(bid, JSON.stringify(res));
                     SAInput.LoadInput4Zad(res);
@@ -13226,7 +13226,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetailsOnProjectSelectNew: function () {
+    loadInputDetailsOnProjectSelectNew: function() {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -13239,7 +13239,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var rc = parseInt(res.kv.count);
                 var page = 800;
                 var ln = Math.ceil(rc / page);
@@ -13253,7 +13253,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetailsOnProjectSelectNewSection: function (projectId, startLimit, endLimit, flag4Proload) {
+    loadInputDetailsOnProjectSelectNewSection: function(projectId, startLimit, endLimit, flag4Proload) {
         var json = initJSON();
         json.kv.fkProjectId = projectId;
         json.kv.startLimit = startLimit;
@@ -13267,7 +13267,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputSection(res);
                 } catch (err) {}
@@ -13283,7 +13283,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
 
-    loadInputDetailsOnProjectSelectNew2: function () {
+    loadInputDetailsOnProjectSelectNew2: function() {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -13296,7 +13296,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputNew(res);
                 } catch (err) {}
@@ -13310,7 +13310,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetailsOnProjectSelect: function () {
+    loadInputDetailsOnProjectSelect: function() {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -13322,7 +13322,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInput(res);
                 } catch (err) {
@@ -13335,7 +13335,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetails4TableOnProjectSelect: function () {
+    loadInputDetails4TableOnProjectSelect: function() {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -13347,7 +13347,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputTable(res);
                 } catch (err) {
@@ -13360,7 +13360,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetails4TabOnProjectSelect: function () {
+    loadInputDetails4TabOnProjectSelect: function() {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -13372,7 +13372,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputTab(res);
                 } catch (err) {
@@ -13385,7 +13385,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetails4DescriptionIdsOnProjectSelect: function () {
+    loadInputDetails4DescriptionIdsOnProjectSelect: function() {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
@@ -13397,7 +13397,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputDescriptionId(res);
                 } catch (err) {
@@ -13411,7 +13411,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
 
-    loadInputDetails4ChildDependenceIdOnProjectSelect4Input: function (fkInputId) {
+    loadInputDetails4ChildDependenceIdOnProjectSelect4Input: function(fkInputId) {
         var json = initJSON();
         json.kv.fkInputId = fkInputId;
         var that = this;
@@ -13423,7 +13423,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputChildDependenceIdNew(res);
                 } catch (err) {
@@ -13435,7 +13435,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDetails4ChildDependenceIdOnProjectSelect: function () {
+    loadInputDetails4ChildDependenceIdOnProjectSelect: function() {
         queue4ProLoad.loadInputDetails4ChildDependenceIdOnProjectSelect = true;
         executeCoreOfManualProSelection();
         return;
@@ -13451,7 +13451,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInput.LoadInputChildDependenceId(res);
                 } catch (err) {
@@ -13464,7 +13464,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadInputDescDetailsOnProjectSelect: function () {
+    loadInputDescDetailsOnProjectSelect: function() {
         var json = initJSON();
 
         json.kv.fkProjectId = global_var.current_project_id;
@@ -13477,7 +13477,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: global_var.projectToggleWithSync,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SAInputDesc.LoadInputDescription(res);
                 } catch (err) {}
@@ -13488,7 +13488,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    loadDependencyOnProjectSelect: function () {
+    loadDependencyOnProjectSelect: function() {
         var json = initJSON();
 
         json.kv.fkProjectId = global_var.current_project_id;
@@ -13501,7 +13501,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: global_var.projectToggleWithSync,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SADependency.LoadDependency(res);
                 } catch (err) {}
@@ -13512,7 +13512,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
 
-    loadBacklogLabelOnProjectSelect: function () {
+    loadBacklogLabelOnProjectSelect: function() {
         var json = initJSON();
 
         json.kv.fkProjectId = global_var.current_project_id;
@@ -13525,7 +13525,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: global_var.projectToggleWithSync,
-            success: function (res) {
+            success: function(res) {
                 try {
                     SABacklogLabel.Load(res);
                     SABacklogLabel.LoadLabelBacklogDep(res);
@@ -13537,7 +13537,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
 
-    loadDetails: function (data, arg) {
+    loadDetails: function(data, arg) {
         var that = arg;
         $.ajax({
             url: urlGl + "api/post/srv/serviceTmGetBacklogList",
@@ -13546,13 +13546,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadDetailesPure(res);
             }
         });
     },
 
-    loadDetailesPure: function (res) {
+    loadDetailesPure: function(res) {
         global_var.current_backlog_list = res;
         //        $("#view_button_" + global_var.current_view).click();
 
@@ -13584,7 +13584,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         this.refreshCurrentBacklog();
         //        }
     },
-    loadBacklogWithTask: function () {
+    loadBacklogWithTask: function() {
 
         global_var.current_list_view_table_item = 'assignee';
         $('#list_view_table_list_4_assignee').show();
@@ -13645,15 +13645,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogWithTaskDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadBacklogWithTaskDetails: function (res) {
+    loadBacklogWithTaskDetails: function(res) {
         $('#list_view_table_list_4_assignee > tbody').html('');
         //        console.log(JSON.stringify(global_var.current_backlog_list))
         try {
@@ -13787,10 +13787,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     .append(Number((spent_hours).toFixed(2)))))
             );
     },
-    clickFirstUserStory: function () {
+    clickFirstUserStory: function() {
         $('#container-us-body').find('.pointer').first().find('a').click();
     },
-    setEmptyMessage4Backlog: function () {
+    setEmptyMessage4Backlog: function() {
         var st = '<div  style="padding:30px;text-align:center;">';
         st += '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>';
         st += "<h5> No User Story have been found or created on this project</h5>";
@@ -13799,7 +13799,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#container-us-body').html(st);
     },
 
-    setEmptyMessage4BacklogListView4Pivot: function () {
+    setEmptyMessage4BacklogListView4Pivot: function() {
         var st = '<tr><td colspan=11>'
         st += '<div  style="padding:30px;text-align:center">';
         st += '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>';
@@ -13809,7 +13809,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         st += '</td></tr>'
         $('#list_view_table_pivot_list > tbody').html(st);
     },
-    setEmptyMessage4BacklogListView: function () {
+    setEmptyMessage4BacklogListView: function() {
         var st = '<tr><td colspan=11>'
         st += '<div  style="padding:30px;text-align:center">';
         st += '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>';
@@ -13819,7 +13819,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         st += '</td></tr>'
         $('#list_view_table_list >tbody').html(st);
     },
-    setEmptyMessage4BacklogListViewByAssignee: function () {
+    setEmptyMessage4BacklogListViewByAssignee: function() {
         var st = '<tr><td colspan=11>'
         st += '<div  style="padding:30px;text-align:center">';
         st += '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>';
@@ -13829,13 +13829,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         st += '</td></tr>'
         $('#list_view_table_list_4_assignee >tbody').html(st);
     },
-    setFilterPaginationRange: function () {
+    setFilterPaginationRange: function() {
         var s = global_var.user_story_core_filter_current_index;
         var e = parseFloat(global_var.user_story_core_filter_current_index) +
             parseFloat($('#us_core_filter_perpage').val())
         $('#us_core_filter_paginationResult').html("(" + s + '-' + e + ')');
     },
-    userstory_sort_by: function (e) {
+    userstory_sort_by: function(e) {
         if (global_var.userStoryFilter.asc.length > 0) {
             global_var.userStoryFilter.asc = $(e).val();
         } else if (global_var.userStoryFilter.desc.length > 0) {
@@ -13845,21 +13845,21 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         this.load();
     },
-    userstory_sort_by_asc: function (e) {
+    userstory_sort_by_asc: function(e) {
         $('.us_sort_by_arrows').attr("style", 'cursor: pointer;color:darked;font-size:14px;');
         $(e).attr("style", 'cursor: pointer;color:green;font-size:14px;');
         global_var.userStoryFilter.asc = $('#us_sort_by_list').val();
         global_var.userStoryFilter.desc = '';
         this.load();
     },
-    userstory_sort_by_desc: function (e) {
+    userstory_sort_by_desc: function(e) {
         $('.us_sort_by_arrows').attr("style", 'cursor: pointer;color:darked;font-size:14px;');
         $(e).attr("style", 'cursor: pointer;color:green;font-size:14px;');
         global_var.userStoryFilter.desc = $('#us_sort_by_list').val();
         global_var.userStoryFilter.asc = '';
         this.load();
     },
-    getUSListBlock_old: function (res) {
+    getUSListBlock_old: function(res) {
         var obj = res.tbl[0].r;
         var ln = '';
         for (var n = 0; n < obj.length; n++) {
@@ -13867,7 +13867,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         return ln;
     },
-    getUSListBlockUserStory: function (res) {
+    getUSListBlockUserStory: function(res) {
         var obj = res.tbl[0].r;
         var tbody = $('<tbody></tbody>');
         for (var n = obj.length - 1; n >= 0; n--) {
@@ -13879,7 +13879,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         return tbody.html();
     },
-    getUSListBlockUserStoryLive: function (res) {
+    getUSListBlockUserStoryLive: function(res) {
         var obj = res.tbl[0].r;
         var tbody = $('<select></select>');
         for (var n = obj.length - 1; n >= 0; n--) {
@@ -13891,7 +13891,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         return tbody.html();
     },
-    getUSListBlockApi: function (res) {
+    getUSListBlockApi: function(res) {
         var obj = res.tbl[0].r;
         var tbody = $('<tbody></tbody>');
         for (var n = obj.length - 1; n >= 0; n--) {
@@ -13904,7 +13904,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         return tbody.html();
     },
-    setUSLists: function (res) {
+    setUSLists: function(res) {
         try {
             if (res.tbl.length === 0) {
                 this.setEmptyMessage4Backlog();
@@ -13919,20 +13919,20 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_label_assign_checked = 0
         } catch (e) {}
     },
-    setUSListsDetailedView: function () {
+    setUSListsDetailedView: function() {
         this.setUSLists(global_var.current_backlog_list);
 
     },
-    setUSLists4KanbanViewDirect: function () {
+    setUSLists4KanbanViewDirect: function() {
         this.setUSLists4KanbanView();
     },
-    setUSLists4PivotViewDirect: function () {
+    setUSLists4PivotViewDirect: function() {
         this.setUSLists4PivotView(global_var.current_backlog_list);
     },
-    setUSLists4PivotView: function (res) {
+    setUSLists4PivotView: function(res) {
         this.loadBacklogWithTask4Pivot();
     },
-    loadBacklogWithTask4Pivot: function () {
+    loadBacklogWithTask4Pivot: function() {
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
         global_var.current_backlog_id = current_backlog_id.length > 1 ?
             Utility.getParamFromUrl('current_backlog_id') :
@@ -13989,15 +13989,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogWithTaskDetails4Pivot(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadBacklogWithTaskDetails4Pivot_GetUserStoryList: function (obj, data) {
+    loadBacklogWithTaskDetails4Pivot_GetUserStoryList: function(obj, data) {
         if (jQuery.inArray(obj.id, data.us_id_list) === -1) {
             var td = $('<td></td>')
                 .attr('style', '  border-top: 0px solid white;')
@@ -14029,11 +14029,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data.us_id_list.push(obj.id);
         }
     },
-    loadBacklogWithTaskDetails4Pivot_groupby: function (groupby) {
+    loadBacklogWithTaskDetails4Pivot_groupby: function(groupby) {
         global_var.sourcedmatrix_filterby = groupby;
         $('#view_button_pivot').click();
     },
-    loadBacklogWithTaskDetails4Pivot_GetTaskList: function (obj, data) {
+    loadBacklogWithTaskDetails4Pivot_GetTaskList: function(obj, data) {
         var id = global_var.sourcedmatrix_filterby === 'tasktype' ?
             obj.fkTaskTypeId :
             global_var.sourcedmatrix_filterby === 'assignee' ?
@@ -14055,7 +14055,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 ' <br>(' + data.task_hours_list[id] + '/' + data.task_shours_list[id] + ')');
         }
     },
-    loadBacklogWithTaskDetails4Pivot_GetTaskHoursList: function (obj, data) {
+    loadBacklogWithTaskDetails4Pivot_GetTaskHoursList: function(obj, data) {
         var sprint = [];
         for (var i = 0; i < obj.length; i++) {
             var t = obj[i].fkTaskTypeId + '--' + obj[i].id;
@@ -14102,7 +14102,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
         }
     },
-    loadBacklogWithTaskDetails4Pivot_GetCombList: function (obj, data) {
+    loadBacklogWithTaskDetails4Pivot_GetCombList: function(obj, data) {
         var id = global_var.sourcedmatrix_filterby === 'tasktype' ?
             obj.fkTaskTypeId :
             global_var.sourcedmatrix_filterby === 'assignee' ?
@@ -14132,12 +14132,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             data.comb_val_list[k] = $('<div></div>').append(td).html();
         }
     },
-    loadBacklogWithTaskDetails4Pivot_setUserStoryCounts: function (data) {
+    loadBacklogWithTaskDetails4Pivot_setUserStoryCounts: function(data) {
         $('#sourcedmatrixview_new').html(data.new_count.length);
         $('#sourcedmatrixview_ongoing').html(data.ongoing_count.length);
         $('#sourcedmatrixview_closed').html(data.closed_count.length);
     },
-    loadBacklogWithTaskDetails4Pivot_GetObjectList: function (obj, data) {
+    loadBacklogWithTaskDetails4Pivot_GetObjectList: function(obj, data) {
         this.loadBacklogWithTaskDetails4Pivot_GetTaskHoursList(obj, data);
         this.loadBacklogWithTaskDetails4Pivot_setUserStoryCounts(data);
         for (var i = 0; i < obj.length; i++) {
@@ -14146,7 +14146,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             this.loadBacklogWithTaskDetails4Pivot_GetCombList(obj[i], data);
         }
     },
-    loadBacklogWithTaskDetails4Pivot_GetHeader: function (data) {
+    loadBacklogWithTaskDetails4Pivot_GetHeader: function(data) {
         var header = $('<div></div>');
         var tr1 = $('<tr></tr>').append($('<th></th>').attr('style', '  border-top: 0px solid white;'));
         for (var j = 0; j < data.task_id_list.length; j++) {
@@ -14155,7 +14155,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         header.append(tr1);
         return header;
     },
-    loadBacklogWithTaskDetails4Pivot_filterbystatus: function (status) {
+    loadBacklogWithTaskDetails4Pivot_filterbystatus: function(status) {
         if (status === 'all') {
             $('.us_filter_status').prop('checked', false).click();
             return;
@@ -14163,7 +14163,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.us_filter_status').prop('checked', false);
         $('#us_filter_status_' + status).click();
     },
-    loadBacklogWithTaskDetails4Pivot_GetBody: function (data) {
+    loadBacklogWithTaskDetails4Pivot_GetBody: function(data) {
         var div = $('<div></div>');
         for (var i = 0; i < data.us_id_list.length; i++) {
             var ln = data.us_list[i];
@@ -14178,7 +14178,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         return div;
     },
-    loadBacklogWithTaskDetails4Pivot: function (res) {
+    loadBacklogWithTaskDetails4Pivot: function(res) {
         $('#list_view_table_pivot_list > thead').html('');
         $('#list_view_table_pivot_list > tbody').html('');
         try {
@@ -14217,19 +14217,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         this.setHeightOfPivotTable();
     },
-    setHeightOfPivotTable: function () {
+    setHeightOfPivotTable: function() {
         var int = 6;
-        $('.us-item-status-pivot-closed').each(function (e) {
+        $('.us-item-status-pivot-closed').each(function(e) {
             var h = $(this).closest('td').height();
             $(this).height(h - int);
         })
 
-        $('.us-item-status-pivot-new').each(function (e) {
+        $('.us-item-status-pivot-new').each(function(e) {
             var h = $(this).closest('td').height();
             $(this).height(h - int);
         })
 
-        $('.us-item-status-pivot-ongoing').each(function (e) {
+        $('.us-item-status-pivot-ongoing').each(function(e) {
             var h = $(this).closest('td').height();
             $(this).height(h - int);
         })
@@ -14242,7 +14242,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    setUSLists4KanbanViewByStatus: function (stLm, endLm, bsTat) {
+    setUSLists4KanbanViewByStatus: function(stLm, endLm, bsTat) {
         var groupBy = localStorage.getItem('usm_groupBy') ? localStorage.getItem('usm_groupBy') : "backlogStatus";
         $('#kanban_view_' + stLm + '_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_' + stLm).html('');
@@ -14262,7 +14262,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data.endLimit = endLimit;
         data.joinType = "left";
         var that = this;
-        callApi('21122313051700845260', data, true, function (res) {
+        callApi('21122313051700845260', data, true, function(res) {
 
             try {
                 //                     
@@ -14302,7 +14302,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    setUSLists4KanbanView: function () {
+    setUSLists4KanbanView: function() {
         global_counter_4_us = 0;
         var div = $(".task-panel")
         div.empty();
@@ -14351,6 +14351,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             _220304054258036310054.loader();
             $(".process-view-combo-boxs").removeClass("d-none");
         } else if (groupBy === 'processList') {
+
             div.append(`
                         <div data-toggle = "tooltip"
                         orderno = "2"
@@ -14385,34 +14386,25 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         <button style=""  id="comp_id_2203040544260546631list" class="btn btn-sm">
                             <i class="fas fa-plus-circle" aria-hidden="true"></i>
                         </button>
-                                    </div>                               
-                    
-                                    </div>
-
+                                    
+                        </div>                               
+                                     </div>
                          </div>
-
-
-
-
-
-
-
-
                              </div>
-                             <div class = 'col-lg-12'
-                             id = '22030803450902333051' >
+                             <div class = 'col-lg-12' id = '22030803450902333051' >
                              
                              
                              </div>
                     </div>
                   
                 `)
+
             //init event
             _220304054258036310054_.loader();
         }
 
     },
-    getStatisticView: function (div) {
+    getStatisticView: function(div) {
         var label = this.getLabelValue()
         var prid = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
         var data = {};
@@ -14422,7 +14414,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data.fkProjectId = prid;
         var that = this;
 
-        callApi('22021913172900532650', data, true, function (res) {
+        callApi('22021913172900532650', data, true, function(res) {
             res.tbl[0].r.map((o) => {
                 var nm = o.labelName;
                 var id = o.id;
@@ -14437,7 +14429,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         })
     },
-    genStaticMatrixBlock: function (id, nm, count) {
+    genStaticMatrixBlock: function(id, nm, count) {
         return `<div class="card m-2 card-${id}" style="min-width: 18rem;">
         <h6 class="card-header">
          ${nm}<b>(${count})</b>
@@ -14447,7 +14439,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         </ul>
       </div>`
     },
-    getMatrixList: function (div) {
+    getMatrixList: function(div) {
 
         var xtype = $('#matrix-view-xtype').val();
         var ytype = $('#matrix-view-ytype').val();
@@ -14461,7 +14453,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         _22022019434402082398.date_body(table);
         this.getMarixListUsMNgm(xtype, table);
     },
-    genMarixXType: function (xtype) {
+    genMarixXType: function(xtype) {
         var items = '';
         if (xtype === 'fkAssigneeId') {
             items = $("select#story_mn_filter_assigne_id");
@@ -14470,7 +14462,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             if (arr.length < 1) {
                 arr = [];
                 var itm = items.find("option")
-                itm.each(function (index) {
+                itm.each(function(index) {
                     if (index < 3) {
                         arr.push($(this).val())
                     }
@@ -14490,7 +14482,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             if (arr.length < 1) {
                 arr = [];
                 var itm = items.find("option")
-                itm.each(function (index) {
+                itm.each(function(index) {
                     if (index < 3) {
                         arr.push($(this).val())
                     }
@@ -14504,7 +14496,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         }
     },
-    genMarixYType: function (YType) {
+    genMarixYType: function(YType) {
         try {
             var item = ''
             _22022019434402082398.row_list = [];
@@ -14537,7 +14529,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 if (arr.length < 1) {
                     arr = [];
                     var itm = items.find("option")
-                    itm.each(function (index) {
+                    itm.each(function(index) {
                         if (index < 3) {
                             arr.push($(this).val())
                         }
@@ -14555,7 +14547,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    getMarixListUsMNgm: function (type, table) {
+    getMarixListUsMNgm: function(type, table) {
         var fromDt = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "1");
         var toDt = this.getValueRangePickerForUSm($("#us_management_created_date_from"), "2");
         var data = this.getUsFilterValueNew();
@@ -14568,7 +14560,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         for (var i in theaders) {
             var id = theaders[i];
             data[type] = id;
-            callApi('22022019331509987206', data, true, function (res) {
+            callApi('22022019331509987206', data, true, function(res) {
 
                 _22022019434402082398.add_body(res, table);
 
@@ -14577,10 +14569,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    getSprintValue: function () {
+    getSprintValue: function() {
         var list = ''
         var elm = $('.us-filter-checkbox-sprint:checked');
-        elm.each(function (index) {
+        elm.each(function(index) {
             if ($(this).is(":checked")) {
                 if ((index + 1) === elm.length) {
                     list += "'" + $(this).val() + "'";
@@ -14592,10 +14584,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         })
         return list;
     },
-    getLabelValue: function () {
+    getLabelValue: function() {
         var list = ''
         var elm = $('.prManag-task-filter-checkbox-label:checked');
-        elm.each(function (index) {
+        elm.each(function(index) {
             if ($(this).is(":checked")) {
                 if ((index + 1) === elm.length) {
                     list += $(this).val() + "|";
@@ -14606,11 +14598,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         })
         return list;
     },
-    getFktaskTypList4USMn: function (params) {
+    getFktaskTypList4USMn: function(params) {
         data = {}; //createTechizatTelebProducts
 
 
-        callApi('220102225238057110391', data, false, function (res) {
+        callApi('220102225238057110391', data, false, function(res) {
             var combo = $("#story_mn_manual_status_id");
             combo.empty();
             var tbl = res.tbl[0].r;
@@ -14632,7 +14624,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         });
     },
-    getManualStatusList: function () {
+    getManualStatusList: function() {
         var items = $("select#story_mn_manual_status_id");
 
         var div = $(".task-panel")
@@ -14649,7 +14641,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    getValueRangePickerForUSm: function (elm, lk) {
+    getValueRangePickerForUSm: function(elm, lk) {
         try {
             var val = elm.val();
             val = val.split('-')
@@ -14670,7 +14662,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return '';
         }
     },
-    getUsFilterValue: function () {
+    getUsFilterValue: function() {
         data = {}; //createTechizatTelebProducts
         var priD = getProjectValueUsManageMultiByelIn($('#story_mn_filter_project_id'));
         var TaskNatue = getProjectValueUsManageMultiByelIn($("#story_mn_filter_nature_id"));
@@ -14739,13 +14731,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (flowGroup) {
             data.fkFlowGroupId = flowGroup;
         }
-         if (flowName) {
-             data.fkFlowId = flowName;
-         }
+        if (flowName) {
+            data.fkFlowId = flowName;
+        }
         data.joinType = "inner";
         return data;
     },
-    getUsFilterValueNew: function () {
+    getUsFilterValueNew: function() {
         data = {}; //createTechizatTelebProducts
         var priD = getProjectValueUsManageMultiByelInNew($('#story_mn_filter_project_id'));
         var TaskNatue = getProjectValueUsManageMultiByelInNew($("#story_mn_filter_nature_id"));
@@ -14809,7 +14801,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         return data;
     },
-    getAssigneeList: function () {
+    getAssigneeList: function() {
         var items = $("select#story_mn_filter_assigne_id");
 
         var div = $(".task-panel")
@@ -14824,7 +14816,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
 
     },
-    getBacklogListByManualStatusId: function (json, stl, statusList, type, count) {
+    getBacklogListByManualStatusId: function(json, stl, statusList, type, count) {
         var data = json
 
         $('#kanban_view_' + stl + '_count').html(0);
@@ -14834,7 +14826,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data[type] = '(' + stl + ')';
         data.startLimit = 0;
         data.endLimit = 20;
-        callApi('21122313051700845260', data, true, function (res) {
+        callApi('21122313051700845260', data, true, function(res) {
 
             var c4new = 0;
             $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
@@ -14879,7 +14871,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         })
     },
-    getBacklogListByManualStatusIdMore: function (st, end, stl) {
+    getBacklogListByManualStatusIdMore: function(st, end, stl) {
         var data = this.getUsFilterValue();
         var type = $("#story_mn_groupBy_id").val();
         if (type === 'assigne') {
@@ -14891,7 +14883,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data[type] = '(' + stl + ')';
         data.startLimit = st;
         data.endLimit = end;
-        callApi('21122313051700845260', data, true, function (res) {
+        callApi('21122313051700845260', data, true, function(res) {
 
             var c4new = 0;
             $('#kanban_view_' + stl + '_count').text(res.kv.rowCount);
@@ -14925,7 +14917,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         })
     },
-    genUsManagementZone: function (id, Name, order, manual) {
+    genUsManagementZone: function(id, Name, order, manual) {
         return `<div class="drop-zone-main-class task-column  ${id}" status="${id}" ${manual ? "manual='true'" : ""} style='order:${order ? order : 0};'>
         <div class="task-column-header">
             <input type="checkbox" name="" data-st="${id}" class="all-check-us-mngm" id="alcheck-${id}-us-mng">
@@ -14955,7 +14947,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     </div>`
     },
-    setUSLists4KanbanViewCoreUsLArge: function (stl) {
+    setUSLists4KanbanViewCoreUsLArge: function(stl) {
         $('#body-large-modal-in-us').html('');
         $(".modal-header b.status-new-total").text(0)
         $(".modal-header b.status-ongoing-total").text(0)
@@ -15051,7 +15043,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var c4new = 0
                 $('#kanban_view_' + stl + '_count').html(0);
                 $('#body-large-modal-in-us').html('');
@@ -15080,7 +15072,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     html: true
                 });
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
@@ -15089,7 +15081,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    getStatisticList4Project: function (projectId, elm) {
+    getStatisticList4Project: function(projectId, elm) {
 
         var data = {}; //createTechizatTelebProducts 
         /* if($(".us-mngm-is-api").prop("checked")){
@@ -15101,7 +15093,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //   data.updatedBy = ".*";
         data.fkProjectId = projectId;
         var that = this;
-        callApi('21122912341403497474', data, true, function (res) {
+        callApi('21122912341403497474', data, true, function(res) {
 
             $(elm).closest('.task-column').find('.status-list-table-for-us').html(that.genStatisticBlockUSman(projectId, 'manual-project-stat-list'));
 
@@ -15117,7 +15109,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
 
     },
-    getStatisticList4Status: function (mnId, elm) {
+    getStatisticList4Status: function(mnId, elm) {
 
         var data = {};
         //createTechizatTelebProducts 
@@ -15130,7 +15122,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //   data.updatedBy = ".*";
         data.fkTaskTypeId = "(" + mnId + ")";
         var that = this;
-        callApi('22010305404407902224', data, true, function (res) {
+        callApi('22010305404407902224', data, true, function(res) {
 
             $(elm).closest('.task-column').find('.status-list-table-for-us').html(that.genStatisticBlockUSman(mnId, 'manual-status-stat-list'));
 
@@ -15145,7 +15137,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
 
     },
-    genStatisticBlockUSman: function (projectId, trigClass) {
+    genStatisticBlockUSman: function(projectId, trigClass) {
         return `<div class="info-box ${trigClass}">
         <span class="title">Status</span>
         <div class="active info-item-elements" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="New" data-original-title="" title="">
@@ -15162,7 +15154,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         </div>
     </div>`
     },
-    setUSLists4KanbanViewCore: function (stl, apiFiled) {
+    setUSLists4KanbanViewCore: function(stl, apiFiled) {
         var rstl = stl;
         if (apiFiled === 'backlogStatus') {
             apiFiled = 'coreBacklogStatus';
@@ -15178,7 +15170,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data.startLimit = 0;
         data.endLimit = 20;
         data.joinType = "left";
-        callApi('21122313051700845260', data, true, function (res) {
+        callApi('21122313051700845260', data, true, function(res) {
             var c4new = 0
             $('#kanban_view_' + stl + '_count').text(res.kv.rowCount);
 
@@ -15222,7 +15214,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    setUSLists4KanbanView_old: function () {
+    setUSLists4KanbanView_old: function() {
 
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
@@ -15298,7 +15290,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         contentArrangableUI();
 
     },
-    setUSLists4KanbanView__: function () {
+    setUSLists4KanbanView__: function() {
         var res = SACore.toJSON();
         $('#kanban_view_new_count_4_task').html(0);
         $('#kanban_view_ongoing_count_4_task').html(0);
@@ -15350,11 +15342,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         contentArrangableUI();
 
     },
-    getUSLineCBPart: function (o) {
+    getUSLineCBPart: function(o) {
         var st = '';
         return st;
     },
-    genUSLine1: function (o) {
+    genUSLine1: function(o) {
         //        var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
         //        var isSourced = o.isSourced === '1' ?
         //                "<i class=\"fa fa-cube\" style=\"color: darkred;\">&nbsp;</i>"
@@ -15406,7 +15398,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //
         //        return st;
     },
-    genUSLine_old: function (o) {
+    genUSLine_old: function(o) {
         var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
         var pointer_is_selected = o.id === global_var.current_backlog_id ? "us-selected" : "";
         var isSourced = o.isSourced === '1' ?
@@ -15493,7 +15485,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         tr.append($('<td class="us-td-list"></td>').html(td3));
         return tr;
     },
-    genUSLine: function (o) {
+    genUSLine: function(o) {
 
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
         var div = $('<div>')
@@ -15554,7 +15546,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         return tr;
     },
-    genUSLineOption: function (o) {
+    genUSLineOption: function(o) {
 
 
         var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
@@ -15583,7 +15575,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         return tr;
     },
-    insertNewBacklogShort: function (el) {
+    insertNewBacklogShort: function(el) {
         var val = $(el).val();
         if (!val) {
             return;
@@ -15606,7 +15598,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.addBacklogByRes(res);
                 SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
 
@@ -15620,7 +15612,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
                 //add label to story card
-                $('.us-filter-checkbox-label').each(function () {
+                $('.us-filter-checkbox-label').each(function() {
                     if ($(this).is(":checked")) {
                         var labelId = $(this).val();
                         if (labelId) {
@@ -15632,13 +15624,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.load();
                 //                
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    assignLabelToNewBacklog: function (backlogId, labelId) {
+    assignLabelToNewBacklog: function(backlogId, labelId) {
         var id = backlogId;
         var checked = '1';
         if ($(this).is(":checked")) {
@@ -15659,17 +15651,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 new Label().load();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    addEpicToJira: function (backlogId) {
+    addEpicToJira: function(backlogId) {
         if (!backlogId) {
             return;
         }
@@ -15690,13 +15682,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 Toaster.showError(res.kv.msg);
             }
         });
     },
 
-    genUSLine4KanbanView: function (o, zoneID) {
+    genUSLine4KanbanView: function(o, zoneID) {
 
 
 
@@ -15825,16 +15817,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 //                                )
             )
 
-            .append($('<div clas="taskContentBody">')
-                .append($('<span class="backlog-status">')
-                    .append($('<div class="us-list-item">')
-                        .addClass('us-item-status-' + o.backlogStatus)
-                        .append(o.backlogStatus)
-                    ))
-                .append($('<span class="backlog-status">')
-                    .append($('<div class="us-list-item us-priority">')
-                        .append($("<select>").attr("id", 'priority-change-story-card').addClass('story-priorty-selectbox')
-                            .append(`
+        .append($('<div clas="taskContentBody">')
+            .append($('<span class="backlog-status">')
+                .append($('<div class="us-list-item">')
+                    .addClass('us-item-status-' + o.backlogStatus)
+                    .append(o.backlogStatus)
+                ))
+            .append($('<span class="backlog-status">')
+                .append($('<div class="us-list-item us-priority">')
+                    .append($("<select>").attr("id", 'priority-change-story-card').addClass('story-priorty-selectbox')
+                        .append(`
                                 <option value="1" selected="">1- Lowest</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -15845,75 +15837,75 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 <option value="8">8</option>
                                 <option value="9">9 - Highest</option>
                                 `)
-                            .val(o.priority))
+                        .val(o.priority))
 
-                    ))
-                /* .append($('<span class="backlog-status">')
-                        .append($('<div class="us-list-item us-item-executor">')
+                ))
+            /* .append($('<span class="backlog-status">')
+                    .append($('<div class="us-list-item us-item-executor">')
 
-                                .append("&nbsp;" + o.createdByName)
-                                )) */
-                .append($('<span class="backlog-status">')
-                    .append($('<div class="us-list-item us-item-date">')
-                        .append("&nbsp;" + Utility.convertDate(o.createdDate))
-                    ))
-                .append($('<span class="backlog-status">')
-                    .append("&nbsp;&nbsp;")
-                    .append(createdByImg))
-                .append($('<span class="backlog-status">')
-                    .append("&nbsp;&nbsp;")
-                    .append(updatedByImg))
-                .append($('<span class="backlog-status">')
-                    .append("&nbsp;&nbsp;")
-                    .append(assigneeImg))
-                .append($('<span class="bugCountId' + o.id + ' " id="bugCountId' + o.id + '">'))
+                            .append("&nbsp;" + o.createdByName)
+                            )) */
+            .append($('<span class="backlog-status">')
+                .append($('<div class="us-list-item us-item-date">')
+                    .append("&nbsp;" + Utility.convertDate(o.createdDate))
+                ))
+            .append($('<span class="backlog-status">')
+                .append("&nbsp;&nbsp;")
+                .append(createdByImg))
+            .append($('<span class="backlog-status">')
+                .append("&nbsp;&nbsp;")
+                .append(updatedByImg))
+            .append($('<span class="backlog-status">')
+                .append("&nbsp;&nbsp;")
+                .append(assigneeImg))
+            .append($('<span class="bugCountId' + o.id + ' " id="bugCountId' + o.id + '">'))
 
-                .append($("<button>")
-                    .addClass("baclog-large-modal-ididit-refresh btn btn-sm btn-light")
-                    .attr('data-bid', o.id)
-                    .append('<i class="fas fa-sync text-success"></i>')
-                )
+            .append($("<button>")
+                .addClass("baclog-large-modal-ididit-refresh btn btn-sm btn-light")
+                .attr('data-bid', o.id)
+                .append('<i class="fas fa-sync text-success"></i>')
+            )
 
-                .append($("<button>")
-                    .addClass("baclog-large-modal-ididit btn btn-sm btn-light")
-                    .attr("data-status", o.id)
-                    .append('<i class="fa fa-mail-forward text-success" aria-hidden="true"></i>')
-                )
+            .append($("<button>")
+                .addClass("baclog-large-modal-ididit btn btn-sm btn-light")
+                .attr("data-status", o.id)
+                .append('<i class="fa fa-mail-forward text-success" aria-hidden="true"></i>')
+            )
 
-                .append(`<label class="switch ">
+            .append(`<label class="switch ">
                          <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
                          <span class="slider round hide-off "></span></label>`)
-                .append($("<button>")
-                    .addClass("baclog-large-modal-next btn btn-sm btn-light")
-                    .attr("data-status", o.id)
-                    .attr("data-status", 'baclog-large-modal-next-id')
-                    .append('<i class="fas fa-expand" aria-hidden="true"></i>')
-                )
-
-                .append($("<button>")
-                    .addClass("baclog-large-modal-history btn btn-sm btn-light")
-                    .attr("data-status", o.id)
-                    .append('<i class="fas fa-history"></i>')
-                )
-                .append($("<div>").addClass("stat-div-task-content")
-                    .append($('<table>').addClass("stat-table-us")
-                        .attr("id", "tbl-" + o.id)
-                        .append($("<thead>")
-                            .append($("<tr class=total>"))
-                            .append($("<tr class='bug'>"))
-                        )
-                        .append($("<tbody class='d-none'>")))
-                    .append($("<ul>"))
-
-                    .css("display", 'none'))
-                //                        .append($('<i  class="fa fa-info-circle">')
-                //                                .data('toggle', 'modal')
-                //                                .data('target', '#backlogTaskInfoModal')
-                //                                .attr('title', 'User Story Task Info')
-                //                                .attr('onclick', "new UserStory().backlogTaskInfoModal('" + o.id + "')")
-                //                                .append(countLine))
-
+            .append($("<button>")
+                .addClass("baclog-large-modal-next btn btn-sm btn-light")
+                .attr("data-status", o.id)
+                .attr("data-status", 'baclog-large-modal-next-id')
+                .append('<i class="fas fa-expand" aria-hidden="true"></i>')
             )
+
+            .append($("<button>")
+                .addClass("baclog-large-modal-history btn btn-sm btn-light")
+                .attr("data-status", o.id)
+                .append('<i class="fas fa-history"></i>')
+            )
+            .append($("<div>").addClass("stat-div-task-content")
+                .append($('<table>').addClass("stat-table-us")
+                    .attr("id", "tbl-" + o.id)
+                    .append($("<thead>")
+                        .append($("<tr class=total>"))
+                        .append($("<tr class='bug'>"))
+                    )
+                    .append($("<tbody class='d-none'>")))
+                .append($("<ul>"))
+
+                .css("display", 'none'))
+            //                        .append($('<i  class="fa fa-info-circle">')
+            //                                .data('toggle', 'modal')
+            //                                .data('target', '#backlogTaskInfoModal')
+            //                                .attr('title', 'User Story Task Info')
+            //                                .attr('onclick', "new UserStory().backlogTaskInfoModal('" + o.id + "')")
+            //                                .append(countLine))
+
+        )
 
 
 
@@ -15921,7 +15913,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return s;
 
     },
-    backlogTaskInfoModal: function (backlogId) {
+    backlogTaskInfoModal: function(backlogId) {
         if (!backlogId) {
             return;
         }
@@ -15943,12 +15935,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.backlogTaskInfoModalDetails(res);
             }
         });
     },
-    backlogTaskInfoModalDetails: function (res) {
+    backlogTaskInfoModalDetails: function(res) {
         if (!res.tbl[0].r) {
             return;
         }
@@ -15974,17 +15966,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#backlogTaskInfoModal_result').append(div);
     },
-    setPreviousUserstory: function () {
+    setPreviousUserstory: function() {
         //set previous backlog
         $('#smb-general-main-previous-us')
             .attr('onclick', "new UserStory().redirectUserStoryCore('" + global_var.previous_backlog_id + "')")
             .html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.previous_backlog_id)));
     },
-    setPreviousUserstoryValues: function () {
+    setPreviousUserstoryValues: function() {
         global_var.previous_backlog_name = global_var.current_backlog_name;
         global_var.previous_backlog_id = global_var.current_backlog_id;
     },
-    redirectToDetailedView: function (id) {
+    redirectToDetailedView: function(id) {
         //        this.setPreviousUserstory();
 
         this.setPreviousUserstoryValues();
@@ -16002,7 +15994,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.redirectUserStoryCore(id);
     },
 
-    redirectToDetailedViewGeneral: function (id) {
+    redirectToDetailedViewGeneral: function(id) {
         //        this.setPreviousUserstory();
 
         this.setPreviousUserstoryValues();
@@ -16017,14 +16009,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         this.load();
     },
-    redirectUserStory: function (backlogId) {
+    redirectUserStory: function(backlogId) {
 
         if ($('select.' + backlogId).val()) {
             //            console.log('id=' + $('#us-gui-component-rel-sus-id').val())
             this.redirectUserStoryCore($('select.' + backlogId).val());
         }
     },
-    redirectUserStoryCore: function (backlogId) {
+    redirectUserStoryCore: function(backlogId) {
         try {
             //            event.preventDefault();
 
@@ -16114,16 +16106,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
  */
     },
-    redirectToDetailedView4ActivityDiagram: function (id) {
+    redirectToDetailedView4ActivityDiagram: function(id) {
         this.redirectToDetailedView(id);
         this.showUserStoryPanel();
     },
-    showUserStoryPanel: function () {
+    showUserStoryPanel: function() {
         $('.main_body_class').show();
         ActivityDiagram.hidePanel();
         Analytics.hide();
     },
-    notifyTicketAsBug: function () {
+    notifyTicketAsBug: function() {
         if (!$('#notifyTicketAsBug_id').val()) {
             return;
         }
@@ -16146,7 +16138,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.changeStatusIconOfUserStoryByStoryId($('#notifyTicketAsBug_id').val(), res.kv.backlogStatus);
                 //                that.clickOnThe1stUserStory();
                 $('#notifyTicketAsBugModal').modal('hide');
@@ -16157,12 +16149,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.refreshCurrentBacklog();
                 that.updateStatusOfBacklogBySourcedId($('#notifyTicketAsBug_suslist').val());
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateStatusOfBacklogBySourcedId: function (id) {
+    updateStatusOfBacklogBySourcedId: function(id) {
         if (!id) {
             return;
         }
@@ -16183,7 +16175,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 var ids = res.kv.ids.split('|');
                 var status = res.kv.status;
                 for (var i = 0; i < ids.length; i++) {
@@ -16195,12 +16187,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .first().find('.backlog-status').first()
                     .html('<div class="us-list-item   us-item-status-' + status + '">' + status + '</div>');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    bindToSUS: function () {
+    bindToSUS: function() {
         if (!$('#bindToSUSModal_id').val()) {
             return;
         }
@@ -16222,7 +16214,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.changeStatusIconOfUserStoryByStoryId($('#bindToSUSModal_id').val(), res.kv.backlogStatus);
                 that.clickOnThe1stUserStory();
                 $('#bindToSUSModal').modal('hide');
@@ -16234,12 +16226,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         $('#bindToSUSModal_id').val(), res.kv.isSourced, false);
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    notifyTicketAsBugModal: function (id) {
+    notifyTicketAsBugModal: function(id) {
         $('#notifyTicketAsBug_id').val(id);
         var json = {
             kv: {}
@@ -16257,15 +16249,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.notifyTicketAsBugModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    notifyTicketAsBugModalDetails: function (res) {
+    notifyTicketAsBugModalDetails: function(res) {
         $('#notifyTicketAsBug_suslist').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -16275,7 +16267,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#notifyTicketAsBug_suslist').first().change();
     },
-    addDependency: function () {
+    addDependency: function() {
         var json = {
             kv: {}
         };
@@ -16294,7 +16286,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.error) {
                     Toaster.showError(res.kv.error)
                     return;
@@ -16302,12 +16294,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 SADependency.LoadDependency(res);
                 that.loadBacklogDependency($('#sourcedUSList4Dependency_id').val());
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadBacklogDependency: function (id) {
+    loadBacklogDependency: function(id) {
         var json = {
             kv: {}
         };
@@ -16326,15 +16318,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadBacklogDependencyDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadBacklogDependencyDetails: function (res) {
+    loadBacklogDependencyDetails: function(res) {
         $('#sourcedUSList4DependencyList > tbody').html("");
         var st = "";
         try {
@@ -16355,7 +16347,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         st += '</tr>'
         $('#sourcedUSList4DependencyList > tbody').html(st);
     },
-    deleteDependency: function (backlogId, id) {
+    deleteDependency: function(backlogId, id) {
         var json = {
             kv: {}
         };
@@ -16372,20 +16364,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SADependency.LoadDependency(res);
                 that.loadBacklogDependency(backlogId);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addDependencyModal: function (id) {
+    addDependencyModal: function(id) {
         this.loadBacklogDependency(id);
         this.loadDependencyModalInfo(id);
     },
-    loadDependencyModalInfo: function (id) {
+    loadDependencyModalInfo: function(id) {
         $('#sourcedUSList4Dependency').html('');
         $('#sourcedUSList4Dependency_id').val(id);
         var json = {
@@ -16405,15 +16397,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.addDependencyModalDetails(res, id);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    bindTicketToSUSModal: function (id) {
+    bindTicketToSUSModal: function(id) {
         $('#bindTicketToSUSModal_id').val(id);
         this.bindTicketToSUSModalAssignee();
         var json = {
@@ -16432,15 +16424,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.bindTicketToSUSModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addDependencyModalDetails: function (res, currentUserStoryId) {
+    addDependencyModalDetails: function(res, currentUserStoryId) {
         $('#sourcedUSList4Dependency').html("");
         var obj = res.tbl[0].r;
         $('#sourcedUSList4Dependency').append($("<option></option>").attr("value", ''));
@@ -16453,7 +16445,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .text(obj[n].backlogName));
         }
     },
-    loadSUS4RelationDetails: function (res) {
+    loadSUS4RelationDetails: function(res) {
         $('#us-related-sus').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -16469,7 +16461,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#us-related-sus').selectpicker('refresh');
     },
-    loadSUS4Relation4SectionDetails: function (res) {
+    loadSUS4Relation4SectionDetails: function(res) {
         var select = $('select.us-gui-component-rel-sus-id-section');
         select.html("");
         select.append($("<option></option>")
@@ -16510,7 +16502,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     //            }
     //        });
     //    },
-    bindTicketToSUSModalAssignee: function () {
+    bindTicketToSUSModalAssignee: function() {
         var json = {
             kv: {}
         };
@@ -16528,15 +16520,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.genUsFilterAssigneeByBindTicketToSUSModal(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    genUsFilterAssigneeByBindTicketToSUSModal: function (res) {
+    genUsFilterAssigneeByBindTicketToSUSModal: function(res) {
         $('#bindTicketToSUSModal_assignee').html("");
         var obj = res.tbl[0].r;
         var st = "";
@@ -16554,7 +16546,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         st += '</table>';
         $('#bindTicketToSUSModal_assignee').html(st);
     },
-    bindTicketToSUSModalDetails: function (res) {
+    bindTicketToSUSModalDetails: function(res) {
         $('#bindTicketToSUSModal_suslist').html("");
         var obj = res.tbl[0].r;
         $('#bindTicketToSUSModal_suslist').append($("<option></option>").attr("value", ''));
@@ -16564,7 +16556,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .text(replaceTags(obj[n].backlogName)));
         }
     },
-    bindToSUSModal: function (id) {
+    bindToSUSModal: function(id) {
         $('#bindToSUSModal_id').val(id);
         var json = {
             kv: {}
@@ -16582,16 +16574,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
 
                 that.bindToSUSModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    bindToSUSModalDetails: function (res) {
+    bindToSUSModalDetails: function(res) {
         $('#bindToSUSModal_suslist').html("");
         var obj = res.tbl[0].r;
         $('#bindToSUSModal_suslist').append($("<option></option>").attr("value", ''));
@@ -16601,13 +16593,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .text(replaceTags(obj[n].backlogName)));
         }
     },
-    minimizeBacklogName: function (arg) {
+    minimizeBacklogName: function(arg) {
         if (arg.trim().length > global_var.default_backlog_length) {
             arg = arg.substring(0, global_var.default_backlog_length) + '...';
         }
         return arg;
     },
-    getStoryInfo: function (id, e) {
+    getStoryInfo: function(id, e) {
         manualCodeListGenBAcklog(id);
         clearLivePrototypeView42();
 
@@ -16625,7 +16617,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        $('.us-selected').each(function () {
+        $('.us-selected').each(function() {
             $(this).removeClass('us-selected');
             $(this).css("background-color", "");
         });
@@ -16641,7 +16633,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.getBacklogDetailedInputInfoById_coreNew(SAInput.toJSON());
 
     },
-    getStoryInfoOld: function (id, e) {
+    getStoryInfoOld: function(id, e) {
         if (!id) {
             return;
         }
@@ -16654,7 +16646,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         this.setPreviousUserstoryValues();
         this.setPreviousUserstory();
-        $('.us-selected').each(function () {
+        $('.us-selected').each(function() {
             $(this).removeClass('us-selected');
             $(this).css("background-color", "");
         });
@@ -16699,8 +16691,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //        this.getBacklogTaskStats();
     },
 
-    getBacklogTaskStats: function () {
-        $('.xpclear').each(function () {
+    getBacklogTaskStats: function() {
+        $('.xpclear').each(function() {
             $(this).html('0')
         });
 
@@ -16715,7 +16707,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var indOveral = getIndexOfTable(res, 'overall');
                 if (indOveral >= 0) {
                     $('#backlog-task-stat-overall').text(res.tbl[indOveral].r[0].overall);
@@ -16753,7 +16745,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
 
-    getSendToApiListByStoryCard: function (storyCardId) {
+    getSendToApiListByStoryCard: function(storyCardId) {
 
 
         var outputList = SACore.GetBacklogDetails(storyCardId, "inputIds").split(',');
@@ -16794,7 +16786,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
 
-    getStoryInfoDetail4BacklogList: function (id, e) {
+    getStoryInfoDetail4BacklogList: function(id, e) {
 
         var st = "";
         var json = {
@@ -16813,14 +16805,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 st = that.genUSLine(res.tbl[0].r[0]);
                 $(e).closest('tr').first().html(st.html());
             }
         });
         return st;
     },
-    getStoryInfoDetail: function (id) {
+    getStoryInfoDetail: function(id) {
         var json = {
             kv: {}
         };
@@ -16837,16 +16829,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 that.setStoryGeneralInfo(res.tbl[0].r[0]);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setStoryGeneralInfo: function (o) {
+    setStoryGeneralInfo: function(o) {
         $('#smb-general-main-info').html('');
         var div = $('<div></div>').addClass("col-12");
         div.append($('<div></div>').addClass("col-12").html("<h4>#" + o.orderNo + ": " + replaceTags(o.backlogName) + "</h4>"));
@@ -16863,17 +16855,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //        div.append($('<div></div>').addClass("col-12").html("<hr>"));
         $('#smb-general-main-info').append(div.html());
     },
-    setCommentBody: function () {
+    setCommentBody: function() {
 
     },
-    clearSearch: function () {
+    clearSearch: function() {
 
         $('#add-bkl-line').val('');
         $('#add-bkl-line').change();
 
 
     },
-    delete: function (id) {
+    delete: function(id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -16891,19 +16883,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 SACore.deleteBacklog(global_var.current_backlog_id);
                 that.load();
                 new Label().load();
                 new Sprint().load();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    getBacklogCoreInfoById: function (id) {
+    getBacklogCoreInfoById: function(id) {
         if (!id) {
             return;
         }
@@ -16922,13 +16914,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 rs = res;
             }
         });
         return rs;
     },
-    select: function (id) {
+    select: function(id) {
         if (!id) {
             return;
         }
@@ -16945,15 +16937,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.fillForm(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    fillForm: function (res) {
+    fillForm: function(res) {
         var obj = res.tbl[0].r[0];
         $('#u_backlogId').val(obj.id);
         $('#u_backlogName').val(obj.backlogName);
@@ -16964,7 +16956,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.assignSprint4UpdateBacklogRadioButtonModal('updateBacklog_sprintlist', obj.fkSprintId);
         this.assignLabel4UpdateBacklogModal('updateBacklog_labellist', obj.fkLabelId);
     },
-    assignLabel4UpdateBacklogModal: function (id, checkedListRes) {
+    assignLabel4UpdateBacklogModal: function(id, checkedListRes) {
         $('#' + id).html("");
         if (!global_var.current_project_id) {
             return;
@@ -16985,17 +16977,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     that.assignLabel4UpdateBacklogModalDetails(res, id, checkedListRes);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    assignLabel4UpdateBacklogModalDetails: function (res, id, checkedListRes) {
+    assignLabel4UpdateBacklogModalDetails: function(res, id, checkedListRes) {
         var vid = ''
         if (id) {
             vid = id;
@@ -17020,7 +17012,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         st += '</table>';
         $('#' + vid).html(st);
     },
-    assignSprint4UpdateBacklogRadioButtonModal: function (id, checkedListRes) {
+    assignSprint4UpdateBacklogRadioButtonModal: function(id, checkedListRes) {
         $('#' + id).html("");
         if (!global_var.current_project_id) {
             return;
@@ -17041,17 +17033,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     that.assignSprint4UpdateBacklogRadioButtonModalDetails(res, id, checkedListRes);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    assignSprint4UpdateBacklogRadioButtonModalDetails: function (res, id, checkedListRes) {
+    assignSprint4UpdateBacklogRadioButtonModalDetails: function(res, id, checkedListRes) {
         var vid = ''
         if (id) {
             vid = id;
@@ -17080,7 +17072,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         st += '</table>';
         $('#' + vid).html(st);
     },
-    assignSprint4UpdateBacklogModal: function (id, checkedListRes) {
+    assignSprint4UpdateBacklogModal: function(id, checkedListRes) {
         $('#' + id).html("");
         if (!global_var.current_project_id) {
             return;
@@ -17101,17 +17093,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     that.assignSprint4UpdateBacklogModalDetails(res, id, checkedListRes);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    assignSprint4UpdateBacklogModalDetails: function (res, id, checkedListRes) {
+    assignSprint4UpdateBacklogModalDetails: function(res, id, checkedListRes) {
         var vid = ''
         if (id) {
             vid = id;
@@ -17136,7 +17128,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         st += '</table>';
         $('#' + vid).html(st);
     },
-    updateInfo: function () {
+    updateInfo: function() {
         var json = {
             kv: {}
         };
@@ -17162,7 +17154,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 //                Toaster.showError("successfull");
                 new Notification("").clearField('updateBacklog');
@@ -17170,12 +17162,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 new Label().load();
                 new Sprint().load();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    update: function () {
+    update: function() {
         //        this.setId(id);
         this.addValue4Update();
         this.addController4Update();
@@ -17183,14 +17175,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.load();
         this.load4Task();
     },
-    addValue4Update: function () {
+    addValue4Update: function() {
         this.setStory($('#u_backlogName').val());
         this.setId($('#u_backlogId').val());
         this.setBacause($('#u_backlogBecause').val());
         this.setDescription($('#u_backlogDescription').val());
         this.setPriority($('#u_backlogPriority').val());
     },
-    addController4Update: function () {
+    addController4Update: function() {
         var f = false;
         if (this.getStory().trim().length == 0) {
             new Notification("Story is not entered!").showInComponent('u_backlogName');
@@ -17202,7 +17194,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             throw "Date info is not entered!";
         }
     },
-    addComment: function () {
+    addComment: function() {
         this.addController4Comment();
         if ($('#file1').val().trim().length > 0) {
             this.sendFileForComment();
@@ -17211,7 +17203,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             this.fillCommentList();
         }
     },
-    addFileForNewTicket: function () {
+    addFileForNewTicket: function() {
         //        var files = evt.target.files; // FileList object
         var files = document.getElementById('insertNewTicketModal_file').files;
         // files is a FileList of File objects. List some properties.
@@ -17225,7 +17217,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         document.getElementById('insertNewTicketModal_list').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
-    addFileForComment: function () {
+    addFileForComment: function() {
         //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file1').files;
         // files is a FileList of File objects. List some properties.
@@ -17239,7 +17231,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
-    addFileForAddTaskType: function () {
+    addFileForAddTaskType: function() {
         //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file4AddTaskType').files;
         // files is a FileList of File objects. List some properties.
@@ -17253,7 +17245,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         document.getElementById('AddTaskType_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
-    addFileForStoryCard: function () {
+    addFileForStoryCard: function() {
         //        var files = evt.target.files; // FileList object
         var files = document.getElementById('setStoryCardUploadImageModal_file').files;
         // files is a FileList of File objects. List some properties.
@@ -17267,7 +17259,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         document.getElementById('setStoryCardUploadImageModal_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
-    addFileForAddBacklog: function () {
+    addFileForAddBacklog: function() {
         //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file4AddBacklog').files;
         // files is a FileList of File objects. List some properties.
@@ -17281,7 +17273,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         document.getElementById('addBacklog_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
-    addFileForTaskComment: function () {
+    addFileForTaskComment: function() {
         //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file11').files;
         // files is a FileList of File objects. List some properties.
@@ -17295,68 +17287,68 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         document.getElementById('addTrial4Scenario_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
-    upload: function () {
+    upload: function() {
         upload('file1');
     },
-    sendFileForComment_old: function () {
+    sendFileForComment_old: function() {
         var r = "";
         if ($('#file1').val().trim().length > 0) {
             r = this.upload('file1');
         }
         return r;
     },
-    sendFileForComponentImage: function () {
+    sendFileForComponentImage: function() {
         if ($('#uploadComponentImageModal_file').val().trim().length > 0) {
             this.upload_componentImage('uploadComponentImageModal_file');
         }
     },
-    sendFileForStoryCardImage: function () {
+    sendFileForStoryCardImage: function() {
         if ($('#setStoryCardUploadImageModal_file').val().trim().length > 0) {
             this.upload_storyCardImage('setStoryCardUploadImageModal_file');
         }
     },
-    sendFileForCanvasBackground: function () {
+    sendFileForCanvasBackground: function() {
         if ($('#uploadBackgroundImage4Canvas_file').val().trim().length > 0) {
             this.upload_canvas('uploadBackgroundImage4Canvas_file');
         }
     },
-    sendFileForComment: function () {
+    sendFileForComment: function() {
         if ($('#file1').val().trim().length > 0) {
             this.upload_temp('file1');
         }
     },
-    sendFileForComment4Task: function () {
+    sendFileForComment4Task: function() {
         if ($('#file11').val().trim().length > 0) {
             this.upload_temp_4_task('file11');
         }
     },
 
-    sendFileForAddTaskType: function () {
+    sendFileForAddTaskType: function() {
         if ($('#file4AddTaskType').val().trim().length > 0) {
             this.upload_temp_4_add_task_type('file4AddTaskType');
         }
     },
-    sendFileForAddBacklog: function (backlogId) {
+    sendFileForAddBacklog: function(backlogId) {
         if ($('#file4AddBacklog').val().trim().length > 0) {
             this.upload_temp_4_add_backlog(backlogId, 'file4AddBacklog');
         }
     },
-    sendFileFoTrial4Scenario: function () {
+    sendFileFoTrial4Scenario: function() {
         if ($('#file_trial').val().trim().length > 0) {
             this.upload_temp_4_trial('file_trial');
         }
     },
-    sendFileForScenario: function () {
+    sendFileForScenario: function() {
         if ($('#file_scenario').val().trim().length > 0) {
             this.upload_temp_4_scenario('file_scenario');
         }
     },
-    sendFileForCommentTask: function () {
+    sendFileForCommentTask: function() {
         if ($('#file11').val().trim().length > 0) {
             this.upload_temp_4_file_comment_task('file11');
         }
     },
-    upload_temp_4_file_comment_task: function (id) {
+    upload_temp_4_file_comment_task: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17374,7 +17366,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17397,7 +17389,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_temp_4_add_backlog: function (backlogId, id) {
+    upload_temp_4_add_backlog: function(backlogId, id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17415,7 +17407,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17436,7 +17428,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_temp_4_add_task_type: function (id) {
+    upload_temp_4_add_task_type: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17454,7 +17446,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17475,7 +17467,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_temp_4_task: function (id) {
+    upload_temp_4_task: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17493,7 +17485,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17516,7 +17508,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_temp_4_trial: function (id) {
+    upload_temp_4_trial: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17534,7 +17526,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17555,7 +17547,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_temp_4_scenario: function (id) {
+    upload_temp_4_scenario: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17573,7 +17565,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17594,7 +17586,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_temp: function (id) {
+    upload_temp: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17612,7 +17604,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17636,7 +17628,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
 
-    upload_canvas: function (id) {
+    upload_canvas: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17654,7 +17646,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17670,7 +17662,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_storyCardImage: function (id) {
+    upload_storyCardImage: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17688,7 +17680,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
 
                     trc++;
                     var fname1 = readerEvt.target.fileName;
@@ -17715,7 +17707,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    upload_componentImage: function (id) {
+    upload_componentImage: function(id) {
         var r = "";
         var that = this;
         var files = document.getElementById(id).files;
@@ -17733,7 +17725,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 reader.fileName = fname;
                 reader.fileExt = fileext;
                 reader.fileNo = i;
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     trc++;
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
@@ -17749,7 +17741,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    uploadFile_temp: function (fileext, file_base_64, file_name) {
+    uploadFile_temp: function(fileext, file_base_64, file_name) {
         //        console.log(file_base_64)
         var d = new Object();
         d.file_base_64 = file_base_64;
@@ -17767,14 +17759,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             data: dat,
             contentType: "application/json",
             async: false,
-            success: function (data) {
+            success: function(data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {}
+            error: function() {}
         });
         return finalname;
     },
-    upload: function (id) {
+    upload: function(id) {
         var files = document.getElementById(id).files;
         var r = "";
         var that = this;
@@ -17786,7 +17778,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             if (files && file) {
                 //                console.log("inside file name=" + fname);
                 var reader = new FileReader();
-                reader.onload = function (readerEvt) {
+                reader.onload = function(readerEvt) {
                     var binaryString = readerEvt.result;
                     var s = that.uploadFile(fileext, btoa(binaryString), fileext, fname);
                     r += s + global_var.vertical_seperator;
@@ -17801,7 +17793,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return r;
     },
-    uploadFile: function (fileext, file_base_64, file_type, file_name) {
+    uploadFile: function(fileext, file_base_64, file_type, file_name) {
         var d = new Object();
         d.file_base_64 = file_base_64;
         d.file_extension = fileext;
@@ -17818,14 +17810,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             data: dat,
             contentType: "application/json",
             async: false,
-            success: function (data) {
+            success: function(data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {}
+            error: function() {}
         });
         return finalname;
     },
-    addController4Comment: function () {
+    addController4Comment: function() {
         var f = false;
         if ($('#backlogComment').val().trim().length == 0) {
             Toaster.showError("Comment is empty.");
@@ -17837,7 +17829,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             throw "Date info is not entered!";
         }
     },
-    addController4CommentTask: function () {
+    addController4CommentTask: function() {
         var f = false;
         if ($('#addComment4Task_comment').val().trim().length == 0) {
             Toaster.showError("Comment is empty.");
@@ -17849,7 +17841,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             throw "Date info is not entered!";
         }
     },
-    addCommentInput4Task: function (fileName) {
+    addCommentInput4Task: function(fileName) {
         if (!global_var.current_issue_id) {
             Toaster.showError("Task is not selected.")
             return
@@ -17866,7 +17858,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         )
 
     },
-    addCommentInput4TaskDetails: function (comment, commentType, estimatedHours, fileName, fkBacklogId, fkTaskId) {
+    addCommentInput4TaskDetails: function(comment, commentType, estimatedHours, fileName, fkBacklogId, fkTaskId) {
         var json = initJSON();
         json.kv.comment = comment;
         json.kv.commentType = commentType;
@@ -17884,7 +17876,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 taskManagement.updateTask.genCommentListOfTask();
 
                 //                genTaskKanbanView();
@@ -17898,12 +17890,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 //                new Notification("").clearField('updateBacklog');
                 //                closeModal('updateBacklog');
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    addCommentInput: function (fileName) {
+    addCommentInput: function(fileName) {
         var json = {
             kv: {}
         };
@@ -17921,7 +17913,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#backlogComment').val('');
                 $('#list').val('');
                 $('#file1').val('');
@@ -17929,12 +17921,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 //                new Notification("").clearField('updateBacklog');
                 //                closeModal('updateBacklog');
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    fillTrialListByTaskWithReturn: function (scenarioId) {
+    fillTrialListByTaskWithReturn: function(scenarioId) {
         //        console.log('task id'+taskId);
         if (!scenarioId) {
             return;
@@ -17958,16 +17950,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 rs = that.generateCommentListHtml4Task(res, taskId);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
         return rs;
     },
-    fillTrialListByScenarioWithReturn: function (scenarioId) {
+    fillTrialListByScenarioWithReturn: function(scenarioId) {
         if (!scenarioId) {
             return;
         }
@@ -17990,16 +17982,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 rs = that.generateTrialListHtml4Scenario(res, scenarioId);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
         return rs;
     },
-    fillCommentListByTaskWithReturn: function (taskId) {
+    fillCommentListByTaskWithReturn: function(taskId) {
         //        console.log('task id'+taskId);
         if (!taskId) {
             return;
@@ -18023,16 +18015,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 rs = that.generateCommentListHtml4Task(res, taskId);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
         return rs;
     },
-    fillCommentListByTask: function (taskId) {
+    fillCommentListByTask: function(taskId) {
         if (!taskId && !global_var.current_task_id_4_comment) {
             return;
         }
@@ -18056,17 +18048,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res))
                 //                $('#backlogComment').val('');
                 that.generateCommentListHtml4Task(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    fillCommentList: function () {
+    fillCommentList: function() {
 
         var json = {
             kv: {}
@@ -18084,21 +18076,21 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res))
                 $('#backlogComment').val('');
                 that.generateCommentListHtml(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    addTaskCommentToTask: function (arg) {
+    addTaskCommentToTask: function(arg) {
         this.addTaskCommentToTaskDetails();
         closeModal('addComment4TaskModal');
     },
-    addTaskCommentToTaskDetails: function () {
+    addTaskCommentToTaskDetails: function() {
         if (isCanvasContextExist('canvasdiv_comment')) {
             try {
                 this.loadPicture4Comment();
@@ -18114,13 +18106,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             //            this.fillCommentListByTask();
         }
     },
-    addComment4TaskModal: function (arg, id) {
+    addComment4TaskModal: function(arg, id) {
         global_var.current_task_id_4_comment = id;
         $('#addComment4Task_id').val(id);
         $('#addComment4Task_commentestimationhours').val("0");
         setGlobalActiveCanvas(global_var.canvas.comment);
     },
-    generateTrialListHtml4Scenario: function (res, scenarioId) {
+    generateTrialListHtml4Scenario: function(res, scenarioId) {
         try {
             if (!res.tbl[0].r) {
                 return;
@@ -18140,7 +18132,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .addClass("mangodbtrial")
                 .addClass(obj[i].isNotifiedAsBug === '1' ? "task-child-notified" : "")
                 .addClass(obj[i].trialStatus === 'nok' ? "task-child-trial-bug" : "")
-            //                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
+                //                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
             ;
             var img = obj[i].createdByAvatar.length === 0 ?
                 fileUrl(new User().getDefaultUserprofileName()) :
@@ -18148,11 +18140,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div1 = $('<div></div>')
                 .addClass("col-1 comment-line")
 
-                .append($('<img></img>')
-                    .addClass("figure-img img-fluid rounded-circle")
-                    .attr("style", "max-width:28px")
-                    .attr("src", img)
-                    .attr("alt", obj[i].createdByName));
+            .append($('<img></img>')
+                .addClass("figure-img img-fluid rounded-circle")
+                .attr("style", "max-width:28px")
+                .attr("src", img)
+                .attr("alt", obj[i].createdByName));
             var comment = replaceTags(obj[i].actualResult);
             var div2 = $('<div></div>')
                 .attr('style', "padding-left:5px;")
@@ -18222,7 +18214,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#div_' + tid).html(div.html());
         return div.html();
     },
-    showNotifiedInfo: function (trialId) {
+    showNotifiedInfo: function(trialId) {
         if (!trialId) {
             return;
         }
@@ -18243,18 +18235,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var st = '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' +
                     res.kv.backlogId + '\')">' + replaceTags(res.kv.backlogName) + '</a>';
                 $('#notifiedInfo_backlog').html(st);
                 $('#notifiedInfo_assignee').html(res.kv.assigneeName);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    loadUSList4Dublication: function () {
+    loadUSList4Dublication: function() {
         var json = {
             kv: {}
         };
@@ -18273,15 +18265,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadUSList4DublicationDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadSUSwithInput4Dublication: function () {
+    loadSUSwithInput4Dublication: function() {
         var json = {
             kv: {}
         };
@@ -18299,15 +18291,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.loadSUSwithInput4DublicationDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadSUSwithInput4DublicationDetails: function (res) {
+    loadSUSwithInput4DublicationDetails: function(res) {
         $('#duplicateScenario_userstorylistwithinputs').html("");
         var obj = res.tbl[0].r;
         $('#duplicateScenario_userstorylistwithinputs').append($("<option></option>"));
@@ -18317,7 +18309,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .text(obj[n].backlogName));
         }
     },
-    loadUSList4DublicationDetails: function (res) {
+    loadUSList4DublicationDetails: function(res) {
         $('#duplicateScenario_userstorylistgeneral').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -18333,7 +18325,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#duplicateScenario_userstorylistgeneral').append(o);
         }
     },
-    dublicateUserStory: function (action) {
+    dublicateUserStory: function(action) {
         var id = this.getBacklogList4AssignLabeltoUserStory();
         if (!id) {
             Toaster.showError('Please select User Stories');
@@ -18363,7 +18355,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 if (action === 'copy') {
                     SACore.updateBacklogByRes(res);
                 } else if (action === 'move') {
@@ -18375,15 +18367,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 closeModal('dublicateUserStoryModal')
                 hideProgress();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    assignPriorityModal: function () {
+    assignPriorityModal: function() {
 
     },
-    notifyTrialAsBugModal: function (trialId) {
+    notifyTrialAsBugModal: function(trialId) {
         if (!trialId) {
             return
         }
@@ -18391,7 +18383,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.notifyTrialAsBugModal4Task(trialId);
         this.notifyTrialAsBugModal4SUS();
     },
-    notifyAsChangeRequestModal: function (historyId) {
+    notifyAsChangeRequestModal: function(historyId) {
         if (!historyId) {
             return;
         }
@@ -18399,7 +18391,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.notifyAsChangeRequestModal4Task(historyId);
         this.notifyAsChangeRequestModal4SUS();
     },
-    getTaskListByBacklogId: function (arg) {
+    getTaskListByBacklogId: function(arg) {
         if (!$(arg).val()) {
             return;
         }
@@ -18420,15 +18412,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.getTaskListByBacklogIdDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    getTaskListByBacklogId4History: function (arg) {
+    getTaskListByBacklogId4History: function(arg) {
         if (!$(arg).val()) {
             return;
         }
@@ -18449,15 +18441,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.getTaskListByBacklogIdDetails4History(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    getTaskListByBacklogIdDetails4History: function (res) {
+    getTaskListByBacklogIdDetails4History: function(res) {
         if (!res.tbl[0].r) {
             return;
         }
@@ -18476,7 +18468,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#notifyAsChangeRequestModal_result').append(div);
     },
-    getTaskListByBacklogIdDetails: function (res) {
+    getTaskListByBacklogIdDetails: function(res) {
         if (!res.tbl[0].r) {
             return;
         }
@@ -18495,7 +18487,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#notifyTrialAsBugModal_result').append(div);
     },
-    notifyTrialAsBugModal4Task: function (trialId) {
+    notifyTrialAsBugModal4Task: function(trialId) {
         $('#notifyTrialAsBugModal_result').html('');
         var json = {
             kv: {}
@@ -18514,15 +18506,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.notifyTrialAsBugModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyLabelAsChangeRequestModal4Task: function () {
+    notifyLabelAsChangeRequestModal4Task: function() {
         $('#notifyLabelAsChangeRequestModal_result').html('');
         var json = {
             kv: {}
@@ -18541,36 +18533,36 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.notifyLabelAsChangeRequestModal4TaskDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    changeRequest_showLastChanges: function () {
+    changeRequest_showLastChanges: function() {
         if ($('#changerequest_showlastchange').is(":checked")) {
             $('.c-input-update-middle').hide();
         } else {
             $('.c-input-update-middle').show();
         }
     },
-    changeRequest_hideDates: function () {
+    changeRequest_hideDates: function() {
         if ($('#changerequest_hidedates').is(":checked")) {
             $('.c-history-input-date').hide();
         } else {
             $('.c-history-input-date').show();
         }
     },
-    loadAssignedLabelData: function (assignedLabelId) {
+    loadAssignedLabelData: function(assignedLabelId) {
         new UserStory().toggleSubmenu($('#us-submenu-generalview'), 'generalview')
         $('#change-mgmt-gui-design-label-list').val(assignedLabelId);
         $('#change-mgmt-gui-design-label-list').change();
     },
-    notifyLabelAsChangeRequest: function () {
+    notifyLabelAsChangeRequest: function() {
         var ids = "";
-        $('.notifyAsChangeRequestModal_nofitiedTask').each(function (e) {
+        $('.notifyAsChangeRequestModal_nofitiedTask').each(function(e) {
             if ($(this).is(":checked") && ($(this).val() !== 'all')) {
                 ids += $(this).val() + '%IN%';
             }
@@ -18599,15 +18591,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 closeModal('notifyLabelAsChangeRequestModal');
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyLabelAsChangeRequestModal4TaskDetails: function (res) {
+    notifyLabelAsChangeRequestModal4TaskDetails: function(res) {
         if (!res.tbl[0].r) {
             return;
         }
@@ -18626,7 +18618,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#notifyLabelAsChangeRequestModal_result').append(div);
     },
-    notifyAsChangeRequestModal4Task: function () {
+    notifyAsChangeRequestModal4Task: function() {
         $('#notifyAsChangeRequestModal_result').html('');
         var json = {
             kv: {}
@@ -18645,15 +18637,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.notifyAsChangeRequestModalDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyTrialAsBugModal4SUS: function () {
+    notifyTrialAsBugModal4SUS: function() {
         var json = {
             kv: {}
         };
@@ -18670,15 +18662,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.notifyTrialAsBugModal4SUSDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyAsChangeRequestModal4SUS: function () {
+    notifyAsChangeRequestModal4SUS: function() {
         var json = {
             kv: {}
         };
@@ -18695,15 +18687,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.notifyAsChangeRequestModal4SUSDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyAsChangeRequestModal4SUSDetails: function (res) {
+    notifyAsChangeRequestModal4SUSDetails: function(res) {
         $('#notifyAsChangeRequestModal_suslist').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -18716,7 +18708,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#notifyAsChangeRequestModal_suslist').append(o);
         }
     },
-    notifyTrialAsBugModal4SUSDetails: function (res) {
+    notifyTrialAsBugModal4SUSDetails: function(res) {
         $('#notifyTrialAsBugModal_suslist').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -18729,7 +18721,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#notifyTrialAsBugModal_suslist').append(o);
         }
     },
-    notifyTrialAsBugModalDetails: function (res) {
+    notifyTrialAsBugModalDetails: function(res) {
         if (!res.tbl[0].r) {
             return;
         }
@@ -18748,7 +18740,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#notifyTrialAsBugModal_result').append(div);
     },
-    notifyAsChangeRequestModalDetails: function (res) {
+    notifyAsChangeRequestModalDetails: function(res) {
         if (!res.tbl[0].r) {
             return;
         }
@@ -18767,9 +18759,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         $('#notifyAsChangeRequestModal_result').append(div);
     },
-    notifyHistoryAsChangeRequest: function () {
+    notifyHistoryAsChangeRequest: function() {
         var ids = "";
-        $('.notifyHistoryAsChangeRequestModal_nofitiedTask').each(function (e) {
+        $('.notifyHistoryAsChangeRequestModal_nofitiedTask').each(function(e) {
             if ($(this).is(":checked") && ($(this).val() !== 'all')) {
                 ids += $(this).val() + '%IN%';
             }
@@ -18798,18 +18790,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 closeModal('notifyTrialAsBugModal');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyTrialAsBug: function () {
+    notifyTrialAsBug: function() {
         var ids = "";
-        $('.notifyTrialAsBugModal_nofitiedTask').each(function (e) {
+        $('.notifyTrialAsBugModal_nofitiedTask').each(function(e) {
             if ($(this).is(":checked") && ($(this).val() !== 'all')) {
                 ids += $(this).val() + '%IN%';
             }
@@ -18838,18 +18830,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 closeModal('notifyTrialAsBugModal');
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    notifyAsChangeRequest: function () {
+    notifyAsChangeRequest: function() {
         var ids = "";
-        $('.notifyAsChangeRequestModal_nofitiedTask').each(function (e) {
+        $('.notifyAsChangeRequestModal_nofitiedTask').each(function(e) {
             if ($(this).is(":checked") && ($(this).val() !== 'all')) {
                 ids += $(this).val() + '%IN%';
             }
@@ -18878,16 +18870,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 closeModal('notifyAsChangeRequestModal');
                 BacklogHistory.load();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    deleteTrial4ScenarioModel: function (id) {
+    deleteTrial4ScenarioModel: function(id) {
         if (!id) {
             return;
         }
@@ -18912,15 +18904,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadTestScenario();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    commentSpentHoursModal: function (id) {
+    commentSpentHoursModal: function(id) {
         if (!id) {
             return;
         }
@@ -18929,7 +18921,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#commentSpentHoursModal').modal('show');
         $('#commentSpentHoursModal_spenthours').focus();
     },
-    commentSpentHours: function () {
+    commentSpentHours: function() {
         if (!$('#commentSpentHoursModal_id').val()) {
             throw 'doestnt work';
         }
@@ -18955,13 +18947,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#commentSpentHoursModal').modal('hide');
                 that.refreshCurrentBacklog();
             }
         });
     },
-    commentEstimatedHoursModal: function (id) {
+    commentEstimatedHoursModal: function(id) {
         if (!id) {
             return;
         }
@@ -18970,7 +18962,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#commentEstimatedHoursModal').modal('show');
         $('#commentEstimatedHoursModal_estimatedhours').focus();
     },
-    commentEstimatedHours: function () {
+    commentEstimatedHours: function() {
         if (!$('#commentEstimatedHoursModal_id').val()) {
             throw 'doestnt work';
         }
@@ -18996,13 +18988,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#commentEstimatedHoursModal').modal('hide');
                 that.refreshCurrentBacklog();
             }
         });
     },
-    generateCommentListHtml4Task: function (res, taskId) {
+    generateCommentListHtml4Task: function(res, taskId) {
         try {
             if (!res.tbl[0].r) {
                 return;
@@ -19045,11 +19037,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 var div1 = $('<div></div>')
                     .addClass("col-1 comment-line")
 
-                    .append($('<img></img>')
-                        .addClass("figure-img img-fluid rounded-circle")
-                        .attr("style", "max-width:28px")
-                        .attr("src", img)
-                        .attr("alt", obj[i].username));
+                .append($('<img></img>')
+                    .addClass("figure-img img-fluid rounded-circle")
+                    .attr("style", "max-width:28px")
+                    .attr("src", img)
+                    .attr("alt", obj[i].username));
                 //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
                 var comment = obj[i].comment;
                 var div2 = $('<div></div>')
@@ -19144,7 +19136,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         )
                     )
 
-                    .append(" &nbsp; ")
+                .append(" &nbsp; ")
                     .append($('<i></i>')
                         .append($('<a></a>')
                             .attr('href', "#")
@@ -19153,7 +19145,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         )
                     )
 
-                    .append("<br>")
+                .append("<br>")
                     .append($("<span></span>")
                         .attr("id", obj[i].id)
                         .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
@@ -19174,7 +19166,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return div.html();
         } catch (e) {}
     },
-    closeBug4TestTrial: function (arg, commentId) {
+    closeBug4TestTrial: function(arg, commentId) {
         if (!commentId) {
             return;
         }
@@ -19199,17 +19191,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     that.loadBacklogTask();
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    toogleCommentAsSubtask: function (obj, id) {
+    toogleCommentAsSubtask: function(obj, id) {
         if (!id) {
             return;
         }
@@ -19230,7 +19222,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.kv.isSubtask === '1') {
                         $(obj).attr("style", "cursor:pointer;color:blue")
@@ -19241,12 +19233,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     }
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    toogleCommentAsBug: function (obj, id) {
+    toogleCommentAsBug: function(obj, id) {
         if (!id) {
             return;
         }
@@ -19267,7 +19259,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.kv.isBug === '1') {
                         $(obj).attr("style", "cursor:pointer;color:red")
@@ -19279,12 +19271,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     }
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    toogleCommentAsRequest: function (obj, id) {
+    toogleCommentAsRequest: function(obj, id) {
         if (!id) {
             return;
         }
@@ -19305,7 +19297,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.kv.isRequest === '1') {
                         $(obj).attr("style", "cursor:pointer;color:blue")
@@ -19317,12 +19309,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     }
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    generateCommentListHtml: function (res) {
+    generateCommentListHtml: function(res) {
         var obj = res.tbl[0].r;
         var div = $('<div></div>').append($('<div></div>'));
         //                .addClass("col-12").append("<hr>"));
@@ -19356,57 +19348,57 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     //        arg = arg.replace(/&#x2F;/g, "/");
     //        return arg;
     //    },
-    generateTrialFileLine: function (o, id) {
-      //  try {
-            var st = o.split('|');
-            var div = $('<div></div>').addClass("row");
-            for (var i = 0; i < st.length; i++) {
-                if (st[i].trim().length === 0) {
-                    continue;
-                }
-
-                var ind = st[i].lastIndexOf(".") + 1;
-                var fileFormat = st[i].substr(ind);
-                var div2 = $('<div></div>').addClass("col-6");
-                var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
-                if (global_var.image_formats.includes(fileFormat)) {
-                    div12lik.append($('<img></img>')
-                        .attr('src', fileUrl(st[i]))
-                        .addClass('comment_img')
-                        .attr('onclick', 'imageViewerNew(this,"' + st[i] + '")')
-                        .attr('alt', st[i]));
-                    //                    
-                } else if (fileFormat === 'pdf') {
-                    div12lik.append($('<img></img>')
-                        .attr('src', fileUrlPrivate('pdf-logo.png'))
-                        .addClass('comment_img')
-                        .attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFilePdfViewer")
-                        .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
-                        .attr('alt', st[i]));
-                }
-                div12lik.append(' <b> ' + add3Dots2Filename(st[i]) + '</b><br>');
-                div12lik.append($('<a target="_blank"></a>')
-                        .attr("href", fileUrl(st[i]))
-                        .append('Download')
-                        //                        .append($('<i></i>').addClass('fa fa-download'))
-                        .append('  '))
-                    .append($('<i></i>')
-                        .addClass('lbl-action')
-                        .append(' Delete ')
-                        .append('  ')
-                        .attr('onclick', 'new UserStory().deleteTrialFile(this,"' + st[i] + '","' + id + '")')
-                    );
-                div2.append(div12lik);
-                div.append(div2);
+    generateTrialFileLine: function(o, id) {
+        //  try {
+        var st = o.split('|');
+        var div = $('<div></div>').addClass("row");
+        for (var i = 0; i < st.length; i++) {
+            if (st[i].trim().length === 0) {
+                continue;
             }
 
-            var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
-            div_col.append(div);
-            return div_col;
-       // } catch (err) {}
+            var ind = st[i].lastIndexOf(".") + 1;
+            var fileFormat = st[i].substr(ind);
+            var div2 = $('<div></div>').addClass("col-6");
+            var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+            if (global_var.image_formats.includes(fileFormat)) {
+                div12lik.append($('<img></img>')
+                    .attr('src', fileUrl(st[i]))
+                    .addClass('comment_img')
+                    .attr('onclick', 'imageViewerNew(this,"' + st[i] + '")')
+                    .attr('alt', st[i]));
+                //                    
+            } else if (fileFormat === 'pdf') {
+                div12lik.append($('<img></img>')
+                    .attr('src', fileUrlPrivate('pdf-logo.png'))
+                    .addClass('comment_img')
+                    .attr('data-toggle', "modal")
+                    .attr('data-target', "#commentFilePdfViewer")
+                    .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
+                    .attr('alt', st[i]));
+            }
+            div12lik.append(' <b> ' + add3Dots2Filename(st[i]) + '</b><br>');
+            div12lik.append($('<a target="_blank"></a>')
+                    .attr("href", fileUrl(st[i]))
+                    .append('Download')
+                    //                        .append($('<i></i>').addClass('fa fa-download'))
+                    .append('  '))
+                .append($('<i></i>')
+                    .addClass('lbl-action')
+                    .append(' Delete ')
+                    .append('  ')
+                    .attr('onclick', 'new UserStory().deleteTrialFile(this,"' + st[i] + '","' + id + '")')
+                );
+            div2.append(div12lik);
+            div.append(div2);
+        }
+
+        var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
+        div_col.append(div);
+        return div_col;
+        // } catch (err) {}
     },
-    deleteTrialFile: function (obj, fname, id) {
+    deleteTrialFile: function(obj, fname, id) {
 
         if (!fname) {
             return;
@@ -19433,15 +19425,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $(obj).closest('div[class="col-6"]').first().remove();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    generateCommentFileLine: function (o, cell) {
+    generateCommentFileLine: function(o, cell) {
         try {
             cell = (cell === 'undefined' || !cell) ? 'cs-img-col' : cell;
             var st = o.split('\\|');
@@ -19492,7 +19484,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return div_col;
         } catch (err) {}
     },
-    generateCommentFileLine4ViewImage: function (id, name, cell) {
+    generateCommentFileLine4ViewImage: function(id, name, cell) {
         try {
             cell = (cell === 'undefined' || !cell) ? 'col-12' : cell;
 
@@ -19521,7 +19513,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return div.html();
         } catch (err) {}
     },
-    generateCommentFileLine4View: function (id, name, cell) {
+    generateCommentFileLine4View: function(id, name, cell) {
         try {
             cell = (cell === 'undefined' || !cell) ? 'col-6' : cell;
 
@@ -19564,7 +19556,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return div.html();
         } catch (err) {}
     },
-    generateCommentFileLine4StoryCard: function (id, name, cell) {
+    generateCommentFileLine4StoryCard: function(id, name, cell) {
 
         try {
             var isPinned = SACore.IsImagePinned(id) ? true : false;
@@ -19671,7 +19663,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return div.html();
         } catch (err) {}
     },
-    deleteTaskCommentFile: function (obj, fname) {
+    deleteTaskCommentFile: function(obj, fname) {
 
         if (!fname) {
             return;
@@ -19697,15 +19689,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $(obj).closest('div.cs-img-col').remove();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    deleteBacklogFile: function (obj, fname) {
+    deleteBacklogFile: function(obj, fname) {
 
         if (!fname) {
             return;
@@ -19731,17 +19723,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 $(obj).closest('div[class="col-3"]').first().remove();
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    unpinImageToStoryCard: function (obj, fname) {
+    unpinImageToStoryCard: function(obj, fname) {
 
         if (!fname) {
             return;
@@ -19767,24 +19759,24 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 $(obj).closest("div").remove();
                 SACore.SetPinnedImageFalse(fname);
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
 
-    addInputToImage: function (elm, bid, img) {
+    addInputToImage: function(elm, bid, img) {
 
         var inputs = $("#generalview_input_list .description-left");
         var item = $("select#addPinImageInput");
         item.empty();
         item.append($("<option>").text('').val(''));
-        inputs.each(function () {
+        inputs.each(function() {
             var idOption = $(this).closest("tr").attr("inid");
             var elm = $(this).clone();
             elm.find(".dropdown").first().remove();
@@ -19793,7 +19785,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
             item.append($("<option>").text(text).val(idOption));
         })
-        item.each(function () {
+        item.each(function() {
             var oldVal = $(this).attr('sa-data-value');
             $(this).val(oldVal);
 
@@ -19804,7 +19796,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $("#InputAddImagePinModal").attr('fname', img);
         $("#InputAddImagePinModal").modal('show');
     },
-    pinImageToStoryCard: function (obj, fid, fname) {
+    pinImageToStoryCard: function(obj, fid, fname) {
         if (!fname) {
             return;
         }
@@ -19825,7 +19817,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 SACore.SetPinnedImageTrue(fid);
 
@@ -19848,25 +19840,25 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#pinnedImages').prepend(div4PinnedImage);
                 $(obj).remove();
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
-    setCommentFileImageViewerUrl: function (arg) {
+    setCommentFileImageViewerUrl: function(arg) {
         $('#commentFileImageViewerUrl').attr("src", fileUrl(arg));
     },
-    setCommentFileVideoViewerUrl: function (arg) {
+    setCommentFileVideoViewerUrl: function(arg) {
         $('#commentFileVideoViewerUrl').attr("src", videoFileURL(arg));
     },
-    setCommentFilePdfViewerUrl: function (arg) {
+    setCommentFilePdfViewerUrl: function(arg) {
         $('#commentFilePdfViewerUrl').attr("src", fileUrl(arg));
     },
-    setUserStoryInforOnGeneralView4Select: function () {
+    setUserStoryInforOnGeneralView4Select: function() {
         var res = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         this.setUserStoryInforOnGeneralView4Details4Select(res);
     },
-    setUserStoryInforOnGeneralView4HistoryDateAndLabel: function () {
+    setUserStoryInforOnGeneralView4HistoryDateAndLabel: function() {
         //        this.setUserStoryInforOnGeneralViewDetailsEmpty();
         if (!global_var.current_backlog_id) {
             return;
@@ -19888,13 +19880,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.setHistoryDatesOnStoryCardLoad(res);
             }
         });
     },
 
-    setUserStoryInforOnGeneralView: function () {
+    setUserStoryInforOnGeneralView: function() {
         this.setUserStoryInforOnGeneralViewDetailsEmpty();
         if (!global_var.current_backlog_id) {
             return;
@@ -19916,13 +19908,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.setUserStoryInforOnGeneralView4Details(res);
             }
         });
     },
 
-    setUserStoryInforOnGeneralView4Share: function () {
+    setUserStoryInforOnGeneralView4Share: function() {
 
         this.setUserStoryInforOnGeneralViewDetailsEmpty();
         if (!global_var.current_backlog_id) {
@@ -19946,13 +19938,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.setUserStoryInforOnGeneralView4DetailsShare(res);
             }
         });
     },
 
-    setUserStoryInforOnGeneralView4DetailsShare: function (res) {
+    setUserStoryInforOnGeneralView4DetailsShare: function(res) {
         res = JSON.parse(replaceTags(JSON.stringify(res)));
 
         //backlogun canvas parametrleri set edilir
@@ -19998,7 +19990,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setHistoryDatesOnStoryCardLoad(res);
     },
 
-    loadStoryCardFileList4Share: function (res) {
+    loadStoryCardFileList4Share: function(res) {
         var resName = res.kv.fileUrl.split(",");
         var resId = res.kv.fileUrlId.split(",");
         $("#storycard_filelist_4_share").html('');
@@ -20010,7 +20002,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             } catch (e) {}
         }
     },
-    setUserStoryInforOnGeneralView4Details4Select: function (res) {
+    setUserStoryInforOnGeneralView4Details4Select: function(res) {
         //        try {
         //        res = JSON.parse(replaceTags(JSON.stringify(res)));
 
@@ -20049,7 +20041,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         setStoryCardCreatedBy();
     },
 
-    setUserStoryInforOnGeneralView4Details: function (res) {
+    setUserStoryInforOnGeneralView4Details: function(res) {
         res = JSON.parse(replaceTags(JSON.stringify(res)));
 
         //backlogun canvas parametrleri set edilir
@@ -20083,7 +20075,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setUserStoryInputsInfoOnGeneralViewDetailsPure(res);
         this.setHistoryDatesOnStoryCardLoad(res);
     },
-    getHistoryTimesByDate: function (el, type) {
+    getHistoryTimesByDate: function(el, type) {
         if (!type) {
             return;
         }
@@ -20114,12 +20106,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getHistoryTimesByDateDetails(res, type);
             }
         });
     },
-    getHistoryTimesByDateDetails: function (res, type) {
+    getHistoryTimesByDateDetails: function(res, type) {
 
         try {
             var times = res.kv.historyTimes.split('%IN%');
@@ -20143,7 +20135,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         } catch (err) {}
     },
-    setHistoryDatesOnStoryCardLoad: function (res) {
+    setHistoryDatesOnStoryCardLoad: function(res) {
         try {
             var dates = res.kv.historyDates.split('%IN%');
             $('#change-mgmt-gui-design-start-date').html($('<option></option>'));
@@ -20164,7 +20156,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         } catch (err) {}
     },
-    getUserStoryInfoById: function (id) {
+    getUserStoryInfoById: function(id) {
         if (!(id)) {
             return;
         }
@@ -20185,15 +20177,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.getUserStoryInfoByIdDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    getUserStoryInfoByIdDetails: function (res) {
+    getUserStoryInfoByIdDetails: function(res) {
         var ind = getIndexOfTable(res, "inputDescListTable");
         var obj = res.tbl[ind].r;
         var div = $('<div></div>');
@@ -20223,7 +20215,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var['inList'].push(div.html());
         global_var['prosDescList'].push((obj.descriptionSourced));
     },
-    setUserStoryInforOnGeneralViewDetailsEmpty: function () {
+    setUserStoryInforOnGeneralViewDetailsEmpty: function() {
         $('#generalview_projectname').html('');
         $('#generalview_status').html('');
         $('#generalview-us-header-name').html('');
@@ -20234,11 +20226,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#generalview_description').html('');
         $('#generalview-table-proc-desc').html('');
     },
-    hideGUIIfUserStoryIsApi: function (obj) {
+    hideGUIIfUserStoryIsApi: function(obj) {
         try {
             if (obj.isApi === '1') {
                 $('.gv-gui-design-api').hide();
-                $('.gv-gui-design-api_4share').each(function () {
+                $('.gv-gui-design-api_4share').each(function() {
                     $(this).hide();
                     $(this).attr("ddddd", 'dddddddddddddddddddd')
                 });
@@ -20249,7 +20241,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         } catch (e) {}
     },
-    setUserStoryInforOnGeneralViewDetails: function (res) {
+    setUserStoryInforOnGeneralViewDetails: function(res) {
         var obj = res.tbl[0].r[0];
         this.hideGUIIfUserStoryIsApi(obj);
 
@@ -20336,7 +20328,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
     },
-    setUserStoryInforOnGeneralViewDetails4Select: function (res) {
+    setUserStoryInforOnGeneralViewDetails4Select: function(res) {
         var parentDependencyHtml = this.getParentBacklogDependencies4Select();
         if (parentDependencyHtml) {
             $('#storycard_dependency').show();
@@ -20500,7 +20492,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
     },
-    toggleBacklogIsApi4StoryCard: function () {
+    toggleBacklogIsApi4StoryCard: function() {
         if (SACore.GetCurrentBaklogIsApi() === '1') {
             $('#user-story-is-api').prop("checked", true);
             $('.is-api-dependence').hide();
@@ -20514,7 +20506,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $("#live-prototype-show-key").show();
         }
     },
-    getParentBacklogDependencies4Select: function () {
+    getParentBacklogDependencies4Select: function() {
         var backlodIds = SADependency.GetBacklogListByChild(SACore.GetCurrentBacklogId());
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
@@ -20527,7 +20519,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return st;
     },
 
-    getParentBacklogDependencies4Select4BView: function () {
+    getParentBacklogDependencies4Select4BView: function() {
 
         var backlodIds = SADependency.GetBacklogListByChild(SACore.GetCurrentBacklogId());
 
@@ -20542,7 +20534,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return st;
     },
 
-    getChildBacklogDependencies4Select: function () {
+    getChildBacklogDependencies4Select: function() {
         var backlodIds = SADependency.GetBacklogListByParent(SACore.GetCurrentBacklogId());
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
@@ -20555,7 +20547,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return st;
     },
 
-    getChildBacklogDependencies4Select4BView: function () {
+    getChildBacklogDependencies4Select4BView: function() {
 
         var backlodIds = SADependency.GetBacklogListByParent(SACore.GetCurrentBacklogId());
 
@@ -20569,7 +20561,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return st;
     },
-    convertChildBoundUserStories: function (s, id, orderNo) {
+    convertChildBoundUserStories: function(s, id, orderNo) {
         var name = s.split('\\|');
         var ids = id.split('\\|');
         var orderNos = [];
@@ -20585,7 +20577,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return st;
     },
-    convertChildBoundUserStories4BView: function (s, id, fkProjectId) {
+    convertChildBoundUserStories4BView: function(s, id, fkProjectId) {
         var name = s.split('\\|');
         var ids = id.split('\\|');
         var st = "";
@@ -20598,7 +20590,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
     },
-    convertDependencyUserStories: function (s, id) {
+    convertDependencyUserStories: function(s, id) {
         var name = s.split('\\|');
         var ids = id.split('\\|');
         var st = "";
@@ -20609,7 +20601,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return st;
     },
-    convertChildDependencyUserStories: function (s, id) {
+    convertChildDependencyUserStories: function(s, id) {
         var name = s.split('\\|');
         var ids = id.split('\\|');
         var st = "";
@@ -20620,17 +20612,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return st;
     },
-    insertNewBacklogModal: function (e) {
+    insertNewBacklogModal: function(e) {
         Utility.focus('backlogName');
         this.assignSprintModalRadioButton('insertNewBacklog_sprintlist');
         this.assignLabelModal('insertNewBacklog_labellist');
         setGlobalActiveCanvas(global_var.canvas.backlog);
     },
-    loadInfo4TaskInAddBacklog: function () {
+    loadInfo4TaskInAddBacklog: function() {
         this.addTaskTypesToCombo4Backlog();
         this.addAssigneeToTaskType4Backlog();
     },
-    addAssigneeToTaskType4Backlog: function () {
+    addAssigneeToTaskType4Backlog: function() {
         var json = {
             kv: {}
         };
@@ -20648,15 +20640,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.aaddAssigneeToTaskType4BacklogDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    aaddAssigneeToTaskType4BacklogDetails: function (res) {
+    aaddAssigneeToTaskType4BacklogDetails: function(res) {
         $('#addBacklog_assignee').html("").append($("<option></option>"));
         try {
             var obj = res.tbl[0].r;
@@ -20667,7 +20659,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         } catch (e) {}
     },
-    addTaskTypesToCombo4Backlog: function () {
+    addTaskTypesToCombo4Backlog: function() {
         var json = {
             kv: {}
         };
@@ -20685,15 +20677,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.addTaskTypesToCombo4BacklogDetails(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addTaskTypesToCombo4BacklogDetails: function (res) {
+    addTaskTypesToCombo4BacklogDetails: function(res) {
         $('#addBacklog_tasktype').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -20702,7 +20694,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 .text(replaceTags(obj[n].typeName)));
         }
     },
-    getLabelLine4Backlog: function (labelName, labelColor) {
+    getLabelLine4Backlog: function(labelName, labelColor) {
         var name = labelName.split('\\|');
         var color = labelColor.split('\\|');
         var st = "";
@@ -20711,7 +20703,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return st;
     },
-    getSprintLine4Backlog: function (sprintName, sprintColor) {
+    getSprintLine4Backlog: function(sprintName, sprintColor) {
         var name = sprintName.split('\\|');
         var color = sprintColor.split('\\|');
         var st = "";
@@ -20721,7 +20713,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         return st;
     },
-    toggleSubmenu: function (e, menuName) {
+    toggleSubmenu: function(e, menuName) {
         //        showProgress();
         $('.tooltip').removeClass('show');
         $('[data-toggle="tooltip"]').tooltip({
@@ -20763,7 +20755,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         dragResize();
         //        hideProgress();
     },
-    toggleSubmenuStoryCard: function () {
+    toggleSubmenuStoryCard: function() {
         try {
             this.setUserStoryInforOnGeneralView4Select();
         } catch (e) {}
@@ -20777,7 +20769,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.getBacklogTaskStats();
     },
 
-    loadStoryCardFileList: function () {
+    loadStoryCardFileList: function() {
         var res = SACore.GetCurrentBaklogFileUrls().split(",");
         var resId = SACore.GetCurrentBaklogFileUrlIds().split(",");
 
@@ -20792,29 +20784,29 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             } catch (e) {}
         }
     },
-    getGUIDesignHTML4StoryCard: function () {
+    getGUIDesignHTML4StoryCard: function() {
         var res = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var st = this.getGUIDesignHTML(res);
         return st;
     },
-    toggleSubmenuStoryCard4Share: function () {
+    toggleSubmenuStoryCard4Share: function() {
         this.setUserStoryInforOnGeneralView4Share();
         //        this.setUserStoryTaskInfoOnGeneralView4Share();
         this.loadAssignedLabel4Share();
         //        this.setBView();
     },
-    setBView: function () {
+    setBView: function() {
         $('#shareGeneralView')
             .attr('pid', global_var.current_project_id)
             .attr('bid', global_var.current_backlog_id)
             .attr('d', $('#userprofile_main_domain').html())
             .attr('lid', "");
     },
-    setBViewLabel: function (labelId) {
+    setBViewLabel: function(labelId) {
         $('#shareGeneralView')
             .attr('lid', labelId);
     },
-    getGeneralViewLine: function () {
+    getGeneralViewLine: function() {
         var el = $('#shareGeneralView');
         return 'bview.html?' +
             'pid=' + el.attr('pid') +
@@ -20822,7 +20814,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             '&d=' + el.attr('d') +
             '&lid=' + el.attr('lid');
     },
-    getGeneralViewLine4Share: function () {
+    getGeneralViewLine4Share: function() {
         var json = initJSON();
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
@@ -20834,7 +20826,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 console.log(res);
 
 
@@ -20847,35 +20839,35 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $temp.remove();
                 Toaster.showMessage('Copy Succesfuly');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    getGeneralPrototypeViewLine: function () {
+    getGeneralPrototypeViewLine: function() {
 
         return this.getGeneralViewLine() + "&h=1";
     },
-    getGeneralViewLineDirect: function (pid, bid) {
+    getGeneralViewLineDirect: function(pid, bid) {
         return 'bview.html?pid=' + pid +
             '&bid=' + bid +
             '&d=' + global_var.current_domain +
             '&lid=' + '';
     },
-    shareGeneralView: function (el) {
+    shareGeneralView: function(el) {
         window.open(this.getGeneralViewLine());
     },
-    shareGeneralPrototypeView: function (el) {
+    shareGeneralPrototypeView: function(el) {
         window.open(this.getGeneralPrototypeViewLine());
     },
-    shareGeneralViewDirect: function (pid, bid) {
+    shareGeneralViewDirect: function(pid, bid) {
         window.open(this.getGeneralViewLineDirect(pid, bid));
     },
-    copyGeneralView: function () {
+    copyGeneralView: function() {
         this.getGeneralViewLine4Share();
 
     },
-    copyGeneralPrototypeView: function () {
+    copyGeneralPrototypeView: function() {
         var copyText = $(location).attr('protocol') + "//" +
             $(location).attr('host') + "/" + this.getGeneralViewLine() + "&h=1";
         var $temp = $("<input>");
@@ -20884,7 +20876,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         document.execCommand("copy");
         $temp.remove();
     },
-    toggleSubmenuIPO: function () {
+    toggleSubmenuIPO: function() {
         global_var.ipoTable = {};
         global_var.ipoTableVal = {};
         $('.relatedSUSOutputName').html('');
@@ -20897,25 +20889,25 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //        this.getBacklogDetailedInputInfoById();
         this.getBacklogDetailedInputInfoById_core(SAInput.toJSON());
     },
-    setGuiMainWindowsParam1: function (param1) {
+    setGuiMainWindowsParam1: function(param1) {
         param1 = Component.ReplaceCSS(param1);
         global_var.actual_backlog_gui_css = param1;
         this.setIPOGUICanvas();
     },
-    setZoom4IPO: function () {
+    setZoom4IPO: function() {
         $('#actual_zoom_id').text($('#ipo_zoom').val());
         global_var.actual_zoom = $('#ipo_zoom').val();
         this.setIPOGUICanvas();
         this.setGUIAllCanvasZoom();
     },
-    zoomIn: function () {
+    zoomIn: function() {
         global_var.actual_zoom = (parseInt(global_var.actual_zoom) + 6);
         $('#actual_zoom_id').text(global_var.actual_zoom);
         this.setIPOGUICanvas();
         this.setGUIAllCanvasZoom();
         SADebug.DrawLineOnZoom();
     },
-    zoomOut: function () {
+    zoomOut: function() {
         global_var.actual_zoom = (parseInt(global_var.actual_zoom) - 6);
         if (global_var.actual_zoom <= 5) {
             global_var.actual_zoom = 5;
@@ -20925,14 +20917,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setGUIAllCanvasZoom();
         SADebug.DrawLineOnZoom();
     },
-    zoomInit: function () {
+    zoomInit: function() {
         global_var.actual_zoom = 100;
         $('#gui_all_' + global_var.current_backlog_id).focus();
         $('#actual_zoom_id').text(global_var.actual_zoom);
         this.setIPOGUICanvas();
         this.setGUIAllCanvasZoom();
     },
-    mainGuiZoomWheel: function (event) {
+    mainGuiZoomWheel: function(event) {
 
         if (global_var.is_body_ctrl_pressed === '1') {
 
@@ -20944,7 +20936,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         }
     },
-    showAllGUI: function () {
+    showAllGUI: function() {
         global_var.ipo_gui_view = "all";
         Utility.addParamToUrl("ipo_gui_view", global_var.ipo_gui_view);
 
@@ -20957,11 +20949,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setGUIAllCanvasZoom();
         this.showAllGuiDetailsNew();
     },
-    showAllGuiDetailsNew: function () {
+    showAllGuiDetailsNew: function() {
         var res = SACore.GetBacklogKeyList();
         this.showAllGUIDetails4Select(res);
     },
-    getResAllGUIDetails: function () {
+    getResAllGUIDetails: function() {
         var rs = "";
         var json = this.getJSONData4BaklogList();
         var that = this;
@@ -20973,13 +20965,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 rs = res;
             }
         });
         return rs;
     },
-    showAllGUIDetails4Select: function (backlogKeyList) {
+    showAllGUIDetails4Select: function(backlogKeyList) {
         $('#gui_component_main_view_all').html('');
 
 
@@ -21048,7 +21040,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#gui_all_' + global_var.current_backlog_id).focus();
 
     },
-    showAllGUIDetails: function (res) {
+    showAllGUIDetails: function(res) {
         $('#gui_component_main_view_all').html('');
         $('#gui_component_main_view_all').show();
         $('#gui_component_main_view').hide();
@@ -21098,19 +21090,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#gui_component_main_view_all').append('<hr>');
         }
         //activate first tab panel
-        $('.activeTabClass').each(function (e) {
+        $('.activeTabClass').each(function(e) {
             $(this).click();
         });
         $('#gui_all_' + global_var.current_backlog_id).focus();
 
     },
-    setBacklogByGuiAll: function (id) {
+    setBacklogByGuiAll: function(id) {
         if (id === global_var.current_backlog_id) {
             return;
         }
         this.redirectUserStoryCore(id);
     },
-    showCurrentGUI: function () {
+    showCurrentGUI: function() {
         global_var.ipo_gui_view = "single";
         Utility.addParamToUrl("ipo_gui_view", global_var.ipo_gui_view);
         $('#gui_component_main_view_all').hide();
@@ -21120,7 +21112,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         new UserStory().refreshCurrentBacklog();
     },
 
-    setGUIAllCanvasZoom: function () {
+    setGUIAllCanvasZoom: function() {
 
         var paramWithZoom = "zoom:" + global_var.actual_zoom + "%;";
         paramWithZoom += (global_var.ipo_gui_view === 'all') ? "display:block1" : "display:none";
@@ -21128,7 +21120,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
     },
 
-    setIPOGUICanvas: function () {
+    setIPOGUICanvas: function() {
         var paramWithZoom = "zoom:" + global_var.actual_zoom + "%;" + global_var.actual_backlog_gui_css;
         paramWithZoom += (global_var.ipo_gui_view === 'single') ? "display:block1" : "display:none";
         $('#SUS_IPO_GUI_Design1').css('transform', 'scale(' + global_var.actual_zoom / 100 + ')');
@@ -21150,7 +21142,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#gui_component_main_view').scrollLeft(oldLeft);
 
     },
-    getBacklogDetailedInputInfoById: function () {
+    getBacklogDetailedInputInfoById: function() {
         if (!global_var.current_backlog_id) {
             return;
         }
@@ -21173,13 +21165,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.getBacklogDetailedInputInfoById_core(res);
 
             }
         });
     },
-    getBacklogDetailedInputInfoById_coreNew: function (res) {
+    getBacklogDetailedInputInfoById_coreNew: function(res) {
         //fill input list table;
         this.getBacklogDetailedInputInfoByIdDetails(res);
 
@@ -21210,7 +21202,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
     },
-    getBacklogDetailedInputInfoById_core: function (res) {
+    getBacklogDetailedInputInfoById_core: function(res) {
         //        $('#txtSUS_IPO_description').val(((res.kv.backlogDescription)));
         $('#txtSUS_IPO_description').val(SACore.GetCurrentDescriptionSourced());
         this.getBacklogDetailedInputInfoByIdDetails(res);
@@ -21259,7 +21251,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#gui_component_main_view_all').hide();
             $('#gui_component_main_view').show();
             //activate first tab panel
-            $('.activeTabClass').each(function (e) {
+            $('.activeTabClass').each(function(e) {
                 $(this).click();
             });
         } else if (global_var.ipo_gui_view === 'all') {
@@ -21268,7 +21260,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#gui_component_main_view').hide();
         }
     },
-    getBacklogDetailedInputInfoByIdDetails: function (res) {
+    getBacklogDetailedInputInfoByIdDetails: function(res) {
         //generate Input Table List
         $('#tblIPOList > tbody').html('');
         $('#tblInputDescriptionList > tbody').html('');
@@ -21281,7 +21273,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //        var st = this.getHtmlGenIPOOutputList(res);
         //        $('#tblIPOOutputList > tbody').html(st);
     },
-    setUserStoryTaskInfoOnGeneralView: function () {
+    setUserStoryTaskInfoOnGeneralView: function() {
         if (!global_var.current_backlog_id) {
             return;
         }
@@ -21301,13 +21293,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.setUserStoryTaskInfoOnGeneralViewDetails(res);
             }
         });
     },
-    setUserStoryTaskInfoOnGeneralView4Share: function () {
+    setUserStoryTaskInfoOnGeneralView4Share: function() {
         if (!global_var.current_backlog_id) {
             return;
         }
@@ -21328,13 +21320,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.setUserStoryTaskInfoOnGeneralViewDetails(res);
             }
         });
     },
-    setUserStoryTaskInfoOnGeneralViewDetails: function (res) {
+    setUserStoryTaskInfoOnGeneralViewDetails: function(res) {
         $('#generalview_tasklist_table_list > tbody').html('');
         //       
         try {
@@ -21356,7 +21348,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
     },
-    assignPriorityToUserStory: function () {
+    assignPriorityToUserStory: function() {
         var id = this.getBacklogList4AssignLabeltoUserStory();
         if (!id) {
             return;
@@ -21379,16 +21371,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 closeModal('assignPriorityToUserStoryModal');
                 that.load();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    setUserStoryInputsInfoOnGeneralView: function () {
+    setUserStoryInputsInfoOnGeneralView: function() {
         if (!global_var.current_backlog_id) {
             return;
         }
@@ -21410,15 +21402,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.setUserStoryInputsInfoOnGeneralViewDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    getTableHeader4InputTable: function (trcount) {
+    getTableHeader4InputTable: function(trcount) {
         if (trcount === 0) {
             return $('<thead></thead>');
         }
@@ -21473,7 +21465,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             );
         return thead;
     },
-    getTableHeader4OutputTable: function (trcount) {
+    getTableHeader4OutputTable: function(trcount) {
         if (trcount === 0) {
             return $('<thead></thead>');
         }
@@ -21491,7 +21483,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             );
         return thead;
     },
-    getTableFooter4InputTable: function (desc, replace) {
+    getTableFooter4InputTable: function(desc, replace) {
         if (desc === 'undefined' || !desc) {
             return $('<tfoot></tfoot>');
         }
@@ -21514,7 +21506,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             ));
         return tfoot;
     },
-    getInputTable4StoryCard4Select: function (res, ind, iteration, rowId, parentId) {
+    getInputTable4StoryCard4Select: function(res, ind, iteration, rowId, parentId) {
         if (iteration >= 20) {
             return;
         }
@@ -21617,7 +21609,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         div.append(table);
         return div;
     },
-    getInputTable4StoryCard: function (res, ind, iteration, rowId, parentId) {
+    getInputTable4StoryCard: function(res, ind, iteration, rowId, parentId) {
         if (iteration >= 20) {
             return;
         }
@@ -21713,7 +21705,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return div;
     },
 
-    setUserStoryInputsInfoOnGeneralViewDetailsPure4Select: function (res) {
+    setUserStoryInputsInfoOnGeneralViewDetailsPure4Select: function(res) {
         //        res = replaceJSON(res);
         $('#generalview_input_list').html('');
         //        try {
@@ -21724,7 +21716,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
     },
 
-    getInputTable4StoryCard4SelectNew: function (res, ind, iteration, rowId, parentId) {
+    getInputTable4StoryCard4SelectNew: function(res, ind, iteration, rowId, parentId) {
         if (iteration >= 20) {
             return;
         }
@@ -21742,7 +21734,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             // .addClass('table-hover')
             .addClass('spilted')
 
-            .attr('border', '1');
+        .attr('border', '1');
 
 
         var tbody = $('<tbody></tbody>');
@@ -21940,7 +21932,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             );
 
 
-            $("#iid" + obj[i].id).keyup(function (event) {
+            $("#iid" + obj[i].id).keyup(function(event) {
                 if (event.keyCode === 13) {
                     new UserStory().insertNewInputDescriptionNew(this, id);
                 }
@@ -21963,7 +21955,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         div.append(table);
         return div;
     },
-    addEventDescription: function (el, action, id) {
+    addEventDescription: function(el, action, id) {
 
         $('#addEventDescModal-input-id').val(id);
         $('#addEventDescModal-actiontype').val(action);
@@ -21972,7 +21964,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
     },
-    selectDataFromDbModal: function (el, action, id) {
+    selectDataFromDbModal: function(el, action, id) {
         if (action === 'select') {
             $('#selectFromDbModal-title').html('Select From Database');
         } else if (action === 'send') {
@@ -21990,7 +21982,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.loadDatabaseList2Combo();
     },
 
-    loadDatabaseList2Combo: function () {
+    loadDatabaseList2Combo: function() {
         var json = {
             kv: {}
         };
@@ -22007,14 +21999,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.selectDataFromDbModalDetails(res);
                 global_var.is_select_from_db_modal_clicked = true;
             }
         });
     },
 
-    addNewField: function () {
+    addNewField: function() {
         var field = $('#selectFromDbModal-newfield').val();
         var table = $('#selectFromDbModal-tableid').val();
         var db = $('#selectFromDbModal-dbid').val();
@@ -22041,7 +22033,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAEntity.updateFieldByRes(res);
                 that.getDbFiledList(table);
                 $('#selectFromDbModal-fieldid').val(res.kv.id);
@@ -22051,7 +22043,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    addNewTable: function () {
+    addNewTable: function() {
         var table = $('#selectFromDbModal-newtable').val();
         var db = $('#selectFromDbModal-dbid').val();
 
@@ -22076,7 +22068,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAEntity.updateTableByRes(res);
                 that.getDbTableList(db);
                 $('#selectFromDbModal-tableid').val(res.kv.id);
@@ -22087,7 +22079,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    addNewDatabase: function () {
+    addNewDatabase: function() {
         var val = $('#selectFromDbModal-newdb').val();
 
         if (!val) {
@@ -22110,7 +22102,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAEntity.updateDbByRes(res);
                 that.loadDatabaseList2Combo();
                 $('#selectFromDbModal-dbid').val(res.kv.id);
@@ -22121,7 +22113,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    selectDataFromDbModalDetails: function (res) {
+    selectDataFromDbModalDetails: function(res) {
         $('#selectFromDbModal-dbid').html('');
 
 
@@ -22145,7 +22137,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    dbFieldOnChange: function (el) {
+    dbFieldOnChange: function(el) {
         var val = $(el).val();
         $('.create-new-field-4-select').hide();
 
@@ -22154,7 +22146,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    getDbTables4SelectDataModal: function (el) {
+    getDbTables4SelectDataModal: function(el) {
         var val = $(el).val();
         $('.create-new-db-4-select').hide();
 
@@ -22165,7 +22157,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    getDbFields4SelectDataModal: function (el) {
+    getDbFields4SelectDataModal: function(el) {
         var val = $(el).val();
         $('.create-new-table-4-select').hide();
 
@@ -22176,7 +22168,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    getDbFiledList: function (tableId) {
+    getDbFiledList: function(tableId) {
         if (!tableId) {
             return;
         }
@@ -22197,14 +22189,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getDbFieldsListDetails(res);
             }
         });
 
     },
 
-    getDbFieldsListDetails: function (res) {
+    getDbFieldsListDetails: function(res) {
         $('#selectFromDbModal-fieldid').html('');
 
 
@@ -22225,7 +22217,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             .append($('<option disabled>').val('').text(""));
     },
 
-    getDbTableList: function (dbid) {
+    getDbTableList: function(dbid) {
         if (!dbid) {
             return;
         }
@@ -22246,14 +22238,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 that.getDbTablesListDetails(res);
             }
         });
 
     },
 
-    getDbTablesList: function (dbid) {
+    getDbTablesList: function(dbid) {
         if (!dbid) {
             return;
         }
@@ -22274,14 +22266,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.getDbTablesListDetails(res);
             }
         });
 
     },
 
-    getDbTablesListDetails: function (res) {
+    getDbTablesListDetails: function(res) {
         $('#selectFromDbModal-tableid').html('');
 
 
@@ -22313,7 +22305,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     //        }
     //    },
 
-    removeSendSaveTo: function (el, id) {
+    removeSendSaveTo: function(el, id) {
         if (!id) {
             return;
         }
@@ -22338,7 +22330,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 $('#addRelatedSourceModal').modal('hide');
 
@@ -22366,7 +22358,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    removeRelationSource: function (el, id) {
+    removeRelationSource: function(el, id) {
         if (!id) {
             return;
         }
@@ -22391,7 +22383,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
 
                 loadCurrentBacklogProdDetails();
@@ -22422,7 +22414,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    removeSendDBRelation: function (el, id) {
+    removeSendDBRelation: function(el, id) {
         if (!id) {
             return;
         }
@@ -22447,7 +22439,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SAInput.updateInputByRes(res);
                 $('#addRelatedSourceModal').modal('hide');
 
@@ -22475,7 +22467,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    removeDBRelation: function (el, id) {
+    removeDBRelation: function(el, id) {
         if (!id) {
             return;
         }
@@ -22500,7 +22492,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 loadCurrentBacklogProdDetails();
 
@@ -22537,7 +22529,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         });
     },
 
-    addRelationSourcedModal: function (el, action, id) {
+    addRelationSourcedModal: function(el, action, id) {
         if (!id) {
             return;
         }
@@ -22587,7 +22579,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    loadApisToCombo: function (action) {
+    loadApisToCombo: function(action) {
         return
         try {
             var keys = SACore.GetBacklogKeys();
@@ -22617,7 +22609,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
-    sendDataToModal: function (el, id) {
+    sendDataToModal: function(el, id) {
         if (!id) {
             return;
         }
@@ -22654,11 +22646,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    inputExistModal: function (el, inputId) {
+    inputExistModal: function(el, inputId) {
         $('#us-related-input-id').val(inputId);
     },
 
-    username_editable: function (el, inputId, event) {
+    username_editable: function(el, inputId, event) {
         $(el).removeAttr('ondblclick');
         var inp = $('<input type="text">')
             .css("width", "90%")
@@ -22670,7 +22662,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         inp.focus();
     },
 
-    updateInputEditLineNew: function (el, inputId) {
+    updateInputEditLineNew: function(el, inputId) {
 
         var inp = $('<input type="text">')
             .css("width", "100%")
@@ -22683,7 +22675,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         inp.focus();
     },
 
-    username_update: function (el) {
+    username_update: function(el) {
 
         var val = $(el).val();
         if (!val) {
@@ -22709,21 +22701,21 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 SACore.updateBacklogByRes(res);
                 that.load();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    error: function () {
+    error: function() {
         Toaster.showError(('somethingww'));
 
     },
 
-    updateInputCompNew: function (el, inputId) {
+    updateInputCompNew: function(el, inputId) {
 
 
         if (!inputId) {
@@ -22752,7 +22744,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
 
                 SAInput.addInputByRes(res);
@@ -22784,7 +22776,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 //  refreshLiveProtytypeView();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
@@ -22792,7 +22784,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-    deleteInputNew4StoryCard: function (el, inputId) {
+    deleteInputNew4StoryCard: function(el, inputId) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -22814,7 +22806,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $(el).closest("tr").remove();
                 AJAXCallFeedback(res);
                 SAInput.deleteInput(inputId);
@@ -22823,13 +22815,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    deleteInputNew: function (el, inputId) {
+    deleteInputNew: function(el, inputId) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -22851,7 +22843,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 SAInput.deleteInput(inputId);
                 SACore.updateBacklogByRes(res);
@@ -22883,13 +22875,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 // refreshLiveProtytypeView();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew: function (object) {
+    setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew: function(object) {
         loadBacklogDetailsByIdIfNotExist(object.selectFromBacklogId);
         loadBacklogDetailsByIdIfNotExist(object.sendToBacklogId);
         loadBacklogDetailsByIdIfNotExist(object.fkDependentBacklogId);
@@ -22988,7 +22980,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         return st;
     },
 
-    getInputDescTdItem: function (descId, desc1, stln, color, inputId, orderNo) {
+    getInputDescTdItem: function(descId, desc1, stln, color, inputId, orderNo) {
         color = (color) ? color : 'undefined';
         var colored = '<a class="colored-a d-flex" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
         var closeColor = "</a>"
@@ -23004,8 +22996,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             `<div  class="btn btn-sm iconDrag"><i class=" fas fa-expand-arrows-alt"></i></div>` +
             '<span class="span_hover desc-item-input" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text4Idesc(desc1))) + '\' '
 
-            +
-            ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">' +
+        +
+        ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">' +
             '- &nbsp; ' + colored +
             this.fnline2Text(desc1) +
             closeColor +
@@ -23020,22 +23012,22 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'\')">Whited</button>' +
             ' <button class="dropdown-item" onclick="new UserStory().deleteInputDescriptionNew(this,\'' + descId + '\')">Delete</button>'
 
-            +
-            '</div>'
+        +
+        '</div>'
 
 
 
-            +
-            '</div>' +
-            '</div>' :
-            stln;
+        +
+        '</div>' +
+        '</div>':
+        stln;
 
 
     },
 
 
 
-    updateInputDescriptionEditLineNew: function (el, descId) {
+    updateInputDescriptionEditLineNew: function(el, descId) {
         var trg = $(el).find('.update-event-desc-text');
         if (trg.length < 1) {
             var inp = $('<input type="text">')
@@ -23048,7 +23040,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
 
-    updateInputDescCompNew: function (el, descId) {
+    updateInputDescCompNew: function(el, descId) {
         var id = descId;
         if (descId.trim().length == 0) {
             return;
@@ -23075,7 +23067,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 loadCurrentBacklogProdDetails();
                 console.log(res);
@@ -23089,7 +23081,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
@@ -23099,7 +23091,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
     },
-    deleteInputDescriptionNew: function (el, inputDescId) {
+    deleteInputDescriptionNew: function(el, inputDescId) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -23123,7 +23115,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 AJAXCallFeedback(res);
                 loadCurrentBacklogProdDetailsSyncrone();
                 loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
@@ -23131,13 +23123,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $(el).closest('div.span-button-div').remove();
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    setUserStoryInputsInfoOnGeneralViewDetailsPure: function (res) {
+    setUserStoryInputsInfoOnGeneralViewDetailsPure: function(res) {
         //        res = replaceJSON(res);
         $('#generalview_input_list').html('');
         //        try {
@@ -23145,14 +23137,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var table = this.getInputTable4StoryCard(res, ind, 0, '', '');
         $('#generalview_input_list').append(table);
     },
-    toggleSubTableOfInputs: function (el, id) {
+    toggleSubTableOfInputs: function(el, id) {
         if ($(el).is(':checked')) {
             $(el).closest('td').find('#sub_tbl_' + id).show();
         } else {
             $(el).closest('td').find('#sub_tbl_' + id).hide();
         }
     },
-    setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select: function (object) {
+    setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select: function(object) {
         var descriptionRelated = replaceTags(object.descriptionRelated);
         var backlogNameRelated = replaceTags(SACore.GetBacklogname(object.fkDependentBacklogId));
         var inputNameRelated = replaceTags(SAInput.GetInputName(object.fkDependentOutputId));
@@ -23189,7 +23181,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         } catch (e) {}
         return st;
     },
-    setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc: function (obj) {
+    setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc: function(obj) {
         var descriptionRelated = replaceTags(obj.descriptionRelated);
         var backlogNameRelated = replaceTags(obj.backlogNameRelated);
         var inputNameRelated = replaceTags(obj.inputNameRelated);
@@ -23221,7 +23213,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         } catch (e) {}
         return st;
     },
-    setUserStoryInputsInfoOnGeneralViewDetails: function (res) {
+    setUserStoryInputsInfoOnGeneralViewDetails: function(res) {
         $('#generalview_input_list  ').html('');
         //        console.log(JSON.stringify(res))
         var obj = res.tbl[0].r;
@@ -23237,7 +23229,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
     },
-    setUserStoryInputDescriptionsInfoOnGeneralView: function (id) {
+    setUserStoryInputDescriptionsInfoOnGeneralView: function(id) {
         var st = "";
         if (!id) {
             return st;
@@ -23258,16 +23250,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 st = that.setUserStoryInputDescriptionsInfoOnGeneralViewDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
         return st
     },
-    setUserStoryInputDescriptionsInfoOnGeneralViewDetails: function (res) {
+    setUserStoryInputDescriptionsInfoOnGeneralViewDetails: function(res) {
         var st = "";
         var obj = res.tbl[0].r;
         for (var i = 0; i < obj.length; i++) {
@@ -23287,7 +23279,7 @@ function Notification(msg) {
 }
 
 Notification.prototype = {
-    getNotificationList: function () {
+    getNotificationList: function() {
         $('#nav_history_overal_count').html('');
         var json = {
             kv: {}
@@ -23304,16 +23296,16 @@ Notification.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 that.getNotificationListDetails(res);
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    getNotificationListDetails: function (res) {
+    getNotificationListDetails: function(res) {
         $('#notificationList_listresult').html("");
         var obj = res.tbl[0].r;
         var table = $('<table style="width:100%" border=1></table>');
@@ -23331,7 +23323,7 @@ Notification.prototype = {
         }
         $('#notificationList_listresult').html(table);
     },
-    setTime: function () {
+    setTime: function() {
         //        setInterval(function () {
         //            try {
         //                new Notification().getNotificationCount();
@@ -23339,7 +23331,7 @@ Notification.prototype = {
         //            }
         //        }, 60000);
     },
-    genHistoryLine: function (o) {
+    genHistoryLine: function(o) {
         var filen = (o.historyTellerImage) ? o.historyTellerImage : new User().getDefaultUserprofileName();
         var st = "<img style=\"padding:5px;float:left;width:34px;heigh:34px;\" class=\"figure-img img-fluid rounded-circle\"   src=\"" +
             fileUrl(filen) + "\" alt=\"" + replaceTags(o.historyTellerName) + "\">";
@@ -23348,7 +23340,7 @@ Notification.prototype = {
             "</span></i>, </br> " + replaceTags(o.historyBody);
         return st;
     },
-    genUSLine: function (o) {
+    genUSLine: function(o) {
         var isSourced = o.isSourced === '1' ?
             "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>" :
             o.fkSourcedId.length > 0 ?
@@ -23385,7 +23377,7 @@ Notification.prototype = {
         td2 += countLine;
         return td2;
     },
-    redirectToDetails: function (projectId, backlogId) {
+    redirectToDetails: function(projectId, backlogId) {
         if (projectId.length === 0 || backlogId.length === 0) {
             return;
         }
@@ -23410,7 +23402,7 @@ Notification.prototype = {
 
 
     },
-    getNotificationCount: function () {
+    getNotificationCount: function() {
         $('#nav_history_overal_count').html('');
         if (!global_var.current_project_id) {
             return;
@@ -23430,7 +23422,7 @@ Notification.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.tbl[0].r[0].notificationCount > 0) {
                         $('#nav_history_overal_count').html(res.tbl[0].r[0].notificationCount);
@@ -23439,22 +23431,22 @@ Notification.prototype = {
 
                 }
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    showInComponent: function (cid) {
+    showInComponent: function(cid) {
         $('#' + cid).next('p').remove();
         $('#' + cid).after('<p class="err-msg" style="color:red">' + this.msg + '</p>');
     },
-    eraseInComponent: function (cid) {
-        $('#' + cid).closest("form").find(".err-msg").each(function () {
+    eraseInComponent: function(cid) {
+        $('#' + cid).closest("form").find(".err-msg").each(function() {
             $(this).remove();
         });
     },
-    clearField: function (formid) {
-        $('#' + formid).find('.msg-clear').each(function (e) {
+    clearField: function(formid) {
+        $('#' + formid).find('.msg-clear').each(function(e) {
             $(this).val('');
             $(this).next('p').remove();
         });
@@ -23472,37 +23464,37 @@ function Label(lbl) {
 }
 
 Label.prototype = {
-    getId: function () {
+    getId: function() {
         return this.id;
     },
-    setId: function (arg) {
+    setId: function(arg) {
         this.id = arg;
     },
-    getName: function () {
+    getName: function() {
         //        return $('#labelname').val();
         return this.name;
     },
-    setName: function (arg) {
+    setName: function(arg) {
         this.name = arg;
     },
-    getColor: function () {
+    getColor: function() {
         //        return $('#labelcolor').val();
         return this.color;
     },
-    setColor: function (arg) {
+    setColor: function(arg) {
         this.color = arg;
     },
-    getCloseLabel: function () {
+    getCloseLabel: function() {
         return 'closeAfterInsertLabel';
         //        return this.closeLabel;
     },
-    setCloseLabel: function (arg) {
+    setCloseLabel: function(arg) {
         this.closeLabel = arg;
     },
-    getModalId: function () {
+    getModalId: function() {
         return this.modalId;
     },
-    addLabelController4Insert4Task: function () {
+    addLabelController4Insert4Task: function() {
         var f = false;
         if (this.getName().trim().length == 0) {
             new Notification("Label name is not entered!").showInComponent('labelname');
@@ -23516,7 +23508,7 @@ Label.prototype = {
             throw "Label info is not entered!";
         }
     },
-    addLabelController4Insert: function () {
+    addLabelController4Insert: function() {
         var f = false;
         if (this.getName().trim().length == 0) {
             new Notification("Label name is not entered!").showInComponent('labelname');
@@ -23530,7 +23522,7 @@ Label.prototype = {
             throw "Label info is not entered!";
         }
     },
-    addLabelController4Update: function () {
+    addLabelController4Update: function() {
         var f = false;
         if (this.getName().trim().length == 0) {
             new Notification("Label name is not entered!").showInComponent('u_labelname');
@@ -23544,7 +23536,7 @@ Label.prototype = {
             throw "Label info is not entered!";
         }
     },
-    insert4Task: function () {
+    insert4Task: function() {
         var projectId = "";
         if (global_var.current_modal === 'loadTaskManagement') {
             projectId = global_var.current_project_id;
@@ -23580,19 +23572,19 @@ Label.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 new Notification("").clearField('insertNewLabel4Task');
                 if ($('#insertNewLabel4Task_closeAfterInsertLabel').is(':checked')) {
                     $('#insertNewLabel4Task').modal('hide');
                 }
                 that.load();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    insert: function () {
+    insert: function() {
         /*   if (!global_var.current_project_id) {
               Toaster.showError("Please choose project first!");
               return;
@@ -23622,19 +23614,19 @@ Label.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 new Notification("").clearField('insertNewLabel');
                 if ($('#closeAfterInsertLabel').is(':checked')) {
                     $('#insertNewLabel').modal('hide');
                 }
                 that.load();
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    updateInfo: function () {
+    updateInfo: function() {
         var ismenu = '0';
         var id = 'u_insertLabelUseAsMenu';
         var checked = $("input[id=" + id + "]:checked").length;
@@ -23661,42 +23653,42 @@ Label.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                Toaster.showError("successfull");
                 new Notification("").clearField('updateLabel');
                 closeModal('updateLabel');
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    addValue4Insert: function () {
+    addValue4Insert: function() {
         this.setName($('#insertNewLabel').find('#labelname').val());
         this.setColor($('#insertNewLabel').find('#labelcolor').val());
     },
-    addValue4Insert4Task: function () {
+    addValue4Insert4Task: function() {
         this.setName($('#insertNewLabel4Task_labelname').val());
         this.setColor($('#insertNewLabel4Task_labelcolor').val());
     },
-    addValue4Update: function () {
+    addValue4Update: function() {
         this.setName($('#u_labelname').val());
         this.setColor($('#u_labelcolor').val());
         this.setId($('#u_labelid').val());
     },
-    add: function () {
+    add: function() {
         this.addValue4Insert();
         this.addLabelController4Insert();
         this.insert();
         this.load();
     },
-    add4Task: function () {
+    add4Task: function() {
         this.addValue4Insert4Task();
         this.addLabelController4Insert4Task();
         this.insert4Task();
         this.load4Task();
     },
-    update: function (id) {
+    update: function(id) {
         //        this.setId(id);
         this.addValue4Update();
         this.addLabelController4Update();
@@ -23705,16 +23697,16 @@ Label.prototype = {
         this.load4Task();
     },
 
-    load4Task: function () {
+    load4Task: function() {
         $('.bug-filter-badge').hide();
         var checkedLines = '';
-        $('.bug-task-filter-checkbox-label').each(function () {
+        $('.bug-task-filter-checkbox-label').each(function() {
             if ($(this).is(":checked")) {
                 checkedLines += $(this).val() + ',';
             }
         })
 
-        $('.tasklabellist').each(function () {
+        $('.tasklabellist').each(function() {
             $(this).html("");
         });
 
@@ -23734,25 +23726,25 @@ Label.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 taskManagement.taskLabelList = res
                 try {
                     that.setLabelListTable4Body(res);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    load: function () {
-        $('.tasklabellist').each(function () {
-            $(this).html("");
-        })
-        /*   if (!global_var.current_project_id) {
-              return;
-          } */
+    load: function() {
+        $('.tasklabellist').each(function() {
+                $(this).html("");
+            })
+            /*   if (!global_var.current_project_id) {
+                  return;
+              } */
         var json = {
             kv: {}
         };
@@ -23769,7 +23761,7 @@ Label.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 //                console.log(JSON.stringify(res
                 try {
@@ -23777,12 +23769,12 @@ Label.prototype = {
                     SABacklogLabel.Load(res);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setLabelList: function (res) {
+    setLabelList: function(res) {
         $('#tasklabellist').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -23792,7 +23784,7 @@ Label.prototype = {
                 .text(obj[n].name));
         }
     },
-    delete: function (id) {
+    delete: function(id) {
         if (confirm("Are you sure?")) {
             if (!id) {
                 return;
@@ -23810,19 +23802,19 @@ Label.prototype = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: false,
-                success: function (res) {
+                success: function(res) {
                     //                console.log(JSON.stringify(res));
                     that.load();
                     that.load4Task();
                 },
-                error: function () {
+                error: function() {
                     Toaster.showError(('somethingww'));
                 }
             });
         }
 
     },
-    select: function (id) {
+    select: function(id) {
         if (!id) {
             return;
         }
@@ -23839,16 +23831,16 @@ Label.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 that.setLabelInfo4Update(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setLabelInfo4Update: function (res) {
+    setLabelInfo4Update: function(res) {
         var obj = res.tbl[0].r[0];
         $('#u_labelname').val(obj.name);
         $('#u_labelcolor').val(obj.color);
@@ -23859,7 +23851,7 @@ Label.prototype = {
             $('#u_insertLabelUseAsMenu').prop('checked', false);
         }
     },
-    setLabelListTableBody: function (res) {
+    setLabelListTableBody: function(res) {
         var obj = res.tbl[0].r;
         var tbl = $('<ul></ul>').attr("class", 'lbl-list-table');
         //        var tr1 = $('<tr class="lbl-list-tr"></tr>');
@@ -23923,7 +23915,7 @@ Label.prototype = {
         }
         return tbl.html();
     },
-    setLabelListTable: function (res) {
+    setLabelListTable: function(res) {
         //        $('.tasklabellist').each(function () {
         //            $(this).html("");
         //        })
@@ -23931,7 +23923,7 @@ Label.prototype = {
         var tbl = this.setLabelListTableBody(res);
         $('#tasklabellist').html(tbl);
     },
-    setLabelListTable4Body: function (res, checkedLines) {
+    setLabelListTable4Body: function(res, checkedLines) {
         //        $('.tasklabellist').each(function () {
         //            $(this).html("");
         //        })
@@ -23946,11 +23938,11 @@ Label.prototype = {
 
 
 var Priority = {
-    load: function () {
+    load: function() {
         Priority.setLabelListTable();
     },
-    setLabelListTable: function (res) {
-        $('#us_filter_priority_list').each(function () {
+    setLabelListTable: function(res) {
+        $('#us_filter_priority_list').each(function() {
             $(this).html("")
         });
         var tbl = $('<table></table>').attr("class", 'lbl-list-table');
@@ -23964,7 +23956,7 @@ var Priority = {
         }
         tbl.append(tr1);
 
-        $('#us_filter_priority_list').each(function () {
+        $('#us_filter_priority_list').each(function() {
             $(this).html(tbl)
         });
     },
@@ -24005,61 +23997,61 @@ function Sprint(lbl) {
 }
 
 Sprint.prototype = {
-    getStartDate: function () {
+    getStartDate: function() {
         return this.startDate;
     },
-    setStartDate: function (arg) {
+    setStartDate: function(arg) {
         this.startDate = arg;
     },
-    getEndDate: function () {
+    getEndDate: function() {
         return this.endDate;
     },
-    setEndDate: function (arg) {
+    setEndDate: function(arg) {
         this.endDate = arg;
     },
-    getProjectId: function () {
+    getProjectId: function() {
         return this.projectId;
     },
-    setProjectId: function (arg) {
+    setProjectId: function(arg) {
         this.projectId = arg;
     },
-    getDescription: function () {
+    getDescription: function() {
         return this.description;
     },
-    setDescription: function (arg) {
+    setDescription: function(arg) {
         this.description = arg;
     },
-    getId: function () {
+    getId: function() {
         return this.id;
     },
-    setId: function (arg) {
+    setId: function(arg) {
         this.id = arg;
     },
-    getName: function () {
+    getName: function() {
         //        return $('#labelname').val();
         return this.name;
     },
-    setName: function (arg) {
+    setName: function(arg) {
         this.name = arg;
     },
-    getColor: function () {
+    getColor: function() {
         //        return $('#labelcolor').val();
         return this.color;
     },
-    setColor: function (arg) {
+    setColor: function(arg) {
         this.color = arg;
     },
-    getCloseLabel: function () {
+    getCloseLabel: function() {
         return 'closeAfterInsertLabel';
         //        return this.closeLabel;
     },
-    setCloseLabel: function (arg) {
+    setCloseLabel: function(arg) {
         this.closeLabel = arg;
     },
-    getModalId: function () {
+    getModalId: function() {
         return this.modalId;
     },
-    addController4Insert4Task: function () {
+    addController4Insert4Task: function() {
 
         var sprintName = $('#insertNewSprint4Task-sprintname').val();
         var color = ($('#insertNewSprint4Task-sprintColor').val());
@@ -24095,7 +24087,7 @@ Sprint.prototype = {
             throw "Label info is not entered!";
         }
     },
-    addController4Insert: function () {
+    addController4Insert: function() {
         this.addValue4Insert();
         var f = false;
         if (this.getName().trim().length == 0) {
@@ -24126,7 +24118,7 @@ Sprint.prototype = {
             throw "Label info is not entered!";
         }
     },
-    addController4Update: function () {
+    addController4Update: function() {
         var f = false;
         if (this.getName().trim().length == 0) {
             new Notification("Sprint name is not entered!").showInComponent('u_sprintname');
@@ -24156,7 +24148,7 @@ Sprint.prototype = {
             throw "Label info is not entered!";
         }
     },
-    insert4Task: function () {
+    insert4Task: function() {
         var json = {
             kv: {}
         };
@@ -24185,16 +24177,16 @@ Sprint.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 new Notification("").clearField('insertNewSprint4Task');
                 $('#insertNewSprint4Task').modal('hide');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError("error");
             }
         });
     },
-    insert: function () {
+    insert: function() {
         var json = initJSON();
         json.kv.sprintName = this.getName();
         json.kv.sprintColor = this.getColor();
@@ -24211,19 +24203,19 @@ Sprint.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                Toaster.showError("successfull");
                 new Notification("").clearField('insertNewSprint');
                 if ($('#closeAfterInsertSprint').is(":checked")) {
                     $('#insertNewSprint').modal('hide');
                 }
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    updateInfo: function () {
+    updateInfo: function() {
         var json = {
             kv: {}
         };
@@ -24245,17 +24237,17 @@ Sprint.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                Toaster.showError("successfull");
                 new Notification("").clearField('updateSprint');
                 closeModal('updateSprint');
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("error");
             }
         });
     },
-    addValue4Insert: function () {
+    addValue4Insert: function() {
         this.setName($('#sprintname').val());
         this.setColor($('#sprintColor').val());
         this.setDescription($('#sprintDescription').val());
@@ -24263,7 +24255,7 @@ Sprint.prototype = {
         this.setProjectId($('#sprintProjectId').val());
         this.setEndDate($('#insertNewSprint_enddate').val());
     },
-    addValue4Update: function () {
+    addValue4Update: function() {
         this.setId($('#u_sprintId').val());
         this.setName($('#u_sprintname').val());
         this.setColor($('#u_sprintColor').val());
@@ -24272,19 +24264,19 @@ Sprint.prototype = {
         this.setProjectId($('#u_sprintProjectId').val());
         this.setEndDate($('#updateSprint_enddate').val());
     },
-    add: function () {
+    add: function() {
         this.addValue4Insert();
         this.addController4Insert();
         this.insert();
         this.load();
 
     },
-    add4Task: function () {
+    add4Task: function() {
         this.addController4Insert4Task();
         this.insert4Task();
         this.load4Task();
     },
-    update: function (id) {
+    update: function(id) {
         //        this.setId(id);
         this.addValue4Update();
         this.addController4Update();
@@ -24293,7 +24285,7 @@ Sprint.prototype = {
         this.load4Task();
     },
 
-    load: function () {
+    load: function() {
         $('#sprintlist').html("");
         //        if (!global_var.current_project_id) {
         //            return;
@@ -24309,23 +24301,23 @@ Sprint.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 try {
                     that.setSprintListTable(res);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    load4Task: function () {
+    load4Task: function() {
         sprintTaskIds = "";
         $('.bug-filter-badge').hide();
         var checkedLines = '';
-        $('.bug-task-filter-checkbox-sprint').each(function () {
+        $('.bug-task-filter-checkbox-sprint').each(function() {
             if ($(this).is(":checked")) {
                 checkedLines += $(this).val() + ',';
             }
@@ -24352,7 +24344,7 @@ Sprint.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                sprintTaskIds = res.kv.sprintTaskIds;
                 //                console.log(JSON.stringify(res));
                 taskManagement.taskSprintList = res
@@ -24361,12 +24353,12 @@ Sprint.prototype = {
                     $('#sprintlist4Task').html(tbl);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setSprintList: function (res) {
+    setSprintList: function(res) {
         $('#sprintlist').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -24376,7 +24368,7 @@ Sprint.prototype = {
                 .text(replaceTags(obj[n].name)));
         }
     },
-    delete: function (id) {
+    delete: function(id) {
         if (confirm("Are you sure?")) {
             if (!id) {
                 return;
@@ -24394,18 +24386,18 @@ Sprint.prototype = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: false,
-                success: function (res) {
+                success: function(res) {
                     //                console.log(JSON.stringify(res));
                     that.load();
                 },
-                error: function () {
+                error: function() {
                     Toaster.showError(('somethingww'));
                 }
             });
         }
 
     },
-    select: function (id) {
+    select: function(id) {
         if (!id) {
             return;
         }
@@ -24420,16 +24412,16 @@ Sprint.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 that.setSprintInfo4Update(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setSprintInfo4Update: function (res) {
+    setSprintInfo4Update: function(res) {
         var obj = res.tbl[0].r[0];
         $('#u_sprintname').val(replaceTags(obj.sprintName));
         $('#u_sprintColor').val(obj.sprintColor);
@@ -24446,13 +24438,13 @@ Sprint.prototype = {
 
         }
     },
-    setSprintListTable: function (res) {
+    setSprintListTable: function(res) {
         $('#sprintlist').html("");
         var tbl = this.getSprintListTableBody(res);
         $('#sprintlist').html(tbl);
     },
 
-    getSprintListTableBody4Task: function (res, withProject, checkedLines) {
+    getSprintListTableBody4Task: function(res, withProject, checkedLines) {
         var obj = res.tbl[0].r;
         var tbl = $('<ul></ul>');
 
@@ -24508,7 +24500,7 @@ Sprint.prototype = {
         return tbl;
     },
 
-    getSprintListTableBody: function (res, withProject) {
+    getSprintListTableBody: function(res, withProject) {
         var obj = res.tbl[0].r;
         var tbl = $('<table></table>').attr("class", 'lbl-list-table');
         var tr1 = $('<tr class="lbl-list-tr"></tr>');
@@ -24563,9 +24555,9 @@ Sprint.prototype = {
                 .attr('id', obj[n].id)
                 .attr("onclick", "new Sprint().delete('" + obj[n].id + "')"));
             tr.append(td);
-            tr.hover(function () {
+            tr.hover(function() {
                 $(this).find('.lbl-action, .story-card-sprint-assign').show();
-            }, function () {
+            }, function() {
                 $(this).find('.lbl-action ,.story-card-sprint-assign').hide();
             });
             tbl.append(tr);
@@ -24581,7 +24573,7 @@ function Project() {
 }
 
 Project.prototype = {
-    getPurposeList: function () {
+    getPurposeList: function() {
         var purpose = $('#addProject_showInputTab').is(":checked") ? '##showInputTab:1;' : "";
         purpose += $('#addProject_showStoryCardTab').is(":checked") ? '##showStoryCardTab:1;' : "";
         purpose += $('#addProject_showHistoryTab').is(":checked") ? '##showHistoryTab:1;' : "";
@@ -24589,7 +24581,7 @@ Project.prototype = {
         purpose += $('#addProject_showTestScenarioTab').is(":checked") ? '##showTestScenarioTab:1;' : "";
         return purpose;
     },
-    insert: function () {
+    insert: function() {
         if ($('#txtProjectName').val().trim().length == 0) {
             Toaster.showError("Please enter project name");
             return;
@@ -24619,22 +24611,22 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.insertAfterEvent();
                 $('#exampleModal2').modal('hide');
                 that.loadProject();
                 //                that.addNewProjectToList($('#txtProjectName').val(), res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    insertAfterEvent: function () {
+    insertAfterEvent: function() {
         $('.newProjectInsert').hide();
         $('.newProjectInsertAfter').show();
     },
-    addNewProjectToList: function (projectName, res) {
+    addNewProjectToList: function(projectName, res) {
         if (!res.kv.id) {
             Toaster.showError("Project is not inserted!");
             return;
@@ -24648,7 +24640,7 @@ Project.prototype = {
         $(st).insertBefore('#tblProjectList > tbody > tr:first');
         $('.pro-tr').first().click();
     },
-    showAllProjectsAfterInsert: function (projectName, res) {
+    showAllProjectsAfterInsert: function(projectName, res) {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
@@ -24659,12 +24651,12 @@ Project.prototype = {
 
 
     },
-    searchProject: function (e) {
+    searchProject: function(e) {
         $('#tblProjectList > tbody').html('');
         var st = '%%' + $(e).val() + '%%';
         this.loadProject(st);
     },
-    loadProject: function (pname) {
+    loadProject: function(pname) {
         var json = {
             kv: {}
         };
@@ -24681,18 +24673,18 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var st = that.generateTableBody4Project(res);
                 $('#tblProjectList > tbody').html(st);
                 $('.pro-tr').first().click();
                 new Project().loadUserList4Combo();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    clearProjectStatFields: function () {
+    clearProjectStatFields: function() {
         $('#overal_us_count_overall').html('0');
         $('#overal_us_count_new').html('0');
         $('#overal_us_count_ongoing_percentage').html('0');
@@ -24705,7 +24697,7 @@ Project.prototype = {
         $('#overal_us_count_bound').html('0');
         $('#overal_us_count_initial').html('0');
     },
-    getProjectStatList: function () {
+    getProjectStatList: function() {
         this.clearProjectStatFields();
         if (!global_var.current_project_id) {
             return;
@@ -24727,7 +24719,7 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 try {
                     var o = res.tbl[0].r[0];
                     $('#overal_us_count_overall').html(o.overalCount);
@@ -24743,12 +24735,12 @@ Project.prototype = {
                     $('#overal_us_count_initial').html(o.initialCount);
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadMainProjectList4Manual: function () {
+    loadMainProjectList4Manual: function() {
         showProgress3();
         var json = {
             kv: {}
@@ -24766,7 +24758,7 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
 
                 that.generateTableBody4MainProject(res); //just FN
@@ -24780,12 +24772,12 @@ Project.prototype = {
 
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
-    loadMainProjectList: function () {
+    loadMainProjectList: function() {
         var json = {
             kv: {}
         };
@@ -24803,7 +24795,7 @@ Project.prototype = {
             crossDomain: true,
             async: true,
 
-            success: function (res) {
+            success: function(res) {
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
                 loadModulePermission();
@@ -24821,12 +24813,12 @@ Project.prototype = {
 
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showGeneralError();
             }
         });
     },
-    generateTableBody4MainProject: function (res) {
+    generateTableBody4MainProject: function(res) {
         try {
             var obj = res.tbl[0].r;
             var urlVal = Utility.getParamFromUrl("current_project_id");
@@ -24853,7 +24845,7 @@ Project.prototype = {
 
     },
 
-    generateTableBody4Project: function (res) {
+    generateTableBody4Project: function(res) {
 
         var st = "";
         try {
@@ -24882,13 +24874,13 @@ Project.prototype = {
         st += '</tr>';
         return st;
     },
-    showProjectDetails: function (e) {
+    showProjectDetails: function(e) {
         var pid = $(e).attr("pid");
         this.showProjectDetailsMain(e);
         this.selectProjectPermission(pid);
         this.insertAfterEvent();
     },
-    showProjectDetailsMain: function (e) {
+    showProjectDetailsMain: function(e) {
         var json = {
             kv: {}
         };
@@ -24905,7 +24897,7 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 $('#txtProjectId').val(res.tbl[0].r[0].id);
                 $('#txtProjectName').val(replaceTags(res.tbl[0].r[0].projectName));
@@ -24916,7 +24908,7 @@ Project.prototype = {
 
         });
     },
-    selectProjectPermission: function (pid) {
+    selectProjectPermission: function(pid) {
         if (pid.trim().length == 0) {
             Toaster.showError('Project ID is empty!');
             return;
@@ -24938,18 +24930,18 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res))
                 $('#tblProjectInvolvedUser > tbody').html("");
                 var st = that.setProjectPermissionList(res);
                 $('#tblProjectInvolvedUser > tbody').html(st);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setProjectPermissionList: function (res) {
+    setProjectPermissionList: function(res) {
 
         var st = "";
         try {
@@ -24971,7 +24963,7 @@ Project.prototype = {
         st += '</tr>'
         return st;
     },
-    toggleProject: function (e) {
+    toggleProject: function(e) {
 
         global_var.current_project_id = $(e).val();
         Utility.addParamToUrl('current_project_id', global_var.current_project_id);
@@ -24986,7 +24978,7 @@ Project.prototype = {
 
     },
 
-    toggleProjectDetails: function () {
+    toggleProjectDetails: function() {
         Utility.addParamToUrl('current_project_id', global_var.current_project_id);
         new UserStory().loadDetailsOnProjectSelect();
 
@@ -25013,7 +25005,7 @@ Project.prototype = {
         getDBStructure4Select();
     },
 
-    showProjectDetailsMain4Permission: function (projectId) {
+    showProjectDetailsMain4Permission: function(projectId) {
         if (!projectId) {
             return;
         }
@@ -25033,13 +25025,13 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.check4PermissionInProjectToggle(res);
             }
 
         });
     },
-    check4PermissionInProject: function (res) {
+    check4PermissionInProject: function(res) {
         var showInput = GetTagLineVal(res.tbl[0].r[0].purpose, 'showInputTab');
         var showStoryCard = GetTagLineVal(res.tbl[0].r[0].purpose, 'showStoryCardTab');
         var showTask = GetTagLineVal(res.tbl[0].r[0].purpose, 'showTaskTab');
@@ -25073,7 +25065,7 @@ Project.prototype = {
 
 
     },
-    check4PermissionInProjectToggle: function (res) {
+    check4PermissionInProjectToggle: function(res) {
         var showInput = GetTagLineVal(res.tbl[0].r[0].purpose, 'showInputTab');
         var showStoryCard = GetTagLineVal(res.tbl[0].r[0].purpose, 'showStoryCardTab');
         var showTask = GetTagLineVal(res.tbl[0].r[0].purpose, 'showTaskTab');
@@ -25151,7 +25143,7 @@ Project.prototype = {
         //        console.log('firstActiveTab=' + firstActiveTab)
         new UserStory().toggleSubmenu($('#us-submenu-' + firstActiveTab), firstActiveTab);
     },
-    updateMain: function () {
+    updateMain: function() {
         if ($('#txtProjectId').val().trim().length == 0) {
             Toaster.showError('Project is not selected!');
             return;
@@ -25189,16 +25181,16 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#exampleModal2').modal('hide');
                 that.loadProject();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadUserList4Combo: function () {
+    loadUserList4Combo: function() {
         var json = {
             kv: {}
         };
@@ -25217,15 +25209,15 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.addUserList4Combo(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addUserList4Combo: function (res) {
+    addUserList4Combo: function(res) {
         $('#sbxUserList').html("");
         var obj = res.tbl[0].r;
         var st = "";
@@ -25241,7 +25233,7 @@ Project.prototype = {
                 .html(replaceTags(obj[n].userPersonName) + " " + t));
         }
     },
-    addUserToProject: function () {
+    addUserToProject: function() {
         if ($('#txtProjectId').val().trim().length == 0) {
             Toaster.showError('Project is not selected!');
             return;
@@ -25268,15 +25260,15 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.setUserToProjectListTable(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setUserToProjectListTable: function () {
+    setUserToProjectListTable: function() {
         var st = '';
         st += '<tr>';
         st += '<td>' + $('#sbxUserList').val() + '</td>';
@@ -25286,7 +25278,7 @@ Project.prototype = {
         st += '</tr>';
         $(st).insertBefore('#tblProjectInvolvedUser > tbody > tr:first');
     },
-    deleteUser: function (e, id) {
+    deleteUser: function(e, id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -25310,15 +25302,15 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $(e).closest('tr').remove();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteProject: function (projectId) {
+    deleteProject: function(projectId) {
         if (!projectId) {
             return;
         }
@@ -25342,15 +25334,15 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadProject();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    isUserExistInPermission: function () {
+    isUserExistInPermission: function() {
         var f = false;
         var json = {
             kv: {}
@@ -25369,20 +25361,20 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.tbl[0].r.length > 0) {
                         f = true;
                     }
                 } catch (e) {}
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         return f;
     },
-    toggleFields: function () {
+    toggleFields: function() {
         $('.newProjectInsert').show();
         $('.newProjectInsertAfter').hide();
         $('#txtProjectName').val('');
@@ -25397,7 +25389,7 @@ Project.prototype = {
         $('#addProject_showHistoryTab').prop('checked', true);
         $('#addProject_showTestScenarioTab').prop('checked', true);
     },
-    updateproject: function () {
+    updateproject: function() {
         $('.newProjectInsert').hide();
         $('.newProjectInsertAfter').show();
         $('#txtProjectName').val('');
@@ -25412,7 +25404,7 @@ Project.prototype = {
         $('#addProject_showTestScenarioTab').prop('checked', true);
 
     },
-    setEditable: function () {
+    setEditable: function() {
         var checked = $("input[id=ifSetProEditable]:checked").length;
         if (checked == '1') {
             $('#btnDeleteProject').attr("style", "pointer-events:default");
@@ -25431,7 +25423,7 @@ function User() {
 }
 
 User.prototype = {
-    forgetPwd: function (e) {
+    forgetPwd: function(e) {
         new Notification().eraseInComponent('domainName');
         new Notification().eraseInComponent('password_message');
         if (!$('#domainName').val().trim()) {
@@ -25458,19 +25450,19 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.err === '1') {
                     new Notification("Domain or Username is incorrect!").showInComponent('domainName');
                 } else {
                     new Notification("Your password were sent to your mail address. Please check your mail address.").showInComponent('password_message');
                 }
             },
-            error: function () {
+            error: function() {
                 new Notification("Domain or Username is incorrect!").showInComponent('domainName');
             }
         });
     },
-    controller4insert: function () {
+    controller4insert: function() {
         var f = false;
         if ($.trim($('#txtUsername').val()).length == 0) {
             Toaster.showError("Please enter Username");
@@ -25503,7 +25495,7 @@ User.prototype = {
         if (f)
             throw "User error";
     },
-    controller4Update: function () {
+    controller4Update: function() {
         var f = false;
         if ($.trim($('#txtUsername').val()).length === 0) {
             Toaster.showError("Please enter Username");
@@ -25537,7 +25529,7 @@ User.prototype = {
         if (f)
             throw "User error";
     },
-    isUsernameValid: function () {
+    isUsernameValid: function() {
         var f = true;
         var username = $('#txtUsername').val();
         if (username === 'undefined' || !username) {
@@ -25559,7 +25551,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 if (res.kv.res === '0') {
                     f = false;
@@ -25569,13 +25561,13 @@ User.prototype = {
                     //                    return true;
                 }
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
     },
-    getUsernameById: function (id) {
+    getUsernameById: function(id) {
         if (!id) {
             Toaster.showError("User is not selected")
             return;
@@ -25594,17 +25586,17 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 console.log(res);
                 return res.tbl[0].r[0].username;
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
-    isUsernameExist4Update: function () {
+    isUsernameExist4Update: function() {
         var f = false;
         var username = $('#txtUsername').val();
         if (username === 'undefined' || !username) {
@@ -25625,7 +25617,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.err.length === 0) {
                         f = false;
@@ -25635,13 +25627,13 @@ User.prototype = {
                 } catch (e) {}
 
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
     },
-    changePassword: function () {
+    changePassword: function() {
         if ($('#changePassword_oldpwd').val().trim().length === 0) {
             Toaster.showError("Please enter Old Password");
             return;
@@ -25680,7 +25672,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.error === '1') {
                     Toaster.showError(res.kv.res);
                 } else {
@@ -25689,12 +25681,12 @@ User.prototype = {
                 }
 
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
-    loadPersonalUser: function () {
+    loadPersonalUser: function() {
         var json = {
             kv: {}
         };
@@ -25708,7 +25700,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 var img = (res.tbl[0].r[0].userImage) ?
                     fileUrl(res.tbl[0].r[0].userImage) :
                     fileUrl(that.getDefaultUserprofileName());
@@ -25720,13 +25712,13 @@ User.prototype = {
                 global_var.current_user_id = res.tbl[0].r[0].id;
                 global_var.current_domain = res.kv.currentDomain;
             },
-            error: function () {
+            error: function() {
                 document.location = "login.html";
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
-    loadPersonalUserOnInit: function () {
+    loadPersonalUserOnInit: function() {
         var json = {
             kv: {}
         };
@@ -25741,7 +25733,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
 
                 var img = (res.tbl[0].r[0].userImage) ?
                     fileUrl(res.tbl[0].r[0].userImage) :
@@ -25756,7 +25748,7 @@ User.prototype = {
                 Utility.addParamToUrl('current_user_type', global_var.current_user_type);
                 that.removeTagsByPermission();
             },
-            error: function () {
+            error: function() {
                 //bu hisse de error atmalidir. lakin atmir
 
                 document.location = "login.html";
@@ -25764,7 +25756,7 @@ User.prototype = {
             }
         });
     },
-    loadNoRegistrOnInit: function () {
+    loadNoRegistrOnInit: function() {
         var bgid = Utility.getParamFromUrl('bgid');
         var n_rgstr = Utility.getParamFromUrl('n_rgstr');
         var dmn = Utility.getParamFromUrl('current_domain');
@@ -25776,7 +25768,7 @@ User.prototype = {
             type: "POST",
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (!res.kv.token) {
                         $("body").html($("<img class='mr-auto' width='90%' height='90%'>").attr('src', 'resource/img/no_access_code.png'))
@@ -25788,34 +25780,34 @@ User.prototype = {
 
 
             },
-            error: function () {
+            error: function() {
                 //bu hisse de error atmalidir. lakin atmir
                 $("body").html($("<img class='mr-auto' width='90%' height='90%'>").attr('src', 'resource/img/no_access_code.png'))
-                // document.location = "login.html";
-                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                    // document.location = "login.html";
+                    //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
-    removeTagsByPermission: function () {
+    removeTagsByPermission: function() {
         if (global_var.current_user_type === 'S') {
-            $('.perm4').each(function (e) {
+            $('.perm4').each(function(e) {
                 $(this).remove();
             });
         } else if (global_var.current_user_type === 'A') {
-            $('.perm4').each(function (e) {
+            $('.perm4').each(function(e) {
                 if (!$(this).data('perm').includes('admin')) {
                     $(this).remove();
                 }
             });
         } else if (global_var.current_user_type === 'M') {
-            $('.perm4').each(function (e) {
+            $('.perm4').each(function(e) {
                 if (!$(this).data('perm').includes('moderator')) {
                     $(this).remove();
                 }
             });
         }
     },
-    isUsernameExist: function () {
+    isUsernameExist: function() {
         var f = false;
         var username = $('#txtUsername').val();
         if (username === 'undefined' || !username) {
@@ -25835,7 +25827,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.res === '0') {
                     f = false;
                     //                    return false;
@@ -25844,13 +25836,13 @@ User.prototype = {
                     //                    return true;
                 }
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
     },
-    isPasswordValid: function (id) {
+    isPasswordValid: function(id) {
         var ids = 'txtUsernamePasswd';
         if (id)
             ids = id;
@@ -25874,7 +25866,7 @@ User.prototype = {
             data: data,
             async: false,
             contentType: 'text/html',
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.res === '0') {
                     f = false;
                     return false;
@@ -25883,13 +25875,13 @@ User.prototype = {
                     return true;
                 }
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
     },
-    isEmailValid: function (id) {
+    isEmailValid: function(id) {
         var ids = 'txtUserEmail';
         if (id) {
             ids = id;
@@ -25914,7 +25906,7 @@ User.prototype = {
             data: data,
             contentType: 'text/html',
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
                 if (res.kv.res === '0') {
                     f = false;
@@ -25922,13 +25914,13 @@ User.prototype = {
                     f = true;
                 }
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
     },
-    insertAPI: function () {
+    insertAPI: function() {
         var json = {
             kv: {}
         };
@@ -25952,7 +25944,7 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.error) {
                     Toaster.showError(res.kv.error);
                 } else {
@@ -25962,37 +25954,37 @@ User.prototype = {
                     that.loadUser();
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    insert: function () {
+    insert: function() {
         this.controller4insert();
         this.uploadUserProfile4Insert();
     },
-    uploadUserProfile4Insert: function () {
+    uploadUserProfile4Insert: function() {
         if ($('#userProfilePhoto4Insert').val().trim().length > 0) {
             this.upload('userProfilePhoto4Insert');
         } else {
             this.insertAPI();
         }
     },
-    uploadUserProfile4Update: function () {
+    uploadUserProfile4Update: function() {
         if ($('#userProfilePhoto4Insert').val().trim().length > 0) {
             this.upload4Update('userProfilePhoto4Insert');
         } else {
             this.updateMainDetail();
         }
     },
-    uploadMyInfoChild: function () {
+    uploadMyInfoChild: function() {
         if ($('#myAccountModal_userProfilePhoto4Insert').val().trim().length > 0) {
             this.upload4MyInfoChild('myAccountModal_userProfilePhoto4Insert');
         } else {
             this.updateMyInfoDetails();
         }
     },
-    updateMyInfoDetails: function () {
+    updateMyInfoDetails: function() {
         var json = {
             kv: {}
         };
@@ -26011,16 +26003,16 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#myAccountModal').modal('hide');
                 that.loadPersonalUloadUserList4ComboserOnInit();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    upload4MyInfoChild: function (id) {
+    upload4MyInfoChild: function(id) {
         var r = "";
         var that = this;
         var file_type = $('#' + id).attr("file_type");
@@ -26030,7 +26022,7 @@ User.prototype = {
         var fname = file['name'].split('.')[0];
         if (files && file) {
             var reader = new FileReader();
-            reader.onload = function (readerEvt) {
+            reader.onload = function(readerEvt) {
                 var binaryString = readerEvt.target.result;
                 var s = that.uploadFile(fileext, btoa(binaryString), file_type, fname);
                 $('#myAccountModal_userProfilePhoto4Insert').attr("fname", s);
@@ -26040,7 +26032,7 @@ User.prototype = {
             reader.readAsBinaryString(file);
         }
     },
-    upload4Update: function (id) {
+    upload4Update: function(id) {
         var r = "";
         var that = this;
         var file_type = $('#' + id).attr("file_type");
@@ -26050,7 +26042,7 @@ User.prototype = {
         var fname = file['name'].split('.')[0];
         if (files && file) {
             var reader = new FileReader();
-            reader.onload = function (readerEvt) {
+            reader.onload = function(readerEvt) {
                 var binaryString = readerEvt.target.result;
                 var s = that.uploadFile(fileext, btoa(binaryString), file_type, fname);
                 $('#userProfilePhoto4Insert').attr("fname", s);
@@ -26060,7 +26052,7 @@ User.prototype = {
             reader.readAsBinaryString(file);
         }
     },
-    upload: function (id) {
+    upload: function(id) {
         var r = "";
         var that = this;
         var file_type = $('#' + id).attr("file_type");
@@ -26072,7 +26064,7 @@ User.prototype = {
             var reader = new FileReader();
             var f = true;
             var i = 0;
-            reader.onload = function (readerEvt) {
+            reader.onload = function(readerEvt) {
                 var binaryString = readerEvt.target.result;
                 var s = that.uploadFile(fileext, btoa(binaryString), file_type, fname);
                 $('#userProfilePhoto4Insert').attr("fname", s);
@@ -26082,7 +26074,7 @@ User.prototype = {
             reader.readAsBinaryString(file);
         }
     },
-    uploadFile: function (fileext, file_base_64, file_type, file_name, file_type) {
+    uploadFile: function(fileext, file_base_64, file_type, file_name, file_type) {
         //        console.log(file_base_64)
         var d = new Object();
         d.file_base_64 = file_base_64;
@@ -26103,14 +26095,14 @@ User.prototype = {
             data: dat,
             contentType: "application/json",
             async: false,
-            success: function (data) {
+            success: function(data) {
                 finalname = data.kv.uploaded_file_name;
             },
-            error: function () {}
+            error: function() {}
         });
         return finalname;
     },
-    afterInsertEvent: function (res) {
+    afterInsertEvent: function(res) {
         $('#txtUserIdInInsertNewUser').val(res.kv.id);
         $('.newUserInsert').hide();
         $('.newUserInsertAfter').show();
@@ -26118,7 +26110,7 @@ User.prototype = {
         $('#txtUsernamePasswd').val('');
         $('#txtUsernamePasswdCheckbox').prop("checked", false).change();
     },
-    beforeInsertEvent: function () {
+    beforeInsertEvent: function() {
         $('#txtUserIdInInsertNewUser').val("");
         $('#userProfilePhoto4Insert').prop("src", fileUrl(this.getDefaultUserprofileName()));
         $('#userProfilePhoto4Insert').attr("src", fileUrl(global_var.de));
@@ -26133,7 +26125,7 @@ User.prototype = {
         $('.newUserInsert').show();
         $('.newUserInsertAfter').hide();
     },
-    passwordChecked: function () {
+    passwordChecked: function() {
         var checked = $("input[id=txtUsernamePasswdCheckbox]:checked").length;
         if (checked == 0) {
             $('#txtUsernamePasswd').attr("disabled", "false");
@@ -26142,11 +26134,11 @@ User.prototype = {
         }
         $('#txtUsernamePasswd').val("");
     },
-    addNewUserUnchechedEvent: function () {
+    addNewUserUnchechedEvent: function() {
         $('.newUserInsert').hide();
         $('.newUserInsertAfter').show();
     },
-    addNewUserToList: function (res) {
+    addNewUserToList: function(res) {
         if (!res.kv.id) {
             Toaster.showError("User is not inserted!");
             return;
@@ -26160,7 +26152,7 @@ User.prototype = {
         $(st).insertBefore('#tblUserList > tbody > tr:first');
         $('.user-tr').first().click();
     },
-    showAllUsersAfterInsert: function (UserName, res) {
+    showAllUsersAfterInsert: function(UserName, res) {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
@@ -26171,12 +26163,12 @@ User.prototype = {
 
 
     },
-    searchUser: function (e) {
+    searchUser: function(e) {
         $('#tblUserList > tbody').html('');
         var st = '%%' + $(e).val() + '%%';
         this.loadUser(st);
     },
-    loadUser: function (pname) {
+    loadUser: function(pname) {
         var json = {
             kv: {}
         };
@@ -26194,29 +26186,29 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var st = that.generateTableBody4User(res);
                 $('#tblUserList > tbody').html(st);
                 $('.user-tr').first().click();
                 new User().loadProjectList4Combo();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    getUserTypeTag: function (t) {
+    getUserTypeTag: function(t) {
         return t === 'A' ?
             '<b style="color:red">-(A)</b>' :
             t === 'M' ?
             '<b style="color:blue">-(M)</b>' :
             "";
     },
-    clearFilterLine: function () {
+    clearFilterLine: function() {
         $('#newUserNameSearch').val('');
         this.loadUser();
     },
-    generateTableBody4User: function (res) {
+    generateTableBody4User: function(res) {
 
         var st = "";
         try {
@@ -26247,12 +26239,12 @@ User.prototype = {
         st += '</tr>';
         return st;
     },
-    showUserDetails: function (e) {
+    showUserDetails: function(e) {
         var pid = $(e).attr("pid");
         this.showUserDetailsMain(e);
         this.selectUserPermission(pid);
     },
-    showUserDetailsMain: function (e) {
+    showUserDetailsMain: function(e) {
         var json = {
             kv: {}
         };
@@ -26270,7 +26262,7 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var src = that.getDefaultUserprofileName();
                 if (res.tbl[0].r[0].userImage.length > 0)
                     src = res.tbl[0].r[0].userImage;
@@ -26286,15 +26278,15 @@ User.prototype = {
                 $('.newUserInsert').hide();
                 $('.newUserInsertAfter').show();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    getDefaultUserprofileName: function () {
+    getDefaultUserprofileName: function() {
         return (this.default_userprofile_name);
     },
-    selectUserPermission: function (pid) {
+    selectUserPermission: function(pid) {
         if (pid.trim().length === 0) {
             Toaster.showError('User ID is empty!');
             return;
@@ -26316,18 +26308,18 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res))
                 $('#tblUserInvolvedUser > tbody').html("");
                 var st = that.setUserPermissionList(res);
                 $('#tblUserInvolvedUser > tbody').html(st);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setUserPermissionList: function (res) {
+    setUserPermissionList: function(res) {
         var st = "";
         try {
             var obj = res.tbl[0].r;
@@ -26347,7 +26339,7 @@ User.prototype = {
         st += '</tr>'
         return st;
     },
-    updateMyInfo: function () {
+    updateMyInfo: function() {
         var f = false;
         if ($.trim($('#myAccountModal_txtUserFulname').val()).length == 0) {
             Toaster.showError("Please enter User Fulname");
@@ -26363,7 +26355,7 @@ User.prototype = {
             throw "User error";
         this.uploadMyInfoChild();
     },
-    updateMain: function () {
+    updateMain: function() {
 
         if ($('#txtUserIdInInsertNewUser').val().trim().length == 0) {
             Toaster.showError('User is not selected!');
@@ -26373,7 +26365,7 @@ User.prototype = {
         this.controller4Update();
         this.uploadUserProfile4Update();
     },
-    updateMainDetail: function () {
+    updateMainDetail: function() {
         var json = {
             kv: {}
         };
@@ -26398,7 +26390,7 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.error) {
                     Toaster.showError(res.kv.error);
                 } else {
@@ -26408,12 +26400,12 @@ User.prototype = {
                 }
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadProjectList4Combo: function () {
+    loadProjectList4Combo: function() {
         var json = {
             kv: {}
         };
@@ -26429,15 +26421,15 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.addUserList4Combo(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addUserList4Combo: function (res) {
+    addUserList4Combo: function(res) {
         $('#sbxProjectListByUser').html("");
         var obj = res.tbl[0].r;
         var st = "";
@@ -26448,7 +26440,7 @@ User.prototype = {
                 .html(replaceTags(obj[n].projectName)));
         }
     },
-    addProjectToUser: function () {
+    addProjectToUser: function() {
 
         if ($('#txtUserIdInInsertNewUser').val().length == 0) {
             Toaster.showError("User is not selected!");
@@ -26478,15 +26470,15 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.setProjectToUserListTable(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setProjectToUserListTable: function () {
+    setProjectToUserListTable: function() {
         var st = '';
         st += '<tr>';
         st += '<td>' + $('#sbxProjectListByUser').val() + '</td>';
@@ -26497,7 +26489,7 @@ User.prototype = {
         st += '</tr>';
         $(st).insertBefore('#tblUserInvolvedUser > tbody > tr:first');
     },
-    deleteUser: function (e, id) {
+    deleteUser: function(e, id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -26521,15 +26513,15 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $(e).closest('tr').remove();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    removeUser: function (id) {
+    removeUser: function(id) {
         if (!id) {
             return;
         }
@@ -26554,7 +26546,7 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 if (res.kv.error) {
                     Toaster.showError(res.kv.error);
                 } else {
@@ -26562,12 +26554,12 @@ User.prototype = {
                 }
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    deleteProjectFromPermissionList: function (e, id) {
+    deleteProjectFromPermissionList: function(e, id) {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -26591,15 +26583,15 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $(e).closest('tr').remove();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    isUserExistInPermission: function () {
+    isUserExistInPermission: function() {
         var f = false;
         var json = {
             kv: {}
@@ -26618,7 +26610,7 @@ User.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     if (res.tbl[0].r.length > 0) {
                         f = true;
@@ -26627,16 +26619,16 @@ User.prototype = {
 
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         return f;
     },
-    toggleFields: function () {
+    toggleFields: function() {
         this.beforeInsertEvent();
     },
-    toogleDeleteUser: function () {
+    toogleDeleteUser: function() {
         var checked = $("input[id=chbToogleDeleteUser]:checked").length;
         if (checked == '1') {
             $('#btnDeleteUser').attr("style", "pointer-events:default");
@@ -26645,7 +26637,7 @@ User.prototype = {
         }
 
     },
-    setEditable: function () {
+    setEditable: function() {
         $('#txtUserName').attr("disabled", !$('#txtUserName').attr("disabled"));
         $('#txtUserDescription').attr("disabled", !$('#txtUserDescription').attr("disabled"));
         $('.setUserUpdateEditable').toggle();
@@ -26658,7 +26650,7 @@ function TaskType() {
 }
 
 TaskType.prototype = {
-    insert: function () {
+    insert: function() {
         if ($('#txtTaskTypeName').val().trim().length == 0) {
             Toaster.showError("Please enter  Type name");
             return;
@@ -26691,22 +26683,22 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#exampleModal7').modal('hide');
                 that.load();
                 //                that.insertAfterEvent();
                 //                that.addNewTaskTypeToList($('#txtTaskTypeName').val(), res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    insertAfterEvent: function () {
+    insertAfterEvent: function() {
         $('.newTaskTypeInsert').hide();
         $('.newTaskTypeInsertAfter').show();
     },
-    addNewTaskTypeToList: function (TaskTypeName, res) {
+    addNewTaskTypeToList: function(TaskTypeName, res) {
         if (!res.kv.id) {
             Toaster.showError("TaskType is not inserted!");
             return;
@@ -26720,7 +26712,7 @@ TaskType.prototype = {
         $(st).insertBefore('#tblTaskTypeList > tbody > tr:first');
         $('.tasktype-tr').first().click();
     },
-    showAllTaskTypesAfterInsert: function (TaskTypeName, res) {
+    showAllTaskTypesAfterInsert: function(TaskTypeName, res) {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
@@ -26731,15 +26723,15 @@ TaskType.prototype = {
 
 
     },
-    searchTaskType: function (e) {
+    searchTaskType: function(e) {
         $('#tblTaskTypeList > tbody').html('');
         var st = '%%' + $(e).val() + '%%';
         this.loadTaskType(st);
     },
-    load: function () {
+    load: function() {
         this.loadTaskType("%%%%");
     },
-    loadTaskType: function (pname) {
+    loadTaskType: function(pname) {
         var json = {
             kv: {}
         };
@@ -26756,17 +26748,17 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 var st = that.generateTableBody4TaskType(res);
                 $('#tblTaskTypeList > tbody').html(st);
                 $('.tasktype-tr').first().click();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    generateTableBody4TaskType: function (res) {
+    generateTableBody4TaskType: function(res) {
 
         var st = "";
         try {
@@ -26798,7 +26790,7 @@ TaskType.prototype = {
         st += '</tr>';
         return st;
     },
-    showTaskTypeDetails: function (e) {
+    showTaskTypeDetails: function(e) {
         var pid = $(e).attr("pid");
         this.addTaskTypeListToCombo('taskTypeModal_afterDoneRelation');
         this.addTaskTypeListToCombo('taskTypeModal_aut_relation');
@@ -26808,7 +26800,7 @@ TaskType.prototype = {
         this.showTaskTypeDetailsMain(e);
         this.insertAfterEvent();
     },
-    showTaskTypeDetailsMain: function (e) {
+    showTaskTypeDetailsMain: function(e) {
         var json = {
             kv: {}
         };
@@ -26825,7 +26817,7 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 new TaskType().addProjectList(res.tbl[0].r[0].fkProjectId);
 
                 $('#txtTaskTypeId').val(res.tbl[0].r[0].id);
@@ -26841,12 +26833,12 @@ TaskType.prototype = {
                 setMultiselectPickerValue('taskTypeModal_aut_relation', res.tbl[0].r[0].autRelationId);
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    updateMain: function () {
+    updateMain: function() {
         if ($('#txtTaskTypeId').val().trim().length == 0) {
             Toaster.showError('Task Type is not selected!');
             return;
@@ -26882,16 +26874,16 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#exampleModal7').modal('hide');
                 that.load();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadUserList4Combo: function () {
+    loadUserList4Combo: function() {
         var json = {
             kv: {}
         };
@@ -26910,15 +26902,15 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.addUserList4Combo(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    addUserList4Combo: function (res) {
+    addUserList4Combo: function(res) {
         var obj = res.tbl[0].r;
         var st = "";
         for (var n = 0; n < obj.length; n++) {
@@ -26928,7 +26920,7 @@ TaskType.prototype = {
                 .html(obj[n].userPersonName));
         }
     },
-    deleteTaskType: function () {
+    deleteTaskType: function() {
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -26949,15 +26941,15 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 that.loadTaskType();
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    isUserExistInPermission: function () {
+    isUserExistInPermission: function() {
         var f = false;
         var json = {
             kv: {}
@@ -26976,18 +26968,18 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 if (res.tbl[0].r.length > 0) {
                     f = true;
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         return f;
     },
-    toggleFields: function () {
+    toggleFields: function() {
         $('.newTaskTypeInsert').show();
         $('.newTaskTypeInsertAfter').hide();
         $('#txtTaskTypeName').val('');
@@ -26999,9 +26991,9 @@ TaskType.prototype = {
         this.addTaskTypeAssigneeListToCombo('taskTypeModal_fkAssigneeId');
         this.addProjectList();
     },
-    addProjectList: function (projectId) {
+    addProjectList: function(projectId) {
         callService("serviceTmgetProjectList", {}, false,
-            function (res) {
+            function(res) {
                 var select = $('#txtTaskTypeProject');
                 select.html('<option></option>');
                 var obj = res.tbl[0].r;
@@ -27011,7 +27003,7 @@ TaskType.prototype = {
             })
     },
 
-    addTaskTypeAssigneeListToCombo: function (elementId) {
+    addTaskTypeAssigneeListToCombo: function(elementId) {
         var json = initJSON();
         json.kv.asc = "userPersonName";
         var that = this;
@@ -27023,7 +27015,7 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 var obj = res.tbl[0].r;
                 var select = $('#' + elementId);
                 select.html('');
@@ -27033,13 +27025,13 @@ TaskType.prototype = {
                     select.append(option);
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
 
-    addTaskTypeListToCombo: function (comboId) {
+    addTaskTypeListToCombo: function(comboId) {
         var json = initJSON();
         var that = this;
         var data = JSON.stringify(json);
@@ -27050,7 +27042,7 @@ TaskType.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $('#' + comboId).html('');
                 var obj = res.tbl[0].r;
                 $('#' + comboId).append($('<option></option')
@@ -27067,14 +27059,14 @@ TaskType.prototype = {
             }
         });
     },
-    taskTypeModalFn: function () {
+    taskTypeModalFn: function() {
         $('.newTaskTypeInsert').hide();
         $('.newTaskTypeInsertAfter').show();
         $('#txtTaskTypeName').val('');
         $('#txtTaskTypeId').val('');
         $('#txtTaskTypeDescription').val('');
     },
-    setEditable: function () {
+    setEditable: function() {
         var checked = $("input[id=ifSetProEditable]:checked").length;
         if (checked == '1') {
             $('#btnDeleteTaskType').attr("style", "pointer-events:default");
@@ -27086,40 +27078,40 @@ TaskType.prototype = {
 
 
 var BacklogHistory = {
-    clearBacklogHistoryFilter: function () {
+    clearBacklogHistoryFilter: function() {
         global_var.user_story_history_filter_current_index = '0';
         global_var.user_story_history_filter_date = "";
         global_var.user_story_history_filter = "";
         $('#us_history_filter_fromdate').val('');
         $('#us_history_filter_todate').val('');
     },
-    loadFilterComponents: function () {
+    loadFilterComponents: function() {
         BacklogHistory.getFilterHistoryCount();
         BacklogHistory.loadFilterHistoryType();
         BacklogHistory.loadFilterHistoryTeller();
     },
-    load: function () {
+    load: function() {
         BacklogHistory.loadHistorybody();
         BacklogHistory.setFilterPaginationRange();
     },
-    setFilterPaging: function (e) {
+    setFilterPaging: function(e) {
         global_var.user_story_history_filter_current_index = '0';
         BacklogHistory.load();
     },
-    setFilterPaginationRange: function () {
+    setFilterPaginationRange: function() {
         var s = global_var.user_story_history_filter_current_index;
         var e = parseFloat(global_var.user_story_history_filter_current_index) +
             parseFloat($('#us_history_filter_history_perpage').val())
         $('#usfilter_paginationResult').html("(" + s + '-' + e + ')');
     },
-    setFilterPreviousPaging: function (e) {
+    setFilterPreviousPaging: function(e) {
         var r = parseFloat(global_var.user_story_history_filter_current_index) -
             parseFloat($('#us_history_filter_history_perpage').val());
         r = parseFloat(r) < 0 ? '0' : r;
         global_var.user_story_history_filter_current_index = r;
         BacklogHistory.load();
     },
-    setFilterNextPaging: function (e) {
+    setFilterNextPaging: function(e) {
         var rc = parseFloat(global_var.user_story_history_filter_current_index) +
             parseFloat($('#us_history_filter_history_perpage').val());
         if (rc <= parseFloat($('#usfilter_paginationresult_rowcount').html())) {
@@ -27128,7 +27120,7 @@ var BacklogHistory = {
 
         BacklogHistory.load();
     },
-    setFilterDate: function () {
+    setFilterDate: function() {
         global_var.user_story_history_filter_date = '';
         var fromDate = '';
         if ($('#us_history_filter_fromdate').val()) {
@@ -27158,7 +27150,7 @@ var BacklogHistory = {
         }
         BacklogHistory.load();
     },
-    loadFilterHistoryTeller: function () {
+    loadFilterHistoryTeller: function() {
         var json = {
             kv: {}
         };
@@ -27176,7 +27168,7 @@ var BacklogHistory = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 $("#us_history_filter_users").html('');
                 var obj = res.tbl[0].r;
                 $("#us_history_filter_users").append($('<option></option>').val('%%%%').html('All'));
@@ -27196,12 +27188,12 @@ var BacklogHistory = {
                 $("#us_history_filter_users").find('option').first().html(
                     $("#us_history_filter_users").find('option').first().html() + " (" + s + ')');
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadFilterHistoryType: function () {
+    loadFilterHistoryType: function() {
         $("#us_history_filter_history_type").html('');
         var keys = Object.keys(history_type);
         $("#us_history_filter_history_type").append($('<option></option>').val('%%%%').html('All'));
@@ -27223,7 +27215,7 @@ var BacklogHistory = {
         $("#us_history_filter_history_type").find('option').first().html(
             $("#us_history_filter_history_type").find('option').first().html() + " (" + s + ')');
     },
-    getFilterHistoryCount: function () {
+    getFilterHistoryCount: function() {
         var id = global_var.current_backlog_id;
         if (!id) {
             return;
@@ -27243,15 +27235,15 @@ var BacklogHistory = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 global_var.backlog_history_type_count = res;
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadHistorybody: function () {
+    loadHistorybody: function() {
         var id = global_var.current_backlog_id;
         if (!id) {
             return;
@@ -27289,7 +27281,7 @@ var BacklogHistory = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 var rc = 0;
                 try {
                     BacklogHistory.loadDetails(res);
@@ -27298,12 +27290,12 @@ var BacklogHistory = {
                 } catch (e) {}
                 $('#usfilter_paginationresult_rowcount').html(rc);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    loadDetails: function (res) {
+    loadDetails: function(res) {
         $('#smb-details-history').find('.smb-details-history-body').html('');
         var ind = getIndexOfTable(res, "Response");
         var obj = res.tbl[ind].r;
@@ -27337,7 +27329,7 @@ var BacklogHistory = {
         }
         $('#smb-details-history').find('.smb-details-history-body').html(div.html());
     },
-    setHistoryTypeCountByResult: function (res) {
+    setHistoryTypeCountByResult: function(res) {
         var ind = getIndexOfTable(res, "historyGroupTable");
         var obj = res.tbl[ind].r;
         for (var i = 0; i < obj.length; i++) {
@@ -27345,11 +27337,11 @@ var BacklogHistory = {
             div.append(div1).append(div2).append(div3);
         }
     },
-    setFilterHistoryType: function (e) {
+    setFilterHistoryType: function(e) {
         global_var.user_story_history_filter += "historyType=" + $(e).val() + ";";
         BacklogHistory.load();
     },
-    setFilterUsers: function (e) {
+    setFilterUsers: function(e) {
         global_var.user_story_history_filter += "historyTellerId=" + $(e).val() + ";";
         BacklogHistory.load();
     },
@@ -27359,27 +27351,27 @@ var BacklogHistory = {
 var Analytics = {
     Main: {
 
-        ToggleProject: function (el) {
+        ToggleProject: function(el) {
             Analytics.Main.getAssigneeByProject(el);
             //            Analytics.Main.getLabelByProject(el);
             //            Analytics.Main.getSprintByProject(el);
             //            Analytics.Main.getReport(el);
         },
-        setFilterType: function (el, atype) {
+        setFilterType: function(el, atype) {
             global_var.analytic_filter.filterType = atype;
             Analytics.Main.loadReportDetailByType();
         },
-        generateInput4Report: function () {
+        generateInput4Report: function() {
 
         },
-        setDateInterval: function (interval) {
+        setDateInterval: function(interval) {
 
             var today = new Date();
             var last = new Date(today.getFullYear(), today.getMonth(), today.getDate() - interval);
             SetConvertedDate('analytics_filter_todate', ConvertedDateToStringDate(today));
             SetConvertedDate('analytics_filter_fromdate', ConvertedDateToStringDate(last));
         },
-        emptyMessage: function () {
+        emptyMessage: function() {
             return '<div style="padding:30px;text-align:center">' +
                 '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
                 '<h5> No User Stories have been found with selected criterias</h5>' +
@@ -27387,20 +27379,20 @@ var Analytics = {
                 '<p>Please Assign User Stories to the Sprint.</p>' +
                 '</div>'
         },
-        setReportInterval: function (int, el) {
+        setReportInterval: function(int, el) {
             $(".analytic-filter-interval").removeAttr('style');
             $(el).attr('style', 'color:red');
             global_var.analytic_filter.interval = int;
             Analytics.Main.getReport();
         },
-        getReport: function (e) {
+        getReport: function(e) {
             //            Analytics.Main.getReportMain(e);
         },
-        clearOutcomes: function () {
+        clearOutcomes: function() {
             $('#analytic_report_result').html(Analytics.Main.emptyMessage());
             $('#analytic_report_result_pivot').html(Analytics.Main.emptyMessage());
         },
-        getReportMain: function (e) {
+        getReportMain: function(e) {
             var prlist = Analytics.getCheckedProjects();
             if (prlist.length < 6) {
                 Toaster.showError("Please select project(s)!");
@@ -27434,13 +27426,13 @@ var Analytics = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: true,
-                success: function (res) {
+                success: function(res) {
                     global_var.analytic_filter.res = res;
                     Analytics.Main.loadReportDetailByType();
                 }
             });
         },
-        loadReportDetailByType: function () {
+        loadReportDetailByType: function() {
 
             if (global_var.analytic_filter.filterType === 'table') {
                 Analytics.Main.getReportDetails();
@@ -27453,7 +27445,7 @@ var Analytics = {
             }
 
         },
-        groupRes4Pivot: function () {
+        groupRes4Pivot: function() {
             var res = global_var.analytic_filter.res;
             var id4Input = getIndexOfTable(res, "Response");
             var obj = res.tbl[id4Input].r;
@@ -27502,7 +27494,7 @@ var Analytics = {
                 global_var.analytic_filter.pivot_cell[tarix][gr] = v;
             }
         },
-        groupRes4Histogram: function () {
+        groupRes4Histogram: function() {
             var res = global_var.analytic_filter.res;
             var id4Input = getIndexOfTable(res, "Response");
             var obj = res.tbl[id4Input].r;
@@ -27548,7 +27540,7 @@ var Analytics = {
                 global_var.analytic_filter.pivot_cell[tarix][gr] = v;
             }
         },
-        groupRes4Series: function () {
+        groupRes4Series: function() {
             var res = global_var.analytic_filter.res;
             var id4Input = getIndexOfTable(res, "Response");
             var obj = res.tbl[id4Input].r;
@@ -27594,7 +27586,7 @@ var Analytics = {
                 global_var.analytic_filter.pivot_cell[tarix][gr] = v;
             }
         },
-        getReportDetails4Histogram: function () {
+        getReportDetails4Histogram: function() {
             $('#analytic_report_result_histogram').html('');
             try {
                 Analytics.Main.groupRes4Histogram();
@@ -27659,7 +27651,7 @@ var Analytics = {
                 $('#analytic_report_result_histogram').html(Analytics.Main.emptyMessage());
             }
         },
-        getReportDetails4Series: function () {
+        getReportDetails4Series: function() {
             $('#analytic_report_result_series').html('');
             try {
                 Analytics.Main.groupRes4Series();
@@ -27724,7 +27716,7 @@ var Analytics = {
                 $('#analytic_report_result_series').html(Analytics.Main.emptyMessage());
             }
         },
-        clearCanvas: function (canvas) {
+        clearCanvas: function(canvas) {
             const ctx = canvas.getContext('2d');
             ctx.save();
             ctx.globalCompositeOperation = 'copy';
@@ -27734,7 +27726,7 @@ var Analytics = {
             ctx.stroke();
             ctx.restore();
         },
-        getReportDetails4Pivot: function () {
+        getReportDetails4Pivot: function() {
             $('#analytic_report_result_pivot').html('');
             try {
                 Analytics.Main.groupRes4Pivot();
@@ -27790,7 +27782,7 @@ var Analytics = {
                 $('#analytic_report_result_pivot').html(Analytics.Main.emptyMessage());
             }
         },
-        getReportDetails: function () {
+        getReportDetails: function() {
             $('#analytic_report_result').html('');
             try {
                 var res = global_var.analytic_filter.res;
@@ -27825,8 +27817,8 @@ var Analytics = {
                         //                        .append($('<td></td>').append(o.sumEstimatedHoursBug))
                         //                        .append($('<td></td>').append(o.sumEstimatedHoursRequest))
                         .append($('<td></td>').append(o.sumSpentHours))
-                    //                        .append($('<td></td>').append(o.sumSpentHoursBug))
-                    //                        .append($('<td></td>').append(o.sumSpentHoursRequest));
+                        //                        .append($('<td></td>').append(o.sumSpentHoursBug))
+                        //                        .append($('<td></td>').append(o.sumSpentHoursRequest));
                     tbody.append(tr);
                 }
                 table.append(this.getReportTableHeader());
@@ -27837,7 +27829,7 @@ var Analytics = {
             }
 
         },
-        getReportTableHeader: function () {
+        getReportTableHeader: function() {
 
             var tr = $('<tr></tr>')
                 .append($('<th></th>').append("Interval"))
@@ -27859,12 +27851,12 @@ var Analytics = {
                 //                    .append($('<th></th>').append('Estimated Hours For Bugs'))
                 //                    .append($('<th></th>').append('Estimated Hours For Request'))
                 .append($('<th></th>').append('Spent Hours'))
-            //                    .append($('<th></th>').append('Spent Hours For Bug'))
-            //                    .append($('<th></th>').append('Spent Hours For Request'));
+                //                    .append($('<th></th>').append('Spent Hours For Bug'))
+                //                    .append($('<th></th>').append('Spent Hours For Request'));
             var thead = $('<thead></thead>').append(tr);
             return thead;
         },
-        getAssigneeByProject: function (e) {
+        getAssigneeByProject: function(e) {
             $('#analytics_main_list_of_assignee >tbody').html('');
             var json = {
                 kv: {}
@@ -27883,7 +27875,7 @@ var Analytics = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: true,
-                success: function (res) {
+                success: function(res) {
                     Analytics.Main.getReport(e);
                     var obj = res.tbl[0].r;
                     var st = "";
@@ -27901,7 +27893,7 @@ var Analytics = {
                 }
             });
         },
-        getLabelByProject: function (e) {
+        getLabelByProject: function(e) {
             $('#analytics_main_list_of_labels >tbody').html('');
             var json = {
                 kv: {}
@@ -27920,7 +27912,7 @@ var Analytics = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: true,
-                success: function (res) {
+                success: function(res) {
                     Analytics.Main.getReport(e);
                     var obj = res.tbl[0].r;
                     var st = "";
@@ -27938,7 +27930,7 @@ var Analytics = {
                 }
             });
         },
-        getSprintByProject: function (e) {
+        getSprintByProject: function(e) {
             $('#analytics_main_list_of_sprints >tbody').html('');
             var json = {
                 kv: {}
@@ -27957,7 +27949,7 @@ var Analytics = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: true,
-                success: function (res) {
+                success: function(res) {
                     Analytics.Main.getReport(e);
                     var obj = res.tbl[0].r;
                     var st = "";
@@ -27975,7 +27967,7 @@ var Analytics = {
                 }
             });
         },
-        getTaskTypeByProject: function (e) {
+        getTaskTypeByProject: function(e) {
             $('#analytics_main_list_of_tasktypes >tbody').html('');
             var json = {
                 kv: {}
@@ -27994,7 +27986,7 @@ var Analytics = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: true,
-                success: function (res) {
+                success: function(res) {
                     Analytics.Main.getReport(e);
                     var obj = res.tbl[0].r;
                     var st = "";
@@ -28012,7 +28004,7 @@ var Analytics = {
                 }
             });
         },
-        loadProjects: function () {
+        loadProjects: function() {
             var json = {
                 kv: {}
             };
@@ -28029,7 +28021,7 @@ var Analytics = {
                 contentType: "application/json",
                 crossDomain: true,
                 async: true,
-                success: function (res) {
+                success: function(res) {
                     global_var.analytic_filter.project_list = {};
                     $('#analytics_main_list_of_projects >tbody').html('');
                     var obj = res.tbl[0].r;
@@ -28042,13 +28034,13 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
                         $('#analytics_main_list_of_projects >tbody').append(tr);
                     }
                 },
-                error: function () {
+                error: function() {
                     Toaster.showError(('somethingww'));
                 }
             });
         }
     },
-    show: function (e) {
+    show: function(e) {
 
 
         $('.main_body_class').hide();
@@ -28061,7 +28053,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         Analytics.Main.getTaskTypeByProject();
         Analytics.Main.setDateInterval('7');
     },
-    hide: function (e) {
+    hide: function(e) {
         Utility.addParamToUrl("mainview", "body");
         $('.main_body_class').show();
         $('#main_body_class_analytics').hide();
@@ -28069,7 +28061,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         ProjectPreview.hide();
         new UserStory().refreshCurrentBacklog();
     },
-    toggleSubmenu: function (e, menuName) {
+    toggleSubmenu: function(e, menuName) {
         $('.analytics-sub-menu').removeClass("us-sm-active");
         var sm = '#analytics-button-' + menuName;
         $(sm).addClass('us-sm-active');
@@ -28088,10 +28080,10 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             Analytics.loadProjects4SpentHours();
         }
     },
-    getSpentHoursReport: function () {
+    getSpentHoursReport: function() {
 
     },
-    loadProjects4SpentHours: function () {
+    loadProjects4SpentHours: function() {
         var json = {
             kv: {}
         };
@@ -28108,7 +28100,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 $('#analytics_filter_by_projects >tbody').html('');
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
@@ -28119,12 +28111,12 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
                     $('#analytics_filter_by_projects >tbody').append(tr);
                 }
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    generalCountByProject: function () {
+    generalCountByProject: function() {
         $('#analytics-details-general-project-list >tbody').html('');
         var json = {
             kv: {}
@@ -28141,15 +28133,15 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 Analytics.generalCountByProjectDetail(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    generalCountByProjectDetail: function (res) {
+    generalCountByProjectDetail: function(res) {
         $('#analytics-details-general-project-list >tbody').html('');
         try {
             var obj = res.tbl[0].r;
@@ -28179,7 +28171,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         }
 
     },
-    projectTaskCount: function () {
+    projectTaskCount: function() {
         $('#analytics-details-project-task-list >tbody').html('');
         var json = {
             kv: {}
@@ -28197,17 +28189,17 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 try {
                     Analytics.projectTaskCountDetails(res);
                 } catch (err) {}
             },
-            error: function () {
+            error: function() {
                 //                Toaster.showError(('somethingww'));
             }
         });
     },
-    projectTaskCountDetails: function (res) {
+    projectTaskCountDetails: function(res) {
         $('#analytics-details-project-task-list >tbody').html('');
         //        if (!res.tbl){
         //            return;
@@ -28235,7 +28227,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             //            console.log("error")
         }
     },
-    loadProjects: function () {
+    loadProjects: function() {
         var json = {
             kv: {}
         };
@@ -28252,15 +28244,15 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
                 Analytics.generateTableBody4MainProject(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    generateTableBody4MainProject: function (res) {
+    generateTableBody4MainProject: function(res) {
         $('#projectList4Analytics').html('');
         var obj = res.tbl[0].r;
         $('#projectList4Analytics').append($('<option></option')
@@ -28273,7 +28265,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             $('#projectList4Analytics').append(o);
         }
     },
-    loadUserStory: function () {
+    loadUserStory: function() {
         var json = {
             kv: {}
         };
@@ -28292,16 +28284,16 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function (res) {
+            success: function(res) {
 
                 Analytics.setUSLists(res);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    setUSLists: function (res) {
+    setUSLists: function(res) {
         $('#analytics-details-userstorylist-list >tbody').html('');
 
         var obj = res.tbl[0].r;
@@ -28321,7 +28313,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             $('#analytics-details-userstorylist-list >tbody').append(tr);
         }
     },
-    getSpentHoursReportList: function () {
+    getSpentHoursReportList: function() {
         $('#analytics-details-spenthours-table >tbody').html('');
         var projectId = Analytics.getCheckedProjects4Filter();
         var teller = Analytics.getCheckedAssignee4Filter();
@@ -28350,7 +28342,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 //                console.log(JSON.stringify(res));
 
                 $('#analytics-details-spenthours-table >tbody').html('');
@@ -28368,146 +28360,146 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             }
         });
     },
-    sortBy: function (e, val) {
+    sortBy: function(e, val) {
         $('.analytics_sort_by_arrows').attr('style', 'cursor: pointer;color:darked;font-size:14px;');
         $(e).attr('style', 'cursor: pointer;color:green;font-size:14px;');
         global_var.analytics_current_sort = val;
         Analytics.getSpentHoursReportList(this)
     },
-    getCheckedObjectsByClass: function (className) {
+    getCheckedObjectsByClass: function(className) {
         var st = "A" + "%IN%";
-        $('.' + className).each(function (e) {
+        $('.' + className).each(function(e) {
             if ($(this).is(":checked") && !st.includes($(this).val())) {
                 st += $(this).val() + "%IN%";
             }
         });
         return st;
     },
-    getCheckedProjects: function () {
+    getCheckedProjects: function() {
         return Analytics.getCheckedObjectsByClass('analytics_filter_checkbox_project');
     },
-    getCheckedAssignees: function () {
+    getCheckedAssignees: function() {
         return Analytics.getCheckedObjectsByClass('analytics_filter_checkbox_assignee');
     },
-    getCheckedLabels: function () {
+    getCheckedLabels: function() {
         return Analytics.getCheckedObjectsByClass('analytics_filter_checkbox_label');
     },
-    getCheckedSprints: function () {
+    getCheckedSprints: function() {
         return Analytics.getCheckedObjectsByClass('analytics_filter_checkbox_sprint');
     },
-    getCheckedTaskTypes: function () {
+    getCheckedTaskTypes: function() {
         return Analytics.getCheckedObjectsByClass('analytics_filter_checkbox_tasktype');
     },
-    getCheckedPriorities: function () {
+    getCheckedPriorities: function() {
         return Analytics.getCheckedObjectsByClass('analytics_filter_checkbox_priority');
     },
-    getCheckedGroupBy: function () {
+    getCheckedGroupBy: function() {
         var st = "";
-        $('.analytics_filter_checkbox_groupby').each(function (e) {
+        $('.analytics_filter_checkbox_groupby').each(function(e) {
             if ($(this).is(":checked") && !st.includes($(this).val())) {
                 st += $(this).val() + ",";
             }
         });
         return st;
     },
-    getCheckedProjects4Filter: function () {
+    getCheckedProjects4Filter: function() {
         var st = "";
-        $('.analytics_filter_checkbox_project').each(function (e) {
+        $('.analytics_filter_checkbox_project').each(function(e) {
             if ($(this).is(":checked") && !st.includes($(this).val())) {
                 st += $(this).val() + "%IN%";
             }
         });
         return st;
     },
-    getCheckedAssignee4Filter: function () {
+    getCheckedAssignee4Filter: function() {
         var st = "";
-        $('.analytics_filter_checkbox_assignee').each(function (e) {
+        $('.analytics_filter_checkbox_assignee').each(function(e) {
             if ($(this).is(":checked") && !st.includes($(this).val())) {
                 st += $(this).val() + "%IN%";
             }
         });
         return st;
     },
-    checkAllProjects: function (e) {
-        $('.analytics_filter_checkbox_project').each(function () {
+    checkAllProjects: function(e) {
+        $('.analytics_filter_checkbox_project').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_project').first().change();
     },
-    uncheckAllProjects: function (e) {
-        $('.analytics_filter_checkbox_project').each(function () {
+    uncheckAllProjects: function(e) {
+        $('.analytics_filter_checkbox_project').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_project').first().change();
     },
-    checkAllLabels: function (e) {
-        $('.analytics_filter_checkbox_label').each(function () {
+    checkAllLabels: function(e) {
+        $('.analytics_filter_checkbox_label').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_label').first().change();
     },
-    uncheckAllLabels: function (e) {
-        $('.analytics_filter_checkbox_label').each(function () {
+    uncheckAllLabels: function(e) {
+        $('.analytics_filter_checkbox_label').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_label').first().change();
     },
-    checkAllSprints: function (e) {
-        $('.analytics_filter_checkbox_sprint').each(function () {
+    checkAllSprints: function(e) {
+        $('.analytics_filter_checkbox_sprint').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_label').first().change();
     },
-    uncheckAllSprints: function (e) {
-        $('.analytics_filter_checkbox_sprint').each(function () {
+    uncheckAllSprints: function(e) {
+        $('.analytics_filter_checkbox_sprint').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_sprint').first().change();
     },
-    checkAllTaskTypes: function (e) {
-        $('.analytics_filter_checkbox_tasktype').each(function () {
+    checkAllTaskTypes: function(e) {
+        $('.analytics_filter_checkbox_tasktype').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_tasktype').first().change();
     },
-    uncheckAllTaskTypes: function (e) {
-        $('.analytics_filter_checkbox_tasktype').each(function () {
+    uncheckAllTaskTypes: function(e) {
+        $('.analytics_filter_checkbox_tasktype').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_tasktype').first().change();
     },
-    checkAllPriority: function (e) {
-        $('.analytics_filter_checkbox_priority').each(function () {
+    checkAllPriority: function(e) {
+        $('.analytics_filter_checkbox_priority').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_priority').first().change();
     },
-    uncheckAllPriority: function (e) {
-        $('.analytics_filter_checkbox_priority').each(function () {
+    uncheckAllPriority: function(e) {
+        $('.analytics_filter_checkbox_priority').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_priority').first().change();
     },
-    checkAllGroupBy: function (e) {
-        $('.analytics_filter_checkbox_groupby').each(function () {
+    checkAllGroupBy: function(e) {
+        $('.analytics_filter_checkbox_groupby').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_groupby').first().change();
     },
-    uncheckAllGroupBy: function (e) {
-        $('.analytics_filter_checkbox_groupby').each(function () {
+    uncheckAllGroupBy: function(e) {
+        $('.analytics_filter_checkbox_groupby').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_groupby').first().change();
     },
-    checkAllAssignees: function (e) {
-        $('.analytics_filter_checkbox_assignee').each(function () {
+    checkAllAssignees: function(e) {
+        $('.analytics_filter_checkbox_assignee').each(function() {
             $(this).prop('checked', true);
         });
         $('.analytics_filter_checkbox_assignee').first().change();
     },
-    uncheckAllAssignees: function (e) {
-        $('.analytics_filter_checkbox_assignee').each(function () {
+    uncheckAllAssignees: function(e) {
+        $('.analytics_filter_checkbox_assignee').each(function() {
             $(this).prop('checked', false);
         });
         $('.analytics_filter_checkbox_assignee').first().change();
@@ -28516,7 +28508,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
 
 
 var ProjectPreview = {
-    loadBacklog: function () {
+    loadBacklog: function() {
         var keys = SACore.GetBacklogKeys();
         for (var n = 0; n < keys.length; n++) {
             var k = keys[n];
@@ -28526,7 +28518,7 @@ var ProjectPreview = {
             }
         }
     },
-    setEmptyMessage4ProjectViev: function () {
+    setEmptyMessage4ProjectViev: function() {
         var st = '<div  style="padding:30px;text-align:center;">';
         st += '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>';
         st += "<h5> No User Story have been found or created on this project</h5>";
@@ -28534,10 +28526,10 @@ var ProjectPreview = {
         st += "</div>";
         return st;
     },
-    show: function () {
+    show: function() {
         this.showDetails();
     },
-    showDetails: function () {
+    showDetails: function() {
         $('#projectpreview_sidebar_id_main').html("");
         var res = SABacklogLabel.toJSONAsBacklogLabel();
         if (res.tbl.length > 0) {
@@ -28546,10 +28538,10 @@ var ProjectPreview = {
             ProjectPreview.getAllBacklogList()
         }
     },
-    hide: function () {
+    hide: function() {
         $('#main_body_class_projectpreview').hide();
     },
-    getLabelList: function () {
+    getLabelList: function() {
         if (!global_var.current_project_id) {
             return;
         }
@@ -28570,7 +28562,7 @@ var ProjectPreview = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 var r = res;
                 if (r.tbl.length === 0) {
                     that.getAllLabelListDetails();
@@ -28579,12 +28571,12 @@ var ProjectPreview = {
                 }
 
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
     },
-    getAllLabelListDetails: function () {
+    getAllLabelListDetails: function() {
         $('#projectpreview_sidebar_id_main').html("");
         for (var n = 0; n < 1; n++) {
             var a = $("<a></a>")
@@ -28603,7 +28595,7 @@ var ProjectPreview = {
             $('#menu1').find('a').first().click();
         }
     },
-    getAllBacklogList: function () {
+    getAllBacklogList: function() {
         $('#projectpreview_sidebar_id_main').html("");
         try {
             var a = $("<a></a>")
@@ -28630,7 +28622,7 @@ var ProjectPreview = {
         $('.um-item-list').first().click();
 
     },
-    getGroupLabelDetails: function (res) {
+    getGroupLabelDetails: function(res) {
         $('#projectpreview_sidebar_id_main').html("");
         try {
             var st = "";
@@ -28671,7 +28663,7 @@ var ProjectPreview = {
         //        $('#menu1').find('a').first().click();
         $('.um-item-list').first().click();
     },
-    getLabelListDetails: function (res) {
+    getLabelListDetails: function(res) {
         $('#projectpreview_sidebar_id_main').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
@@ -28691,7 +28683,7 @@ var ProjectPreview = {
             $('#menu1').find('a').first().click();
         }
     },
-    getBacklogListbyLabel: function (labelId, n) {
+    getBacklogListbyLabel: function(labelId, n) {
         if (!labelId) {
             return;
         }
@@ -28712,16 +28704,16 @@ var ProjectPreview = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 div = that.getBacklogListbyLabelDetails(res, n);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         return div;
     },
-    getAllBacklogListbyLabel: function () {
+    getAllBacklogListbyLabel: function() {
 
         var json = {
             kv: {}
@@ -28740,16 +28732,16 @@ var ProjectPreview = {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 div = that.getBacklogListbyLabelDetails(res, 1);
             },
-            error: function () {
+            error: function() {
                 Toaster.showError(('somethingww'));
             }
         });
         return div;
     },
-    getAllBacklogListDetails: function () {
+    getAllBacklogListDetails: function() {
         var div1 = $('<div></div>');
         var div = $('<div></div>')
             .attr('id', "menu1")
@@ -28782,7 +28774,7 @@ var ProjectPreview = {
         div1.append(div);
         return div1.html();
     },
-    getBacklogListbyLabelDetails4View: function (labelId, n) {
+    getBacklogListbyLabelDetails4View: function(labelId, n) {
         var div1 = $('<div></div>');
         var div = $('<div></div>')
             .attr('id', "menu" + (n + 1))
@@ -28815,7 +28807,7 @@ var ProjectPreview = {
         div1.append(div);
         return div1.html();
     },
-    getBacklogListbyLabelDetails: function (res, n) {
+    getBacklogListbyLabelDetails: function(res, n) {
         var div1 = $('<div></div>');
         var div = $('<div></div>')
             .attr('id', "menu" + (n + 1))
@@ -28832,14 +28824,14 @@ var ProjectPreview = {
         div1.append(div);
         return div1.html();
     },
-    getGUIPage: function (backlogId) {
+    getGUIPage: function(backlogId) {
 
         var div = this.getBacklogDocument(backlogId);
         $('#projectpreview_gui_design_new').html('');
         $('#projectpreview_gui_design_new').append(div);
 
     },
-    getBacklogDocument_old: function (backlogId) {
+    getBacklogDocument_old: function(backlogId) {
         var div = $('<div>');
         div.append(this.getGUIPage4Header(backlogId));
         div.append(this.getGUIPage4InputTable(backlogId));
@@ -28849,14 +28841,14 @@ var ProjectPreview = {
         this.getGUIPage4NotifiedLabel(backlogId, div);
         return div;
     },
-    getBacklogDocument: function (backlogId) {
+    getBacklogDocument: function(backlogId) {
         var div = StoryCard.Get(backlogId)
         return div;
     },
-    printDocument: function () {
+    printDocument: function() {
         printById('texnikitapshiriq_body');
     },
-    getGUIPage4Header: function (backlogId) {
+    getGUIPage4Header: function(backlogId) {
         return $('<div class="col-12">')
             .css("background-color", "#2C73B4")
             .css("margin-top", "30px")
@@ -28864,7 +28856,7 @@ var ProjectPreview = {
                 .append(SACore.GetBacklogname(backlogId))
                 .append(" ( #" + SACore.GetBacklogOrderNo(backlogId) + ")"))
     },
-    getGUIPage4NotifiedLabel: function (backlogId, div) {
+    getGUIPage4NotifiedLabel: function(backlogId, div) {
         var key = SACore.GetBaklogNotifiedLabel(backlogId);
         var f = true;
         for (var i = 0; i < key.length; i++) {
@@ -28907,7 +28899,7 @@ var ProjectPreview = {
         }
     },
 
-    getGUIPage4GUIDesign: function (backlogId) {
+    getGUIPage4GUIDesign: function(backlogId) {
         var st = "";
         var res = SAInput.toJSONByBacklog(backlogId);
         var divRoot = $('<div class="col-12">');
@@ -28929,7 +28921,7 @@ var ProjectPreview = {
         return divRoot;
     },
 
-    getGUIPage4InputTable: function (backlogId) {
+    getGUIPage4InputTable: function(backlogId) {
         var div = $('<div>');
         var res = SAInput.toJSONByBacklog(backlogId);
         var ind = 0;
@@ -28945,7 +28937,7 @@ var ProjectPreview = {
         return div;
     },
 
-    getGUIPage4Attachment: function (backlogId) {
+    getGUIPage4Attachment: function(backlogId) {
 
         var res = SACore.GetBaklogFileUrls(backlogId).split(",");
         var resId = SACore.GetBaklogFileUrlIds(backlogId).split(",");
@@ -28966,7 +28958,7 @@ var ProjectPreview = {
         div1.append(div);
         return div1.html();
     },
-    getGUIPage4AttachedImage: function (backlogId) {
+    getGUIPage4AttachedImage: function(backlogId) {
         var res = SACore.GetBaklogFileUrls(backlogId).split(",");
         var resId = SACore.GetBaklogFileUrlIds(backlogId).split(",");
         var div = $('<div class="row guiviewmain">');
@@ -28988,7 +28980,7 @@ var ProjectPreview = {
         return div1.html();
     },
 
-    getGUIPageOld: function (el, backlogId) {
+    getGUIPageOld: function(el, backlogId) {
         var backlog = new UserStory().getBacklogCoreInfoById(backlogId);
         var canvasCSS = Component.ReplaceCSS(backlog.kv.param1);
         $('#projectpreview_gui_design').attr('style', canvasCSS);
@@ -29124,11 +29116,11 @@ function deletePDescAll(ids) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         },
-        error: function () {
+        error: function() {
             Toaster.showError(('somethingww'));
         }
     });
@@ -29157,10 +29149,10 @@ function setColoredToPDescAll(ids, color) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             new UserStory().getBacklogDesc();
         },
-        error: function () {
+        error: function() {
             Toaster.showError(('somethingww'));
         }
     });
@@ -29189,7 +29181,7 @@ function setColoredToInputDesc(el, ids, color) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             SAInputDesc.updateInputDescriptionByRes(res);
 
             if (color) {
@@ -29202,7 +29194,7 @@ function setColoredToInputDesc(el, ids, color) {
                     .removeAttr('style');
             }
         },
-        error: function () {
+        error: function() {
             Toaster.showError(('somethingww'));
         }
     });
