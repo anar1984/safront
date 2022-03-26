@@ -20973,6 +20973,7 @@ function addInputDescListToTaskNew_setComment_event() {
             var st = "";
 
             var name = SAInputDesc.GetDetails($(this).attr("data-id"));
+            var inpName = SAInput.GetInputName($(this).closest('tr').attr("inid"));
             if (name.startsWith('fn_event(')) {
                 var item = $(this).parent().find(".desc-item-input")
                 if (item.find(".api-name").length > 0) {
@@ -20985,7 +20986,7 @@ function addInputDescListToTaskNew_setComment_event() {
             var col = $("<div class='col-12 item-input-add-task'>")
                 .append(`<label class='font-weight-bold' >${name}</label>`)
 
-                .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : " + name))
+                .append($("<input class='form-control' row='3'>").val(inpName+" : " + name))
 
                 .append($("<textarea class='form-control' row='3'>").val(st))
             $("#addNewDetailedTaskModal_list").append(col);
@@ -21008,11 +21009,18 @@ function addInputListToTaskNew_setComment_event() {
                 var descId = SAInput.DescriptionId[$(this).val()];
                 for (var i in descId) {
                     var id = descId[i];
-
+                    
                     var desc = fnline2Text(SAInputDesc.GetDetails(id));
+                    if (desc.startsWith('fn_event(')) {
+                        var item = desc.split('|r|')
+                        if (item[2] === 'Api') {
+                            desc = item[1] + " Call API : " + item[4] + " " +item[3];
+                        } else {
+                            desc = item[1] + " " + item[3];
+        
+                        }
+                    }
                     st += (i + 1) + ")" + "- " + desc + '\n';
-
-
                 }
             } catch (err) {}
             var col = $("<div class='col-12 item-input-add-task'>")

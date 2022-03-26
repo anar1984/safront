@@ -251,10 +251,14 @@ var cmpList = {
     },
     tablePagintion: {
         Init: function (elm, rowCount) {
+              
             var elm = $(elm);
                var attr  =  $(elm).attr('data-pag-id')
             if (elm.prop('tagName') === 'TABLE') {
                 $("#paginiton_id_"+attr).remove();
+                if(rowCount=="0"||!rowCount){
+                    return
+                }
                 var tbid = makeId(10);
                 $(elm).attr("data-pag-id", tbid);
                 $(elm).addClass("selectableTable");

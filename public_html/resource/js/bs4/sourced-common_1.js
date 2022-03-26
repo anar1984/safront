@@ -7445,7 +7445,7 @@ UserStory.prototype = {
 
         }
         $('#generalview_input_list').append(table);
-
+         this.getEventListApi();
         $(".description-style-background").sortable({
             handle: ".iconDrag",
             update: function (event, ui) {
@@ -7455,7 +7455,29 @@ UserStory.prototype = {
         });
         resetAllEditStoryCard();
     },
+    getEventListApi:function (params) {
+             var data   = {}; 
+             data.fkBacklogId =  global_var.current_backlog_id;
 
+        callApi('22032411284000205845', data, true, function (res) {
+                          console.log(res);
+            res.tbl[0].r.map((o) => {
+                
+                    var block = $('.story-card-input-line-tr-2[inid="'+o.fkBacklogInputId+'"]');
+                    var hr  =  block.find('hr#hr-4-desc-section');
+                    if(hr.length<1){
+                        block.find('td.desc-table-list-for-multiple').prepend(`<hr id="hr-4-desc-section" style="margin:3px 1px;">`)
+                    }
+                    var div  = $('<div>') 
+                                  .append(`<b>Related event API</b> : ${o.eventInputName} -> `)
+                                 .append(`<a href="#" class="api-name" style="color:black;" onclick="new UserStory().redirectUserStoryCore('${o.fkApiId}')"> <i><b> ${o.apiName} </b></i></a>`)
+                                 .append(`<a class="api-id" style="color:black;">(${o.fkApiId})</a>`)
+                                .append(`<i> => ${o.relatedApiName}</i>`)
+                   hr.before(div);
+            })
+              
+        })
+    },
     getStoryCardOutputList: function (res) {
 
         var obj = "";
@@ -22938,7 +22960,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
 
             if (selectFromInput || sendToInput || selectFromDBField)
-                st += "<hr style='margin:3px 1px;'>";
+                st += "<hr id='hr-4-desc-section' style='margin:3px 1px;'>";
 
             if (backlogNameRelated) {
                 st += '<span>';
