@@ -24489,6 +24489,8 @@ function printClickGetScName() {
             
         }
         var Aa=readyHtmlForPrint(bgNames);
+        // $('.task-panel').html('')
+        // $('.task-panel').append(Aa);
          var  block  =  $("<div style='width:100%;'>").append(Aa);
 
         var newWin=window.open('','Print-Window');
@@ -24496,45 +24498,56 @@ function printClickGetScName() {
         newWin.document.write(`<html>
         <head>
           <style>
-                   .anaDivForPrint {
-                    width: 100%;
+                  .anaDivForPrint {
+                    width: 100%;                    
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: space-between;
                  }
 
-                .childDivForPrint {
-                    width: 45%;
-                    height: 15vh;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: white;
-                    font-size: 20px;
-                    padding: 10px;
-                    margin-top:5px;
+                .childDivForPrint { 
+                    padding-top:50px; 
+                    padding-bottom:20px;  
+                    padding-left:20px; 
+                    padding-left:20px;                
+                    font-size: 35px;                   
+                    width:45%;
+                    heigth:15vh;                                     
                     border: 1px solid black;
+                }
+                .spanForPrint{                                      
+                    overflow: hidden;
+                    margin-top:10px;
+                    margin-bottom:10px;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+
                 }
          </style>
         </head>
         <body onload="window.print()">${block.html()}</body></html>`);
 
         newWin.document.close();
-
-        setTimeout(function(){newWin.close();},10);
+        setTimeout(function(){newWin.close();},10);           
             
-            // window.print();
             })
 
 };
 function readyHtmlForPrint(dt){
 
-    var element=$(`<div class='anaDivForPrint'></div>`);
+    var element=$(`<table></table>`);
+    
 
     for(var i=0;i<dt.length;i++){
 
-        element.append(`<div class='childDivForPrint'>${dt[i]}</div>`)
-
+        element.append(`<tr>
+        <td class='childDivForPrint'><span class="spanForPrint">${dt[i]}</span></td>
+         <td class='childDivForPrint'><span class="spanForPrint">${(dt[i+1])?dt[i+1]:''}</span></td>
+        <tr>`)
+    i++;
     }
     return element;
+
 }
