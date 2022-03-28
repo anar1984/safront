@@ -10,6 +10,92 @@ and open the template in the editor.
     Author     : anar.rustamov
 */
 
+.containerDbb {
+    min-width: 100%;
+}
+
+.font20px {
+    font-size: 20px;
+}
+
+.section_box1Dbb {
+    position: relative;
+    min-width: 100%;
+    height: auto;
+    background-color: #f1f1f1;
+    padding: 0px 40px 0px 40px;
+}
+
+.section_box2Dbb {
+    position: relative;
+    margin-top: 30px;
+    min-width: 100%;
+    height: auto;
+    background-color: #f1f1f1;
+    padding: 0px 40px 0px 40px;
+}
+
+.section_where {
+    position: relative;
+    margin-top: 30px;
+    min-width: 100%;
+    height: auto;
+    background-color: #f1f1f1;
+    padding-bottom: 70px;
+    padding: 0px 40px 0px 40px;
+}
+
+.inputContainerDbb {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.cs-input-boxDbb {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.deyerCss {
+    height: 37px;
+    border-color: #595959;
+    border-radius: 5px;
+    width: 100px;
+    padding-left: 5px;
+}
+
+.cs-input-boxDbb .btn {
+    background: #595959 !important;
+    border-radius: 5px !important;
+    color: #e6dede !important;
+}
+
+.OPerationCss .btn {
+    width: 70px;
+    height: 37px;
+}
+
+.OPerationCss {
+    width: 70px !important;
+}
+
+.headBtnDbb {
+    border: none;
+    background: #515074;
+    width: 40px;
+    height: 37px;
+    border-radius: 5px;
+    margin-top: 21px;
+    color: white;
+}
+
+.tableBodyDb {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 .anaDivForPrint {
     width: 100%;
     display: flex;
@@ -57,11 +143,6 @@ and open the template in the editor.
 .flowListColumnn:hover .btnMEnuAcan,
 .flowListColumnn:hover .btnMEnuAcanDropDow {
     visibility: visible;
-}
-
-.flowListSpdivZad {
-    /* border-bottom: 1px solid #595959;
-    border-radius: 0px 0px 0px 10px; */
 }
 
 .mapListBorder {

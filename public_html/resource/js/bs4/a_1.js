@@ -14891,6 +14891,16 @@ $(document).on('click', '.loadEntityDiagram', function(evt) {
         global_var.doc_actual_zoom = 65;
     });
 });
+// load Sql Generator
+$(document).on('click', '.loadSqlGenerator', function (evt) {   
+    var f = 'generator';
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadSqlGenerator";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    SqlGeneratorClass.loader();    
+   // $('#mainBodyDivForAll').html(html_string);
+});
+// 
 $(document).on('click', '.loadSourceActivity', function(evt) {
     var f = 'sourceactivity';
     clearManualProjectFromParam();

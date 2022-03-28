@@ -1153,3 +1153,259 @@ var SQLBoardTab = {
         },
     },
 };
+
+const SqlGeneratorClass = {
+    loader: function () {
+        $('#mainBodyDivForAll').html(this.genBlock());
+        $('.selectpicker').selectpicker('refresh');
+        this.loadDbName($('select.SqlGenloadDB'));
+      
+    },
+    genBlock: function (params) {
+        return `
+                <div class="containerDbb"> 
+                   ${this.genSectionSelect()}
+                   ${this.genSectionFrom()}
+                   ${this.genSectionWhere()}
+                </div> 
+                `
+    },
+    genSectionSelect: function () {
+        return `
+                    <div class="section_box1Dbb">
+                    <div class="font20px"><span>Select</span></div>
+                    <!-- head -->
+                    <div class="inputContainerDbb">
+                        <div class="cs-input-boxDbb">
+                            <span>Database Name</span>
+                            <select onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB" id="sqlgenSelectDbNAme" data-live-search="true" data-size="6"
+                                data-show-subtext="true">
+                        
+                            </select>
+                        </div>
+                        <div class="cs-input-boxDbb">
+                            <span>Table Name</span>
+                            <select onchange='SqlGeneratorClass.loadFieldName(this)' class="selectpicker select sqlgenTableNameSelect" id="sqlgenSelectTBName" data-live-search="true" data-size="6"
+                                data-show-subtext="true">
+
+                            </select>
+                        </div>
+                        <div class="cs-input-boxDbb">
+                            <span>Field Name</span>
+                            <select class="selectpicker select sqlgenFieldNameSelect" data-actions-box='true' multiple id="sqlgenSelectFieldName" data-live-search="true" data-size="6"
+                                data-show-subtext="true">
+
+                            </select>
+                        </div>
+                        <div class="cs-input-boxDbb">
+                            <button onclick='SqlGeneratorClass.setTableSelect()' class="headBtnDbb"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <!-- body -->
+                    <div class="tableBodyDb">
+                        <table class="table table-hover table-striped" id='sqlgenSelectTable'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Database Name</th>
+                                    <th scope="col">Table Name</th>
+                                    <th scope="col">Field Name</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>                   
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+        `
+    },
+    genSectionFrom: function () {
+        return `
+             <div class="section_box2Dbb">
+             <div class="font20px"><span>From</span></div>
+                    <!-- head -->
+                    <div class="inputContainerDbb">
+                        <div class="cs-input-boxDbb">
+                            <span>Database Name</span>
+                            <select onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB" id="sqlgeneratorDb2" data-live-search="true" data-size="6"
+                                data-show-subtext="true">
+                        
+                            </select>
+                        </div>
+                        <div class="cs-input-boxDbb">
+                            <span>Table Name</span>
+                            <select class="selectpicker select sqlgenTableNameSelect" id="" data-live-search="true" data-size="6"
+                                data-show-subtext="true">
+
+                            </select>
+                        </div>            
+                        <div class="cs-input-boxDbb">
+                            <button class="headBtnDbb"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <!-- body -->
+                    <div class="tableBodyDb">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Database Name</th>
+                                    <th scope="col">Table Name</th>                      
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>                  
+                            
+                            </tbody>
+                        </table>
+                    </div>
+
+        </div>
+
+        `
+    },
+    genSectionWhere: function () {
+        return ` <div class="section_where">
+        <!-- head -->
+        <div class="font20px"><span>Where</span></div>
+        <div class="inputContainerDbb">
+            <div class="cs-input-boxDbb">
+                <span>Database Name</span>
+                <select onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB"  id="" data-live-search="true" data-size="6"
+                    data-show-subtext="true">               
+                </select>
+            </div>
+            <div class="cs-input-boxDbb">
+                <span>Table Name</span>
+                <select onchange='SqlGeneratorClass.loadFieldName(this)' class="selectpicker select sqlgenTableNameSelect"  id="" data-live-search="true" data-size="6"
+                    data-show-subtext="true">
+                </select>
+            </div>
+            <div class="cs-input-boxDbb">
+                <span>Field Name</span>
+                <select data-actions-box='true' class="selectpicker select sqlgenFieldNameSelect" multiple id="" data-live-search="true" data-size="6"
+                    data-show-subtext="true">
+                </select>
+            </div>
+            <div class="cs-input-boxDbb">
+                <span>Operation</span>
+                <select class="selectpicker OPerationCss"  id="" title=" ">
+                    <option value=""> </option>
+                    <option value="beraber"><div>=</div></option>
+                    <option value="beraber"><div>></div></option>
+                    <option value="beraber"><div><</div></option>
+                </select>
+            </div>
+            <div class="cs-input-boxDbb">
+                <span>Dəyər</span>
+                <input class="deyerCss" type="text">
+            </div>
+             <div class="cs-input-boxDbb">
+                <button class="headBtnDbb"><i class="fas fa-plus"></i></button>
+            </div>            
+        </div>
+        <!-- body -->
+        <div class="tableBodyDb">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Database Name</th>
+                        <th scope="col">Table Name</th>
+                        <th scope="col">Field Name</th>
+                        <th scope="col">Operation</th>
+                        <th scope="col">Deyer</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>             
+                  
+                </tbody>
+            </table>
+        </div>
+        </div>`
+    },
+    loadDbName: function (el) {      
+      
+        callService('serviceTmGetDbList', {}, true, function (res) {
+            var db = res.tbl[0].r;
+            for (var i = 0; i < db.length; i++) {
+                var o = db[i];
+                el.append($('<option>')
+                    .val(o.id)
+                    .text(o.dbName)
+                )
+            }
+            el.selectpicker('refresh');
+        })
+    },
+    loadTableName: function (el) {         
+       var select= $(el).closest('.inputContainerDbb').find('select.sqlgenTableNameSelect');        
+        select.empty();
+       select.selectpicker('refresh');
+        var data = {};
+        data.dbId = $(el).val();
+         callService('serviceTmGetDbTableListForPopup', data, true, function (res) {
+             var db = res.tbl[0].r;
+             for (var i = 0; i < db.length; i++) {
+                 var o = db[i];
+                 select.append($('<option>')
+                     .val(o.id)
+                     .text(o.tableName)
+                 )
+             }
+             select.selectpicker('refresh');
+         })
+
+    },
+    loadFieldName: function (el) {
+        var select = $(el).closest('.inputContainerDbb').find('select.sqlgenFieldNameSelect');
+        
+          select.empty();
+          select.selectpicker('refresh');
+          var data = {};
+          data.tableId = $(el).val();
+          callService('serviceTmGetFieldByTableId', data, true, function (res) {
+              var db = res.tbl[0].r;
+              for (var i = 0; i < db.length; i++) {
+                  var o = db[i];
+                  select.append($('<option>')
+                      .val(o.fieldName)
+                      .text(o.fieldName)
+                  )
+              }
+              select.selectpicker('refresh');
+          })
+    },
+    setTableSelect: function () {
+         var table = $('#sqlgenSelectTable tbody');
+        var DbName = $('#sqlgenSelectDbNAme option:selected').text();
+        var TbName = $('#sqlgenSelectTBName option:selected').text();
+        var FdName = $('#sqlgenSelectFieldName').val();
+        for (let i = 0; i < FdName.length; i++) {
+            const filed = FdName[i];            
+            table.append(`
+            <tr>
+            <td>${i+1}</td>
+            <td>${DbName}</td>
+            <td>${TbName}</td>
+            <td>${filed}</td>
+            <td><a onclick='SqlGeneratorClass.selectDeleteTable(this)' href="#">delete</a></td>
+            </tr>
+           `)            
+        }
+    },
+    selectDeleteTable: function (el) {
+        $(el).closest('tr').remove();         
+
+        var tb = $('#sqlgenSelectTable tbody tr');
+        tb.each(function (index) {
+            var td = $(this).find('td').first();
+            td.text('');
+            td.text(index+1);
+        })
+    }
+
+}
