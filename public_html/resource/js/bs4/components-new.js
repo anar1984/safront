@@ -1,5 +1,8 @@
 'use strict';
-var cmpList = {
+ const global_const ={
+     
+ };
+const cmpList = {
     userBlock: {
         Init: function (elm, type,title,options) {
                var that  = this
@@ -290,8 +293,8 @@ var cmpList = {
                   <div class="float-right task-list-pagination_btns d-flex">
                   <div class="task-list-hid cs-input-group m-0 mr-2">
                         <select class="custom-select-table-for d-none" title='hesab' id="table-selected-row-details-${tbid}">
-                                <option selected='selected' class="count"> </option>
-                                <option class="sum"></option>
+                                <option selected='selected'  class="count"> </option>
+                                <option selected='selected' class="sum"></option>
                                 <option class="avarage"> </option>
                                 <option class="min"></option>
                                 <option class="max"></option>      
@@ -405,7 +408,16 @@ var cmpList = {
         },
         export:function (elm,tbid) {
             var table  =  $('table[data-pag-id="'+tbid+'"]').clone();
-            var type  =  $(elm).attr('data-st')
+            var type  =  $(elm).attr('data-st');
+               var img  =  table.find('img');
+                   img.each(function () {
+                       var src  = $(this).attr('src');
+                       var name  =  $(this).attr('alt')
+                           var a  =  $("<a>")
+                                     .attr('href',src)
+                                     .text(name?name:"picture");
+                     $(this).replaceWith(a);
+                  })
             if(type==='all'){
               
                 table.find("thead .filter-table-row-header-tr").remove();
@@ -424,17 +436,40 @@ var cmpList = {
                 table.find("thead tr td").remove();
               
             }else{
-                var indexList  = [];
-                var td = table.find("tbody>tr>td");
-                td.each(function () {
-                    if ($(this).hasClass('selected')) {
-                        indexList.push($(this).index());
-                    }else{
+              
+                var tr = table.find("tbody>tr");
+                tr.each(function () {
+                    var selected = $(this).find('.selected')
+                    if (selected.length<1) {
                         $(this).remove();
                     }
                 })
+                var indexList  = [];
+                table.find("tbody>tr>td:first-child").addClass('selected');
+                var td = table.find("tbody>tr>td");     
+                td.each(function () {
+                    if ($(this).hasClass('selected')) {
+            
+                        indexList.push($(this).index());
+                    }else{
+                        $(this).addClass('removed-class');
+                    }
+                })
+             
+                var th = table.find("thead:first-child tr th");
+                th.each(function () {
+
+                    var indext  =  $(this).index();
+                    if (indexList.includes(indext)) {
+                     
+                    }else{
+                        $(this).addClass('removed-class');
+                    }
+                })
+                table.find(".removed-class").remove();
+
             }
-            table.tblToExcel(); 
+            table.tblToExcel();
         }
 
     },
@@ -782,7 +817,7 @@ var cmpList = {
                 var title = data.title?data.title:'Are You Sure?';
                 var acceptButton = data.confrimButton?data.confrimButton:lang_task.windowUpdateTask.yes;
                 var cancelButton = data.cancelButton?data.cancelButton:lang_task.windowUpdateTask.no;
-                var buttonConfrim = $('<button type="button" class="btn cs-nextsave-btn w-50 mr-2">').html(acceptButton).click(function (e) {
+                var buttonConfrim = $('<button type="button" class="btn cs-nextsave-btn w-50 mr-2">').text(acceptButton).click(function (e) {
                      var res =  data.confirmAction();
                     if(res){
                         data.confirmAction();
@@ -790,7 +825,7 @@ var cmpList = {
                     }
                     that.close(this);
                 });
-                var buttonCancel = $('<button type="button" class="btn cs-nextsave-btn w-50">').html(cancelButton).click(function (e) {
+                var buttonCancel = $('<button type="button" class="btn cs-nextsave-btn w-50">').text(cancelButton).click(function (e) {
                     e.preventDefault();
                     e.preventDefault();
                     var res =  data.cancelAction();
@@ -875,8 +910,8 @@ var cmpList = {
                       $(menu).css("top", "auto");
                     } else if(e.clientY <= windowHeight && e.clientX <= windowWidth) {
                       //When user click on top-left part of window
-                      $(menu).css("left", e.clientX);
-                      $(menu).css("top", e.clientY);
+                      $(menu).css("left", e.clientY);
+                      $(menu).css("top", e.clientX);
                       $(menu).css("right", "auto");
                       $(menu).css("bottom", "auto");
                     } else {
@@ -957,7 +992,7 @@ $.fn.textWidth = function(){
     var width = $(this).find('span:first').width();
     $(this).html(html_org);
     return width;
-  };
+};
 $.fn.extend({
     autoHeight: function () {
         function autoHeight_(element) {
@@ -977,7 +1012,6 @@ $.fn.extend({
         });
     }
 });
- 
 $.saConfirm = function(options, elements){
     if (typeof options === "undefined") {
         options = {};
@@ -995,7 +1029,6 @@ $.saConfirm = function(options, elements){
     if (typeof options.closeAction === "function") {
           
     }
-    
     return  cmpList.saConfirm.Init(options);
 };
 $.fn.tblToExcel = function () {
@@ -1141,9 +1174,9 @@ $(document).on("click", 'body', function () {
 })
 $(document).on("click", '.showhide-col-main-info', function (e) {
     e.stopPropagation();
- });
+});
 
- function geDateRangePickerValueBT(elm) {
+function geDateRangePickerValueBT(elm) {
     try {
         var val  = elm.val();
         val = val.split('-')
@@ -1159,19 +1192,16 @@ $(document).on("click", '.showhide-col-main-info', function (e) {
 
 }
 
-/*    // selectable table Block start */
+/*   // selectable table Block start */
 var isMouseDown = false;
 var startRowIndex = null;
 var startCellIndex = null;
 
 function selectTo(cell) {
-
+        
     var row = cell.parent();
     var cellIndex = cell.index();
     var rowIndex = row.index();
-    var est = 0
-    var min = 0;
-    var max = 0;
     var rowStart, rowEnd, cellStart, cellEnd;
 
     if (rowIndex < startRowIndex) {
@@ -1210,53 +1240,56 @@ function selectTo(cell) {
 }
 
 function sumAvarMaxMinCount(tbid,selected) {
-    var est  = 0
+    var est=0
     var min = 0;
     var max = 0;
     var sum = 0;
-    $(selected).each(function (params) {
+    $(selected).each(function (index) {
         var dt = $(this);
         var val = dt.text();
-          val  =  val.replace('%','')
-          val = new Number(val)
-          console.log(val);
-        if (est === 1) {
-            min = val;
-        }
-        est++
-
-        if (parseFloat(val)) {
-            sum = sum + parseFloat(val);
-        }
-        if (max < parseFloat(val)) {
-            max = val;
-        }
-        if (min > parseFloat(val)) {
-            min = val;
-        }
+          val  =  val.replace('%','');
+          val = new Number(val);
+          val  =  parseFloat(val);
+         if(val){
+             console.log(val);
+             est++;
+             if (est === 1) {
+                min = val;
+             }    
+            
+            sum = sum + val;
+            if (max < val) {
+                max = val;
+            }
+            if (min > val) {
+                min = val;
+            }
+         }  
     })
-    var count  = $(selected).length
+    var count  = $(selected).length;
     var tbid = $(tbid).closest('table').attr('data-pag-id');
     var elm = $("#table-selected-row-details-"+tbid+"");
         elm.removeClass('d-none');
         elm.parent().removeClass('d-none');
     var avar = (sum / count);
-    $(elm).find('.sum').html((sum) ? ("<b>cəm: </b>" + sum) : "cəm").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
-    $(elm).find('.avarage').html((sum) ? " <b>ortalama: </b>" + avar.toFixed(1) : "ortalama").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
-    $(elm).find('.min').html((min) ? " <b>min: </b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""))
-    $(elm).find('.max').html((max) ? " <b>maks: </b>" + (max) : "maks").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""))
-    $(elm).find('.count').html((count) ? " <b>say: </b>" + (count) : "say").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""))
-    elm.selectpicker('refresh')
-     
+    $(elm).find('.sum')
+          .html((sum) ? ("<b>cəm: </b>" + sum) : "cəm").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""));
+    $(elm).find('.avarage').html((sum) ? "<b>ortalama: </b>" + avar.toFixed(1) : "ortalama").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""));
+    $(elm).find('.min').html((min) ? " <b>min: </b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""));
+    $(elm).find('.max').html((max) ? " <b>maks: </b>" + (max) : "maks").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""));
+    $(elm).find('.count').html((count) ? " <b>say: </b>" + (count) : "say").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""));
+      elm.selectpicker('refresh');
 }
 
 $(document).on("mousedown", ".selectableTable td:not(:first-child)", function (e) {
-    var tbid = $(tbid).closest('table').attr('data-pag-id');
+    var tbid = $(this).closest('table').attr('data-pag-id');
         isMouseDown = true;
         var cell = $(this);
-
+       
     $(".selectableTable").find(".selected").removeClass("selected"); // deselect everything
-
+    var elm = $("#table-selected-row-details-"+tbid+"");
+    elm.addClass('d-none');
+    elm.parent().addClass('d-none');
     if (e.shiftKey) {
         selectTo(cell);
     } else {
@@ -1274,10 +1307,6 @@ $(document).on("mouseover", ".selectableTable td:not(:first-child)", function (e
     selectTo($(this));
 })
 
-$(document).on("mousedown", ".selectableTable thead th:not(:first-child)", function (e) {
-    isMouseDown = true;
-    return false; // prevent text selection
-})
 $(document).on("mouseover", ".selectableTable thead th:not(:first-child)", function (e) {
     if (!isMouseDown)
         return;

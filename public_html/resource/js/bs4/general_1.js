@@ -1530,21 +1530,26 @@ function GetConvertedDate(componentId) {
     return d;
 }
 function GetConvertedDateDT(componentId) {
-    var val  = $('#' + componentId).val();
-      val = val.split(" ");
-    if (!val)
-        return "";
-      nev = val[0].split(".")
-    var day = nev[0];
-    var month = nev[1];
-    var year = nev[2];
-    var d = year + "" + month + '' + day;
     try {
-        d = parseInt(d);
-    } catch (err) {
-        d = "";
+        var val  = $('#' + componentId).val();
+        val = val.split(" ");
+      if (!val)
+          return "";
+        nev = val[0].split(".")
+      var day = nev[0];
+      var month = nev[1];
+      var year = nev[2];
+      var d = year + "" + month + '' + day;
+      try {
+          d = parseInt(d);
+      } catch (err) {
+          d = "";
+      }
+      return d;
+    } catch (error) {
+      return '';
     }
-    return d;
+  
 }
 function GetConvertedTimeDT(componentId) {
     try {
