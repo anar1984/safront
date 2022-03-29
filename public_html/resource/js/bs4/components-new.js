@@ -910,8 +910,8 @@ const cmpList = {
                       $(menu).css("top", "auto");
                     } else if(e.clientY <= windowHeight && e.clientX <= windowWidth) {
                       //When user click on top-left part of window
-                      $(menu).css("left", e.clientY);
-                      $(menu).css("top", e.clientX);
+                      $(menu).css("left", e.clientX);
+                      $(menu).css("top", e.clientY);
                       $(menu).css("right", "auto");
                       $(menu).css("bottom", "auto");
                     } else {
