@@ -3,18 +3,18 @@ var current_db_id = "";
 var per_page_here = 25;
 var page_count_there = 1;
 
-$(document).on("change", "select.cs-database-name-list", function (e) {
+$(document).on("change", "select.cs-database-name-list", function(e) {
     // $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-table-list').html("");
     current_db_id = $(this).val();
     getTablesAndFields4Popup(this, $(this).val());
 });
 
-$(document).on("click", ".rsql", function (e) {
+$(document).on("click", ".rsql", function(e) {
     var title = $(this).attr('title');
     getCoreContainer(this).find('#livesqlditor').val(title);
 });
 
-$(document).on("click", ".insertnewlinetodb", function (e) {
+$(document).on("click", ".insertnewlinetodb", function(e) {
 
     setCoreContainer(this);
     var dbname = getDatabaseName();
@@ -24,7 +24,7 @@ $(document).on("click", ".insertnewlinetodb", function (e) {
 });
 
 
-$(document).on("click", ".close_rsql", function (e) {
+$(document).on("click", ".close_rsql", function(e) {
 
 
     if (!confirm("Are you sure?")) {
@@ -37,21 +37,21 @@ $(document).on("click", ".close_rsql", function (e) {
 
 function getDatabaseName() {
     return getCoreContainerLast()
-            .find("select.cs-database-name-list")
-            .find("option:selected")
-            .text();
+        .find("select.cs-database-name-list")
+        .find("option:selected")
+        .text();
 }
 
 function getTableName() {
     return getCoreContainerLast()
-            .find("select.cs-database-table-list")
-            .find("option:selected")
-            .text();
+        .find("select.cs-database-table-list")
+        .find("option:selected")
+        .text();
 }
 
 
 
-$(document).on("change", ".th-header-filter-search-by-column", function (e) {
+$(document).on("change", ".th-header-filter-search-by-column", function(e) {
     page_count_there = 1;
     var el = getCoreContainer(this).find('select.cs-database-table-list');
     setCoreContainerByElement(el);
@@ -68,34 +68,34 @@ function getDataList() {
     getFieldByTableId4PopupContainer(data);
 }
 
-$(document).on("click", ".cs-sql-editor-debug-btn", function (e) {
+$(document).on("click", ".cs-sql-editor-debug-btn", function(e) {
     setCoreContainer(this);
     runSql();
 });
 
 var current_active_table_element;
 
-$(document).on("change", "select.cs-database-table-list", function (e) {
+$(document).on("change", "select.cs-database-table-list", function(e) {
     var tableId = $(this).val();
     setCoreContainer(this);
     current_table_id = tableId;
     getFieldByTableId4Popup(tableId);
 });
 
-$(document).on("change", "select.cs-database-field-list", function (e) {
+$(document).on("change", "select.cs-database-field-list", function(e) {
     setCoreContainer(this);
     toggleDataSetTableColumns();
 });
 
 function toggleDataSetTableColumns() {
     var checkedFields = getCoreContainerLast().find('select.cs-database-field-list').val();
-    getCoreContainerLast().find('thead .th-header-filter-search-by-column').each(function () {
+    getCoreContainerLast().find('thead .th-header-filter-search-by-column').each(function() {
         var field = $(this).attr('sa-core-name');
         if (field) {
             var elm = getCoreContainerLast()
-                    .find('thead .th-header-filter-search-by-column[sa-core-name=' + field + ']').closest("th")
+                .find('thead .th-header-filter-search-by-column[sa-core-name=' + field + ']').closest("th")
             var index = elm.index();
-//            alert("'" + field + "'-" + index);
+            //            alert("'" + field + "'-" + index);
             if (checkedFields.includes(field)) {
                 elm.show();
                 getCoreContainerLast().find('tbody tr td:nth-child(' + (index + 1) + ')').show();
@@ -107,53 +107,53 @@ function toggleDataSetTableColumns() {
     })
 }
 
-$(document).on("click", ".cs-filter-table-btn", function (e) {
+$(document).on("click", ".cs-filter-table-btn", function(e) {
     setCoreContainer(this);
     getCoreContainerLast().find("select.cs-database-table-list").change();
 });
 
-$(document).on("change", "select.cs-pagination-page-count", function (e) {
+$(document).on("change", "select.cs-pagination-page-count", function(e) {
     page_count_there = $(this).val();
     getDataList();
     // sqlEditorPageLoader();
 });
 
-$(document).on("click", ".perpage-select .perpage-prev", function (e) {
+$(document).on("click", ".perpage-select .perpage-prev", function(e) {
     $(this)
-            .closest(".perpage-select")
-            .find(".cs-pagination-page-count option:selected")
-            .prev()
-            .attr("selected", "selected")
-            .selectpicker("refresh");
+        .closest(".perpage-select")
+        .find(".cs-pagination-page-count option:selected")
+        .prev()
+        .attr("selected", "selected")
+        .selectpicker("refresh");
     $(this)
-            .closest(".perpage-select")
-            .find("select.cs-pagination-page-count")
-            .change();
+        .closest(".perpage-select")
+        .find("select.cs-pagination-page-count")
+        .change();
 });
 
-$(document).on("click", ".perpage-select .perpage-next", function (e) {
+$(document).on("click", ".perpage-select .perpage-next", function(e) {
     $(this)
-            .closest(".perpage-select")
-            .find(".cs-pagination-page-count option:selected")
-            .next()
-            .attr("selected", "selected")
-            .selectpicker("refresh");
+        .closest(".perpage-select")
+        .find(".cs-pagination-page-count option:selected")
+        .next()
+        .attr("selected", "selected")
+        .selectpicker("refresh");
     $(this)
-            .closest(".perpage-select")
-            .find("select.cs-pagination-page-count")
-            .change();
+        .closest(".perpage-select")
+        .find("select.cs-pagination-page-count")
+        .change();
 });
 
-$(document).on("change", "select.cs-pagination-per-page", function (e) {
+$(document).on("change", "select.cs-pagination-per-page", function(e) {
     per_page_here = $(this).val();
     getDataList();
 });
 
-$(document).on("click", "#ShowDatabaseTableBtn", function (e) {
+$(document).on("click", "#ShowDatabaseTableBtn", function(e) {
     sqlEditorPageLoader();
 });
 
-$(document).on("click", ".ShowTableDataEntry", function () {
+$(document).on("click", ".ShowTableDataEntry", function() {
     var tableid = $(this).closest("td.tdSeqment").attr("pid");
     var dbid = $("#entityDatabaseList").val();
 
@@ -164,66 +164,66 @@ $(document).on("click", ".ShowTableDataEntry", function () {
     $(".cs-database-table-list").val(tableid).change();
 });
 
-$(document).on("click", ".cs-reset-live-sql", function (e) {
+$(document).on("click", ".cs-reset-live-sql", function(e) {
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find(".cs-nav-select select.cs-database-name-list")
-            .html("");
+        .closest(".ShowDatabaseTable")
+        .find(".cs-nav-select select.cs-database-name-list")
+        .html("");
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find(".cs-nav-select select.cs-database-table-list")
-            .html("");
+        .closest(".ShowDatabaseTable")
+        .find(".cs-nav-select select.cs-database-table-list")
+        .html("");
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find("select.cs-database-name-list, select.cs-database-table-list")
-            .selectpicker("refresh");
+        .closest(".ShowDatabaseTable")
+        .find("select.cs-database-name-list, select.cs-database-table-list")
+        .selectpicker("refresh");
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find(".cs-table-database-table-zad-list")
-            .find("thead")
-            .html("");
+        .closest(".ShowDatabaseTable")
+        .find(".cs-table-database-table-zad-list")
+        .find("thead")
+        .html("");
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find(".cs-table-database-table-zad-list")
-            .find("tbody")
-            .html("");
+        .closest(".ShowDatabaseTable")
+        .find(".cs-table-database-table-zad-list")
+        .find("tbody")
+        .html("");
 });
 
 function sqlEditorPageLoader() {
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find(".cs-nav-select select.cs-database-name-list")
-            .html("");
+        .closest(".ShowDatabaseTable")
+        .find(".cs-nav-select select.cs-database-name-list")
+        .html("");
     $(this)
-            .closest(".ShowDatabaseTable")
-            .find(".cs-nav-select select.cs-database-table-list")
-            .html("");
+        .closest(".ShowDatabaseTable")
+        .find(".cs-nav-select select.cs-database-table-list")
+        .html("");
     cs_loadDatabaseList2ComboEntityDetails();
     $(".sa-sqlboard-selectpicker").selectpicker("refresh");
 
-    $(".navigation select").each(function (ev) {
+    $(".navigation select").each(function(ev) {
         let arrowWidth = 60;
 
-        $.fn.resizeselect = function (settings) {
-            return this.each(function () {
+        $.fn.resizeselect = function(settings) {
+            return this.each(function() {
                 $(this)
-                        .change(function () {
-                            let $this = $(this);
-                            let style = window.getComputedStyle(this);
-                            let {fontWeight, fontSize, fontFamily} = style;
-                            let text = $this.find("option:selected").text();
-                            let $demo = $("<span>").html(text).css({
-                                "font-size": fontSize,
-                                "font-weight": fontWeight,
-                                "font-family": fontFamily,
-                                visibility: "hidden",
-                            });
-                            $demo.appendTo($this.parent());
-                            let width = $demo.width();
-                            $demo.remove();
-                            $this.width(width + arrowWidth);
-                        })
-                        .change();
+                    .change(function() {
+                        let $this = $(this);
+                        let style = window.getComputedStyle(this);
+                        let { fontWeight, fontSize, fontFamily } = style;
+                        let text = $this.find("option:selected").text();
+                        let $demo = $("<span>").html(text).css({
+                            "font-size": fontSize,
+                            "font-weight": fontWeight,
+                            "font-family": fontFamily,
+                            visibility: "hidden",
+                        });
+                        $demo.appendTo($this.parent());
+                        let width = $demo.width();
+                        $demo.remove();
+                        $this.width(width + arrowWidth);
+                    })
+                    .change();
             });
         };
         $(this).closest(".navigation .bootstrap-select").resizeselect();
@@ -249,7 +249,7 @@ function loadSqlEditorDatabaseListCombo(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             el.html("");
             try {
                 var obj = res.tbl[0].r;
@@ -264,8 +264,7 @@ function loadSqlEditorDatabaseListCombo(el) {
                 }
                 sortSelectBoxByCoreElement(el);
                 el.selectpicker("refresh");
-            } catch (err) {
-            }
+            } catch (err) {}
             if (dbid) {
                 el.change();
             }
@@ -277,8 +276,8 @@ function getTablesAndFields4Popup(parentEl, dbid) {
     if (!dbid)
         return;
     var el = $(parentEl)
-            .closest("div.sql-tab-body-container")
-            .find("select.cs-database-table-list");
+        .closest("div.sql-tab-body-container")
+        .find("select.cs-database-table-list");
     el.html("").append($("<option>").append(" "));
 
     var json = initJSON();
@@ -293,7 +292,7 @@ function getTablesAndFields4Popup(parentEl, dbid) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             el.html("");
             try {
                 var obj = res.tbl[0].r;
@@ -301,9 +300,8 @@ function getTablesAndFields4Popup(parentEl, dbid) {
                 for (var i in obj) {
                     var o = obj[i];
                     var op = $('<option class="data-table-option">')
-                            .val(o.id)
-                            .append(o.tableName)
-                            ;
+                        .val(o.id)
+                        .append(o.tableName);
 
                     if (sql_board_clicked_table_id === o.id) {
                         op.attr("selected", 'selected');
@@ -317,8 +315,7 @@ function getTablesAndFields4Popup(parentEl, dbid) {
                     el.change();
                     sql_board_clicked_table_id = '';
                 }
-            } catch (err) {
-            }
+            } catch (err) {}
         },
     });
 
@@ -351,7 +348,7 @@ function getFieldListByTableId() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             try {
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
@@ -361,8 +358,7 @@ function getFieldListByTableId() {
                         keys.push(val);
                     }
                 }
-            } catch (err) {
-            }
+            } catch (err) {}
         },
     });
     return keys;
@@ -373,7 +369,7 @@ function getFieldByTableId4Popup(tableId, dataCore) {
         return;
 
     var el = getCoreContainerLast()
-            .find("select.cs-database-field-list");
+        .find("select.cs-database-field-list");
     el.html("").append($("<option>").append(" "));
 
 
@@ -388,7 +384,7 @@ function getFieldByTableId4Popup(tableId, dataCore) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {
+        success: function(res) {
             el.html("");
 
             var selectedField = "";
@@ -399,14 +395,13 @@ function getFieldByTableId4Popup(tableId, dataCore) {
                     selectedField += o.fieldName ? o.fieldName + "," : "";
 
                     el.append($('<option class="data-table-option">')
-                            .val(o.fieldName)
-                            .attr('selected', 'true')
-                            .append(o.fieldName)
-                            );
+                        .val(o.fieldName)
+                        .attr('selected', 'true')
+                        .append(o.fieldName)
+                    );
                 }
                 getDataTableRowListContainer(selectedField, dataCore);
-            } catch (err) {
-            }
+            } catch (err) {}
             el.selectpicker('refresh');
         },
     });
@@ -415,7 +410,7 @@ function getFieldByTableId4Popup(tableId, dataCore) {
 
 function getFilterDataNames() {
     var res = '';
-    getCoreContainerLast().find(".th-header-filter-search-by-column").each(function (ev) {
+    getCoreContainerLast().find(".th-header-filter-search-by-column").each(function(ev) {
         var key = $(this).attr("sa-data-name");
         if (key) {
             res += key + ",";
@@ -427,7 +422,7 @@ function getFilterDataNames() {
 
 function getFilterDataLine() {
     var data = {};
-    getCoreContainerLast().find(".th-header-filter-search-by-column").each(function (ev) {
+    getCoreContainerLast().find(".th-header-filter-search-by-column").each(function(ev) {
         var key = $(this).attr("sa-data-name");
         var val = $(this).val();
 
@@ -445,13 +440,11 @@ function getCoreContainer(el) {
 }
 
 function setCoreContainerByElement(el) {
-    current_active_table_element = el.closest("div.sql-tab-body-container");
-    ;
+    current_active_table_element = el.closest("div.sql-tab-body-container");;
 }
 
 function setCoreContainer(el) {
-    current_active_table_element = $(el).closest("div.sql-tab-body-container");
-    ;
+    current_active_table_element = $(el).closest("div.sql-tab-body-container");;
 }
 
 function getCoreContainerLast() {
@@ -481,7 +474,7 @@ function getDataTableRowCount(dbname, tablename, dataCore) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {
+        success: function(res) {
             loadPageCountSelectBox(res.kv.countId);
             getCoreContainerLast().find(".querydatarowcount").html(res.kv.countId);
         },
@@ -506,7 +499,7 @@ function loadPageCountSelectBox(rowCount) {
 }
 
 function setLimitForDataFilter() {
-    var data = {startLimit: 0, endLimit: 0};
+    var data = { startLimit: 0, endLimit: 0 };
 
     var startLimit = per_page_here * (page_count_there - 1);
     var endLimit = per_page_here * page_count_there;
@@ -548,7 +541,7 @@ function runSql() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {
+        success: function(res) {
             AJAXCallFeedback(res);
 
             if (res.kv.err) {
@@ -557,7 +550,7 @@ function runSql() {
                 getDataTableRowListDetails(0, {}, el, res, true);
             }
         },
-        error: function (res) {
+        error: function(res) {
             getCoreContainerLast().find("#sqlEditorRunResult").html(JSON.stringify(res));
             getCoreContainerLast().find(".live-sql-error").text("No data found");
         },
@@ -589,12 +582,12 @@ function insertNewRecord(dbname, tablename, dataCore) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             AJAXCallFeedback(res);
             getCoreContainerLast().find('.cs-filter-table-btn').click();
 
         },
-        error: function () {
+        error: function() {
             $(".live-sql-error").text("");
             $(".live-sql-error").text("No data found");
         },
@@ -629,12 +622,12 @@ function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
+        success: function(res) {
             AJAXCallFeedback(res);
 
             getDataTableRowListDetails(limitData.startLimit, dataCore, el, res);
         },
-        error: function () {
+        error: function() {
             $(".live-sql-error").text("");
             $(".live-sql-error").text("No data found");
         },
@@ -650,36 +643,36 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
     }
 
     var tr_th = $("<tr>")
-            .addClass("coretr")
-            .append($("<th>"));
+        .addClass("coretr")
+        .append($("<th>"));
 
     for (var k in keys) {
         var col = keys[k];
         var _col = Utility.addUnderScoreToCamalStyle(col);
         var valSt = dataCore && dataCore[col] ? dataCore[col] : "";
 
-        var input = (hideSearchField && hideSearchField == true) ? ""
-                : $("<input>")
-                .attr('type', 'search')
-                .val(valSt)
-                .addClass("th-header-filter-search-by-column")
-                .attr("placeholder", _col)
-                .attr("sa-core-name", _col)
-                .attr("sa-data-name", col)
+        var input = (hideSearchField && hideSearchField == true) ? "" :
+            $("<input>")
+            .attr('type', 'search')
+            .val(valSt)
+            .addClass("th-header-filter-search-by-column")
+            .attr("placeholder", _col)
+            .attr("sa-core-name", _col)
+            .attr("sa-data-name", col)
 
         tr_th.append(
-                $("<th>")
-                .text(_col)
-                .append($("<br>"))
-                .append(input)
+            $("<th>")
+            .text(_col)
+            .append($("<br>"))
+            .append(input)
 
-                );
+        );
     }
     tr_th.append($("<th>")
-            .append($('<button>')
-                    .addClass("insertnewlinetodb")
-                    .addClass("form-control")
-                    .text("insert")));
+        .append($('<button>')
+            .addClass("insertnewlinetodb")
+            .addClass("form-control")
+            .text("insert")));
     el.find("thead").append(tr_th);
     el.find("tbody").html("");
 
@@ -701,9 +694,9 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
 
             var td = $("<td>");
             td.attr("data-id", o.id)
-                    .attr('data-key', col)
-                    .addClass("sql-table-cell-update")
-                    .text(add3Dots2String(o[col], 150));
+                .attr('data-key', col)
+                .addClass("sql-table-cell-update")
+                .text(add3Dots2String(o[col], 150));
             tr.append(td);
         }
         el.find("tbody").append(tr);
@@ -713,39 +706,38 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
     autoResizeOfFilterEditBox();
 }
 
-$(document).on('dblclick', '.sql-table-cell-update', function (ev) {
+$(document).on('dblclick', '.sql-table-cell-update', function(ev) {
     setCoreContainer(this);
     var txt = $(this).text();
     var id = $(this).attr('data-id');
     var key = $(this).attr('data-key');
     var tarea = $('<textarea>')
-            .addClass('sql-table-cell-update-zad')
-            .addClass('form-control')
-            .attr('data-id', id)
-            .attr('data-key', key)
-            .text(txt);
+        .addClass('sql-table-cell-update-zad')
+        .addClass('form-control')
+        .attr('data-id', id)
+        .attr('data-key', key)
+        .text(txt);
     $(this).removeClass('sql-table-cell-update');
     $(this).html(tarea);
     tarea.focus();
 })
 
-$(document).on('change', '.sql-table-cell-update-zad', function (ev) {
+$(document).on('change', '.sql-table-cell-update-zad', function(ev) {
     setCoreContainer(this);
 
     var txt = $(this).val()
-    var id = $(this).attr('data-id');
-    ;
+    var id = $(this).attr('data-id');;
     var key = $(this).attr('data-key');
 
     $(this).closest('td').text(txt).addClass('sql-table-cell-update');
 
     var data = {};
     data.entityDb = getCoreContainerLast().find("select.cs-database-name-list")
-            .find("option:selected")
-            .text();
+        .find("option:selected")
+        .text();
     data.entity = getCoreContainerLast().find("select.cs-database-table-list")
-            .find("option:selected")
-            .text();
+        .find("option:selected")
+        .text();
     data.updatedField = key;
     data[key] = txt;
     data.id = id;
@@ -753,24 +745,24 @@ $(document).on('change', '.sql-table-cell-update-zad', function (ev) {
 })
 
 function autoResizeOfFilterEditBox() {
-    $(".livesql-table-boxes input").each(function (ev) {
-        $.fn.textWidth = function (text, font) {
+    $(".livesql-table-boxes input").each(function(ev) {
+        $.fn.textWidth = function(text, font) {
             if (!$.fn.textWidth.ZadFakeEl)
                 $.fn.textWidth.ZadFakeEl = $("<span>").hide().appendTo(document.body);
             $.fn.textWidth.ZadFakeEl.text(
-                    text || this.val() || this.text() || this.attr("placeholder")
-                    ).css("font", font || this.css("font"));
+                text || this.val() || this.text() || this.attr("placeholder")
+            ).css("font", font || this.css("font"));
             return $.fn.textWidth.ZadFakeEl.width() + 15;
         };
 
         $(this)
-                .on("input", function () {
-                    var inputWidth = $(this).textWidth();
-                    $(this).css({
-                        width: inputWidth + 20,
-                    });
-                })
-                .trigger("input");
+            .on("input", function() {
+                var inputWidth = $(this).textWidth();
+                $(this).css({
+                    width: inputWidth + 20,
+                });
+            })
+            .trigger("input");
 
         function inputWidth(CSelem, minW, maxW) {
             CSelem = $(this);
@@ -783,22 +775,22 @@ function autoResizeOfFilterEditBox() {
 }
 
 // SQL EDITOR SHOW
-$(document).on("click", ".cs-sql-editor-run-btn", function (e) {
+$(document).on("click", ".cs-sql-editor-run-btn", function(e) {
     setCoreContainer(this);
     getCoreContainerLast().find(".cs-sql-editor-run-btn")
-            .toggleClass("active");
+        .toggleClass("active");
     getCoreContainerLast().find(".app_editor_wrapper")
-            .show("slide", {direction: "up", }, 200);
+        .show("slide", { direction: "up", }, 200);
 });
 
-$(document).on("click", ".cs-sql-editor-run-btn.active", function (e) {
+$(document).on("click", ".cs-sql-editor-run-btn.active", function(e) {
     setCoreContainer(this);
     getCoreContainerLast().find(".app_editor_wrapper")
-            .hide("slide", {direction: "up", }, 200);
+        .hide("slide", { direction: "up", }, 200);
 });
 
 // LOAD SQL BUTTON
-$(document).on("click", ".cs-sql-editor-debug-load-btn", function (e) {
+$(document).on("click", ".cs-sql-editor-debug-load-btn", function(e) {
     getCoreContainer(this).find(".cs-sql-editor-debug-load-btn").toggleClass("active");
     getCoreContainer(this).find(".sql-editor-load-box").show();
 
@@ -816,20 +808,19 @@ $(document).on("click", ".cs-sql-editor-debug-load-btn", function (e) {
                 var dateLL = key.split("__dasdemir___")[1];
 
                 ol.append($('<li>')
-                        .addClass('sqlEditorLoadResult')
-                        .append($('<span>')
-                                .attr('title', replaceTags(localStorage.getItem(key)))
-                                .addClass('rsql')
-                                .text(val + "(" + dateLL + ")"))
-                        .append($("<span>")
-                                .addClass("close_rsql")
-                                .attr('pid', key)
-                                .append($('<i class="fa fa-trash">')))
-                        )
+                    .addClass('sqlEditorLoadResult')
+                    .append($('<span>')
+                        .attr('title', replaceTags(localStorage.getItem(key)))
+                        .addClass('rsql')
+                        .text(val + "(" + dateLL + ")"))
+                    .append($("<span>")
+                        .addClass("close_rsql")
+                        .attr('pid', key)
+                        .append($('<i class="fa fa-trash">')))
+                )
 
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
     }
     el.append(ol)
@@ -842,11 +833,11 @@ function shortenSqlQueryTextBoHIstory(sql) {
     return sql;
 }
 
-$(document).on("click", ".cs-sql-editor-debug-load-btn.active", function (e) {
+$(document).on("click", ".cs-sql-editor-debug-load-btn.active", function(e) {
     getCoreContainer(this).find(".sql-editor-load-box").hide();
 });
 // SAVE SQL BUTTON
-$(document).on("click", ".cs-sql-editor-debug-save-btn", function (e) {
+$(document).on("click", ".cs-sql-editor-debug-save-btn", function(e) {
     var sql = getCoreContainer(this).find('#livesqlditor').val();
     if (!sql) {
         Toaster.showMessage('SQL is empty.');
@@ -854,23 +845,23 @@ $(document).on("click", ".cs-sql-editor-debug-save-btn", function (e) {
     }
 
     var currentdate = new Date();
-    var datetime = "__dasdemir___" + currentdate.getDate() + "/"
-            + (currentdate.getMonth() + 1) + "/"
-            + currentdate.getFullYear() + " @ "
-            + currentdate.getHours() + ":"
-            + currentdate.getMinutes() + ":"
-            + currentdate.getSeconds();
+    var datetime = "__dasdemir___" + currentdate.getDate() + "/" +
+        (currentdate.getMonth() + 1) + "/" +
+        currentdate.getFullYear() + " @ " +
+        currentdate.getHours() + ":" +
+        currentdate.getMinutes() + ":" +
+        currentdate.getSeconds();
     localStorage.setItem(datetime, sql);
     Toaster.showMessage('SQL is stored in local storage.');
-//    getCoreContainer(this).find(".cs-sql-editor-debug-save-btn").toggleClass("active");
-//    getCoreContainer(this).find(".sql-editor-save-input-box").show();
+    //    getCoreContainer(this).find(".cs-sql-editor-debug-save-btn").toggleClass("active");
+    //    getCoreContainer(this).find(".sql-editor-save-input-box").show();
 });
 
-$(document).on("click", ".cs-sql-editor-debug-save-btn.active", function (e) {
+$(document).on("click", ".cs-sql-editor-debug-save-btn.active", function(e) {
     getCoreContainer(this).find(".sql-editor-save-input-box").hide();
 });
 
-$(document).on("click", ".sql-editor-save-btn", function (e) {
+$(document).on("click", ".sql-editor-save-btn", function(e) {
     var sql_name = $(".sql-editor-save-input").val();
     var sql_command = $(".ace_text-input").val();
     localStorage.setItem('sql_name', sql_name);
@@ -984,7 +975,7 @@ function startSqlStory() {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 el.html("");
                 try {
                     var obj = res.tbl[0].r;
@@ -994,16 +985,15 @@ function startSqlStory() {
                         el.append($("<option>").val(o.id).append(o.dbName));
                     }
                     el.selectpicker("refresh");
-                } catch (err) {
-                }
+                } catch (err) {}
             },
         });
     }
-    $(".sqlboard-wrapper").each(function (e) {
+    $(".sqlboard-wrapper").each(function(e) {
         cs_loadDatabaseListBoardDetails(e);
     });
 
-    $(document).on("change", "select.sqlboard-database-select", function (e) {
+    $(document).on("change", "select.sqlboard-database-select", function(e) {
         current_db_id = $(this).val();
         getTablesAndFields4PopupBoard($(this).val());
     });
@@ -1025,48 +1015,47 @@ function startSqlStory() {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
+            success: function(res) {
                 ul.html("");
                 try {
                     var obj = res.tbl[0].r;
                     for (var i in obj) {
                         var o = obj[i];
                         ul.append(
-                                $("<li>")
-                                .attr("navtableboard", o.id)
-                                .append($("<span>").append(o.tableName))
-                                );
+                            $("<li>")
+                            .attr("navtableboard", o.id)
+                            .append($("<span>").append(o.tableName))
+                        );
                     }
-                } catch (err) {
-                }
+                } catch (err) {}
             },
         });
     }
 
-    $(".cs-search-table-board").on("keyup", function () {
+    $(".cs-search-table-board").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $(".sqlboard-table-list *").filter(function () {
+        $(".sqlboard-table-list *").filter(function() {
             let item = $(this).text().toLowerCase().indexOf(value) > -1;
             $(this).toggle(item);
         });
     });
 
-    $("input.cs-search-table-board[type=search]").on("search", function () {
+    $("input.cs-search-table-board[type=search]").on("search", function() {
         $(".sqlboard-table-list *").removeAttr("style");
     });
 
-    $(".sqlboard-wrapper").each(function (e) {
+    $(".sqlboard-wrapper").each(function(e) {
         $(".sql-board-tab-list").html("");
         $(".sql-board-tab-content").html("");
         $(".sql-board-tab-list").append(
-                '<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>'
-                );
+            '<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>'
+        );
     });
 }
 
 var sql_board_clicked_table_id = '';
 var num = 0;
-$(document).on("dblclick", ".sqlboard-table-list>li", function (e) {
+$(document).on("dblclick", ".sqlboard-table-list>li", function(e) {
 
     var dbid = $('select.sqlboard-database-select').val();
     var tabname = $(this).find("span").text();
@@ -1078,18 +1067,18 @@ $(document).on("dblclick", ".sqlboard-table-list>li", function (e) {
 
 });
 
-$(document).on("click", ".add-boardtab-btn", function (e) {
+$(document).on("click", ".add-boardtab-btn", function(e) {
     setCoreContainer(this);
     SQLBoardTab.Tabulation.Init();
 });
 
-$(document).on("click", ".close-boardtab-btn", function (e) {
+$(document).on("click", ".close-boardtab-btn", function(e) {
     var csid = $(this).closest("li a").attr("csid");
     var elm = $(this).closest("li");
     $(this)
-            .closest(".sqlboard-main")
-            .find(".sql-board-tab-content #" + csid)
-            .remove();
+        .closest(".sqlboard-main")
+        .find(".sql-board-tab-content #" + csid)
+        .remove();
     if (elm.find("a").hasClass("active")) {
         elm.prev().find("a").click();
     }
@@ -1099,14 +1088,14 @@ $(document).on("click", ".close-boardtab-btn", function (e) {
 
 var SQLBoardTab = {
     Tabulation: {
-        Init: function () {
+        Init: function() {
             var tabs_board_id = makeId(10);
             $(".list-add-boardtab").remove();
             var tab = $(".sql-board-tab-list");
             tab.append(SQLBoardTab.Tabulation.GenerateHeader(tabs_board_id));
             tab.append(
-                    '<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>'
-                    );
+                '<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>'
+            );
             var tabcontent = $(".sql-board-tab-content");
             tabcontent.css("padding-top", "20px");
             var tab_count = tabcontent.find("div").length;
@@ -1117,37 +1106,37 @@ var SQLBoardTab = {
             $('#' + tabs_board_id).find('.sa-sqlboard-selectpicker').selectpicker('refresh');
             $(".sql-board-tab-list li:nth-last-child(-n+2) a").click();
         },
-        GenerateHeader: function (tabs_board_id) {
+        GenerateHeader: function(tabs_board_id) {
             var tabNo = $('.sa-sql-board-tab-header').length;
             return $("<li>")
-                    .addClass("nav-item")
-                    .addClass("sa-sql-board-tab-header")
-                    .attr("role", "presentation")
+                .addClass("nav-item")
+                .addClass("sa-sql-board-tab-header")
+                .attr("role", "presentation")
+                .append(
+                    $("<a>")
+                    .addClass("nav-link ")
+                    .attr("id", tabs_board_id + "-tab")
+                    .attr("csid", tabs_board_id)
+                    .attr("data-toggle", "tab")
+                    .attr("href", "#" + tabs_board_id)
+                    .attr("role", "tab")
+                    .append("Tab -" + (tabNo + 1))
                     .append(
-                            $("<a>")
-                            .addClass("nav-link ")
-                            .attr("id", tabs_board_id + "-tab")
-                            .attr("csid", tabs_board_id)
-                            .attr("data-toggle", "tab")
-                            .attr("href", "#" + tabs_board_id)
-                            .attr("role", "tab")
-                            .append("Tab -" + (tabNo + 1))
-                            .append(
-                                    '<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>'
-                                    )
-                            );
+                        '<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>'
+                    )
+                );
         },
-        GenerateBody: function (tabs_board_id, tab_count) {
+        GenerateBody: function(tabs_board_id, tab_count) {
             var singleTabBody = SQLBoardTab.Tabulation.GetSingleTabBody();
             return $("<div>")
-                    .addClass("tab-pane fade")
-                    .addClass("sql-tab-body-container")
-                    .addClass(tab_count === 0 ? "active show" : "")
-                    .attr("id", tabs_board_id)
-                    .attr("role", "tabpanel")
-                    .append($("<div>").html(singleTabBody));
+                .addClass("tab-pane fade")
+                .addClass("sql-tab-body-container")
+                .addClass(tab_count === 0 ? "active show" : "")
+                .attr("id", tabs_board_id)
+                .attr("role", "tabpanel")
+                .append($("<div>").html(singleTabBody));
         },
-        GetSingleTabBody: function () {
+        GetSingleTabBody: function() {
             var body = $("#sqlTabBodyOriginal").html();
             return body;
         },
@@ -1155,13 +1144,13 @@ var SQLBoardTab = {
 };
 
 const SqlGeneratorClass = {
-    loader: function () {
+    loader: function() {
         $('#mainBodyDivForAll').html(this.genBlock());
         $('.selectpicker').selectpicker('refresh');
         this.loadDbName($('select.SqlGenloadDB'));
-      
+
     },
-    genBlock: function (params) {
+    genBlock: function(params) {
         return `
                 <div class="containerDbb"> 
                    ${this.genSectionSelect()}
@@ -1170,7 +1159,7 @@ const SqlGeneratorClass = {
                 </div> 
                 `
     },
-    genSectionSelect: function () {
+    genSectionSelect: function() {
         return `
                     <div class="section_box1Dbb">
                     <div class="font20px"><span>Select</span></div>
@@ -1206,11 +1195,11 @@ const SqlGeneratorClass = {
                         <table class="table table-hover table-striped" id='sqlgenSelectTable'>
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Database Name</th>
-                                    <th scope="col">Table Name</th>
-                                    <th scope="col">Field Name</th>
-                                    <th scope="col"></th>
+                                    <th class='text-center' scope="col">#</th>
+                                    <th class='text-center' scope="col">Database Name</th>
+                                    <th class='text-center' scope="col">Table Name</th>
+                                    <th class='text-center' scope="col">Field Name</th>
+                                    <th class='text-center' scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>                   
@@ -1221,7 +1210,7 @@ const SqlGeneratorClass = {
                     </div>
         `
     },
-    genSectionFrom: function () {
+    genSectionFrom: function() {
         return `
              <div class="section_box2Dbb">
              <div class="font20px"><span>From</span></div>
@@ -1229,107 +1218,104 @@ const SqlGeneratorClass = {
                     <div class="inputContainerDbb">
                         <div class="cs-input-boxDbb">
                             <span>Database Name</span>
-                            <select onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB" id="sqlgeneratorDb2" data-live-search="true" data-size="6"
-                                data-show-subtext="true">
-                        
+                            <select id='sqlgenFromDbNAme' onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB" id="sqlgeneratorDb2" data-live-search="true" data-size="6"
+                                data-show-subtext="true">                        
                             </select>
                         </div>
                         <div class="cs-input-boxDbb">
                             <span>Table Name</span>
-                            <select class="selectpicker select sqlgenTableNameSelect" id="" data-live-search="true" data-size="6"
+                            <select id='sqlgenFromtTBName' class="selectpicker select sqlgenTableNameSelect" id="" data-live-search="true" data-size="6"
                                 data-show-subtext="true">
-
                             </select>
                         </div>            
                         <div class="cs-input-boxDbb">
-                            <button class="headBtnDbb"><i class="fas fa-plus"></i></button>
+                            <button onclick='SqlGeneratorClass.setTableFrom()' class="headBtnDbb"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
                     <!-- body -->
                     <div class="tableBodyDb">
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped" id='sqlgenFromTable'>
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Database Name</th>
-                                    <th scope="col">Table Name</th>                      
-                                    <th scope="col"></th>
+                                    <th class='text-center' scope="col">#</th>
+                                    <th class='text-center' scope="col">Database Name</th>
+                                    <th class='text-center' scope="col">Table Name</th>                      
+                                    <th class='text-center' scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>                  
+                            <tbody>               
                             
                             </tbody>
                         </table>
                     </div>
-
         </div>
 
         `
     },
-    genSectionWhere: function () {
+    genSectionWhere: function() {
         return ` <div class="section_where">
         <!-- head -->
         <div class="font20px"><span>Where</span></div>
         <div class="inputContainerDbb">
             <div class="cs-input-boxDbb">
                 <span>Database Name</span>
-                <select onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB"  id="" data-live-search="true" data-size="6"
+                <select id='sqlgenWhereDbNAme' onchange='SqlGeneratorClass.loadTableName(this)' class="selectpicker select SqlGenloadDB"  id="" data-live-search="true" data-size="6"
                     data-show-subtext="true">               
                 </select>
             </div>
             <div class="cs-input-boxDbb">
                 <span>Table Name</span>
-                <select onchange='SqlGeneratorClass.loadFieldName(this)' class="selectpicker select sqlgenTableNameSelect"  id="" data-live-search="true" data-size="6"
+                <select id='sqlgenWhereTBName' onchange='SqlGeneratorClass.loadFieldName(this)' class="selectpicker select sqlgenTableNameSelect"  id="" data-live-search="true" data-size="6"
                     data-show-subtext="true">
                 </select>
             </div>
             <div class="cs-input-boxDbb">
                 <span>Field Name</span>
-                <select data-actions-box='true' class="selectpicker select sqlgenFieldNameSelect" multiple id="" data-live-search="true" data-size="6"
+                <select id='sqlgenWhereFieldName' data-actions-box='true' class="selectpicker select sqlgenFieldNameSelect" multiple id="" data-live-search="true" data-size="6"
                     data-show-subtext="true">
                 </select>
             </div>
             <div class="cs-input-boxDbb">
                 <span>Operation</span>
-                <select class="selectpicker OPerationCss"  id="" title=" ">
+                <select id='sqlgenFromOPName' class="selectpicker OPerationCss"  id="" title=" ">
                     <option value=""> </option>
-                    <option value="beraber"><div>=</div></option>
-                    <option value="beraber"><div>></div></option>
-                    <option value="beraber"><div><</div></option>
+                    <option value="="><div>=</div></option>
+                    <option value=">"><div>></div></option>
+                    <option value="<"><div><</div></option>
                 </select>
             </div>
             <div class="cs-input-boxDbb">
                 <span>Dəyər</span>
-                <input class="deyerCss" type="text">
+                <input id='sqlgenFromDeyName' class="deyerCss" type="text">
             </div>
              <div class="cs-input-boxDbb">
-                <button class="headBtnDbb"><i class="fas fa-plus"></i></button>
+                <button onclick="SqlGeneratorClass.setTableWhere()" class="headBtnDbb"><i class="fas fa-plus"></i></button>
             </div>            
         </div>
         <!-- body -->
         <div class="tableBodyDb">
-            <table class="table table-hover table-striped">
+            <table id="sqlgenWhereTable" class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Database Name</th>
-                        <th scope="col">Table Name</th>
-                        <th scope="col">Field Name</th>
-                        <th scope="col">Operation</th>
-                        <th scope="col">Deyer</th>
-                        <th scope="col"></th>
+                        <th class='text-center' scope="col">#</th>
+                        <th class='text-center' scope="col">Database Name</th>
+                        <th class='text-center' scope="col">Table Name</th>
+                        <th class='text-center' scope="col">Field Name</th>
+                        <th class='text-center' scope="col">Operation</th>
+                        <th class='text-center' scope="col">Deyer</th>
+                        <th class='text-center' scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>             
                   
                 </tbody>
-            </table>
+            </table>           
         </div>
         </div>`
     },
-    loadDbName: function (el) {      
-      
-        callService('serviceTmGetDbList', {}, true, function (res) {
+    loadDbName: function(el) {
+
+        callService('serviceTmGetDbList', {}, true, function(res) {
             var db = res.tbl[0].r;
             for (var i = 0; i < db.length; i++) {
                 var o = db[i];
@@ -1341,70 +1327,116 @@ const SqlGeneratorClass = {
             el.selectpicker('refresh');
         })
     },
-    loadTableName: function (el) {         
-       var select= $(el).closest('.inputContainerDbb').find('select.sqlgenTableNameSelect');        
+    loadTableName: function(el) {
+        var select = $(el).closest('.inputContainerDbb').find('select.sqlgenTableNameSelect');
         select.empty();
-       select.selectpicker('refresh');
+        select.selectpicker('refresh');
         var data = {};
         data.dbId = $(el).val();
-         callService('serviceTmGetDbTableListForPopup', data, true, function (res) {
-             var db = res.tbl[0].r;
-             for (var i = 0; i < db.length; i++) {
-                 var o = db[i];
-                 select.append($('<option>')
-                     .val(o.id)
-                     .text(o.tableName)
-                 )
-             }
-             select.selectpicker('refresh');
-         })
-
+        callService('serviceTmGetDbTableListForPopup', data, true, function(res) {
+            var db = res.tbl[0].r;
+            for (var i = 0; i < db.length; i++) {
+                var o = db[i];
+                select.append($('<option>')
+                    .val(o.id)
+                    .text(o.tableName)
+                )
+            }
+            select.selectpicker('refresh');
+        })
     },
-    loadFieldName: function (el) {
+    loadFieldName: function(el) {
         var select = $(el).closest('.inputContainerDbb').find('select.sqlgenFieldNameSelect');
-        
-          select.empty();
-          select.selectpicker('refresh');
-          var data = {};
-          data.tableId = $(el).val();
-          callService('serviceTmGetFieldByTableId', data, true, function (res) {
-              var db = res.tbl[0].r;
-              for (var i = 0; i < db.length; i++) {
-                  var o = db[i];
-                  select.append($('<option>')
-                      .val(o.fieldName)
-                      .text(o.fieldName)
-                  )
-              }
-              select.selectpicker('refresh');
-          })
+        select.empty();
+        select.selectpicker('refresh');
+        var data = {};
+        data.tableId = $(el).val();
+        callService('serviceTmGetFieldByTableId', data, true, function(res) {
+            var db = res.tbl[0].r;
+            for (var i = 0; i < db.length; i++) {
+                var o = db[i];
+                select.append($('<option>')
+                    .val(o.fieldName)
+                    .text(o.fieldName)
+                )
+            }
+            select.selectpicker('refresh');
+        })
     },
-    setTableSelect: function () {
-         var table = $('#sqlgenSelectTable tbody');
+    setTableSelect: function() {
+        var table = $('#sqlgenSelectTable tbody');
         var DbName = $('#sqlgenSelectDbNAme option:selected').text();
         var TbName = $('#sqlgenSelectTBName option:selected').text();
         var FdName = $('#sqlgenSelectFieldName').val();
         for (let i = 0; i < FdName.length; i++) {
-            const filed = FdName[i];            
+            const filed = FdName[i];
             table.append(`
             <tr>
-            <td>${i+1}</td>
-            <td>${DbName}</td>
-            <td>${TbName}</td>
-            <td>${filed}</td>
-            <td><a onclick='SqlGeneratorClass.selectDeleteTable(this)' href="#">delete</a></td>
+            <td class='text-center'>${i+1}</td>
+            <td class='text-center'>${DbName}</td>
+            <td class='text-center'>${TbName}</td>
+            <td class='text-center'>${filed}</td>
+            <td class='text-center'><a onclick='SqlGeneratorClass.selectDeleteTable(this)' href="#">delete</a></td>
             </tr>
-           `)            
+           `)
         }
+        this.tableNomreleme($('#sqlgenSelectTable tbody tr'));
     },
-    selectDeleteTable: function (el) {
-        $(el).closest('tr').remove();         
-
-        var tb = $('#sqlgenSelectTable tbody tr');
-        tb.each(function (index) {
+    selectDeleteTable: function(el) {
+        $(el).closest('tr').remove();
+        this.tableNomreleme($('#sqlgenSelectTable tbody tr'))
+    },
+    setTableFrom: function() {
+        var table = $('#sqlgenFromTable tbody');
+        var DbName = $('#sqlgenFromDbNAme option:selected').text();
+        var TbName = $('#sqlgenFromtTBName option:selected').text();
+        table.append(`
+            <tr>
+            <td class='text-center'>${1}</td>
+            <td class='text-center'>${DbName}</td>
+            <td class='text-center'>${TbName}</td>           
+            <td class='text-center'><a onclick='SqlGeneratorClass.fromDeleteTable(this)' href="#">delete</a></td>
+            </tr>
+           `)
+        this.tableNomreleme($('#sqlgenFromTable tbody tr'));
+    },
+    fromDeleteTable: function(el) {
+        $(el).closest('tr').remove();
+        this.tableNomreleme($('#sqlgenFromTable tbody tr'))
+    },
+    setTableWhere: function() {
+        var table = $('#sqlgenWhereTable tbody');
+        var DbName = $('#sqlgenWhereDbNAme option:selected').text();
+        var TbName = $('#sqlgenWhereTBName option:selected').text();
+        var FdName = $('#sqlgenWhereFieldName').val();
+        var OPname = $('#sqlgenFromOPName').val();
+        var deyName = $('#sqlgenFromDeyName').val();
+        for (let i = 0; i < FdName.length; i++) {
+            const filed = FdName[i];
+            table.append(`
+            <tr>
+            <td class='text-center'>${i+1}</td>
+            <td class='text-center'>${DbName}</td>
+            <td class='text-center'>${TbName}</td>
+            <td class='text-center'>${filed}</td>
+            <td class='text-center'>${OPname}</td>
+            <td class='text-center'>${deyName}</td>
+            <td class='text-center'><a onclick='SqlGeneratorClass.whereDeleteTable(this)' href="#">delete</a></td>
+            </tr>
+           `)
+        }
+        this.tableNomreleme($('#sqlgenWhereTable tbody tr')) 
+    },
+    whereDeleteTable: function(el) {
+        $(el).closest('tr').remove();
+        this.tableNomreleme($('#sqlgenWhereTable tbody tr'))
+    },
+    tableNomreleme: function(el) {
+        var tb = $(el);
+        tb.each(function(index) {
             var td = $(this).find('td').first();
             td.text('');
-            td.text(index+1);
+            td.text(index + 1);
         })
     }
 
