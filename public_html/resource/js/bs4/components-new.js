@@ -1290,6 +1290,7 @@ $(document).on("mousedown", ".selectableTable td:not(:first-child)", function (e
     var elm = $("#table-selected-row-details-"+tbid+"");
     elm.addClass('d-none');
     elm.parent().addClass('d-none');
+    $(this).closest('table').find('.last_click_class').removeClass('last_click_class');
     if (e.shiftKey) {
         selectTo(cell);
     } else {
@@ -1349,7 +1350,7 @@ $(document).on("click", ".selectableTable tbody  tr td:first-child", function (e
             if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
                 
             }else{
-                td.addClass('selected');
+                $(this).addClass('selected');
             }
            })
            var count = $(this).closest("table.selectableTable").find("td.selected")
@@ -1367,7 +1368,7 @@ $(document).on("mouseover", ".selectableTable tbody  tr td:first-child", functio
             if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
                 
             }else{
-                td.addClass('selected');
+                $(this).addClass('selected');
             }
            })
            var count = $(this).closest("table.selectableTable").find("td.selected")

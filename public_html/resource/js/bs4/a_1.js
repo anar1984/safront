@@ -14994,7 +14994,7 @@ function filterLoadFlowNAmeByFolowGrooup(el) {
             res.tbl[0].r.map((o) => {
                 select.append(`<option value='${o.id}'>${o.flowName}</option>`);
             })
-            select.selectpicker('refresh')
+            select.selectpicker('refresh');
         } catch (error) {
 
         }
