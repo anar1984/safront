@@ -3474,9 +3474,8 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
             } else {
                 st = finalname
             }
-
-            $('#' + id).trigger("load-file", [st]);
             $('#' + id).attr('fname', st);
+            $('#' + id).trigger("load-file", [st]);
 
         },
         error: function() {}

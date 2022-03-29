@@ -1529,13 +1529,13 @@ function GetConvertedDate(componentId) {
     }
     return d;
 }
-function GetConvertedDateDT(componentId) {
+function GetConvertedDateDT(componentId,splitter) {
     try {
         var val  = $('#' + componentId).val();
         val = val.split(" ");
       if (!val)
           return "";
-        nev = val[0].split(".")
+        nev = val[0].split(splitter?splitter:".")
       var day = nev[0];
       var month = nev[1];
       var year = nev[2];

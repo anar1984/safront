@@ -1638,3 +1638,277 @@ const CheweekSlider = function (parentDiv, imgArray) {
     };
     CheweekFullSlider(parentDiv, imgArray);
  };
+
+
+ 
+   /// checklist  start
+var fn_22010711064709895352 = {
+
+
+    create_aciqlama: (fkOnwer, elem) => {
+    
+        var setBack = elem.closest('.redirectClass')
+        var loc = setBack.find('.task-check-list-box li .hm')
+        if (loc.length > 0) {
+            for (let i = 0; i < loc.length; i++) {
+                var title = $(loc[i]).text()
+                callApi('21121713570309449461',{title: title,fkOwnerId: fkOnwer}, false, function (res) {
+    
+                        $('#newAddCheckListVocation').val('');
+                        fn_22010711064709895352.loader(fkOnwer);
+                    }
+    
+                )
+            }
+        } else {
+            var titlee = $('#newAddCheckListVocation').val();
+    
+            callApi('21121713570309449461', {title: titlee,fkOwnerId: fkOnwer}, false, function (res) {
+                    $('#newAddCheckListVocation').val('');
+                    fn_22010711064709895352.loader(fkOnwer);
+                }
+    
+            )
+        }
+    },
+    
+    
+    //loader function
+    loader: (fkOwnerId) => {
+    
+        if (fkOwnerId.length > 0) {
+            var tab = $(".task-check-list-box ul")
+            tab.empty();
+            callApi('21121714131601512424', {fkOwnerId: fkOwnerId}, false, function (res) {
+    
+                    var list = res.tbl[0].r;
+                    //var aciqlama = $("#newAddCheckListVocation")
+                    var tab = $(".task-check-list-box ul")
+                    tab.empty();
+               
+                    for (let i = 0; i < list.length; i++) {
+                        const o = list[i];
+                        var bestId = makeId(10);
+                        var kid = makeId(10);
+                        var imgblock  =  $('<div>')
+                        try {
+                            var imglist  =  o.filePicker;
+                            imglist= imglist.split('|');
+                            for (let l = 0; l < imglist.length; l++) {
+                                const d = imglist[l];
+                                if(d){
+                                    imgblock.append(`<div class="file-item" id="pro_zad_span${kid}">
+                                    <span class="file-name-attach full-screen-image-btn" data-url='${d}'  onclick="imageViewerNew(this,'${d}')">
+                                    ${add3Dots2Filename(d)}
+                                    </span>
+                                    <i class="fa fa-times" pid="${kid}" onclick="removeFilenameFromZad(this,'${d}')" aria-hidden="true"></i>
+                                    </div>`)
+                                }
+                               
+                                
+                            }
+                              
+                        } catch (error) {
+                            console.log(error);
+                        }
+     
+                        var div =
+                            `<li class="d-block component-container-dashed ${(o.isChecked==1)?'on-checked':''}">
+                                <div class="d-flex">
+                                    <div class="item-checkbox">
+                                       <label class="checkmarkcontainer" style="margin-top: 0px;">
+                                           <input onchange='fn_22010711064709895352.updateCheckListAciqlama(this)' ${(o.isChecked==1)?'checked':''} class="taskCheckListItemToggle noteCheckListItem" oid="${o.id}" type="checkbox">
+                                           <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="mr-auto w-100">
+                                            <textarea rows="1" onchange="fn_22010711064709895352.updateMezmunVocation(this)" class="form-control updateTaskcheckListItemName1 p-0 pl-3" oid="${o.id}" >${o.title}</textarea>
+                                    </div>
+                                
+                                    <div class="pl-0 p2-1">
+                                        <span title="Created By">
+                                            <img width="40px" class="Assigne-card-story-select-img created" src="${fileUrl(o.userImage)}" data-placement="top" data-trigger="hover" data-toggle="popover" data-content="${o.userName}" data-title="Created By" data-original-title="" title="">
+                                        </span>
+                                    </div>
+                                <div class="pl-0 p2-1"></div>
+                                <div class="pl-0 mb-0">
+                                    <label class="mb-0">
+                                        <span class="taskListenAttachmentFile">
+                                             <input type="file"  oid="${o.id}"  id='${bestId}' fname='${o.filePicker}' multiple="" class="d-none file-item-checklist-input-operation saTypeFilePicherUploadFile">
+                                                        <i class="cs-svg-icon attach-01"></i>
+                                         </span>
+                                         <label></label>
+                                    </label>
+                                 </div>
+                                 <div class="pl-1 p2-1 d-table">
+                                       <a href="#" oid="${o.id}" onclick='fn_22010711064709895352.deleteMezmunVocation(this)' class="text-light">
+                                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                       </a>
+                                 </div>
+                               </div>
+                               <div class="flex-column" fname="">
+                                     <div class="progress_bar_new" id="progress_bar_new" style="margin-top: -3px;">
+                                            
+                                         ${imgblock.html()}
+                                     </div>
+                                </div>
+                      </li>`
+                        tab.prepend(div);
+                    }
+                    $('.updateTaskcheckListItemName1').autoHeight();
+                }
+    
+            )
+        }
+    
+    },
+    
+    // uddate check
+    updateCheckListAciqlama: (el,file) => {
+        var data = {};
+        var id = $(el).attr('oid');
+        var filename = $(el).closest('li').find('.saTypeFilePicherUploadFile').attr('fname');
+             console.log($(el).closest('li').find('.saTypeFilePicherUploadFile'));
+            data.fkChecklistId = id;
+            data.filePicker = filename ;
+        if ($(el).closest('li').find('.taskCheckListItemToggle').prop("checked")) { 
+            data.isChecked = 1;
+        } else {
+            data.isChecked = 0;
+        }
+        callApi('21121714031708916446', data, true);
+    },
+    
+    // update Mezmun
+    updateMezmunVocation: (el) => {
+        var id = $(el).attr('oid');
+        var val = $(el).val();
+    
+        callApi('21121714072605535941', {fkChecklistId: id,title: val}, true);
+    },
+    
+    //delete Mezmun
+    deleteMezmunVocation: (el) => {
+        if (confirm("Məlumatın silinməsinə əminsiz?")) {
+            var id = $(el).attr('oid');
+    
+            callApi('21121714100203705645', {
+                    fkChecklistId: id
+                }, true, function () {
+    
+                    var fkowner = $(el).closest('.redirectClass').find('[sa-selectedfield="fkActionId"]').val();
+                    fn_22010711064709895352.loader(fkowner);
+    
+                }
+    
+            )
+        }
+    },
+    
+    //create all
+    create_all: (el) => {
+    
+        var setBack = el.closest('.redirectClass');
+        var fk_owner = setBack.find('#comp_id_22011915551301534994').val();
+        var aciqlama = $("#newAddCheckListVocation");
+        var tab = $(".task-check-list-box ul");
+        var loc = setBack.find('.task-check-list-box li .hm');
+    
+        if (loc.length > 0 && fk_owner && aciqlama.val()) {
+            var data = aciqlama.val()
+            tab.append($(
+                `<li class="d-flex">
+                    <div class="item-checkbox">
+                        <label class="checkmarkcontainer">
+                            <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+                                <span class="checkmark">
+                                </span></label>
+                    </div>
+                <div class="mr-auto w-100">
+                        <textarea rows="1" class="form-control p-0 pl-3 hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                            <div class="pl-1 p2-1"></div>
+                                <div class="pl-1 p2-1">
+                                </div>
+                        <div class="pl-1 p2-1 d-table">
+                            <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;">
+                                    <i class="fas fa-trash-alt text-light" aria-hidden="true">
+                                    </i>
+                            </a>
+                        </div>
+            </li>`
+            ))
+            aciqlama.val("")
+            fn_22010711064709895352.create_aciqlama(fk_owner, el);
+        } 
+        
+        else if (fk_owner && loc.length > 0) {
+            fn_22010711064709895352.create_aciqlama(fk_owner, el);
+        } 
+        
+        else if (fk_owner && aciqlama.val()) {
+    
+            fn_22010711064709895352.create_aciqlama(fk_owner, el);
+    
+        } 
+        
+        else {
+    
+            if (aciqlama.val()) {
+                var data = aciqlama.val()
+                tab.append($(
+                    `<li class="d-flex">
+                    <div class="item-checkbox">
+                        <label class="checkmarkcontainer">
+                            <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+                                <span class="checkmark">
+                                </span></label>
+                    </div>
+                <div class="mr-auto w-100">
+                        <textarea rows="1" class="form-control p-0 pl-3 hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                            <div class="pl-1 p2-1"></div>
+                                <div class="pl-1 p2-1">
+                                </div>
+                        <div class="pl-1 p2-1 d-table">
+                            <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;">
+                                    <i class="fas fa-trash-alt text-light" aria-hidden="true">
+                                    </i>
+                            </a>
+                        </div>
+            </li>`
+                ))
+                aciqlama.val("")
+    
+            }
+    
+        }
+    }
+    
+    }
+    
+    //ENTER SLASH
+    $(document).on('change',"#newAddCheckListVocation",function() {
+        var el = $(this)
+        fn_22010711064709895352.create_all(el);
+    })
+    
+    // Loader click
+    $(document).on('click',"#comp_id_220119163237025810359",function () {
+    var elem = $(this);
+    var setBack = elem.closest('.redirectClass');
+    var fk_owner = setBack.find('#comp_id_22011915551301534994').val();
+    fn_22010711064709895352.loader(fk_owner);
+    
+    })
+    
+    //add click
+    $(document).on('click',"#comp_id_22011001554309238028",function () {
+            var el = $(this)
+            fn_22010711064709895352.create_all(el);
+    })  
+    //file upload  click
+    $(document).on('load-file',".file-item-checklist-input-operation",function (file) {
+            var el = $(this)
+            fn_22010711064709895352.updateCheckListAciqlama(el,file);
+    })  
+     
+   /// checklist  end
