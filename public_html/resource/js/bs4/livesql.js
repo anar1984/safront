@@ -1441,3 +1441,99 @@ const SqlGeneratorClass = {
     }
 
 }
+
+function addZero(txt) {
+    return  (parseFloat(txt)<10 ? '0'+txt : txt)
+  }
+  // entty history table generate
+  function entityDiagramHistorySettable(stlmt, endlmt,type) {
+  
+      var startDate=$("#entityDiagramHistoryFilterDateStart").val();
+      var strdArr = new Date(startDate);
+      var fromDate = strdArr.getFullYear() + "-" + addZero(strdArr.getMonth()+ 1)  + "-" + addZero(strdArr.getDate());
+      var fromTime = addZero(strdArr.getHours()) + ":" + addZero(strdArr.getMinutes()) + ":" + addZero(strdArr.getSeconds());
+      
+      var endDate = $("#entityDiagramHistoryFilterDateEnd").val();
+      var endArr = new Date(endDate);
+      var toDate = endArr.getFullYear() + "-" + addZero(endArr.getMonth() + 1) + "-" + addZero(endArr.getDate());
+      var toTime=addZero(endArr.getHours()) + ":" + addZero(endArr.getMinutes()) + ":" + addZero(endArr.getSeconds());
+  
+      var table = $('select.cs-database-table-list option:selected').text();
+      var dataBAse = $('select.cs-database-name-list option:selected').text();
+      var FildName = $('#entityDiagramHistoryFilterIDInput').val();
+  
+      var data = {};
+      data.databaseName = dataBAse;
+      data.tableName = table;
+      data.id = FildName;
+      data.startLimit = stlmt;
+      data.endLimit = endlmt;
+      data.fromDate = fromDate;
+      data.fromTime = fromTime;
+      data.toDate = toDate;
+      data.toTime = toTime;
+      var table = $('.cs-table-database-table-zad-list tbody');
+      table.empty();
+      var tHead = $('.cs-table-database-table-zad-list thead tr');
+      tHead.empty();
+      tHead.append(`
+      <th></th> 
+      <th class="text-center">daxil eden</th> 
+      <th class="text-center">type</th>
+      <th class="text-center">id</th>
+      <th class="text-center">modification_date</th>
+      <th class="text-center">status</th>
+      <th class="text-center">ad</th>
+      <th class="text-center">soyad</th>
+      <th class="text-center">tevellud</th>
+      <th class="text-center">hobbi</th>
+      <th class="text-center">insert_date</th>
+      
+      `);
+      
+      callService('serviceRsGetHistoryTable', data, true, function (res) {
+          if (type === 'load') {
+                       $("table.cs-table-database-table-zad-list").genPaginition(res.kv.rc);  
+            }
+          var tTr = res.tbl[0].r;
+          if (!res.tbl) {
+              $('.table-paginition-block-component').remove();
+          }
+          for (var i = 0; i < tTr.length; i++) {
+              var n = tTr[i];
+              table.prepend(`
+          <tr>
+          <td class="text-align-center"> ${stlmt + i + 1}</td>
+          <td class="text-align-center text-center">${(n.__createdBy) ? genUserTrblock('', fileUrl(n.__image), 'Daxil Edən', n.__createdBy) : ''}</td>
+          <td class="text-align-center text-center">${(n.__type) ? n.__type : ''}</td>
+            <td class="text-align-center text-center">${(n.id) ? n.id : ''}</td>
+             <td class="text-align-center text-center">${(n.modificationDate) ? Utility.convertDate(n.modificationDate) : ''} </td>
+              <td class="text-align-center text-center">${(n.status) ? n.status : ''}</td>           
+               <td class="text-align-center text-center">${(n.ad) ? n.ad : ''}</td>
+                <td class="text-align-center text-center">${(n.soyad) ? n.soyad : ''}</td>
+                 <td class="text-align-center text-center">${(n.tevellud) ? n.tevellud : ''}</td>
+                 <td class="text-align-center text-center">${(n.hobbi) ? n.hobbi : ''}</td>              
+                  <td class="text-align-center text-center">${(n.insertDate) ? Utility.convertDate(n.insertDate) : ''} </td>            
+                
+                  
+          </tr>
+          `)
+          }
+          table.append(`<tr> <td style='visibility:hidden;'></td><td style='visibility:hidden;'></td> </tr>`);
+      })
+  
+  }
+   // history click
+  $(document).on('click', '#entityDiagramHistory10014', function () {      
+       entityDiagramHistorySettable(0, 49,'load')
+  })
+  
+  // page
+  $(document).on("change-page","table.cs-table-database-table-zad-list", function (el, startLimit, endLimit) {
+      entityDiagramHistorySettable(startLimit, endLimit);
+  })
+  // id input change
+  $(document).on('change', '#entityDiagramHistoryFilterIDInput', function () {
+      entityDiagramHistorySettable(0, 49, 'load')
+      $(this).val('')
+  })
