@@ -5,8 +5,7 @@
                 <div class="form-group  has-search">
                     <div class="has-search-in">
                         <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                        <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false"
-                            class="bug-filter form-control" placeholder="Axtar..." id="search-us-managmenet">
+                        <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="search-us-managmenet">
                     </div>
                 </div>
             </div>
@@ -14,16 +13,13 @@
         <div class="mt-2">
             <div class="cs-input-group">
                 <span class="comp-title-span">Project</span>
-                <select class="form-control  usmg-selectpicker" data-live-search="true" data-actions-box="true"
-                    style="text-overflow: ellipsis" id='story_mn_filter_project_id' data-type="project_id" multiple
-                    title="Project"></select>
+                <select class="form-control  usmg-selectpicker" data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis" id='story_mn_filter_project_id' data-type="project_id" multiple title="Project"></select>
             </div>
         </div>
         <div class="mt-2">
             <div class="cs-input-group">
                 <span class="comp-title-span">Group By</span>
-                <select class="form-control usmg-selectpicker " data-actions-box="true" style="text-overflow: ellipsis"
-                    id='story_mn_groupBy_id' title="Group By">
+                <select class="form-control usmg-selectpicker " data-actions-box="true" style="text-overflow: ellipsis" id='story_mn_groupBy_id' title="Group By">
                     <option value="fkProjectId">Project</option>
                     <option value="assigne">Assigne</option>
                     <option value="backlogStatus">Status</option>
@@ -41,8 +37,7 @@
         <div class="mt-4">
             <div class="cs-input-group someyourContainer position-relative">
                 <div class="dropdown-toggle1 " data-toggle="dropdown">
-                    <div class="popover-badges" data-placement="bottom" data-bs-auto-close="false" data-toggle="popover"
-                        data-trigger="hover" data-content="Label">
+                    <div class="popover-badges" data-placement="bottom" data-bs-auto-close="false" data-toggle="popover" data-trigger="hover" data-content="Label">
                         <i class="fas fa-tag" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -51,19 +46,16 @@
                     <span class="badge badge-pill badge-warning">0</span>
 
                 </div>
-                <div class="dropdown-menu  drop-label-menu category-item-boxes "
-                    style="width: 360px;background: #525596;">
+                <div class="dropdown-menu  drop-label-menu category-item-boxes " style="width: 360px;background: #525596;">
                     <span>
                         <button class="new-label-modal btn" title="New Label" data-toggle="modal" href="#"
                             data-target="#insertNewLabel">
                             <i class="fas fa-plus-circle" aria-hidden="true"></i>
                         </button>
                     </span>
-                    <button class="newlabelspan btn" style="cursor: pointer;"
-                        onclick="new UserStory().clearAndShowAll(this)"><i class="fas fa-broom"></i></button>
+                    <button class="newlabelspan btn" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)"><i class="fas fa-broom"></i></button>
                     <div class="dropdown-divider" style="padding:0px;"></div>
-                    <ul id="tasklabellist" class="tasklabellist"
-                        style='height: 250px;overflow-y: auto; overflow-x: hidden;'></ul>
+                    <ul id="tasklabellist" class="tasklabellist" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></ul>
                 </div>
 
             </div>
@@ -71,8 +63,7 @@
         <div class="mt-4">
             <div class="cs-input-group">
                 <div class="dropdown-toggle1" data-toggle="dropdown">
-                    <div class="popover-badges" data-placement="bottom" data-toggle="popover" data-trigger="hover"
-                        data-content="Sprint">
+                    <div class="popover-badges" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Sprint">
                         <i class="fas fa-running" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -87,8 +78,7 @@
                                font-size: 12px; color:#727D91; margin-top: 5px;">
                             New Sprint</a>
                     </span>
-                    <span class="newlabelspan" style="cursor: pointer;"
-                        onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
                     <div class="dropdown-divider" style="padding:0px;"></div>
                     <div id="sprintlist" class="sprintlist" style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
                     </div>
@@ -114,7 +104,7 @@
                 </button>
             </div>
         </div>
-         <div class="mt-4">                       
+        <div class="mt-4">
             <div class="cs-input-group">
                 <button style="color:rgb(156, 159, 209);" id="refresUsmHomeAnaSehife" onclick=" filterOnChnageUSM()" class="btn btn-sm">
                   <i class="fas fa-sync text-light" aria-hidden="true"></i>
@@ -128,19 +118,14 @@
         <div class="mt-2">
             <div class="cs-input-group">
                 <span class="comp-title-span">Closed By</span>
-                <select
-                    class="form-control story_mn_filter_user_list usmg-selectpicker upToDateSelectEmpty upToDateSelectEmpty"
-                    id='story_mn_filter_closed_id' data-live-search="true" multiple onchange="filterOnChnageUSM()"
-                    title="Closed By" style="text-overflow: ellipsis">
+                <select class="form-control story_mn_filter_user_list usmg-selectpicker upToDateSelectEmpty upToDateSelectEmpty" id='story_mn_filter_closed_id' data-live-search="true" multiple onchange="filterOnChnageUSM()" title="Closed By" style="text-overflow: ellipsis">
                 </select>
             </div>
         </div>
         <div class="mt-2">
             <div class="cs-input-group">
                 <span class="comp-title-span">Task Status</span>
-                <select class="form-control usmg-selectpicker upToDateSelectEmpty" data-live-search="true"
-                    data-actions-box="true" style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"
-                    id='story_mn_filter_status_id' data-type="taskStatus" multiple title="Task Status">
+                <select class="form-control usmg-selectpicker upToDateSelectEmpty" data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis" onchange="filterOnChnageUSM()" id='story_mn_filter_status_id' data-type="taskStatus" multiple title="Task Status">
                     <option value="new" selected>New</option>
                     <option value="ongoing" selected>Ongoing</option>
                     <option value="closed">Closed</option>
@@ -167,12 +152,9 @@
                     <a href="#" class="float-right h-auto p-0 pl-1 pr-1 btn" id="assignee-group-name-add"
                         style="font-size: 12px;">add group</a>
                 </span>
-                <input type="text" data-type="assignee" class="form-control group-name-save d-none"
-                    id="assignee-group-name-save" placeholder="Group Name">
-                <select
-                    class="form-control usmg-selectpicker group-select-list assignee-group-name-list story_mn_filter_user_list cs-svg-icon icra-eden"
-                    data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis"
-                    id='story_mn_filter_assigne_id' data-type="assigne_id" multiple title="Assignee"></select>
+                <input type="text" data-type="assignee" class="form-control group-name-save d-none" id="assignee-group-name-save" placeholder="Group Name">
+                <select class="form-control usmg-selectpicker group-select-list assignee-group-name-list story_mn_filter_user_list cs-svg-icon icra-eden" data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis" id='story_mn_filter_assigne_id' data-type="assigne_id"
+                    multiple title="Assignee"></select>
             </div>
         </div>
         <div class="mt-2 ">
@@ -191,11 +173,8 @@
                     <a href="#" class="float-right h-auto p-0 pl-1 pr-1 btn" id="assignee-group-name-add"
                         style="font-size: 12px;">add group</a>
                 </span>
-                <input type="text" class="form-control group-name-save d-none" data-type="tasktype"
-                    id="tasktype-group-name-save" placeholder="Group Name">
-                <select class="form-control usmg-selectpicker group-select-list upToDateSelectEmpty" multiple
-                    data-actions-box="true" style="text-overflow: ellipsis" id='story_mn_manual_status_id'
-                    title="Task Type">
+                <input type="text" class="form-control group-name-save d-none" data-type="tasktype" id="tasktype-group-name-save" placeholder="Group Name">
+                <select class="form-control usmg-selectpicker group-select-list upToDateSelectEmpty" multiple data-actions-box="true" style="text-overflow: ellipsis" id='story_mn_manual_status_id' title="Task Type">
                 </select>
             </div>
         </div>
@@ -214,16 +193,14 @@
             </div>
             <div class="usm-more-filter-bg d-flex justify-content-center">
                 <!-- <div class="col-border"></div> -->
-                 <!-- close date -->
+                <!-- close date -->
                 <div class="mt-1">
                     <div class="cs-input-group input-group input-datatime-group" style="margin-top: 5px;">
                         <span class="comp-title-span w-100">Closed Date</span>
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                         </div>
-                        <input onchange="filterOnChnageUSM()"
-                            class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from upToDateSelectEmpty"
-                            id="us_management_closed_date_from" type="text">
+                        <input onchange="filterOnChnageUSM()" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from upToDateSelectEmpty" id="us_management_closed_date_from" type="text">
                     </div>
                 </div>
                 <!-- create date -->
@@ -233,30 +210,22 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="cs-svg-icon calendar-01"></i></div>
                         </div>
-                        <input onchange="filterOnChnageUSM()"
-                            class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from upToDateSelectEmpty"
-                            id="us_management_created_date_from" type="text">
+                        <input onchange="filterOnChnageUSM()" class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from upToDateSelectEmpty" id="us_management_created_date_from" type="text">
                     </div>
                 </div>
                 <!-- Flow Group -->
                 <div class="mt-2">
                     <div class="cs-input-group">
                         <span class="comp-title-span">Flow Group</span>
-                        <select
-                            class="form-control usmg-selectpicker cs-svg-icon upToDateSelectEmpty" multiple
-                            id="story_mn_filter_Flow_ID_12" data-live-search="true" data-actions-box="true"
-                            onchange="filterOnChnageUSM()" title="Flow Group" style="text-overflow: ellipsis">
+                        <select class="form-control usmg-selectpicker cs-svg-icon upToDateSelectEmpty" multiple id="story_mn_filter_Flow_ID_12" data-live-search="true" data-actions-box="true" onchange="filterOnChnageUSM()" title="Flow Group" style="text-overflow: ellipsis">
                         </select>
                     </div>
                 </div>
-                 <!-- Flow name -->
+                <!-- Flow name -->
                 <div class="mt-2">
                     <div class="cs-input-group">
                         <span class="comp-title-span">Flow name</span>
-                        <select
-                            class="form-control usmg-selectpicker cs-svg-icon upToDateSelectEmpty" multiple
-                            id="story_mn_filter_Flow_NameID_12" data-actions-box="true" data-live-search="true"
-                            onchange="filterOnChnageUSM()" title="Flow name" style="text-overflow: ellipsis">
+                        <select class="form-control usmg-selectpicker cs-svg-icon upToDateSelectEmpty" multiple id="story_mn_filter_Flow_NameID_12" data-actions-box="true" data-live-search="true" onchange="filterOnChnageUSM()" title="Flow name" style="text-overflow: ellipsis">
                         </select>
                     </div>
                 </div>
@@ -265,9 +234,7 @@
                 <div class="mt-2">
                     <div class="cs-input-group">
                         <span class="comp-title-span">Task Nature</span>
-                        <select class="form-control usmg-selectpicker upToDateSelectEmpty" data-live-search="true"
-                            data-actions-box="true" style="text-overflow: ellipsis" onchange="filterOnChnageUSM()"
-                            id='story_mn_filter_nature_id' data-type="updated_id" multiple title="Nature">
+                        <select class="form-control usmg-selectpicker upToDateSelectEmpty" data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis" onchange="filterOnChnageUSM()" id='story_mn_filter_nature_id' data-type="updated_id" multiple title="Nature">
                             <option value='bug'>Bug</option>
                             <option value='change'>Change Request</option>
                             <option value='new'>New Request</option>
@@ -278,14 +245,21 @@
                 <div class="mt-2">
                     <div class="cs-input-group">
                         <span class="comp-title-span">Created By</span>
-                        <select
-                            class="form-control story_mn_filter_user_list usmg-selectpicker cs-svg-icon daxil-eden upToDateSelectEmpty"
-                            id="story_mn_filter_created_id" data-actions-box="true" data-live-search="true" multiple
-                            onchange="filterOnChnageUSM()" title="Created By" style="text-overflow: ellipsis">
+                        <select class="form-control story_mn_filter_user_list usmg-selectpicker cs-svg-icon daxil-eden upToDateSelectEmpty" id="story_mn_filter_created_id" data-actions-box="true" data-live-search="true" multiple onchange="filterOnChnageUSM()" title="Created By"
+                            style="text-overflow: ellipsis">
                         </select>
                     </div>
                 </div>
 
+
+                <div class="mt-2">
+                    <div class="cs-input-group">
+                        <span class="comp-title-span">Print</span>
+                        <button onclick='printClickGetScName()' class="btn btn-sm">
+                           <i class="fas fa-print"></i>
+                        </button>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -295,29 +269,28 @@
                 
             </div>
         </div> -->
- <!--  drop down -->
+        <!--  drop down -->
         <div class="mt-4">
             <div class="dropdown cs-input-group btn">
-            <button class="btn" type="button" id="dropdownMenu2" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                <button class="btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-cog"></i>
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">                
-                <button class="dropdown-item" type="button"  id="upToDateButtonUSM">Active</button>
-                <button class="dropdown-item" type="button"  id="addNewTaskButton">Add New Task </button>
-                
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button" id="upToDateButtonUSM">Active</button>
+                    <button class="dropdown-item" type="button" id="addNewTaskButton">Add New Task </button>
+
+                </div>
             </div>
         </div>
-        </div>
 
-       
-       
+
+
 
 
     </div>
 </div>
 
-<div class="col-12 cs-core-issue-management us-half-div" id="main_div_of_backlog_info_kanban_view" >
+<div class="col-12 cs-core-issue-management us-half-div" id="main_div_of_backlog_info_kanban_view">
     <div class="row us-half-div-row">
         <!--        <div class="col-1 text-left toggleUSPanel" style="padding:4px;  ">
                     <a href="#" class="add-userstory-button1"
@@ -331,50 +304,47 @@
             <div class="col-12 d-none  p-0 m-0 process-view-combo-boxs row">
                 <div class="col-2 p-0">
                     <div class="cs-input-group">
-                        <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis"
-                            id='Flov_GRoup_comp_id_22030405435105928068' title="Flow Group">
+                        <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis" id='Flov_GRoup_comp_id_22030405435105928068' title="Flow Group">
                             
                         </select>
                     </div>
                 </div>
                 <div class="col-2 p-0">
                     <div class="cs-input-group">
-                        <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis"
-                            id='comp_id_22030405435105928068' title="Process List">
+                        <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true" style="text-overflow: ellipsis" id='comp_id_22030405435105928068' title="Process List">
                             
                         </select>
                     </div>
                 </div>
-                
+
 
                 <div class="col-3 d-flex  p-0">
                     <div class="cs-input-group">
-                        <button style="color:rgb(220, 111, 235);"  id="comp_id_22030405442605466312" class="btn btn-sm">
+                        <button style="color:rgb(220, 111, 235);" id="comp_id_22030405442605466312" class="btn btn-sm">
                             <i class="fas fa-plus-circle" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="cs-input-group">
-                        <button style="color:rgb(220, 111, 235);"  id="_bussinesFollowuUpdateedit214" class="btn btn-sm">
+                        <button style="color:rgb(220, 111, 235);" id="_bussinesFollowuUpdateedit214" class="btn btn-sm">
                             <i class="fas fa-edit"></i>
                         </button>
                     </div>
-                     <div class="cs-input-group">
-                        <button style="color:rgb(220, 111, 235);"  id="_bussinesFollowuSilmek14" class="btn btn-sm">
+                    <div class="cs-input-group">
+                        <button style="color:rgb(220, 111, 235);" id="_bussinesFollowuSilmek14" class="btn btn-sm">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
-                    
+
                 </div>
-               
+
                 <div class="col-5 p-0">
 
                 </div>
-                
+
             </div>
             <div class="col-12 d-none  p-0 m-0 matrix-view-combo-boxs row">
                 <div class="col-1 p-0">
-                    <select name="" onchange="filterOnChnageUSM()" class="form-control form-control-sm"
-                        id="matrix-view-xtype">
+                    <select name="" onchange="filterOnChnageUSM()" class="form-control form-control-sm" id="matrix-view-xtype">
                         <option value="fkAssigneeId">fkAssigneeId</option>
                         <option value="fkTaskTypeId">Task Type</option>
                     </select>
@@ -383,8 +353,7 @@
 
                 </div>
                 <div class="col-1  p-0">
-                    <select name="" onchange="filterOnChnageUSM()" class="form-control form-control-sm"
-                        id="matrix-view-ytype">
+                    <select name="" onchange="filterOnChnageUSM()" class="form-control form-control-sm" id="matrix-view-ytype">
                         <option value="createdDate">created Date</option>
                         <option value="createdBy">created by</option>
                     </select>
@@ -396,11 +365,11 @@
                 <div class="task-column draft" status="draft">
 
                     <div draggable="true" class="task-column-header">
-                        <input type="checkbox" name="" data-st='draft' class='all-check-us-mngm'
-                            id="alcheck-draft-us-mng">
+                        <input type="checkbox" name="" data-st='draft' class='all-check-us-mngm' id="alcheck-draft-us-mng">
 
                         <span class="headerInputColumn">Draft <b><span class="counterkanban"
-                                    id="kanban_view_draft_count">0</span></b></span>
+                                    id="kanban_view_draft_count">0</span></b>
+                        </span>
                         <!--                            <div class="column-header-edit">
                                                         <i class="fas fa-ellipsis-h"></i>
                                                     </div>
@@ -412,8 +381,7 @@
                         
                         
                                                     </div>-->
-                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal"
-                            data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
+                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
 
                         <button data-status='draft' class="btn btn-sm btn-light next-large-modal-btn"><i
                                 class="fas fa-expand"></i></button>
@@ -424,8 +392,7 @@
                     <div class="miniStoryCard">
                         <h5>New Story Card</h5>
                         <input class="miniStoryInput form-control" type="text">
-                        <div class="TextHeader " onclick="insertNewUserStory(this, 'draft')" id="AcceptStory"
-                            style="color: green;">
+                        <div class="TextHeader " onclick="insertNewUserStory(this, 'draft')" id="AcceptStory" style="color: green;">
                             <i class="fas fa-check"></i>
 
                         </div>
@@ -448,7 +415,8 @@
                         <input type="checkbox" name="" data-st='new' class='all-check-us-mngm' id="alcheck-new-us-mng">
 
                         <span class="headerInputColumn">New <b><span class="counterkanban"
-                                    id="kanban_view_new_count">0</span></b></span>
+                                    id="kanban_view_new_count">0</span></b>
+                        </span>
                         <!--                            <div class="column-header-edit">
                                                         <i class="fas fa-ellipsis-h"></i>
                                                     </div>
@@ -460,8 +428,7 @@
                         
                         
                                                     </div>-->
-                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal"
-                            data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
+                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
 
                         <button data-status='new' class="btn btn-sm btn-light next-large-modal-btn"><i
                                 class="fas fa-expand"></i></button>
@@ -472,8 +439,7 @@
                     <div class="miniStoryCard">
                         <h5>New Story Card</h5>
                         <input class="miniStoryInput form-control" type="text">
-                        <div class="TextHeader " onclick="insertNewUserStory(this, 'new')" id="AcceptStory"
-                            style="color: green;">
+                        <div class="TextHeader " onclick="insertNewUserStory(this, 'new')" id="AcceptStory" style="color: green;">
                             <i class="fas fa-check"></i>
 
                         </div>
@@ -492,11 +458,11 @@
                 </div>
                 <div class="task-column  on-going" status="ongoing">
                     <div class="task-column-header">
-                        <input type="checkbox" name="" data-st='ongoing' class='all-check-us-mngm'
-                            id="alcheck-ongoing-us-mng">
+                        <input type="checkbox" name="" data-st='ongoing' class='all-check-us-mngm' id="alcheck-ongoing-us-mng">
 
                         <span class="headerInputColumn">Ongoing <b><span class="counterkanban"
-                                    id="kanban_view_ongoing_count">0</span></b></span>
+                                    id="kanban_view_ongoing_count">0</span></b>
+                        </span>
                         <!--                            <div class="column-header-edit">
                                                         <i class="fas fa-ellipsis-h"></i>
                                                     </div>
@@ -508,8 +474,7 @@
                         
                         
                                                     </div>-->
-                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal"
-                            data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
+                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
 
                         <button data-status='ongoing' class="btn btn-sm btn-light next-large-modal-btn"><i
                                 class="fas fa-expand"></i></button>
@@ -517,8 +482,7 @@
                     <div class="miniStoryCard">
                         <h5>New Story Card</h5>
                         <input class="miniStoryInput form-control" type="text">
-                        <div class="TextHeader " onclick="insertNewUserStory(this, 'ongoing')" id="AcceptStory"
-                            style="color: green;">
+                        <div class="TextHeader " onclick="insertNewUserStory(this, 'ongoing')" id="AcceptStory" style="color: green;">
                             <i class="fas fa-check"></i>
 
                         </div>
@@ -540,8 +504,7 @@
                 </div>
                 <div class="task-column closed" status="closed">
                     <div class="task-column-header">
-                        <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm'
-                            id="alcheck-closed-us-mng">
+                        <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm' id="alcheck-closed-us-mng">
 
                         <span class="headerInputColumn">Closed
                             <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
@@ -557,8 +520,7 @@
                         
                         
                                                     </div>-->
-                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal"
-                            data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
+                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs"> <i class="fas fa-edit"></i></button>
 
                         <button data-status='closed' class="btn btn-sm btn-light next-large-modal-btn"><i
                                 class="fas fa-expand"></i></button>
@@ -566,8 +528,7 @@
                     <div class="miniStoryCard">
                         <h5>New Story Card</h5>
                         <input class="miniStoryInput form-control" type="text">
-                        <div class="TextHeader " id="AcceptStory" onclick="insertNewUserStory(this, 'closed')"
-                            style="color: green;">
+                        <div class="TextHeader " id="AcceptStory" onclick="insertNewUserStory(this, 'closed')" style="color: green;">
                             <i class="fas fa-check"></i>
 
                         </div>
@@ -596,8 +557,7 @@
 </div>
 
 
-<div class="modal fade bd-example-modal-lg" id="multieditpopUpUs" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="multieditpopUpUs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -611,8 +571,7 @@
 
                     <div class="col-lg-4 ">
 
-                        <select class="form-control" data-actions-box="true" data-type="priority" onchange=""
-                            id='priority-change-story-card-multi' title="Priority">
+                        <select class="form-control" data-actions-box="true" data-type="priority" onchange="" id='priority-change-story-card-multi' title="Priority">
                             <option value=''>None</option>
                             <option value='1'>1- Lowest</option>
                             <option value='2'>2</option>
@@ -636,10 +595,8 @@
 </div>
 
 
-<div class="modal fade" id="task-ongoing-large-history" style="z-index: 1045;" tabindex="-1" role="dialog"
-    aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;"
-        role="document">
+<div class="modal fade" id="task-ongoing-large-history" style="z-index: 1045;" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
         <div class="modal-content" style="width: 100%; height: 100%;">
             <div class="modal-header">
                 <h5 class="modal-title">History</h5>
@@ -651,15 +608,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body histroy-and-dashboard"
-                style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto; position: relative;">
+            <div class="modal-body histroy-and-dashboard" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto; position: relative;">
                 <!--<form>-->
                 <div class="row">
                     <div class="table-content " style="overflow-y: auto; height: 80vh;">
 
 
-                        <table id="history-main-table-backlogst" style="width: max-content;min-width: 100%;"
-                            cellspacing="0" cellpadding="0">
+                        <table id="history-main-table-backlogst" style="width: max-content;min-width: 100%;" cellspacing="0" cellpadding="0">
                             <thead>
                                 <tr>
                                     <td>Project </td>

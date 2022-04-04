@@ -1,5 +1,8 @@
 'use strict';
-var cmpList = {
+ const global_const ={
+     
+ };
+const cmpList = {
     userBlock: {
         Init: function (elm, type,title,options) {
                var that  = this
@@ -251,16 +254,21 @@ var cmpList = {
     },
     tablePagintion: {
         Init: function (elm, rowCount) {
+              
             var elm = $(elm);
                var attr  =  $(elm).attr('data-pag-id')
             if (elm.prop('tagName') === 'TABLE') {
                 $("#paginiton_id_"+attr).remove();
+                if(rowCount=="0"||!rowCount){
+                    return
+                }
                 var tbid = makeId(10);
                 $(elm).attr("data-pag-id", tbid);
                 $(elm).addClass("selectableTable");
                 $(elm).attr('component-type',"table-paginiton");
          
                 $(elm).parent().after(this.genBlock(rowCount, tbid));
+                $('#paginiton_id_'+tbid).find('.custom-select-table-for').selectpicker('refresh')
                 var select = $('#paginiton_id_'+tbid).find("select.count-row-select-global");
                 select.empty();
                 var page = Math.ceil(rowCount / 50);
@@ -276,20 +284,23 @@ var cmpList = {
               <div class="mr-auto task-list-datetime">
                   
               </div>
-              <div class="task-list-pagination" table-id='${tbid}'>
+              <div class="task-list-pagination "  table-id='${tbid}'>
                   <div style="display: none;">
                       <input class="startLimitNew" value="0" type="text">
                       <input class="endLimitNew" value="49" type="text">
                       <select name=""  class="count-row-select-global"></select>
                   </div>
                   <div class="float-right task-list-pagination_btns d-flex">
-                    <select class="custom-select-table-for d-none" id="table-selected-row-details-${tbid}" style=" height: 25px; background: #03396c; color: #fff; border-radius: 50px; padding: 0px 10px; margin-right: 8px; ">
-                        <option class="count"> </option>
-                        <option class="sum"></option>
-                        <option class="avarage"> </option>
-                        <option class="min"></option>
-                        <option class="max"></option>      
-                    </select>
+                  <div class="task-list-hid cs-input-group m-0 mr-2">
+                        <select class="custom-select-table-for d-none" title='hesab' id="table-selected-row-details-${tbid}">
+                                <option selected='selected'  class="count"> </option>
+                                <option selected='selected' class="sum"></option>
+                                <option class="avarage"> </option>
+                                <option class="min"></option>
+                                <option class="max"></option>      
+                        </select>
+                </div>
+                   
                   <!--  <a class="btn circle btn-primary mt-0  tbl-export-import-btn"><i class='cs-svg-icon cs-svg-icon-import'></i></a> -->
                     <div class="dropdown">
                         <a class="btn circle btn-primary mt-0 tbl-export-import-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='cs-svg-icon cs-svg-icon-export'></i></a>
@@ -397,7 +408,16 @@ var cmpList = {
         },
         export:function (elm,tbid) {
             var table  =  $('table[data-pag-id="'+tbid+'"]').clone();
-            var type  =  $(elm).attr('data-st')
+            var type  =  $(elm).attr('data-st');
+               var img  =  table.find('img');
+                   img.each(function () {
+                       var src  = $(this).attr('src');
+                       var name  =  $(this).attr('alt')
+                           var a  =  $("<a>")
+                                     .attr('href',src)
+                                     .text(name?name:"picture");
+                     $(this).replaceWith(a);
+                  })
             if(type==='all'){
               
                 table.find("thead .filter-table-row-header-tr").remove();
@@ -416,17 +436,40 @@ var cmpList = {
                 table.find("thead tr td").remove();
               
             }else{
-                var indexList  = [];
-                var td = table.find("tbody>tr>td");
-                td.each(function () {
-                    if ($(this).hasClass('selected')) {
-                       td.push($(this).index());
-                    }else{
+              
+                var tr = table.find("tbody>tr");
+                tr.each(function () {
+                    var selected = $(this).find('.selected')
+                    if (selected.length<1) {
                         $(this).remove();
                     }
                 })
+                var indexList  = [];
+                table.find("tbody>tr>td:first-child").addClass('selected');
+                var td = table.find("tbody>tr>td");     
+                td.each(function () {
+                    if ($(this).hasClass('selected')) {
+            
+                        indexList.push($(this).index());
+                    }else{
+                        $(this).addClass('removed-class');
+                    }
+                })
+             
+                var th = table.find("thead:first-child tr th");
+                th.each(function () {
+
+                    var indext  =  $(this).index();
+                    if (indexList.includes(indext)) {
+                     
+                    }else{
+                        $(this).addClass('removed-class');
+                    }
+                })
+                table.find(".removed-class").remove();
+
             }
-            table.tblToExcel(); 
+            table.tblToExcel();
         }
 
     },
@@ -774,7 +817,7 @@ var cmpList = {
                 var title = data.title?data.title:'Are You Sure?';
                 var acceptButton = data.confrimButton?data.confrimButton:lang_task.windowUpdateTask.yes;
                 var cancelButton = data.cancelButton?data.cancelButton:lang_task.windowUpdateTask.no;
-                var buttonConfrim = $('<button type="button" class="btn cs-nextsave-btn w-50 mr-2">').html(acceptButton).click(function (e) {
+                var buttonConfrim = $('<button type="button" class="btn cs-nextsave-btn w-50 mr-2">').text(acceptButton).click(function (e) {
                      var res =  data.confirmAction();
                     if(res){
                         data.confirmAction();
@@ -782,7 +825,7 @@ var cmpList = {
                     }
                     that.close(this);
                 });
-                var buttonCancel = $('<button type="button" class="btn cs-nextsave-btn w-50">').html(cancelButton).click(function (e) {
+                var buttonCancel = $('<button type="button" class="btn cs-nextsave-btn w-50">').text(cancelButton).click(function (e) {
                     e.preventDefault();
                     e.preventDefault();
                     var res =  data.cancelAction();
@@ -949,7 +992,7 @@ $.fn.textWidth = function(){
     var width = $(this).find('span:first').width();
     $(this).html(html_org);
     return width;
-  };
+};
 $.fn.extend({
     autoHeight: function () {
         function autoHeight_(element) {
@@ -969,7 +1012,6 @@ $.fn.extend({
         });
     }
 });
- 
 $.saConfirm = function(options, elements){
     if (typeof options === "undefined") {
         options = {};
@@ -987,7 +1029,6 @@ $.saConfirm = function(options, elements){
     if (typeof options.closeAction === "function") {
           
     }
-    
     return  cmpList.saConfirm.Init(options);
 };
 $.fn.tblToExcel = function () {
@@ -1133,9 +1174,9 @@ $(document).on("click", 'body', function () {
 })
 $(document).on("click", '.showhide-col-main-info', function (e) {
     e.stopPropagation();
- });
+});
 
- function geDateRangePickerValueBT(elm) {
+function geDateRangePickerValueBT(elm) {
     try {
         var val  = elm.val();
         val = val.split('-')
@@ -1151,19 +1192,16 @@ $(document).on("click", '.showhide-col-main-info', function (e) {
 
 }
 
-/*    // selectable table Block start */
+/*   // selectable table Block start */
 var isMouseDown = false;
 var startRowIndex = null;
 var startCellIndex = null;
 
 function selectTo(cell) {
-
+        
     var row = cell.parent();
     var cellIndex = cell.index();
     var rowIndex = row.index();
-    var est = 0
-    var min = 0;
-    var max = 0;
     var rowStart, rowEnd, cellStart, cellEnd;
 
     if (rowIndex < startRowIndex) {
@@ -1202,50 +1240,57 @@ function selectTo(cell) {
 }
 
 function sumAvarMaxMinCount(tbid,selected) {
-    var est  = 0
+    var est=0
     var min = 0;
     var max = 0;
     var sum = 0;
-    $(selected).each(function (params) {
+    $(selected).each(function (index) {
         var dt = $(this);
-        var val = parseFloat(dt.text());
-        if (est === 1) {
-            min = val;
-        }
-        est++
-        if (parseFloat(val)) {
-            sum = sum + parseFloat(val);
-        }
-        if (max < val) {
-            max = val;
-        }
-        if (min > val) {
-            min = val;
-        }
+        var val = dt.text();
+          val  =  val.replace('%','');
+          val = new Number(val);
+          val  =  parseFloat(val);
+         if(val){
+             console.log(val);
+             est++;
+             if (est === 1) {
+                min = val;
+             }    
+            
+            sum = sum + val;
+            if (max < val) {
+                max = val;
+            }
+            if (min > val) {
+                min = val;
+            }
+         }  
     })
-    var count  = $(selected).length
+    var count  = $(selected).length;
     var tbid = $(tbid).closest('table').attr('data-pag-id');
     var elm = $("#table-selected-row-details-"+tbid+"");
-        elm.removeClass('d-none')
+        elm.removeClass('d-none');
+        elm.parent().removeClass('d-none');
     var avar = (sum / count);
-    $(elm).find('.sum').html((sum) ? ("<b>sum:</b>" + sum) : "sum").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
-    $(elm).find('.avarage').html((sum) ? " <b>avarage:</b>" + avar.toFixed(1) : "avarage").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
-    $(elm).find('.min').html((min) ? " <b>min:</b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""))
-    $(elm).find('.max').html((max) ? " <b>max:</b>" + (max) : "max").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""))
-    $(elm).find('.count').html((count) ? " <b>count:</b>" + (count) : "").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""))
-
-
+    $(elm).find('.sum')
+          .html((sum) ? ("<b>cəm: </b>" + sum) : "cəm").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""));
+    $(elm).find('.avarage').html((sum) ? "<b>ortalama: </b>" + avar.toFixed(1) : "ortalama").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""));
+    $(elm).find('.min').html((min) ? " <b>min: </b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""));
+    $(elm).find('.max').html((max) ? " <b>maks: </b>" + (max) : "maks").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""));
+    $(elm).find('.count').html((count) ? " <b>say: </b>" + (count) : "say").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""));
+      elm.selectpicker('refresh');
 }
 
 $(document).on("mousedown", ".selectableTable td:not(:first-child)", function (e) {
-    var tbid = $(tbid).closest('table').attr('data-pag-id');
-    var elm = $("#table-selected-row-details-"+tbid+"");
-        elm.addClass('d-none');
+    var tbid = $(this).closest('table').attr('data-pag-id');
         isMouseDown = true;
         var cell = $(this);
-
+       
     $(".selectableTable").find(".selected").removeClass("selected"); // deselect everything
-
+    var elm = $("#table-selected-row-details-"+tbid+"");
+    elm.addClass('d-none');
+    elm.parent().addClass('d-none');
+    $(this).closest('table').find('.last_click_class').removeClass('last_click_class');
     if (e.shiftKey) {
         selectTo(cell);
     } else {
@@ -1263,10 +1308,6 @@ $(document).on("mouseover", ".selectableTable td:not(:first-child)", function (e
     selectTo($(this));
 })
 
-$(document).on("mousedown", ".selectableTable thead th:not(:first-child)", function (e) {
-    isMouseDown = true;
-    return false; // prevent text selection
-})
 $(document).on("mouseover", ".selectableTable thead th:not(:first-child)", function (e) {
     if (!isMouseDown)
         return;
@@ -1309,7 +1350,7 @@ $(document).on("click", ".selectableTable tbody  tr td:first-child", function (e
             if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
                 
             }else{
-                td.addClass('selected');
+                $(this).addClass('selected');
             }
            })
            var count = $(this).closest("table.selectableTable").find("td.selected")
@@ -1327,7 +1368,7 @@ $(document).on("mouseover", ".selectableTable tbody  tr td:first-child", functio
             if ($(this).css("display") === "none"||$(this).hasClass('d-none')) {
                 
             }else{
-                td.addClass('selected');
+                $(this).addClass('selected');
             }
            })
            var count = $(this).closest("table.selectableTable").find("td.selected")
@@ -1597,3 +1638,277 @@ const CheweekSlider = function (parentDiv, imgArray) {
     };
     CheweekFullSlider(parentDiv, imgArray);
  };
+
+
+ 
+   /// checklist  start
+var fn_22010711064709895352 = {
+
+
+    create_aciqlama: (fkOnwer, elem) => {
+    
+        var setBack = elem.closest('.redirectClass')
+        var loc = setBack.find('.task-check-list-box li .hm')
+        if (loc.length > 0) {
+            for (let i = 0; i < loc.length; i++) {
+                var title = $(loc[i]).text()
+                callApi('21121713570309449461',{title: title,fkOwnerId: fkOnwer}, false, function (res) {
+    
+                        $('#newAddCheckListVocation').val('');
+                        fn_22010711064709895352.loader(fkOnwer);
+                    }
+    
+                )
+            }
+        } else {
+            var titlee = $('#newAddCheckListVocation').val();
+    
+            callApi('21121713570309449461', {title: titlee,fkOwnerId: fkOnwer}, false, function (res) {
+                    $('#newAddCheckListVocation').val('');
+                    fn_22010711064709895352.loader(fkOnwer);
+                }
+    
+            )
+        }
+    },
+    
+    
+    //loader function
+    loader: (fkOwnerId) => {
+    
+        if (fkOwnerId.length > 0) {
+            var tab = $(".task-check-list-box ul")
+            tab.empty();
+            callApi('21121714131601512424', {fkOwnerId: fkOwnerId}, false, function (res) {
+    
+                    var list = res.tbl[0].r;
+                    //var aciqlama = $("#newAddCheckListVocation")
+                    var tab = $(".task-check-list-box ul")
+                    tab.empty();
+               
+                    for (let i = 0; i < list.length; i++) {
+                        const o = list[i];
+                        var bestId = makeId(10);
+                        var kid = makeId(10);
+                        var imgblock  =  $('<div>')
+                        try {
+                            var imglist  =  o.filePicker;
+                            imglist= imglist.split('|');
+                            for (let l = 0; l < imglist.length; l++) {
+                                const d = imglist[l];
+                                if(d){
+                                    imgblock.append(`<div class="file-item" id="pro_zad_span${kid}">
+                                    <span class="file-name-attach full-screen-image-btn" data-url='${d}'  onclick="imageViewerNew(this,'${d}')">
+                                    ${add3Dots2Filename(d)}
+                                    </span>
+                                    <i class="fa fa-times" pid="${kid}" onclick="removeFilenameFromZad(this,'${d}')" aria-hidden="true"></i>
+                                    </div>`)
+                                }
+                               
+                                
+                            }
+                              
+                        } catch (error) {
+                            console.log(error);
+                        }
+     
+                        var div =
+                            `<li class="d-block component-container-dashed ${(o.isChecked==1)?'on-checked':''}">
+                                <div class="d-flex">
+                                    <div class="item-checkbox">
+                                       <label class="checkmarkcontainer" style="margin-top: 0px;">
+                                           <input onchange='fn_22010711064709895352.updateCheckListAciqlama(this)' ${(o.isChecked==1)?'checked':''} class="taskCheckListItemToggle noteCheckListItem" oid="${o.id}" type="checkbox">
+                                           <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="mr-auto w-100">
+                                            <textarea rows="1" onchange="fn_22010711064709895352.updateMezmunVocation(this)" class="form-control updateTaskcheckListItemName1 p-0 pl-3" oid="${o.id}" >${o.title}</textarea>
+                                    </div>
+                                
+                                    <div class="pl-0 p2-1">
+                                        <span title="Created By">
+                                            <img width="40px" class="Assigne-card-story-select-img created" src="${fileUrl(o.userImage)}" data-placement="top" data-trigger="hover" data-toggle="popover" data-content="${o.userName}" data-title="Created By" data-original-title="" title="">
+                                        </span>
+                                    </div>
+                                <div class="pl-0 p2-1"></div>
+                                <div class="pl-0 mb-0">
+                                    <label class="mb-0">
+                                        <span class="taskListenAttachmentFile">
+                                             <input type="file"  oid="${o.id}"  id='${bestId}' fname='${o.filePicker}' multiple="" class="d-none file-item-checklist-input-operation saTypeFilePicherUploadFile">
+                                                        <i class="cs-svg-icon attach-01"></i>
+                                         </span>
+                                         <label></label>
+                                    </label>
+                                 </div>
+                                 <div class="pl-1 p2-1 d-table">
+                                       <a href="#" oid="${o.id}" onclick='fn_22010711064709895352.deleteMezmunVocation(this)' class="text-light">
+                                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                       </a>
+                                 </div>
+                               </div>
+                               <div class="flex-column" fname="">
+                                     <div class="progress_bar_new" id="progress_bar_new" style="margin-top: -3px;">
+                                            
+                                         ${imgblock.html()}
+                                     </div>
+                                </div>
+                      </li>`
+                        tab.prepend(div);
+                    }
+                    $('.updateTaskcheckListItemName1').autoHeight();
+                }
+    
+            )
+        }
+    
+    },
+    
+    // uddate check
+    updateCheckListAciqlama: (el,file) => {
+        var data = {};
+        var id = $(el).attr('oid');
+        var filename = $(el).closest('li').find('.saTypeFilePicherUploadFile').attr('fname');
+             console.log($(el).closest('li').find('.saTypeFilePicherUploadFile'));
+            data.fkChecklistId = id;
+            data.filePicker = filename ;
+        if ($(el).closest('li').find('.taskCheckListItemToggle').prop("checked")) { 
+            data.isChecked = 1;
+        } else {
+            data.isChecked = 0;
+        }
+        callApi('21121714031708916446', data, true);
+    },
+    
+    // update Mezmun
+    updateMezmunVocation: (el) => {
+        var id = $(el).attr('oid');
+        var val = $(el).val();
+    
+        callApi('21121714072605535941', {fkChecklistId: id,title: val}, true);
+    },
+    
+    //delete Mezmun
+    deleteMezmunVocation: (el) => {
+        if (confirm("Məlumatın silinməsinə əminsiz?")) {
+            var id = $(el).attr('oid');
+    
+            callApi('21121714100203705645', {
+                    fkChecklistId: id
+                }, true, function () {
+    
+                    var fkowner = $(el).closest('.redirectClass').find('[sa-selectedfield="fkActionId"]').val();
+                    fn_22010711064709895352.loader(fkowner);
+    
+                }
+    
+            )
+        }
+    },
+    
+    //create all
+    create_all: (el) => {
+    
+        var setBack = el.closest('.redirectClass');
+        var fk_owner = setBack.find('#comp_id_22011915551301534994').val();
+        var aciqlama = $("#newAddCheckListVocation");
+        var tab = $(".task-check-list-box ul");
+        var loc = setBack.find('.task-check-list-box li .hm');
+    
+        if (loc.length > 0 && fk_owner && aciqlama.val()) {
+            var data = aciqlama.val()
+            tab.append($(
+                `<li class="d-flex">
+                    <div class="item-checkbox">
+                        <label class="checkmarkcontainer">
+                            <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+                                <span class="checkmark">
+                                </span></label>
+                    </div>
+                <div class="mr-auto w-100">
+                        <textarea rows="1" class="form-control p-0 pl-3 hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                            <div class="pl-1 p2-1"></div>
+                                <div class="pl-1 p2-1">
+                                </div>
+                        <div class="pl-1 p2-1 d-table">
+                            <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;">
+                                    <i class="fas fa-trash-alt text-light" aria-hidden="true">
+                                    </i>
+                            </a>
+                        </div>
+            </li>`
+            ))
+            aciqlama.val("")
+            fn_22010711064709895352.create_aciqlama(fk_owner, el);
+        } 
+        
+        else if (fk_owner && loc.length > 0) {
+            fn_22010711064709895352.create_aciqlama(fk_owner, el);
+        } 
+        
+        else if (fk_owner && aciqlama.val()) {
+    
+            fn_22010711064709895352.create_aciqlama(fk_owner, el);
+    
+        } 
+        
+        else {
+    
+            if (aciqlama.val()) {
+                var data = aciqlama.val()
+                tab.append($(
+                    `<li class="d-flex">
+                    <div class="item-checkbox">
+                        <label class="checkmarkcontainer">
+                            <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+                                <span class="checkmark">
+                                </span></label>
+                    </div>
+                <div class="mr-auto w-100">
+                        <textarea rows="1" class="form-control p-0 pl-3 hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                            <div class="pl-1 p2-1"></div>
+                                <div class="pl-1 p2-1">
+                                </div>
+                        <div class="pl-1 p2-1 d-table">
+                            <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;">
+                                    <i class="fas fa-trash-alt text-light" aria-hidden="true">
+                                    </i>
+                            </a>
+                        </div>
+            </li>`
+                ))
+                aciqlama.val("")
+    
+            }
+    
+        }
+    }
+    
+    }
+    
+    //ENTER SLASH
+    $(document).on('change',"#newAddCheckListVocation",function() {
+        var el = $(this)
+        fn_22010711064709895352.create_all(el);
+    })
+    
+    // Loader click
+    $(document).on('click',"#comp_id_220119163237025810359",function () {
+    var elem = $(this);
+    var setBack = elem.closest('.redirectClass');
+    var fk_owner = setBack.find('#comp_id_22011915551301534994').val();
+    fn_22010711064709895352.loader(fk_owner);
+    
+    })
+    
+    //add click
+    $(document).on('click',"#comp_id_22011001554309238028",function () {
+            var el = $(this)
+            fn_22010711064709895352.create_all(el);
+    })  
+    //file upload  click
+    $(document).on('load-file',".file-item-checklist-input-operation",function (file) {
+            var el = $(this)
+            fn_22010711064709895352.updateCheckListAciqlama(el,file);
+    })  
+     
+   /// checklist  end
