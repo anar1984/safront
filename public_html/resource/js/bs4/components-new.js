@@ -1,7 +1,4 @@
 'use strict';
- const global_const ={
-     
- };
 const cmpList = {
     userBlock: {
         Init: function (elm, type,title,options) {
@@ -1163,7 +1160,8 @@ $(document).on("input", 'input[type="number"]', function (e) {
 });
 $(document).on('hide.bs.dropdown', '.user-addons-box-elm', function (e) {
     return false;
-})
+});
+
 $(document).on('click', '.user-addons-box-elm .dropdown-menu', function (e) {
     e.stopPropagation();
 })
@@ -1299,7 +1297,7 @@ $(document).on("mousedown", ".selectableTable td:not(:first-child)", function (e
         startRowIndex = cell.parent().index();
     }
 
-    return false; // prevent text selection
+   // return false; // prevent text selection
 })
 $(document).on("mouseover", ".selectableTable td:not(:first-child)", function (e) {
     if (!isMouseDown)
@@ -1722,7 +1720,7 @@ var fn_22010711064709895352 = {
                                         </label>
                                     </div>
                                     <div class="mr-auto w-100">
-                                            <textarea rows="1" onchange="fn_22010711064709895352.updateMezmunVocation(this)" class="form-control updateTaskcheckListItemName1 p-0 pl-3" oid="${o.id}" >${o.title}</textarea>
+                                            <textarea rows="1" onchange="fn_22010711064709895352.updateMezmunVocation(this)" class="form-control updateTaskcheckListItemName1 " oid="${o.id}" >${o.title}</textarea>
                                     </div>
                                 
                                     <div class="pl-0 p2-1">
@@ -1825,7 +1823,7 @@ var fn_22010711064709895352 = {
                                 </span></label>
                     </div>
                 <div class="mr-auto w-100">
-                        <textarea rows="1" class="form-control p-0 pl-3 hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                        <textarea rows="1" class="form-control hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
                             <div class="pl-1 p2-1"></div>
                                 <div class="pl-1 p2-1">
                                 </div>
@@ -1864,7 +1862,7 @@ var fn_22010711064709895352 = {
                                 </span></label>
                     </div>
                 <div class="mr-auto w-100">
-                        <textarea rows="1" class="form-control p-0 pl-3 hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                        <textarea rows="1" class="form-control  hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
                             <div class="pl-1 p2-1"></div>
                                 <div class="pl-1 p2-1">
                                 </div>
