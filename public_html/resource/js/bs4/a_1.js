@@ -14534,11 +14534,12 @@ function callLoadDev() {
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
         loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
-        SACore.FillAllSelectBox();
+        ///SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
         // loadUsersAsOwner();
         commmonOnloadAction(this);
+        
         getJsCodeListByProject();
         Prototype.ApiContainer.Init(global_var.current_project_id);
         $('.cs-col-pagename .mm-title').html('');
@@ -16049,7 +16050,7 @@ var _22022019434402082398 = {
         three_dot_length: 50,
         column_list: {},
         row_list: [],
-        add_body: (res, table) => {
+    add_body: (res, table) => {
                 try {
                     var xtype = $('#matrix-view-xtype').val();
                     var ytype = $('#matrix-view-ytype').val();
