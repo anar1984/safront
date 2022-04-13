@@ -1083,6 +1083,15 @@ $.fn.tblToExcel = function () {
         tableToExcel(this, 'W3C Example Table');
     });
 }
+String.prototype.xss=function(){
+    var str=this;
+   return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');;
+};
 /* ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /*    // userList Block start */
 $(document).on('click', '.user-avatar-list li .item-click .removed-user-btn', function (e) {
@@ -1649,8 +1658,9 @@ var fn_22010711064709895352 = {
         var loc = setBack.find('.task-check-list-box li .hm')
         if (loc.length > 0) {
             for (let i = 0; i < loc.length; i++) {
-                var title = $(loc[i]).text()
-                callApi('21121713570309449461',{title: title,fkOwnerId: fkOnwer}, false, function (res) {
+                var title = $(loc[i]).text();
+                var fileList = $(loc[i]).closest('li').find('.saTypeFilePicherUploadFile').attr('fname');
+                callApi('21121713570309449461',{title: title,fkOwnerId: fkOnwer,filePicker:fileList}, false, function (res) {
     
                         $('#newAddCheckListVocation').val('');
                         fn_22010711064709895352.loader(fkOnwer);
@@ -1735,7 +1745,7 @@ var fn_22010711064709895352 = {
                                              <input type="file"  oid="${o.id}"  id='${bestId}' fname='${o.filePicker}' multiple="" class="d-none file-item-checklist-input-operation saTypeFilePicherUploadFile">
                                                         <i class="cs-svg-icon attach-01"></i>
                                          </span>
-                                         <label></label>
+                                  
                                     </label>
                                  </div>
                                  <div class="pl-1 p2-1 d-table">
@@ -1814,26 +1824,30 @@ var fn_22010711064709895352 = {
     
         if (loc.length > 0 && fk_owner && aciqlama.val()) {
             var data = aciqlama.val()
+            var   ids  =   makeId(10);
             tab.append($(
-                `<li class="d-flex">
+                `<li class="d-block component-container-dashed">
+                <div class="d-flex"> 
                     <div class="item-checkbox">
-                        <label class="checkmarkcontainer">
-                            <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
-                                <span class="checkmark">
-                                </span></label>
+                    <label class="checkmarkcontainer">
+                    <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+                    <span class="checkmark">
+                    </span></label>
                     </div>
-                <div class="mr-auto w-100">
-                        <textarea rows="1" class="form-control hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
-                            <div class="pl-1 p2-1"></div>
-                                <div class="pl-1 p2-1">
-                                </div>
-                        <div class="pl-1 p2-1 d-table">
-                            <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;">
-                                    <i class="fas fa-trash-alt text-light" aria-hidden="true">
-                                    </i>
-                            </a>
-                        </div>
-            </li>`
+                    <div class="mr-auto w-100">
+                    <textarea rows="1" class="form-control hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                    <div class="pl-1 p2-1"></div>
+                    <div class="pl-1 p2-1">
+                    </div>
+                    <div class="pl-0 mb-0"><label class="mb-0"><span class="taskListenAttachmentFile"><input  id='${ids}' multiple type="file" class="d-none saTypeFilePicherUploadFile"><i class="cs-svg-icon attach-01"></i></span></label></div>
+                    <div class="pl-1 p2-1 d-table">
+                    <a href="#" oid="" class="taskCheckListItemDeletecreate " style="font-size:13px;"><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                
+                <div class="flex-column"><div class="progress_bar_new" id='progress_bar_new' style="margin-top: -3px;">
+                </div></div>
+              </li>`
             ))
             aciqlama.val("")
             fn_22010711064709895352.create_aciqlama(fk_owner, el);
@@ -1853,26 +1867,30 @@ var fn_22010711064709895352 = {
     
             if (aciqlama.val()) {
                 var data = aciqlama.val()
+                var   ids  =   makeId(10);
                 tab.append($(
-                    `<li class="d-flex">
+                    `<li class="d-block component-container-dashed">
+                <div class="d-flex"> 
                     <div class="item-checkbox">
-                        <label class="checkmarkcontainer">
-                            <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
-                                <span class="checkmark">
-                                </span></label>
+                    <label class="checkmarkcontainer">
+                    <input class="taskCheckListItemToggle noteCheckListItem"  type="checkbox">
+                    <span class="checkmark">
+                    </span></label>
                     </div>
-                <div class="mr-auto w-100">
-                        <textarea rows="1" class="form-control  hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
-                            <div class="pl-1 p2-1"></div>
-                                <div class="pl-1 p2-1">
-                                </div>
-                        <div class="pl-1 p2-1 d-table">
-                            <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;">
-                                    <i class="fas fa-trash-alt text-light" aria-hidden="true">
-                                    </i>
-                            </a>
-                        </div>
-            </li>`
+                    <div class="mr-auto w-100">
+                    <textarea rows="1" class="form-control hm" oid="" style="height: 21px; overflow-y: hidden;">${data}</textarea></div>
+                    <div class="pl-1 p2-1"></div>
+                    <div class="pl-1 p2-1">
+                    </div>
+                    <div class="pl-0 mb-0"><label class="mb-0"><span class="taskListenAttachmentFile"><input  id='${ids}' multiple type="file" class="d-none saTypeFilePicherUploadFile"><i class="cs-svg-icon attach-01"></i></span></label></div>
+                    <div class="pl-1 p2-1 d-table">
+                    <a href="#" oid="" class="taskCheckListItemDeletecreate " style="font-size:13px;"><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                
+                <div class="flex-column"><div class="progress_bar_new" id='progress_bar_new' style="margin-top: -3px;">
+                </div></div>
+              </li>`
                 ))
                 aciqlama.val("")
     
@@ -1910,3 +1928,13 @@ var fn_22010711064709895352 = {
     })  
      
    /// checklist  end
+const  getTimeDifferenceNew = function (from, to) {
+     
+    var difMs = (from - to);
+    var difDays = Math.floor(difMs / 86400000);
+    var difHrs = Math.floor((difMs % 86400000) / 3600000);
+    var difMins = Math.round(difMs / 60000);
+    var txt = difMins;
+       return txt
+    // } 
+}

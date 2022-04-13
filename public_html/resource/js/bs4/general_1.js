@@ -427,7 +427,7 @@ var Utility = {
         var st = "";
         var sep = (seperator) ? seperator : global_var.data_eliminator;
         try {
-            st = d.substring(6, 8) + sep + d.substring(4, 6) + sep + d.substring(0, 4)
+            st = d.substring(4, 6) + sep + d.substring(6, 8) + sep + d.substring(0, 4)
         } catch (e) {
         }
         return st;

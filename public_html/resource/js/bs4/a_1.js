@@ -7739,7 +7739,7 @@ function jsCodeModal_checkbox_action() {
     $('.jscode-zad-' + val).show();
 }
 
-
+let  oldValueFn = ''
 $(document).on("change", "#jsCodeModal_fnlist", function(e) {
 
     var val = $(this).val();
@@ -7765,7 +7765,8 @@ $(document).on("change", "#jsCodeModal_fnlist", function(e) {
             $('#jsCodeModal_fncorename').val(res.kv.fnCoreName);
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
             window.editor1.setValue(res.kv.fnBody);
-
+            oldValueFn = res.kv.fnBody;
+             
             //  $('#jsCodeModal_fnbody').val(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
@@ -8032,12 +8033,24 @@ $(document).on('focusout', '#guiClassModal_classbody', function() {
 
     updateGuiClassBody(value)
 })
-$(document).on('focusout', '#jsCodeModal_fnbody', function() {
+
+$(document).on('click', '#saveFnCodeBoard', function() {
 
     var value = window.editor1.getValue();
-
-    updateJSChangeDetails(value, "fnBody")
-})
+    updateJSChangeDetails(value, "fnBody");
+});
+window.addEventListener('beforeunload', function (e) {
+   var newValue  = window.editor1.getValue();
+       if (global_var.current_modal === 'loadFn') {
+           if(oldValueFn == newValue){
+               alert('daaaa');
+           }else{
+                e.preventDefault();
+                e.returnValue = ''; 
+           }
+        
+       }
+});
 
 
 let FullSc = true;
@@ -13125,6 +13138,14 @@ $(window).keydown(function(e) {
         if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) {
             /*ctrl+s or command+s*/
             $("#save-code-ground-btn").click();
+            e.preventDefault();
+            return false;
+        }
+    }
+    if (global_var.current_modal === 'loadFn') {
+        if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) {
+            /*ctrl+s or command+s*/
+            $("#saveFnCodeBoard").click();
             e.preventDefault();
             return false;
         }
@@ -18973,6 +18994,7 @@ function updateJSChangeDetails(val, ustype) {
 }
 
 function updateJSChangePure(val, ustype, jsCodeId) {
+     $('.loading').show();
     try {
 
         if (ustype.lentgh === 0 || val.lentgh === 0 || jsCodeId === 0) {
@@ -18997,8 +19019,9 @@ function updateJSChangePure(val, ustype, jsCodeId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            getAllJsCodeByProject();
-            loadCurrentBacklogProdDetails();
+           // getAllJsCodeByProject();
+            //loadCurrentBacklogProdDetails();
+            $('.loading').hide();
         },
         error: function () {
             Toaster.showError("Something went wrong!");
@@ -19068,62 +19091,7 @@ function updateTask4ShortChangePureWithSync(val, ustype, taskId, comment, change
     });
 }
 
-function updateTask4Details(elm, ustype) {
-    var val = $(elm).val();
-    updateTask4ShortChangePureDetail(val, ustype, global_var.current_issue_id);
-}
 
-function updateTask4ShortChangePureDetail(val, ustype, taskId) {
-    try {
-
-        if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
-            return;
-        }
-    } catch (e) {
-        return;
-    }
-
-
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {}
-    json.kv.id = taskId;
-    json.kv.key = ustype;
-    json.kv.value = val;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmupdateTaskDetails4Short",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            /*  SATask.addTaskByRes(res);
-             SACore.updateBacklogByRes(res); */
-            if (global_var.current_modal === 'loadStoryCardMgmt') {
-                var bid = res.tbl[0].r[0].fkBacklogId;
-                $("#body-large-modal-in-us4backlog #user-story-show-stat[data-bid='" + bid + "']").change();
-                $("#user-story-show-stat[data-bid='" + bid + "']").change();
-            } else if (global_var.current_modal === 'loadBugChange') {
-                getBugList();
-            }
-            try {
-                genTaskTypeManagmentView4None();
-            } catch (error) {
-
-            }
-
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
-}
 
 function updateTask4ShortChangePure(val, ustype, taskId) {
     try {
