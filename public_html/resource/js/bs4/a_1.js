@@ -8037,13 +8037,14 @@ $(document).on('focusout', '#guiClassModal_classbody', function() {
 $(document).on('click', '#saveFnCodeBoard', function() {
 
     var value = window.editor1.getValue();
+    oldValueFn  =value;
     updateJSChangeDetails(value, "fnBody");
 });
 window.addEventListener('beforeunload', function (e) {
    var newValue  = window.editor1.getValue();
        if (global_var.current_modal === 'loadFn') {
            if(oldValueFn == newValue){
-               alert('daaaa');
+               
            }else{
                 e.preventDefault();
                 e.returnValue = ''; 

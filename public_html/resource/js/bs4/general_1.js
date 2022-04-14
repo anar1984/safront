@@ -1532,9 +1532,10 @@ function GetConvertedDate(componentId) {
 function GetConvertedDateDT(componentId,splitter) {
     try {
         var val  = $('#' + componentId).val();
-        val = val.split(" ");
+      
       if (!val)
           return "";
+          val = val.split(" ");
         nev = val[0].split(splitter?splitter:".")
       var day = nev[0];
       var month = nev[1];
