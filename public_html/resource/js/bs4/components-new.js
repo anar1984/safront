@@ -1938,3 +1938,77 @@ const  getTimeDifferenceNew = function (from, to) {
        return txt
     // } 
 }
+/// date range picker   
+function genTimePickerById(id,drop) {
+    $('#' + id).daterangepicker({
+        showDropdowns: true,
+        showWeekNumbers: true,
+        timePicker: false,
+        timePickerIncrement: 1,
+        timePicker12Hour: true,
+        defaultDate: false,
+        ranges: {
+            'Bu Gün': [moment(), moment()],
+            'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Son 7 gün': [moment().subtract(6, 'days'), moment()],
+            'Son 30 gün': [moment().subtract(29, 'days'), moment()],
+            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+            'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+    
+        buttonClasses: ['btn btn-default'],
+        applyClass: 'btn-small btn-primary',
+        cancelClass: 'btn-small btn-cancel-value-clear',
+        separator: ' to ',
+        drops:drop,
+        locale: {
+
+            applyLabel: 'Axtar',
+            cancelLabel: 'ləğv et',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Xüsusi',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
+        }
+    });
+}
+function getValueRangePicker(elm, lk) {
+    try {
+        var val = $(elm).val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+        var stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+        var endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+
+        // var inns = stTime.trim() + '%BN%' + endTime.trim();
+        
+        if (lk == 1) {
+             return stTime;
+        }
+        else if (lk ==2) {
+             return endTime;
+        }else{
+             return  [stTime,endTime];
+        }
+
+    } catch (error) {
+        return '';
+    }
+}
+
+function madeId() {
+    var id  = '';
+    var d  =  new Date();
+         id+= d.getFullYear();
+         id+= d.getMonth()+1;
+         id+= d.getDate();
+         id+= d.getDay();
+         id+= d.getHours();
+         id+= d.getMinutes();
+         id+= d.getSeconds();
+         id+= d.getMilliseconds();
+
+    return 'comp_id_'+id;
+}

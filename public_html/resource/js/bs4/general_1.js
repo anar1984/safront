@@ -716,8 +716,8 @@ function init4Core() {
     new User().loadPersonalUserOnInit();
     //Priority.load();
     new Project().loadUserList4Combo();
-    /// new Notification().getNotificationCount();
-    // new Notification().setTime();
+    /// new NotificationSA().getNotificationCount();
+    // new NotificationSA().setTime();
 
 
 }

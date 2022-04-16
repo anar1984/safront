@@ -6255,7 +6255,7 @@ UserStory.prototype = {
     check4Inputs: function () {
         var f = true;
         if (this.getStory().trim().length == 0) {
-            new Notification("Story is not entered!").showInComponent('backlogName');
+            new NotificationSA("Story is not entered!").showInComponent('backlogName');
             throw "Story is not entered!";
         }
     },
@@ -11800,7 +11800,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             success: function (res) {
                 SACore.updateBacklogByRes(res);
 //                alert("successfull");
-                new Notification("").clearField('updateBacklog');
+                new NotificationSA("").clearField('updateBacklog');
                 closeModal('updateBacklog');
                 new Label().load();
                 new Sprint().load();
@@ -11827,7 +11827,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     addController4Update: function () {
         var f = false;
         if (this.getStory().trim().length == 0) {
-            new Notification("Story is not entered!").showInComponent('u_backlogName');
+            new NotificationSA("Story is not entered!").showInComponent('u_backlogName');
             throw "Story is not entered!";
             f = true;
         }
@@ -12502,7 +12502,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#tasklistcomment').val('');
                 $('#file11').val('');
 //                 alert("successfull");
-//                new Notification("").clearField('updateBacklog');
+//                new NotificationSA("").clearField('updateBacklog');
 //                closeModal('updateBacklog');
             },
             error: function () {
@@ -12528,7 +12528,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#list').val('');
                 $('#file1').val('');
 //                 alert("successfull");
-//                new Notification("").clearField('updateBacklog');
+//                new NotificationSA("").clearField('updateBacklog');
 //                closeModal('updateBacklog');
             },
             error: function () {
@@ -16298,7 +16298,7 @@ Notification.prototype = {
         var table = $('<table style="width:100%" border=1></table>');
         for (var n = 0; n < obj.length; n++) {
             o = obj[n];
-            var td1 = '<a href="#" onclick="new Notification().redirectToDetails(\'' +
+            var td1 = '<a href="#" onclick="new NotificationSA().redirectToDetails(\'' +
                     o.fkProjectId + "','" + o.fkBacklogId + '\')">' + replaceTags(o.backlogName)
                     + '<br>' + replaceTags(o.projectName) + "</a>"
             td1 += o.isReviewed === '1' ? "" : " <span style='color:red;font-size:11px'><b>(new)</b></span>";
@@ -16313,7 +16313,7 @@ Notification.prototype = {
     setTime: function () {
 //        setInterval(function () {
 //            try {
-//                new Notification().getNotificationCount();
+//                new NotificationSA().getNotificationCount();
 //            } catch (e) {
 //            }
 //        }, 60000);
@@ -16479,10 +16479,10 @@ Label.prototype = {
     addLabelController4Insert: function () {
         var f = false;
         if (this.getName().trim().length == 0) {
-            new Notification("Label name is not entered!").showInComponent('labelname');
+            new NotificationSA("Label name is not entered!").showInComponent('labelname');
             f = true;
         } else if (this.getColor().trim().length == 0) {
-            new Notification("Label color is not entered!").showInComponent('labelcolor');
+            new NotificationSA("Label color is not entered!").showInComponent('labelcolor');
             f = true;
         }
 
@@ -16493,10 +16493,10 @@ Label.prototype = {
     addLabelController4Update: function () {
         var f = false;
         if (this.getName().trim().length == 0) {
-            new Notification("Label name is not entered!").showInComponent('u_labelname');
+            new NotificationSA("Label name is not entered!").showInComponent('u_labelname');
             f = true;
         } else if (this.getColor().trim().length == 0) {
-            new Notification("Label color is not entered!").showInComponent('u_labelcolor');
+            new NotificationSA("Label color is not entered!").showInComponent('u_labelcolor');
             f = true;
         }
 
@@ -16530,7 +16530,7 @@ Label.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-                new Notification("").clearField('insertNewLabel');
+                new NotificationSA("").clearField('insertNewLabel');
                 if ($('#closeAfterInsertLabel').is(':checked')) {
                     $('#insertNewLabel').modal('hide');
                 }
@@ -16565,7 +16565,7 @@ Label.prototype = {
             async: false,
             success: function (res) {
 //                alert("successfull");
-                new Notification("").clearField('updateLabel');
+                new NotificationSA("").clearField('updateLabel');
                 closeModal('updateLabel');
             },
             error: function () {
@@ -16855,19 +16855,19 @@ Sprint.prototype = {
     addController4Insert: function () {
         var f = false;
         if (this.getName().trim().length == 0) {
-            new Notification("Sprint name is not entered!").showInComponent('sprintname');
+            new NotificationSA("Sprint name is not entered!").showInComponent('sprintname');
             f = true;
         }
         if (this.getColor().trim().length == 0) {
-            new Notification("Sprint color is not entered!").showInComponent('sprintColor');
+            new NotificationSA("Sprint color is not entered!").showInComponent('sprintColor');
             f = true;
         }
         if (this.getStartDate().trim().length == 0) {
-            new Notification("Start Date is not entered!").showInComponent('insertNewSprint_startdate');
+            new NotificationSA("Start Date is not entered!").showInComponent('insertNewSprint_startdate');
             f = true;
         }
         if (this.getEndDate().trim().length == 0) {
-            new Notification("End Date is not entered!").showInComponent('insertNewSprint_enddate');
+            new NotificationSA("End Date is not entered!").showInComponent('insertNewSprint_enddate');
             f = true;
         }
 
@@ -16875,7 +16875,7 @@ Sprint.prototype = {
         var endDt = document.getElementById("insertNewSprint_enddate").value;
         if ((new Date(startDt).getTime() > new Date(endDt).getTime()))
         {
-            new Notification("End Date should be greater than Start Date!").showInComponent('insertNewSprint_enddate');
+            new NotificationSA("End Date should be greater than Start Date!").showInComponent('insertNewSprint_enddate');
             f = true;
         }
 
@@ -16886,19 +16886,19 @@ Sprint.prototype = {
     addController4Update: function () {
         var f = false;
         if (this.getName().trim().length == 0) {
-            new Notification("Sprint name is not entered!").showInComponent('u_sprintname');
+            new NotificationSA("Sprint name is not entered!").showInComponent('u_sprintname');
             f = true;
         }
         if (this.getColor().trim().length == 0) {
-            new Notification("Sprint color is not entered!").showInComponent('u_sprintColor');
+            new NotificationSA("Sprint color is not entered!").showInComponent('u_sprintColor');
             f = true;
         }
         if (this.getStartDate().trim().length == 0) {
-            new Notification("Start Date is not entered!").showInComponent('updateSprint_startdate');
+            new NotificationSA("Start Date is not entered!").showInComponent('updateSprint_startdate');
             f = true;
         }
         if (this.getEndDate().trim().length == 0) {
-            new Notification("End Date is not entered!").showInComponent('updateSprint_enddate');
+            new NotificationSA("End Date is not entered!").showInComponent('updateSprint_enddate');
             f = true;
         }
 
@@ -16906,7 +16906,7 @@ Sprint.prototype = {
         var endDt = document.getElementById("updateSprint_enddate").value;
         if ((new Date(startDt).getTime() > new Date(endDt).getTime()))
         {
-            new Notification("End Date should be greater than Start Date!").showInComponent('updateSprint_enddate');
+            new NotificationSA("End Date should be greater than Start Date!").showInComponent('updateSprint_enddate');
             f = true;
         }
 
@@ -16932,7 +16932,7 @@ Sprint.prototype = {
             async: false,
             success: function (res) {
 //                alert("successfull");
-                new Notification("").clearField('insertNewSprint');
+                new NotificationSA("").clearField('insertNewSprint');
                 if ($('#closeAfterInsertSprint').is(":checked")) {
                     $('#insertNewSprint').modal('hide');
                 }
@@ -16960,7 +16960,7 @@ Sprint.prototype = {
             async: false,
             success: function (res) {
 //                alert("successfull");
-                new Notification("").clearField('updateSprint');
+                new NotificationSA("").clearField('updateSprint');
                 closeModal('updateSprint');
             },
             error: function () {
@@ -17818,8 +17818,8 @@ function User() {
 
 User.prototype = {
     forgetPwd: function (e) {
-        new Notification().eraseInComponent('domainName');
-        new Notification().eraseInComponent('password_message');
+        new NotificationSA().eraseInComponent('domainName');
+        new NotificationSA().eraseInComponent('password_message');
         if (!$('#domainName').val().trim()) {
             alert("Please enter Domain.")
             return;
@@ -17841,13 +17841,13 @@ User.prototype = {
             contentType: 'text/html',
             success: function (res) {
                 if (res.kv.err === '1') {
-                    new Notification("Domain or Username is incorrect!").showInComponent('domainName');
+                    new NotificationSA("Domain or Username is incorrect!").showInComponent('domainName');
                 } else {
-                    new Notification("Your password were sent to your mail address. Please check your mail address.").showInComponent('password_message');
+                    new NotificationSA("Your password were sent to your mail address. Please check your mail address.").showInComponent('password_message');
                 }
             },
             error: function () {
-                new Notification("Domain or Username is incorrect!").showInComponent('domainName');
+                new NotificationSA("Domain or Username is incorrect!").showInComponent('domainName');
             }
         });
     },
