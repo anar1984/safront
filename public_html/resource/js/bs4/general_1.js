@@ -427,7 +427,7 @@ var Utility = {
         var st = "";
         var sep = (seperator) ? seperator : global_var.data_eliminator;
         try {
-            st = d.substring(6, 8) + sep + d.substring(4, 6) + sep + d.substring(0, 4)
+            st = d.substring(4, 6) + sep + d.substring(6, 8) + sep + d.substring(0, 4)
         } catch (e) {
         }
         return st;
@@ -716,8 +716,8 @@ function init4Core() {
     new User().loadPersonalUserOnInit();
     //Priority.load();
     new Project().loadUserList4Combo();
-    /// new Notification().getNotificationCount();
-    // new Notification().setTime();
+    /// new NotificationSA().getNotificationCount();
+    // new NotificationSA().setTime();
 
 
 }
@@ -1532,9 +1532,10 @@ function GetConvertedDate(componentId) {
 function GetConvertedDateDT(componentId,splitter) {
     try {
         var val  = $('#' + componentId).val();
-        val = val.split(" ");
+      
       if (!val)
           return "";
+          val = val.split(" ");
         nev = val[0].split(splitter?splitter:".")
       var day = nev[0];
       var month = nev[1];

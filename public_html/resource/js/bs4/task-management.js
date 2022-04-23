@@ -4726,8 +4726,6 @@ $(document).on("change", '#run_task_day_yearly_select_detail input', function (e
 
     var val = getValueScheduleWeekAction("run_task_day_yearly_select_detail");
     updateTask4ShortChangePureDetail(val, "monthlyAction", global_var.current_issue_id);
-
-
 })
 
 $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
@@ -5862,7 +5860,57 @@ function updateEkrantaskTypeBYuserId(userid) {
     }
 
 }
+function updateTask4Details(elm, ustype) {
+    var val = $(elm).val();
+    updateTask4ShortChangePureDetail(val, ustype, global_var.current_issue_id);
+}
 
+function updateTask4ShortChangePureDetail(val, ustype, taskId) {
+    try {
+        if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
+            return;
+        }
+    } catch (e) {return;}
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.id = taskId;
+    json.kv.key = ustype;
+    json.kv.value = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateTaskDetails4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+              SATask.addTaskByRes(res);
+           //  SACore.updateBacklogByRes(res); 
+            if (global_var.current_modal === 'loadStoryCardMgmt') {
+                var bid = res.tbl[0].r[0].fkBacklogId;
+                $("#body-large-modal-in-us4backlog #user-story-show-stat[data-bid='" + bid + "']").change();
+                $("#user-story-show-stat[data-bid='" + bid + "']").change();
+            } else if (global_var.current_modal === 'loadBugChange') {
+                //getBugList();
+            }
+            try {
+                genTaskTypeManagmentView4None();
+            } catch (error) {
+
+            }
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function createEkrantaskTypeByUSerID(useId) {
     var data = {};
     data.fkUserId = useId ? useId : global_var.current_ticker_id;
