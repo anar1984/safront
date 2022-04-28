@@ -5588,7 +5588,7 @@ UserStory.prototype = {
                         .append(descBody)
                         .append(scDesc)
                         .append(apiDesc)
-                    ))
+                    ).append($('<span class="related-table-span related-table'+obj[n].id+'">')))
                 .append($('<td>')
                     .append($("<button>")
                         .addClass("btn cs-copy-btn")
@@ -5627,7 +5627,7 @@ UserStory.prototype = {
                 }
             }
         }) /* .disableSelection(); */
-
+        getListDescRelatedDb()
         $("div.function-statement-container table tr").hover(function() {
             $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
         });
@@ -5714,6 +5714,10 @@ UserStory.prototype = {
                 .append($('<button class="dev dropdown-item firstbut" >')
                     .text('Add Related API')
                     .attr("onclick", "addRelatedApi(this,'" + id + "')")
+                )
+                .append($('<button class="dev dropdown-item firstbut" >')
+                    .text('Add Related Table DB')
+                    .attr("onclick", "addRelatedDb(this,'" + id + "')")
                 )
                 .append($('<button class="dev dropdown-item firstbut" >')
                     .text('Add Related Function')

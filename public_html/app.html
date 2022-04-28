@@ -6058,6 +6058,75 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="addRelatedDbModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Related DB</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+
+                        <div class="col-12 row">
+                            <input type="text"  class="d-none" id="addRelatedDBModal-inputid">
+                            <div class="col-6">
+                                <label for="sprintname" style="width: 100%;" class="col-form-label control-label">DB name
+                                </label>
+                                <select id="addRelatedDBModal-db" data-live-search="true" class="form-control  " style="width:100%;padding: 0px;
+                                    border-radius: 4px;
+                                    border: 1px solid gray;">
+                                    <option value="txt"></option>
+    
+                                </select>
+                            </div>
+                             <div class="col-5">
+                                <label for="sprintname" style="width: 100%;" class="col-form-label control-label">Table name
+                                </label>
+                                <select id="addRelatedTableModal-db" data-live-search="true" class="form-control  " style="width:100%;padding: 0px;
+                                    border-radius: 4px;
+                                    border: 1px solid gray;">
+                                    <option value="txt"></option>
+    
+                                </select>
+                             </div>
+                             <div class="col-1">
+                                <label for="sprintname" style="width: 100%;" class="col-form-label control-label">
+                                </label>
+                                <button type="button" class="btn btn-primary " id="addRelatedTable"> add </button>
+                             </div>
+                            
+                           
+                        </div>
+                        <div class="col-12 pt-2">
+                            <table class="table table-hover table-striped" id="relatedDbSelectTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">#</th>
+                                        <th class="text-center" scope="col">Database Name</th>
+                                        <th class="text-center" scope="col">Table Name</th>
+                                        <th class="text-center" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>                   
+                                
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document" >

@@ -688,13 +688,13 @@ const cmpList = {
                     }
                 
             },
-            onClickItem: function (elm,tbid) {
+            onClickItem: function (event,elm,tbid) {
                 var order  = $(elm).attr('order-no')
                 var item  = $("[right-click="+tbid+"] tbody .last_click_class td:eq("+order+")");
-                item.find('.right-click-btn').click();
+                item.find('.right-click-btn').trigger('click',[event]);
             },
             clickItem : function(order,text,tbid,icon) {
-                return `<li onclick="cmpList.tableRightClick.onClickItem(this,'${tbid}')" class="dropdown-item" order-no="${order}">
+                return `<li onclick="cmpList.tableRightClick.onClickItem(event,this,'${tbid}')" class="dropdown-item" order-no="${order}">
                         <i class="cs-svg-icon ${icon?icon.trim():"link-2"}"></i> ${text}
                       </li>`
             },
@@ -1085,12 +1085,13 @@ $.fn.tblToExcel = function () {
 }
 String.prototype.xss=function(){
     var str=this;
-   return String(str)
+
+   return str?String(str)
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');;
+    .replace(/>/g, '&gt;'):'';
 };
 /* ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /*    // userList Block start */
@@ -1273,6 +1274,7 @@ function sumAvarMaxMinCount(tbid,selected) {
             }
          }  
     })
+    sum  = (Math.round(sum * 100) / 100)
     var count  = $(selected).length;
     var tbid = $(tbid).closest('table').attr('data-pag-id');
     var elm = $("#table-selected-row-details-"+tbid+"");
@@ -1972,6 +1974,11 @@ function genTimePickerById(id,drop) {
             monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
         }
     });
+    try {
+        startTimeCurrent(id);
+    } catch (error) {       
+    }
+   
 }
 function getValueRangePicker(elm, lk) {
     try {

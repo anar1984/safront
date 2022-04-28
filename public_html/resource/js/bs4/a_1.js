@@ -9224,6 +9224,45 @@ $(document).on("click", ".screen_pgn_count", function(e) {
 })
 
 
+function addRelatedDbModal(el) {
+    var descId = $('#addRelatedApiModal-id').val();
+    var apidId = $('#addRelatedApiModal-api').val();
+    var desc = $('#addRelatedApiModal-shortdesc').val();
+
+    if (!descId || !apidId)
+        return;
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+
+    json.kv.id = descId;
+    json.kv.apiId = apidId;
+    json.kv.shortDesc = desc;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddRelatedApiToBacklogDesc",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function(res) {
+            AJAXCallFeedback(res);
+
+            $('#addRelatedApiModal').modal('hide');
+            new UserStory().getBacklogDesc();
+
+            loadCurrentBacklogProdDetails();
+
+        }
+    });
+}
+
 function addRelatedApiModal(el) {
     var descId = $('#addRelatedApiModal-id').val();
     var apidId = $('#addRelatedApiModal-api').val();
@@ -9573,6 +9612,100 @@ function addRelatedApi(el, descId) {
     loadRelatedAPI4Relation();
 }
 
+// add related tablee 
+function addRelatedDb(el, descId) {
+    $('#addRelatedDBModal-inputid').val(descId);
+    getListrelatedDbDesc(descId);
+    SqlGeneratorClass.loadDbName($('#addRelatedDBModal-db'));
+    $('#addRelatedDbModal').modal('show');
+   // loadRelatedAPI4Relation();
+}
+function getListrelatedDbDesc(fkInputDescId) {
+    var data  =  {};
+        data.fkInputDescId = fkInputDescId;
+        callApi('22042211045701142953', data, true, function(res) {
+               var table  = $('#relatedDbSelectTable tbody');
+               table.empty();
+               var db = res.tbl[0].r;
+               for (var i = 0; i < db.length; i++) {
+                   const o  = db[i]
+                  table.append(`
+                  <tr>
+                  <td class='text-center'>${i+1}</td>
+                  <td class='text-center'>${o.dbName}</td>
+                  <td class='text-center'>${o.tableName}</td>
+                  <td class='text-center'><a onclick='deleteTableRelated(this,"${o.id}")' href="#">delete</a></td>
+                  </tr>
+                 `)
+               }
+
+        })
+}
+function getListDescRelatedDb() {
+    var table  = $('#description_table_body_id > tr.esas-table-tr-for-zad');
+    var ids  = '';
+    table.each(function (params) {
+         ids += $(this).attr('pid')+'|';
+    })   
+    var data  =  {};
+    data.fkInputDescId = ids;
+    callApi('22042211045701142953', data, true, function(res) {
+        $('#description_table_body_id').find('.related-table-span').empty();
+               var db = res.tbl[0].r;
+           for (var i = 0; i < db.length; i++) {
+               const o  = db[i]
+               $('#description_table_body_id')
+                       .find('.related-table'+o.fkInputDescId)
+                        .append('<span class="m-2 badge badge-warning">'+o.dbName+'.'+o.tableName+'</span>')
+           }
+
+    })
+        
+}
+function deleteTableRelated(elm,id) {
+       if(confirm('Are you sure?!!')){
+        var data  ={}
+        data.id = id;
+        callApi('22042211050005313573', data, true, function(res) {
+            $(elm).closest('tr').remove();
+            getListDescRelatedDb()
+        })
+       }
+        
+}
+$(document).on('change','#addRelatedDBModal-db',function(){
+    var select =  $('#addRelatedTableModal-db');
+     var data  =  {};
+        data.dbId = $(this).val();
+        callService('serviceTmGetDbTableListForPopup', data, true, function(res) {
+            var db = res.tbl[0].r;
+            for (var i = 0; i < db.length; i++) {
+                var o = db[i];
+                select.append($('<option>')
+                    .val(o.id)
+                    .text(o.tableName)
+                )
+            }
+            select.selectpicker('refresh');
+        })
+})
+$(document).on('click','#addRelatedTable',function(){
+        var tableid =  $('#addRelatedTableModal-db').val();
+        var descid =  $('#addRelatedDBModal-inputid').val();
+        var dbId =  $('#addRelatedDBModal-db').val();
+         var data  =  {};
+         if(!dbId || !descid || !dbId){
+              Toaster.showError('Data not found');
+              return;
+         }
+        data.fkTableId = tableid;
+        data.fkDbId = dbId;
+        data.fkInputDescId = descid;
+        callApi('22042211081601854078', data, true, function(res) {
+            getListrelatedDbDesc(descid);
+            getListDescRelatedDb()
+        })
+})
 
 function addRelatedSourceCode(el, descId) {
     $('#addRelatedSourceCodeModal-id').val(descId);
@@ -12783,11 +12916,10 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig, isHtml) {
         async: true,
         success: function(res) {
 
-            isHtml = isHtml ? isHtml : $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
+            /* isHtml = isHtml ? isHtml : $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
 
-            if (isHtml === '1') {
-                $('#cs-col-Ceckbox-id').val("0");
-                $('#cs-col-Ceckbox-id').selectpicker("refresh");
+            if (isHtml === '1') { */
+             
 
                 try {
                     if (trig == 'load') {
@@ -12802,9 +12934,7 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig, isHtml) {
                     generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', "", false);
 
                 }
-                $('#cs-col-Ceckbox-id').val("1");
-                $('#cs-col-Ceckbox-id').selectpicker("refresh");
-            } else {
+            /* } else {
 
 
 
@@ -12818,7 +12948,7 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig, isHtml) {
                 } else {
                     generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', html, true);
                 }
-            }
+            } */
 
         }
     });
@@ -13009,19 +13139,7 @@ function iframeLoaded() {
     try {
         var pid = global_var.current_backlog_id;
         var js = window.editorJSGround.getValue();
-
-        if ($("#cs-col-Ceckbox-id").val() !== '1') {
-            // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
-            var resTmp = SAInput.toJSONByBacklog(pid);
-            var oldmodal = global_var.current_modal;
-
-            global_var.current_modal = $('#show_hidden_carrier').prop('checked') ? 'loadLivePrototype' : '';
-            var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-            global_var.current_modal = oldmodal;
-        } else {
-            var html = window.editorHTMLGround.getValue();
-
-        }
+        var html = window.editorHTMLGround.getValue();
         var css = window.editorCSSGround.getValue();
         var block = getIframeBlockInside(pid, css, js, html);
         $("#result-code-editor").html(block);
@@ -13063,6 +13181,15 @@ function getIframeBlockInside(pid, css, js, bodys) {
 $(document).on("change", '#show_hidden_carrier', function(e) {
     $("#run-code-ground-btn").click();
 })
+$(document).on("click", '#importLiveProto', function(e) {
+    var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+    var oldmodal = global_var.current_modal;
+    global_var.current_modal = '';
+    var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+    global_var.current_modal = oldmodal;
+    window.editorHTMLGround.setValue(html);
+    $("#save-code-ground-btn").click();
+})
 
 $(document).on("click", '#save-code-ground-btn', function(e) {
     var elm = $("#result-code-editor");
@@ -13070,34 +13197,21 @@ $(document).on("click", '#save-code-ground-btn', function(e) {
     $('.loading.editor').show();
     var js = window.editorJSGround.getValue();
     var css = window.editorCSSGround.getValue();
-    if ($("#cs-col-Ceckbox-id").val() !== '1') {} else {
-        var html = String(window.editorHTMLGround.getValue());
-
-        insertHtmlSendDbBybacklogId(html);
-    }
-
+    
+    var html = String(window.editorHTMLGround.getValue());
+    insertHtmlSendDbBybacklogId(html);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     setBacklogAsHtmlCodeGround(global_var.current_backlog_id, js, css);
     getIframeBlock(elm);
     ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
-
-
 });
 
 function setBacklogAsHtmlCodeGround(backlogId, js, css) {
     if (!backlogId) {
         return;
     }
-    if ($("#cs-col-Ceckbox-id").val() !== '1') {
-        var resTmp = SAInput.toJSONByBacklog(backlogId);
-        var oldmodal = global_var.current_modal;
-        global_var.current_modal = '';
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal = oldmodal;
-    } else {
-        var html = window.editorHTMLGround.getValue();
-    }
+    var html = window.editorHTMLGround.getValue();
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
     json.kv.backlogHtml = "<style>" + css + "</style>" + html + "<script>" + js + "</script>";
@@ -13131,8 +13245,6 @@ $(document).on("click", '#run-code-ground-btn', function(e) {
     elm.find('div').remove();
 
     getIframeBlock(elm);
-
-
 });
 $(window).keydown(function(e) {
     if (global_var.current_modal === 'loadCodeGround') {
