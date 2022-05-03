@@ -771,20 +771,22 @@ function add3Dots2Filename(fname) {
 function genFileBlockMulti4Table(names, cell) {
         try {
             names  = names.split("|");
-        } catch (error) {}
+        } catch (error) {};
+        var idx = 0
         var list  = '<span id="progress_bar_new">'
         for (let i = 0; i < names.length; i++) {
             const o = names[i];
             if(o.length > 0){
+                idx ++
                 if(i>0){
-                    list+= generateFileLine4Table(names[0], cell,'d-none');
+                    list+= generateFileLine4Table(o, cell,'d-none');
                 }else{
                     list+= generateFileLine4Table(names[0], cell,'');
                 }
             }
         }
-        if(names.length>1){
-            list +=  "<span onclick='imageViewerNew(this)' class='badge badge-info ml-1' >+" + (names.length - 1)+"</span>";
+        if(idx>1){
+            list +=  "<span onclick='imageViewerNew(this)' class='badge badge-info ml-1' >+" + (idx - 1)+"</span>";
         }
         list+='</span>';
     return list;
@@ -837,22 +839,63 @@ function setFilePickerValueCore(element,value,empty){
           }
           else if(attr==='block'){
               block.addClass("d-flex flex-nowrap");
-              block.append(`<div class="cs-img-col" id='pro_zad_span${idx}'>
-              <div class="file_upload_div cs_new_file_upload">
-              <img src="${fileUrl(value)}" class="comment_img full-screen-image-btn" data-url='${value}'  onclick="imageViewerNew(this,'${value}')" alt="${value}">
-              <span class="cs-img-title">${add3Dots2Filename(value)}</span>
-              <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
-              <i class="fa fa-download" aria-hidden="true"></i>
-              </a>
-              <span class="lbl-action" pid='${idx}' onclick="removeFilenameFromZad(this,'${value}')">
-              <i class="fa fa-trash-o" aria-hidden="true">
-              </i>
-              </span></div></div></div>`) 
+              block.append(new FileView().genBlockFileModelNew(value,idx)); 
           }
        }
       
        
 }
+
+
+const fileFormat  = {
+       imageFormat:["jpeg", "jpg", "png", "bmp", "gif"],
+       videoFormat:["mp4", "mpeg", "mkv", "webm", "avi", "mpg"],
+       wordFormat:['docx','dot','dotm'],
+       excelFormat:['xlsx','xlsm','xlsb','xltx','xls','xlt','xla','xlw','xlr','xlam'],
+       pdfFormat:['pdf'],
+       ppFormat:['pptx','pptm','ppt'],
+}
+class FileView{
+    
+     genBlockFileModelNew(filName,idx,deleteFn){
+        var ind = filName.lastIndexOf(".") + 1;
+        var fileFormats = filName.substr(ind);
+        var icon  =  'resource/img/doc.png'
+        if (fileFormat.imageFormat.includes(fileFormats)) {
+              icon  = fileUrl(filName);            
+        }
+        else if (fileFormat.wordFormat.includes(fileFormats)) {
+              icon  = 'resource/img/word.png';
+        }
+        else if (fileFormat.excelFormat.includes(fileFormats)) {
+              icon  = 'resource/img/excel.png';
+        }
+        else if (fileFormat.pdfFormat.includes(fileFormats)) {
+              icon  = 'resource/img/pdf.png';
+        }
+        else if (fileFormat.ppFormat.includes(fileFormats)) {
+              icon  = 'resource/img/powerpoint.png';
+        }
+        else if (fileFormat.videoFormat.includes(fileFormats)) {
+              icon  = 'resource/img/video.png';
+        }
+        return  this.genFileBlock(icon,filName,idx,deleteFn);
+    }
+    genFileBlock(icon,value,idx,deleteFn){
+        return  `<div class="cs-img-col" id='pro_zad_span${idx}'>
+        <div class="file_upload_div cs_new_file_upload">
+        <img src="${icon}" class="comment_img full-screen-image-btn" data-url='${value}'  onclick="imageViewerNew(this,'${value}')" alt="${value}">
+        <span class="cs-img-title">${add3Dots2Filename(value)}</span>
+        <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        </a>
+        <span class="lbl-action" pid='${idx}' onclick="${deleteFn?deleteFn:`removeFilenameFromZad(this,'${value}')`}">
+        <i class="fa fa-trash-o" aria-hidden="true">
+        </i>
+        </span></div></div></div>`
+    }
+}
+
 function generateFileLine4Table(name, cell,hideClass) {
 
     try {

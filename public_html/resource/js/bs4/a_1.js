@@ -3454,16 +3454,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                         .attr('pid', idx)
                         .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
             } else if (attr === 'block') {
-                $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
-                $('#pro_element_' + idx).find('.comment_img')
-                    .attr("src", fileUrl(finalname))
-                    .attr('data-url', finalname)
-                    .addClass('full-screen-image-btn')
-                    .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
-                $('#pro_element_' + idx).find('.see-detail-img a').attr("href", fileUrl(finalname));
-
-                $('#pro_zad_' + idx)
-                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')');
+                $('#pro_element_' + idx).replaceWith(new FileView().genBlockFileModelNew(finalname,idx))
             }
 
 
