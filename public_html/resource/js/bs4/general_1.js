@@ -427,7 +427,7 @@ var Utility = {
         var st = "";
         var sep = (seperator) ? seperator : global_var.data_eliminator;
         try {
-            st = d.substring(4, 6) + sep + d.substring(6, 8) + sep + d.substring(0, 4)
+            st = d.substring(6, 8) + sep + d.substring(4, 6) + sep + d.substring(0, 4)
         } catch (e) {
         }
         return st;
@@ -580,11 +580,6 @@ function parseDate(str) {
     var mdy = str.split('/');
     return new Date(mdy[2], mdy[0]-1, mdy[1]);
 }
-
-
-
-
-
 
 
 function fileUrl(fname) {
@@ -773,25 +768,33 @@ function genFileBlockMulti4Table(names, cell) {
             names  = names.split("|");
         } catch (error) {};
         var idx = 0
-        var list  = '<span id="progress_bar_new">'
+        var list  = '<span class="position-relative" id="progress_bar_new">'
+        var absolute  = '';
         for (let i = 0; i < names.length; i++) {
             const o = names[i];
             if(o.length > 0){
                 idx ++
                 if(i>0){
-                    list+= generateFileLine4Table(o, cell,'d-none');
+                    absolute+= new FileView().genTableFileModelNew(o,'dropdown-item');
                 }else{
-                    list+= generateFileLine4Table(names[0], cell,'');
+                    list+= new FileView().genTableFileModelNew(o,'');
                 }
             }
         }
+       
         if(idx>1){
-            list +=  "<span onclick='imageViewerNew(this)' class='badge badge-info ml-1' >+" + (idx - 1)+"</span>";
+            list +=  `<div class='btn-group'>
+                          <span  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class='badge badge-info ml-1' >+${(idx - 1)}</span>
+                          <div class="dropdown-menu">
+                               ${absolute}
+                            </div>
+                         </div>  
+                          `;
         }
         list+='</span>';
     return list;
 }
- function setFilePickerValue(element,value,empty){
+function setFilePickerValue(element,value,empty){
     $(element).attr("fname",value);
     try {
         value  = value.split("|");
@@ -811,7 +814,7 @@ function genFileBlockMulti4Table(names, cell) {
         list += setFilePickerValueCore(element,o,empty);
       }
   }
- }
+}
 function setFilePickerValueCore(element,value,empty){
        var idx = makeId(10)
        var elm  = $(element);
@@ -825,17 +828,7 @@ function setFilePickerValueCore(element,value,empty){
            
           if(attr==='list'){
               block.removeClass("d-flex flex-nowrap");
-             block.append($('<div>')
-                        .addClass("file-item")
-                        .attr('id', 'pro_zad_span' + idx)
-                        .append($("<span class='file-name-attach'>")
-                                    .text(add3Dots2Filename(value))
-                                    .attr('onclick', 'imageViewerNew(this,"' + value + '")'))
-                                    .addClass('full-screen-image-btn')
-                                    .attr('data-url',value)
-                        .append($('<i class="fa fa-times">')
-                                    .attr('pid', idx)
-                                    .attr('onclick', 'removeFilenameFromZad(this,\'' + value + '\')')))
+             block.append(new FileView().genListFileModelNew(value,idx))
           }
           else if(attr==='block'){
               block.addClass("d-flex flex-nowrap");
@@ -850,49 +843,120 @@ function setFilePickerValueCore(element,value,empty){
 const fileFormat  = {
        imageFormat:["jpeg", "jpg", "png", "bmp", "gif"],
        videoFormat:["mp4", "mpeg", "mkv", "webm", "avi", "mpg"],
-       wordFormat:['docx','dot','dotm'],
+       wordFormat:['docx','dot','dotm','doc'],
        excelFormat:['xlsx','xlsm','xlsb','xltx','xls','xlt','xla','xlw','xlr','xlam'],
        pdfFormat:['pdf'],
        ppFormat:['pptx','pptm','ppt'],
 }
+
 class FileView{
     
      genBlockFileModelNew(filName,idx,deleteFn){
         var ind = filName.lastIndexOf(".") + 1;
         var fileFormats = filName.substr(ind);
-        var icon  =  'resource/img/doc.png'
-        if (fileFormat.imageFormat.includes(fileFormats)) {
-              icon  = fileUrl(filName);            
-        }
-        else if (fileFormat.wordFormat.includes(fileFormats)) {
-              icon  = 'resource/img/word.png';
-        }
-        else if (fileFormat.excelFormat.includes(fileFormats)) {
-              icon  = 'resource/img/excel.png';
-        }
-        else if (fileFormat.pdfFormat.includes(fileFormats)) {
-              icon  = 'resource/img/pdf.png';
-        }
-        else if (fileFormat.ppFormat.includes(fileFormats)) {
-              icon  = 'resource/img/powerpoint.png';
-        }
-        else if (fileFormat.videoFormat.includes(fileFormats)) {
-              icon  = 'resource/img/video.png';
-        }
-        return  this.genFileBlock(icon,filName,idx,deleteFn);
+       
+        var data  =  this.getFileData(fileFormats,filName)
+        return  this.genFileBlock(data.icon,filName,idx,deleteFn,data.fn);
     }
-    genFileBlock(icon,value,idx,deleteFn){
+    genTableFileModelNew(filName,hideClass){
+        var ind = filName.lastIndexOf(".") + 1;
+        var fileFormats = filName.substr(ind);
+       
+        var data  =  this.getFileData(fileFormats,filName)
+        return  this.genTableListView(filName,data.fn,hideClass);
+    }
+    genListFileModelNew(filName,idx,deleteFn){
+        var ind = filName.lastIndexOf(".") + 1;
+        var fileFormats = filName.substr(ind);
+       
+        var data  =  this.getFileData(fileFormats,filName)
+        return  this.genFileListView(filName,idx,deleteFn,data.fn);
+    }
+    getFileData(fileFormats,filName){
+        var icon  =  'resource/img/doc.png';
+        var fn  = 'new FileView().openFileOffice';
+        if (fileFormat.imageFormat.includes(fileFormats)) {
+            icon  = fileUrl(filName); 
+            fn  = 'imageViewerNew';           
+      }
+      else if (fileFormat.wordFormat.includes(fileFormats)) {
+            icon  = 'resource/img/word.png';
+            fn = `new FileView().openFileOffice`;
+      }
+      else if (fileFormat.excelFormat.includes(fileFormats)) {
+            icon  = 'resource/img/excel.png';
+            fn = `new FileView().openFileOffice`;
+      }
+      else if (fileFormat.pdfFormat.includes(fileFormats)) {
+            icon  = 'resource/img/pdf.png';
+            fn = `new FileView().openFileOffice`;
+      }
+      else if (fileFormat.ppFormat.includes(fileFormats)) {
+            icon  = 'resource/img/powerpoint.png';
+            fn = `new FileView().openFileOffice`;
+      }
+      else if (fileFormat.videoFormat.includes(fileFormats)) {
+            icon  = 'resource/img/video.png';
+            fn  = 'imageViewerNew';
+      }
+
+      return {icon:icon,
+               fn:fn}
+    }
+    genFileBlock(icon,value,idx,deleteFn,fn){
         return  `<div class="cs-img-col" id='pro_zad_span${idx}'>
         <div class="file_upload_div cs_new_file_upload">
-        <img src="${icon}" class="comment_img full-screen-image-btn" data-url='${value}'  onclick="imageViewerNew(this,'${value}')" alt="${value}">
+        <img src="${icon}" class="comment_img full-screen-image-btn" data-url='${value}'  onclick="${fn}(this,'${value}')" alt="${value}">
         <span class="cs-img-title">${add3Dots2Filename(value)}</span>
         <div class="see-detail-img"><a target="_blank" href="${fileUrl(value)}">
         <i class="fa fa-download" aria-hidden="true"></i>
         </a>
-        <span class="lbl-action" pid='${idx}' onclick="${deleteFn?deleteFn:`removeFilenameFromZad(this,'${value}')`}">
+        <span class="lbl-action" pid='${idx}' onclick="${deleteFn?deleteFn:`new FileView().removeFilenameFromZad(this,'${value}')`}">
         <i class="fa fa-trash-o" aria-hidden="true">
         </i>
         </span></div></div></div>`
+    }
+    genFileListView(value,idx,deleteFn,fn){
+        return  $('<div>')
+        .addClass("file-item")
+        .attr('id', 'pro_zad_span' + idx)
+        .append($("<span class='file-name-attach'>")
+                    .text(add3Dots2Filename(value))
+                    .attr('onclick', `${fn}(this,"' + value + '")`))
+                    .addClass('full-screen-image-btn')
+                    .attr('data-url',value)
+        .append($('<i class="fa fa-times">')
+                    .attr('pid', idx)
+                    .attr('onclick', deleteFn?deleteFn:`new FileView().removeFilenameFromZad(this,'${value}')`))
+    }
+    genTableListView(value,fn,hideClass){
+        return  `<div class="${hideClass?hideClass:"d-inline-block"}">
+                     <div class="col-12 file_upload_div"> 
+                    <b onclick="${fn}(this,'${value}')" class="full-screen-image-btn" data-url="${value}">${add3Dots2Filename(value)}</b>
+                    <a target="_blank" href="${fileUrl(value)}">
+                    <i class="fa fa-download" aria-hidden="true"></i>  
+                    </a>
+                    </div>
+                    </div>`
+    }
+    openFileOffice(elm,value) {
+        var link  =  `https://docs.google.com/gview?url=${fileUrl(value)}&embedded=true`
+        window.open(link, value); 
+    }
+    removeFilenameFromZad(el, filename) {
+        if (confirm("Are You sure ?")) {
+            var picker  = $(el).closest('.component-container-dashed').find('.saTypeFilePicherUploadFile')
+            var st = picker.attr('fname');
+            st = st.replace(filename, '');
+    
+            picker.attr('fname', st);
+    
+            var id = $(el).attr("pid");
+            $('#pro_zad_span' + id).remove();
+            $('#pro_element_' + id).remove();
+            $(el).remove();
+            $(picker).trigger('remove-file');
+        }
     }
 }
 
@@ -1615,6 +1679,8 @@ function GetConvertedTimeDT(componentId) {
    
 }
 function GetReConvertedDT(componentId,time,date) {
+    if(!time||!date)
+         return ''
     try {
         // convert Date
     var day = date.substring(6, 8);
@@ -1957,9 +2023,6 @@ function fnline2Text(fnline) {
 
     return res;
 }
-
-
-
 
 
 function hasFilter4UserStory() {

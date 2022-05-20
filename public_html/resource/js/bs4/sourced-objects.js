@@ -196,10 +196,6 @@ var SAEntity = {
     },
 
 }
-
-
-
-
 var SAProjectUser = {
     "ProjectUsers": {},
     "Users": {},
@@ -400,7 +396,6 @@ var SAProjectUser = {
     }
 
 }
-
 var SATask = {
     "Tasks": {},
     "OrderNo": {},
@@ -584,8 +579,6 @@ var SATask = {
     }
 
 }
-
-
 var SACore = {
     "PinnedImages": {},
     "Project": {},
@@ -1330,7 +1323,6 @@ var SACore = {
         return keys;
     }
 }
-
 
 var SAInputDesc = {
     "InputDescriptions": {},

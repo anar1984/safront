@@ -1986,7 +1986,8 @@ function callApi(apiId, dataCore, isAsync, callback) {
     return res1;
 }
  function stripScripts(s) {
-      return s.replace('/<script.*>.*</script>/ims', " ") 
+      return s.replace(new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, 'g'), '')
+      
   }
 function callService(serviceName, dataCore, isAsync, callback) {
     if (!serviceName) {
@@ -2010,6 +2011,7 @@ function callService(serviceName, dataCore, isAsync, callback) {
         crossDomain: true,
         async: synch,
         success: function (res) {
+            res  = JSON.parse(stripScripts(JSON.stringify(res)));
             AJAXCallFeedback(res);
             res1 = res;
             if (callback) {

@@ -27,6 +27,9 @@ const cmpList = {
            
         
         },
+        getDefaultUserprofile:function(){
+           return 'userprofile.png';
+        },
         clickfocusElementSeacrh:function (elm) {
             setTimeout(function() { 
                 $(elm).closest(".user-addons-box-elm").find('.bs-searchbox input').focus();
@@ -51,14 +54,14 @@ const cmpList = {
         genviewItemBlock: function (id, url, nameAt) {
             var img = (url) ?
                 fileUrl(url) :
-                fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(this.getDefaultUserprofile());
             return ` <img id='${id}' class="Assigne-card-story-select-img owner" src="${img}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAt}">
                     `
         },
         genItemBlock: function (id, url, nameAt) {
             var img = (url) ?
                 fileUrl(url) :
-                fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(this.getDefaultUserprofile());
             return `<li id="${id}">
                 <div class="item-click">
                     <div class="circular--portrait">
@@ -95,8 +98,10 @@ const cmpList = {
 
                 }
             } else if (type === 'multi') {
-                block.empty();
-                tit.empty();
+                if(list.length >0){
+                    block.empty();
+                    tit.empty();
+                }
                 if (typeof list === 'object') {
                     for (let i = 0; i < list.length; i++) {
                         const o = list[i];
@@ -135,10 +140,6 @@ const cmpList = {
             var elm = select;
             elm.html('');
             var keys = SAProjectUser.GetKeysUser();
-            var div1 = $(`<option
-                    data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
-                    Unassigned</option>`);
-            elm.append(div1);
             for (var i = 0; i < keys.length; i++) {
                 var id = keys[i];
                 if(hiddenList.includes(id)){
@@ -148,7 +149,7 @@ const cmpList = {
                     var userName = SAProjectUser.Users[id].userPersonName;
                     var img = (userImage) ?
                         fileUrl(userImage) :
-                        fileUrl(new User().getDefaultUserprofileName());
+                        fileUrl(this.getDefaultUserprofile());
                     var div = $(`<option value='${id}'
                             data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
                             ${userName}</option>`);
@@ -256,9 +257,10 @@ const cmpList = {
                var attr  =  $(elm).attr('data-pag-id')
             if (elm.prop('tagName') === 'TABLE') {
                 $("#paginiton_id_"+attr).remove();
-                if(rowCount=="0"||!rowCount){
-                    return
-                }
+                if(rowCount=="0"||!rowCount|| typeof rowCount =='object' || rowCount.length >10)
+                 return;
+                 
+                 
                 var tbid = makeId(10);
                 $(elm).attr("data-pag-id", tbid);
                 $(elm).addClass("selectableTable");
@@ -946,7 +948,7 @@ $.fn.getVal = function (val) {
             var value =$(this).find('.mode-aktiv-all').attr('data-val');
            return value?value:"A";
         }
-           
+        
        }
    
 }
@@ -1707,12 +1709,7 @@ var fn_22010711064709895352 = {
                             for (let l = 0; l < imglist.length; l++) {
                                 const d = imglist[l];
                                 if(d){
-                                    imgblock.append(`<div class="file-item" id="pro_zad_span${kid}">
-                                    <span class="file-name-attach full-screen-image-btn" data-url='${d}'  onclick="imageViewerNew(this,'${d}')">
-                                    ${add3Dots2Filename(d)}
-                                    </span>
-                                    <i class="fa fa-times" pid="${kid}" onclick="removeFilenameFromZad(this,'${d}')" aria-hidden="true"></i>
-                                    </div>`)
+                                    imgblock.append(new FileView().genListFileModelNew(finalname,idx))
                                 }
                                
                                 
@@ -2020,15 +2017,87 @@ function madeId() {
     return 'comp_id_'+id;
 }
 
-function addSeperateNumber(nStr)
-{
+function addSeperateNumber(nStr,rkl){
+      if(!nStr){
+        nStr  =  0;
+      }
+    nStr  = parseFloat(nStr).toFixed(rkl?rkl:2);
+    nStr = nStr.xss();
     nStr += '';
-    x = nStr.split('.');
-    x1 = x[0];
-    x2 = x.length > 1 ? '.' + x[1] : '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
         x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1 + x2;
 }
+
+(function($){
+    var defaults = {
+        elems           :null, //Element to print HTML
+        copy_css        :false,//Copy CSS from original element
+        external_css    :null  //New external css file to apply
+    };
+
+    var methods = {
+        init : function (options) {
+            var settings = $.extend({}, defaults, options)
+            
+            return this.each(function () {
+                var elems=$(this);
+              //  $(this).click(function(e) {
+                        $('.print-iframe').remove();
+                    var iframe   = document.createElement('iframe');
+                        iframe.classList.add('print-iframe');
+                   
+                    
+                    $(iframe).load(function(){
+                        elems.each(function(){
+                            iframe.contentWindow.document.body.appendChild(this.cloneNode(true));
+                        });
+                        if(settings.copy_css) {
+                            var arrStyleSheets = document.getElementsByTagName("link");
+                            for (var i = 0; i < arrStyleSheets.length; i++){
+                                iframe.contentWindow.document.head.appendChild(arrStyleSheets[i].cloneNode(true));
+                            }
+                            var arrStyle = document.getElementsByTagName("style");
+                            for (var i = 0; i < arrStyle.length; i++){    
+                                iframe.contentWindow.document.head.appendChild(arrStyle[i].cloneNode(true));
+                            }
+                        }
+                        if(settings.external_css) {
+                            var style  = document.createElement("link")
+                            style.rel  = 'stylesheet';
+                            style.type = 'text/css';
+                            style.href = settings.external_css;
+                            iframe.contentWindow.document.head.appendChild(style);
+                        }
+                        var script   = document.createElement('script');
+                        script.type  = 'text/javascript';
+                        script.text  = 'window.print();';
+                        iframe.contentWindow.document.head.appendChild(script);
+                        $(iframe).hide();
+                    });
+                    $(iframe).appendTo('body');
+               // });
+            });
+        },
+        destroy : function () {
+            //Anything else I should do here?
+            return this.each(function () {});
+        }
+    };
+
+    $.fn.saPrint = function(method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || ! method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' +  method + ' does not exist on jQuery.printIt');
+        }    
+    };
+    }(jQuery));
+

@@ -3469,14 +3469,14 @@ const taskManagement = {
    
                             var msg = ""
                              var img  = SAProjectUser.Users[tellerId].userImage;
-                               img  =  fileUrl(img)
+                                 img  =  fileUrl(img);
                              var deadLine = getTimeDifference(endTime, new Date());
                              var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
                   return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus,fktaskId);
                     
                 } catch (error) {
                    console.log(error)
-                    return ''
+                    return '';
                 }
                 
             },

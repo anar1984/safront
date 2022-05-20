@@ -1,3 +1,9 @@
+ <!--  global event js vaxt catanda silinecek -->
+ <script src="https://test.sourcedagile.com/api/get/dwd/js/48edh/22050717295302341503.js"></script>
+ <!--  global fn js vaxt catanda silinecek -->
+  <script src="https://test.sourcedagile.com/api/get/dwd/js/48edh/22050712292400293866.js"></script>
+
+
 <style>
     /* horizontal panel*/
 
@@ -219,6 +225,11 @@
 <div style="position: relative; background-color: #525596;border-bottom: 1px solid #272B7C;border-top: 1px solid #272B7C;color: #fff;" class="d-flex justify-content-center align-items-center storecard-header-nav-section">
 
     <div class=" cs-col-Ceckbox">
+      
+   <input class="btn btn-outline-light" id="storycard-panel-backlog-id" placeholder="StoryCard ID" onchange="findBacklogWithId4StoryCard(this)" title="StoryCard find by Id">
+           
+    </div>
+    <div class=" cs-col-Ceckbox">
         <!-- <div class="mm-col">
             <span class="mm-title">Html Mode</span>
         </div>
@@ -301,6 +312,12 @@
     <div class="cs-col-storecard-general-setting mr-1">
         <button class="btn btn-danger btn-sm " id="css-toggle-ground-btn" title="Toggle-js">
             <i class="far fa-eye fa-eye-slash"> </i> CSS
+
+        </button>
+    </div>
+    <div class="cs-col-storecard-general-setting mr-1">
+        <button class="btn btn-secondary btn-sm "  id="history-toggle-ground-btn" title="History">
+            <i class="fas fa-history"></i> History
 
         </button>
     </div>
@@ -421,26 +438,26 @@
     })
 
     $('#html-toggle-ground-btn').click(function () {
-        $('#html-toggle-ground-btn').children("i").toggleClass("fa-eye-slash")
+        $('#html-toggle-ground-btn').children("i").toggleClass("fa-eye-slash");
         $(".html-code-editor").toggleClass('display-n');
         if ($(".js-code-editor").hasClass("display-n") && $(".html-code-editor").hasClass("display-n")) {
-            $(".panel-right-code").addClass("with-100")
-            $(".panel-left-code").addClass("with-0")
+            $(".panel-right-code").addClass("with-100");
+            $(".panel-left-code").addClass("with-0");
         } else {
-            $(".panel-right-code").removeClass("with-100")
-            $(".panel-left-code").removeClass("with-0")
+            $(".panel-right-code").removeClass("with-100");
+            $(".panel-left-code").removeClass("with-0");
         }
     })
 
     $('#js-toggle-ground-btn').click(function() {
-         $('#js-toggle-ground-btn').children("i").toggleClass("fa-eye-slash")
+         $('#js-toggle-ground-btn').children("i").toggleClass("fa-eye-slash");
         $(".js-code-editor").toggleClass('display-n');
         if ($(".js-code-editor").hasClass("display-n") && $(".html-code-editor").hasClass("display-n")) {
-            $(".panel-right-code").addClass("with-100")
-            $(".panel-left-code").addClass("with-0")
+            $(".panel-right-code").addClass("with-100");
+            $(".panel-left-code").addClass("with-0");
         } else {
-            $(".panel-right-code").removeClass("with-100")
-            $(".panel-left-code").removeClass("with-0")
+            $(".panel-right-code").removeClass("with-100");
+            $(".panel-left-code").removeClass("with-0");
         }
     })
 
@@ -517,3 +534,66 @@
 
    
 </script>
+<div class="modal fade" id="history-codeground-modal" style="z-index: 41045;overflow: hidden;" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
+        <div class="modal-content" style="width: 100%; height: 100%;">
+            <div class="modal-header" style="background-color: rgb(82 85 150);">
+                <h5 class="modal-title" id=""></h5>
+                <div class="float-right">
+
+                </div>
+
+                <button type="button" class="close p-2" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body" style="background-color: #f1f3f4;height: 95vh;overflow: hidden;">
+                <!--<form>-->
+                    <div class="row">
+                        <div class="col-3" style="height: 95vh; overflow: hidden;" id="history-list">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link active history-tab-codegorund" data-type="js" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">JS</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link history-tab-codegorund" data-type="html" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">HTML</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link history-tab-codegorund" data-type="css" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">CSS</button>
+                                </li>
+                              </ul>
+                              <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <ul data-dev="js" class="list-group scroll-ul-history list-group-flush  overflow-auto" id="list-history-js-ul">
+
+                                     </ul>
+                                </div>
+                                <div  class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                      <ul data-dev="html" class="list-group scroll-ul-history list-group-flush  overflow-auto" id="list-history-html-ul">
+
+                                       </ul>
+                                </div>
+                                <div  class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <ul data-dev='css' class="list-group  scroll-ul-history list-group-flush  overflow-auto" id="list-history-css-ul">
+
+                                   </ul>
+                               </div>
+                              </div>
+                        
+                        </div>
+                        <div class="col-9" style="height: 90vh;overflow: hidden;" >
+                            <section class="actions">
+                                <label>Inline</label>
+                                <input type="checkbox" class="inline-it">
+                            </section>
+                            <div class="w-100 h-100" id="editor-history-dif">
+
+                            </div>
+                        
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

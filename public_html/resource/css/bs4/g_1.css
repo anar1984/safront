@@ -5317,3 +5317,20 @@ only screen and (max-width: 767px) {
     background: #f5f7f7;
     z-index: 100;
 }
+.scroll-ul-history{
+    height: 83vh;
+    counter-reset: section;
+}
+.history-item-codegorund::before{
+    counter-increment: section;
+    content: counter(section);
+    display: inline-block;
+    color: white;
+    background: #555;
+    margin-right: 16px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+
+}
