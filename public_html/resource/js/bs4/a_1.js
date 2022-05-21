@@ -12790,16 +12790,16 @@ class HistoryNew{
             case 'js': 
             case "css":
             case 'html': 
-                        api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",body:'requestBody'}
+                        api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",trig:"fkBacklogId",body:'requestBody'}
                  break;
             case 'sql': case'javacore': 
-                        api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",body:'jsBody'}
+                        api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fkBacklogId",body:'jsBody'}
                  break;
             case 'api': 
-                        api = {listApi:'22052112352806745403',dateId:'history',name:"backlogName",body:''}
+                        api = {listApi:'22052112352806745403',dateId:'history',name:"backlogName",trig:"fkBacklogId",body:''}
                  break;
             case 'db':  
-                        api = {listApi:'22052113455707789858',dateId:'history',name:"databaseName",body:'sqlQuery'}
+                        api = {listApi:'22052113455707789858',dateId:'history',name:"databaseName",trig:"tableName",body:'sqlQuery'}
                  break;
             default:
                 break;
@@ -12844,19 +12844,21 @@ class HistoryNew{
             $('.loading').remove();
         })
     }
-    getListHistory4History(typeDev) {
-        var list = $('#list-history-' + typeDev + '-ul');
-        list.attr('data-start', '0');
-        list.attr('data-end', '50');
-        list.empty();
+    addLoader(list){
+        $(list).empty();
         for (var i = 0; i < 10; i++) {
     
-            list.append(`<li class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;"> 
+            $(list).append(`<li class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;"> 
                                             <div class="box-loader w-100 shimmer">
                                                 
                                               </div>
                                           </li>`)
         }
+    }
+    getListHistory4History(typeDev) {
+        var list = $('#list-history-' + typeDev + '-ul');
+        var select = $('#list-history-' + typeDev + '-select');
+        this.addLoader(list);
         var time  =  DateRangePickerFormatValueArry($('#history-panel-date-id'))
         var data = {};
         data.fkBacklogId = global_var.current_backlog_id;
@@ -12874,6 +12876,7 @@ class HistoryNew{
         callApi(apiID.listApi, data, true, function (res) {
     
             list.empty();
+            select.empty();
             try {
                 var siy = res.tbl[0].r
                 for (let k = 0; k < siy.length; k++) {
@@ -12885,14 +12888,19 @@ class HistoryNew{
                     }
                     historyList4History[o.id] = o;
                     list.append(that.genItemBlock(o,typeDev));
+                     if(select.find('[value='+o[apiID.trig]+']').length<1){
+                        select.append($('<option>').val(o[apiID.trig]).text(o[apiID.name]))
+                     }
                 }
                 $('[data-toggle="popover"]').popover({
                     html: true
                 });
+                select.selectpicker('refresh')
             } catch (error) {
                 console.error(error);
                 list.append(`<li class="list-group-item  text-center">Empty</li>`)
             }
+
         })
     }
     getReleaseList(){
@@ -12916,7 +12924,7 @@ class HistoryNew{
             }else{
                 var namess  = o[time.name] + ' ('+o.projectName+')';
             }
-        return `<li pid='${o.id}' data-type='${type}' class="list-group-item history-item-4history">
+        return `<li pid='${o.id}' fid='${o[time.trig]}' data-type='${type}' class="list-group-item history-item-4history">
         <span><input  data-id="${o.id}" type="checkbox"></span>
         ${namess}
         <span>${Utility.convertDate(o[time.dateId+'Date'])+'/'+Utility.convertTime(o[time.dateId+'Time'])}</span>
@@ -12960,6 +12968,28 @@ $(document).on("click", '.tab-pane.active .history-item-4history input[type="che
 $(document).on("click", '.history-tab-4history', function (e) {
     var typeDev = $(this).attr('data-type');
     new HistoryNew().getListHistory4History(typeDev);
+});
+$(document).on("change", 'select.select-filter-title', function (e) {
+    var ul  = $(this).closest('.tab-pane').find('ul.scroll-ul-history');
+    var li  = ul.find('li');
+   var val  =  $(this).val();
+        if(val.length >0){
+            li.hide();
+               val.map(function (o) {
+                ul.find('li[fid='+o+']').show();
+               })
+           
+        }else{
+            li.show();
+        } 
+});
+$(document).on("change", 'input.all-checked-history', function (e) {
+    var ul  = $(this).closest('.tab-pane').find('ul.scroll-ul-history');
+    if($(this).prop('checked')){
+        ul.find('input[type="checkbox"]').prop('checked',true);
+    }else{
+        ul.find('input[type="checkbox"]').prop('checked',false);
+    }
 });
 $(document).on("click", '#unAssignee-add-release', function (e) {
     new HistoryNew().unAssigneeRelease();
