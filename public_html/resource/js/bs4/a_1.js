@@ -691,6 +691,25 @@ function DateRangePickerFormatValue(elm) {
     var inns = stTime.trim() + '%BN%' + endTime.trim();
     return inns
 }
+function DateRangePickerFormatValueArry(elm) {
+
+    var val = $(elm).val();
+    if (!val) {
+        return ''
+    }
+    var stTime
+    var endTime
+    val = val.split('-')
+    var dt = val[0].split('/');
+    var dt1 = val[1].split('/');
+    stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+    endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+    console.log(endTime, stTime);
+    return {
+             'startTime':stTime.trim(),
+             'endTime':endTime.trim()
+           }
+}
 
 $(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
     var depID = $(this).attr('data-api-tabid');
@@ -12717,13 +12736,257 @@ $(document).on('click', '.loadHistory', function (evt) {
 
         $('#mainBodyDivForAll').html(html_string);
         $('.history-select-picker').selectpicker();
-
-       
+        genTimePickerById('history-panel-date-id','down');
+        new HistoryNew().getReleaseList();
+        new HistoryNew().getUserList();
+        genMonacoEditorDiff("editorDiffHistory",'editor-history-dif', '//Start', '//StartDiff', 'javascript');
         $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
 
     });
 
 });
+$(document).on("click", '.history-item-4history', function (e) {
+    $('.history-item-4history').removeClass('active')
+    $(this).addClass('active');
+    var pid = $(this).attr('pid');
+    var type = $(this).attr('data-type');
+    if(type=='api'){
+        var id = historyList4History[pid].fkBacklogId;
+        loadHistoryByBacklogStId(id);
+        $("#task-ongoing-large-history").modal('show');
+    }else{
+        new HistoryNew().itemClick(type,pid);  
+    }
+    
+});
+let historyList4History={};
+class HistoryNew{
+    itemClick(type,pid){
+        var apiID = this.getApiId4History(type);
+         const o = historyList4History[pid]; 
+        var valNew = o[apiID.body];
+        var oldVal = o.oldValue;
+       /*  
+         var data  = {};
+             data.historyDate = historyList4History[pid][apiID.dateId+'Date']
+             data.historyTime = historyList4History[pid][apiID.dateId+'Time']
+        var that  =  this; */
+        this.setModel(type,oldVal,valNew)
+        /* callApi(apiID.listApi,data,true,function (res) {
+          
+        }) */
+    }
+    setModel(type,valold,valNew){
+        type = (type == 'js') ? 'javascript' : type;
+        type = (type == 'db') ? 'sql' : type;
+        window.editorDiffHistory.setModel({
+            original: monaco.editor.createModel(valold, type),
+            modified: monaco.editor.createModel(valNew, type),
+        });
+    }
+    getApiId4History(key) {
+        var api 
+        switch (key) {
+            case 'js': 
+            case "css":
+            case 'html': 
+                        api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",body:'requestBody'}
+                 break;
+            case 'sql': case'javacore': 
+                        api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",body:'jsBody'}
+                 break;
+            case 'api': 
+                        api = {listApi:'22052112352806745403',dateId:'history',name:"backlogName",body:''}
+                 break;
+            case 'db':  
+                        api = {listApi:'22052113455707789858',dateId:'history',name:"databaseName",body:'sqlQuery'}
+                 break;
+            default:
+                break;
+        }
+        return api;
+    }
+    getListHistory4HistoryMore(typeDev, stl, endL) {
+        var list = $('#list-history-' + typeDev + '-ul');
+    
+        var data = {};
+        data.fkBacklogId = global_var.current_backlog_id;
+        data.devType = typeDev;
+        data.startLimit = stl;
+        data.endLimit = endL;
+        data.createdDateFrom = time.startTime;
+        data.createdDateTo = time.endTime;
+        var apiID = this.getApiId4History(typeDev);
+        var that  = this;
+        callApi(apiID.listApi, data, true, function (res) {
+            try {
+                var siy = res.tbl[0].r
+                for (let k = 0; k < siy.length; k++) {
+                    const o = siy[k];
+                    try {
+                        o.oldValue = siy[k + 1].requestBody;
+                    } catch (error) {
+                        o.oldValue = '';
+                    }
+    
+                    historyList4History[o.id] = o;
+    
+                    list.append(that.genItemBlock(o,typeDev))
+    
+                }
+                $('[data-toggle="popover"]').popover({
+                    html: true
+                });
+            } catch (error) {}
+            list.removeData('loading');
+            list.attr('data-start',stl);
+            list.attr('data-end',endL);
+            $('.loading').remove();
+        })
+    }
+    getListHistory4History(typeDev) {
+        var list = $('#list-history-' + typeDev + '-ul');
+        list.attr('data-start', '0');
+        list.attr('data-end', '50');
+        list.empty();
+        for (var i = 0; i < 10; i++) {
+    
+            list.append(`<li class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;"> 
+                                            <div class="box-loader w-100 shimmer">
+                                                
+                                              </div>
+                                          </li>`)
+        }
+        var time  =  DateRangePickerFormatValueArry($('#history-panel-date-id'))
+        var data = {};
+        data.fkBacklogId = global_var.current_backlog_id;
+        data.devType = typeDev;
+        data.startLimit = 0;
+        data.endLimit = 500;
+        data.createdDateFrom = time.startTime;
+        data.createdDateTo = time.endTime;
+        data.createdBy = getProjectValueUsManageMultiByelInNew($("#history-panel-created-id"));
+        if($('#release-is-filter').prop('checked')){
+            data.fkDeployReleaseId = $('#releaseList4History').val();
+        }
+        var apiID = this.getApiId4History(typeDev);
+        var that  = this;
+        callApi(apiID.listApi, data, true, function (res) {
+    
+            list.empty();
+            try {
+                var siy = res.tbl[0].r
+                for (let k = 0; k < siy.length; k++) {
+                    const o = siy[k];
+                    try {
+                        o.oldValue = siy[k + 1][apiID.body];
+                    } catch (error) {
+                        o.oldValue = '';
+                    }
+                    historyList4History[o.id] = o;
+                    list.append(that.genItemBlock(o,typeDev));
+                }
+                $('[data-toggle="popover"]').popover({
+                    html: true
+                });
+            } catch (error) {
+                console.error(error);
+                list.append(`<li class="list-group-item  text-center">Empty</li>`)
+            }
+        })
+    }
+    getReleaseList(){
+        var data ={};
+        var select = $('#releaseList4History');
+        callApi('22052111302105571050',data,true,function (res) {
+            res.tbl[0].r.map((o) => {
+                select.append($('<option>').val(o.id).text(o.releaseName +"("+Utility.convertDate(o.releaseDate)+')'))
+            });
+            select.selectpicker('refresh');
+        });
+    }
+    getUserList(){
+        var select = $('#history-panel-created-id');
+        loadAssigneesByElement(select);
+    }
+    genItemBlock(o,type){
+        var time  =  this.getApiId4History(type);
+            if(type=='db'){
+               var namess  = o.fieldName +' ('+o.databaseName+"_" +o.tableName+')';
+            }else{
+                var namess  = o[time.name] + ' ('+o.projectName+')';
+            }
+        return `<li pid='${o.id}' data-type='${type}' class="list-group-item history-item-4history">
+        <span><input  data-id="${o.id}" type="checkbox"></span>
+        ${namess}
+        <span>${Utility.convertDate(o[time.dateId+'Date'])+'/'+Utility.convertTime(o[time.dateId+'Time'])}</span>
+        <img class="Assigne-card-story-select-img float-right updated" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Name: ${o.userPersonName} <br>
+                                  Date:  " title="" data-original-title="Updated By "> </li>`
+    }
+    unAssigneeRelease(){
+        var ids  = this.getCheckecIdListHistory();
+        var data = {};
+           data.fkDeployReleaseId = $('#releaseList4History').val();
+           data.historyType = $('.active.history-tab-4history').attr('data-type');
+        ids.each(function (params) {
+           data.fkHistoryId = $(this).attr('data-id');
+            callApi('22052112020304439823', data, true, function (res) {
+               
+            });
+        })
+        Toaster.showMessage('Remove history from release');
+    }
+    assigneeRelease(){
+        var ids  = this.getCheckecIdListHistory();
+        var data = {};
+           data.fkDeployReleaseId = $('#releaseList4History').val();
+           data.historyType = $('.active.history-tab-4history').attr('data-type');
+        ids.each(function (params) {
+           data.fkHistoryId = $(this).attr('data-id');
+            callApi('22052111535109047014', data, true, function (res) {
+               
+            });
+        })
+        Toaster.showMessage('Added history to release');
+    }
+    getCheckecIdListHistory(){
+        var ids  =  $('.tab-pane.active .history-item-4history input[type="checkbox"]:checked'); 
+         return ids;
+    }
+}
+$(document).on("click", '.tab-pane.active .history-item-4history input[type="checkbox"]', function (e) {
+    e.stopPropagation();
+});
+$(document).on("click", '.history-tab-4history', function (e) {
+    var typeDev = $(this).attr('data-type');
+    new HistoryNew().getListHistory4History(typeDev);
+});
+$(document).on("click", '#unAssignee-add-release', function (e) {
+    new HistoryNew().unAssigneeRelease();
+});
+$(document).on("click", '#assignee-add-release', function (e) {
+    new HistoryNew().assigneeRelease();
+});
+$(document).on("change", 'select.refresh-history-list', function (e) {
+    var typeDev = $('.active.history-tab-4history').attr('data-type');
+    new HistoryNew().getListHistory4History(typeDev);
+});
+$(document).on("change", 'input.refresh-history-list', function (e) {
+    var typeDev = $('.active.history-tab-4history').attr('data-type');
+    new HistoryNew().getListHistory4History(typeDev);
+});
+$(document).on("change", '#releaseList4History', function (e) {
+      if($('#release-is-filter').prop('checked')){
+        var typeDev = $('.active.history-tab-4history').attr('data-type');
+        new HistoryNew().getListHistory4History(typeDev);
+      } 
+});
+
+
+/* ////History endddddddddddddd >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+
+
 ///// code ground start >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 $(document).on('click', '.loadCodeGround', function (evt) {
@@ -13049,7 +13312,7 @@ function getBacklogListforCodeGround(fkProjectId) {
     });
 }
 
-function genMonacoEditorDiff(elmID, valold, valNew, type) {
+function genMonacoEditorDiff(names,elmID, valold, valNew, type) {
     $('#' + elmID).empty();
     require.config({
         paths: {
@@ -13057,18 +13320,18 @@ function genMonacoEditorDiff(elmID, valold, valNew, type) {
         }
     });
     require(['vs/editor/editor.main'], () => {
-        window.editorDiff = monaco.editor.createDiffEditor(document.getElementById(elmID), {
+        window[names] = monaco.editor.createDiffEditor(document.getElementById(elmID), {
             readOnly: true,
             theme: 'vs-dark',
             automaticLayout: true,
         });
-        window.editorDiff.setModel({
+        window[names].setModel({
             original: monaco.editor.createModel(valold, type),
             modified: monaco.editor.createModel(valNew, type),
         });
 
         document.querySelector('.inline-it').addEventListener('change', (e) => {
-            window.editorDiff.updateOptions({
+            window[names].updateOptions({
                 renderSideBySide: !e.target.checked
             });
         });
@@ -13081,7 +13344,7 @@ $(document).on("click", '#history-toggle-ground-btn', function (e) {
     $('.scroll-ul-history').empty();
     getListHistoryCodeground('js');
     setTimeout(() => {
-        genMonacoEditorDiff('editor-history-dif', '//salam', '//salam22', 'javascript');
+        genMonacoEditorDiff("editorDiff",'editor-history-dif', '//salam', '//salam22', 'javascript');
 
     }, 1000);
 });
