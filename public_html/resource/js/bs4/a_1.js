@@ -12793,7 +12793,7 @@ class HistoryNew{
                         api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",trig:"fkBacklogId",body:'requestBody'}
                  break;
             case 'sql': case'javacore': 
-                        api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fkBacklogId",body:'jsBody'}
+                        api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fnDescription",body:'jsBody'}
                  break;
             case 'api': 
                         api = {listApi:'22052112352806745403',dateId:'history',name:"backlogName",trig:"fkBacklogId",body:''}
