@@ -120,8 +120,6 @@ function getIndexOfTable(res, tablename) {
     }
     return ind;
 }
-
-
 var db;
 var request;
 var objectStore;

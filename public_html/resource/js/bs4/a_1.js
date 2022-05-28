@@ -1202,8 +1202,7 @@ function setApiJsonToElement(bid, element) {
                 var obj = res.tbl[idx].r;
                 rsZad = JSON.stringify(obj);
 
-            } catch (errr) {}
-
+            } catch (errr) {};
             that.attr('proDesc', `${rsZad}`);
         },
         error: function () {
@@ -1219,8 +1218,6 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 
     if (!bid)
         return;
-
-
 
     $.ajax({
         url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
@@ -2186,7 +2183,8 @@ function showBacklogHistoryClick(el) {
             $('select.projectList_liveprototype_storycard').change();
         }
         return;
-    } else if (global_var.current_modal === 'loadLivePrototype') {
+    } 
+    else if (global_var.current_modal === 'loadLivePrototype') {
         if (pid === global_var.current_project_id) {
             $("#storyCardListSelectBox").val(bid)
             $("#storyCardListSelectBox").change();
@@ -2196,7 +2194,19 @@ function showBacklogHistoryClick(el) {
             $('select.projectList_liveprototype').val(pid);
             $('select.projectList_liveprototype').change();
         }
-    } else {
+    } 
+    else if (global_var.current_modal === 'loadCodeGround') {
+        if (pid === global_var.current_project_id) {
+            $("#storyCardListSelectBox4CodeGround").val(bid);
+            $("#storyCardListSelectBox4CodeGround").trigger('change');
+        } else {
+            global_var.current_backlog_id = bid;
+            Utility.addParamToUrl('current_backlog_id', bid);
+            $('select.projectList_codeground_storycard').val(pid);
+            $('select.projectList_codeground_storycard').trigger('change');
+        }
+    } 
+    else {
         callStoryCard(bid);
         return;
     }
@@ -2396,6 +2406,8 @@ function generateFileLine(name, cell) {
         div_col.append(div);
         return div.html();
     } catch (err) {}
+
+    
 }
 
 
@@ -13523,6 +13535,7 @@ $(document).on("change", '#project-list-codeground', function (e) {
 $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     var val = $(this).val()
     global_var.current_backlog_id = val;
+    fillBacklogHistory4View(val, '0');
     Utility.addParamToUrl("current_backlog_id", val);
     $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
     getBacklogHTMLBodyByIdCodeGround(val, 'load');
