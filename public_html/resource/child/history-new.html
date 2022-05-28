@@ -70,6 +70,9 @@
               <button class="nav-link history-tab-4history" data-type="javacore" id="javacore-tab" data-toggle="tab" data-target="#javacore" type="button" role="tab" aria-controls="javacore" aria-selected="false">JAVA</button>
             </li>
             <li class="nav-item" role="presentation">
+              <button class="nav-link history-tab-4history" data-type="nodecore" id="nodecore-tab" data-toggle="tab" data-target="#nodecore" type="button" role="tab" aria-controls="nodecore" aria-selected="false">NODE</button>
+            </li>
+            <li class="nav-item" role="presentation">
               <button class="nav-link history-tab-4history" data-type="sql" id="sql-tab" data-toggle="tab" data-target="#sql" type="button" role="tab" aria-controls="sql" aria-selected="false">SQL</button>
             </li>
             <li class="nav-item" role="presentation">
@@ -114,6 +117,15 @@
                 </div>
               <ul data-dev='javacore' class="list-group  scroll-ul-history list-group-flush  overflow-auto" id="list-history-javacore-ul">
                   JAVA
+               </ul>
+           </div>
+            <div  class="tab-pane fade" id="nodecore" role="tabpanel" aria-labelledby="nodecore-tab">
+              <div class="col-12 d-flex">
+                <input type="checkbox" class="col-1 all-checked-history mt-2"> 
+              <select class="history-select-picker select-filter-title col-12 " data-live-search="true" data-actions-box="true"  data-container='body' multiple name="" id="list-history-javacore-select"></select>
+                </div>
+              <ul data-dev='nodecore' class="list-group  scroll-ul-history list-group-flush  overflow-auto" id="list-history-nodecore-ul">
+                  NODE
                </ul>
            </div>
             <div  class="tab-pane fade" id="sql" role="tabpanel" aria-labelledby="sql-tab">

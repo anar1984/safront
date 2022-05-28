@@ -28,6 +28,7 @@ var SAFN = {
         'concat': 'Concat',
         'callfn': 'CallFn',
         'runjava': 'RunJava',
+        'runnode': 'RunNode',
         'runsql': 'RunSql',
         'execsql': 'ExecSql',
         'ifhasvalue': "IfHasValue",
@@ -1167,6 +1168,9 @@ var SAFN = {
                     case '@.runjava':
                         descLine = SAFN.Convert.RunJavaStatement(mainBody);
                         break;
+                    case '@.runnode':
+                        descLine = SAFN.Convert.RunNodeStatement(mainBody);
+                        break;
                     case '@.runsql':
                         descLine = SAFN.Convert.RunSqlStatement(mainBody);
                         break;
@@ -1319,6 +1323,9 @@ var SAFN = {
                         break;
                     case '@.runjava':
                         descLine = SAFN.Reconvert.runJavaStatement(mainBody);
+                        break;
+                    case '@.runnode':
+                        descLine = SAFN.Reconvert.runNodeStatement(mainBody);
                         break;
                     case '@.runsql':
                         descLine = SAFN.Reconvert.runSqlStatement(mainBody);
@@ -1602,6 +1609,15 @@ var SAFN = {
             var div = $(triggerEl).find('div.function-statement-container');
             var key = div.find("select.fns-key").val();
             var fnline = "@.runjava(" + key + ")";
+            return fnline;
+        },
+        runNodeStatement: function (triggerEl) {
+
+            // var div = triggerEl.find('div.function-statement-container');
+
+            var div = $(triggerEl).find('div.function-statement-container');
+            var key = div.find("select.fns-key").val();
+            var fnline = "@.runnode(" + key + ")";
             return fnline;
         },
         runSqlStatement: function (triggerEl) {
@@ -2196,6 +2212,64 @@ var SAFN = {
                                     .attr("id", 'get-runsql-select-box')
                                     .addClass("function-statement-input-common  get-runsql-select-box fns-key ")
                                     .append($("<option>").attr("pid",fnId).val(fnId).attr('selected', 'selected'))
+
+                                )
+                            )
+                            .append(but)
+                            .append(but2)
+                        )
+                    )
+                )
+
+            return descBody;
+
+        },
+        RunNodeStatement: function (descLine) {
+            var fnId = SAFN.GetCommandArgument(descLine);
+            // fnName = (fnName) ? fnName : fnId;
+
+            var but = '';
+            var but2 = $("<li>")
+                .addClass('cs-select-btn-box')
+                .append($('<button>')
+                    .append('<i class="fas fa-plus"></i>')
+                    .attr("data-type",'nodecore')
+                    .attr("onclick", "addNewRelatedCallfn(this)")
+                )
+            if (fnId.length > 0) {
+                but = $("<li>")
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                        .append('<i class="fas fa-share"></i>')
+                        .attr("data-type",'nodecore')
+                        .attr("onclick", "showJSModalByName(this)")
+                    )
+            }
+            var descBody = $('<div>')
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-runnode")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Run NODE")
+                        )
+
+                    )
+
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'inline-block')
+                            .css("padding", '0 0 0 0')
+                            .append($('<li>')
+                                .addClass("function-statement-input-common cs-select-box")
+                                .append($('<select>')
+                                    .addClass('function-statement-container-change-event')
+                                    .attr('data-live-search', "true")
+                                    .attr("id", 'get-runnode-select-box')
+                                    .addClass("function-statement-input-common  get-runnode-select-box fns-key ")
+                                    .append($("<option>").text(fnId).val(fnId).attr('selected', 'selected'))
 
                                 )
                             )
@@ -4351,6 +4425,7 @@ var SAFN = {
         'UnvisibleParam': '@.unvisibleparam(,)',
         'CallFn': '@.callfn(,)',
         'RunJava': '@.runjava(,)',
+        'RunNode': '@.runnode(,)',
         'RunSql': '@.runsql(,)',
         'CallApi': '@.callapi(,)',
     },
@@ -4577,6 +4652,7 @@ function loadSelecPickerOnChnageFnList(element,dataType) {
         try {
             dt = res.tbl[0].r
         } catch (err) {
+            
         }
 
         $(element).each(function () {
@@ -4682,6 +4758,7 @@ $(document).ready(function () {
         '@.unvisibleparam()',
         '@.callfn()',
         '@.runjava()',
+        '@.runnode()',
         '@.runsql()',
         '@.callapi()',
         '@.break()'
@@ -4749,6 +4826,10 @@ $(document).ready(function () {
     })
 
     $(document).on("change", "select.function-statement-input-common.get-runjava-select-box", function (e) {
+
+        SAFN.Convert.Common.GetLineBody(this);
+    })
+    $(document).on("change", "select.function-statement-input-common.get-runnode-select-box", function (e) {
 
         SAFN.Convert.Common.GetLineBody(this);
     })
@@ -4886,6 +4967,7 @@ $(document).ready(function () {
         { "label": "VISIBLE PARAM", "fx": "@.visibleparam()", "desc": "VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
         { "label": "UNVISIBLE PARAM", "fx": "@.unvisibleparam()", "desc": "UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
         { "label": "RUN JAVA", "fx": "@.runjava()", "desc": "RUN JAVA It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+        { "label": "RUN NODE", "fx": "@.runnode()", "desc": "RUN NODE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
         { "label": "RUN SQL", "fx": "@.runsql()", "desc": "RUN SQL It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
         { "label": "CALL FUNCTION", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
         { "label": "CALL API", "fx": "@.callapi()", "desc": "CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },

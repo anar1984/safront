@@ -12804,7 +12804,7 @@ class HistoryNew{
             case 'html': 
                         api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",trig:"fkBacklogId",body:'requestBody'}
                  break;
-            case 'sql': case'javacore': 
+            case 'sql': case'javacore': case'nodecore':
                         api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fnDescription",body:'jsBody'}
                  break;
             case 'api': 
@@ -15175,13 +15175,15 @@ $(document).on('change', '#jsCodeModal_fntype', function (evt) {
 function fnINit4fnType(val) {
     $('.loading.editor').show();
     var ts
-    if (val === 'core' || val === 'event' || val === 'jscore') {
+    if (val === 'core' || val === 'event' || val === 'jscore'||val=='nodecore') {
         ts = 'js'
     } else if (val === 'java' || val === 'javacore') {
         ts = 'java'
-    } else if (val === 'sql') {
+    } 
+    else if (val === 'sql') {
         ts = 'sql'
-    } else if (val === 'csscore') {
+    }
+     else if (val === 'csscore') {
         ts = 'css'
     }
     generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', ts, 'vs-dark');
