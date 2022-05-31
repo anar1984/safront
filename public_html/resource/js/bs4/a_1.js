@@ -15526,6 +15526,20 @@ $(document).on('click', '.loadSqlGenerator', function (evt) {
     SqlGeneratorClass.loader();
     // $('#mainBodyDivForAll').html(html_string);
 });
+
+$(document).on('click', '.loadExportImport', function (evt) {
+   
+    global_var.current_modal = "exportimport";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    $.get("resource/child/exportimport.html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        ExportImportTool.init();
+        ExportImportTool.loader();
+    });
+});
+
+
+
 // 
 $(document).on('click', '.loadSourceActivity', function (evt) {
     var f = 'sourceactivity';
