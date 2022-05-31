@@ -808,8 +808,9 @@ const cmpList = {
         _hilightAnimating: false,
        Init:function(data){
                var container  = $(data.parent?data.parent:"body");
-
-               container.append(this.genBlock(data))
+               container.find('.sa-confirm-block').remove() 
+               container.append(this.genBlock(data));
+              container.find('button.cs-nextsave-btn').trigger('focus');
        },
        genBlock:function(data) {
                var that  = this;
@@ -883,7 +884,7 @@ const cmpList = {
                                                         </label>
                                                     </div>`)
                                             )
-            
+                      
            return  container.append(backGround)
                             .append(block);
        },

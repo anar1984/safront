@@ -5318,7 +5318,7 @@ only screen and (max-width: 767px) {
     z-index: 100;
 }
 .scroll-ul-history{
-    height: 83vh;
+    height: 78vh;
     counter-reset: section;
 }
 .history-item-codegorund::before{
@@ -5334,9 +5334,7 @@ only screen and (max-width: 767px) {
     text-align: center;
 
 }
-.history-item-4history::before{
-    counter-increment: section;
-    content: counter(section);
+.history-item-4history-span{
     display: inline-block;
     color: white;
     background: #555;

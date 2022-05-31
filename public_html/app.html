@@ -5853,7 +5853,69 @@
         </div>
     </div>
 
-
+    <div class="modal fade" id="history-codeground-modal" style="z-index: 41045;overflow: hidden;" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
+            <div class="modal-content" style="width: 100%; height: 100%;">
+                <div class="modal-header" style="background-color: rgb(82 85 150);">
+                    <h5 class="modal-title" id=""></h5>
+                    <div class="float-right">
+    
+                    </div>
+    
+                    <button type="button" class="close p-2" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                </div>
+                <div class="modal-body" style="background-color: #f1f3f4;height: 95vh;overflow: hidden;">
+                    <!--<form>-->
+                        <div class="row">
+                            <div class="col-3" style="height: 95vh; overflow: hidden;" id="history-list">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link active history-tab-codegorund" data-type="js" id="home-tab" data-toggle="tab" data-target="#home-new" type="button" role="tab" aria-controls="home-new" aria-selected="true">JS</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link history-tab-codegorund" data-type="html" id="profile-tab" data-toggle="tab" data-target="#profile-new" type="button" role="tab" aria-controls="profile-new" aria-selected="false">HTML</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link history-tab-codegorund" data-type="css" id="contact-tab" data-toggle="tab" data-target="#contact-new" type="button" role="tab" aria-controls="contact-new" aria-selected="false">CSS</button>
+                                    </li>
+                                  </ul>
+                                  <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home-new" role="tabpanel" aria-labelledby="home-tab">
+    
+                                        <ul data-dev="js" class="list-group scroll-ul-history list-group-flush  overflow-auto" id="list-history-js-ul">
+    
+                                         </ul>
+                                    </div>
+                                    <div  class="tab-pane fade" id="profile-new" role="tabpanel" aria-labelledby="profile-tab">
+                                          <ul data-dev="html" class="list-group scroll-ul-history list-group-flush  overflow-auto" id="list-history-html-ul">
+    
+                                           </ul>
+                                    </div>
+                                    <div  class="tab-pane fade" id="contact-new" role="tabpanel" aria-labelledby="contact-tab">
+                                        <ul data-dev='css' class="list-group  scroll-ul-history list-group-flush  overflow-auto" id="list-history-css-ul">
+    
+                                       </ul>
+                                   </div>
+                                  </div>
+                            
+                            </div>
+                            <div class="col-9" style="height: 90vh;overflow: hidden;" >
+                                <section class="actions">
+                                    <label>Inline</label>
+                                    <input type="checkbox" class="inline-it">
+                                </section>
+                                <div class="w-100 h-100" id="editor-history-dif-codeground">
+    
+                                </div>
+                            
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="addNewRelatedSourceCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
