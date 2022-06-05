@@ -12751,8 +12751,9 @@ $(document).on('click', '.loadHistory', function (evt) {
         genTimePickerById('history-panel-date-id','down');
         new HistoryNew().getReleaseList();
         new HistoryNew().getUserList();
-        genMonacoEditorDiff("editorDiffHistory",'editor-history-dif', '//Start', '//StartDiff', 'javascript');
+        generateMonacoeditros('editor-history-history', "editorDiffHistory", 'javascript','vs-dark');
         $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
+        new HistoryNew().load();
 
     });
 
@@ -12762,39 +12763,119 @@ $(document).on("click", '.history-item-4history', function (e) {
     $(this).addClass('active');
     var pid = $(this).attr('pid');
     var type = $(this).attr('data-type');
+    
     if(type=='api'){
         var id = historyList4History[pid].fkBacklogId;
         loadHistoryByBacklogStId(id);
         $("#task-ongoing-large-history").modal('show');
+        
     }else{
+        $('.loading').show();
         new HistoryNew().itemClick(type,pid);  
     }
     
 });
 let historyList4History={};
+$(document).on('click', ".btn-minus-pag", function () {
+    var limit  = 100;
+    var vall = 'count-row-select-task';
+    $('#' + vall).val(1);
+    $('.startLimitNew').val(0);
+    $('.endLimitNew').val(limit);
+    new HistoryNew().load();
+
+});
+$(document).on('change', "#list-history-js-select", function () {
+    new HistoryNew().load();
+});
+$(document).on('change', "#releaseList4History-old", function () {
+    
+   $('.history-item-4history.active').trigger('click');
+});
+$(document).on('click', ".btn-plus-pag", function () {
+    var vall = 'count-row-select-task';
+    var limit  =  100;
+    var pageComponentLast = $('#' + vall + ' option:last-child');
+    var txt = parseFloat(pageComponentLast.text())
+
+    $('#' + vall).val(txt)
+    var ol = Math.ceil(txt * limit);
+    $('input.startLimitNew').val(ol - limit);
+    $('input.endLimitNew').val(ol);
+    new HistoryNew().load();
+});
+$(document).on("click", ".pagination_btn_left_right_new", function (e) {
+    var stlm = $('input.startLimitNew');
+    var endlm = $('input.endLimitNew');
+    var clickedButton = $(this).attr('data-page-icon');
+    var pageSelected = $('#count-row-select-task option:selected');
+    var pageSelect = $('#count-row-select-task');
+    var pageNumber = null;
+    var limit  =  100;
+    if (clickedButton == 'pageLeft') {
+        var current = parseInt(pageSelected.text());
+        pageNumber = current != 1 ? current - 1 : 1;
+        if (current != 1) {
+            stlm.val(parseFloat(stlm.val()) - parseFloat(limit));
+            endlm.val(parseFloat(endlm.val()) - parseFloat(limit));
+        }
+
+    } else if (clickedButton == 'pageRight') {
+        var current = parseInt(pageSelected.text());
+
+        pageNumber = current != parseInt($('#count-row-select-task option:last-child').text()) ? current + 1 : current;
+        if (current != parseInt($('#count-row-select-task option:last-child').text())) {
+            stlm.val(parseFloat(stlm.val()) + parseFloat(limit));
+            endlm.val(parseFloat(endlm.val()) + parseFloat(limit));
+        }
+    }
+   
+    new HistoryNew().load();
+});
+
 class HistoryNew{
     itemClick(type,pid){
-        var apiID = this.getApiId4History(type);
-         const o = historyList4History[pid]; 
-        var valNew = o[apiID.body];
-        var oldVal = o.oldValue;
-       /*  
+        /* 
+        var time  =  DateRangePickerFormatValueArry($('#history-panel-date-id'))
+         var oldReleaseID = $('#releaseList4History-old').val();
+           if(!oldReleaseID)return;
          var data  = {};
-             data.historyDate = historyList4History[pid][apiID.dateId+'Date']
-             data.historyTime = historyList4History[pid][apiID.dateId+'Time']
+                data.createdDateFrom = time.startTime;
+                data.devType = type;
+                data.fkHistoryId = pid;
+                data.createdDateTo = time.endTime;
+                data.fkDeployReleaseId = oldReleaseID;
         var that  =  this; */
-        this.setModel(type,oldVal,valNew)
+        var apiID = this.getApiId4History(type);
+        const o = historyList4History[pid]; 
+            var valNew = o[apiID.body];
+        this.setModel(type,valNew);
+        
+        $('.loading').hide();
         /* callApi(apiID.listApi,data,true,function (res) {
-          
+            const o = historyList4History[pid]; 
+            var valNew = o[apiID.body];
+             try {
+                var oldVal = res.tbl[0].r[0][apiID.body];
+             } catch (error) {
+                var oldVal  = 'Əvvəlki relizdə yoxdur';
+             }
+           
+           
         }) */
     }
-    setModel(type,valold,valNew){
+    load(){
+        historyList4History = {};
+        var typeDev = $('.active.history-tab-4history').attr('data-type');
+        new HistoryNew().getListHistory4History(typeDev);
+    }
+    setModel(type,valNew){
         type = (type == 'js') ? 'javascript' : type;
         type = (type == 'db') ? 'sql' : type;
-        window.editorDiffHistory.setModel({
-            original: monaco.editor.createModel(valold, type),
-            modified: monaco.editor.createModel(valNew, type),
+        window.editorDiffHistory.updateOptions({
+            language: type,
         });
+        window.editorDiffHistory.setValue(valNew);
     }
     getApiId4History(key) {
         var api 
@@ -12818,44 +12899,6 @@ class HistoryNew{
         }
         return api;
     }
-    getListHistory4HistoryMore(typeDev, stl, endL) {
-        var list = $('#list-history-' + typeDev + '-ul');
-    
-        var data = {};
-        data.fkBacklogId = global_var.current_backlog_id;
-        data.devType = typeDev;
-        data.startLimit = stl;
-        data.endLimit = endL;
-        data.createdDateFrom = time.startTime;
-        data.createdDateTo = time.endTime;
-        var apiID = this.getApiId4History(typeDev);
-        var that  = this;
-        callApi(apiID.listApi, data, true, function (res) {
-            try {
-                var siy = res.tbl[0].r
-                for (let k = 0; k < siy.length; k++) {
-                    const o = siy[k];
-                    try {
-                        o.oldValue = siy[k + 1].requestBody;
-                    } catch (error) {
-                        o.oldValue = '';
-                    }
-    
-                    historyList4History[o.id] = o;
-    
-                    list.append(that.genItemBlock(o,typeDev))
-    
-                }
-                $('[data-toggle="popover"]').popover({
-                    html: true
-                });
-            } catch (error) {}
-            list.removeData('loading');
-            list.attr('data-start',stl);
-            list.attr('data-end',endL);
-            $('.loading').remove();
-        })
-    }
     addLoader(list){
         $(list).empty();
         for (var i = 0; i < 10; i++) {
@@ -12869,14 +12912,14 @@ class HistoryNew{
     }
     getListHistory4History(typeDev) {
         var list = $('#list-history-' + typeDev + '-ul');
-        var select = $('#list-history-' + typeDev + '-select');
+        var text = $('#list-history-js-select');
         this.addLoader(list);
         var time  =  DateRangePickerFormatValueArry($('#history-panel-date-id'))
         var data = {};
-        data.fkBacklogId = global_var.current_backlog_id;
         data.devType = typeDev;
-        data.startLimit = 0;
-        data.endLimit = 500;
+        data.startLimit = $('input.startLimitNew').val();
+        data.endLimit = $('input.endLimitNew').val();
+        data.searchText = text.val();
         data.createdDateFrom = time.startTime;
         data.createdDateTo = time.endTime;
         data.createdBy = getProjectValueUsManageMultiByelInNew($("#history-panel-created-id"));
@@ -12886,28 +12929,20 @@ class HistoryNew{
         var apiID = this.getApiId4History(typeDev);
         var that  = this;
         callApi(apiID.listApi, data, true, function (res) {
-    
-            list.empty();
-            select.empty();
+              that.genPaginition(res.kv.rowCount);
+              list.empty();
             try {
                 var siy = res.tbl[0].r
+                var say  =  $('input.startLimitNew').val()
                 for (let k = 0; k < siy.length; k++) {
                     const o = siy[k];
-                    try {
-                        o.oldValue = siy[k + 1][apiID.body];
-                    } catch (error) {
-                        o.oldValue = '';
-                    }
+                    say++
                     historyList4History[o.id] = o;
-                    list.append(that.genItemBlock(o,typeDev));
-                     if(select.find('[value='+o[apiID.trig]+']').length<1){
-                        select.append($('<option>').val(o[apiID.trig]).text(o[apiID.name]))
-                     }
+                    list.append(that.genItemBlock(o,typeDev,say)); 
                 }
                 $('[data-toggle="popover"]').popover({
                     html: true
                 });
-                select.selectpicker('refresh')
             } catch (error) {
                 console.error(error);
                 list.append(`<li class="list-group-item  text-center">Empty</li>`)
@@ -12915,9 +12950,32 @@ class HistoryNew{
 
         })
     }
+    genPaginition (countId) {
+    
+        if (countId) {
+           var limit  = 100;
+            var stlm = $('#history-pagination .startLimitNew').val();
+            var endlm = parseFloat(stlm)  +  parseFloat(limit) ;
+            $("#history-pagination .pagination_btn").text((parseFloat(stlm) + 1) + "-" + endlm + '/' + countId);
+            var page = Math.ceil(countId / limit);
+            var elm = $('#history-pagination #count-row-select-task');
+            var oldval = elm.val();
+            elm.empty();
+            for (let i = 0; i < page; i++) {
+                elm.append($("<option>")
+                    .text(i + 1)
+                    .val(i + 1))
+            }
+            if (oldval) {
+                elm.val(oldval);
+            }
+        } else {
+            $("#history-pagination .pagination_btn").text('0-0/0')
+        }
+    }
     getReleaseList(){
         var data ={};
-        var select = $('#releaseList4History');
+        var select = $('select.releaseList4History');
         callApi('22052111302105571050',data,true,function (res) {
             res.tbl[0].r.map((o) => {
                 select.append($('<option>').val(o.id).text(o.releaseName +"("+Utility.convertDate(o.releaseDate)+')'))
@@ -12929,19 +12987,20 @@ class HistoryNew{
         var select = $('#history-panel-created-id');
         loadAssigneesByElement(select);
     }
-    genItemBlock(o,type){
+    genItemBlock(o,type,say){
         var time  =  this.getApiId4History(type);
             if(type=='db'){
                var namess  = o.fieldName +' ('+o.databaseName+"_" +o.tableName+')';
             }else{
                 var namess  = o[time.name] + ' ('+o.projectName+')';
             }
-        return `<li pid='${o.id}' fid='${o[time.trig]}' data-type='${type}' class="list-group-item history-item-4history">
-        <span><input  data-id="${o.id}" type="checkbox"></span>
+        return `<li pid='${o.id}' fid='${o[time.trig]}' bgid='${o.fkBacklogId}' prid='${o.fkProjectId}' data-type='${type}' class="list-group-item history-item-4history">
+        <span><span class='history-item-4history-span'>${say}</span> <input  data-id="${o.id}" type="checkbox"></span>
         ${namess}
         <span>${Utility.convertDate(o[time.dateId+'Date'])+'/'+Utility.convertTime(o[time.dateId+'Time'])}</span>
         <img class="Assigne-card-story-select-img float-right updated" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Name: ${o.userPersonName} <br>
-                                  Date:  " title="" data-original-title="Updated By "> </li>`
+                                  Date:  "  title="" data-original-title="Updated By">
+                                ${type !='api'?`<button class="btn btn-secondary btn-sm" id="history-toggle-ground-btn" title="History"><i class="fas fa-history" aria-hidden="true"></i></button>`:""}</li>`
     }
     unAssigneeRelease(){
         var ids  = this.getCheckecIdListHistory();
@@ -13010,17 +13069,14 @@ $(document).on("click", '#assignee-add-release', function (e) {
     new HistoryNew().assigneeRelease();
 });
 $(document).on("change", 'select.refresh-history-list', function (e) {
-    var typeDev = $('.active.history-tab-4history').attr('data-type');
-    new HistoryNew().getListHistory4History(typeDev);
+    new HistoryNew().load();
 });
 $(document).on("change", 'input.refresh-history-list', function (e) {
-    var typeDev = $('.active.history-tab-4history').attr('data-type');
-    new HistoryNew().getListHistory4History(typeDev);
+    new HistoryNew().load();
 });
 $(document).on("change", '#releaseList4History', function (e) {
       if($('#release-is-filter').prop('checked')){
-        var typeDev = $('.active.history-tab-4history').attr('data-type');
-        new HistoryNew().getListHistory4History(typeDev);
+        new HistoryNew().load();
       } 
 });
 
@@ -13383,10 +13439,15 @@ function genMonacoEditorDiff(names,elmID, valold, valNew, type) {
 $(document).on("click", '#history-toggle-ground-btn', function (e) {
     $('#history-codeground-modal').modal('show');
     historyList = {};
-    $('.scroll-ul-history').empty();
+    $('#history-codeground-modal .scroll-ul-history').empty();
+       if(global_var.current_modal=='loadHistory'){
+        global_var.current_backlog_id = $(this).closest('li').attr('bgid');
+        global_var.current_project_id = $(this).closest('li').attr('prid');
+       }
+    
     getListHistoryCodeground('js');
     setTimeout(() => {
-        genMonacoEditorDiff("editorDiff",'editor-history-dif', '//salam', '//salam22', 'javascript');
+        genMonacoEditorDiff("editorDiff",'editor-history-dif-codeground', '//salam', '//salam22', 'javascript');
 
     }, 1000);
 });
@@ -13411,7 +13472,7 @@ $(document).on("click", '.history-tab-codegorund', function (e) {
 let historyList = {};
 
 function getListHistoryCodegroundMore(typeDev, stl, endL) {
-    var list = $('#list-history-' + typeDev + '-ul');
+    var list = $('#history-codeground-modal #list-history-' + typeDev + '-ul');
 
     var data = {};
     data.fkBacklogId = global_var.current_backlog_id;
@@ -13448,7 +13509,7 @@ function getListHistoryCodegroundMore(typeDev, stl, endL) {
 }
 
 function getListHistoryCodeground(typeDev) {
-    var list = $('#list-history-' + typeDev + '-ul');
+    var list = $('#history-codeground-modal #list-history-' + typeDev + '-ul');
     list.attr('data-start', '0');
     list.attr('data-end', '50');
     list.empty();
@@ -13465,7 +13526,7 @@ function getListHistoryCodeground(typeDev) {
     data.devType = typeDev;
     data.startLimit = 0;
     data.endLimit = 50;
-    callApi('22051817104609238599', data, true, function (res) {
+    callApi('22053017091407086089', data, true, function (res) {
 
         list.empty();
         try {
