@@ -158,10 +158,10 @@ var SAEntity = {
     },
 
     GetOrderNoKeys: function () {
-//        const ordered = {};
-//        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
-//            ordered[key] = SACore.BacklogNo[key];
-//        });
+        //        const ordered = {};
+        //        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
+        //            ordered[key] = SACore.BacklogNo[key];
+        //        });
         var keys = Object.keys(SATask.OrderNo);
         keys = keys.sort(function (a, b) {
             return a - b
@@ -259,10 +259,10 @@ var SAProjectUser = {
     },
 
     GetOrderNoKeys: function () {
-//        const ordered = {};
-//        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
-//            ordered[key] = SACore.BacklogNo[key];
-//        });
+        //        const ordered = {};
+        //        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
+        //            ordered[key] = SACore.BacklogNo[key];
+        //        });
         var keys = Object.keys(SAProjectUser.OrderNo);
         keys = keys.sort(function (a, b) {
             return a - b
@@ -300,7 +300,7 @@ var SAProjectUser = {
     },
 
     toJSONObject: function (taskId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var o = this.ProjectUsers[taskId];
         return o;
     },
@@ -308,7 +308,7 @@ var SAProjectUser = {
         return this.toDescJSON(global_var.current_us_input_id);
     },
     toDescJSON: function (inputId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = SAInput.GetCurrentProjectUser();
         var idx = 0;
         try {
@@ -322,7 +322,7 @@ var SAProjectUser = {
         } catch (err) {
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -342,20 +342,20 @@ var SAProjectUser = {
         return res;
     },
     toJSON: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.ProjectUsers);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
             var k = keys[n];
             var o = this.ProjectUsers[k];
-//            if (this.checkFilter(o)) {
-//                continue;
-//            }
+            //            if (this.checkFilter(o)) {
+            //                continue;
+            //            }
             json.tbl[0].r.push(o);
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -405,22 +405,22 @@ var SATask = {
         var continueOr = false;
 
         if (global_var.userStoryFilter.backlogStatus.length > 0 &&
-                !global_var.userStoryFilter.backlogStatus.includes(o.taskStatus))
+            !global_var.userStoryFilter.backlogStatus.includes(o.taskStatus))
             continueOr = true;
         if (global_var.userStoryFilter.createdBy.length > 0 &&
-                !global_var.userStoryFilter.createdBy.includes(o.createdBy))
+            !global_var.userStoryFilter.createdBy.includes(o.createdBy))
             continueOr = true;
         if (global_var.userStoryFilter.assignee.length > 0 &&
-                !SACore.hasAssigneeInFilter(o.fkAssigneeId))
+            !SACore.hasAssigneeInFilter(o.fkAssigneeId))
             continueOr = true;
         if (global_var.userStoryFilter.taskType.length > 0 &&
-                !SACore.hasTaskTypesInFilter(o.fkTaskTypeId))
+            !SACore.hasTaskTypesInFilter(o.fkTaskTypeId))
             continueOr = true;
 
 
         var userstoryname = o.taskName.toLowerCase();
         if (global_var.userStoryFilter.userstory.length > 0 &&
-                !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase())))
+            !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase())))
             continueOr = true;
 
         return continueOr;
@@ -473,10 +473,10 @@ var SATask = {
     },
 
     GetOrderNoKeys: function () {
-//        const ordered = {};
-//        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
-//            ordered[key] = SACore.BacklogNo[key];
-//        });
+        //        const ordered = {};
+        //        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
+        //            ordered[key] = SACore.BacklogNo[key];
+        //        });
         var keys = Object.keys(SATask.OrderNo);
         keys = keys.sort(function (a, b) {
             return a - b
@@ -505,7 +505,7 @@ var SATask = {
     },
 
     toJSONObject: function (taskId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var o = this.Tasks[taskId];
         return o;
     },
@@ -513,7 +513,7 @@ var SATask = {
         return this.toDescJSON(global_var.current_us_input_id);
     },
     toDescJSON: function (inputId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = SAInput.GetCurrentTask();
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -524,7 +524,7 @@ var SATask = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -544,20 +544,20 @@ var SATask = {
         return res;
     },
     toJSON: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.Tasks);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
             var k = keys[n];
             var o = this.Tasks[k];
-//            if (this.checkFilter(o)) {
-//                continue;
-//            }
+            //            if (this.checkFilter(o)) {
+            //                continue;
+            //            }
             json.tbl[0].r.push(o);
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -677,12 +677,14 @@ var SACore = {
         try {
             if (this.Backlogs[backlogId].inputIds) {
                 this.Backlogs[backlogId].inputIds =
-                        this.Backlogs[backlogId].inputIds + ',' + inputId;
+                    this.Backlogs[backlogId].inputIds + ',' + inputId;
             } else {
                 this.Backlogs[backlogId]['inputIds'] = inputId;
             }
         } catch (err) {
-            this.Backlogs[backlogId]['inputIds'] = inputId;
+            try {
+                this.Backlogs[backlogId]['inputIds'] = inputId;
+            } catch (err) { }
         }
     },
     deleteBacklog: function (backlogId) {
@@ -704,10 +706,10 @@ var SACore = {
                 this.BacklogName[o.backlogName] = o.id;
                 this.AddBacklog(o.id, o);
                 this.SetBacklogNo(o.backlogNo, o.id);
-//                if (o.isSourced === '1') {
+                //                if (o.isSourced === '1') {
                 this.AddSUSs(o.id);
                 this.FillSUSCombobox(o);
-//                }
+                //                }
             }
             this.SortFilledCombos();
         } catch (err) {
@@ -719,10 +721,10 @@ var SACore = {
         }
     },
     GetBacklogNoKeys: function () {
-//        const ordered = {};
-//        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
-//            ordered[key] = SACore.BacklogNo[key];
-//        });
+        //        const ordered = {};
+        //        Object.keys(SACore.BacklogNo).sort().forEach(function (key) {
+        //            ordered[key] = SACore.BacklogNo[key];
+        //        });
         var keys = Object.keys(SACore.BacklogNo);
         keys = keys.sort(function (a, b) {
             return a - b
@@ -757,10 +759,10 @@ var SACore = {
             for (var n = 0; n < keys.length; n++) {
                 var id = keys[n];
                 var o = this.Backlogs[id];
-//                if (o.isSourced === '1') {
+                //                if (o.isSourced === '1') {
                 this.AddSUSs(o.id);
                 this.FillSUSCombobox(o);
-//                }
+                //                }
             }
             this.SortFilledCombos();
         } catch (err) {
@@ -789,7 +791,7 @@ var SACore = {
         sortCombo('us-gui-component-rel-sus-id');
         sortCombo('us-related-sus');
         $('#us-related-sus').selectpicker('refresh');
-//        $('.us-gui-component-rel-sus-id').selectpicker('refresh');
+        //        $('.us-gui-component-rel-sus-id').selectpicker('refresh');
     },
     FillAllCombobox: function (obj) {
         this.FillSUSCombobox(obj);
@@ -799,24 +801,24 @@ var SACore = {
         $('#us-related-sus').html('');
 
         $('#us-gui-component-rel-sus-id').append($("<option></option>")
-                .attr("value", '')
-                .text(' '));
+            .attr("value", '')
+            .text(' '));
         $('#us-related-sus').append($("<option></option>")
-                .attr("value", '')
-                .text(' '));
+            .attr("value", '')
+            .text(' '));
 
 
 
     },
     FillSUSCombobox: function (obj) {
         $('#us-gui-component-rel-sus-id').append($("<option></option>")
-                .attr("value", obj.id)
-                .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
+            .attr("value", obj.id)
+            .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
 
         if (obj.isApi === '1') {
             $('#us-related-sus').append($("<option></option>")
-                    .attr("value", obj.id)
-                    .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
+                .attr("value", obj.id)
+                .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
         }
 
 
@@ -829,17 +831,17 @@ var SACore = {
             keys = keys.sort();
 
             $('#' + compId)
-                    .append($('<option>')
-                            .val("-1")
-                            .text("None"))
+                .append($('<option>')
+                    .val("-1")
+                    .text("None"))
             for (var n = 0; n < keys.length; n++) {
                 var name = keys[n];
                 var id = this.BacklogName[name];
                 name += "  (#" + this.GetBacklogOrderNo(id) + ")"
                 $('#' + compId)
-                        .append($('<option>')
-                                .val(id)
-                                .text(name))
+                    .append($('<option>')
+                        .val(id)
+                        .text(name))
             }
 
         } catch (err) {
@@ -847,33 +849,33 @@ var SACore = {
 
     },
     toJSON: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.Backlogs);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
             var k = keys[n];
             var o = this.Backlogs[k];
-//            if (this.checkFilterUserStory(o)) {
-//                continue;
-//            }
+            //            if (this.checkFilterUserStory(o)) {
+            //                continue;
+            //            }
 
             json.tbl[0].r.push(o);
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
 
     toJSONObject: function (backlogId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var o = this.Backlogs[backlogId];
         return o;
     },
 
     toJSON4View: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.Backlogs);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -887,7 +889,7 @@ var SACore = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -906,40 +908,40 @@ var SACore = {
         if (global_var.userStoryFilter.isInitial === '1' && o.isInitial !== '1')
             continueOr = true;
         if (global_var.userStoryFilter.priority.length > 0 &&
-                !global_var.userStoryFilter.priority.includes(o.priority))
+            !global_var.userStoryFilter.priority.includes(o.priority))
             continueOr = true;
         if (global_var.userStoryFilter.backlogStatus.length > 0 &&
-                !global_var.userStoryFilter.backlogStatus.includes(o.backlogStatus))
+            !global_var.userStoryFilter.backlogStatus.includes(o.backlogStatus))
             continueOr = true;
         if (global_var.userStoryFilter.createdBy.length > 0 &&
-                !global_var.userStoryFilter.createdBy.includes(o.createdBy))
+            !global_var.userStoryFilter.createdBy.includes(o.createdBy))
             continueOr = true;
         if (global_var.userStoryFilter.assignee.length > 0 &&
-                !this.hasAssigneeInFilter(o.assigneeIds))
+            !this.hasAssigneeInFilter(o.assigneeIds))
             continueOr = true;
         if (global_var.userStoryFilter.owner.length > 0 &&
-                !this.hasOwnerInFilter(o.fkOwnerId))
+            !this.hasOwnerInFilter(o.fkOwnerId))
             continueOr = true;
         if (global_var.userStoryFilter.taskType.length > 0 &&
-                !this.hasTaskTypesInFilter(o.taskTypeIds))
+            !this.hasTaskTypesInFilter(o.taskTypeIds))
             continueOr = true;
         if (global_var.userStoryFilter.assignedLabel.length > 0 &&
-                !this.hasAssignedLabelsInFilter(o.assignedLabelIds))
+            !this.hasAssignedLabelsInFilter(o.assignedLabelIds))
             continueOr = true;
         if (global_var.userStoryFilter.label.length > 0 &&
-                !this.hasLabelsInFilter(o.labelIds))
+            !this.hasLabelsInFilter(o.labelIds))
             continueOr = true;
         if (global_var.userStoryFilter.sprint.length > 0 &&
-                !this.hasSprintsInFilter(o.sprintIds))
+            !this.hasSprintsInFilter(o.sprintIds))
             continueOr = true;
 
         var userstoryname = o.backlogName.toLowerCase();
         if (global_var.userStoryFilter.userstory.length > 0 &&
-                !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase()) ||
-                        o.orderNo.includes(global_var.userStoryFilter.userstory) ||
-                        o.createdByName.includes(global_var.userStoryFilter.userstory)
-                        )
-                )
+            !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase()) ||
+                o.orderNo.includes(global_var.userStoryFilter.userstory) ||
+                o.createdByName.includes(global_var.userStoryFilter.userstory)
+            )
+        )
             continueOr = true;
 
         return continueOr;
@@ -959,38 +961,38 @@ var SACore = {
         if (global_var.userStoryFilter.isInitial === '1' && o.isInitial !== '1')
             continueOr = true;
         if (global_var.userStoryFilter.priority.length > 0 &&
-                !global_var.userStoryFilter.priority.includes(o.priority))
+            !global_var.userStoryFilter.priority.includes(o.priority))
             continueOr = true;
         if (global_var.userStoryFilter.backlogStatus.length > 0 &&
-                !global_var.userStoryFilter.backlogStatus.includes(o.backlogStatus))
+            !global_var.userStoryFilter.backlogStatus.includes(o.backlogStatus))
             continueOr = true;
         if (global_var.userStoryFilter.createdBy.length > 0 &&
-                !global_var.userStoryFilter.createdBy.includes(o.createdBy))
+            !global_var.userStoryFilter.createdBy.includes(o.createdBy))
             continueOr = true;
         try {
             if (global_var.userStoryFilter.owner.length > 0 &&
-                    !global_var.userStoryFilter.owner.includes(o.fkOwnerId))
+                !global_var.userStoryFilter.owner.includes(o.fkOwnerId))
                 continueOr = true;
         } catch (err) {
         }
 
         if (global_var.userStoryFilter.assignedLabel.length > 0 &&
-                !this.hasAssignedLabelsInFilter(o.assignedLabelIds))
+            !this.hasAssignedLabelsInFilter(o.assignedLabelIds))
             continueOr = true;
         if (global_var.userStoryFilter.label.length > 0 &&
-                !this.hasLabelsInFilter(o.labelIds))
+            !this.hasLabelsInFilter(o.labelIds))
             continueOr = true;
         if (global_var.userStoryFilter.sprint.length > 0 &&
-                !this.hasSprintsInFilter(o.sprintIds))
+            !this.hasSprintsInFilter(o.sprintIds))
             continueOr = true;
 
         var userstoryname = o.backlogName.toLowerCase();
         if (global_var.userStoryFilter.userstory.length > 0 &&
-                !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase()) ||
-                        o.orderNo.includes(global_var.userStoryFilter.userstory) ||
-                        o.createdByName.includes(global_var.userStoryFilter.userstory)
-                        )
-                )
+            !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase()) ||
+                o.orderNo.includes(global_var.userStoryFilter.userstory) ||
+                o.createdByName.includes(global_var.userStoryFilter.userstory)
+            )
+        )
             continueOr = true;
 
         return continueOr;
@@ -1002,11 +1004,11 @@ var SACore = {
 
         var userstoryname = o.backlogName.toLowerCase();
         if (global_var.userStoryFilter.userstory.length > 0 &&
-                !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase()) ||
-                        o.orderNo.includes(global_var.userStoryFilter.userstory) ||
-                        o.createdByName.includes(global_var.userStoryFilter.userstory)
-                        )
-                )
+            !(userstoryname.includes(global_var.userStoryFilter.userstory.toLowerCase()) ||
+                o.orderNo.includes(global_var.userStoryFilter.userstory) ||
+                o.createdByName.includes(global_var.userStoryFilter.userstory)
+            )
+        )
             continueOr = true;
         return continueOr;
     },
@@ -1016,7 +1018,7 @@ var SACore = {
             var itemList = global_var.userStoryFilter.sprint.split('%IN%');
             for (var i = 0; i < itemList.length; i++) {
                 if (itemList[i].length > 0 &&
-                        coreList.includes(itemList[i]))
+                    coreList.includes(itemList[i]))
                     return true;
             }
 
@@ -1031,7 +1033,7 @@ var SACore = {
             var fileteredAssignedLabelList = global_var.userStoryFilter.label.split('%IN%');
             for (var i = 0; i < fileteredAssignedLabelList.length; i++) {
                 if (fileteredAssignedLabelList[i].length > 0 &&
-                        labelList.includes(fileteredAssignedLabelList[i]))
+                    labelList.includes(fileteredAssignedLabelList[i]))
                     return true;
             }
 
@@ -1046,7 +1048,7 @@ var SACore = {
             var fileteredAssignedLabelList = global_var.userStoryFilter.assignedLabel.split('%IN%');
             for (var i = 0; i < fileteredAssignedLabelList.length; i++) {
                 if (fileteredAssignedLabelList[i].length > 0 &&
-                        assignedLabelList.includes(fileteredAssignedLabelList[i]))
+                    assignedLabelList.includes(fileteredAssignedLabelList[i]))
                     return true;
             }
 
@@ -1061,7 +1063,7 @@ var SACore = {
             var fileteredAssigneedList = global_var.userStoryFilter.assignee.split('%IN%');
             for (var i = 0; i < fileteredAssigneedList.length; i++) {
                 if (fileteredAssigneedList[i].length > 0 &&
-                        assigneeList.includes(fileteredAssigneedList[i]))
+                    assigneeList.includes(fileteredAssigneedList[i]))
                     return true;
             }
 
@@ -1076,7 +1078,7 @@ var SACore = {
             var fileteredAssigneedList = global_var.userStoryFilter.owner.split('%IN%');
             for (var i = 0; i < fileteredAssigneedList.length; i++) {
                 if (fileteredAssigneedList[i].length > 0 &&
-                        assigneeList.includes(fileteredAssigneedList[i]))
+                    assigneeList.includes(fileteredAssigneedList[i]))
                     return true;
             }
         } catch (e) {
@@ -1089,7 +1091,7 @@ var SACore = {
             var fileteredTaskTypesList = global_var.userStoryFilter.taskType.split('%IN%');
             for (var i = 0; i < fileteredTaskTypesList.length; i++) {
                 if (fileteredTaskTypesList[i].length > 0 &&
-                        taskTypesList.includes(fileteredTaskTypesList[i]))
+                    taskTypesList.includes(fileteredTaskTypesList[i]))
                     return true;
             }
 
@@ -1299,7 +1301,7 @@ var SACore = {
         for (var n = 0; n < keys.length; n++) {
             var k = keys[n];
             var o = this.Backlogs[k];
-//            console.log(o.inputCount,':',parseFloat(o.inputCount))
+            //            console.log(o.inputCount,':',parseFloat(o.inputCount))
             if (o.inputCount.length === 0 || parseFloat(o.inputCount) === 0) {
                 continue;
             }
@@ -1311,15 +1313,15 @@ var SACore = {
         var json = [];
 
         var keys = Object.keys(this.Backlogs);
-//        for (var n = 0; n < keys.length; n++) {
-//            var k = keys[n];
-//            var o = this.Backlogs[k];
-////            console.log(o.inputCount,':',parseFloat(o.inputCount))
-//            if (o.inputCount.length === 0 || parseFloat(o.inputCount) === 0) {
-//                continue;
-//            }
-//            json.push(k);
-//        }
+        //        for (var n = 0; n < keys.length; n++) {
+        //            var k = keys[n];
+        //            var o = this.Backlogs[k];
+        ////            console.log(o.inputCount,':',parseFloat(o.inputCount))
+        //            if (o.inputCount.length === 0 || parseFloat(o.inputCount) === 0) {
+        //                continue;
+        //            }
+        //            json.push(k);
+        //        }
         return keys;
     }
 }
@@ -1392,7 +1394,7 @@ var SAInputDesc = {
         return this.toDescJSON(global_var.current_us_input_id);
     },
     toDescJSON: function (inputId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = SAInput.GetCurrentInputDescription();
         var idx = 0;
         try {
@@ -1407,7 +1409,7 @@ var SAInputDesc = {
         } catch (err) {
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -1429,7 +1431,7 @@ var SAInputDesc = {
         return res;
     },
     toJSON: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.InputDescriptions);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -1443,7 +1445,7 @@ var SAInputDesc = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -1779,7 +1781,7 @@ var SAInput = {
     },
 
     toJSONWithInputs: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
 
         var keys = Object.keys(this.Inputs);
 
@@ -1791,13 +1793,13 @@ var SAInput = {
         return json;
     },
     toInputJSON: function (inputId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var o = SAInput.Inputs[inputId];
         json.tbl[0].r.push(o);
         return json;
     },
     toJSONAsInputType: function (backlogId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         try {
             var keys = SACore.GetInputList(backlogId);
             var idx = 0;
@@ -1805,8 +1807,8 @@ var SAInput = {
                 var k = keys[n].trim();
                 var o = SAInput.Inputs[k];
                 if (!(o.inputType === 'IN' || o.inputType === 'GUI'
-                        || o.inputType === 'TBL' || o.inputType === 'GRP'
-                        || o.inputType === 'TAB')) {
+                    || o.inputType === 'TBL' || o.inputType === 'GRP'
+                    || o.inputType === 'TAB')) {
                     continue;
                 }
                 json.tbl[0].r.push(o);
@@ -1818,7 +1820,7 @@ var SAInput = {
     },
     _toJSONByBacklog: function (backlogId) {
 
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
 
         var keys = SACore.GetInputList(backlogId);
         var idx = 0;
@@ -1833,7 +1835,7 @@ var SAInput = {
     },
     toJSONByBacklog: function (backlogId) {
         loadBacklogInputsByIdIfNotExist(backlogId);
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
 
         var keys = SACore.GetInputList(backlogId);
         var idx = 0;
@@ -1848,7 +1850,7 @@ var SAInput = {
     },
     toJSON: function () {
         loadBacklogInputsByIdIfNotExist(global_var.current_backlog_id);
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = this.getInputsByBacklodId();
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -1861,7 +1863,7 @@ var SAInput = {
         return json;
     },
     toJSONAsSectionType: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
 
         var keys = this.getInputsByBacklodId();
         var idx = 0;
@@ -1899,7 +1901,7 @@ var SAInput = {
     GetInputDescription: function (inputId) {
         var res = [];
         try {
-//            res = this.Inputs[inputId]['inputDescriptionIds'].split(',');
+            //            res = this.Inputs[inputId]['inputDescriptionIds'].split(',');
             res = this.DescriptionId[inputId];
         } catch (err) {
         }
@@ -1927,14 +1929,14 @@ var SAInput = {
     },
     GetCurrentDependenceId: function () {
         var id = this.Inputs[global_var.current_us_input_id].fkDependentBacklogId;
-        return  id;
+        return id;
     },
     GetCurrentChildDependenceId: function () {
-//        var id = this.Inputs[global_var.current_us_input_id].childDependenceId;
+        //        var id = this.Inputs[global_var.current_us_input_id].childDependenceId;
         LoadChildDependenceId4Input(global_var.current_us_input_id);
 
         var id = this.ChildDependenceId[global_var.current_us_input_id];
-        return  id;
+        return id;
     }
 }
 /* 
@@ -2042,7 +2044,7 @@ var SADependency = {
         return this.toDescJSON(global_var.current_us_input_id);
     },
     toDescJSON: function (inputId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = SAInput.GetCurrentInputDescription();
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -2053,12 +2055,12 @@ var SADependency = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
     toJSON: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.Dependencies);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -2072,7 +2074,7 @@ var SADependency = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -2314,7 +2316,7 @@ var SABacklogLabel = {
     },
 
     toDescJSON: function (inputId) {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = SAInput.GetCurrentInputDescription();
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -2325,7 +2327,7 @@ var SABacklogLabel = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },
@@ -2347,7 +2349,7 @@ var SABacklogLabel = {
         return res;
     },
     toJSONAsBacklogLabel: function () {
-        var json = {"tbl": [{"r": []}]};
+        var json = { "tbl": [{ "r": [] }] };
         var keys = Object.keys(this.BacklogLabelList);
         var idx = 0;
         for (var n = 0; n < keys.length; n++) {
@@ -2361,7 +2363,7 @@ var SABacklogLabel = {
             idx++;
         }
         if (idx === 0) {
-            json = {"tbl": []};
+            json = { "tbl": [] };
         }
         return json;
     },

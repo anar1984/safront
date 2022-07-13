@@ -15529,7 +15529,7 @@ $(document).on('click', '.loadSqlGenerator', function (evt) {
 
 $(document).on('click', '.loadExportImport', function (evt) {
    
-    global_var.current_modal = "exportimport";
+    global_var.current_modal = "loadExportImport";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/exportimport.html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);

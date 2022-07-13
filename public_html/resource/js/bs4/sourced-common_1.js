@@ -7660,6 +7660,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         dragResize()
     },
     insertNewInputNew: function(el, action) {
+        debugger
         action = (action) ? action : "IN"
 
         this.insertNewInputNewBody(el, action);
