@@ -12751,6 +12751,7 @@ $(document).on('click', '.loadHistory', function (evt) {
         genTimePickerById('history-panel-date-id','down');
         new HistoryNew().getReleaseList();
         new HistoryNew().getUserList();
+        loadProjectList2SelectboxByClass('projectList_history',true);
         generateMonacoeditros('editor-history-history', "editorDiffHistory", 'javascript','vs-dark');
         $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
         new HistoryNew().load();
@@ -12885,7 +12886,7 @@ class HistoryNew{
             case 'html': 
                         api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",trig:"fkBacklogId",body:'requestBody'}
                  break;
-            case 'sql': case'javacore': case'nodecore':
+            case 'sql': case'javacore': case'nodecore': case'mysqlfn':
                         api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fnDescription",body:'jsBody'}
                  break;
             case 'api': 
@@ -12921,6 +12922,7 @@ class HistoryNew{
         data.endLimit = $('input.endLimitNew').val();
         data.searchText = text.val();
         data.createdDateFrom = time.startTime;
+        data.fkProjectId = $('#history-panel-project-id').val();
         data.createdDateTo = time.endTime;
         data.createdBy = getProjectValueUsManageMultiByelInNew($("#history-panel-created-id"));
         if($('#release-is-filter').prop('checked')){
@@ -13136,7 +13138,7 @@ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, rea
     $('.loading.editor').show();
     require.config({
         paths: {
-            'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'
+            'vs': 'https://unpkg.com/monaco-editor@0.33.0/min/vs'
         }
     });
     window.MonacoEnvironment = {
@@ -13145,9 +13147,9 @@ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, rea
 
     let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+            baseUrl: 'https://unpkg.com/monaco-editor@0.33.0/min/'
         };
-        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+        importScripts('https://unpkg.com/monaco-editor@0.33.0/min/vs/base/worker/workerMain.js');
     `], {
         type: 'text/javascript'
     }));
@@ -13172,7 +13174,7 @@ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, rea
 function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
     require.config({
         paths: {
-            'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'
+            'vs': 'https://unpkg.com/monaco-editor@0.33.0/min/vs'
         }
     });
     window.MonacoEnvironment = {
@@ -13181,14 +13183,15 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
 
     let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+            baseUrl: 'https://unpkg.com/monaco-editor@0.33.0/min/'
         };
-        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+        importScripts('https://unpkg.com/monaco-editor@0.33.0/min/vs/base/worker/workerMain.js');
     `], {
         type: 'text/javascript'
     }));
-
+ 
     require(["vs/editor/editor.main"], function () {
+       
         window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
             value: body,
             language: lang,
@@ -13200,8 +13203,26 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
             scrollBeyondLastLine: true,
             theme: theme
         });
+        getCustomThemeMonaco();
 
     });
+}
+function getCustomThemeMonaco() {
+    monaco.editor.defineTheme('myTheme', {
+        base: 'vs',
+        inherit: true,
+        rules: [{ background: 'EDF9FA' }],
+        colors: {
+            'editor.foreground': '#000000',
+            'editor.background': '#EDF9FA',
+            'editorCursor.foreground': '#8B0000',
+            'editor.lineHighlightBackground': '#0000FF20',
+            'editorLineNumber.foreground': '#008800',
+            'editor.selectionBackground': '#88000030',
+            'editor.inactiveSelectionBackground': '#88000015'
+        }
+    });
+    monaco.editor.setTheme('myTheme');
 }
 
 function loadNameBacklogOrProjectShareURl(backlogId) {
@@ -13879,7 +13900,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
         // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
-        window.editorEvent = CodeMirror(document.querySelector('#eventActionType4ManualJs'), {
+       /*  window.editorEvent = CodeMirror(document.querySelector('#eventActionType4ManualJs'), {
             lineNumbers: true,
             tabSize: 2,
             mode: 'javascript',
@@ -13893,7 +13914,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
                         cm.setOption("fullScreen", false);
                 }
             }
-        });
+        }); */
         Prototype.Init();
         /// editorGenerateJSCSS();
 
@@ -15241,7 +15262,7 @@ function fnINit4fnType(val) {
     } else if (val === 'java' || val === 'javacore') {
         ts = 'java'
     } 
-    else if (val === 'sql') {
+    else if (val === 'sql'||val=='mysqlfn') {
         ts = 'sql'
     }
      else if (val === 'csscore') {
@@ -15254,11 +15275,26 @@ $(document).on('click', '#importCoreJavaCode', function (evt) {
 
     compileJavaCore();
 });
+$(document).on('click', '#importMySqlFNCode', function (evt) {
+
+    compileMySqlFn();
+});
 
 function compileJavaCore() {
     var data = {};
     data.id = global_var.current_fn_id;
     callService('serviceIoCompileCoreJava', data, true, function (res) {
+        if (res.kv && res.kv.err && res.kv.err.length > 0) {
+            Toaster.showError(JSON.stringify(res.kv.err));
+        } else {
+            Toaster.showMessage("Code Compiled!");
+        }
+    })
+}
+function compileMySqlFn() {
+    var data = {};
+    data.id = global_var.current_fn_id;
+    callApi('22061512275600749022', data, true, function (res) {
         if (res.kv && res.kv.err && res.kv.err.length > 0) {
             Toaster.showError(JSON.stringify(res.kv.err));
         } else {
@@ -19812,10 +19848,13 @@ function loadProjectList2SelectboxByClassNochange(className) {
     cmd.selectpicker('refresh');
 }
 
-function loadProjectList2SelectboxByClass(className) {
+function loadProjectList2SelectboxByClass(className,hassnull) {
 
     var cmd = $('select.' + className);
     cmd.html('');
+    if(hassnull){
+        cmd.append('<option></option>');
+    }
     var f = true;
     var pid = SACore.GetProjectKeys();
     for (var n = 0; n < pid.length; n++) {
