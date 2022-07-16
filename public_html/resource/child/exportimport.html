@@ -2,6 +2,49 @@
     <div class="col-12">
         <h5>Database Export/Import</h1>
     </div>
+
+    <div class="col-4">
+        <label>Project</label>
+        <select class="form-control ei-project-gui-list" data-live-search="true" data-actions-box="true" ></select>
+    </div>
+    <div class="col-4">
+        <label>Story Card</label>
+        <select class="form-control ei-storycard-gui-list" data-live-search="true" data-actions-box="true" ></select>
+    </div>
+    <div class="col-2">
+        <label> </label><br>
+        <button class="btn btn-primary ei-primary-gui-list">Deploy</button>
+    </div>
+    <div class="col-2">
+        <label> </label><br>
+        <span class=" ei-span-gui-list"></span>
+    </div>
+
+    <div class="col-12">
+        <hr>
+    </div>
+
+    <div class="col-4">
+        <label>Project</label>
+        <select class="form-control ei-project-api-list" data-live-search="true" data-actions-box="true" ></select>
+    </div>
+    <div class="col-4">
+        <label>API  </label>
+        <select class="form-control ei-storycard-api-list" data-live-search="true" data-actions-box="true"   ></select>
+    </div>
+    <div class="col-2">
+        <label> </label><br>
+        <button class="btn btn-primary ei-primary-api-list">Deploy</button>
+    </div>
+    <div class="col-2">
+        <label> </label><br>
+        <span class="b  ei-span-api-list"></span>
+    </div>
+
+    <div class="col-12">
+        <hr>
+    </div>
+
     <div class="col-2">
         <label>Database</label>
         <select class="form-control ei-db-list"></select>
@@ -10,21 +53,15 @@
         <label>Table</label>
         <select data-live-search="true"  data-actions-box="true" class="form-control ei-table-list"></select>
     </div>
-    <!-- <div class="col-2">
-        <br>
-        <input type='checkbox' id='dfdf' class="ei-only-table-sctructure">
-        <label for='dfdf'>  Table Structure</label>
+    <div class="col-2">
+        <label>From data</label>
+        <input type="date" data-live-search="true" id="ei-from-date-list" data-actions-box="true" class="form-control ei-from-date-list">
     </div>
     <div class="col-2">
-        <br>
-        <input type='checkbox' id='dfdf5' class="ei-only-table-history">
-        <label for='dfdf5'>  Table History</label>
-    </div> -->
-    <!-- <div class="col-2">
-        <br>
-        <input type='checkbox' id='dfddf444' class="ei-only-table-data">
-        <label for='dfddf444'> Table Data</label>
-    </div> -->
+        <label>To Date</label>
+        <input type="date" data-live-search="true"  id='ei-to-date-list' data-actions-box="true" class="form-control ei-to-date-list">
+    </div>
+   
     <div class="col-2">
         <label><br></label><br>
         <button   class="btn btn-primary ei-export-btn">Export</button>
@@ -32,11 +69,15 @@
     <div class="col-2">
         <label>Download Table Structure SQL File</label>
        
-        <span class='hoxe'>
+        <span class='hoxe' contenteditable="true">
 
         </span>
+        
     </div>
-
+    <div class="col-12">
+        <label>SQL Query</label><br>
+        <textarea  rows="10" class="form-control ei-sql-query"></textarea>
+    </div>
     <div class="col-12">
        <hr>
     </div>
