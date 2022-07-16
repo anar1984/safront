@@ -34,8 +34,7 @@ const cmpList = {
             setTimeout(function() { 
                 $(elm).closest(".user-addons-box-elm").find('.bs-searchbox input').focus();
         }, 300);
-            
-            console.log($(elm).closest(".user-addons-box-elm").find('.bs-searchbox input'));
+
         },
         getUserBlockValue: function (elm) {
             var type = $(elm).attr("action-type");
@@ -139,6 +138,7 @@ const cmpList = {
           
             var elm = select;
             elm.html('');
+            elm.append('<option class="d-none" value=""></option>');
             var keys = SAProjectUser.GetKeysUser();
             for (var i = 0; i < keys.length; i++) {
                 var id = keys[i];
@@ -178,7 +178,7 @@ const cmpList = {
                            </ul>
                          </div>
                         <div class="input-group">
-                            <select name="" class="selectpicker-user-list user-list-selectbox-single"   data-live-search="true">
+                            <select name="" class="selectpicker-user-list user-list-selectbox-single" data-actions-box="true"  data-live-search="true">
                                
                             </select>  
                         </div>
@@ -205,7 +205,7 @@ const cmpList = {
                             </ul>
                         </div>
                         <div class="input-group">
-                            <select name="" class="selectpicker-user-list user-list-selectbox-multiple"   data-live-search="true">
+                            <select name="" class="selectpicker-user-list user-list-selectbox-multiple" data-actions-box="true"  data-live-search="true">
                                
                             </select>  
                         </div>
@@ -509,17 +509,17 @@ const cmpList = {
         },
         genBlock: function (tableId,list) {
             return ` <div  table-id='${tableId}' class="showhide-col-main-info toggle-block-${tableId}" style="display: none">
-            <div class="showhide-col-main-info-in">
-                <ul>
-                   ${list}
-                </ul>
-                <div class="showhide-col-footer">
-                    <span onclick='cmpList.tableShowHideColumn.showAllBtn("${tableId}")'  class="scm-show"><i class="fas fa-eye"></i></span>
-                    <span onclick='cmpList.tableShowHideColumn.getLocalStorage("${tableId}")' class="scm-hide"><i class="fas fa-eye-slash"></i></span>
-                </div>
-            </div>
-           
-        </div>`
+                        <div class="showhide-col-main-info-in">
+                            <ul>
+                            ${list}
+                            </ul>
+                            <div class="showhide-col-footer">
+                                <span onclick='cmpList.tableShowHideColumn.showAllBtn("${tableId}")'  class="scm-show"><i class="fas fa-eye"></i></span>
+                                <span onclick='cmpList.tableShowHideColumn.getLocalStorage("${tableId}")' class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                            </div>
+                        </div>
+                    
+                    </div>`
         },
         genAllCheckBtn: function (params) {
                 return `<li>
@@ -1096,6 +1096,47 @@ String.prototype.xss=function(){
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;'):'';
 };
+$.fn.apiPicker =function (options) {
+     if(typeof options ==Object){
+        var json = initJSON();
+        if (options.dataCore) {
+            json.kv = $.extend(json.kv, options.dataCore);
+        }
+        json.kv['apiId'] = options.apiId;
+        json.kv['apiId'] ='{{{q}}}';
+        var that = this;
+        $(options.elements).selectpicker().ajaxSelectPicker({
+            ajax: {
+                url: urlGl + "api/post/srv/serviceIoCallActionApi",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+            },
+            // function to preprocess JSON data
+            preprocessData: function (data) {
+                var data  =  data.tbl[0].r
+              var i, l = data.length, array = [];
+              if (l) {
+                  for (i = 0; i < l; i++) {
+                      array.push($.extend(true, data[i], {
+                          text : data[i][options.key],
+                          value: data[i][options.value],
+                          /* data : {
+                              subtext: data[i].Email
+                          } */
+                      }));
+                  }
+              }
+              // You must always return a valid array when processing data. The
+              // data argument passed is a clone and cannot be modified directly.
+              return array;
+            }
+          
+          });
+     }
+   
+}
 /* ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /*    // userList Block start */
 $(document).on('click', '.user-avatar-list li .item-click .removed-user-btn', function (e) {
@@ -1656,7 +1697,31 @@ const CheweekSlider = function (parentDiv, imgArray) {
    /// checklist  start
 var fn_22010711064709895352 = {
 
-
+     gen_block: (elm)=>{
+         $(elm).html( ` <div class="task-check-list-box cs-box-background overflow-hidden">
+         <div class="d-flex">
+              <div class="mr-auto w-100">  
+                <input type="text" class="form-control" id="newAddCheckListVocation" placeholder="Açıqlama Qeyd Et..." style="background: transparent; border-radius: 0; color: #ffff" />
+               </div>
+                <div class="showhide-col-footer d-flex task-check-list-show-hide ">
+                    <span class="scm-show "><i class="fas fa-eye" aria-hidden="true"></i></span>
+                    <span class="scm-hide active"><i class="fas fa-eye-slash" aria-hidden="true"></i></span>
+            </div>
+            <div class="remove-all-desc">
+            <div class="dropdown show">
+                    <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="cs-svg-icon trash"></i>
+                    </span>
+                    <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
+                        <a data-type="all" class="dropdown-item all-remove-note" href="#">Hamısını sil</a>
+                        <a data-type="checked" class="dropdown-item all-remove-note" href="#">İşarələnmişləri sil</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <ul></ul>
+    </div>`)
+     },
     create_aciqlama: (fkOnwer, elem) => {
     
         var setBack = elem.closest('.redirectClass')
@@ -1803,10 +1868,8 @@ var fn_22010711064709895352 = {
             callApi('21121714100203705645', {
                     fkChecklistId: id
                 }, true, function () {
-    
                     var fkowner = $(el).closest('.redirectClass').find('[sa-selectedfield="fkActionId"]').val();
                     fn_22010711064709895352.loader(fkowner);
-    
                 }
     
             )
@@ -1901,6 +1964,9 @@ var fn_22010711064709895352 = {
     
     }
     
+
+
+
     //ENTER SLASH
     $(document).on('change',"#newAddCheckListVocation",function() {
         var el = $(this)
@@ -1938,6 +2004,7 @@ const  getTimeDifferenceNew = function (from, to) {
        return txt
     // } 
 }
+
 /// date range picker   
 function genTimePickerById(id,drop) {
     $('#' + id).daterangepicker({
