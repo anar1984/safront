@@ -27,12 +27,14 @@ const cmpList = {
            
         
         },
+        getDefaultUserprofile:function(){
+           return 'userprofile.png';
+        },
         clickfocusElementSeacrh:function (elm) {
             setTimeout(function() { 
                 $(elm).closest(".user-addons-box-elm").find('.bs-searchbox input').focus();
         }, 300);
-            
-            console.log($(elm).closest(".user-addons-box-elm").find('.bs-searchbox input'));
+
         },
         getUserBlockValue: function (elm) {
             var type = $(elm).attr("action-type");
@@ -51,14 +53,14 @@ const cmpList = {
         genviewItemBlock: function (id, url, nameAt) {
             var img = (url) ?
                 fileUrl(url) :
-                fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(this.getDefaultUserprofile());
             return ` <img id='${id}' class="Assigne-card-story-select-img owner" src="${img}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAt}">
                     `
         },
         genItemBlock: function (id, url, nameAt) {
             var img = (url) ?
                 fileUrl(url) :
-                fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(this.getDefaultUserprofile());
             return `<li id="${id}">
                 <div class="item-click">
                     <div class="circular--portrait">
@@ -95,8 +97,10 @@ const cmpList = {
 
                 }
             } else if (type === 'multi') {
-                block.empty();
-                tit.empty();
+                if(list.length >0){
+                    block.empty();
+                    tit.empty();
+                }
                 if (typeof list === 'object') {
                     for (let i = 0; i < list.length; i++) {
                         const o = list[i];
@@ -134,11 +138,8 @@ const cmpList = {
           
             var elm = select;
             elm.html('');
+            elm.append('<option class="d-none" value=""></option>');
             var keys = SAProjectUser.GetKeysUser();
-            var div1 = $(`<option
-                    data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
-                    Unassigned</option>`);
-            elm.append(div1);
             for (var i = 0; i < keys.length; i++) {
                 var id = keys[i];
                 if(hiddenList.includes(id)){
@@ -148,7 +149,7 @@ const cmpList = {
                     var userName = SAProjectUser.Users[id].userPersonName;
                     var img = (userImage) ?
                         fileUrl(userImage) :
-                        fileUrl(new User().getDefaultUserprofileName());
+                        fileUrl(this.getDefaultUserprofile());
                     var div = $(`<option value='${id}'
                             data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
                             ${userName}</option>`);
@@ -177,7 +178,7 @@ const cmpList = {
                            </ul>
                          </div>
                         <div class="input-group">
-                            <select name="" class="selectpicker-user-list user-list-selectbox-single"   data-live-search="true">
+                            <select name="" class="selectpicker-user-list user-list-selectbox-single" data-actions-box="true"  data-live-search="true">
                                
                             </select>  
                         </div>
@@ -204,7 +205,7 @@ const cmpList = {
                             </ul>
                         </div>
                         <div class="input-group">
-                            <select name="" class="selectpicker-user-list user-list-selectbox-multiple"   data-live-search="true">
+                            <select name="" class="selectpicker-user-list user-list-selectbox-multiple" data-actions-box="true"  data-live-search="true">
                                
                             </select>  
                         </div>
@@ -256,9 +257,10 @@ const cmpList = {
                var attr  =  $(elm).attr('data-pag-id')
             if (elm.prop('tagName') === 'TABLE') {
                 $("#paginiton_id_"+attr).remove();
-                if(rowCount=="0"||!rowCount){
-                    return
-                }
+                if(rowCount=="0"||!rowCount|| typeof rowCount =='object' || rowCount.length >10)
+                 return;
+                 
+                 
                 var tbid = makeId(10);
                 $(elm).attr("data-pag-id", tbid);
                 $(elm).addClass("selectableTable");
@@ -507,17 +509,17 @@ const cmpList = {
         },
         genBlock: function (tableId,list) {
             return ` <div  table-id='${tableId}' class="showhide-col-main-info toggle-block-${tableId}" style="display: none">
-            <div class="showhide-col-main-info-in">
-                <ul>
-                   ${list}
-                </ul>
-                <div class="showhide-col-footer">
-                    <span onclick='cmpList.tableShowHideColumn.showAllBtn("${tableId}")'  class="scm-show"><i class="fas fa-eye"></i></span>
-                    <span onclick='cmpList.tableShowHideColumn.getLocalStorage("${tableId}")' class="scm-hide"><i class="fas fa-eye-slash"></i></span>
-                </div>
-            </div>
-           
-        </div>`
+                        <div class="showhide-col-main-info-in">
+                            <ul>
+                            ${list}
+                            </ul>
+                            <div class="showhide-col-footer">
+                                <span onclick='cmpList.tableShowHideColumn.showAllBtn("${tableId}")'  class="scm-show"><i class="fas fa-eye"></i></span>
+                                <span onclick='cmpList.tableShowHideColumn.getLocalStorage("${tableId}")' class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                            </div>
+                        </div>
+                    
+                    </div>`
         },
         genAllCheckBtn: function (params) {
                 return `<li>
@@ -688,13 +690,13 @@ const cmpList = {
                     }
                 
             },
-            onClickItem: function (elm,tbid) {
+            onClickItem: function (event,elm,tbid) {
                 var order  = $(elm).attr('order-no')
                 var item  = $("[right-click="+tbid+"] tbody .last_click_class td:eq("+order+")");
-                item.find('.right-click-btn').click();
+                item.find('.right-click-btn').trigger('click',[event]);
             },
             clickItem : function(order,text,tbid,icon) {
-                return `<li onclick="cmpList.tableRightClick.onClickItem(this,'${tbid}')" class="dropdown-item" order-no="${order}">
+                return `<li onclick="cmpList.tableRightClick.onClickItem(event,this,'${tbid}')" class="dropdown-item" order-no="${order}">
                         <i class="cs-svg-icon ${icon?icon.trim():"link-2"}"></i> ${text}
                       </li>`
             },
@@ -806,8 +808,9 @@ const cmpList = {
         _hilightAnimating: false,
        Init:function(data){
                var container  = $(data.parent?data.parent:"body");
-
-               container.append(this.genBlock(data))
+               container.find('.sa-confirm-block').remove() 
+               container.append(this.genBlock(data));
+              container.find('button.cs-nextsave-btn').trigger('focus');
        },
        genBlock:function(data) {
                var that  = this;
@@ -881,7 +884,7 @@ const cmpList = {
                                                         </label>
                                                     </div>`)
                                             )
-            
+                      
            return  container.append(backGround)
                             .append(block);
        },
@@ -946,7 +949,7 @@ $.fn.getVal = function (val) {
             var value =$(this).find('.mode-aktiv-all').attr('data-val');
            return value?value:"A";
         }
-           
+        
        }
    
 }
@@ -1085,13 +1088,55 @@ $.fn.tblToExcel = function () {
 }
 String.prototype.xss=function(){
     var str=this;
-   return String(str)
+
+   return str?String(str)
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');;
+    .replace(/>/g, '&gt;'):'';
 };
+$.fn.apiPicker =function (options) {
+     if(typeof options ==Object){
+        var json = initJSON();
+        if (options.dataCore) {
+            json.kv = $.extend(json.kv, options.dataCore);
+        }
+        json.kv['apiId'] = options.apiId;
+        json.kv['apiId'] ='{{{q}}}';
+        var that = this;
+        $(options.elements).selectpicker().ajaxSelectPicker({
+            ajax: {
+                url: urlGl + "api/post/srv/serviceIoCallActionApi",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+            },
+            // function to preprocess JSON data
+            preprocessData: function (data) {
+                var data  =  data.tbl[0].r
+              var i, l = data.length, array = [];
+              if (l) {
+                  for (i = 0; i < l; i++) {
+                      array.push($.extend(true, data[i], {
+                          text : data[i][options.key],
+                          value: data[i][options.value],
+                          /* data : {
+                              subtext: data[i].Email
+                          } */
+                      }));
+                  }
+              }
+              // You must always return a valid array when processing data. The
+              // data argument passed is a clone and cannot be modified directly.
+              return array;
+            }
+          
+          });
+     }
+   
+}
 /* ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /*    // userList Block start */
 $(document).on('click', '.user-avatar-list li .item-click .removed-user-btn', function (e) {
@@ -1273,6 +1318,7 @@ function sumAvarMaxMinCount(tbid,selected) {
             }
          }  
     })
+    sum  = (Math.round(sum * 100) / 100)
     var count  = $(selected).length;
     var tbid = $(tbid).closest('table').attr('data-pag-id');
     var elm = $("#table-selected-row-details-"+tbid+"");
@@ -1651,7 +1697,31 @@ const CheweekSlider = function (parentDiv, imgArray) {
    /// checklist  start
 var fn_22010711064709895352 = {
 
-
+     gen_block: (elm)=>{
+         $(elm).html( ` <div class="task-check-list-box cs-box-background overflow-hidden">
+         <div class="d-flex">
+              <div class="mr-auto w-100">  
+                <input type="text" class="form-control" id="newAddCheckListVocation" placeholder="Açıqlama Qeyd Et..." style="background: transparent; border-radius: 0; color: #ffff" />
+               </div>
+                <div class="showhide-col-footer d-flex task-check-list-show-hide ">
+                    <span class="scm-show "><i class="fas fa-eye" aria-hidden="true"></i></span>
+                    <span class="scm-hide active"><i class="fas fa-eye-slash" aria-hidden="true"></i></span>
+            </div>
+            <div class="remove-all-desc">
+            <div class="dropdown show">
+                    <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="cs-svg-icon trash"></i>
+                    </span>
+                    <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
+                        <a data-type="all" class="dropdown-item all-remove-note" href="#">Hamısını sil</a>
+                        <a data-type="checked" class="dropdown-item all-remove-note" href="#">İşarələnmişləri sil</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <ul></ul>
+    </div>`)
+     },
     create_aciqlama: (fkOnwer, elem) => {
     
         var setBack = elem.closest('.redirectClass')
@@ -1705,12 +1775,7 @@ var fn_22010711064709895352 = {
                             for (let l = 0; l < imglist.length; l++) {
                                 const d = imglist[l];
                                 if(d){
-                                    imgblock.append(`<div class="file-item" id="pro_zad_span${kid}">
-                                    <span class="file-name-attach full-screen-image-btn" data-url='${d}'  onclick="imageViewerNew(this,'${d}')">
-                                    ${add3Dots2Filename(d)}
-                                    </span>
-                                    <i class="fa fa-times" pid="${kid}" onclick="removeFilenameFromZad(this,'${d}')" aria-hidden="true"></i>
-                                    </div>`)
+                                    imgblock.append(new FileView().genListFileModelNew(finalname,idx))
                                 }
                                
                                 
@@ -1803,10 +1868,8 @@ var fn_22010711064709895352 = {
             callApi('21121714100203705645', {
                     fkChecklistId: id
                 }, true, function () {
-    
                     var fkowner = $(el).closest('.redirectClass').find('[sa-selectedfield="fkActionId"]').val();
                     fn_22010711064709895352.loader(fkowner);
-    
                 }
     
             )
@@ -1901,6 +1964,9 @@ var fn_22010711064709895352 = {
     
     }
     
+
+
+
     //ENTER SLASH
     $(document).on('change',"#newAddCheckListVocation",function() {
         var el = $(this)
@@ -1938,6 +2004,7 @@ const  getTimeDifferenceNew = function (from, to) {
        return txt
     // } 
 }
+
 /// date range picker   
 function genTimePickerById(id,drop) {
     $('#' + id).daterangepicker({
@@ -1972,6 +2039,11 @@ function genTimePickerById(id,drop) {
             monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
         }
     });
+    try {
+        startTimeCurrent(id);
+    } catch (error) {       
+    }
+   
 }
 function getValueRangePicker(elm, lk) {
     try {
@@ -2012,3 +2084,88 @@ function madeId() {
 
     return 'comp_id_'+id;
 }
+
+function addSeperateNumber(nStr,rkl){
+      if(!nStr){
+        nStr  =  0;
+      }
+    nStr  = parseFloat(nStr).toFixed(rkl?rkl:2);
+    nStr = nStr.xss();
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
+(function($){
+    var defaults = {
+        elems           :null, //Element to print HTML
+        copy_css        :false,//Copy CSS from original element
+        external_css    :null  //New external css file to apply
+    };
+
+    var methods = {
+        init : function (options) {
+            var settings = $.extend({}, defaults, options)
+            
+            return this.each(function () {
+                var elems=$(this);
+              //  $(this).click(function(e) {
+                        $('.print-iframe').remove();
+                    var iframe   = document.createElement('iframe');
+                        iframe.classList.add('print-iframe');
+                   
+                    
+                    $(iframe).load(function(){
+                        elems.each(function(){
+                            iframe.contentWindow.document.body.appendChild(this.cloneNode(true));
+                        });
+                        if(settings.copy_css) {
+                            var arrStyleSheets = document.getElementsByTagName("link");
+                            for (var i = 0; i < arrStyleSheets.length; i++){
+                                iframe.contentWindow.document.head.appendChild(arrStyleSheets[i].cloneNode(true));
+                            }
+                            var arrStyle = document.getElementsByTagName("style");
+                            for (var i = 0; i < arrStyle.length; i++){    
+                                iframe.contentWindow.document.head.appendChild(arrStyle[i].cloneNode(true));
+                            }
+                        }
+                        if(settings.external_css) {
+                            var style  = document.createElement("link")
+                            style.rel  = 'stylesheet';
+                            style.type = 'text/css';
+                            style.href = settings.external_css;
+                            iframe.contentWindow.document.head.appendChild(style);
+                        }
+                        var script   = document.createElement('script');
+                        script.type  = 'text/javascript';
+                        script.text  = 'window.print();';
+                        iframe.contentWindow.document.head.appendChild(script);
+                        $(iframe).hide();
+                    });
+                    $(iframe).appendTo('body');
+               // });
+            });
+        },
+        destroy : function () {
+            //Anything else I should do here?
+            return this.each(function () {});
+        }
+    };
+
+    $.fn.saPrint = function(method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || ! method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' +  method + ' does not exist on jQuery.printIt');
+        }    
+    };
+    }(jQuery));
+

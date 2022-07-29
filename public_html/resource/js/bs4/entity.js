@@ -1259,7 +1259,7 @@ function uploadFile4IpoCoreImportDB(fileext, file_base_64, file_name, id) {
             $('#pro_zad_span' + idx)
                     .after($('<i class="fa fa-times">')
                             .attr('pid', idx)
-                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+                            .attr('onclick', 'new FileView().removeFilenameFromZad(this,\'' + finalname + '\')'));
 
 
 
@@ -1269,14 +1269,12 @@ function uploadFile4IpoCoreImportDB(fileext, file_base_64, file_name, id) {
                     finalname;
 
             $('#' + id).attr('fname', st);
-            console.log(finalname);
             importSendNameApiDB(finalname)
         },
         error: function () {}
     });
     return finalname;
 }
-
 
 function importSendNameApiDB(filNm) {
     var json = {

@@ -821,6 +821,15 @@ tbody .ifbacklogDescriptionText:hover{
 .cs-sum-inbox.cs-sum-inbox-runjava .cs-select-btn-box button:hover {
     background: #8f467f !important;
 }
+.cs-sum-inbox.cs-sum-inbox-runnode .cs-select-btn-box button {
+    background: #c77d08;
+}
+.cs-sum-inbox.cs-sum-inbox-runnode .cs-select-btn-box button:hover {
+    background: #c77d08;
+}
+.cs-sum-inbox.cs-sum-inbox-runnode .cs-select-btn-box button:hover {
+    background: #c77d08 !important;
+}
 .cs-sum-inbox .cs-select-btn-box button:focus{
     outline: none;
     border: none;
@@ -927,6 +936,9 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
 }
 table tr td .cs-sum-inbox.cs-sum-inbox-runjava > div {
     background-color: #b955a3;
+}
+table tr td .cs-sum-inbox.cs-sum-inbox-runnode > div {
+    background-color: #e09e36;
 }
 table tr td .cs-sum-inbox.cs-sum-inbox-runsql > div {
     background-color: #4cb1c1;

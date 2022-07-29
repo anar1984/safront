@@ -47,6 +47,7 @@ var moduleList = {
     "loadActivityDiagram": "Activity Diagram",
     "loadBugChange": "Issue Management",
     "loadCodeGround": "Code Ground",
+    "loadHistory": "History",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
     "loadBusinessCase": "Business Case",
@@ -71,7 +72,7 @@ var saInputTagIsPressed = false;
 
 
 
-$(document).on('keyup', '#backlogDescriptionText', function(e) {
+$(document).on('keyup', '#backlogDescriptionText', function (e) {
     if (e.keyCode === 13) {
         new UserStory().insertNewBacklogDesc();
     }
@@ -122,7 +123,7 @@ function getUserFullInfo(fkUserId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             res1 = res.kv;
 
         }
@@ -167,12 +168,12 @@ function removeBacklogDescCommentType(el, descId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
             that.getBacklogDesc();
             loadCurrentBacklogProdDetails();
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -197,14 +198,14 @@ function setBacklogDescCommentType(el, descId, commentType) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             AJAXCallFeedback(res);
             loadCurrentBacklogProdDetails();
             //            that.getBacklogDesc();
 
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -221,7 +222,7 @@ function MapApiCallAsyncType(arg) {
 
     return arg;
 }
-(function($, window) {
+(function ($, window) {
     var cols, dragSrcEl = null,
         dragSrcEnter = null,
         dragableColumns, _this;
@@ -235,7 +236,7 @@ function MapApiCallAsyncType(arg) {
         return (nav.indexOf('msie') !== -1) ? parseInt(nav.split('msie')[1]) : false;
     }
 
-    dragableColumns = (function() {
+    dragableColumns = (function () {
         var $table;
 
         function dragColumns(table, options) {
@@ -244,7 +245,7 @@ function MapApiCallAsyncType(arg) {
             _this.options = $.extend({}, _this.options, options);
             if (_this.options.drag) {
                 if (isIE() === 9) {
-                    $table.find('thead tr th').each(function() {
+                    $table.find('thead tr th').each(function () {
                         if ($(this).find('.drag-ie').length === 0) {
                             $(this).html($('<a>').html($(this).html()).attr('href', '#').addClass('drag-ie'));
                         }
@@ -253,7 +254,7 @@ function MapApiCallAsyncType(arg) {
                 cols = $table.find('thead tr th');
 
                 jQuery.event.props.push('dataTransfer');
-                [].forEach.call(cols, function(col) {
+                [].forEach.call(cols, function (col) {
                     col.setAttribute('draggable', true);
 
                     $(col).on('dragstart', _this.handleDragStart);
@@ -273,33 +274,33 @@ function MapApiCallAsyncType(arg) {
                 overClass: 'over',
                 movedContainerSelector: '.dnd-moved'
             },
-            handleDragStart: function(e) {
+            handleDragStart: function (e) {
                 $(this).addClass(_this.options.dragClass);
                 dragSrcEl = this;
                 e.dataTransfer.effectAllowed = 'copy';
                 e.dataTransfer.setData('text/html', this.id);
             },
-            handleDragOver: function(e) {
+            handleDragOver: function (e) {
                 if (e.preventDefault) {
                     e.preventDefault();
                 }
                 e.dataTransfer.dropEffect = 'copy';
                 return false;
             },
-            handleDragEnter: function(e) {
+            handleDragEnter: function (e) {
                 dragSrcEnter = this;
-                [].forEach.call(cols, function(col) {
+                [].forEach.call(cols, function (col) {
                     $(col).removeClass(_this.options.overClass);
                 });
                 $(this).addClass(_this.options.overClass);
                 return false;
             },
-            handleDragLeave: function(e) {
+            handleDragLeave: function (e) {
                 if (dragSrcEnter !== e) {
                     //this.classList.remove(_this.options.overClass);
                 }
             },
-            handleDrop: function(e) {
+            handleDrop: function (e) {
                 if (e.stopPropagation) {
                     e.stopPropagation();
                 }
@@ -308,9 +309,9 @@ function MapApiCallAsyncType(arg) {
                 }
                 return false;
             },
-            handleDragEnd: function(e) {
+            handleDragEnd: function (e) {
                 var colsPositions = {};
-                [].forEach.call(cols, function(col) {
+                [].forEach.call(cols, function (col) {
                     $(col).removeClass(_this.options.overClass);
                     var name = $(col).attr('data-name');
                     var index = $(col).index();
@@ -323,7 +324,7 @@ function MapApiCallAsyncType(arg) {
                 }
                 return false;
             },
-            moveColumns: function(fromIndex, toIndex) {
+            moveColumns: function (fromIndex, toIndex) {
                 var rows = $table.find(_this.options.movedContainerSelector);
                 for (var i = 0; i < rows.length; i++) {
                     if (toIndex > fromIndex) {
@@ -340,9 +341,9 @@ function MapApiCallAsyncType(arg) {
     })();
 
     return $.fn.extend({
-        dragableColumns: function() {
+        dragableColumns: function () {
             var option = (arguments[0]);
-            return this.each(function() {
+            return this.each(function () {
                 var $table = $(this);
                 new dragableColumns($table, option);
             });
@@ -418,7 +419,7 @@ function bindScrollZadToCanvas() {
 //////   var table ----------------------------------------------- Revan Gozelov edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-$(document).on("click", "#import-excel-button-id-a", function() {
+$(document).on("click", "#import-excel-button-id-a", function () {
 
 
     if ($(this).hasClass('active')) {
@@ -433,7 +434,7 @@ $(document).on("click", "#import-excel-button-id-a", function() {
 
 })
 
-$(document).on("click", '#file_export_excel_new', function() {
+$(document).on("click", '#file_export_excel_new', function () {
     var tabId = $(this).attr("data-api-tabid")
     var workbook = XLSX.utils.book_new();
 
@@ -455,7 +456,7 @@ function exportExcelFile(workbook) {
     return XLSX.writeFile(workbook, "bookName.xlsx");
 }
 
-$(document).on("change", "#file_excel_import", function() {
+$(document).on("change", "#file_excel_import", function () {
     var tabID = $(this).attr('data-api-tabid');
     filePicked(this, tabID);
 })
@@ -468,12 +469,12 @@ function filePicked(oEvent, tabID) {
     // Ready The Event For When A File Gets Selected
     var reader = new FileReader();
 
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         var data = e.target.result;
         var workbook = XLSX.read(data, {
             type: 'binary'
         });
-        workbook.SheetNames.forEach(function(sheetName) {
+        workbook.SheetNames.forEach(function (sheetName) {
             // Here is your object
             var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
             var json_object = JSON.stringify(XL_row_object);
@@ -501,7 +502,7 @@ function filePicked(oEvent, tabID) {
             $("table[table-id='" + tabID + "']").find("tbody").append(tbody.html());
         })
     };
-    reader.onerror = function(ex) {
+    reader.onerror = function (ex) {
         console.log(ex);
     };
 
@@ -517,7 +518,7 @@ function getGroupList4Table(elm) {
         var tableId = $(elm).attr('tbid');
         $('#' + tableId).find(".groupTrElement").remove();
         var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
-            //  $.each(td, function (index, item) {
+        //  $.each(td, function (index, item) {
 
         sortableTable(tableId, sv, td);
 
@@ -528,8 +529,8 @@ function getGroupList4Table(elm) {
     }
 
 }
-$(function() {
-    $(document).on('click', '.stat-div-task-content .stat-table-us tbody .theader-table td', function() {
+$(function () {
+    $(document).on('click', '.stat-div-task-content .stat-table-us tbody .theader-table td', function () {
         var tbl = $(this).parents('.stat-table-us');
         var index = $(this).index(),
             rows = [],
@@ -538,11 +539,11 @@ $(function() {
         $(tbl).find('.theader-table td').removeClass('asc desc');
         $(this).addClass(thClass);
 
-        $(tbl).find('tbody .task-tr-list').each(function(index, row) {
+        $(tbl).find('tbody .task-tr-list').each(function (index, row) {
             rows.push($(row).detach());
         });
 
-        rows.sort(function(a, b) {
+        rows.sort(function (a, b) {
             var aValue = $(a).find('td').eq(index).text(),
                 bValue = $(b).find('td').eq(index).text();
 
@@ -557,7 +558,7 @@ $(function() {
             rows.reverse();
         }
 
-        $.each(rows, function(index, row) {
+        $.each(rows, function (index, row) {
             $(tbl).append(row);
         });
     });
@@ -690,8 +691,27 @@ function DateRangePickerFormatValue(elm) {
     var inns = stTime.trim() + '%BN%' + endTime.trim();
     return inns
 }
+function DateRangePickerFormatValueArry(elm) {
 
-$(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function(e) {
+    var val = $(elm).val();
+    if (!val) {
+        return ''
+    }
+    var stTime
+    var endTime
+    val = val.split('-')
+    var dt = val[0].split('/');
+    var dt1 = val[1].split('/');
+    stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+    endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+    console.log(endTime, stTime);
+    return {
+             'startTime':stTime.trim(),
+             'endTime':endTime.trim()
+           }
+}
+
+$(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
     var depID = $(this).attr('data-api-tabid');
     var val = $(this).val();
     var stTime
@@ -776,7 +796,7 @@ function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {}
+        success: function (res) {}
     });
 }
 
@@ -801,7 +821,7 @@ function getBacklogLastModificationDateAndTime(bid1) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             try {
                 backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.out));
                 //                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.outShared));
@@ -951,7 +971,7 @@ function dbCommand(objectStore, command, data, param) {
 
 
 function commonResultCallback(result) {
-    if (typeof(result) === 'string') {
+    if (typeof (result) === 'string') {
         console.log(result);
     } else if (result instanceof Event) {
         if (result.target instanceof IDBRequest) {
@@ -960,7 +980,7 @@ function commonResultCallback(result) {
                 if (Array.isArray(requestResult)) {
                     let totalResult = requestResult.length;
                     console.log('Request return with ' + totalResult + ' records');
-                    requestResult.forEach(function(item, index) {
+                    requestResult.forEach(function (item, index) {
                         console.log('record[' + index + '], key: ' + item.personId + ', content: ' + JSON.stringify(item));
                     });
                 } else {
@@ -1046,7 +1066,7 @@ function loadBacklogDetailsByIdIfNotExist_old3(bid) {
         var transaction = db.transaction(["subdb"], "readwrite");
         var store = transaction.objectStore("subdb");
         var objectStoreRequest = store.get(bid);
-        objectStoreRequest.onsuccess = function(event) {
+        objectStoreRequest.onsuccess = function (event) {
             dbStorageJSON = event.target.result; //objectStoreRequest.result;
 
         };
@@ -1059,7 +1079,7 @@ function loadBacklogDetailsByIdIfNotExist_old3(bid) {
         var transaction1 = db.transaction(["subdb"], "readwrite");
         var store1 = transaction1.objectStore("subdb");
         var objectStoreRequest1 = store1.get('md_' + bid);
-        objectStoreRequest1.onsuccess = function(event) {
+        objectStoreRequest1.onsuccess = function (event) {
             dbStorageMD = objectStoreRequest1.result;
         };
     } catch (err) {
@@ -1171,7 +1191,7 @@ function setApiJsonToElement(bid, element) {
         contentType: "text/html",
         crossDomain: true,
         async: false,
-        success: function(resCore) {
+        success: function (resCore) {
             var res = {};
             try {
                 res = JSON.parse(resCore);
@@ -1182,11 +1202,10 @@ function setApiJsonToElement(bid, element) {
                 var obj = res.tbl[idx].r;
                 rsZad = JSON.stringify(obj);
 
-            } catch (errr) {}
-
+            } catch (errr) {};
             that.attr('proDesc', `${rsZad}`);
         },
-        error: function() {
+        error: function () {
             hideProgress4();
         }
     });
@@ -1194,13 +1213,11 @@ function setApiJsonToElement(bid, element) {
 }
 
 function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
-    var async = (isAsync) ? isAsync: false;
+    var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
     if (!bid)
         return;
-
-
 
     $.ajax({
         url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
@@ -1208,7 +1225,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
         contentType: "text/html",
         crossDomain: true,
         async: false,
-        success: function(resCore) {
+        success: function (resCore) {
             var res = "";
             try {
                 res = JSON.parse(resCore);
@@ -1248,7 +1265,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
                 loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
             }
         },
-        error: function() {
+        error: function () {
             hideProgress4();
         }
     });
@@ -1271,7 +1288,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 }
 
 function loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync) {
-    var async = (isAsync) ? isAsync: false;
+    var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
     if (!bid)
@@ -1290,7 +1307,7 @@ function loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync) {
         contentType: "application/json",
         crossDomain: true,
         async: async,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 try {
@@ -1315,7 +1332,7 @@ function loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync) {
                 hideProgress4();
             }
         },
-        error: function() {
+        error: function () {
             hideProgress4();
         }
     });
@@ -1334,10 +1351,10 @@ function emptyCallforProgressBar() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
         },
-        error: function(res) {
+        error: function (res) {
 
             alert('Some error happened');
         }
@@ -1381,10 +1398,10 @@ function callEmptyFunctionWithAjax4BacklogLoader4Zad(bid1, makeId4) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             loadBacklogProductionCoreDetailssById(bid1);
         },
-        error: function(res) {
+        error: function (res) {
             backlogLoaderController[makeId4] = true;
             alert('Some error happened');
         }
@@ -1623,7 +1640,7 @@ function searchFilterTable4LiveProtoptyApi(el, tableId) {
     filter = input.value.toLowerCase();
     table = $('#' + tableId);
 
-    tr = table.find("tr").each(function() {
+    tr = table.find("tr").each(function () {
         td = $(this).text();
         txtValue = td.toLowerCase();
         text_id = $(this).find('a').first().attr('bid');
@@ -1647,7 +1664,7 @@ function searchFilterTable(el, tableId) {
     filter = input.value.toLowerCase();
     table = $('#' + tableId);
 
-    tr = table.find("tr").each(function() {
+    tr = table.find("tr").each(function () {
         td = $(this).text();
         txtValue = td.toLowerCase();
         if (txtValue) {
@@ -1692,7 +1709,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(resCore) {
+        success: function (resCore) {
             var res = "";
             try {
                 res = JSON.parse(resCore);
@@ -1754,7 +1771,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selec
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 var transaction = db.transaction(["subdb"], "readwrite");
                 var store = transaction.objectStore("subdb");
@@ -1794,7 +1811,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader_old(bid, select, select
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 SAInput.LoadInput4Zad(res);
                 //                localStorage.setItem(bid, JSON.stringify(res));
@@ -1887,7 +1904,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(resCore) {
+        success: function (resCore) {
             var res = "";
             try {
                 res = JSON.parse(resCore);
@@ -1925,7 +1942,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
                 _LoadBacklogInputsByIdIfNotExistPost(carrier);
             }
         },
-        error: function() {
+        error: function () {
             hideProgress5();
         }
     });
@@ -1953,7 +1970,7 @@ function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 try {
@@ -1982,7 +1999,7 @@ function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
                 hideProgress5();
             }
         },
-        error: function() {
+        error: function () {
             hideProgress5();
         }
     });
@@ -2043,7 +2060,7 @@ function getRelatedStoryCardByApiId() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 var obj = res.tbl[0].r;
                 var div = $('<div>');
@@ -2077,7 +2094,7 @@ function compileJava() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             if (res.kv && res.kv.err && res.kv.err.length > 0) {
                 Toaster.showError(JSON.stringify(res.kv.err));
             } else {
@@ -2085,7 +2102,7 @@ function compileJava() {
             }
 
         },
-        error: function(res) {
+        error: function (res) {
             Toaster.showError(JSON.stringify(res));
         }
     });
@@ -2104,7 +2121,7 @@ function testZad() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             //            console.log(JSON.stringify(res));
         }
     });
@@ -2124,7 +2141,7 @@ function getTaskInfo(taskId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             rs = res.kv;
 
         }
@@ -2132,7 +2149,7 @@ function getTaskInfo(taskId) {
     return rs;
 }
 
-$(document).on('change', '#storyCardInputRelationModal_inpuntypes', function() {
+$(document).on('change', '#storyCardInputRelationModal_inpuntypes', function () {
     var val = $(this).val();
 
     $('#storyCardInputRelationModal_apiinoutlist').find('tr').hide()
@@ -2166,7 +2183,8 @@ function showBacklogHistoryClick(el) {
             $('select.projectList_liveprototype_storycard').change();
         }
         return;
-    } else if (global_var.current_modal === 'loadLivePrototype') {
+    } 
+    else if (global_var.current_modal === 'loadLivePrototype') {
         if (pid === global_var.current_project_id) {
             $("#storyCardListSelectBox").val(bid)
             $("#storyCardListSelectBox").change();
@@ -2176,7 +2194,19 @@ function showBacklogHistoryClick(el) {
             $('select.projectList_liveprototype').val(pid);
             $('select.projectList_liveprototype').change();
         }
-    } else {
+    } 
+    else if (global_var.current_modal === 'loadCodeGround') {
+        if (pid === global_var.current_project_id) {
+            $("#storyCardListSelectBox4CodeGround").val(bid);
+            $("#storyCardListSelectBox4CodeGround").trigger('change');
+        } else {
+            global_var.current_backlog_id = bid;
+            Utility.addParamToUrl('current_backlog_id', bid);
+            $('select.projectList_codeground_storycard').val(pid);
+            $('select.projectList_codeground_storycard').trigger('change');
+        }
+    } 
+    else {
         callStoryCard(bid);
         return;
     }
@@ -2229,14 +2259,14 @@ function setBacklogHistory4View() {
         var d = $('<div>')
             .addClass("col-lg-12")
 
-        .append($('<a>')
-            .addClass("dropdown-item")
-            .attr("href", "#")
-            .attr("pid", o.fkProjectId)
-            .attr('bid', o.fkBacklogId)
-            .attr('is_api', o.isApi)
-            .attr("onclick", "showBacklogHistoryClick(this)")
-            .text(o.backlogName))
+            .append($('<a>')
+                .addClass("dropdown-item")
+                .attr("href", "#")
+                .attr("pid", o.fkProjectId)
+                .attr('bid', o.fkBacklogId)
+                .attr('is_api', o.isApi)
+                .attr("onclick", "showBacklogHistoryClick(this)")
+                .text(o.backlogName))
 
         temp.push(o.fkBacklogId);
 
@@ -2246,7 +2276,7 @@ function setBacklogHistory4View() {
     }
 }
 
-$(document).on('change', '#addFieldsOfTableAsInputModal-checkall', function() {
+$(document).on('change', '#addFieldsOfTableAsInputModal-checkall', function () {
     if ($(this).is(":checked")) {
         $('#addFieldsOfTableAsInputModal').find('.fields-as-input').prop('checked', true)
     } else {
@@ -2255,7 +2285,7 @@ $(document).on('change', '#addFieldsOfTableAsInputModal-checkall', function() {
 })
 
 
-$(document).on('change', '#addStoryCardInputsAsModal-checkall', function() {
+$(document).on('change', '#addStoryCardInputsAsModal-checkall', function () {
     if ($(this).is(":checked")) {
         $('#addStoryCardInputsAsModal').find('.inputs-as-input').prop('checked', true)
     } else {
@@ -2263,7 +2293,7 @@ $(document).on('change', '#addStoryCardInputsAsModal-checkall', function() {
     }
 })
 
-$(document).on('change', '#storyCardInputRelationModal_apilist', function(evt) {
+$(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) {
 
 
     var table = $('#storyCardInputRelationModal_apiinoutlist');
@@ -2280,7 +2310,7 @@ $(document).on('change', '#storyCardInputRelationModal_apilist', function(evt) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             for (var i in obj) {
                 var o = obj[i];
@@ -2376,6 +2406,8 @@ function generateFileLine(name, cell) {
         div_col.append(div);
         return div.html();
     } catch (err) {}
+
+    
 }
 
 
@@ -2527,7 +2559,7 @@ function toggleProjectDetails4Loading() {
 }
 
 var global_zad_bid = "";
-$(document).on('click', '.manualProject', function(evt) {
+$(document).on('click', '.manualProject', function (evt) {
     //    showProgressAlternative();
     var idx = 0;
     try {
@@ -2624,13 +2656,13 @@ function loadFromIndexedDBtoRAM() {
     var idssheyList = Object.keys(backlog_last_modification);
 
     request = window.indexedDB.open("sa-db", 1);
-    request.onupgradeneeded = function(event) {
+    request.onupgradeneeded = function (event) {
         db = event.target.result;
         objectStore = db.createObjectStore("subdb", {
             keyPath: "bid",
         });
     }
-    request.onsuccess = function(event) {
+    request.onsuccess = function (event) {
         db = request.result;
 
         var transaction = db.transaction(["subdb"], "readwrite");
@@ -2652,7 +2684,7 @@ function loadFromIndexedDBtoRAM() {
         //        }
         //        consoleDebugTime(' local storage temizlendi');
 
-        objectStore.openCursor().onsuccess = function(event) {
+        objectStore.openCursor().onsuccess = function (event) {
             //            consoleDebugTime('curcur started ')
             var cursor = event.target.result;
             if (cursor) {
@@ -2692,13 +2724,13 @@ function loadFromIndexedDBtoRAM() {
 function loadFromIndexedDBtoRAM4LivePrototype() {
 
     request = window.indexedDB.open("sa-db", 1);
-    request.onupgradeneeded = function(event) {
+    request.onupgradeneeded = function (event) {
         db = event.target.result;
         objectStore = db.createObjectStore("subdb", {
             keyPath: "bid",
         });
     }
-    request.onsuccess = function(event) {
+    request.onsuccess = function (event) {
         db = request.result;
 
         var transaction = db.transaction(["subdb"], "readwrite");
@@ -2718,7 +2750,7 @@ function loadFromIndexedDBtoRAM4LivePrototype() {
         }
 
 
-        objectStore.openCursor().onsuccess = function(event) {
+        objectStore.openCursor().onsuccess = function (event) {
             var cursor = event.target.result;
             if (cursor) {
                 var res = cursor.value.json;
@@ -2755,7 +2787,7 @@ function loadMainProjectList4ManualZad() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             new UserStory().generateTableBody4MainProject(res); //just FN
             new UserStory().addProjectToMenu(res); //just FN
@@ -2764,7 +2796,7 @@ function loadMainProjectList4ManualZad() {
             global_zad_bid = $(".manualProject[pid='" + global_var.fkManualProjectId + "']").first().attr("tid");
             loadManualProjectZad(global_var.fkManualProjectId, global_zad_bid);
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -2870,7 +2902,7 @@ function _LoadBacklogDetailsFromDBAndRunFn(carrier) {
     var transaction = db.transaction(["subdb"], "readwrite");
     var store = transaction.objectStore("subdb");
     var objectStoreRequest = store.get(carrier.getBacklogId());
-    objectStoreRequest.onsuccess = function(event) {
+    objectStoreRequest.onsuccess = function (event) {
         var dbStorageJSON = event.target.result;
         loadBacklogProductionDetailsById_resparams(dbStorageJSON.json);
 
@@ -2910,7 +2942,7 @@ function _InitLoaderActionOnManualProjectGuiCreation(carrier) {
 
 
     var runInit = true;
-    $('#mainBodyDivForAll').find('.loaderSection').each(function() {
+    $('#mainBodyDivForAll').find('.loaderSection').each(function () {
         runInit = false;
         return;
     })
@@ -2991,11 +3023,11 @@ function executeCoreOfManualProSelection(bid1) {
 function loadSelectBoxesAfterGUIDesign(element) {
     var zadList = [];
     var idx = 1;
-    $(element).find('select.hasTriggerApiCall').each(function(e) {
+    $(element).find('select.hasTriggerApiCall').each(function (e) {
         var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
         if (selectFromBacmkogId) {
             var that = this;
-            callApi(selectFromBacmkogId, {}, true, function(res) {
+            callApi(selectFromBacmkogId, {}, true, function (res) {
                 loadSelectBoxesAfterGUIDesignDetails(res, that);
             })
         }
@@ -3061,7 +3093,7 @@ function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
 
 function loadSelectBoxesAfterGUIDesign_old(element) {
     var zadList = [];
-    $(element).find('select.hasTriggerApiCall').each(function(e) {
+    $(element).find('select.hasTriggerApiCall').each(function (e) {
         var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
         var selectFromInputId = $(this).attr("selectFromInputId");
 
@@ -3129,7 +3161,7 @@ function p() {
     hideProgressAlternative();
 }
 
-$(document).on('change', ".saTypeFilePicherUploadFile", function(e) {
+$(document).on('change', ".saTypeFilePicherUploadFile", function (e) {
     if ($(this).val().trim().length > 0) {
         uploadFile4Ipo($(this).attr('id'));
     }
@@ -3146,7 +3178,7 @@ function uploadFileByClassName(className) {
     if (!className) {
         return;
     }
-    $('.' + className).each(function() {
+    $('.' + className).each(function () {
         if ($(this).val().trim().length > 0) {
             uploadFile4Ipo($(this).attr('id'));
         }
@@ -3183,7 +3215,7 @@ function uploadFile4Ipo(id) {
             reader.fileName = fname;
             reader.fileExt = fileext;
             reader.fileNo = i;
-            reader.onload = function(readerEvt) {
+            reader.onload = function (readerEvt) {
                 trc++;
                 var fname1 = readerEvt.target.fileName;
                 var fileext1 = readerEvt.target.fileExt;
@@ -3235,7 +3267,7 @@ function uploadFile4CanvasZad(id) {
             reader.fileName = fname;
             reader.fileExt = fileext;
             reader.fileNo = i;
-            reader.onload = function(readerEvt) {
+            reader.onload = function (readerEvt) {
                 trc++;
                 var fname1 = readerEvt.target.fileName;
                 var fileext1 = readerEvt.target.fileExt;
@@ -3275,7 +3307,7 @@ function uploadFile4IpoImport(id) {
             reader.fileName = fname;
             reader.fileExt = fileext;
             reader.fileNo = i;
-            reader.onload = function(readerEvt) {
+            reader.onload = function (readerEvt) {
                 trc++;
                 var fname1 = readerEvt.target.fileName;
                 var fileext1 = readerEvt.target.fileExt;
@@ -3311,7 +3343,7 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
         data: dat,
         contentType: "application/json",
         async: true,
-        beforeSend: function() {
+        beforeSend: function () {
             pbDiv.append('<br>').append($('<span>')
                 .attr('id', 'pro_zad_span' + idx)
                 .text(file_name)
@@ -3320,21 +3352,19 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
                     .attr('src', 'resource/img/loader.gif'))
             )
         },
-        uploadProgress: function(event, position, total, percentComplete) {
+        uploadProgress: function (event, position, total, percentComplete) {
             //            console.log('test')
             var percentVal = percentComplete + '%';
             pbDiv.text(percentVal);
         },
-        success: function(data) {
+        success: function (data) {
             finalname = data.kv.uploaded_file_name;
 
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
                 .after($('<i class="fa fa-times">')
                     .attr('pid', idx)
-                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
-
-
+                    .attr('onclick', 'new FileView().removeFilenameFromZad(this,\'' + finalname + '\')'));
 
             var st = $('#' + id).attr('fname');
             st = (st && st !== 'undefined') ? st : '';
@@ -3342,14 +3372,12 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
                 finalname;
 
             $('#' + id).attr('fname', st);
-            console.log(finalname);
-            importSendNameApi(finalname)
+            importSendNameApi(finalname);
         },
-        error: function() {}
+        error: function () {}
     });
     return finalname;
 }
-
 
 function importSendNameApi(filNm) {
     var json = {
@@ -3369,11 +3397,11 @@ function importSendNameApi(filNm) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
 
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -3407,7 +3435,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         data: dat,
         contentType: "application/json",
         async: true,
-        beforeSend: function() {
+        beforeSend: function () {
             if (attr === 'list') {
                 pbDiv.removeClass("d-flex flex-nowrap");
                 pbDiv.append(
@@ -3423,62 +3451,37 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                 pbDiv.addClass("d-flex flex-nowrap");
                 pbDiv.append(`<div class="cs-img-col" id='pro_element_${idx}'>
                 <div class="file_upload_div cs_new_file_upload">
-                <img src="resource/img/blockloader.gif" class="comment_img" data-toggle="modal" data-target="#commentFileImageViewer"  alt="">
-                <span class="cs-img-title"></span>
-                <div class="see-detail-img"><a target="_blank"  href="">
-                <i class="fa fa-download" aria-hidden="true"></i>
-                </a>
-                <span class="lbl-action" id='pro_zad_${idx}' pid='${idx}' onclick="removeFilenameFromZad(this,'${file_name}')">
-                <i class="fa fa-trash-o" aria-hidden="true">
-                </i>
-                </span></div></div></div>`)
+                   <img src="resource/img/blockloader.gif" class="comment_img"   alt="">
+                   <span class="cs-img-title"></span>
+                   </div>
+                </div>`)
             }
 
         },
-        uploadProgress: function(event, position, total, percentComplete) {
+        uploadProgress: function (event, position, total, percentComplete) {
             console.log(percentComplete);
             var percentVal = percentComplete + '%';
             // pbDiv.text(percentVal);
         },
-        success: function(data) {
+        success: function (data) {
             finalname = data.kv.uploaded_file_name;
 
             if (attr === 'list') {
-                $('#pro_zad_' + idx).remove();
-                $('#pro_zad_span' + idx + ' .file-name-attach')
-                    .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
-                    .addClass('full-screen-image-btn')
-                    .attr('data-url', finalname)
-                $('#pro_zad_span' + idx)
-                    .append($('<i class="fa fa-times">')
-                        .attr('pid', idx)
-                        .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+                $('#pro_zad_span' + idx).replaceWith(new FileView().genListFileModelNew(finalname, idx));
             } else if (attr === 'block') {
-                $('#pro_element_' + idx).find('.cs-img-title').text(add3Dots2Filename(finalname));
-                $('#pro_element_' + idx).find('.comment_img')
-                    .attr("src", fileUrl(finalname))
-                    .attr('data-url', finalname)
-                    .addClass('full-screen-image-btn')
-                    .attr('onclick', 'imageViewerNew(this,"' + finalname + '")')
-                $('#pro_element_' + idx).find('.see-detail-img a').attr("href", fileUrl(finalname));
-
-                $('#pro_zad_' + idx)
-                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')');
+                $('#pro_element_' + idx).replaceWith(new FileView().genBlockFileModelNew(finalname, idx));
             }
-
-
             var st = $('#' + id).attr('fname');
             if (st) {
-                st = (st.length > 1 && st !== "|") ? st + global_var.vertical_seperator + finalname :
-                    finalname;
+                st = (st.length > 1 && st !== "|") ? st + global_var.vertical_seperator + finalname : finalname;
             } else {
-                st = finalname
+                st = finalname;
             }
             $('#' + id).attr('fname', st);
             $('#' + id).trigger("load-file", [st]);
 
         },
-        error: function() {}
+        error: function () {}
     });
     return finalname;
 }
@@ -3504,7 +3507,7 @@ function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
         data: dat,
         contentType: "application/json",
         async: true,
-        beforeSend: function() {
+        beforeSend: function () {
             pbDiv.after('<br>').after($('<span>')
                 .attr('id', 'pro_zad_span_' + idx)
                 .text(file_name)
@@ -3513,40 +3516,20 @@ function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
                     .attr('src', 'resource/img/loader.gif'))
             )
         },
-        uploadProgress: function(event, position, total, percentComplete) {
+        uploadProgress: function (event, position, total, percentComplete) {
             //            console.log('test')
             var percentVal = percentComplete + '%';
             pbDiv.text(percentVal);
         },
-        success: function(data) {
+        success: function (data) {
             $('#pro_zad_span_' + idx).remove();
             pbDiv.attr('fname', data.kv.uploaded_file_name);
 
 
         },
-        error: function() {}
+        error: function () {}
     });
     return finalname;
-}
-
-function removeFilenameFromZad(el, filename) {
-    if (confirm("Are You sure ?")) {
-        var st = $(el).closest('div.component-class')
-            .find('.saTypeFilePicherUploadFile')
-            .attr('fname');
-        st = st.replace(filename, '');
-
-        $(el).closest('div.component-class')
-            .find('.saTypeFilePicherUploadFile')
-            .attr('fname', st);
-
-        var id = $(el).attr("pid");
-        $('#pro_zad_span' + id).remove();
-        $('#pro_element_' + id).remove();
-        $(el).remove();
-    }
-
-
 }
 
 function answerSect() {
@@ -3592,7 +3575,7 @@ function answerSect() {
     return arr;
 }
 
-$(document).on('keypress', ".answerInput", function(e) {
+$(document).on('keypress', ".answerInput", function (e) {
     if (e.which == 13) {
         $(this).parents('.answerSection').after(answerSect());
     }
@@ -3621,12 +3604,12 @@ function GetCurrentUserList() {
 
 function copyClassCodeAction() {
     var fnlist = "";
-    $('.class4copy').each(function() {
+    $('.class4copy').each(function () {
         fnlist += $(this).is(':checked') ? $(this).attr('pid') + ',' : "";
     })
 
     var fnProList = "";
-    $('.class4copy4Project').each(function() {
+    $('.class4copy4Project').each(function () {
         fnProList += $(this).is(':checked') ? $(this).attr('pid') + ',' : "";
     })
 
@@ -3646,7 +3629,7 @@ function copyClassCodeAction() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#copyClassCodeModal').modal('hide');
 
         }
@@ -3655,12 +3638,12 @@ function copyClassCodeAction() {
 
 function copyJSCodeAction() {
     var fnlist = "";
-    $('.js4copy').each(function() {
+    $('.js4copy').each(function () {
         fnlist += $(this).is(':checked') ? $(this).attr('pid') + ',' : "";
     })
 
     var fnProList = "";
-    $('.js4copy4Project').each(function() {
+    $('.js4copy4Project').each(function () {
         fnProList += $(this).is(':checked') ? $(this).attr('pid') + ',' : "";
     })
 
@@ -3680,14 +3663,14 @@ function copyJSCodeAction() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#copyJSCodeModal').modal('hide');
 
         }
     });
 }
 
-$(document).on('click', '.checkAll4ClassCopyToProject', function(evt) {
+$(document).on('click', '.checkAll4ClassCopyToProject', function (evt) {
     if ($(this).is(':checked')) {
         $('.class4copy4Project').prop('checked', true)
     } else if (!$(this).is(':checked')) {
@@ -3695,7 +3678,7 @@ $(document).on('click', '.checkAll4ClassCopyToProject', function(evt) {
     }
 });
 
-$(document).on('click', '.checkAll4ClassCopyTo', function(evt) {
+$(document).on('click', '.checkAll4ClassCopyTo', function (evt) {
     if ($(this).is(':checked')) {
         $('.class4copy').prop('checked', true)
     } else if (!$(this).is(':checked')) {
@@ -3703,7 +3686,7 @@ $(document).on('click', '.checkAll4ClassCopyTo', function(evt) {
     }
 });
 
-$(document).on('click', '.checkAll4JsCopyToProject', function(evt) {
+$(document).on('click', '.checkAll4JsCopyToProject', function (evt) {
     if ($(this).is(':checked')) {
         $('.js4copy4Project').prop('checked', true)
     } else if (!$(this).is(':checked')) {
@@ -3711,7 +3694,7 @@ $(document).on('click', '.checkAll4JsCopyToProject', function(evt) {
     }
 });
 
-$(document).on('click', '.checkAll4JsCopyTo', function(evt) {
+$(document).on('click', '.checkAll4JsCopyTo', function (evt) {
     if ($(this).is(':checked')) {
         $('.js4copy').prop('checked', true)
     } else if (!$(this).is(':checked')) {
@@ -3756,12 +3739,12 @@ function loadTableFIlterInside() {
     $(".filter-table-row-select").selectpicker("refresh");
     if (global_var.current_modal !== 'loadLivePrototype') {
         $('.table').dragtable({
-            persistState: function(table) {
+            persistState: function (table) {
 
                 if (!window.sessionStorage)
                     return;
                 var ss = window.sessionStorage;
-                table.el.find('th').each(function(i) {
+                table.el.find('th').each(function (i) {
                     if (this.id != '') {
                         table.sortOrder[this.id] = i;
                     }
@@ -3817,7 +3800,7 @@ function copyJSCodeClassTo_loadJSList() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var div = $('#copyJSCodeModal_jslist');
             div.html('');
             var obj = res.tbl[0].r;
@@ -3887,7 +3870,7 @@ function copyClassCodeClassTo_loadClassList() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var div = $('#copyClassCodeModal_jslist');
             div.html('');
             var obj = res.tbl[0].r;
@@ -3921,7 +3904,7 @@ function testMandelo() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             //            console.log(JSON.stringify(res));
         }
 
@@ -3929,9 +3912,9 @@ function testMandelo() {
 }
 
 
-$(document).on('click', '.sa-tab-action-zad', function(evt) {
+$(document).on('click', '.sa-tab-action-zad', function (evt) {
     var id = $(this).find('a').first().attr('href');
-    $(id).find('.sa-onloadclick').each(function() {
+    $(id).find('.sa-onloadclick').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
             //            if ($(this).attr("sa-loadonetime") === '1') {
             $(this).attr("sa-isloaded", "1");
@@ -3978,7 +3961,7 @@ function addRolePermissionToUser() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             Toaster.showMessage("Permissions are added User successfully!")
             $('#permission_projectlist4backlog').change();
@@ -3988,7 +3971,7 @@ function addRolePermissionToUser() {
 }
 
 function addRolePermission() {
-    $(".permision_bystorycard_list_user").each(function(e) {
+    $(".permision_bystorycard_list_user").each(function (e) {
         var projectId = $('#permission_projectlist4backlog').val();
         var roleId = $('#permission_rolelist').val();
         var relId = $(this).attr('id');
@@ -4016,9 +3999,9 @@ function addRolePermission() {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function(res) {
+            success: function (res) {
                 Toaster.showMessage("Permissions are added successfully!")
-                    //                getPermissionRoleByProject();
+                //                getPermissionRoleByProject();
             }
 
         });
@@ -4032,7 +4015,7 @@ function addPermissionRoleModal() {
     getPermissionRoleByProject4List();
 }
 
-$(document).on("change", ".permission-role-list-item", function(e) {
+$(document).on("change", ".permission-role-list-item", function (e) {
     var id = $(this).attr('data-id');
     var name = $(this).val();
     updatePermissionRoleName(id, name);
@@ -4058,7 +4041,7 @@ function updatePermissionRoleName(roleId, roleName) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getPermissionRoleByProject();
         }
 
@@ -4083,7 +4066,7 @@ function deletePermissionList(roleId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getPermissionRoleByProject();
             getPermissionRoleByProject4List();
         }
@@ -4108,7 +4091,7 @@ function getPermissionRoleByProject4List() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#addPermissionRoleModal_rolelist');
             el.html('');
 
@@ -4164,7 +4147,7 @@ function addPermissionRoleDetails(roleName, projectId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getPermissionRoleByProject();
         }
 
@@ -4188,7 +4171,7 @@ function getPermissionRoleByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#permission_rolelist');
             el.html('');
             el.append($('<option>'))
@@ -4202,7 +4185,7 @@ function getPermissionRoleByProject() {
     });
 }
 
-$(document).on("change", ".permision_inputlistbystorycard", function(e) {
+$(document).on("change", ".permision_inputlistbystorycard", function (e) {
     var accessType = 'n';
     if ($(this).is(':checked')) {
         accessType = 'y';
@@ -4230,12 +4213,12 @@ $(document).on("change", ".permision_inputlistbystorycard", function(e) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {}
+        success: function (res) {}
 
     });
 })
 
-$(document).on("change", ".permision_byapi_list_user", function(e) {
+$(document).on("change", ".permision_byapi_list_user", function (e) {
     var accessType = 'n';
     var relationId = $(this).attr('id');
     if ($(this).is(':checked')) {
@@ -4264,14 +4247,14 @@ $(document).on("change", ".permision_byapi_list_user", function(e) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
         }
     });
 
 })
 
-$(document).on("change", ".permision_bystorycard_list_user", function(e) {
+$(document).on("change", ".permision_bystorycard_list_user", function (e) {
     var accessType = 'n';
     var relationId = $(this).attr('id');
     if ($(this).is(':checked')) {
@@ -4303,7 +4286,7 @@ function addStoryCardPermission(relationId, accessType) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
         }
     });
@@ -4330,7 +4313,7 @@ function getBodyOfApiPermissionByUser() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
@@ -4363,7 +4346,7 @@ function getBodyOfBacklogPermissionByUser() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
@@ -4399,7 +4382,7 @@ function addStoryCardInputPermission(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#permision_byinput_body');
             el.html('');
             var obj = res.tbl[0].r;
@@ -4444,7 +4427,7 @@ function getInputPermissionInfoByStoryCard(backlogId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#permision_byinput_body');
             var obj = res.kv.exceptInputs.split(',');
             for (var i in obj) {
@@ -4457,7 +4440,7 @@ function getInputPermissionInfoByStoryCard(backlogId) {
     });
 }
 
-$(document).on("change", "#permission_projectlist4api", function(e) {
+$(document).on("change", "#permission_projectlist4api", function (e) {
 
     var projectId = $(this).val();
 
@@ -4476,7 +4459,7 @@ $(document).on("change", "#permission_projectlist4api", function(e) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#permision_byapi_body');
             el.html('');
             var obj = res.tbl[0].r;
@@ -4505,7 +4488,7 @@ $(document).on("change", "#permission_projectlist4api", function(e) {
 })
 
 
-$(document).on("change", "#permission_projectlist4backlog", function(e) {
+$(document).on("change", "#permission_projectlist4backlog", function (e) {
 
     var projectId = $(this).val();
 
@@ -4524,7 +4507,7 @@ $(document).on("change", "#permission_projectlist4backlog", function(e) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#permision_bystorycard_body');
             el.html('');
             var obj = res.tbl[0].r;
@@ -4562,7 +4545,7 @@ $(document).on("change", "#permission_projectlist4backlog", function(e) {
 
 })
 
-$(document).on("change", ".module-list-4-permission", function(e) {
+$(document).on("change", ".module-list-4-permission", function (e) {
     var accessType = 'n';
     var relationId = $(this).attr('data-type');
     if ($(this).is(':checked')) {
@@ -4592,7 +4575,7 @@ function addModulePermission(relationId, accessType) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
         }
     });
@@ -4621,14 +4604,14 @@ function getModuleList4Permission() {
 }
 
 
-$(document).on("click", "#permission_userlist", function(e) {
+$(document).on("click", "#permission_userlist", function (e) {
     var id = $(this).val();
     getBodyOfPermissionByUser(id);
     getBodyOfModulePermissionByUser(id);
 })
 
 
-$(document).on("change", ".project-permission-item-by-user", function(e) {
+$(document).on("change", ".project-permission-item-by-user", function (e) {
     var projectId = $(this).attr('id');
     var userId = $('#permission_userlist').val();
     var relId = $(this).attr('relId');
@@ -4646,7 +4629,7 @@ $(document).on("change", ".project-permission-item-by-user", function(e) {
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function(res) {
+            success: function (res) {
                 getBodyOfPermissionByUser();
             }
         });
@@ -4663,7 +4646,7 @@ $(document).on("change", ".project-permission-item-by-user", function(e) {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function(res) {
+            success: function (res) {
                 getBodyOfPermissionByUser();
             }
         });
@@ -4690,7 +4673,7 @@ function getBodyOfModulePermissionByUser() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
@@ -4722,7 +4705,7 @@ function getBodyOfPermissionByUser() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var select = $('#permission_projectlist4backlog');
             var select1 = $('#permission_projectlist4api');
             select.html('');
@@ -4761,7 +4744,7 @@ function changeProjectIconInMenu(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {}
+        success: function (res) {}
     });
 }
 
@@ -4778,7 +4761,7 @@ function changeProjectShowInMenu(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {}
+        success: function (res) {}
     });
 }
 
@@ -4797,7 +4780,7 @@ function addPermissionBacklockListAction() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#addPermissionBacklockListModal').modal('hide');
             getProjectList4Permission();
         }
@@ -4824,7 +4807,7 @@ function showPermissionProjectPinModal(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var el = $('#addPermissionBacklockListModal_storycard');
             el.html('');
             var obj = res.tbl[0].r;
@@ -4851,7 +4834,7 @@ function getProjectList4Permission() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             var select = $('#permision_byproject_body');
             var div = $('#permision_pinproject_body');
@@ -4923,7 +4906,7 @@ function getUserList4Permission() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             var select = $('#permission_userlist');
             select.html('');
@@ -4938,7 +4921,7 @@ function getUserList4Permission() {
                 select.append(option);
             }
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -5014,12 +4997,12 @@ function GetCurrentProjectApi() {
     return res;
 }
 
-$(document).on("click", ".sa-show-form", function(e) {
+$(document).on("click", ".sa-show-form", function (e) {
     var backlogId = $(this).attr('sa-data-backlogid');
     new UserStory().setGUIComponentButtonGUIModal(backlogId, this);
 })
 
-$(document).on("click", ".sa-event-relation-trigger-onclick", function(e) {
+$(document).on("click", ".sa-event-relation-trigger-onclick", function (e) {
     var classId = $(this).attr('sa-event-relation-trigger-class-id');
     if (classId) {
         $('.' + classId).click();
@@ -5030,14 +5013,14 @@ $(document).on("click", ".sa-event-relation-trigger-onclick", function(e) {
 
 
 
-$(document).on("change", ".sa-event-relation-trigger-onchange", function(e) {
+$(document).on("change", ".sa-event-relation-trigger-onchange", function (e) {
     var classId = $(this).attr('sa-event-relation-trigger-class-id');
     if (classId) {
         $('.' + classId).change();
     }
 })
 
-$(document).on("dblclick", ".sa-event-relation-trigger-ondblclick", function(e) {
+$(document).on("dblclick", ".sa-event-relation-trigger-ondblclick", function (e) {
     var classId = $(this).attr('sa-event-relation-trigger-class-id');
     if (classId) {
         $('.' + classId).dblclick();
@@ -5050,7 +5033,7 @@ function initOnloadActionOnGUIDesign(el) {
 }
 
 function initOnloadActionOnGUIDesign4OnClick(el) {
-    $(el).closest('div.redirectClass').find('.sa-onloadclick').each(function() {
+    $(el).closest('div.redirectClass').find('.sa-onloadclick').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
             //            if ($(this).attr("sa-loadonetime") === '1') {
             $(this).attr("sa-isloaded", "1");
@@ -5062,7 +5045,7 @@ function initOnloadActionOnGUIDesign4OnClick(el) {
 }
 
 function initOnloadActionOnGUIDesign4Onchange(el) {
-    $(el).closest('div.redirectClass').find('.sa-onloadchange').each(function() {
+    $(el).closest('div.redirectClass').find('.sa-onloadchange').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
             if ($(this).attr("sa-loadonetime") === '1') {
                 $(this).attr("sa-isloaded", "1");
@@ -5101,7 +5084,7 @@ function addBaklogListToInputAs(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 var o = obj[i];
@@ -5139,7 +5122,7 @@ function getInputList4Code(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var elm = $('#addStoryCardInputsAsModal-inputlist');
             elm.html('');
 
@@ -5148,12 +5131,12 @@ function getInputList4Code(el) {
 
                 var div = $('<div class="col-6">');
                 div.append($('<input>')
-                    .addClass('inputs-as-input')
-                    .attr('type', 'checkbox')
-                    .attr("checked", "true")
-                    .attr('pid', obj[i].id))
+                        .addClass('inputs-as-input')
+                        .attr('type', 'checkbox')
+                        .attr("checked", "true")
+                        .attr('pid', obj[i].id))
 
-                .append(' ')
+                    .append(' ')
                     .append($('<input>')
                         .css("border-color", "transparent")
                         .attr('type', 'text')
@@ -5176,7 +5159,7 @@ function getInputList4Code(el) {
 
 
 function addStoryCardInputsAsAction() {
-    $('.inputs-as-input').each(function() {
+    $('.inputs-as-input').each(function () {
         if ($(this).is(":checked")) {
             var inputId = $(this).attr('pid');
             var inputName = $(this).next('input[type="text"]').val();
@@ -5197,7 +5180,7 @@ function addStoryCardInputsAsAction() {
                 contentType: "application/json",
                 crossDomain: true,
                 async: false,
-                success: function(res) {
+                success: function (res) {
                     SAInput.addInputByRes(res);
                     SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
 
@@ -5272,7 +5255,7 @@ function loadDatabaseList2FieldAsInput() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#addFieldsOfTableAsInputModal-dbid').html('');
 
             var obj = res.tbl[0].r;
@@ -5311,7 +5294,7 @@ function getDbFiledList(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var elm = $('#addFieldsOfTableAsInputModal-fieldid');
             elm.html('');
 
@@ -5320,14 +5303,14 @@ function getDbFiledList(el) {
 
                 var div = $('<div class="col-6">')
                 div.append($('<input>')
-                    .addClass('fields-as-input')
-                    .attr('type', 'checkbox')
-                    .attr("checked", "true")
-                    .attr('pid', obj[i].id))
+                        .addClass('fields-as-input')
+                        .attr('type', 'checkbox')
+                        .attr("checked", "true")
+                        .attr('pid', obj[i].id))
 
-                .append(' ')
+                    .append(' ')
 
-                .append($('<input>')
+                    .append($('<input>')
                         .addClass('fields-as-input')
                         .css("border-color", "transparent")
                         .attr('type', 'text')
@@ -5344,7 +5327,7 @@ function getDbFiledList(el) {
 
 
 function addFieldsOfTableAsInputAction() {
-    $('.fields-as-input').each(function() {
+    $('.fields-as-input').each(function () {
         if ($(this).is(":checked")) {
             var fieldId = $(this).attr('pid');
             var inputName = $(this).next('input[type="text"]').val();
@@ -5366,7 +5349,7 @@ function addFieldsOfTableAsInputAction() {
                 contentType: "application/json",
                 crossDomain: true,
                 async: false,
-                success: function(res) {
+                success: function (res) {
                     SAInput.addInputByRes(res);
                     SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                     //                    new UserStory().refreshCurrentBacklog();
@@ -5413,7 +5396,7 @@ function deleteMoveOnDesc(id) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
             that.getBacklogDesc();
             loadCurrentBacklogProdDetailsSyncrone();
@@ -5423,7 +5406,7 @@ function deleteMoveOnDesc(id) {
                 reloadBacklogListOnStoryCard();
             }
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -5448,7 +5431,7 @@ function moveBacklogDescDrag(el) {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            success: function(res) {
+            success: function (res) {
                 //new UserStory().getBacklogDesc();
             }
         });
@@ -5479,7 +5462,7 @@ function if_inc_moveBacklogDescDrag(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             new UserStory().getBacklogDesc();
         }
     });
@@ -5506,7 +5489,7 @@ function forlist_inc_moveBacklogDescDrag(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             new UserStory().getBacklogDesc();
         }
     });
@@ -5547,7 +5530,7 @@ function moveBacklogDesc(el, elId, moveType) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             new UserStory().getBacklogDesc();
         }
     });
@@ -5559,7 +5542,7 @@ function moveBacklogDesc(el, elId, moveType) {
 function getGUIDataByStoryCardList(el, selectedFieldsList) {
     $(el).closest(".redirectClass").attr('bid');
     var res = {};
-    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function(e) {
+    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
         var val = $(this).val();
         var selectedFields = $(this).attr('sa-selectedfield').split(',');
         for (var i in selectedFields) {
@@ -5615,9 +5598,9 @@ function triggerAPI_old(element, apiId, data) {
     var out = be.callApi(apiId, finalRes, el);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-    SACore.GetBacklogDetails(apiId, 'apiSyncRequest'):
+        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
         'sync';
-    if (async === 'sync') {
+    if (async ==='sync') {
         triggerAPIAfter(el, apiId, out, finalRes)
     }
     //call oncload action
@@ -5669,7 +5652,7 @@ function _TriggerAPI(carrier) {
     //    var el = document.getElementById(id);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-    SACore.GetBacklogDetails(apiId, 'apiSyncRequest'):
+        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
         'sync';
 
     var el = element;
@@ -5696,7 +5679,7 @@ function _TriggerAPI(carrier) {
 
 
 
-    if (async === 'sync') {
+    if (async ==='sync') {
         triggerAPIAfter(el, apiId, out, finalRes)
     }
     //call oncload action
@@ -5724,11 +5707,11 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
     updateAttributeBasedOnData(el, data);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-    SACore.GetBacklogDetails(apiId, 'apiSyncRequest'):
+        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
         'sync';
 
 
-    $(el).closest('.redirectClass').find('.sa-selectpicker').each(function() {
+    $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
         $(this).selectpicker('refresh');
     })
 }
@@ -5753,7 +5736,7 @@ function updateAttributeBasedOnData(el, data) {
             try {
                 var key = keys[i];
                 var val = '@{' + key + '}';
-                $(el).closest('.redirectClass').find('[class*="' + val + '"]').each(function() {
+                $(el).closest('.redirectClass').find('[class*="' + val + '"]').each(function () {
                     var newVal = data[key];
                     var regexp = new RegExp(val, 'g');
                     var classVal = $(this).attr('class').replace(regexp, newVal);
@@ -5762,7 +5745,7 @@ function updateAttributeBasedOnData(el, data) {
 
 
                 var attrName4Filter = 'sa-data-' + key;
-                $(el).closest('.redirectClass').find('[' + attrName4Filter + ']').each(function() {
+                $(el).closest('.redirectClass').find('[' + attrName4Filter + ']').each(function () {
                     var newVal = data[key];
                     $(this).attr(attrName4Filter, newVal);
                 });
@@ -5775,7 +5758,7 @@ function updateStyleParamBasedOnKey(el, key, value) {
 
     try {
         var val = '@{' + key + '}';
-        $(el).closest('.redirectClass').find('[sa-data-hasreplace="1"]').each(function() {
+        $(el).closest('.redirectClass').find('[sa-data-hasreplace="1"]').each(function () {
             var style = $(this).attr('style');
 
             var newVal = value;
@@ -5791,7 +5774,7 @@ function updateAttributeBasedOnKey(el, key, value) {
 
     try {
         var val = '@{' + key + '}';
-        $(el).closest('.redirectClass').find('[class*="' + val + '"]').each(function() {
+        $(el).closest('.redirectClass').find('[class*="' + val + '"]').each(function () {
             var newVal = value;
             var regexp = new RegExp(val, 'g');
             var classVal = $(this).attr('class').replace(regexp, newVal);
@@ -5804,7 +5787,7 @@ function updateAttributeBasedOnKey(el, key, value) {
 
 
         var attrName = 'sa-data-' + key;
-        $(el).closest('.redirectClass').find('[' + attrName + ']').each(function() {
+        $(el).closest('.redirectClass').find('[' + attrName + ']').each(function () {
             var newVal = value;
             $(this).attr(attrName, newVal);
 
@@ -5841,7 +5824,7 @@ function getDbTablesList4Code(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#addFieldsOfTableAsInputModal-tableid').html('');
 
             var obj = res.tbl[0].r;
@@ -5865,16 +5848,16 @@ function triggerAPI2Fill(el, apiId, selectField, data) {
     }
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-    SACore.GetBacklogDetails(apiId, 'apiSyncRequest'):
+        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
         'sync';
 
-    if (async === 'sync') {
+    if (async ==='sync') {
         var out = be.callApi(apiId, res);
         fillSelectBoxAfterSyncApiCall(el, out, selectField);
 
 
 
-    } else if (async === 'async') {
+    } else if (async ==='async') {
         var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
         var asyncData = {};
         asyncData.defaultValue = '';
@@ -6079,7 +6062,7 @@ function clearTableBodyAfterApiCall(el, apiId) {
     var f = false;
     for (var i in cols) {
         var c = cols[i];
-        $(el).closest('.redirectClass').find('.component-table-class-for-zad').each(function() {
+        $(el).closest('.redirectClass').find('.component-table-class-for-zad').each(function () {
             var tblSelectedFields = $(this).attr('sa-tableselectedfield');
             tblSelectedFields = tblSelectedFields.replace(/ /g, '');
             tblSelectedFields = tblSelectedFields.split(',');
@@ -6126,7 +6109,7 @@ function loadTableDirectOnTriggerAsDefault_old(el, apiId, data, startLimit) {
         var o = obj[j];
         var tr = $('<tr>').append($('<td>').text((parseInt(startLimit) + j + 1)));
 
-        thead.find("th.selectablezad").each(function(e) {
+        thead.find("th.selectablezad").each(function (e) {
             var sfield = $(this).attr("sa-selectedfield-header");
             var inputId = $(this).attr("pid");
             var flag = true;
@@ -6223,7 +6206,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
         var selectedFieldList = selectedField.split(",");
         var f = false;
         var elem = $(el).closest('div.redirectClass');
-        elem.find('table.component-table-class-for-zad').each(function(ev) {
+        elem.find('table.component-table-class-for-zad').each(function (ev) {
             if (f) {
                 return false;
             }
@@ -6237,7 +6220,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
             selectedFieldTable = selectedFieldTable.replace(/ /g, '');
             var selectedFieldTableList = selectedFieldTable.split(",");
 
-            var diffArray = selectedFieldList.filter(function(el) {
+            var diffArray = selectedFieldList.filter(function (el) {
                 return selectedFieldTableList.indexOf(el) !== -1;
             });
 
@@ -6286,7 +6269,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
         var f = false;
         for (var i in cols) {
             var c = cols[i];
-            elem.find('.component-table-class-for-zad').each(function() {
+            elem.find('.component-table-class-for-zad').each(function () {
                 var tblSelectedFields = $(this).attr('sa-tableselectedfield');
                 tblSelectedFields = tblSelectedFields.replace(/ /g, '');
                 tblSelectedFields = tblSelectedFields.split(',');
@@ -6320,7 +6303,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 
                 var rowNoOrij = parseInt(startLimit) + parseInt(j)
 
-                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + rowNoOrij + '"]').each(function() {
+                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + rowNoOrij + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
                     if (fieldList.includes(c)) {
                         $(this).attr('sa-data-table-row-id', rowId);
@@ -6360,7 +6343,7 @@ function callTableRelationAPIs(elem, tableId) {
 
     elem.find('table[table-id="' + tableId + '"]')
         .find('.has_table_relation_td')
-        .each(function() {
+        .each(function () {
 
 
 
@@ -6460,7 +6443,7 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
     for (var i in obj) {
         var o = obj[i];
         $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
-            .each(function() {
+            .each(function () {
 
                 var elem2 = $(this).find('.component-input-class').first();
                 elem2.text(o[asyncData.selectedField]);
@@ -6501,7 +6484,7 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
     for (var i in obj) {
         var o = obj[i];
         $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
-            .each(function() {
+            .each(function () {
 
                 var finalVal = "";
 
@@ -6566,9 +6549,9 @@ function setValueOnCompAfterTriggerApi(el, data) {
         $(el).closest('div.redirectClass') :
         $(el).closest('.redirectClass');
 
-    element.find('[sa-selectedfield]').each(function(e) {
+    element.find('[sa-selectedfield]').each(function (e) {
         var isInTable = false;
-        $(this).closest("table.component-table-class-for-zad").each(function(e) {
+        $(this).closest("table.component-table-class-for-zad").each(function (e) {
             isInTable = true;
             return;
         })
@@ -6703,7 +6686,7 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
                 $(el).find("option:selected").prop("selected", false);
                 $(el).selectpicker('refresh');
 
-                $.each(val.split(","), function(i, e) {
+                $.each(val.split(","), function (i, e) {
                     var id = $(el).attr('id');
                     $(el).find("option[value='" + e + "']").prop("selected", true);
                 });
@@ -6712,7 +6695,7 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
                 $(el).find("option:selected").prop("selected", false);
                 $(el).selectpicker('refresh');
 
-                $.each(val.split(","), function(i, e) {
+                $.each(val.split(","), function (i, e) {
                     var id = $(el).attr('id');
                     $(el).find("option[value='" + e + "']").prop("selected", true);
                 });
@@ -6767,7 +6750,7 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
 }
 
 function initHtmlFroalaEditorByClass(className) {
-    $('.' + className).each(function() {
+    $('.' + className).each(function () {
         var id = $(this).attr('id');
         var val = $(this).val();
         val = replaceTagsReverse(val);
@@ -6805,7 +6788,7 @@ function initHtmlFroalaEditor(elementId, val) {
                 }
             }
         },
-        function() {
+        function () {
 
             editor.html.set(val);
         }
@@ -6837,7 +6820,7 @@ function uatAction() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getBugList();
             $('#uatModal_comment').val("");
             $('#uatModal').modal('hide');
@@ -6851,7 +6834,7 @@ function setMultiselectPickerValue(elementId, val) {
     el.find("option:selected").prop("selected", false);
     el.selectpicker('refresh');
 
-    $.each(val.split(","), function(i, e) {
+    $.each(val.split(","), function (i, e) {
         var id = el.attr('id');
         el.find("option[value='" + e + "']").prop("selected", true);
     });
@@ -6880,7 +6863,7 @@ function getMultiSelectpickerValue(el) {
 function getGUIDataByStoryCard(el) {
     var res = {};
 
-    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function(e) {
+    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
         var val = $(this).val();
         if ($(this).attr('sa-type') === 'label') {
             val = $(this).text();
@@ -6952,7 +6935,7 @@ function insertNewInputActionRel(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getInputActionRelList();
             getInputAttributeByProject();
             new UserStory().genGUIDesign();
@@ -6984,7 +6967,7 @@ function directRelationAddApi(el, ids) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getInputActionRelList();
             getInputAttributeByProject();
 
@@ -7010,7 +6993,7 @@ function getInputActionRelList() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var body = $('.input_event_related_api_table_list_body');
             body.html('');
 
@@ -7058,7 +7041,7 @@ function deleteInputActionRel(relId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getInputActionRelList();
             getInputAttributeByProject();
             new UserStory().genGUIDesign();
@@ -7162,7 +7145,7 @@ function getJsCodeListByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
@@ -7200,7 +7183,7 @@ function getGlobalJsCodeListByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
                 for (var i = 0; i < obj.length; i++) {
@@ -7231,7 +7214,7 @@ function getJsGlobalCodeByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 var obj = res.tbl[0].r;
@@ -7307,7 +7290,7 @@ function getJsCodeByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 var obj = res.tbl[0].r;
                 for (var i = 0; i < obj.length; i++) {
@@ -7386,7 +7369,7 @@ function getProjectDescriptionByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 cr_project_desc = {};
                 cr_project_desc_by_backlog = {};
@@ -7430,7 +7413,7 @@ function getInputAttributeByProjectManual() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 cr_input_comp_attribute = {};
 
@@ -7478,7 +7461,7 @@ function getInputAttributeByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 cr_input_comp_attribute = {};
                 cr_input_cont_attribute = {};
@@ -7536,7 +7519,7 @@ function getInputActionRelByProjectMAnual2() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 cr_input_action_rel = {};
                 cr_input_action_rel_list = {};
@@ -7580,7 +7563,7 @@ function getInputActionRelByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 cr_input_action_rel = {};
                 cr_input_action_rel_list = {};
@@ -7623,7 +7606,7 @@ function getInputClassRelByProjectManual() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 cr_comp_input_classes = {};
@@ -7668,7 +7651,7 @@ function getInputClassRelByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 cr_comp_input_classes = {};
@@ -7719,7 +7702,7 @@ function deleteJsCodeClass() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllJsCodeByProject();
 
         }
@@ -7729,7 +7712,7 @@ function deleteJsCodeClass() {
 
 
 
-$(document).on("change", "select.jsCodeModal_checkbox", function(e) {
+$(document).on("change", "select.jsCodeModal_checkbox", function (e) {
     jsCodeModal_checkbox_action();
 })
 
@@ -7739,8 +7722,8 @@ function jsCodeModal_checkbox_action() {
     $('.jscode-zad-' + val).show();
 }
 
-let  oldValueFn = ''
-$(document).on("change", "#jsCodeModal_fnlist", function(e) {
+let oldValueFn = ''
+$(document).on("change", "#jsCodeModal_fnlist", function (e) {
 
     var val = $(this).val();
     if (!val) {
@@ -7760,13 +7743,13 @@ $(document).on("change", "#jsCodeModal_fnlist", function(e) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#jsCodeModal_fndescription').val(res.kv.fnDescription);
             $('#jsCodeModal_fncorename').val(res.kv.fnCoreName);
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
             window.editor1.setValue(res.kv.fnBody);
             oldValueFn = res.kv.fnBody;
-             
+
             //  $('#jsCodeModal_fnbody').val(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
@@ -7800,7 +7783,7 @@ function insertNewJsFuncionDesc() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllJsCodeByProject();
             loadCurrentBacklogProdDetails();
             $('#jsCodeModal_newfunction').val('');
@@ -7832,7 +7815,7 @@ function getAllJsCodeByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllJsCodeByProjectDetails(res);
         }
     });
@@ -7857,7 +7840,7 @@ function loadGlobalJsCode() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var table = $('select#jsCodeModal_fnlist');
             try {
                 var obj = res.tbl[0].r;
@@ -7955,7 +7938,7 @@ var cdnh2 = true;
 
 function showJsCodeModal() {
     $('#jsCodeModal').remove();
-    $.get("resource/child/fn.html", function(html_string) {
+    $.get("resource/child/fn.html", function (html_string) {
         $("body").append(html_string);
 
         loadProjectList2SelectboxByClassNochange('jsCodeModal_projectList_class');
@@ -7990,10 +7973,10 @@ function jsEditorGenerate() {
         mode: 'javascript',
         theme: 'blackboard',
         extraKeys: {
-            "F11": function(cm) {
+            "F11": function (cm) {
                 cm.setOption("fullScreen", !cm.getOption("fullScreen"));
             },
-            "Esc": function(cm) {
+            "Esc": function (cm) {
                 if (cm.getOption("fullScreen"))
                     cm.setOption("fullScreen", false);
             }
@@ -8027,35 +8010,35 @@ function cssEditorGenerate() {
 
 
 }
-$(document).on('focusout', '#guiClassModal_classbody', function() {
+$(document).on('focusout', '#guiClassModal_classbody', function () {
 
     var value = window.editor.getValue();
 
     updateGuiClassBody(value)
 })
 
-$(document).on('click', '#saveFnCodeBoard', function() {
+$(document).on('click', '#saveFnCodeBoard', function () {
 
     var value = window.editor1.getValue();
-    oldValueFn  =value;
+    oldValueFn = value;
     updateJSChangeDetails(value, "fnBody");
 });
 window.addEventListener('beforeunload', function (e) {
-   var newValue  = window.editor1.getValue();
-       if (global_var.current_modal === 'loadFn') {
-           if(oldValueFn == newValue){
-               
-           }else{
-                e.preventDefault();
-                e.returnValue = ''; 
-           }
-        
-       }
+    var newValue = window.editor1.getValue();
+    if (global_var.current_modal === 'loadFn') {
+        if (oldValueFn == newValue) {
+
+        } else {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+
+    }
 });
 
 
 let FullSc = true;
-$(document).on('click', '.editor_full_screenBt', function() {
+$(document).on('click', '.editor_full_screenBt', function () {
     var val3 = window.editor1.getValue();
 
     $('#full_screen_editor_modal').modal('show');
@@ -8069,7 +8052,7 @@ $(document).on('click', '.editor_full_screenBt', function() {
 
 
 })
-$(document).on('click', '.close_full_scree_editor', function() {
+$(document).on('click', '.close_full_scree_editor', function () {
     var val1 = window.editor3.getValue();
     $('#full_screen_editor_modal').modal('hide');
 
@@ -8094,7 +8077,7 @@ function getAllGuiClassByProject() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllGuiClassByProjectDetails(res);
         }
     });
@@ -8139,7 +8122,7 @@ function updateGuiClassBody(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllGuiClassByProject();
         }
     });
@@ -8162,7 +8145,7 @@ function updateGuiClassName(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllGuiClassByProject();
             loadCurrentBacklogProdDetails();
         }
@@ -8191,7 +8174,7 @@ function deleteGuiClass() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getAllGuiClassByProject();
 
         }
@@ -8203,7 +8186,7 @@ function deleteGuiClass() {
 var current_clicked_class_id = "";
 
 
-$(document).on("click", ".gui-class-row-tr", function(e) {
+$(document).on("click", ".gui-class-row-tr", function (e) {
     $('.gui-class-row-tr').removeClass('gui-class-row-tr-active');
     $(this).addClass('gui-class-row-tr-active');
     var val = $(this).attr('pid');
@@ -8224,7 +8207,7 @@ $(document).on("click", ".gui-class-row-tr", function(e) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#guiClassModal_classname').val(res.kv.className);
             $('#guiClassModal_classbody').val(res.kv.classBody);
             cssEditorGenerate();
@@ -8310,7 +8293,7 @@ function insertNewGuiClassModalCore(val) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
             //            addGuiClassToInputCore(res.kv.id);//bu sehvdir
             getAllGuiClassByProject();
@@ -8337,7 +8320,7 @@ function insertNewGuiClassModalCoreFor(val) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             addGuiClassToInputCore(res.kv.id);
             getAllGuiClassByProject();
@@ -8367,7 +8350,7 @@ function insertNewGuiClass4Container(className) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             addGuiClassToInput4ContainerCore(res.kv.id)
             $('#gui_prop_cn_gui_class_new').val('');
@@ -8393,7 +8376,7 @@ function insertNewGuiClass(className) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             Prototype.CssContainer.getGuiClassList(res.kv.id);
             $('#gui_prop_in_gui_class_new').val('');
             addGuiClassToInputCore(res.kv.id)
@@ -8427,7 +8410,7 @@ function addGuiClassToInput4ContainerCore(classId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             Prototype.CssContainer.getGuiClassList(classId);
             new UserStory().genGUIDesign();
         }
@@ -8459,7 +8442,7 @@ function addGuiClassToInputCore(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             loadCurrentBacklogProdDetailsSyncrone();
             getInputCompClassList();
             getInputClassRelByProjectManual();
@@ -8494,7 +8477,7 @@ function getInputCompClassListCore(inputId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             getInputCompClassListDetails(res);
         }
     });
@@ -8560,7 +8543,7 @@ function getInputContainerClassListCore(inputId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             getInputContainerClassListCoreDetailes(res);
         }
     });
@@ -8612,7 +8595,7 @@ function removeInputClassRel(el, relId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             getInputCompClassList();
             getInputContaierClassList();
             getInputClassRelByProjectManual();
@@ -8680,7 +8663,7 @@ function getAllGuiClassList() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             try {
                 setResArrayAsObject(res);
@@ -8734,7 +8717,7 @@ function getGuiClassList() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             try {
                 getGuiClassListDetails(res);
                 getGuiClassListDetails4Container(res);
@@ -8829,7 +8812,7 @@ function addInputAttributes4Container(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#gui_prop_cn_attr_name').val('');
             $('#gui_prop_cn_attr_value').val('');
             getInputAttributeList4Container(global_var.current_us_input_id);
@@ -8865,7 +8848,7 @@ function getInputAttributeList4Container(inputId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             getInputAttributeListDetails4Container(res);
         }
     });
@@ -8942,7 +8925,7 @@ function addInputAttributesCore(namval, val) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#gui_prop_in_attr_name').val('');
             $('#gui_prop_in_attr_value').val('');
             getInputAttributeList(global_var.current_us_input_id);
@@ -8980,7 +8963,7 @@ function getInputAttributeList(inputId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             getInputAttributeListDetails(res);
         }
     });
@@ -9063,7 +9046,7 @@ function removeInputAttributeCore(inputAttrId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             loadCurrentBacklogProdDetails();
 
             getInputAttributeList(global_var.current_us_input_id);
@@ -9071,7 +9054,7 @@ function removeInputAttributeCore(inputAttrId) {
             getInputAttributeByProjectManual();
             new UserStory().genGUIDesign();
         },
-        error: function() {
+        error: function () {
             alert("error")
         }
     });
@@ -9103,7 +9086,7 @@ function testIO(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             //            console.log(JSON.stringify(res));
         }
     });
@@ -9133,7 +9116,7 @@ function testIOInsert(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             //            console.log(JSON.stringify(res));
         }
     });
@@ -9159,7 +9142,7 @@ function testIODelete(id) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             //            console.log(JSON.stringify(res));
         }
     });
@@ -9185,16 +9168,16 @@ function testIOUpdate(id) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             //            console.log(JSON.stringify(res));
         }
     });
 }
 
-$(document).on("keyup", ".Assigne-card-story-search", function(e) {
+$(document).on("keyup", ".Assigne-card-story-search", function (e) {
     var filter = $(this).val(),
         count = 0;
-    $(".Assigne-content-user").each(function() {
+    $(".Assigne-content-user").each(function () {
         if ($(this).text().search(new RegExp(filter, "i")) < 0) {
             $(this).fadeOut();
 
@@ -9204,7 +9187,7 @@ $(document).on("keyup", ".Assigne-card-story-search", function(e) {
         }
     });
 
-    $(".owner-content-user").each(function() {
+    $(".owner-content-user").each(function () {
         if ($(this).text().search(new RegExp(filter, "i")) < 0) {
             $(this).fadeOut();
 
@@ -9216,13 +9199,52 @@ $(document).on("keyup", ".Assigne-card-story-search", function(e) {
 })
 
 
-$(document).on("click", ".screen_pgn_count", function(e) {
+$(document).on("click", ".screen_pgn_count", function (e) {
     var rc = $(this).attr('pid');
     $('.img_slider').hide();
     $('.img_slider_' + rc).show();
     SourcedActivityDiagram.DrawLine();
 })
 
+
+function addRelatedDbModal(el) {
+    var descId = $('#addRelatedApiModal-id').val();
+    var apidId = $('#addRelatedApiModal-api').val();
+    var desc = $('#addRelatedApiModal-shortdesc').val();
+
+    if (!descId || !apidId)
+        return;
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+
+    json.kv.id = descId;
+    json.kv.apiId = apidId;
+    json.kv.shortDesc = desc;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddRelatedApiToBacklogDesc",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            AJAXCallFeedback(res);
+
+            $('#addRelatedApiModal').modal('hide');
+            new UserStory().getBacklogDesc();
+
+            loadCurrentBacklogProdDetails();
+
+        }
+    });
+}
 
 function addRelatedApiModal(el) {
     var descId = $('#addRelatedApiModal-id').val();
@@ -9251,7 +9273,7 @@ function addRelatedApiModal(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
 
             $('#addRelatedApiModal').modal('hide');
@@ -9295,7 +9317,7 @@ function addRelatedSourceCodeModal(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
 
             $('#addRelatedSourceCodeModal').modal('hide');
@@ -9332,7 +9354,7 @@ function removeRelatedSourceCodeFromDesc(descId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
@@ -9364,7 +9386,7 @@ function removeRelatedApiFromDesc(descId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
@@ -9409,7 +9431,7 @@ function addNewApiFromDesc() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
 
@@ -9420,14 +9442,14 @@ function addNewApiFromDesc() {
             $('#addRelatedApiModal-newapi').val('');
             //                
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
 }
 
 function convertToCamelView(str) {
-    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function(letter) {
+    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function (letter) {
         return letter.toUpperCase();
     });
     str = str.replace(/ /g, '');
@@ -9438,7 +9460,7 @@ function convertToCamelView(str) {
 function addSpaceToCamelView(str) {
     str = str.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
 
-    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function(letter) {
+    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function (letter) {
         return letter.toUpperCase();
     });
 
@@ -9446,7 +9468,7 @@ function addSpaceToCamelView(str) {
 }
 
 function firstLetterToLowercase(str) {
-    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function(letter) {
+    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function (letter) {
         return letter.toUpperCase();
     });
     str = str.replace(/ /g, '');
@@ -9455,7 +9477,7 @@ function firstLetterToLowercase(str) {
 }
 
 function firstLetterToLowercase(str) {
-    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function(letter) {
+    str = str.toLowerCase().replace(/^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, function (letter) {
         return letter.toUpperCase();
     });
     str = str.replace(/ /g, '');
@@ -9497,7 +9519,7 @@ function addNewSourceCodeFromDescNew(trigg) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var descId = $('#addNewRelatedSourceCodeModal-id').val();
             if (descId === 'loadFn') {
                 getAllJsCodeByProject();
@@ -9524,7 +9546,7 @@ function addNewSourceCodeFromDescNew(trigg) {
             return
 
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -9556,12 +9578,12 @@ function addNewSourceCodeFromDesc() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             loadRelatedSourceCode4Relation();
             $('#addRelatedSourceCodeModal-api').val(res.kv.id);
             $('.toggleRelatedSourceCode4DescClass').hide();
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -9573,6 +9595,103 @@ function addRelatedApi(el, descId) {
     loadRelatedAPI4Relation();
 }
 
+// add related tablee 
+function addRelatedDb(el, descId) {
+    $('#addRelatedDBModal-inputid').val(descId);
+    getListrelatedDbDesc(descId);
+    SqlGeneratorClass.loadDbName($('#addRelatedDBModal-db'));
+    $('#addRelatedDbModal').modal('show');
+    // loadRelatedAPI4Relation();
+}
+
+function getListrelatedDbDesc(fkInputDescId) {
+    var data = {};
+    data.fkInputDescId = fkInputDescId;
+    callApi('22042211045701142953', data, true, function (res) {
+        var table = $('#relatedDbSelectTable tbody');
+        table.empty();
+        var db = res.tbl[0].r;
+        for (var i = 0; i < db.length; i++) {
+            const o = db[i]
+            table.append(`
+                  <tr>
+                  <td class='text-center'>${i+1}</td>
+                  <td class='text-center'>${o.dbName}</td>
+                  <td class='text-center'>${o.tableName}</td>
+                  <td class='text-center'><a onclick='deleteTableRelated(this,"${o.id}")' href="#">delete</a></td>
+                  </tr>
+                 `)
+        }
+
+    })
+}
+
+function getListDescRelatedDb() {
+    var table = $('#description_table_body_id > tr.esas-table-tr-for-zad');
+    var ids = '';
+    table.each(function (params) {
+        ids += $(this).attr('pid') + '|';
+    })
+    var data = {};
+    data.fkInputDescId = ids;
+    callApi('22042211045701142953', data, true, function (res) {
+        $('#description_table_body_id').find('.related-table-span').empty();
+        var db = res.tbl[0].r;
+        for (var i = 0; i < db.length; i++) {
+            const o = db[i]
+            $('#description_table_body_id')
+                .find('.related-table' + o.fkInputDescId)
+                .append('<span class="m-2 badge badge-warning">' + o.dbName + '.' + o.tableName + '</span>')
+        }
+
+    })
+
+}
+
+function deleteTableRelated(elm, id) {
+    if (confirm('Are you sure?!!')) {
+        var data = {}
+        data.id = id;
+        callApi('22042211050005313573', data, true, function (res) {
+            $(elm).closest('tr').remove();
+            getListDescRelatedDb()
+        })
+    }
+
+}
+$(document).on('change', '#addRelatedDBModal-db', function () {
+    var select = $('#addRelatedTableModal-db');
+    var data = {};
+    data.dbId = $(this).val();
+    callService('serviceTmGetDbTableListForPopup', data, true, function (res) {
+        var db = res.tbl[0].r;
+        for (var i = 0; i < db.length; i++) {
+            var o = db[i];
+            select.append($('<option>')
+                .val(o.id)
+                .text(o.tableName)
+            )
+        }
+        select.selectpicker('refresh');
+    })
+})
+$(document).on('click', '#addRelatedTable', function () {
+    var tableid = $('#addRelatedTableModal-db').val();
+    var descid = $('#addRelatedDBModal-inputid').val();
+    var dbId = $('#addRelatedDBModal-db').val();
+    var data = {};
+    if (!dbId || !descid || !dbId) {
+        Toaster.showError('Data not found');
+        return;
+    }
+    data.fkTableId = tableid;
+    data.fkDbId = dbId;
+    data.fkInputDescId = descid;
+    callApi('22042211081601854078', data, true, function (res) {
+        getListrelatedDbDesc(descid);
+        getListDescRelatedDb()
+    })
+})
 
 function addRelatedSourceCode(el, descId) {
     $('#addRelatedSourceCodeModal-id').val(descId);
@@ -9614,7 +9733,7 @@ function loadRelatedSourceCode4Relation() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
             for (var i in obj) {
                 var o = obj[i];
@@ -9652,7 +9771,7 @@ function loadRelatedGlobalSourceCode4Relation() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
             for (var i in obj) {
                 var o = obj[i];
@@ -9702,7 +9821,7 @@ function loadRelatedAPI4Relation() {
         .prepend($("<option>").val("-2").append("New API"));
 }
 
-$(document).on("change", "#selectTableSize", function(e) {
+$(document).on("change", "#selectTableSize", function (e) {
     $('#entityDatabaseList').change();
 })
 
@@ -9710,25 +9829,25 @@ $(document).on("change", "#selectTableSize", function(e) {
 
 
 
-$(document).on("click", ".removeFieldLink", function(e) {
+$(document).on("click", ".removeFieldLink", function (e) {
     $('#removeFieldLinkModal').modal('show');
     var fieldId = $(this).closest('div.feildSection').attr('id');
     $('#removeFieldLinkModal-id').val(fieldId);
     getFieldLink(fieldId)
 })
 
-$(document).on("dblclick", ".sad-apicard", function(e) {
+$(document).on("dblclick", ".sad-apicard", function (e) {
     $(this).find('.sad-api-card-input').toggle();
     $(this).find('.sad-api-card-output').toggle();
     SourcedActivityDiagram.CoreLines.DrawLines.All();
 })
 
-$(document).on("dblclick", ".sad-storycard", function(e) {
+$(document).on("dblclick", ".sad-storycard", function (e) {
     $(this).find('.sad-story-card-input').toggle();
     SourcedActivityDiagram.CoreLines.DrawLines.All();
 })
 
-$(document).on("dblclick", ".sad-entitycard", function(e) {
+$(document).on("dblclick", ".sad-entitycard", function (e) {
     $(this).find('.sad-entity-input').toggle();
     SourcedActivityDiagram.CoreLines.DrawLines.All();
 })
@@ -9754,7 +9873,7 @@ function getFieldLink(fieldId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getFieldLinkDetails(res);
         }
     });
@@ -9780,7 +9899,7 @@ function deleteLinkFromFieldRel(fieldId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var id = $('#removeFieldLinkModal-id').val();
             getFieldLink(id);
             getFieldRel4Select();
@@ -9838,7 +9957,7 @@ function getFieldLinkDetails(res) {
 
 }
 
-$(document).on("change", "#entityDatabaseList", function(e) {
+$(document).on("change", "#entityDatabaseList", function (e) {
     var id = $(this).val();
     if (!id)
         return;
@@ -9920,7 +10039,7 @@ function getTablesAndFields(dbid) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             SAEntity.Load(res);
         }
     });
@@ -9949,10 +10068,10 @@ function addFieldRel(fkDbId, fromFieldId, toFieldId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Field didn't updated")
         }
     });
@@ -9981,11 +10100,11 @@ function getFieldRel4Select() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             SAEntity.updateFieldRelByRes(res);
             getFieldRel4SelectDetails();
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Field didn't updated")
         }
     });
@@ -10048,11 +10167,11 @@ function updateDbFieldOrderNo(fieldId, orderNo, tableId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getFieldRel4Select();
             //            SAEntity.updateFieldByRes(res);
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Field didn't updated")
         }
     });
@@ -10080,10 +10199,10 @@ function updateDbField(fieldId, fieldName) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             //            SAEntity.updateFieldByRes(res);
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Field didn't updated")
         }
     });
@@ -10110,18 +10229,18 @@ function deleteDbField(fieldId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getFieldRel4Select();
             //            SAEntity.updateFieldByRes(res);
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Field didn't deleted")
         }
     });
 }
 
 
-$(document).on("change", "#tableFieldDetailsModal_tabledesc", function() {
+$(document).on("change", "#tableFieldDetailsModal_tabledesc", function () {
     updateDbtableDesc($('#tableFieldDetailsModal_id').val(), $(this).val());
 })
 
@@ -10148,8 +10267,8 @@ function updateDbtableDesc(tableId, desc) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {},
-        error: function() {
+        success: function (res) {},
+        error: function () {
             Toaster.showError("Table didn't updated")
         }
     });
@@ -10176,12 +10295,12 @@ function updateDbtableOrderNo(tableId, orderNo) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getFieldRel4Select();
             //            SAEntity.updateTableByRes(res);
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Table didn't updated")
         }
     });
@@ -10208,10 +10327,10 @@ function updateDbtable(tableId, tableName) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             SAEntity.updateTableByRes(res);
         },
-        error: function() {
+        error: function () {
             Toaster.showError("Table didn't updated")
         }
     });
@@ -10275,12 +10394,12 @@ function addNewTable(tableName, orderNo, el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $(el).closest('.tdSeqment').attr("pid", res.kv.id);
             $(el).closest('.tdSeqment').removeClass('table-segment-idle')
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(tableName + " is not inserted");
         }
     });
@@ -10300,7 +10419,7 @@ function createMvp() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             Toaster.showMessage("MVP Operations finished successfully!")
         }
     });
@@ -10327,7 +10446,7 @@ function commitDatabaseOnServer() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             Toaster.showMessage("Database committed successfully!")
         }
     });
@@ -10381,7 +10500,7 @@ function dropDatabase(el) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             loadDatabaseList2ComboEntity();
             $('#sendDataToModal-dbname').val('');
             $('#createDatabaseModal').modal('hide');
@@ -10417,7 +10536,7 @@ function createDatabase() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             SAEntity.updateDbByRes(res);
             loadDatabaseList2ComboEntity();
             $('#sendDataToModal-dbname').val('');
@@ -10445,7 +10564,7 @@ function loadDatabaseList2ComboEntity() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             loadDatabaseList2ComboEntityDetails(res);
             loadDatabaseList2Comboİmport(res)
             $('#entityDatabaseList').change();
@@ -10468,7 +10587,7 @@ function loadDatabaseList2ComboEntityDetails(res) {
     }
 }
 
-$(document).on("change", "#sad-diagram-sclist", function(e) {
+$(document).on("change", "#sad-diagram-sclist", function (e) {
     var list = ($(this).val()) ? $(this).val() : [];
     SourcedActivityDiagram.ShowOnlySCInList(list);
     if (list.length > 0) {
@@ -10478,7 +10597,7 @@ $(document).on("change", "#sad-diagram-sclist", function(e) {
 
 
 
-$(document).on("click1", ".card-UserStory-edit-exit", function(e) {
+$(document).on("click1", ".card-UserStory-edit-exit", function (e) {
     $(document).find(".TaskStoryCardPanel").css("display", "none");
     //    try {
     //        getDBStructure4Select();
@@ -10488,12 +10607,12 @@ $(document).on("click1", ".card-UserStory-edit-exit", function(e) {
 })
 let type = "api";
 let apitype = 'oldApi';
-$(document).on("click", ".btn-change-mode-eventhesc", function(e) {
+$(document).on("click", ".btn-change-mode-eventhesc", function (e) {
     $(this).closest('.modal-body').find('.create-new-text-4-desc').toggleClass('d-none');
     $(this).closest('.modal-body').find('.create-new-db-4-select').val('');
     type = $(this).attr("data-type");
 })
-$(document).on("click", ".btn-change-mode-eventapi", function(e) {
+$(document).on("click", ".btn-change-mode-eventapi", function (e) {
     $(this).closest('.modal-body').find('.create-new-text-4-newapi').toggleClass('d-none');
     $(this).closest('.modal-body').find('.create-new-db-4-select').val('');
     apitype = $(this).attr("data-type");
@@ -10546,14 +10665,14 @@ function addNewApiforRel(bnName, actype, inputId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
             var fn_body = `fn_event(|r|${actype}|r|Api|r|${res.kv.id}|r|${bnName}|r|)`;
             addNewDescByValueAndInpId(fn_body, inputId);
 
         },
-        error: function() {
+        error: function () {
             Toaster.showGeneralError();
         }
     });
@@ -10581,7 +10700,7 @@ function addNewDescByValueAndInpId(val, inputId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             AJAXCallFeedback(res);
             SAInput.updateInputByRes(res);
@@ -10593,7 +10712,7 @@ function addNewDescByValueAndInpId(val, inputId) {
 
             $("#addEventDescModal").modal('hide');
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -10637,12 +10756,12 @@ function updateInputDescCompNewf(val, descId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             AJAXCallFeedback(res);
             loadCurrentBacklogProdDetails();
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -10654,7 +10773,7 @@ function updateInputDescCompNewf(val, descId) {
 }
 
 
-$(document).on("dblclick", '.update-event-desc-text', function(e) {
+$(document).on("dblclick", '.update-event-desc-text', function (e) {
     var tx = $(this).text()
     var inp = $(`<input onkeypress="this.style.width = (this.value.length + 1) + 'rem'" class='update-event-desc-input'  sa-data-value='${tx}' value='${tx}'>").attr('onchange','updateEventEventDesc(this)`)
     inp.css("width", (tx.length + 1) + 'rem')
@@ -10663,7 +10782,7 @@ $(document).on("dblclick", '.update-event-desc-text', function(e) {
     //  inp.focus();
 
 })
-$(document).on("focusout", '.update-event-desc-input', function(e) {
+$(document).on("focusout", '.update-event-desc-input', function (e) {
     var tx = $(this).val();
 
     $(this).parent().text(tx);
@@ -10671,7 +10790,7 @@ $(document).on("focusout", '.update-event-desc-input', function(e) {
 })
 
 
-$(document).on("click", '#user-story-is-api', function(e) {
+$(document).on("click", '#user-story-is-api', function (e) {
 
     if ($('#user-story-is-api').is(":checked")) {
         $('.is-api-dependence').hide();
@@ -10706,7 +10825,7 @@ function getDBStructure4Select() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 SAEntity.Load(res);
             } catch (err) {}
@@ -10753,7 +10872,7 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId, isRefres
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#selectFromDbModal').modal('hide');
             if (isRefreshed !== true) {
 
@@ -10801,7 +10920,7 @@ function addSourceOfRelationAsAPI4SendDetails(id, sendToBacklogId, sendToInputId
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             SAInput.updateInputByRes(res);
             $('#sendDataToModal').modal('hide');
             getDBStructure4Select();
@@ -10858,7 +10977,7 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#addRelatedSourceModal').modal('hide');
             loadCurrentBacklogProdDetailsSyncrone();
             if (global_var.current_modal === 'loadLivePrototype') {
@@ -10896,7 +11015,7 @@ function deleteDocument() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             newDocument();
         }
     });
@@ -10928,7 +11047,7 @@ function deleteForeverStoryCard(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#storyCardTrashModal').modal('hide');
         }
     });
@@ -10961,7 +11080,7 @@ function deleteForeverDocument(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#documentTrashModal').modal('hide');
         }
     });
@@ -10990,7 +11109,7 @@ function sendBackStoryCard(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             new UserStory().refreshBacklog();
             $('#storyCardTrashModal').modal('hide');
         }
@@ -11020,7 +11139,7 @@ function sendBackDocument(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             global_var.current_doc_id = id;
             loadDoc(id);
             $('#documentTrashModal').modal('hide');
@@ -11053,7 +11172,7 @@ function deleteDocument() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             newDocument();
         }
     });
@@ -11082,7 +11201,7 @@ function getStoryCardTrashModal() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#storyCardTrashModal').modal('show');
             getStoryCardTrashModalDetails(res);
         }
@@ -11144,7 +11263,7 @@ function getDocumentTrashModal() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#documentTrashModal').modal('show');
             getDocumentTrashModalDetails(res);
         }
@@ -11205,7 +11324,7 @@ function updateDocumentName(name, id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {}
+        success: function (res) {}
     });
 }
 
@@ -11232,7 +11351,7 @@ function loadProjectListToEditor() {
     //    $('#editor-container-pr-list').html($('#projectList').html());
     //    $('#editor-container-pr-list').change();
 
-    $('.test181').each(function() {
+    $('.test181').each(function () {
         $(this).attr('checked', true);
         $(this).change();
     })
@@ -11270,7 +11389,7 @@ function loadTablesDB(elId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             loadTables4EditorDetailsResult(res)
             $(".Choose-userstory-popUp").css("display", "block")
             $("#treeview").hummingbird();
@@ -11306,10 +11425,10 @@ function loadDetailsOnProjectSelect(projectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        beforeSend: function() {
+        beforeSend: function () {
             showProgress();
         },
-        success: function(res) {
+        success: function (res) {
             global_var.current_project_id = projectId;
             new UserStory().refreshBacklog();
             loadStoryCards4EditorDetailsResult(res)
@@ -11317,7 +11436,7 @@ function loadDetailsOnProjectSelect(projectId) {
             $("#treeview").hummingbird();
             hideProgress();
         },
-        error: function() {
+        error: function () {
             hideProgress();
         }
     });
@@ -11428,7 +11547,7 @@ function commmonOnloadAction(el) {
     if (global_var.current_modal === 'loadDashboard') {
         // $('#statistics-projectlist').html($('#projectList').html());
         taskManagement.setBugFilterProjectAdd('statistics-projectlist')
-            //        $('#statistics-projectlist').prepend($('<option>').text(""))
+        //        $('#statistics-projectlist').prepend($('<option>').text(""))
         $('#statistics-projectlist option').first().remove()
         $('.selectcustom1').selectpicker("refresh");
         //        $('#statistics-projectlist').val("")
@@ -11472,7 +11591,7 @@ function showGeneralStatisticsDetailsModal(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             showGeneralStatisticsDetailsModalDetails(res, actionType);
         }
     });
@@ -11522,7 +11641,7 @@ function showGeneralStatisticsDetailsModalByAssignee(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             showGeneralStatisticsDetailsModalDetailsByAssignee(res, projectId);
         }
     });
@@ -11531,10 +11650,10 @@ function showGeneralStatisticsDetailsModalByAssignee(el) {
 
 
 
-$(document).on("dblclick", ".task-for-backlog-event", function(e) {
+$(document).on("dblclick", ".task-for-backlog-event", function (e) {
     showGeneralStatisticsDetailsModalByTask4SC(this);
 })
-$(document).on("dblclick", ".task-for-backlog-event-prm", function(e) {
+$(document).on("dblclick", ".task-for-backlog-event-prm", function (e) {
     showGeneralStatisticsDetailsModalByTaskforProjectManage(this);
 })
 
@@ -11567,7 +11686,7 @@ function showGeneralStatisticsDetailsModalByTaskforProjectManage(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             showGeneralStatisticsDetailsModalDetailsByTask4SC(res);
         }
     });
@@ -11602,7 +11721,7 @@ function showGeneralStatisticsDetailsModalByTask4SC(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             showGeneralStatisticsDetailsModalDetailsByTask4SC(res);
         }
     });
@@ -11619,7 +11738,7 @@ function showGeneralStatisticsDetailsModalDetailsByTask4SC(res) {
             .attr("pid", obj[i].id)
             .css("cursor", "pointer")
 
-        .append($('<td>').append((idx++)))
+            .append($('<td>').append((idx++)))
             .append($('<td>').append((obj[i].backlogName)));
         tr.attr("onclick", "showTaskDetails4Statistic(this)")
 
@@ -11669,7 +11788,7 @@ function showGeneralStatisticsDetailsModalByTask(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             showGeneralStatisticsDetailsModalDetailsByTask(res);
         }
     });
@@ -11764,7 +11883,7 @@ function showGeneralStatisticsDetailsModalDetailsByAssignee(res, projectId) {
             .attr("pid", obj[i].id)
             .css("cursor", "pointer")
 
-        .append($('<td>').append((idx++)))
+            .append($('<td>').append((idx++)))
             .append($('<td>').append((obj[i].taskName)));
         tr.attr("onclick", "showAssigneeTaskDetails4Statistic(this)")
 
@@ -11805,7 +11924,7 @@ function loadTaskInfoToContainer(taskId, projectId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             SATask.updateTaskByRes(res);
         }
     });
@@ -11843,7 +11962,7 @@ function showGeneralStatisticsDetailsModalDetailsByTask(res) {
             .attr("pid", obj[i].id)
             .css("cursor", "pointer")
 
-        .append($('<td>').append((idx++)))
+            .append($('<td>').append((idx++)))
             .append($('<td>').append((obj[i].backlogName)));
         tr.attr("onclick", "showTaskDetails4Statistic(this)")
 
@@ -11866,7 +11985,7 @@ function showGeneralStatisticsDetailsModalDetails(res, actionType) {
             .attr("pid", obj[i].id)
             .css("cursor", "pointer")
 
-        .append($('<td>').append((idx++)))
+            .append($('<td>').append((idx++)))
             .append($('<td>').append((obj[i].backlogName)));
         if (t.includes(actionType)) {
             tr.attr("onclick", "showTaskDetails4Statistic(this)")
@@ -11903,7 +12022,7 @@ function loadStoryCard4SAD(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             loadStoryCard4SADDetails(res);
         }
     });
@@ -11970,7 +12089,7 @@ function setDocZoom() {
 
 
 
-$(document).on("click", "#SaveAsPage", function() {
+$(document).on("click", "#SaveAsPage", function () {
     saveAsDocumentModal();
 })
 
@@ -11990,7 +12109,7 @@ function saveAsDocument() {
     $('#saveAsDocumentModal').modal("hide");
 }
 
-$(document).on('click', '.ded-open-docs', function(evt) {
+$(document).on('click', '.ded-open-docs', function (evt) {
     openDocument();
 });
 
@@ -12023,10 +12142,10 @@ function openDocument() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             loadDocuments(res);
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -12078,7 +12197,7 @@ function loadDoc(docId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             global_var.current_doc_id = docId;
             $('#documentListModal').modal("hide");
             //            $('#testPage').html(res.kv.documentBody);
@@ -12086,13 +12205,13 @@ function loadDoc(docId) {
             $('.fr-element').html(res.kv.documentBody);
             hideProgress();
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
 
-$(document).on('click', '#SavePage', function(evt) {
+$(document).on('click', '#SavePage', function (evt) {
     saveDocument();
 });
 
@@ -12127,42 +12246,42 @@ function saveDocument() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             global_var.current_doc_id = res.kv.id;
             Toaster.showMessage("Saved")
             hideProgress();
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
 
-$(document).on('click', '.live-prototype-show-story-card-refresh', function(evt) {
+$(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
     loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
     $('#storyCardListSelectBox').change();
 
 });
 
-$(document).on('click', '.live-prototype-show-story-card', function(evt) {
+$(document).on('click', '.live-prototype-show-story-card', function (evt) {
     if (global_var.current_modal !== "loadStoryCard") {
         var id = $('#storyCardListSelectBox').val();
         callStoryCard(id);
     }
 });
-$(document).on('click', '.data-show-activity-storycard', function(evt) {
+$(document).on('click', '.data-show-activity-storycard', function (evt) {
     var id = $(this).parents('.USrectangle').attr('data-sed-id')
     if (global_var.current_modal !== "loadStoryCard") {
         //  var id = global_var.current_backlog_id;
         callStoryCard(id);
     }
 });
-$(document).on('click', '.data-show-activity-ipo', function(evt) {
+$(document).on('click', '.data-show-activity-ipo', function (evt) {
     var idbl = $(this).parents('.Content').attr('data-sed-id')
     Utility.addParamToUrl('current_backlog_id', idbl);
     $('#modal-prototypye').modal('show');
     $('.trigger-leaderline-id').removeAttr('id')
-    $.get("resource/child/ipo.html", function(html_string) {
+    $.get("resource/child/ipo.html", function (html_string) {
 
         getAllGuiClassList();
         getInputClassRelByProject();
@@ -12192,13 +12311,13 @@ $(document).on('click', '.data-show-activity-ipo', function(evt) {
 
 
 });
-$(document).on('click', '.close-modal-act-ipo', function(evt) {
+$(document).on('click', '.close-modal-act-ipo', function (evt) {
 
     $('.trigger-leaderline-id').attr('id', 'gui_component_main_view');
 
 
 });
-$(document).on('click', '.line-prev-act-ipo', function(evt) {
+$(document).on('click', '.line-prev-act-ipo', function (evt) {
 
     $(".live-prototype-show-sourcedrelation").click();
 
@@ -12213,7 +12332,7 @@ $(document).on('click', '.line-prev-act-ipo', function(evt) {
 //});
 
 
-$(document).on('click', '.live-prototype-show-inputrelation', function(evt) {
+$(document).on('click', '.live-prototype-show-inputrelation', function (evt) {
     //    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
     $('#storyCardInputRelationModal').modal('show');
     setInputListToInputRelation();
@@ -12221,7 +12340,7 @@ $(document).on('click', '.live-prototype-show-inputrelation', function(evt) {
     saInputTagIsPressed = true;
 });
 
-$(document).on('click', '.live-prototype-show-sourcedrelation', function(evt) {
+$(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     var backlogId = global_var.current_backlog_id;
     $('.sa-main-c2').removeClass("col");
     bindScrollZadToCanvas();
@@ -12229,14 +12348,14 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function(evt) {
     $('.gui-design').css('background-color', 'transparent');
 
 });
-$(document).on('click', '.relation-add-btn-table', function(evt) {
+$(document).on('click', '.relation-add-btn-table', function (evt) {
     var backlog = $(this).attr('data-apiId');
     var typ = $(this).attr('data-type');
     var Input = $(this).attr('data-input');
     addNewRelation(backlog, typ, Input);
 
 });
-$(document).on('click', '.generate-realtion-fileds-api', function(evt) {
+$(document).on('click', '.generate-realtion-fileds-api', function (evt) {
     var backlog = $(this).attr('data-apiId');
     var inpid = $(this).attr('data-input');
     addNewRelationInsertListGen(backlog, inpid);
@@ -12261,7 +12380,7 @@ function showApiRelationModalCore(backLogId, inputid) {
     table.empty();
     data = {};
     data.fkApiId = backLogId;
-    callApi('21122413451908481407', data, true, function(res) {
+    callApi('21122413451908481407', data, true, function (res) {
         var selectin = $("<select class='form-control apiInputSelect input-relation-selected-name-for-zad' >")
             .attr("onchange", "tableApiSelectBoxOnChange(this)");
         var selectout = $("<select class='form-control apiInputSelect' >")
@@ -12291,7 +12410,7 @@ function addNewRelationInsertListGen(backLogId, inputId) {
     var data = {};
     data.fkApiId = backLogId;
     data.fkRelatedInputId = inputId;
-    callApi('22012211383202191857', data, true, function(res) {
+    callApi('22012211383202191857', data, true, function (res) {
         showApiRelationModal(backLogId);
     })
 
@@ -12301,7 +12420,7 @@ function deleteApiRelationModal(relId, elm) {
     var data = {};
     data.id = relId;
     $(elm).closest("tr").remove();
-    callApi('22012211351903155308', data, true, function(res) {
+    callApi('22012211351903155308', data, true, function (res) {
 
     })
 
@@ -12312,7 +12431,7 @@ function addNewRelation(backLogId, typs, inpId) {
     data1.fkRelatedInputId = inpId;
     data1.fkApiId = backLogId;
     data1.relType = typs;
-    callApi('21122412204000321041', data1, true, function(res1) {
+    callApi('21122412204000321041', data1, true, function (res1) {
 
         showApiRelationModalCore(backLogId, inpId)
     })
@@ -12326,7 +12445,7 @@ function tableSelectBoxOnChange(el) {
 
     data.id = $(el).closest('tr').attr('pid');
 
-    callApi('21122417433606496584', data, true, function(res) {
+    callApi('21122417433606496584', data, true, function (res) {
 
     })
 
@@ -12337,7 +12456,7 @@ function tableApiSelectBoxOnChange(el) {
     var data = {};
     data.fkApiInputId = inId;
     data.id = $(el).closest("tr").attr('pid');
-    callApi('22012118281709943409', data, true, function(res) {})
+    callApi('22012118281709943409', data, true, function (res) {})
 }
 
 
@@ -12347,7 +12466,7 @@ function inputSetSelectBox() {
     var item = $("select.tableInputSelect");
     item.empty();
     item.append($("<option>").text('').val(''));
-    inputs.each(function() {
+    inputs.each(function () {
         var idOption = $(this).closest("tr").attr("inid");
         var elm = $(this).clone();
         elm.find(".dropdown").first().remove();
@@ -12356,7 +12475,7 @@ function inputSetSelectBox() {
 
         item.append($("<option>").text(text).val(idOption));
     })
-    item.each(function() {
+    item.each(function () {
         var oldVal = $(this).attr('sa-data-value');
         $(this).val(oldVal);
 
@@ -12370,7 +12489,7 @@ function getBacklogInputOutPutSetTable(inputid, backlogId, selectin, selectout, 
     data = {};
     data.fkApiId = backlogId;
     data.fkRelatedInputId = inputid;
-    callApi('211224123024004010435', data, true, function(res) {
+    callApi('211224123024004010435', data, true, function (res) {
         try {
             var dt = res.tbl[0].r;
             for (var i = 0; i < dt.length; i++) {
@@ -12470,7 +12589,7 @@ function setInputListToInputRelation() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             div.html('');
             var table = $('<table>')
@@ -12512,21 +12631,21 @@ function setInputListToInputRelation() {
                             .addClass('RemoveApiTD'))
                     )
 
-                .append($('<td>')
-                    .append($('<i class="fa fa-chevron-right">'))
-                    .append($('<span>').text(" " + o.inputName + " "))
-                    .append($('<i class="fa fa-chevron-right">')))
+                    .append($('<td>')
+                        .append($('<i class="fa fa-chevron-right">'))
+                        .append($('<span>').text(" " + o.inputName + " "))
+                        .append($('<i class="fa fa-chevron-right">')))
 
-                .append($('<td>')
-                    .append($('<span>')
-                        .attr('pid', o.id)
-                        .addClass('ApiInTDspan')
-                        .append(sendToZad))
-                    .append($('<span>')
-                        .attr('onclick', "deleteSendToApiOnInputRelation(this,'" + o.id + "')")
-                        .addClass('DeleteINAPi')
-                        .addClass('RemoveApiTD'))
-                )
+                    .append($('<td>')
+                        .append($('<span>')
+                            .attr('pid', o.id)
+                            .addClass('ApiInTDspan')
+                            .append(sendToZad))
+                        .append($('<span>')
+                            .attr('onclick', "deleteSendToApiOnInputRelation(this,'" + o.id + "')")
+                            .addClass('DeleteINAPi')
+                            .addClass('RemoveApiTD'))
+                    )
 
 
                 table.append(tr)
@@ -12562,7 +12681,7 @@ function setApiListToInputRelation() {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             select.html('');
 
             var obj = res.tbl[0].r;
@@ -12578,13 +12697,13 @@ function setApiListToInputRelation() {
 
 }
 
-$(document).on('click', '.redirectClass4CSS', function(evt) {
+$(document).on('click', '.redirectClass4CSS', function (evt) {
     //    var id = $(this).find('.redirectClass').attr('bid');
     //    new UserStory().setBacklogByGuiAll(id)
 });
 
 
-$(document).on('click', '.loadSqlBoard', function(evt) {
+$(document).on('click', '.loadSqlBoard', function (evt) {
     //    return;
     clearManualProjectFromParam();
     global_var.current_modal = "loadSqlBoard";
@@ -12594,7 +12713,7 @@ $(document).on('click', '.loadSqlBoard', function(evt) {
 
 
 
-    $.get("resource/child/sqlboard.html", function(html_string) {
+    $.get("resource/child/sqlboard.html", function (html_string) {
 
 
 
@@ -12613,9 +12732,364 @@ $(document).on('click', '.loadSqlBoard', function(evt) {
 
 });
 
+///// History  start >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+$(document).on('click', '.loadHistory', function (evt) {
+    //    return;
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadHistory";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    showToggleMain();
+
+    getProjectUsers();
+    getUsers();
+
+    $.get("resource/child/history-new.html", function (html_string) {
+
+        $('#mainBodyDivForAll').html(html_string);
+        $('.history-select-picker').selectpicker();
+        genTimePickerById('history-panel-date-id','down');
+        new HistoryNew().getReleaseList();
+        new HistoryNew().getUserList();
+        loadProjectList2SelectboxByClass('projectList_history',true);
+        generateMonacoeditros('editor-history-history', "editorDiffHistory", 'javascript','vs-dark');
+        $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
+        new HistoryNew().load();
+
+    });
+
+});
+$(document).on("click", '.history-item-4history', function (e) {
+    $('.history-item-4history').removeClass('active')
+    $(this).addClass('active');
+    var pid = $(this).attr('pid');
+    var type = $(this).attr('data-type');
+    
+    if(type=='api'){
+        var id = historyList4History[pid].fkBacklogId;
+        loadHistoryByBacklogStId(id);
+        $("#task-ongoing-large-history").modal('show');
+        
+    }else{
+        $('.loading').show();
+        new HistoryNew().itemClick(type,pid);  
+    }
+    
+});
+let historyList4History={};
+$(document).on('click', ".btn-minus-pag", function () {
+    var limit  = 100;
+    var vall = 'count-row-select-task';
+    $('#' + vall).val(1);
+    $('.startLimitNew').val(0);
+    $('.endLimitNew').val(limit);
+    new HistoryNew().load();
+
+});
+$(document).on('change', "#list-history-js-select", function () {
+    new HistoryNew().load();
+});
+$(document).on('change', "#releaseList4History-old", function () {
+    
+   $('.history-item-4history.active').trigger('click');
+});
+$(document).on('click', ".btn-plus-pag", function () {
+    var vall = 'count-row-select-task';
+    var limit  =  100;
+    var pageComponentLast = $('#' + vall + ' option:last-child');
+    var txt = parseFloat(pageComponentLast.text())
+
+    $('#' + vall).val(txt)
+    var ol = Math.ceil(txt * limit);
+    $('input.startLimitNew').val(ol - limit);
+    $('input.endLimitNew').val(ol);
+    new HistoryNew().load();
+});
+$(document).on("click", ".pagination_btn_left_right_new", function (e) {
+    var stlm = $('input.startLimitNew');
+    var endlm = $('input.endLimitNew');
+    var clickedButton = $(this).attr('data-page-icon');
+    var pageSelected = $('#count-row-select-task option:selected');
+    var pageSelect = $('#count-row-select-task');
+    var pageNumber = null;
+    var limit  =  100;
+    if (clickedButton == 'pageLeft') {
+        var current = parseInt(pageSelected.text());
+        pageNumber = current != 1 ? current - 1 : 1;
+        if (current != 1) {
+            stlm.val(parseFloat(stlm.val()) - parseFloat(limit));
+            endlm.val(parseFloat(endlm.val()) - parseFloat(limit));
+        }
+
+    } else if (clickedButton == 'pageRight') {
+        var current = parseInt(pageSelected.text());
+
+        pageNumber = current != parseInt($('#count-row-select-task option:last-child').text()) ? current + 1 : current;
+        if (current != parseInt($('#count-row-select-task option:last-child').text())) {
+            stlm.val(parseFloat(stlm.val()) + parseFloat(limit));
+            endlm.val(parseFloat(endlm.val()) + parseFloat(limit));
+        }
+    }
+   
+    new HistoryNew().load();
+});
+
+class HistoryNew{
+    itemClick(type,pid){
+        /* 
+        var time  =  DateRangePickerFormatValueArry($('#history-panel-date-id'))
+         var oldReleaseID = $('#releaseList4History-old').val();
+           if(!oldReleaseID)return;
+         var data  = {};
+                data.createdDateFrom = time.startTime;
+                data.devType = type;
+                data.fkHistoryId = pid;
+                data.createdDateTo = time.endTime;
+                data.fkDeployReleaseId = oldReleaseID;
+        var that  =  this; */
+        var apiID = this.getApiId4History(type);
+        const o = historyList4History[pid]; 
+            var valNew = o[apiID.body];
+        this.setModel(type,valNew);
+        
+        $('.loading').hide();
+        /* callApi(apiID.listApi,data,true,function (res) {
+            const o = historyList4History[pid]; 
+            var valNew = o[apiID.body];
+             try {
+                var oldVal = res.tbl[0].r[0][apiID.body];
+             } catch (error) {
+                var oldVal  = 'Əvvəlki relizdə yoxdur';
+             }
+           
+           
+        }) */
+    }
+    load(){
+        historyList4History = {};
+        var typeDev = $('.active.history-tab-4history').attr('data-type');
+        new HistoryNew().getListHistory4History(typeDev);
+    }
+    setModel(type,valNew){
+        type = (type == 'js') ? 'javascript' : type;
+        type = (type == 'db') ? 'sql' : type;
+        window.editorDiffHistory.updateOptions({
+            language: type,
+        });
+        window.editorDiffHistory.setValue(valNew);
+    }
+    getApiId4History(key) {
+        var api 
+        switch (key) {
+            case 'js': 
+            case "css":
+            case 'html': 
+                        api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",trig:"fkBacklogId",body:'requestBody'}
+                 break;
+            case 'sql': case'javacore': case'nodecore': case'mysqlfn':
+                        api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fnDescription",body:'jsBody'}
+                 break;
+            case 'api': 
+                        api = {listApi:'22052112352806745403',dateId:'history',name:"backlogName",trig:"fkBacklogId",body:''}
+                 break;
+            case 'db':  
+                        api = {listApi:'22052113455707789858',dateId:'history',name:"databaseName",trig:"tableName",body:'sqlQuery'}
+                 break;
+            default:
+                break;
+        }
+        return api;
+    }
+    addLoader(list){
+        $(list).empty();
+        for (var i = 0; i < 10; i++) {
+    
+            $(list).append(`<li class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;"> 
+                                            <div class="box-loader w-100 shimmer">
+                                                
+                                              </div>
+                                          </li>`)
+        }
+    }
+    getListHistory4History(typeDev) {
+        var list = $('#list-history-' + typeDev + '-ul');
+        var text = $('#list-history-js-select');
+        this.addLoader(list);
+        var time  =  DateRangePickerFormatValueArry($('#history-panel-date-id'))
+        var data = {};
+        data.devType = typeDev;
+        data.startLimit = $('input.startLimitNew').val();
+        data.endLimit = $('input.endLimitNew').val();
+        data.searchText = text.val();
+        data.createdDateFrom = time.startTime;
+        data.fkProjectId = $('#history-panel-project-id').val();
+        data.createdDateTo = time.endTime;
+        data.createdBy = getProjectValueUsManageMultiByelInNew($("#history-panel-created-id"));
+        if($('#release-is-filter').prop('checked')){
+            data.fkDeployReleaseId = $('#releaseList4History').val();
+        }
+        var apiID = this.getApiId4History(typeDev);
+        var that  = this;
+        callApi(apiID.listApi, data, true, function (res) {
+              that.genPaginition(res.kv.rowCount);
+              list.empty();
+            try {
+                var siy = res.tbl[0].r
+                var say  =  $('input.startLimitNew').val()
+                for (let k = 0; k < siy.length; k++) {
+                    const o = siy[k];
+                    say++
+                    historyList4History[o.id] = o;
+                    list.append(that.genItemBlock(o,typeDev,say)); 
+                }
+                $('[data-toggle="popover"]').popover({
+                    html: true
+                });
+            } catch (error) {
+                console.error(error);
+                list.append(`<li class="list-group-item  text-center">Empty</li>`)
+            }
+
+        })
+    }
+    genPaginition (countId) {
+    
+        if (countId) {
+           var limit  = 100;
+            var stlm = $('#history-pagination .startLimitNew').val();
+            var endlm = parseFloat(stlm)  +  parseFloat(limit) ;
+            $("#history-pagination .pagination_btn").text((parseFloat(stlm) + 1) + "-" + endlm + '/' + countId);
+            var page = Math.ceil(countId / limit);
+            var elm = $('#history-pagination #count-row-select-task');
+            var oldval = elm.val();
+            elm.empty();
+            for (let i = 0; i < page; i++) {
+                elm.append($("<option>")
+                    .text(i + 1)
+                    .val(i + 1))
+            }
+            if (oldval) {
+                elm.val(oldval);
+            }
+        } else {
+            $("#history-pagination .pagination_btn").text('0-0/0')
+        }
+    }
+    getReleaseList(){
+        var data ={};
+        var select = $('select.releaseList4History');
+        callApi('22052111302105571050',data,true,function (res) {
+            res.tbl[0].r.map((o) => {
+                select.append($('<option>').val(o.id).text(o.releaseName +"("+Utility.convertDate(o.releaseDate)+')'))
+            });
+            select.selectpicker('refresh');
+        });
+    }
+    getUserList(){
+        var select = $('#history-panel-created-id');
+        loadAssigneesByElement(select);
+    }
+    genItemBlock(o,type,say){
+        var time  =  this.getApiId4History(type);
+            if(type=='db'){
+               var namess  = o.fieldName +' ('+o.databaseName+"_" +o.tableName+')';
+            }else{
+                var namess  = o[time.name] + ' ('+o.projectName+')';
+            }
+        return `<li pid='${o.id}' fid='${o[time.trig]}' bgid='${o.fkBacklogId}' prid='${o.fkProjectId}' data-type='${type}' class="list-group-item history-item-4history">
+        <span><span class='history-item-4history-span'>${say}</span> <input  data-id="${o.id}" type="checkbox"></span>
+        ${namess}
+        <span>${Utility.convertDate(o[time.dateId+'Date'])+'/'+Utility.convertTime(o[time.dateId+'Time'])}</span>
+        <img class="Assigne-card-story-select-img float-right updated" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Name: ${o.userPersonName} <br>
+                                  Date:  "  title="" data-original-title="Updated By">
+                                ${type !='api'?`<button class="btn btn-secondary btn-sm" id="history-toggle-ground-btn" title="History"><i class="fas fa-history" aria-hidden="true"></i></button>`:""}</li>`
+    }
+    unAssigneeRelease(){
+        var ids  = this.getCheckecIdListHistory();
+        var data = {};
+           data.fkDeployReleaseId = $('#releaseList4History').val();
+           data.historyType = $('.active.history-tab-4history').attr('data-type');
+        ids.each(function (params) {
+           data.fkHistoryId = $(this).attr('data-id');
+            callApi('22052112020304439823', data, true, function (res) {
+               
+            });
+        })
+        Toaster.showMessage('Remove history from release');
+    }
+    assigneeRelease(){
+        var ids  = this.getCheckecIdListHistory();
+        var data = {};
+           data.fkDeployReleaseId = $('#releaseList4History').val();
+           data.historyType = $('.active.history-tab-4history').attr('data-type');
+        ids.each(function (params) {
+           data.fkHistoryId = $(this).attr('data-id');
+            callApi('22052111535109047014', data, true, function (res) {
+               
+            });
+        })
+        Toaster.showMessage('Added history to release');
+    }
+    getCheckecIdListHistory(){
+        var ids  =  $('.tab-pane.active .history-item-4history input[type="checkbox"]:checked'); 
+         return ids;
+    }
+}
+$(document).on("click", '.tab-pane.active .history-item-4history input[type="checkbox"]', function (e) {
+    e.stopPropagation();
+});
+$(document).on("click", '.history-tab-4history', function (e) {
+    var typeDev = $(this).attr('data-type');
+    new HistoryNew().getListHistory4History(typeDev);
+});
+$(document).on("change", 'select.select-filter-title', function (e) {
+    var ul  = $(this).closest('.tab-pane').find('ul.scroll-ul-history');
+    var li  = ul.find('li');
+   var val  =  $(this).val();
+        if(val.length >0){
+            li.hide();
+               val.map(function (o) {
+                ul.find('li[fid='+o+']').show();
+               })
+           
+        }else{
+            li.show();
+        } 
+});
+$(document).on("change", 'input.all-checked-history', function (e) {
+    var ul  = $(this).closest('.tab-pane').find('ul.scroll-ul-history');
+    if($(this).prop('checked')){
+        ul.find('input[type="checkbox"]').prop('checked',true);
+    }else{
+        ul.find('input[type="checkbox"]').prop('checked',false);
+    }
+});
+$(document).on("click", '#unAssignee-add-release', function (e) {
+    new HistoryNew().unAssigneeRelease();
+});
+$(document).on("click", '#assignee-add-release', function (e) {
+    new HistoryNew().assigneeRelease();
+});
+$(document).on("change", 'select.refresh-history-list', function (e) {
+    new HistoryNew().load();
+});
+$(document).on("change", 'input.refresh-history-list', function (e) {
+    new HistoryNew().load();
+});
+$(document).on("change", '#releaseList4History', function (e) {
+      if($('#release-is-filter').prop('checked')){
+        new HistoryNew().load();
+      } 
+});
+
+
+/* ////History endddddddddddddd >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+
+
 ///// code ground start >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-$(document).on('click', '.loadCodeGround', function(evt) {
+$(document).on('click', '.loadCodeGround', function (evt) {
     //    return;
     clearManualProjectFromParam();
     global_var.current_modal = "loadCodeGround";
@@ -12625,10 +13099,11 @@ $(document).on('click', '.loadCodeGround', function(evt) {
     getProjectUsers();
     getUsers();
 
-    $.get("resource/child/codeground.html", function(html_string) {
+    $.get("resource/child/codeground.html", function (html_string) {
 
         $('#mainBodyDivForAll').html(html_string);
         $('.code-select-picker').selectpicker();
+
         if (global_var.n_rgstr) {
             var bgid = Utility.getParamFromUrl('bgid');
             global_var.current_backlog_id = bgid;
@@ -12651,7 +13126,7 @@ $(document).on('click', '.loadCodeGround', function(evt) {
             generateMonacoeditros('js-code-editor', 'editorJSGround', 'javascript', 'vs-dark');
 
         }
-
+        $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
 
     });
 
@@ -12663,7 +13138,7 @@ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, rea
     $('.loading.editor').show();
     require.config({
         paths: {
-            'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'
+            'vs': 'https://unpkg.com/monaco-editor@0.33.0/min/vs'
         }
     });
     window.MonacoEnvironment = {
@@ -12672,14 +13147,14 @@ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, rea
 
     let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+            baseUrl: 'https://unpkg.com/monaco-editor@0.33.0/min/'
         };
-        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+        importScripts('https://unpkg.com/monaco-editor@0.33.0/min/vs/base/worker/workerMain.js');
     `], {
         type: 'text/javascript'
     }));
 
-    require(["vs/editor/editor.main"], function() {
+    require(["vs/editor/editor.main"], function () {
         window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
             value: body,
             language: lang,
@@ -12699,7 +13174,7 @@ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, rea
 function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
     require.config({
         paths: {
-            'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'
+            'vs': 'https://unpkg.com/monaco-editor@0.33.0/min/vs'
         }
     });
     window.MonacoEnvironment = {
@@ -12708,14 +13183,15 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
 
     let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+            baseUrl: 'https://unpkg.com/monaco-editor@0.33.0/min/'
         };
-        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+        importScripts('https://unpkg.com/monaco-editor@0.33.0/min/vs/base/worker/workerMain.js');
     `], {
         type: 'text/javascript'
     }));
-
-    require(["vs/editor/editor.main"], function() {
+ 
+    require(["vs/editor/editor.main"], function () {
+       
         window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
             value: body,
             language: lang,
@@ -12727,8 +13203,26 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
             scrollBeyondLastLine: true,
             theme: theme
         });
+        getCustomThemeMonaco();
 
     });
+}
+function getCustomThemeMonaco() {
+    monaco.editor.defineTheme('myTheme', {
+        base: 'vs',
+        inherit: true,
+        rules: [{ background: 'EDF9FA' }],
+        colors: {
+            'editor.foreground': '#000000',
+            'editor.background': '#EDF9FA',
+            'editorCursor.foreground': '#8B0000',
+            'editor.lineHighlightBackground': '#0000FF20',
+            'editorLineNumber.foreground': '#008800',
+            'editor.selectionBackground': '#88000030',
+            'editor.inactiveSelectionBackground': '#88000015'
+        }
+    });
+    monaco.editor.setTheme('myTheme');
 }
 
 function loadNameBacklogOrProjectShareURl(backlogId) {
@@ -12736,7 +13230,7 @@ function loadNameBacklogOrProjectShareURl(backlogId) {
 
     var data = {};
     data.id = bid;
-    callService('serviceTmGetBacklogCoreInfoByIdNew', data, true, function(res) {
+    callService('serviceTmGetBacklogCoreInfoByIdNew', data, true, function (res) {
 
         var cmd = $('#storyCardListSelectBox4CodeGround');
         cmd.html('');
@@ -12781,30 +13275,27 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig, isHtml) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
-            isHtml = isHtml ? isHtml : $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
+            /* isHtml = isHtml ? isHtml : $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
 
-            if (isHtml === '1') {
-                $('#cs-col-Ceckbox-id').val("0");
-                $('#cs-col-Ceckbox-id').selectpicker("refresh");
+            if (isHtml === '1') { */
 
-                try {
-                    if (trig == 'load') {
-                        window.editorHTMLGround.setValue(res.kv.backlogHtml);
-                    } else {
-                        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, false);
-                    }
-                } catch (error) {
-                    if (trig == 'load') {
-                        return
-                    }
-                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', "", false);
 
+            try {
+                if (trig == 'load') {
+                    window.editorHTMLGround.setValue(res.kv.backlogHtml);
+                } else {
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, false);
                 }
-                $('#cs-col-Ceckbox-id').val("1");
-                $('#cs-col-Ceckbox-id').selectpicker("refresh");
-            } else {
+            } catch (error) {
+                if (trig == 'load') {
+                    return
+                }
+                generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', "", false);
+
+            }
+            /* } else {
 
 
 
@@ -12818,7 +13309,7 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig, isHtml) {
                 } else {
                     generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', html, true);
                 }
-            }
+            } */
 
         }
     });
@@ -12839,7 +13330,7 @@ function getBacklogJSBodyByIdCodeGround(bid, trig) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 if (trig == 'load') {
                     window.editorJSGround.setValue(res.tbl[0].r[0].fnBody);
@@ -12875,7 +13366,7 @@ function getBacklogCSSBodyByIdCodeGround(bid, trig) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             try {
                 if (trig == 'load') {
                     window.editorCSSGround.setValue(res.tbl[0].r[0].classBody);
@@ -12913,7 +13404,7 @@ function getBacklogListforCodeGround(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
             var cmd = $('#storyCardListSelectBox4CodeGround');
             cmd.html('');
@@ -12933,15 +13424,161 @@ function getBacklogListforCodeGround(fkProjectId) {
 
 
             sortSelectBoxByElement(cmd);
-            cmd.val(global_var.current_backlog_id);
+            cmd.val(global_var.current_backlog_id).trigger('change');
             cmd.selectpicker('refresh');
 
         }
     });
 }
 
+function genMonacoEditorDiff(names,elmID, valold, valNew, type) {
+    $('#' + elmID).empty();
+    require.config({
+        paths: {
+            'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.10.1/min/vs'
+        }
+    });
+    require(['vs/editor/editor.main'], () => {
+        window[names] = monaco.editor.createDiffEditor(document.getElementById(elmID), {
+            readOnly: true,
+            theme: 'vs-dark',
+            automaticLayout: true,
+        });
+        window[names].setModel({
+            original: monaco.editor.createModel(valold, type),
+            modified: monaco.editor.createModel(valNew, type),
+        });
 
-$(document).on("change", '#change-editor-theme-monaco', function(e) {
+        document.querySelector('.inline-it').addEventListener('change', (e) => {
+            window[names].updateOptions({
+                renderSideBySide: !e.target.checked
+            });
+        });
+    });
+}
+
+$(document).on("click", '#history-toggle-ground-btn', function (e) {
+    $('#history-codeground-modal').modal('show');
+    historyList = {};
+    $('#history-codeground-modal .scroll-ul-history').empty();
+       if(global_var.current_modal=='loadHistory'){
+        global_var.current_backlog_id = $(this).closest('li').attr('bgid');
+        global_var.current_project_id = $(this).closest('li').attr('prid');
+       }
+    
+    getListHistoryCodeground('js');
+    setTimeout(() => {
+        genMonacoEditorDiff("editorDiff",'editor-history-dif-codeground', '//salam', '//salam22', 'javascript');
+
+    }, 1000);
+});
+$(document).on("click", '.history-item-codegorund', function (e) {
+    $('.history-item-codegorund').removeClass('active')
+    $(this).addClass('active');
+    var pid = $(this).attr('pid');
+    var type = historyList[pid].devType;
+    type = (type == 'js') ? 'javascript' : type;
+    var valold = historyList[pid].oldValue;
+    var valNew = historyList[pid].requestBody;
+    window.editorDiff.setModel({
+        original: monaco.editor.createModel(valold, type),
+        modified: monaco.editor.createModel(valNew, type),
+    });
+});
+$(document).on("click", '.history-tab-codegorund', function (e) {
+    var typeDev = $(this).attr('data-type');
+
+    getListHistoryCodeground(typeDev);
+});
+let historyList = {};
+
+function getListHistoryCodegroundMore(typeDev, stl, endL) {
+    var list = $('#history-codeground-modal #list-history-' + typeDev + '-ul');
+
+    var data = {};
+    data.fkBacklogId = global_var.current_backlog_id;
+    data.devType = typeDev;
+    data.startLimit = stl;
+    data.endLimit = endL;
+    callApi('22051817104609238599', data, true, function (res) {
+        try {
+            var siy = res.tbl[0].r
+            for (let k = 0; k < siy.length; k++) {
+                const o = siy[k];
+                try {
+                    o.oldValue = siy[k + 1].requestBody;
+                } catch (error) {
+                    o.oldValue = '';
+                }
+
+                historyList[o.id] = o;
+
+                list.append(`<li pid='${o.id}' class="list-group-item history-item-codegorund">${Utility.convertDate(o.createdDate)+'/'+Utility.convertTime(o.createdTime)}
+                 <img class="Assigne-card-story-select-img float-right updated" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Name: ${o.userPersonName} <br>
+                                             Date:  " title="" data-original-title="Updated By "> </li>`)
+
+            }
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
+        } catch (error) {}
+        list.removeData('loading');
+        list.attr('data-start',stl);
+        list.attr('data-end',endL);
+        $('.loading').remove();
+    })
+}
+
+function getListHistoryCodeground(typeDev) {
+    var list = $('#history-codeground-modal #list-history-' + typeDev + '-ul');
+    list.attr('data-start', '0');
+    list.attr('data-end', '50');
+    list.empty();
+    for (var i = 0; i < 10; i++) {
+
+        list.append(`<li class="weather-container" style="min-height: 10px;overflow: hidden;box-shadow: none;background:none;"> 
+                                        <div class="box-loader w-100 shimmer">
+                                            
+                                          </div>
+                                      </li>`)
+    }
+    var data = {};
+    data.fkBacklogId = global_var.current_backlog_id;
+    data.devType = typeDev;
+    data.startLimit = 0;
+    data.endLimit = 50;
+    callApi('22053017091407086089', data, true, function (res) {
+
+        list.empty();
+        try {
+            var siy = res.tbl[0].r
+            for (let k = 0; k < siy.length; k++) {
+                const o = siy[k];
+                try {
+                    o.oldValue = siy[k + 1].requestBody;
+                } catch (error) {
+                    o.oldValue = '';
+                }
+
+                historyList[o.id] = o;
+
+                list.append(`<li pid='${o.id}' class="list-group-item history-item-codegorund">${Utility.convertDate(o.createdDate)+'/'+Utility.convertTime(o.createdTime)}
+                 <img class="Assigne-card-story-select-img float-right updated" src="${fileUrl(o.userImage)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Name: ${o.userPersonName} <br>
+                                             Date:  " title="" data-original-title="Updated By ">
+                 </li>`)
+
+            }
+            $('[data-toggle="popover"]').popover({
+                html: true
+            });
+        } catch (error) {
+            list.append(`<li class="list-group-item  text-center">Empty</li>`)
+        }
+    })
+}
+
+
+$(document).on("change", '#change-editor-theme-monaco', function (e) {
     window.editorJSGround.updateOptions({
         theme: $(this).val()
     });
@@ -12953,10 +13590,7 @@ $(document).on("change", '#change-editor-theme-monaco', function(e) {
     })
 
 });
-$(document).on("change", '#cs-col-Ceckbox-id', function(e) {
-
-
-
+$(document).on("change", '#cs-col-Ceckbox-id', function (e) {
     updateUS4ShortChangeDetails($(this).val(), 'hasHtml');
     if ($(this).val() === '1') {
         window.editorHTMLGround.updateOptions({
@@ -12972,7 +13606,7 @@ $(document).on("change", '#cs-col-Ceckbox-id', function(e) {
 
 
 });
-$(document).on("change", '#project-list-codeground', function(e) {
+$(document).on("change", '#project-list-codeground', function (e) {
     Utility.addParamToUrl("current_project_id", $(this).val())
     global_var.current_project_id = $(this).val();
     getBacklogListforCodeGround($(this).val());
@@ -12980,11 +13614,12 @@ $(document).on("change", '#project-list-codeground', function(e) {
 
 });
 
-$(document).on("change", '#storyCardListSelectBox4CodeGround', function(e) {
+$(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     var val = $(this).val()
     global_var.current_backlog_id = val;
+    fillBacklogHistory4View(val, '0');
     Utility.addParamToUrl("current_backlog_id", val);
-
+    $('#storycard-panel-backlog-id').val(global_var.current_backlog_id);
     getBacklogHTMLBodyByIdCodeGround(val, 'load');
 
     getBacklogJSBodyByIdCodeGround(val, 'load');
@@ -13009,19 +13644,7 @@ function iframeLoaded() {
     try {
         var pid = global_var.current_backlog_id;
         var js = window.editorJSGround.getValue();
-
-        if ($("#cs-col-Ceckbox-id").val() !== '1') {
-            // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
-            var resTmp = SAInput.toJSONByBacklog(pid);
-            var oldmodal = global_var.current_modal;
-
-            global_var.current_modal = $('#show_hidden_carrier').prop('checked') ? 'loadLivePrototype' : '';
-            var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-            global_var.current_modal = oldmodal;
-        } else {
-            var html = window.editorHTMLGround.getValue();
-
-        }
+        var html = window.editorHTMLGround.getValue();
         var css = window.editorCSSGround.getValue();
         var block = getIframeBlockInside(pid, css, js, html);
         $("#result-code-editor").html(block);
@@ -13060,44 +13683,40 @@ function getIframeBlockInside(pid, css, js, bodys) {
     return $iframe.html();
 }
 
-$(document).on("change", '#show_hidden_carrier', function(e) {
+$(document).on("change", '#show_hidden_carrier', function (e) {
     $("#run-code-ground-btn").click();
 })
+$(document).on("click", '#importLiveProto', function (e) {
+    var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+    var oldmodal = global_var.current_modal;
+    global_var.current_modal = '';
+    var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+    global_var.current_modal = oldmodal;
+    window.editorHTMLGround.setValue(html);
+    $("#save-code-ground-btn").click();
+})
 
-$(document).on("click", '#save-code-ground-btn', function(e) {
+$(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
     $('.loading.editor').show();
     var js = window.editorJSGround.getValue();
     var css = window.editorCSSGround.getValue();
-    if ($("#cs-col-Ceckbox-id").val() !== '1') {} else {
-        var html = String(window.editorHTMLGround.getValue());
 
-        insertHtmlSendDbBybacklogId(html);
-    }
-
+    var html = String(window.editorHTMLGround.getValue());
+    insertHtmlSendDbBybacklogId(html);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     setBacklogAsHtmlCodeGround(global_var.current_backlog_id, js, css);
     getIframeBlock(elm);
     ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
-
-
 });
 
 function setBacklogAsHtmlCodeGround(backlogId, js, css) {
     if (!backlogId) {
         return;
     }
-    if ($("#cs-col-Ceckbox-id").val() !== '1') {
-        var resTmp = SAInput.toJSONByBacklog(backlogId);
-        var oldmodal = global_var.current_modal;
-        global_var.current_modal = '';
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal = oldmodal;
-    } else {
-        var html = window.editorHTMLGround.getValue();
-    }
+    var html = window.editorHTMLGround.getValue();
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
     json.kv.backlogHtml = "<style>" + css + "</style>" + html + "<script>" + js + "</script>";
@@ -13110,31 +13729,29 @@ function setBacklogAsHtmlCodeGround(backlogId, js, css) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             Toaster.showMessage("Succesfuly Saved");
             $('.loading.editor').hide();
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('Something went wrong!!!'));
         }
     });
 }
-$(document).on("click", '#info-code-ground-btn', function(e) {
+$(document).on("click", '#info-code-ground-btn', function (e) {
 
     calStroyCardNew(global_var.current_backlog_id);
 
 
 });
-$(document).on("click", '#run-code-ground-btn', function(e) {
+$(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
 
     getIframeBlock(elm);
-
-
 });
-$(window).keydown(function(e) {
+$(window).keydown(function (e) {
     if (global_var.current_modal === 'loadCodeGround') {
         if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) {
             /*ctrl+s or command+s*/
@@ -13193,7 +13810,7 @@ function insertJsSendDbBybacklogId(body) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             setHistoryCodeGround(pid, body, "js");
         }
@@ -13217,7 +13834,7 @@ function insertCssSendDbBybacklogId(body) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             setHistoryCodeGround(pid, body, "css")
 
 
@@ -13239,7 +13856,7 @@ function insertHtmlSendDbBybacklogId(body) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             setHistoryCodeGround(pid, body, "html")
         }
@@ -13251,13 +13868,13 @@ function setHistoryCodeGround(bid, body, type) {
     data.requestBody = body;
     data.fkBacklogId = bid;
     data.devType = type;
-    callApi('21122715084804621887', data, true, function(res) {
+    callApi('21122715084804621887', data, true, function (res) {
 
     })
 }
 
 ///// code ground end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-$(document).on('click', '.loadLivePrototype', function(evt) {
+$(document).on('click', '.loadLivePrototype', function (evt) {
     //    return;
     clearManualProjectFromParam();
     global_var.current_modal = "loadLivePrototype";
@@ -13269,7 +13886,7 @@ $(document).on('click', '.loadLivePrototype', function(evt) {
 
     // initZadShey(global_var.current_project_id);
 
-    $.get("resource/child/ipo.html", function(html_string) {
+    $.get("resource/child/ipo.html", function (html_string) {
 
 
 
@@ -13283,21 +13900,21 @@ $(document).on('click', '.loadLivePrototype', function(evt) {
 
         // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
-        window.editorEvent = CodeMirror(document.querySelector('#eventActionType4ManualJs'), {
+       /*  window.editorEvent = CodeMirror(document.querySelector('#eventActionType4ManualJs'), {
             lineNumbers: true,
             tabSize: 2,
             mode: 'javascript',
             theme: 'blackboard',
             extraKeys: {
-                "F11": function(cm) {
+                "F11": function (cm) {
                     cm.setOption("fullScreen", !cm.getOption("fullScreen"));
                 },
-                "Esc": function(cm) {
+                "Esc": function (cm) {
                     if (cm.getOption("fullScreen"))
                         cm.setOption("fullScreen", false);
                 }
             }
-        });
+        }); */
         Prototype.Init();
         /// editorGenerateJSCSS();
 
@@ -13315,9 +13932,9 @@ $(document).on('click', '.loadLivePrototype', function(evt) {
 function livPrototipeSortable() {
     var arr = [];
     $("#SUS_IPO_GUI_Design").sortable({
-        update: function(event, ui) {
+        update: function (event, ui) {
             var elements = $(ui.item).parent('div').find('.component-container-dashed');
-            elements.each(function(index, el) {
+            elements.each(function (index, el) {
                 // console.log(el)
                 let idu = $(el).attr('id');
                 arr[index] = {
@@ -13329,7 +13946,7 @@ function livPrototipeSortable() {
                 inputOrder: arr
             };
             //data.inputOrder = arr;
-            callApi('22031412084805382531', data, true, function(res) {
+            callApi('22031412084805382531', data, true, function (res) {
                 //Toaster.showMessage('Müvəffəqiyyətlə dəyişdirildi');               
 
             })
@@ -13421,7 +14038,7 @@ function loadEventDesApiList(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var cmd = $('select#addEventDescModal-apiId');
             cmd.html('');
 
@@ -13460,7 +14077,7 @@ function loadDetailsOnProjectSelect4StoryCardNewTr(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var cmd = $('select.us-related-apis-new');
             cmd.html('');
             //            new UserStory().setUSLists(res);
@@ -13515,8 +14132,14 @@ function findBacklogWithId4StoryCard(elm) {
         var fkProjectId = getBacklogDetailsById(id).fkProjectId;
         Utility.addParamToUrl("current_backlog_id", id);
         global_var.current_backlog_id = id;
-        $("select.projectList_liveprototype_storycard").val(fkProjectId);
-        $("select.projectList_liveprototype_storycard").change();
+        if (global_var.current_modal == 'loadCodeGround') {
+            $("select.projectList_codeground_storycard").val(fkProjectId);
+            $("select.projectList_codeground_storycard").trigger('change');
+        } else {
+            $("select.projectList_liveprototype_storycard").val(fkProjectId);
+            $("select.projectList_liveprototype_storycard").trigger('change');
+        }
+
 
     } catch (error) {
 
@@ -13537,7 +14160,7 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
 
             var cmd = $('#storyCardListSelectBox4StoryCard');
@@ -13599,7 +14222,7 @@ function loadApiListOnProjectSelect4Ipo(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var tbl = $('#api_list_side_bar');
             tbl.html('');
             var obj = res.tbl[0].r;
@@ -13639,7 +14262,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var tbl = $('#api_list_side_bar');
             tbl.html('');
             var cmd = $('#storyCardListSelectBox');
@@ -13718,7 +14341,7 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             var tbl = $('#api_list_side_bar');
             tbl.html('');
             $('#statistics-BacklogList').empty();
@@ -13778,12 +14401,12 @@ var hstry = {
     prfkInputId: {},
     prListById: {},
     pfActionType: {},
-    setActionTypeTable: function(id, object) {
+    setActionTypeTable: function (id, object) {
         try {
             this.pfActionType[id] = object;
         } catch (e) {}
     },
-    SetTableFields: function(inputId, hsId) {
+    SetTableFields: function (inputId, hsId) {
         if (inputId in this.prfkInputId) {
             if (!this.prfkInputId[inputId].includes(hsId))
                 this.prfkInputId[inputId] = this.prfkInputId[inputId] + ',' + hsId;
@@ -13791,7 +14414,7 @@ var hstry = {
             this.prfkInputId[inputId] = hsId;
         }
     },
-    setHistorList: function(id, object) {
+    setHistorList: function (id, object) {
         try {
             this.prListById[id] = object;
         } catch (e) {}
@@ -13830,17 +14453,17 @@ function loadHistoryByTasksId(backlog_id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#history-main-table-task tbody').empty()
 
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-task tbody')
                     .append($('<tr>')
-                        .append("<td>" + obj[i].taskName + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
+                        .append("<td>" + obj[i].taskName.xss() + "</td>")
+                        .append("<td>" + obj[i].newValue.xss()+ "</td>")
+                        .append("<td>" + obj[i].oldValue.xss()  + "</td>")
+                        .append("<td>" + obj[i].historyType.xss() + "</td>")
                         .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
                         .append("<td><img class='Assigne-card-story-select-img created' src= " + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
@@ -13869,7 +14492,7 @@ function loadHistoryByCssId(project_id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#history-main-table-css tbody').empty()
 
             var obj = res.tbl[0].r;
@@ -13910,7 +14533,7 @@ function loadHistoryBysqlId(fkTableId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#history-main-table-sql tbody').empty()
 
             var obj = res.tbl[0].r;
@@ -13951,7 +14574,7 @@ function loadHistoryByDBId(fkTableId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#history-main-table-db tbody').empty()
 
             var obj = res.tbl[0].r;
@@ -13993,7 +14616,7 @@ function loadDatabaseList2ComboEntityDAsh() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             $('#database-tm-list').empty();
             try {
                 var obj = res.tbl[0].r;
@@ -14035,7 +14658,7 @@ function getDbTablesList4CodeDash(el) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#database-table-list').html('');
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
@@ -14067,7 +14690,7 @@ function loadHistoryByBacklogStId(backlog_id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#history-main-table-backlogst tbody').empty()
 
             var obj = res.tbl[0].r;
@@ -14109,7 +14732,7 @@ function getProjectUsersForElById(id, elm) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $(elm).empty().append($('<option>'));
             try {
                 var obj = res.tbl[0].r;
@@ -14127,7 +14750,7 @@ function getProjectUsersForElById(id, elm) {
             $(elm).selectpicker('refresh')
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -14147,7 +14770,7 @@ function getProjectUsersForID(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#statistics-createdby-task').empty().append($('<option>'));
             try {
                 var obj = res.tbl[0].r;
@@ -14165,7 +14788,7 @@ function getProjectUsersForID(id) {
             $('#statistics-createdby-task').selectpicker('refresh')
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -14187,7 +14810,7 @@ function loadHistoryByJsId(project_id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             $('#history-main-table-js tbody').empty()
 
             var obj = res.tbl[0].r;
@@ -14227,7 +14850,7 @@ function loadHistoryByBacklofId(backlodId) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             hstry.prfkInputId = {};
             hstry.prListById = {};
             hstry.pfActionType = {};
@@ -14406,12 +15029,12 @@ function loadLivePrototypeCore(el) {
     new UserStory().loadDetailsOnProjectSelect4Ipo();
 }
 
-$(document).on('click', '.loadDashboard', function(evt) {
+$(document).on('click', '.loadDashboard', function (evt) {
     var f = 'dashboard';
     clearManualProjectFromParam();
     global_var.current_modal = "loadDashboard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         new UserStory().pureClearAll(this);
         commmonOnloadAction(this);
@@ -14519,12 +15142,12 @@ function callLivePrototype() {
     }
 }
 
-$(document).on('click', '.loadDocEditor', function(evt) {
+$(document).on('click', '.loadDocEditor', function (evt) {
     var f = 'doceditor';
     clearManualProjectFromParam();
     global_var.current_modal = "loadDocEditor";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         new UserStory().pureClearAll(this);
         hideToggleMain();
@@ -14532,14 +15155,14 @@ $(document).on('click', '.loadDocEditor', function(evt) {
         commmonOnloadAction(this);
     });
 });
-$(document).on('click', '.loadStoryCard', function(evt) {
+$(document).on('click', '.loadStoryCard', function (evt) {
 
     clearManualProjectFromParam();
     global_var.current_modal = "loadStoryCard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadStoryCard();
 });
-$(document).on('click', '.loadDev', function(evt) {
+$(document).on('click', '.loadDev', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
@@ -14548,7 +15171,7 @@ $(document).on('click', '.loadDev', function(evt) {
 
 function callLoadDev() {
 
-    $.get("resource/child/dev.html", function(html_string) {
+    $.get("resource/child/dev.html", function (html_string) {
         getProjectUsers();
         getUsers();
         new UserStory().clearAndShowAll(this)
@@ -14561,7 +15184,7 @@ function callLoadDev() {
         showNavBar();
         // loadUsersAsOwner();
         commmonOnloadAction(this);
-        
+
         getJsCodeListByProject();
         Prototype.ApiContainer.Init(global_var.current_project_id);
         $('.cs-col-pagename .mm-title').html('');
@@ -14573,7 +15196,7 @@ function callLoadStoryCard() {
     SAFN.InitConversion();
     showToggleMain();
     var f = 'storycard';
-    $.get("resource/child/storycard.html", function(html_string) {
+    $.get("resource/child/storycard.html", function (html_string) {
         getProjectUsers();
         getUsers();
 
@@ -14597,12 +15220,12 @@ function callLoadStoryCard() {
     });
 }
 
-$(document).on('click', '.loadFn', function(evt) {
+$(document).on('click', '.loadFn', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadFn";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
 
-    $.get("resource/child/fn.html", function(html_string) {
+    $.get("resource/child/fn.html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         $('.jsCodeModal-selectpicker').selectpicker('refresh');
         $('#jsCodeModal').css('display', 'block');
@@ -14620,12 +15243,12 @@ $(document).on('click', '.loadFn', function(evt) {
 
     });
 });
-$(document).on('change', '#jsCodeModal_projectList', function(evt) {
+$(document).on('change', '#jsCodeModal_projectList', function (evt) {
     global_var.current_project_id = $(this).val();
     $('.loading.editor').show();
     getAllJsCodeByProject();
 });
-$(document).on('change', '#jsCodeModal_fntype', function(evt) {
+$(document).on('change', '#jsCodeModal_fntype', function (evt) {
     var val = $(this).val();
     localStorage.setItem('global-fn-type', val);
     fnINit4fnType(val);
@@ -14634,27 +15257,44 @@ $(document).on('change', '#jsCodeModal_fntype', function(evt) {
 function fnINit4fnType(val) {
     $('.loading.editor').show();
     var ts
-    if (val === 'core' || val === 'event' || val === 'jscore') {
+    if (val === 'core' || val === 'event' || val === 'jscore'||val=='nodecore') {
         ts = 'js'
     } else if (val === 'java' || val === 'javacore') {
         ts = 'java'
-    } else if (val === 'sql') {
+    } 
+    else if (val === 'sql'||val=='mysqlfn') {
         ts = 'sql'
-    } else if (val === 'csscore') {
+    }
+     else if (val === 'csscore') {
         ts = 'css'
     }
     generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', ts, 'vs-dark');
 
 }
-$(document).on('click', '#importCoreJavaCode', function(evt) {
+$(document).on('click', '#importCoreJavaCode', function (evt) {
 
     compileJavaCore();
+});
+$(document).on('click', '#importMySqlFNCode', function (evt) {
+
+    compileMySqlFn();
 });
 
 function compileJavaCore() {
     var data = {};
     data.id = global_var.current_fn_id;
-    callService('serviceIoCompileCoreJava', data, true, function(res) {
+    callService('serviceIoCompileCoreJava', data, true, function (res) {
+        if (res.kv && res.kv.err && res.kv.err.length > 0) {
+            Toaster.showError(JSON.stringify(res.kv.err));
+        } else {
+            Toaster.showMessage("Code Compiled!");
+        }
+    })
+}
+function compileMySqlFn() {
+    var data = {};
+    data.id = global_var.current_fn_id;
+    callApi('22061512275600749022', data, true, function (res) {
         if (res.kv && res.kv.err && res.kv.err.length > 0) {
             Toaster.showError(JSON.stringify(res.kv.err));
         } else {
@@ -14690,19 +15330,19 @@ function loadProjectList2SelectboxByClassWithoutCallAction(className) {
     cmd.selectpicker('refresh');
 }
 
-$(document).on('change', '.user-story-is-shared', function(evt) {
+$(document).on('change', '.user-story-is-shared', function (evt) {
 
     var ustype = 'isBounded';
     var val = $(this).is(":checked") ? "1" : "0";
     updateUS4ShortChangeDetails(val, ustype);
 });
-$(document).on('change', '.user-story-run-in-backend', function(evt) {
+$(document).on('change', '.user-story-run-in-backend', function (evt) {
 
     var ustype = 'runInBackend';
     var val = $(this).is(":checked") ? "1" : "0";
     updateUS4ShortChangeDetails(val, ustype);
 });
-$(document).on('change', '.user-story-prototype-change', function(evt) {
+$(document).on('change', '.user-story-prototype-change', function (evt) {
 
 
     if ($(this).is(":checked")) {
@@ -14716,13 +15356,13 @@ $(document).on('change', '.user-story-prototype-change', function(evt) {
     updateUS4ShortChangeDetails(val, ustype);
 });
 
-$(document).on('change', '.user-story-short-change', function(evt) {
+$(document).on('change', '.user-story-short-change', function (evt) {
     var ustype = $(this).data('type');
     var val = $(this).val();
     updateUS4ShortChange(this, ustype);
 });
 
-$(document).on('change', '.user-story-input-json', function(ev) {
+$(document).on('change', '.user-story-input-json', function (ev) {
     var id = global_var.current_backlog_id;
     var val = $(this).val();
     callApi('21122616132506122050', {
@@ -14731,19 +15371,19 @@ $(document).on('change', '.user-story-input-json', function(ev) {
     });
 })
 
-$(document).on('click', '.neefdiagram-call', function(evt) {
+$(document).on('click', '.neefdiagram-call', function (evt) {
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
         ActivityDiagram.showNeefDiagram('');
     });
 });
-$(document).on('click', '.loadStoryCardMgmt', function(evt) {
+$(document).on('click', '.loadStoryCardMgmt', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
     global_var.current_modal = "loadStoryCardMgmt";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
         $('.popover-badges').popover();
@@ -14788,14 +15428,14 @@ $(document).on('click', '.loadStoryCardMgmt', function(evt) {
     });
 });
 // show form permission user
-$(document).on('click', '#userStoryUserPermission12', function() {
-        usm_show_permission_users1();
-    })
-    //set label select new SC
+$(document).on('click', '#userStoryUserPermission12', function () {
+    usm_show_permission_users1();
+})
+//set label select new SC
 function add_newStoryCArd_label_SetSelect() {
     var data = {};
     var sel = $('#add_newStoryCArd_label14');
-    callService('serviceTmGetLabelList', data, true, function(res) {
+    callService('serviceTmGetLabelList', data, true, function (res) {
         sel.empty();
         var o = res.tbl[0].r;
         sel.append($('<option>'));
@@ -14811,10 +15451,10 @@ function add_newStoryCArd_label_SetSelect() {
 
 
 }
-$(document).on('click', '.someyourContainer .category-item-boxes li', function(e) {
+$(document).on('click', '.someyourContainer .category-item-boxes li', function (e) {
     e.stopPropagation();
 });
-$(document).on('click', '.loadBugChange', function(evt) {
+$(document).on('click', '.loadBugChange', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
     global_var.current_modal = "loadBugChange";
@@ -14845,23 +15485,23 @@ $(document).on('click', '.loadBugChange', function(evt) {
        
     }); */
 });
-$(document).on('click', '.loadUserManual', function(evt) {
+$(document).on('click', '.loadUserManual', function (evt) {
     var f = 'usermanual';
     clearManualProjectFromParam();
     global_var.current_modal = "loadUserManual";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         hideToggleMain();
         ProjectPreview.show('');
     });
 });
-$(document).on('click', '.loadStatistics', function(evt) {
+$(document).on('click', '.loadStatistics', function (evt) {
     var f = 'stat';
     clearManualProjectFromParam();
     global_var.current_modal = "loadStatistics";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         hideToggleMain();
         commmonOnloadAction(this);
@@ -14869,11 +15509,11 @@ $(document).on('click', '.loadStatistics', function(evt) {
         Statistics.GetGeneralStatsCountNGB.Call4Group();
     });
 });
-$(document).on('click', '.loadStatistics', function(evt) {
+$(document).on('click', '.loadStatistics', function (evt) {
     var f = 'stat';
     global_var.current_modal = "loadStatistics";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         hideToggleMain();
         commmonOnloadAction(this);
@@ -14882,11 +15522,11 @@ $(document).on('click', '.loadStatistics', function(evt) {
         $('.selectcustom1').selectpicker();
     });
 });
-$(document).on('click', '.loadActivityDiagram', function(evt) {
+$(document).on('click', '.loadActivityDiagram', function (evt) {
     var f = 'activity';
     global_var.current_modal = "loadActivityDiagram";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         //        new UserStory().pureClearAll(this);
         hideToggleMain();
@@ -14898,12 +15538,12 @@ $(document).on('click', '.loadActivityDiagram', function(evt) {
         loadProjectList2SelectboxByClass('projectList_activity');
     });
 });
-$(document).on('click', '.loadEntityDiagram', function(evt) {
+$(document).on('click', '.loadEntityDiagram', function (evt) {
     var f = 'entity';
     clearManualProjectFromParam();
     global_var.current_modal = "loadEntityDiagram";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         new UserStory().pureClearAll(this);
         hideToggleMain();
@@ -14914,21 +15554,35 @@ $(document).on('click', '.loadEntityDiagram', function(evt) {
     });
 });
 // load Sql Generator
-$(document).on('click', '.loadSqlGenerator', function (evt) {   
+$(document).on('click', '.loadSqlGenerator', function (evt) {
     var f = 'generator';
     clearManualProjectFromParam();
     global_var.current_modal = "loadSqlGenerator";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    SqlGeneratorClass.loader();    
-   // $('#mainBodyDivForAll').html(html_string);
+    SqlGeneratorClass.loader();
+    // $('#mainBodyDivForAll').html(html_string);
 });
+
+$(document).on('click', '.loadExportImport', function (evt) {
+   
+    global_var.current_modal = "loadExportImport";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    $.get("resource/child/exportimport.html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        ExportImportTool.init();
+        ExportImportTool.loader();
+    });
+});
+
+
+
 // 
-$(document).on('click', '.loadSourceActivity', function(evt) {
+$(document).on('click', '.loadSourceActivity', function (evt) {
     var f = 'sourceactivity';
     clearManualProjectFromParam();
     global_var.current_modal = "loadSourceActivity";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         new UserStory().pureClearAll(this);
         hideToggleMain();
@@ -14940,12 +15594,12 @@ $(document).on('click', '.loadSourceActivity', function(evt) {
         global_var.doc_actual_zoom = 65;
     });
 });
-$(document).on('click', '.loadTestCase', function(evt) {
+$(document).on('click', '.loadTestCase', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
     global_var.current_modal = "loadTestCase";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         hideToggleMain();
         commmonOnloadAction(this);
@@ -14965,22 +15619,22 @@ $(document).on('click', '.loadTestCase', function(evt) {
 
     });
 });
-$(document).on('click', '.loadRunService', function(evt) {
+$(document).on('click', '.loadRunService', function (evt) {
     var f = 'runservice';
     clearManualProjectFromParam();
     global_var.current_modal = "loadRunService";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         loadDocEditorRunService();
     });
 });
-$(document).on('click', '.loadBusinessCase', function(evt) {
+$(document).on('click', '.loadBusinessCase', function (evt) {
     var f = 'bcase';
     clearManualProjectFromParam();
     global_var.current_modal = "loadBusinessCase";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         hideToggleMain();
         commmonOnloadAction(this);
@@ -14988,12 +15642,12 @@ $(document).on('click', '.loadBusinessCase', function(evt) {
         setBCasescripts();
     });
 });
-$(document).on('click', '.loadBusinessService', function(evt) {
+$(document).on('click', '.loadBusinessService', function (evt) {
     var f = 'bservice';
     clearManualProjectFromParam();
     global_var.current_modal = "loadBusinessService";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         hideToggleMain();
         commmonOnloadAction(this);
@@ -15002,7 +15656,7 @@ $(document).on('click', '.loadBusinessService', function(evt) {
     });
 });
 //filter flow group change
-$(document).on('change', '#story_mn_filter_Flow_ID_12', function() {
+$(document).on('change', '#story_mn_filter_Flow_ID_12', function () {
     filterLoadFlowNAmeByFolowGrooup();
 })
 
@@ -15021,7 +15675,7 @@ function filterLoadFlowNAmeByFolowGrooup(el) {
     select.empty();
     select.selectpicker('refresh');
     select.html('<option></option>');
-    callApi("22030405453401501463", data, true, function(res) {
+    callApi("22030405453401501463", data, true, function (res) {
         try {
             res.tbl[0].r.map((o) => {
                 select.append(`<option value='${o.id}'>${o.flowName}</option>`);
@@ -15037,7 +15691,7 @@ function filterLoadFlowNAmeByFolowGrooup(el) {
 function loadFlowGroupSelectInFilter1() {
     var select = $('#story_mn_filter_Flow_ID_12');
     select.html('<option></option>');
-    callApi("22030511170609167656", {}, true, function(res) {
+    callApi("22030511170609167656", {}, true, function (res) {
         res.tbl[0].r.map((o) => {
             select.append(`<option value='${o.id}'>${o.groupName}</option>`);
         })
@@ -15062,13 +15716,13 @@ function usm_nav_dropDownn_appendPermission(var_g) {
     };
 }
 
-$(document).on('click', '.loadPermission', function(evt) {
+$(document).on('click', '.loadPermission', function (evt) {
     var f = "perm";
     clearManualProjectFromParam();
     global_var.current_modal = "loadPermission";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     clearManualProjectFromParam();
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         //        new UserStory().clearAll();
         getUserList4Permission();
@@ -15076,12 +15730,12 @@ $(document).on('click', '.loadPermission', function(evt) {
         getModuleList4Permission();
     });
 });
-$(document).on('click', '.loadProjectManagement', function(evt) {
+$(document).on('click', '.loadProjectManagement', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
     global_var.current_modal = "loadProjectManagement";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         setProjectManagementFilterProject();
         setProjectManagementFilterAssignees();
@@ -15101,12 +15755,12 @@ $(document).on('click', '.loadProjectManagement', function(evt) {
         }
     });
 });
-$(document).on('click', '.loadTaskManagement', function(evt) {
+$(document).on('click', '.loadTaskManagement', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
     global_var.current_modal = "loadTaskManagement";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_taskmgmt');
         genTaskKanbanViewTrigger();
@@ -15194,7 +15848,7 @@ function loadUsersAsNezaretci() {
     $('#nezaretci-user-list').val(fkOwnerId)
     $('#nezaretci-user-list').selectpicker('refresh');
 }
-$(document).on('change', 'select#nezaretci-user-list', function(e) {
+$(document).on('change', 'select#nezaretci-user-list', function (e) {
     var selected = $(this).find("option:selected");
     var dataContent = selected.attr('data-content');
     var srcAttr = $(dataContent).find('img').attr('src');
@@ -15236,7 +15890,7 @@ function ReturnLoadUsersAsNezaretci(elm) {
     $('#nezaretci-user-list').selectpicker('refresh');
 }
 
-$(document).on('click', '.user-avatar-list li .item-click .removed-nezaretci-btn', function(e) {
+$(document).on('click', '.user-avatar-list li .item-click .removed-nezaretci-btn', function (e) {
 
     var elm = $(this).closest("li")
     var select = $(this).closest('.user-addons-box').find('.selectpicker-user-list');
@@ -15249,47 +15903,47 @@ $(document).on('click', '.user-avatar-list li .item-click .removed-nezaretci-btn
 //    new Sprint().load();
 //});
 
-$(document).on('click', '.storydiagram', function(evt) {
+$(document).on('click', '.storydiagram', function (evt) {
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
         ActivityDiagram.showStoryDiagram();
     });
 });
-$(document).on('click', '.loadProject', function(evt) {
+$(document).on('click', '.loadProject', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadProject";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
         new Project().loadProject();
         new User().removeTagsByPermission();
         commmonOnloadAction(this);
     });
 });
-$(document).on('click', '.loadUser', function(evt) {
+$(document).on('click', '.loadUser', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadUser";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
         new User().loadUser();
         commmonOnloadAction(this);
     });
 });
-$(document).on('click', '.loadTaskTypeManagment', function(evt) {
+$(document).on('click', '.loadTaskTypeManagment', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadTaskTypeManagment";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_tasktypemgmt')
-            // this is not Working
+        // this is not Working
         getUsers();
         $(".type_liveprototype_tasktypemgmt").selectpicker();
         new Sprint().load4Task();
@@ -15297,22 +15951,22 @@ $(document).on('click', '.loadTaskTypeManagment', function(evt) {
         // commmonOnloadAction(this); 
     });
 });
-$(document).on('click', '.loadTaskType', function(evt) {
+$(document).on('click', '.loadTaskType', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadTaskType";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
         getUsers();
         new TaskType().load();
         commmonOnloadAction(this);
     });
 });
-$(document).on('click', '.inputdiagram', function(evt) {
+$(document).on('click', '.inputdiagram', function (evt) {
     var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function(html_string) {
+    $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
         ActivityDiagram.showInputDiagram();
     });
@@ -15323,7 +15977,7 @@ function setActiveInputDescType(actionType) {
 }
 
 function loadHtml(file) {
-    $.get("resource/child/" + file + ".html", function(html_string) {
+    $.get("resource/child/" + file + ".html", function (html_string) {
 
 
         //        new UserStory().pureClearAll(this);
@@ -15375,7 +16029,7 @@ function setProjectManagementFilterAssignees() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             var select = $('#prMn_filter_assignee_id');
             var select2 = $('#prMn_filter_created_by');
             select.html('');
@@ -15396,7 +16050,7 @@ function setProjectManagementFilterAssignees() {
             select.selectpicker('refresh');
             select2.selectpicker('refresh');
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -15455,7 +16109,7 @@ function getStatisticList(idlist) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
 
             var dt = res.tbl;
             for (let index = 0; index < dt.length; index++) {
@@ -15504,7 +16158,7 @@ function getStatisticList(idlist) {
 
             }
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -15550,13 +16204,13 @@ function getProjectManagementList() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function(res) {
+        success: function (res) {
             getProjectManagmentListDetails(res, stLimit + 1);
             setPagination(res.tbl[0].r.length, val);
             // getGroupList();
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -15589,9 +16243,9 @@ function getProjectManagmentListDetails(res, stLimit) {
         var userName = SAProjectUser.GetDetails(o.fkOwnerId, "userName")
 
         var rs = global_var.bug_task_sprint_assign_checked === 1
-            /* ?
-             div.html() :
-             ""; */
+        /* ?
+         div.html() :
+         ""; */
 
         sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
         sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
@@ -15615,7 +16269,7 @@ function getProjectManagmentListDetails(res, stLimit) {
         var task_id = getTaskCode(o.id);
         var t = $('<tr>')
 
-        .attr("id", o.id)
+            .attr("id", o.id)
             .attr("projectId", o.fkProjectId)
             .attr("stIdr", o.fkBacklogId)
             .addClass('bug-tr')
@@ -15647,13 +16301,13 @@ function getProjectManagmentListDetails(res, stLimit) {
                 .addClass('bug-list-column-task-nature')
                 .append($("<div>").attr('id', 'new' + o.id).append('No-task')))
 
-        .append($('<td>').addClass('bug-list-column')
-            .addClass('bug-list-column-story-card')
-            .append("<span class='get-data-group'>" + proJectName + "</span>"))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-story-card')
+                .append("<span class='get-data-group'>" + proJectName + "</span>"))
 
 
 
-        .append($('<td>').addClass('bug-list-column')
+            .append($('<td>').addClass('bug-list-column')
                 .css('white-space', 'nowrap')
                 .addClass('bug-list-column-owner-by ')
                 .append($("<div>").addClass("get-data-group")
@@ -15702,7 +16356,7 @@ function getProjectManagmentListDetails(res, stLimit) {
 function getProjectManagementListDetailsHeader() {
     var th = $('<tr>')
 
-    .append($('<th>').append('# <input type="checkbox" class="all-bug-list-check">'))
+        .append($('<th>').append('# <input type="checkbox" class="all-bug-list-check">'))
         .append($('<th>').addClass('bug-list-column')
             .addClass('bug-list-column-task-status')
             .append('US No'))
@@ -15726,14 +16380,14 @@ function getProjectManagementListDetailsHeader() {
             .addClass('bug-list-column-created-date').append('Created Date'))
 
 
-    .append($('<th>').append(''))
+        .append($('<th>').append(''))
 
 
 
 
     return th;
 }
-$(document).on("click", ".prManag-task-filter-checkbox-label", function() {
+$(document).on("click", ".prManag-task-filter-checkbox-label", function () {
     if (global_var.current_modal === 'loadProjectManagement') {
         getProjectUsers4ProjectManagment();
     }
@@ -15747,7 +16401,7 @@ $(document).on("click", ".prManag-task-filter-checkbox-label", function() {
     }
 
 })
-$(document).on("click", ".us-filter-checkbox-sprint", function() {
+$(document).on("click", ".us-filter-checkbox-sprint", function () {
     if (global_var.current_modal === 'loadProjectManagement') {
         getProjectUsers4ProjectManagment();
     }
@@ -15760,7 +16414,7 @@ $(document).on("click", ".us-filter-checkbox-sprint", function() {
 
 function setPrmFilterLabelValues() {
     var st = ' ';
-    $('.prManag-task-filter-checkbox-label').each(function() {
+    $('.prManag-task-filter-checkbox-label').each(function () {
         if ($(this).is(":checked")) {
             st += "'" + $(this).val() + "',";
         }
@@ -15771,7 +16425,7 @@ function setPrmFilterLabelValues() {
 
 function setPrmFilterSprintValues() {
     var st = ' ';
-    $('.us-filter-checkbox-sprint').each(function() {
+    $('.us-filter-checkbox-sprint').each(function () {
         if ($(this).is(":checked")) {
             st += "'" + $(this).val() + "',";
         }
@@ -15803,11 +16457,11 @@ function getUpdateAssigneIDForBacklog(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             backLogIdListForSearch = res.kv.fkBacklogId
             labelOrSplitValuesUs();
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -15815,7 +16469,7 @@ function getUpdateAssigneIDForBacklog(id) {
 
 function setPrmFilterSprintValuesUs() {
     var st = ' ';
-    $('.us-filter-checkbox-sprint').each(function() {
+    $('.us-filter-checkbox-sprint').each(function () {
         if ($(this).is(":checked")) {
 
             var json = {
@@ -15833,7 +16487,7 @@ function setPrmFilterSprintValuesUs() {
                 contentType: "application/json",
                 crossDomain: true,
                 async: false,
-                success: function(res) {
+                success: function (res) {
                     var dt = res.tbl[0].r;
                     for (let i = 0; i < dt.length; i++) {
 
@@ -15842,7 +16496,7 @@ function setPrmFilterSprintValuesUs() {
                     }
                     UsSprint = st;
                 },
-                error: function() {
+                error: function () {
                     Toaster.showError(('somethingww'));
                 }
             });
@@ -15857,7 +16511,7 @@ function setPrmFilterSprintValuesUs() {
 
 function setPrmFilterLabeValuesUs() {
     var st = '';
-    $('.prManag-task-filter-checkbox-label').each(function() {
+    $('.prManag-task-filter-checkbox-label').each(function () {
         if ($(this).is(":checked")) {
 
             var json = {
@@ -15875,7 +16529,7 @@ function setPrmFilterLabeValuesUs() {
                 contentType: "application/json",
                 crossDomain: true,
                 async: false,
-                success: function(res) {
+                success: function (res) {
                     var dt = res.tbl[0].r
                     for (let i = 0; i < dt.length; i++) {
 
@@ -15883,7 +16537,7 @@ function setPrmFilterLabeValuesUs() {
                     }
                     UsLabel = st;
                 },
-                error: function() {
+                error: function () {
                     Toaster.showError(('somethingww'));
                 }
             });
@@ -15914,7 +16568,7 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
             // $(div).html('')
             var dt = res.tbl;
             for (let index = 0; index < dt.length; index++) {
@@ -15976,7 +16630,7 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id) {
 
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
@@ -16017,7 +16671,7 @@ function getSTatsUserManagmentTableKanban(elm) {
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function(res) {
+        success: function (res) {
 
             // $(div).html('')
             var dt = res.tbl;
@@ -16063,35 +16717,35 @@ function getSTatsUserManagmentTableKanban(elm) {
             getBugList4UserStory(bgId, tbody, list);
 
         },
-        error: function() {
+        error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
 var _22022019434402082398 = {
-        three_dot_length: 50,
-        column_list: {},
-        row_list: [],
+    three_dot_length: 50,
+    column_list: {},
+    row_list: [],
     add_body: (res, table) => {
+        try {
+            var xtype = $('#matrix-view-xtype').val();
+            var ytype = $('#matrix-view-ytype').val();
+            res.tbl[0].r.map((o) => {
+                coreBugKV[o.fkTaskId] = o;
+                var pid = o[ytype] + "_" + o[xtype];
+                var olid = o[ytype] + "_" + o[xtype] + "_" + o.fkBacklogId;
                 try {
-                    var xtype = $('#matrix-view-xtype').val();
-                    var ytype = $('#matrix-view-ytype').val();
-                    res.tbl[0].r.map((o) => {
-                                coreBugKV[o.fkTaskId] = o;
-                                var pid = o[ytype] + "_" + o[xtype];
-                                var olid = o[ytype] + "_" + o[xtype] + "_" + o.fkBacklogId;
-                                try {
 
-                                    var userImage = SAProjectUser.Users[o.fkAssigneeId].userImage;
-                                    var createdByImage = SAProjectUser.Users[o.createdBy].userImage;
-                                    var userName = SAProjectUser.Users[o.fkAssigneeId].userPersonName;
-                                    var createByName = SAProjectUser.Users[o.createdBy].userPersonName;
+                    var userImage = SAProjectUser.Users[o.fkAssigneeId].userImage;
+                    var createdByImage = SAProjectUser.Users[o.createdBy].userImage;
+                    var userName = SAProjectUser.Users[o.fkAssigneeId].userPersonName;
+                    var createByName = SAProjectUser.Users[o.createdBy].userPersonName;
 
-                                } catch (error) {
+                } catch (error) {
 
-                                }
+                }
 
-                                var newtr = `<div class="d-flex text-center">
+                var newtr = `<div class="d-flex text-center">
                 <span>
                 <div class="p-1"><b>Id</b></div>
                 <div>${o.projectCode + "-" + o.orderNoSeq}</div>
@@ -16107,12 +16761,12 @@ var _22022019434402082398 = {
                 </div>
                 `
 
-                                _22022019434402082398.ol_item_for_td_backlog(pid, olid, o.backlogName, o.fkBacklogId);
-                                var bug = `<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>`
-                                var task_name = o.taskName;
+                _22022019434402082398.ol_item_for_td_backlog(pid, olid, o.backlogName, o.fkBacklogId);
+                var bug = `<i class="fas fa-bug" style="color: red;" aria-hidden="true"></i>`
+                var task_name = o.taskName;
 
-                                $(`#${olid}`)
-                                    .append(`<li class='list-group-item p-1'  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}' title='${task_name}'>
+                $(`#${olid}`)
+                    .append(`<li class='list-group-item p-1'  data-trigger="hover" data-placement='top' data-toggle="popover" data-content='${newtr}' title='${task_name}'>
                                ${o.taskNature==='bug'?bug:""} <span class='d-inline-block' onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${o.fkProjectId}','${o.fkTaskId}')" style='max-width:260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;' >${task_name}</span>
                                <div>
                                ${` <span   class="us-item-status-${o.taskStatus}">${o.taskStatus}</span>`}
@@ -18995,7 +19649,7 @@ function updateJSChangeDetails(val, ustype) {
 }
 
 function updateJSChangePure(val, ustype, jsCodeId) {
-     $('.loading').show();
+    $('.loading').show();
     try {
 
         if (ustype.lentgh === 0 || val.lentgh === 0 || jsCodeId === 0) {
@@ -19020,7 +19674,7 @@ function updateJSChangePure(val, ustype, jsCodeId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-           // getAllJsCodeByProject();
+            // getAllJsCodeByProject();
             //loadCurrentBacklogProdDetails();
             $('.loading').hide();
         },
@@ -19092,8 +19746,6 @@ function updateTask4ShortChangePureWithSync(val, ustype, taskId, comment, change
     });
 }
 
-
-
 function updateTask4ShortChangePure(val, ustype, taskId) {
     try {
 
@@ -19103,14 +19755,12 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
     } catch (e) {
         return;
     }
-
-
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {};
     json.kv.id = taskId;
     json.kv.type = ustype;
     json.kv.value = val;
@@ -19128,8 +19778,8 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
             SACore.updateBacklogByRes(res);
             if (global_var.current_modal === 'loadStoryCardMgmt') {
                 var bid = res.tbl[0].r[0].fkBacklogId;
-                $("#body-large-modal-in-us4backlog #user-story-show-stat[data-bid='" + bid + "']").change();
-                $("#user-story-show-stat[data-bid='" + bid + "']").change();
+                $("#body-large-modal-in-us4backlog #user-story-show-stat[data-bid='" + bid + "']").trigger('change');
+                $("#user-story-show-stat[data-bid='" + bid + "']").trigger('change');
             } else if (global_var.current_modal === 'loadBugChange') {
                 getBugList();
             }
@@ -19198,10 +19848,13 @@ function loadProjectList2SelectboxByClassNochange(className) {
     cmd.selectpicker('refresh');
 }
 
-function loadProjectList2SelectboxByClass(className) {
+function loadProjectList2SelectboxByClass(className,hassnull) {
 
     var cmd = $('select.' + className);
     cmd.html('');
+    if(hassnull){
+        cmd.append('<option></option>');
+    }
     var f = true;
     var pid = SACore.GetProjectKeys();
     for (var n = 0; n < pid.length; n++) {
@@ -19391,7 +20044,7 @@ function lableAddAssignUSerStoryManagement(elm) {
 
     var check = $(".assign-label-story-card-item-new");
     var labelId = $(elm).attr("id");
-  
+
     for (var indx = 0; indx < check.length; indx++) {
         if ($(check[indx]).prop('checked')) {
 
@@ -20966,7 +21619,7 @@ function addInputDescListToTaskNew_setComment_event() {
             var col = $("<div class='col-12 item-input-add-task'>")
                 .append(`<label class='font-weight-bold' >${name}</label>`)
 
-                .append($("<input class='form-control' row='3'>").val(inpName+" : " + name))
+                .append($("<input class='form-control' row='3'>").val(inpName + " : " + name))
 
                 .append($("<textarea class='form-control' row='3'>").val(st))
             $("#addNewDetailedTaskModal_list").append(col);
@@ -20989,15 +21642,15 @@ function addInputListToTaskNew_setComment_event() {
                 var descId = SAInput.DescriptionId[$(this).val()];
                 for (var i in descId) {
                     var id = descId[i];
-                    
+
                     var desc = fnline2Text(SAInputDesc.GetDetails(id));
                     if (desc.startsWith('fn_event(')) {
                         var item = desc.split('|r|')
                         if (item[2] === 'Api') {
-                            desc = item[1] + " Call API : " + item[4] + " " +item[3];
+                            desc = item[1] + " Call API : " + item[4] + " " + item[3];
                         } else {
                             desc = item[1] + " " + item[3];
-        
+
                         }
                     }
                     st += (i + 1) + ")" + "- " + desc + '\n';
@@ -24460,8 +25113,8 @@ function backlogBugCountSet12(list) {
 }
 
 function printClickGetScName() {
-    var bgNames=[];
-    var checkID='';
+    var bgNames = [];
+    var checkID = '';
     $('.assign-label-story-card-item-new').each(function () {
         checkID += $(this).is(':checked') ? $(this).attr('pid') + '|' : "";
     });
@@ -24473,14 +25126,14 @@ function printClickGetScName() {
         for (let i = 0; i < dt.length; i++) {
             let o = dt[i];
             bgNames.push(o.backlogName);
-            
+
         }
-        var Aa=readyHtmlForPrint(bgNames);
+        var Aa = readyHtmlForPrint(bgNames);
         // $('.task-panel').html('')
         // $('.task-panel').append(Aa);
-         var  block  =  $("<div style='width:100%;'>").append(Aa);
+        var block = $("<div style='width:100%;'>").append(Aa);
 
-        var newWin=window.open('','Print-Window');
+        var newWin = window.open('', 'Print-Window');
         newWin.document.open();
         newWin.document.write(`<html>
         <head>
@@ -24517,23 +25170,26 @@ function printClickGetScName() {
         <body onload="window.print()">${block.html()}</body></html>`);
 
         newWin.document.close();
-        setTimeout(function(){newWin.close();},10);           
-            
-            })
+        setTimeout(function () {
+            newWin.close();
+        }, 10);
+
+    })
 
 };
-function readyHtmlForPrint(dt){
 
-    var element=$(`<table></table>`);
-    
+function readyHtmlForPrint(dt) {
 
-    for(var i=0;i<dt.length;i++){
+    var element = $(`<table></table>`);
+
+
+    for (var i = 0; i < dt.length; i++) {
 
         element.append(`<tr>
         <td class='childDivForPrint'><span class="spanForPrint">${dt[i]}</span></td>
          <td class='childDivForPrint'><span class="spanForPrint">${(dt[i+1])?dt[i+1]:''}</span></td>
         <tr>`)
-    i++;
+        i++;
     }
     return element;
 
