@@ -772,6 +772,9 @@ tbody .ifbacklogDescriptionText:hover{
 .cs-sum-inbox .cs-select-box .get-runjava-select-box.bootstrap-select .btn, .cs-sum-inbox .get-runjava-select-box.select-api-box.bootstrap-select .btn {
     background: #8f467f;
 }
+.cs-sum-inbox .cs-select-box .get-json-select-box.bootstrap-select .btn, .cs-sum-inbox .get-json-select-box.select-api-box.bootstrap-select .btn {
+    background: #a0af71d4;
+}
 .cs-sum-inbox .cs-select-btn-box {
     padding: 0px 0px 0px 4px;
     display: inline-block;
@@ -829,6 +832,15 @@ tbody .ifbacklogDescriptionText:hover{
 }
 .cs-sum-inbox.cs-sum-inbox-runnode .cs-select-btn-box button:hover {
     background: #c77d08 !important;
+}
+.cs-sum-inbox.cs-sum-inbox-json .cs-select-btn-box button {
+    background: #a0af71d4;
+}
+.cs-sum-inbox.cs-sum-inbox-json .cs-select-btn-box button:hover {
+    background: #a0af71d4;
+}
+.cs-sum-inbox.cs-sum-inbox-json .cs-select-btn-box button:hover {
+    background: #a0af71d4 !important;
 }
 .cs-sum-inbox .cs-select-btn-box button:focus{
     outline: none;
@@ -939,6 +951,9 @@ table tr td .cs-sum-inbox.cs-sum-inbox-runjava > div {
 }
 table tr td .cs-sum-inbox.cs-sum-inbox-runnode > div {
     background-color: #e09e36;
+}
+table tr td .cs-sum-inbox.cs-sum-inbox-json > div {
+    background-color: #a0d301;
 }
 table tr td .cs-sum-inbox.cs-sum-inbox-runsql > div {
     background-color: #4cb1c1;

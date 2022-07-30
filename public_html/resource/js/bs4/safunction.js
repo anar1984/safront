@@ -29,6 +29,7 @@ var SAFN = {
         'callfn': 'CallFn',
         'runjava': 'RunJava',
         'runnode': 'RunNode',
+        'json': 'JSON',
         'runsql': 'RunSql',
         'execsql': 'ExecSql',
         'ifhasvalue': "IfHasValue",
@@ -1171,6 +1172,9 @@ var SAFN = {
                     case '@.runnode':
                         descLine = SAFN.Convert.RunNodeStatement(mainBody);
                         break;
+                    case '@.json':
+                        descLine = SAFN.Convert.RunJsonStatement(mainBody);
+                        break;
                     case '@.runsql':
                         descLine = SAFN.Convert.RunSqlStatement(mainBody);
                         break;
@@ -1326,6 +1330,9 @@ var SAFN = {
                         break;
                     case '@.runnode':
                         descLine = SAFN.Reconvert.runNodeStatement(mainBody);
+                        break;
+                    case '@.json':
+                        descLine = SAFN.Reconvert.runJsonStatement(mainBody);
                         break;
                     case '@.runsql':
                         descLine = SAFN.Reconvert.runSqlStatement(mainBody);
@@ -1618,6 +1625,15 @@ var SAFN = {
             var div = $(triggerEl).find('div.function-statement-container');
             var key = div.find("select.fns-key").val();
             var fnline = "@.runnode(" + key + ")";
+            return fnline;
+        },
+        runJsonStatement: function (triggerEl) {
+
+            // var div = triggerEl.find('div.function-statement-container');
+
+            var div = $(triggerEl).find('div.function-statement-container');
+            var key = div.find("select.fns-key").val();
+            var fnline = "@.json(" + key + ")";
             return fnline;
         },
         runSqlStatement: function (triggerEl) {
@@ -2269,6 +2285,64 @@ var SAFN = {
                                     .attr('data-live-search', "true")
                                     .attr("id", 'get-runnode-select-box')
                                     .addClass("function-statement-input-common  get-runnode-select-box fns-key ")
+                                    .append($("<option>").text(fnId).val(fnId).attr('selected', 'selected'))
+
+                                )
+                            )
+                            .append(but)
+                            .append(but2)
+                        )
+                    )
+                )
+
+            return descBody;
+
+        },
+        RunJsonStatement: function (descLine) {
+            var fnId = SAFN.GetCommandArgument(descLine);
+            // fnName = (fnName) ? fnName : fnId;
+
+            var but = '';
+            var but2 = $("<li>")
+                .addClass('cs-select-btn-box')
+                .append($('<button>')
+                    .append('<i class="fas fa-plus"></i>')
+                    .attr("data-type",'json')
+                    .attr("onclick", "addNewRelatedCallfn(this)")
+                )
+            if (fnId.length > 0) {
+                but = $("<li>")
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                        .append('<i class="fas fa-share"></i>')
+                        .attr("data-type",'json')
+                        .attr("onclick", "showJSModalByName(this)")
+                    )
+            }
+            var descBody = $('<div>')
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-json")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("JSON")
+                        )
+
+                    )
+
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'inline-block')
+                            .css("padding", '0 0 0 0')
+                            .append($('<li>')
+                                .addClass("function-statement-input-common cs-select-box")
+                                .append($('<select>')
+                                    .addClass('function-statement-container-change-event')
+                                    .attr('data-live-search', "true")
+                                    .attr("id", 'get-json-select-box')
+                                    .addClass("function-statement-input-common  get-json-select-box fns-key ")
                                     .append($("<option>").text(fnId).val(fnId).attr('selected', 'selected'))
 
                                 )
@@ -4426,6 +4500,7 @@ var SAFN = {
         'CallFn': '@.callfn(,)',
         'RunJava': '@.runjava(,)',
         'RunNode': '@.runnode(,)',
+        'JSON': '@.json(,)',
         'RunSql': '@.runsql(,)',
         'CallApi': '@.callapi(,)',
     },
@@ -4759,6 +4834,7 @@ $(document).ready(function () {
         '@.callfn()',
         '@.runjava()',
         '@.runnode()',
+        '@.json()',
         '@.runsql()',
         '@.callapi()',
         '@.break()'
@@ -4830,6 +4906,10 @@ $(document).ready(function () {
         SAFN.Convert.Common.GetLineBody(this);
     })
     $(document).on("change", "select.function-statement-input-common.get-runnode-select-box", function (e) {
+
+        SAFN.Convert.Common.GetLineBody(this);
+    })
+    $(document).on("change", "select.function-statement-input-common.get-json-select-box", function (e) {
 
         SAFN.Convert.Common.GetLineBody(this);
     })

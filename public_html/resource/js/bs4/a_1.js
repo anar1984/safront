@@ -12886,7 +12886,7 @@ class HistoryNew{
             case 'html': 
                         api = {listApi:'22051817104609238599',dateId:'created',name:"backlogName",trig:"fkBacklogId",body:'requestBody'}
                  break;
-            case 'sql': case'javacore': case'nodecore': case'mysqlfn':
+            case 'sql': case'javacore': case'nodecore': case'mysqlfn':case'json':
                         api = {listApi:'22052112223308637114',dateId:'history',name:"fnDescription",trig:"fnDescription",body:'jsBody'}
                  break;
             case 'api': 
@@ -13203,8 +13203,7 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
             scrollBeyondLastLine: true,
             theme: theme
         });
-        getCustomThemeMonaco();
-
+        //getCustomThemeMonaco();
     });
 }
 function getCustomThemeMonaco() {
@@ -15267,6 +15266,9 @@ function fnINit4fnType(val) {
     }
      else if (val === 'csscore') {
         ts = 'css'
+    }
+     else if (val === 'json') {
+        ts = 'json'
     }
     generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', ts, 'vs-dark');
 

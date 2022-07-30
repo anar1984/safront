@@ -5693,6 +5693,7 @@ UserStory.prototype = {
         loadSelecPickerOnChnageFnList($("select.get-runsql-select-box"), 'sql');
         loadSelecPickerOnChnageFnList($("select.get-runjava-select-box"), 'javacore');
         loadSelecPickerOnChnageFnList($("select.get-runnode-select-box"), 'nodecore');
+        loadSelecPickerOnChnageFnList($("select.get-json-select-box"), 'json');
         loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"), 'core');
         return table;
     },
