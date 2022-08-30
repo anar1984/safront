@@ -696,7 +696,8 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
             td.attr("data-id", o.id)
                 .attr('data-key', col)
                 .addClass("sql-table-cell-update")
-                .text(add3Dots2String(o[col], 150));
+                .text(o[col]);
+                // .text(add3Dots2String(o[col], 150));
             tr.append(td);
         }
         el.find("tbody").append(tr);
