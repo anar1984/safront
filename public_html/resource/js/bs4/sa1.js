@@ -352,8 +352,6 @@ function updateBacklogName() {
 }
 
 function runApiOnStoryCard() {
-
-    // alert('zad')
     var fkBacklogId = global_var.current_backlog_id;
     global_var.runApiOnStoryCard = 1;
     var sty = $('#user-story-input-json').val();

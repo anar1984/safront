@@ -158,7 +158,7 @@ const ExportImportTool = (function () {
         $('.hoxe').html('In Progress');
         callApi('22051711163103472938', data, true, function (res) {
             var urlCommon = urlGl + "api/get/deploy/" + res.kv.db_structure;
-            console.log(urlCommon)
+
             $.get(urlCommon, function (data) {
                 $(".ei-sql-query").text(data);
 
