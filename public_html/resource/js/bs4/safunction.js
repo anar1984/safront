@@ -1471,6 +1471,8 @@ var SAFN = {
         },
         IfStatement: function (triggerEl) {
             var div = triggerEl.find('div.function-statement-container');
+
+
             var key = div.find(".fns-key").first().val();
             var oper = div.find("select.fns-oper").first().val();
             var val = div.find(".fns-val").first().val();
@@ -1529,7 +1531,11 @@ var SAFN = {
         },
         ForListStatement: function (triggerEl) {
             var div = triggerEl.find('div.function-statement-container');
+
             var key = div.find(".fns-key").val();
+
+
+
             var body = div.find(".forlist-inc-table").first().find('tbody').first().children();
             var bd = '';
             body.each(function (p) {
@@ -1626,7 +1632,7 @@ var SAFN = {
             // var div = triggerEl.find('div.function-statement-container');
 
             var div = $(triggerEl).find('div.function-statement-container');
-            var key = div.find("select option:selected").attr("pid");
+            var key = div.find("select.fns-key").val();
             var fnline = "@.json(" + key + ")";
             return fnline;
         },
@@ -2279,7 +2285,7 @@ var SAFN = {
                                     .attr('data-live-search', "true")
                                     .attr("id", 'get-runnode-select-box')
                                     .addClass("function-statement-input-common  get-runnode-select-box fns-key ")
-                                    .append($("<option>").attr("pid",fnId).val(fnId).attr('selected', 'selected'))
+                                    .append($("<option>").text(fnId).val(fnId).attr('selected', 'selected'))
 
                                 )
                             )
