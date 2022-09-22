@@ -9510,6 +9510,7 @@ function addNewSourceCodeFromDescNew(trigg) {
     json.kv.fnCoreInput = "data";
     json.kv.fnBody = "return data";
     json.kv.fnType = type;
+    json.kv.fkApiId = Utility.getParamFromUrl("current_backlog_id");
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -9520,6 +9521,8 @@ function addNewSourceCodeFromDescNew(trigg) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            updateJsCodeApiId(res.kv.id);
+
             var descId = $('#addNewRelatedSourceCodeModal-id').val();
             if (descId === 'loadFn') {
                 getAllJsCodeByProject();
@@ -9550,6 +9553,13 @@ function addNewSourceCodeFromDescNew(trigg) {
             Toaster.showGeneralError();
         }
     });
+}
+
+const updateJsCodeApiId = id =>{
+    var data  ={};
+    data.id = id;
+    data.fkApiId = Utility.getParamFromUrl("current_backlog_id");
+    callApi('22091605132508889661',data)
 }
 
 function addNewSourceCodeFromDesc() {
@@ -15171,10 +15181,15 @@ $(document).on('click', '.loadDev', function (evt) {
 function callLoadDev() {
 
     $.get("resource/child/dev.html", function (html_string) {
+        
+
         getProjectUsers();
         getUsers();
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
+
+        development.load();
+
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
         loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
@@ -15190,6 +15205,8 @@ function callLoadDev() {
         $('.cs-col-pagename .mm-title').html('Development');
     });
 }
+
+
 
 function callLoadStoryCard() {
     SAFN.InitConversion();
